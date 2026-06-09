@@ -465,6 +465,25 @@ astro_one/
 └── security/            # 🛡️ 安全模块
 ```
 
+## 🔄 更新日志（相比 nanobot v0.2.0）
+
+### 🚀 新功能
+
+- **无限迭代模式** — 移除了工具调用 200 次的迭代上限，Agent 现在可以持续运行直到任务完成，更适合复杂航天分析流程。(`runner.py`、`loop.py`、`config/schema.py`)
+- **Shell 长进程会话管理** — Agent 现在可以启动和管理长时间运行的后台进程（开发服务器、数据库、监控服务等），支持 `yield_time_ms` 非阻塞执行和 `write_stdin` 交互式进程控制。(`shell.py`、`exec_session.py`)
+- **CSV 自动列检测与工具路由** — 自动巡天服务现在会读取 CSV 文件头，自动将放错目录的数据文件路由到正确的航天工具（MLF / IOD / Orbin），无需手动分类。(`auto_space_scan.py`)
+- **通道推理流支持** — 为聊天通道新增思维链（Chain-of-Thought）流式输出架构。支持折叠思考过程的界面可以展示推理步骤，其他通道静默忽略。(`channels/base.py`)
+- **ToolCallRequest 扩展字段** — 支持工具调用中携带额外元数据（如 Gemini 的 `thought_signature` 思维签名），增强跨模型兼容性。(`providers/base.py`)
+- **AeroBench 航天测评基准** — 完整的航天 AI Agent 基准测试框架，包含数据集生成器、评估指标、模拟和真实模型两种运行模式。(`benchmark/AeroBench/`)
+- **中文使用手册** — LaTeX 编写的完整中文文档，含 PDF 输出。(`instruction/`)
+
+### 🐛 Bug 修复
+
+- **OpenAI 兼容工具消息合并错误** — 修复了连续多条 `tool` 角色消息被错误合并，导致第二个工具调用结果丢失的问题。(`providers/base.py`)
+- **CLI 流式输出回退** — 修复了当模型仅输出推理增量而没有最终回答增量时（如思维链模型），流式模式下最终回答不显示的问题。(`cli/commands.py`)
+- **会话重置残留状态** — `/new` 命令现在会彻底清除 `goal_state` 和 `thread_goal`，防止旧上下文泄漏到新会话中。(`session/manager.py`)
+- **飞书 Reaction 日志噪音** — 将 Reaction API 错误日志从 `warning` 降为 `debug`，因为失败通常无害，不需要作为警告打扰运维。(`channels/feishu.py`)
+
 ## 🔧 开发
 
 ### 环境设置

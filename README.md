@@ -389,6 +389,25 @@ astro_one/
 └── security/            # 🛡️ 安全模块
 ```
 
+## 🔄 Changelog (vs nanobot v0.2.0)
+
+### 🚀 New Features
+
+- **Infinite Iteration Mode** — Removed the 200-iteration cap on tool calls. The agent now runs until the task is complete, making it far more suitable for complex aerospace analysis workflows. (`runner.py`, `loop.py`, `config/schema.py`)
+- **Shell Session Management** — Agent can now start and manage long-running processes (dev servers, databases, watchers) without blocking the main loop. Supports `yield_time_ms` for non-blocking execution and `write_stdin` for interactive process control. (`shell.py`, `exec_session.py`)
+- **CSV Auto-Detection & Tool Rerouting** — Auto Space Scan now reads CSV headers to automatically route misplaced data files to the correct aerospace tool (MLF / IOD / Orbin). No more manual sorting required. (`auto_space_scan.py`)
+- **Channel Reasoning Stream** — Architecture for streaming chain-of-thought reasoning to chat channels. Channels with specialized thinking UI can display reasoning steps; others silently ignore them. (`channels/base.py`)
+- **ToolCallRequest Extra Content** — Support for additional metadata in tool calls (e.g., Gemini `thought_signature`), improving cross-model compatibility. (`providers/base.py`)
+- **AeroBench** — A complete aerospace AI agent benchmark framework with dataset generators, evaluation metrics, and both simulated and real-model runners. (`benchmark/AeroBench/`)
+- **Chinese User Manual** — Full LaTeX-authored Chinese documentation with PDF output. (`instruction/`)
+
+### 🐛 Bug Fixes
+
+- **OpenAI-Compatible Tool Message Merging** — Fixed consecutive `tool` role messages being incorrectly merged, causing the second tool call result to be lost. (`providers/base.py`)
+- **CLI Streaming Fallback** — Fixed the final response not being printed when a model only outputs reasoning deltas without a final answer delta (e.g., chain-of-thought models). (`cli/commands.py`)
+- **Session Reset Cleanup** — `/new` command now fully clears persistent goal state (`goal_state`, `thread_goal`), preventing stale context from leaking into new sessions. (`session/manager.py`)
+- **Feishu Reaction Log Noise** — Downgraded reaction API errors from `warning` to `debug` since failures are typically harmless. (`channels/feishu.py`)
+
 ## 🔧 开发
 
 ### 环境设置

@@ -25,9 +25,32 @@ botpy.log
 nano.*.save
 .DS_Store
 uv.lock
-case/*.gif
-tools/mlf/data/NCtrain.xlsx
 lfs-trace.log
 ~$*.doc
-tools/orbin/models/triple_ensemble_models.pth
 _*.doc
+.ruff_cache/
+
+# 模型权重文件（体积过大，不上传到 Git）
+*.pth
+*.pkl
+
+# 演示动图
+case/*.gif
+
+# 训练数据
+tools/mlf/data/NCtrain.xlsx
+
+# LaTeX 编译辅助文件
+instruction/*.aux
+instruction/*.log
+instruction/*.out
+instruction/*.synctex.gz
+instruction/*.toc
+instruction/*.data.minted
+
+# IDE 配置
+.vscode/
+.idea/
+
+# 测试/调试临时文件
+ollama_test_resp.json
