@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import csv
 import inspect
 import json
 import shutil
@@ -31,6 +32,30 @@ SPACE_TOOL_SPECS = (
     SpaceToolSpec("orbin", "orbin_orbit_prediction", "data_dir"),
 )
 GENERATED_CSV_NAMES = {"results.csv"}
+IOD_REQUIRED_COLUMNS = frozenset({
+    "relative time (s)",
+    "observer longitude",
+    "observer latitude",
+    "observer altitude",
+    "observer eci x",
+    "observer eci y",
+    "observer eci z",
+    "direction vector x",
+    "direction vector y",
+    "direction vector z",
+})
+ORBIN_REQUIRED_COLUMNS = frozenset({
+    "time_utcg_",
+    "azimuth_deg_",
+    "elevation_deg_",
+    "range_km_",
+    "eci_x_m",
+    "eci_y_m",
+    "eci_z_m",
+    "obs_vector_x",
+    "obs_vector_y",
+    "obs_vector_z",
+})
 
 
 class AutoSpaceScanService:
@@ -189,6 +214,10 @@ class AutoSpaceScanService:
         self, spec: SpaceToolSpec, file: Path, error: str
     ) -> tuple[SpaceToolSpec, Path, str] | None:
         """Ask the LLM for a bounded retry decision after a tool failure."""
+        column_reroute = self._try_column_reroute(spec, file)
+        if column_reroute is not None:
+            return column_reroute
+
         provider = self._current_provider()
         if not provider:
             return None
@@ -205,6 +234,36 @@ class AutoSpaceScanService:
             repaired_file.write_text(csv_content, encoding="utf-8")
         reason = str(decision.get("reason") or "模型建议重试")
         return repair_spec, repaired_file, reason
+
+    def _try_column_reroute(
+        self, spec: SpaceToolSpec, file: Path
+    ) -> tuple[SpaceToolSpec, Path, str] | None:
+        """Reroute misplaced CSVs by matching their header against known tool schemas."""
+        detected = self._detect_csv_tool(file)
+        if detected is None or detected.tool_name == spec.tool_name:
+            return None
+        return detected, file, f"CSV列匹配 {detected.tool_name}，自动改用对应航天工具"
+
+    @classmethod
+    def _detect_csv_tool(cls, file: Path) -> SpaceToolSpec | None:
+        headers = cls._read_csv_headers(file)
+        if not headers:
+            return None
+        normalized = {header.strip().lower() for header in headers if header.strip()}
+        if IOD_REQUIRED_COLUMNS.issubset(normalized):
+            return cls._spec_for_tool("iod_orbit_determination")
+        if ORBIN_REQUIRED_COLUMNS.issubset(normalized):
+            return cls._spec_for_tool("orbin_orbit_prediction")
+        return None
+
+    @staticmethod
+    def _read_csv_headers(file: Path) -> list[str]:
+        try:
+            with file.open("r", encoding="utf-8-sig", errors="replace", newline="") as handle:
+                return next(csv.reader(handle), [])
+        except Exception:
+            logger.debug("Could not read CSV header for {}", file)
+            return []
 
     async def _ask_repair_decision(
         self, spec: SpaceToolSpec, file: Path, error: str

@@ -82,6 +82,20 @@ def test_channels_config_builtin_fields_removed():
     assert cfg.send_tool_hints is False
 
 
+@pytest.mark.asyncio
+async def test_send_once_reasoning_end_is_noop_for_channels_without_reasoning_ui():
+    """Channels that do not implement reasoning UI should not crash on reasoning_end."""
+    channel = _FakePlugin({}, MessageBus())
+    msg = OutboundMessage(
+        channel="fakeplugin",
+        chat_id="chat-1",
+        content="",
+        metadata={"_progress": True, "_reasoning_end": True},
+    )
+
+    await ChannelManager._send_once(channel, msg)
+
+
 # ---------------------------------------------------------------------------
 # discover_plugins
 # ---------------------------------------------------------------------------

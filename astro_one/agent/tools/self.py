@@ -92,7 +92,7 @@ class MyTool(Tool, ContextAware):
         )
 
     RESTRICTED: dict[str, dict[str, Any]] = {
-        "max_iterations":        {"type": int, "min": 1,   "max": 100},
+        "max_iterations":        {"type": int, "min": 1},
         "context_window_tokens": {"type": int, "min": 4096, "max": 1_000_000},
         "model":                 {"type": str, "min_len": 1},
     }
@@ -134,14 +134,14 @@ class MyTool(Tool, ContextAware):
             "- set (key, value): change config or store notes in your scratchpad. "
             "Scratchpad keys persist across turns but not restarts.\n"
             "Key values: _current_iteration (current progress), "
-            "max_iterations - _current_iteration = remaining iterations.\n"
+            "max_iterations=None means there is no iteration cap.\n"
             "Note: web_config and exec_config are readable but read-only.\n"
             "\n"
             "When to use:\n"
             "- User asks about your model, settings, or token usage → check that key.\n"
             "- A tool fails or behaves unexpectedly → check the related config to diagnose.\n"
             "- User asks you to remember a preference for this session → set to store it in your scratchpad.\n"
-            "- About to start a large task → check context_window_tokens and max_iterations first."
+            "- About to start a large task → check context_window_tokens first."
         )
         if not self._modify_allowed:
             base += "\nREAD-ONLY MODE: set is disabled."

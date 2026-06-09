@@ -51,3 +51,16 @@ def test_tool_call_request_serializes_provider_fields() -> None:
     assert message["provider_specific_fields"] == {"thought_signature": "signed-token"}
     assert message["function"]["provider_specific_fields"] == {"inner": "value"}
     assert message["function"]["arguments"] == '{"path": "todo.md"}'
+
+
+def test_tool_call_request_accepts_and_serializes_extra_content() -> None:
+    tool_call = ToolCallRequest(
+        id="abc123xyz",
+        name="read_file",
+        arguments={"path": "todo.md"},
+        extra_content={"thought_signature": "signed-token"},
+    )
+
+    message = tool_call.to_openai_tool_call()
+
+    assert message["extra_content"] == {"thought_signature": "signed-token"}

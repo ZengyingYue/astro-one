@@ -2,20 +2,13 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Literal
+from typing import Any, Literal
 
 from pydantic import AliasChoices, BaseModel, ConfigDict, Field, model_validator
 from pydantic.alias_generators import to_camel
 from pydantic_settings import BaseSettings
 
 from astro_one.cron.types import CronSchedule
-
-if TYPE_CHECKING:
-    from astro_one.agent.tools.cli_apps import CliAppsToolConfig
-    from astro_one.agent.tools.image_generation import ImageGenerationToolConfig
-    from astro_one.agent.tools.self import MyToolConfig
-    from astro_one.agent.tools.shell import ExecToolConfig
-    from astro_one.agent.tools.web import WebToolsConfig
 
 
 class Base(BaseModel):
@@ -115,7 +108,7 @@ class AgentDefaults(Base):
     context_block_limit: int | None = None
     temperature: float = 0.1
     fallback_models: list[FallbackCandidate] = Field(default_factory=list)
-    max_tool_iterations: int = 200
+    max_tool_iterations: int | None = None
     max_concurrent_subagents: int = Field(default=1, ge=1)
     max_tool_result_chars: int = 16_000
     provider_retry_mode: Literal["standard", "persistent"] = "standard"

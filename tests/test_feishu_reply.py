@@ -10,6 +10,7 @@ import pytest
 from astro_one.bus.events import OutboundMessage
 from astro_one.bus.queue import MessageBus
 from astro_one.channels.feishu import FeishuChannel, FeishuConfig
+from astro_one.channels.manager import ChannelManager
 
 
 # ---------------------------------------------------------------------------
@@ -306,6 +307,28 @@ async def test_send_skips_reply_for_progress_messages() -> None:
     ))
 
     channel._client.im.v1.message.create.assert_called_once()
+    channel._client.im.v1.message.reply.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_send_once_reasoning_end_is_noop_for_feishu() -> None:
+    channel = _make_feishu_channel(reply_to_message=True)
+
+    await ChannelManager._send_once(
+        channel,
+        OutboundMessage(
+            channel="feishu",
+            chat_id="ou_abc",
+            content="",
+            metadata={
+                "message_id": "om_001",
+                "_progress": True,
+                "_reasoning_end": True,
+            },
+        ),
+    )
+
+    channel._client.im.v1.message.create.assert_not_called()
     channel._client.im.v1.message.reply.assert_not_called()
 
 

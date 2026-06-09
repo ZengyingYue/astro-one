@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import inspect
+import itertools
 import os
 from contextlib import suppress
 from dataclasses import dataclass, field
@@ -79,7 +80,7 @@ class AgentRunSpec:
     initial_messages: list[dict[str, Any]]
     tools: ToolRegistry
     model: str
-    max_iterations: int
+    max_iterations: int | None
     max_tool_result_chars: int
     temperature: float | None = None
     max_tokens: int | None = None
@@ -280,7 +281,14 @@ class AgentRunner:
         had_injections = False
         injection_cycles = 0
 
-        for iteration in range(spec.max_iterations):
+        iteration_source = (
+            itertools.count()
+            if spec.max_iterations is None
+            else range(spec.max_iterations)
+        )
+        exhausted_iterations = False
+
+        for iteration in iteration_source:
             try:
                 # Keep the persisted conversation untouched. Context governance
                 # may repair or compact historical messages for the model, but
@@ -560,6 +568,9 @@ class AgentRunner:
             await hook.after_iteration(context)
             break
         else:
+            exhausted_iterations = True
+
+        if exhausted_iterations:
             stop_reason = "max_iterations"
             if spec.max_iterations_message:
                 final_content = spec.max_iterations_message.format(

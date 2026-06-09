@@ -212,6 +212,9 @@ class Session:
         self.last_consolidated = 0
         self.updated_at = datetime.now()
         self.metadata.pop("_last_summary", None)
+        # Clear sustained goal state so /new does not resurrect old tasks.
+        self.metadata.pop("goal_state", None)
+        self.metadata.pop("thread_goal", None)
 
     def retain_recent_legal_suffix(self, max_messages: int) -> None:
         """Keep a legal recent suffix constrained by a hard message cap."""

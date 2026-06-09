@@ -413,7 +413,7 @@ class FeishuChannel(BaseChannel):
             else:
                 logger.debug("Added {} reaction to message {}", emoji_type, message_id)
         except Exception as e:
-            logger.warning("Error adding reaction: {}", e)
+            logger.debug("Skipping Feishu reaction after API error: {}", e)
 
     async def _add_reaction(self, message_id: str, emoji_type: str = "THUMBSUP") -> None:
         """

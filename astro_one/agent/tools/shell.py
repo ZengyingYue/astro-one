@@ -9,7 +9,20 @@ from typing import Any
 from pydantic import Field
 
 from astro_one.agent.tools.base import Tool
+from astro_one.agent.tools.exec_session import (
+    DEFAULT_EXEC_SESSION_MANAGER,
+    DEFAULT_MAX_OUTPUT_CHARS,
+    DEFAULT_YIELD_MS,
+    MAX_OUTPUT_CHARS,
+    MAX_YIELD_MS,
+    ExecSessionManager,
+    clamp_session_int,
+    format_session_poll,
+)
 from astro_one.config.schema import Base
+
+
+_IS_WINDOWS = os.name == "nt"
 
 
 class ExecToolConfig(Base):
@@ -58,6 +71,7 @@ class ExecTool(Tool):
         allow_patterns: list[str] | None = None,
         restrict_to_workspace: bool = False,
         path_append: str = "",
+        exec_session_manager: ExecSessionManager | None = None,
     ):
         self.timeout = timeout
         self.working_dir = working_dir
@@ -75,6 +89,7 @@ class ExecTool(Tool):
         self.allow_patterns = allow_patterns or []
         self.restrict_to_workspace = restrict_to_workspace
         self.path_append = path_append
+        self._exec_session_manager = exec_session_manager or DEFAULT_EXEC_SESSION_MANAGER
 
     @property
     def name(self) -> str:
@@ -85,7 +100,12 @@ class ExecTool(Tool):
 
     @property
     def description(self) -> str:
-        return "Execute a shell command and return its output. Use with caution."
+        return (
+            "Execute a shell command and return its output. For long-running commands, "
+            "interactive programs, dev servers, or web apps, pass yield_time_ms so exec "
+            "returns a running session_id instead of blocking; then use write_stdin to "
+            "poll or terminate the session. Use with caution."
+        )
 
     @property
     def parameters(self) -> dict[str, Any]:
@@ -104,10 +124,39 @@ class ExecTool(Tool):
                     "type": "integer",
                     "description": (
                         "Timeout in seconds. Increase for long-running commands "
-                        "like compilation or installation (default 60, max 600)."
+                        "like compilation or installation (default 60, max 600). "
+                        "Do not use a large timeout to run servers; use yield_time_ms."
                     ),
                     "minimum": 1,
                     "maximum": 600,
+                },
+                "yield_time_ms": {
+                    "type": "integer",
+                    "description": (
+                        "Start the command as a managed session and return after this many "
+                        "milliseconds with recent output plus a session_id if still running. "
+                        "Use for web servers, dev servers, watchers, and interactive commands."
+                    ),
+                    "minimum": 0,
+                    "maximum": 30000,
+                },
+                "max_output_chars": {
+                    "type": "integer",
+                    "description": (
+                        "Maximum output characters to return when yield_time_ms is used "
+                        "(default 10000, max 50000)."
+                    ),
+                    "minimum": 1000,
+                    "maximum": 50000,
+                },
+                "max_output_tokens": {
+                    "type": "integer",
+                    "description": (
+                        "Compatibility alias for max_output_chars. The runtime uses a "
+                        "character budget."
+                    ),
+                    "minimum": 1000,
+                    "maximum": 50000,
                 },
             },
             "required": ["command"],
@@ -115,7 +164,11 @@ class ExecTool(Tool):
 
     async def execute(
         self, command: str, working_dir: str | None = None,
-        timeout: int | None = None, **kwargs: Any,
+        timeout: int | None = None,
+        yield_time_ms: int | None = None,
+        max_output_chars: int | None = None,
+        max_output_tokens: int | None = None,
+        **kwargs: Any,
     ) -> str:
         cwd = working_dir or self.working_dir or os.getcwd()
         guard_error = self._guard_command(command, cwd)
@@ -129,6 +182,31 @@ class ExecTool(Tool):
             env["PATH"] = env.get("PATH", "") + os.pathsep + self.path_append
 
         try:
+            if yield_time_ms is not None:
+                if max_output_chars is None:
+                    max_output_chars = max_output_tokens
+                session_id, poll = await self._exec_session_manager.start(
+                    command=command,
+                    cwd=cwd,
+                    env=env,
+                    timeout=effective_timeout,
+                    shell_program=None,
+                    login=False,
+                    yield_time_ms=clamp_session_int(
+                        yield_time_ms,
+                        DEFAULT_YIELD_MS,
+                        0,
+                        MAX_YIELD_MS,
+                    ),
+                    max_output_chars=clamp_session_int(
+                        max_output_chars,
+                        DEFAULT_MAX_OUTPUT_CHARS,
+                        1000,
+                        MAX_OUTPUT_CHARS,
+                    ),
+                )
+                return format_session_poll(session_id, poll)
+
             process = await asyncio.create_subprocess_shell(
                 command,
                 stdout=asyncio.subprocess.PIPE,

@@ -93,6 +93,34 @@ def test_print_cli_progress_line_pauses_spinner_before_printing():
     assert order == ["start", "stop", "print", "start", "stop"]
 
 
+def test_streamed_final_fallback_buffers_content_when_no_delta_streamed():
+    """A streamed turn with only reasoning deltas should still print the final content."""
+    renderer = MagicMock()
+    renderer.streamed = False
+
+    result = commands._streamed_final_fallback(
+        "我是 astro_one。",
+        {"_streamed": True, "latency_ms": 12},
+        renderer,
+    )
+
+    assert result == ("我是 astro_one。", {"latency_ms": 12})
+
+
+def test_streamed_final_fallback_ignores_content_after_delta_streamed():
+    """Avoid duplicating final content when the live renderer already printed deltas."""
+    renderer = MagicMock()
+    renderer.streamed = True
+
+    result = commands._streamed_final_fallback(
+        "already rendered",
+        {"_streamed": True},
+        renderer,
+    )
+
+    assert result is None
+
+
 @pytest.mark.asyncio
 async def test_print_interactive_progress_line_pauses_spinner_before_printing():
     """Interactive progress output should also pause spinner cleanly."""

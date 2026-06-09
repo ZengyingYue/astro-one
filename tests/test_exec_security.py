@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import socket
+import time
 from unittest.mock import patch
 
 import pytest
 
+from astro_one.agent.tools.exec_session import ExecSessionManager, WriteStdinTool
 from astro_one.agent.tools.shell import ExecTool
 
 
@@ -67,3 +69,24 @@ async def test_exec_blocks_chained_internal_url():
             command="echo start && curl http://169.254.169.254/latest/meta-data/ && echo done"
         )
     assert "Error" in result
+
+
+@pytest.mark.asyncio
+async def test_exec_yield_time_starts_long_running_session_without_blocking():
+    manager = ExecSessionManager()
+    tool = ExecTool(timeout=30, exec_session_manager=manager)
+    started = time.monotonic()
+
+    result = await tool.execute(
+        command="python -c \"import time; print('ready', flush=True); time.sleep(30)\"",
+        yield_time_ms=100,
+    )
+
+    assert time.monotonic() - started < 5
+    assert "ready" in result
+    assert "Process running. session_id:" in result
+
+    session_id = result.split("session_id:", 1)[1].splitlines()[0].strip()
+    cleanup = WriteStdinTool(manager=manager)
+    cleanup_result = await cleanup.execute(session_id=session_id, terminate=True, yield_time_ms=0)
+    assert "Session terminated." in cleanup_result

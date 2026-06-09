@@ -1,0 +1,1834 @@
+% astro-one V0.2.0 详细使用说明书
+% 空间目标感知国家重点实验室
+\documentclass[12pt,a4paper,UTF8]{ctexart}
+
+% ── 页面布局 ──
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.8cm, right=2.8cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% ── 字体与中文 ──
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setmonofont{Courier New}
+\setsansfont{Arial}
+
+% ── 颜色与超链接 ──
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+\usepackage[table]{xcolor}
+\definecolor{codebg}{RGB}{245,245,248}
+\definecolor{codeframe}{RGB}{200,200,210}
+\definecolor{notebg}{RGB}{255,248,220}
+\definecolor{warnbg}{RGB}{255,235,235}
+\definecolor{tipbg}{RGB}{230,245,230}
+
+% ── 图形 ──
+\usepackage{graphicx}
+\usepackage{float}
+
+% ── 表格 ──
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+% ── 代码 ──
+\usepackage{minted}
+\setminted{
+    breaklines=true,
+    fontsize=\small,
+    bgcolor=codebg,
+    frame=single,
+    framesep=8pt,
+    rulecolor=codeframe,
+    tabsize=2,
+    samepage=true,
+}
+
+% ── 列表 ──
+\usepackage{enumitem}
+\setlist{nosep, leftmargin=*}
+
+% ── 标题格式 ──
+\usepackage{titlesec}
+\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter}{1em}{}
+\titleformat{\section}[hang]{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}[hang]{\large\bfseries}{\thesubsection}{1em}{}
+
+% ── 页眉页脚 ──
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small astro-one V0.2.0 使用说明书}
+\fancyhead[R]{\small 空间目标感知国家重点实验室}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── 自定义环境 ──
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\newtcolorbox{notebox}[1][]{
+    colback=notebg, colframe=orange!60, arc=4pt, breakable,
+    title={\textcolor{orange!80!black}{\textbf{注意}}},
+    #1
+}
+\newtcolorbox{warnbox}[1][]{
+    colback=warnbg, colframe=red!50, arc=4pt, breakable,
+    title={\textcolor{red!70!black}{\textbf{警告}}},
+    #1
+}
+\newtcolorbox{tipbox}[1][]{
+    colback=tipbg, colframe=green!50, arc=4pt, breakable,
+    title={\textcolor{green!60!black}{\textbf{提示}}},
+    #1
+}
+
+% ── 元数据 ──
+\title{{\Huge \textbf{astro-one V0.2.0}}\\[6pt]
+       \Large 航天 AI 智能体框架使用说明书}
+\author{空间目标感知国家重点实验室 \\
+        \texttt{https://github.com/astro-one/astro-one}}
+\date{2026年5月 \\ 版本 1.0}
+
+\begin{document}
+
+% ════════════════════════════════════════════════════════════════
+% 封面
+% ════════════════════════════════════════════════════════════════
+\maketitle
+\thispagestyle{empty}
+
+\vspace{3cm}
+\begin{center}
+    \large
+    \textbf{开发者：} 空间目标感知国家重点实验室（State Key Laboratory of Space Target Perception）
+
+    \textbf{许可证：} MIT License
+
+    \textbf{Python 版本：} $\geq$ 3.11
+
+    \textbf{发布日期：} 2026年3月
+\end{center}
+
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{center}
+    \textcopyright\ 2026 空间目标感知国家重点实验室
+
+    本文档依据 MIT 许可证条款分发。
+
+    本文档中提及的所有商标均为其各自所有者的财产。
+\end{center}
+
+% ════════════════════════════════════════════════════════════════
+% 目录
+% ════════════════════════════════════════════════════════════════
+\newpage
+\tableofcontents
+\newpage
+
+% ════════════════════════════════════════════════════════════════
+% 第1章 项目概述
+% ════════════════════════════════════════════════════════════════
+\chapter{项目概述}
+
+\section{什么是 astro-one}
+
+\textbf{astro-one} 是一个超轻量级的航天 AI 智能体（Agent）框架，基于 HKUDS 团队的 nanobot 构建。它提供核心 Agent 功能，支持多种大语言模型（LLM）提供商和即时通讯渠道，特别针对\textbf{航天垂直领域}（空间态势感知、轨道分析）做了深度定制。
+
+\subsection{核心定位}
+\begin{itemize}
+    \item \textbf{航天 AI 助手}：内置轨道机动检测（MLF）、初始轨道确定（IOD）、轨道根数预测（Orbin）三大航天推理工具。
+    \item \textbf{多渠道接入}：支持飞书、Telegram、Discord、QQ、微信、Slack、WhatsApp 等 15+ 聊天平台。
+    \item \textbf{多模型兼容}：支持 OpenAI、Anthropic、Google Gemini、DeepSeek、Ollama 等 30+ LLM 提供商。
+    \item \textbf{轻量可扩展}：基于插件架构（Channel / Tool / Skill 三层扩展），核心代码精炼。
+\end{itemize}
+
+\subsection{技术栈}
+\begin{itemize}
+    \item \textbf{语言}：Python 3.11+
+    \item \textbf{异步框架}：asyncio
+    \item \textbf{LLM 接入}：LiteLLM + 原生 SDK（OpenAI、Anthropic、boto3 等）
+    \item \textbf{配置管理}：Pydantic v2 + Pydantic-Settings
+    \item \textbf{CLI}：Typer + Rich + prompt\_toolkit
+    \item \textbf{消息队列}：asyncio.Queue（内置轻量总线）
+    \item \textbf{会话存储}：JSONL 格式本地持久化
+\end{itemize}
+
+\section{项目架构}
+
+\subsection{整体数据流}
+
+\begin{center}
+\begin{minipage}{0.95\textwidth}
+\begin{verbatim}
+  消息到达 → Channel (Telegram/Discord/Feishu等)
+       ↓
+  MessageBus.publish_inbound()
+       ↓
+  AgentLoop 消费消息
+       ↓
+  ContextBuilder 构建 Prompt (历史 + 记忆 + 技能 + 运行时上下文)
+       ↓
+  LLM Provider (Anthropic/OpenAI/Ollama等) 生成响应
+       ↓
+  ToolRegistry 执行工具调用 (Shell/文件/Web/MCP/航天工具)
+       ↓
+  MessageBus.publish_outbound()
+       ↓
+  Channel 发送回复
+\end{verbatim}
+\end{minipage}
+\end{center}
+
+\subsection{模块结构}
+
+\begin{longtable}{L{3cm} L{4cm} L{8cm}}
+\toprule
+\textbf{模块} & \textbf{路径} & \textbf{功能} \\
+\midrule
+Agent 核心 & \texttt{astro\_one/agent/} & 主循环、上下文构建、记忆系统、子Agent \\
+消息总线 & \texttt{astro\_one/bus/} & 发布/订阅模式的异步消息路由 \\
+LLM 提供商 & \texttt{astro\_one/providers/} & 30+ LLM 后端统一接口 \\
+聊天渠道 & \texttt{astro\_one/channels/} & 15+ 聊天平台接入 \\
+工具系统 & \texttt{astro\_one/agent/tools/} & Shell、文件、Web、MCP、航天工具 \\
+会话管理 & \texttt{astro\_one/session/} & JSONL 格式会话持久化 \\
+配置系统 & \texttt{astro\_one/config/} & Pydantic v2 配置模型 \\
+CLI 界面 & \texttt{astro\_one/cli/} & Typer 命令行界面 \\
+技能系统 & \texttt{astro\_one/skills/} & 可扩展的 Agent 技能 \\
+安全模块 & \texttt{astro\_one/security/} & SSRF 防护、网络隔离 \\
+API 服务 & \texttt{astro\_one/api/} & OpenAI 兼容 REST API \\
+\bottomrule
+\end{longtable}
+
+\section{版本特性（V0.2.0）}
+
+\begin{itemize}
+    \item \textbf{Agent 核心}：完整的状态机驱动处理流程（RESTORE → COMPACT → COMMAND → BUILD → RUN → SAVE → RESPOND → DONE）
+    \item \textbf{流式输出}：支持 SSE 和即时通讯渠道的增量输出
+    \item \textbf{记忆系统}：三级记忆架构（MemoryStore / Consolidator / Dream）
+    \item \textbf{会话管理}：JSONL 持久化，自动压缩与恢复
+    \item \textbf{航天工具}：MLF 轨道机动检测、IOD 轨道初定、Orbin 轨道预测
+    \item \textbf{安全防护}：SSRF 防护、workspace 隔离、命令注入检测
+    \item \textbf{模型预设}：支持多套模型配置的快速切换
+    \item \textbf{Web UI}：WebSocket 驱动的实时 Web 界面
+    \item \textbf{子Agent}：支持后台异步子任务执行
+    \item \textbf{Docker 支持}：开箱即用的容器化部署
+\end{itemize}
+
+% ════════════════════════════════════════════════════════════════
+% 第2章 安装与环境配置
+% ════════════════════════════════════════════════════════════════
+\chapter{安装与环境配置}
+
+\section{环境要求}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{L{4cm} L{5cm} L{6cm}}
+\toprule
+\textbf{组件} & \textbf{最低版本} & \textbf{推荐配置} \\
+\midrule
+Python & 3.11 & 3.12+ \\
+操作系统 & Linux / macOS / Windows & Ubuntu 22.04+ \\
+内存 & 2 GB & 8 GB+（运行本地模型时） \\
+磁盘 & 500 MB & 2 GB+（含模型文件） \\
+网络 & 出站 HTTPS & 稳定互联网连接 \\
+\bottomrule
+\end{tabular}
+\caption{环境要求}
+\end{table}
+
+\section{安装方式}
+
+\subsection{PyPI 安装（推荐）}
+
+\begin{minted}{bash}
+# 基础安装
+pip install astro-one-ai
+
+# 带开发依赖
+pip install "astro-one-ai[dev]"
+
+# 带特定渠道依赖
+pip install "astro-one-ai[wecom,matrix]"
+\end{minted}
+
+\subsection{源码安装}
+
+\begin{minted}{bash}
+git clone https://github.com/astro-one/astro-one.git
+cd astro-one
+
+# 开发模式安装
+pip install -e .
+
+# 全量安装
+pip install -e ".[dev,wecom,matrix]"
+\end{minted}
+
+\subsection{Docker 安装}
+
+\begin{minted}{bash}
+# 使用 docker-compose（推荐）
+docker compose up -d astro-one-gateway
+
+# 手动构建
+docker build -t astro-one .
+docker run -d --name astro-one -p 18790:18790 astro-one
+\end{minted}
+
+\section{初始化配置}
+
+安装完成后，运行初始化向导：
+
+\begin{minted}{bash}
+astroone onboard
+\end{minted}
+
+此命令将：
+\begin{enumerate}
+    \item 创建配置目录 \texttt{\textasciitilde/.astro\_one/}
+    \item 生成默认配置文件 \texttt{config.json}
+    \item 创建工作空间目录 \texttt{\textasciitilde/.astro\_one/workspace/}
+    \item 生成模板文件（SOUL.md、AGENTS.md、USER.md）
+    \item 初始化 Git 仓库（用于记忆版本管理）
+\end{enumerate}
+
+\subsection{配置文件位置}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{L{5cm} L{10cm}}
+\toprule
+\textbf{文件/目录} & \textbf{默认路径} \\
+\midrule
+配置文件 & \texttt{\textasciitilde/.astro\_one/config.json} \\
+工作空间 & \texttt{\textasciitilde/.astro\_one/workspace/} \\
+会话文件 & \texttt{\textasciitilde/.astro\_one/workspace/sessions/} \\
+记忆文件 & \texttt{\textasciitilde/.astro\_one/workspace/memory/} \\
+CLI 历史 & \texttt{\textasciitilde/.astro\_one/cli\_history} \\
+\bottomrule
+\end{tabular}
+\caption{默认文件路径}
+\end{table}
+
+\begin{tipbox}
+可以使用环境变量 \texttt{NANOBOT\_\_<section>\_\_<key>} 覆盖配置。例如，设置默认模型：
+\begin{minted}{bash}
+export NANOBOT__AGENTS__DEFAULTS__MODEL="openai/gpt-4o"
+\end{minted}
+\end{tipbox}
+
+% ════════════════════════════════════════════════════════════════
+% 第3章 快速入门
+% ════════════════════════════════════════════════════════════════
+\chapter{快速入门}
+
+\section{5 分钟上手}
+
+\subsection{步骤 1：初始化}
+\begin{minted}{bash}
+astroone onboard
+\end{minted}
+按提示完成初始化，选择默认模型和提供商。
+
+\subsection{步骤 2：配置 LLM Provider}
+编辑 \texttt{\textasciitilde/.astro\_one/config.json}，添加 API 密钥：
+
+\begin{minted}{json}
+{
+  "providers": {
+    "openai": {
+      "apiKey": "sk-xxxxx",
+      "apiBase": "https://api.openai.com/v1"
+    },
+    "anthropic": {
+      "apiKey": "sk-ant-xxxxx"
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": "anthropic/claude-opus-4-5"
+    }
+  }
+}
+\end{minted}
+
+\subsection{步骤 3：运行 Agent}
+\begin{minted}{bash}
+# 单次对话
+astroone agent -m "介绍一下低地球轨道的特点"
+
+# 交互式对话
+astroone agent
+
+# 流式输出
+astroone agent --stream
+\end{minted}
+
+\subsection{步骤 4：启动 Gateway}
+\begin{minted}{bash}
+astroone gateway
+\end{minted}
+Gateway 将加载所有已启用的聊天渠道，等待消息接入。
+
+\section{本地模型设置（Ollama）}
+
+\begin{minted}{bash}
+# 1. 安装 Ollama
+curl -fsSL https://ollama.com/install.sh | sh
+
+# 2. 拉取模型
+ollama pull qwen3.5:27b
+
+# 3. 配置 astro-one
+#    编辑 config.json：
+\end{minted}
+
+\begin{minted}{json}
+{
+  "agents": {
+    "defaults": {
+      "model": "qwen3.5:27b",
+      "provider": "ollama"
+    }
+  },
+  "providers": {
+    "ollama": {
+      "apiBase": "http://localhost:11434"
+    }
+  }
+}
+\end{minted}
+
+\begin{minted}{bash}
+# 4. 启动
+astroone agent -m "你好，请做自我介绍"
+\end{minted}
+
+\section{Python API 使用}
+
+\begin{minted}{python}
+# sdk_example.py
+from astro_one.astro_one import AstroOne
+
+# 从配置文件创建实例
+bot = AstroOne.from_config()
+
+# 同步运行（在 asyncio 事件循环中）
+import asyncio
+
+async def main():
+    result = await bot.run(
+        "分析 tools/iod/data/demo_input.csv 中的观测数据",
+        session_key="my_session"
+    )
+    print(f"回复: {result.content}")
+    print(f"使用工具: {result.tools_used}")
+
+asyncio.run(main())
+\end{minted}
+
+% ════════════════════════════════════════════════════════════════
+% 第4章 CLI 命令参考
+% ════════════════════════════════════════════════════════════════
+\chapter{CLI 命令参考}
+
+astro-one 提供两个等价的命令行入口：\texttt{astro-one} 和 \texttt{astroone}。
+
+\section{全局选项}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{L{3cm} L{8cm} L{4cm}}
+\toprule
+\textbf{选项} & \textbf{说明} & \textbf{默认值} \\
+\midrule
+\texttt{--config} & 指定配置文件路径 & \texttt{\textasciitilde/.astro\_one/config.json} \\
+\texttt{--workspace} & 覆盖工作空间路径 & 配置文件中的值 \\
+\texttt{--help / -h} & 显示帮助信息 & — \\
+\bottomrule
+\end{tabular}
+\caption{全局选项}
+\end{table}
+
+\section{onboard — 初始化向导}
+
+\begin{minted}{bash}
+astroone onboard [OPTIONS]
+\end{minted}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{L{4cm} L{8cm} L{3cm}}
+\toprule
+\textbf{选项} & \textbf{说明} & \textbf{默认值} \\
+\midrule
+\texttt{--config PATH} & 配置文件写入路径 & 默认路径 \\
+\texttt{--workspace PATH} & 工作空间目录 & 默认路径 \\
+\bottomrule
+\end{tabular}
+\caption{onboard 命令选项}
+\end{table}
+
+\section{agent — Agent 对话}
+
+\begin{minted}{bash}
+# 单次对话
+astroone agent -m "消息内容"
+
+# 交互式对话
+astroone agent
+
+# 流式交互
+astroone agent --stream
+
+# 使用特定模型和会话
+astroone agent -m "消息" --session my-session --model "openai/gpt-4o"
+\end{minted}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{L{3.5cm} L{8cm} L{3.5cm}}
+\toprule
+\textbf{选项} & \textbf{说明} & \textbf{默认值} \\
+\midrule
+\texttt{-m / --message} & 单次消息内容 & —（交互模式） \\
+\texttt{--stream} & 启用流式输出 & false \\
+\texttt{--model} & 覆盖默认模型 & 配置文件中的值 \\
+\texttt{--session} & 会话标识符 & \texttt{cli:direct} \\
+\texttt{--no-markdown} & 禁用 Markdown 渲染 & false \\
+\texttt{--thinking} & 显示模型推理过程 & false \\
+\bottomrule
+\end{tabular}
+\caption{agent 命令选项}
+\end{table}
+
+\subsection{交互模式快捷键}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{L{4cm} L{11cm}}
+\toprule
+\textbf{输入} & \textbf{操作} \\
+\midrule
+\texttt{exit / quit / :q} & 退出交互模式 \\
+\texttt{/new} & 开始新会话 \\
+\texttt{/model} & 列出可用模型 \\
+\texttt{/model <name>} & 切换到指定模型 \\
+\texttt{/models} & 列出所有模型预设 \\
+\texttt{Ctrl+C} & 中断当前生成 \\
+\texttt{Enter} & 发送消息 \\
+\bottomrule
+\end{tabular}
+\caption{交互模式命令}
+\end{table}
+
+\section{gateway — 启动网关}
+
+\begin{minted}{bash}
+astroone gateway [OPTIONS]
+\end{minted}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{L{3.5cm} L{8cm} L{3.5cm}}
+\toprule
+\textbf{选项} & \textbf{说明} & \textbf{默认值} \\
+\midrule
+\texttt{--host} & 绑定地址 & \texttt{0.0.0.0} \\
+\texttt{--port} & 绑定端口 & \texttt{18790} \\
+\bottomrule
+\end{tabular}
+\caption{gateway 命令选项}
+\end{table}
+
+Gateway 启动后将：
+\begin{enumerate}
+    \item 初始化所有已启用的聊天渠道
+    \item 启动消息总线的出站分发器
+    \item 启动 Agent 处理循环
+    \item 启动 Web UI（如已配置）
+    \item 启动定时任务调度器（如已配置）
+\end{enumerate}
+
+\section{status — 状态查看}
+
+\begin{minted}{bash}
+astroone status
+\end{minted}
+
+显示：
+\begin{itemize}
+    \item 当前配置概览
+    \item 启用的渠道列表及运行状态
+    \item Agent 工作空间路径
+    \item 活跃会话数
+\end{itemize}
+
+\section{channels login — 渠道登录}
+
+\begin{minted}{bash}
+# 登录 WhatsApp
+astroone channels login --provider whatsapp
+
+# 登录 Telegram
+astroone channels login --provider telegram
+\end{minted}
+
+\section{provider login — Provider 登录}
+
+\begin{minted}{bash}
+# 登录 OpenAI Codex
+astroone provider login --provider openai_codex
+\end{minted}
+
+% ════════════════════════════════════════════════════════════════
+% 第5章 配置参考
+% ════════════════════════════════════════════════════════════════
+\chapter{配置参考}
+
+\section{配置文件结构}
+
+配置文件为 JSON 格式，支持 camelCase 键名。完整结构如下：
+
+\begin{minted}{json}
+{
+  "agents": { ... },         // Agent 配置
+  "channels": { ... },       // 聊天渠道配置
+  "providers": { ... },      // LLM 提供商配置
+  "tools": { ... },          // 工具配置
+  "gateway": { ... },        // 网关配置
+  "api": { ... },            // API 服务配置
+  "modelPresets": { ... }    // 模型预设
+}
+\end{minted}
+
+\section{agents.defaults — Agent 默认配置}
+
+\begin{longtable}{L{4cm} L{4.5cm} L{6.5cm}}
+\toprule
+\textbf{字段 (camelCase)} & \textbf{默认值} & \textbf{说明} \\
+\midrule
+\texttt{workspace} & \texttt{\textasciitilde/.astro\_one/workspace} & 工作空间路径 \\
+\texttt{model} & \texttt{anthropic/claude-opus-4-5} & 默认模型标识符 \\
+\texttt{provider} & \texttt{"auto"} & 模型提供商（auto 表示自动匹配） \\
+\texttt{modelPreset} & \texttt{null} & 默认模型预设名称 \\
+\texttt{maxTokens} & 8192 & 最大输出 token 数 \\
+\texttt{contextWindowTokens} & 65536 & 上下文窗口大小 \\
+\texttt{temperature} & 0.1 & 生成温度 \\
+\texttt{maxToolIterations} & 200 & 单轮最大工具调用次数 \\
+\texttt{maxConcurrentSubagents} & 1 & 最大并发子Agent数 \\
+\texttt{maxToolResultChars} & 16000 & 工具结果最大字符数 \\
+\texttt{providerRetryMode} & \texttt{"standard"} & 重试模式（standard/persistent） \\
+\texttt{toolHintMaxLength} & 40 & 工具提示最大长度 \\
+\texttt{reasoningEffort} & \texttt{null} & 推理深度（null/low/medium/high） \\
+\texttt{timezone} & \texttt{"UTC"} & Agent 所在时区 \\
+\texttt{botName} & \texttt{"astro-one"} & 机器人名称 \\
+\texttt{botIcon} & \texttt{"\emoji[rocket]"} & 机器人图标 \\
+\texttt{unifiedSession} & false & 是否跨渠道共享会话 \\
+\texttt{disabledSkills} & \texttt{[]} & 禁用的技能列表 \\
+\texttt{sessionTtlMinutes} & 0 & 空闲会话自动压缩时间（0=禁用） \\
+\texttt{maxMessages} & 120 & 会话最大保留消息数 \\
+\texttt{consolidationRatio} & 0.5 & 记忆巩固目标比例 \\
+\texttt{fallbackModels} & \texttt{[]} & 备选模型列表 \\
+\bottomrule
+\end{longtable}
+
+\section{providers — LLM 提供商配置}
+
+支持的提供商列表（每个均为 \texttt{\{"apiKey": "...", "apiBase": "..."\}} 格式）：
+
+\begin{longtable}{L{3.5cm} L{4cm} L{7.5cm}}
+\toprule
+\textbf{配置键} & \textbf{后端类型} & \textbf{说明} \\
+\midrule
+\texttt{openai} & OpenAI 原生 & GPT-4o, GPT-4.1, o3 等 \\
+\texttt{anthropic} & Anthropic 原生 & Claude Opus 4.7, Sonnet 4.6, Haiku 4.5 \\
+\texttt{bedrock} & AWS Bedrock & 通过 AWS SDK 访问 \\
+\texttt{azure\_openai} & Azure OpenAI & Azure 托管的 OpenAI 服务 \\
+\texttt{gemini} & Google Gemini & Gemini 2.5 Pro/Flash 等 \\
+\texttt{deepseek} & DeepSeek & DeepSeek-V4-Pro, DeepSeek-R1 等 \\
+\texttt{ollama} & 本地 Ollama & 本地模型推理 \\
+\texttt{openrouter} & OpenRouter & 多提供商聚合 \\
+\texttt{groq} & Groq & 高速推理 \\
+\texttt{zhipu} & 智谱 GLM & GLM-4 系列 \\
+\texttt{moonshot} & 月之暗面 & Kimi 系列 \\
+\texttt{dashscope} & 阿里百炼 & Qwen 系列 \\
+\texttt{siliconflow} & 硅基流动 & 国产模型聚合 \\
+\texttt{volcengine} & 火山引擎 & 豆包系列 \\
+\texttt{lm\_studio} & LM Studio & 本地桌面推理 \\
+\texttt{vllm} & vLLM & 高性能推理服务 \\
+\texttt{openai\_codex} & OpenAI Codex & OAuth 登录（无需手动提供 Key） \\
+\texttt{github\_copilot} & GitHub Copilot & OAuth 登录 \\
+\bottomrule
+\end{longtable}
+
+\begin{tipbox}
+\texttt{provider} 字段设为 \texttt{"auto"} 时，astro-one 会根据模型名称中的关键词自动匹配提供商。例如，模型名 \texttt{"anthropic/claude-opus-4-7"} 会自动匹配到 Anthropic 提供商。
+\end{tipbox}
+
+\section{modelPresets — 模型预设}
+
+模型预设允许用户定义多组模型配置，并可通过 \texttt{/model <name>} 命令快速切换。
+
+\begin{minted}{json}
+{
+  "modelPresets": {
+    "fast": {
+      "label": "快速模式",
+      "model": "openai/gpt-4o-mini",
+      "provider": "openai",
+      "maxTokens": 4096,
+      "contextWindowTokens": 131072,
+      "temperature": 0.3
+    },
+    "smart": {
+      "label": "深度思考",
+      "model": "anthropic/claude-opus-4-7",
+      "provider": "anthropic",
+      "maxTokens": 8192,
+      "contextWindowTokens": 200000,
+      "temperature": 0.1,
+      "reasoningEffort": "high"
+    },
+    "local": {
+      "label": "本地模型",
+      "model": "qwen3.5:27b",
+      "provider": "ollama",
+      "maxTokens": 4096,
+      "contextWindowTokens": 32768
+    }
+  }
+}
+\end{minted}
+
+\section{channels — 渠道配置}
+
+\begin{minted}{json}
+{
+  "channels": {
+    "sendProgress": true,       // 发送Agent进度到渠道
+    "sendToolHints": false,     // 发送工具调用提示
+    "showReasoning": true,      // 显示模型推理过程
+    "sendMaxRetries": 3,        // 消息投递最大重试次数
+    "transcriptionProvider": "groq",  // 语音转文字后端
+
+    "telegram": {
+      "enabled": true,
+      "botToken": "12345:xxx",
+      "allowFrom": ["*"]
+    },
+    "feishu": {
+      "enabled": true,
+      "appId": "cli_xxxxx",
+      "appSecret": "xxxxx",
+      "allowFrom": ["ou_xxx"]
+    },
+    "discord": {
+      "enabled": true,
+      "botToken": "xxxxx",
+      "allowFrom": ["*"]
+    },
+    "websocket": {
+      "enabled": true,
+      "port": 18791
+    }
+  }
+}
+\end{minted}
+
+\begin{warnbox}
+\texttt{allowFrom} 字段为空列表 \texttt{[]} 表示拒绝所有用户访问。设置为 \texttt{["*"]} 表示允许所有用户。请在生产环境中仔细配置访问控制。
+\end{warnbox}
+
+\section{tools — 工具配置}
+
+\begin{minted}{json}
+{
+  "tools": {
+    "web": {
+      "searchEnable": true,
+      "fetchEnable": true
+    },
+    "exec": {
+      "enable": true,
+      "timeout": 60,
+      "restrictToWorkspace": false,
+      "denyPatterns": ["rm -rf /", "shutdown"]
+    },
+    "my": {
+      "enable": true,
+      "allowSet": true
+    },
+    "imageGeneration": {
+      "enable": false
+    },
+    "restrictToWorkspace": false,
+    "ssrfWhitelist": [],
+    "mcpServers": {
+      "my-server": {
+        "type": "stdio",
+        "command": "python",
+        "args": ["-m", "my_mcp_server"],
+        "toolTimeout": 30,
+        "enabledTools": ["*"]
+      }
+    }
+  }
+}
+\end{minted}
+
+\section{环境变量}
+
+astro-one 支持通过环境变量覆盖配置。前缀为 \texttt{NANOBOT\_\_}，使用双下划线分隔嵌套层级。
+
+\begin{table}[H]
+\centering
+\begin{tabular}{L{7cm} L{8cm}}
+\toprule
+\textbf{环境变量} & \textbf{说明} \\
+\midrule
+\texttt{NANOBOT\_\_AGENTS\_\_DEFAULTS\_\_MODEL} & 默认模型 \\
+\texttt{NANOBOT\_\_PROVIDERS\_\_OPENAI\_\_API\_KEY} & OpenAI API 密钥 \\
+\texttt{ASTRO\_ONE\_MAX\_CONCURRENT\_REQUESTS} & 最大并发请求数（默认 3） \\
+\texttt{ASTRO\_ONE\_LLM\_TIMEOUT\_S} & LLM 调用超时秒数（默认 300） \\
+\texttt{ASTRO\_ONE\_STREAM\_IDLE\_TIMEOUT\_S} & 流式空闲超时秒数 \\
+\bottomrule
+\end{tabular}
+\caption{常用环境变量}
+\end{table}
+
+% ════════════════════════════════════════════════════════════════
+% 第6章 航天专业工具
+% ════════════════════════════════════════════════════════════════
+\chapter{航天专业工具}
+
+astro-one 内置三个航天垂直领域的专业 AI 推理工具，均位于 \texttt{tools/} 目录下，通过 \texttt{astro\_one/agent/tools/} 中的 Python 包装器注册到 Agent 工具链中。
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.95\textwidth}
+\begin{verbatim}
+tools/
+├── mlf/                  # 液体状态机轨道机动检测
+│   ├── src/mlf.py        # LSM 核心模块
+│   ├── src/predictor.py  # 推理预测器
+│   ├── models/           # 预训练模型
+│   └── data/             # demo 数据
+├── iod/                  # Transformer 轨道初定
+│   ├── src/models.py     # Transformer 模型定义
+│   ├── src/predictor.py  # 推理预测器
+│   ├── models/           # Encoder/Decoder 模型
+│   └── scalers/          # 数据标准化器
+└── orbin/                # Informer 轨道预测
+    ├── src/1021_best.py  # Informer 模型
+    ├── src/predictor.py  # 集成预测器
+    ├── models/           # 三模型集成
+    └── data/             # 真实观测数据
+\end{verbatim}
+\end{minipage}
+\caption{航天工具目录结构}
+\end{figure}
+
+\section{MLF — 轨道机动检测}
+
+\subsection{功能概述}
+基于\textbf{液体状态机（Liquid State Machine）}的卫星轨道机动检测模型。从卫星轨道参数序列中检测是否发生轨道机动，输出机动概率和预测机动时间。
+
+\subsection{Agent 工具名}
+\texttt{mlf\_maneuver\_detection}
+
+\subsection{输入数据格式}
+CSV 文件，包含 23 维特征列（卫星 ID + 轨道参数包括倾角、RAAN、偏心率、升交点赤经、半长轴、变轨前后参数等）。
+
+\subsection{输出格式}
+\begin{itemize}
+    \item \texttt{satellite\_id}：卫星 ID
+    \item \texttt{prediction}：机动判定结果（maneuver / no\_maneuver）
+    \item \texttt{maneuver\_prob}：机动概率（0–1）
+    \item \texttt{no\_maneuver\_prob}：未机动概率
+    \item \texttt{maneuver\_time\_days}：预测机动时间（天）
+\end{itemize}
+
+\subsection{使用示例}
+
+\begin{minted}{bash}
+# 通过 CLI 调用 Agent
+astroone agent -m "使用MLF工具分析 tools/mlf/data/demo_data.csv 中的轨道数据，检测是否有卫星进行了轨道机动"
+
+# Python SDK
+from astro_one.astro_one import AstroOne
+bot = AstroOne.from_config()
+result = await bot.run("用 mlf_maneuver_detection 工具检测 tools/mlf/data/demo_data.csv")
+\end{minted}
+
+\subsection{军事分析输出}
+工具会自动输出包括以下内容的态势分析：
+\begin{itemize}
+    \item \textbf{态势等级}：高/中/低风险评估
+    \item \textbf{概率分层}：高置信度（$>$0.8）、中置信度（0.5–0.8）、低置信度（0.3–0.5）
+    \item \textbf{优先处置清单}：按机动概率排序的重点目标
+    \item \textbf{意图研判}：轨道转移、规避/反跟踪、抵近操作准备三类假设复核建议
+\end{itemize}
+
+\section{IOD — 轨道初定}
+
+\subsection{功能概述}
+基于\textbf{Transformer 编码器-解码器}架构的初始轨道确定（Initial Orbit Determination）模型。从地基观测数据（时间、站址、方向向量）预测卫星的 ECI 位置和速度。
+
+\subsection{Agent 工具名}
+\texttt{iod\_orbit\_determination}
+
+\subsection{输入数据格式}
+CSV 文件，包含以下列：
+\begin{itemize}
+    \item \texttt{Relative Time (s)}：相对时间
+    \item \texttt{Observer Longitude / Latitude / Altitude}：观测者地理坐标
+    \item \texttt{Observer ECI X / Y / Z}：观测者地心惯性坐标
+    \item \texttt{Direction Vector X / Y / Z}：方向向量（视线方向）
+\end{itemize}
+
+\subsection{输出格式}
+\begin{itemize}
+    \item \texttt{Direction Vector X / Y / Z}：预测的方向向量
+    \item \texttt{Satellite ECI X / Y / Z (km)}：卫星位置
+    \item \texttt{Satellite Velocity X / Y / Z (km/s)}：卫星速度
+\end{itemize}
+
+\subsection{军事分析输出}
+\begin{itemize}
+    \item \textbf{轨道类型判断}：LEO / MEO / HEO / GEO 自动分类
+    \item \textbf{倾角估计}：用于判断卫星纬向覆盖能力
+    \item \textbf{目标保持风险}：基于高度变化幅度和速度离散度的风险评估
+\end{itemize}
+
+\section{Orbin — 轨道根数预测}
+
+\subsection{功能概述}
+基于\textbf{Informer 模型}的轨道六根数预测模型，使用\textbf{三模型集成}提升预测精度。从观测弧段数据预测卫星未来的 ECI 位置和速度。
+
+\subsection{Agent 工具名}
+\texttt{orbin\_orbit\_prediction}
+
+\subsection{输入数据格式}
+CSV 文件，包含以下列：
+\begin{itemize}
+    \item \texttt{Time\_UTCG\_}：UTC 时间
+    \item \texttt{Azimuth\_deg\_}：方位角（度）
+    \item \texttt{Elevation\_deg\_}：高度角（度）
+    \item \texttt{Range\_km\_}：距离（km）
+    \item \texttt{eci\_x\_m, eci\_y\_m, eci\_z\_m}：卫星 ECI 位置（米）
+\end{itemize}
+
+\subsection{输出格式}
+\begin{itemize}
+    \item \texttt{x\_km\_pred, y\_km\_pred, z\_km\_pred}：预测位置（km）
+    \item \texttt{vx\_km/s\_pred, vy\_km/s\_pred, vz\_km/s\_pred}：预测速度（km/s）
+    \item 可选：\texttt{*\_true} 列（用于精度对比）
+\end{itemize}
+
+\subsection{军事分析输出}
+\begin{itemize}
+    \item \textbf{轨道周期}：预估轨道周期
+    \item \textbf{预测可信度}：基于高度/速度离散度的置信度评估
+    \item \textbf{跟踪优先级}：一级/二级/三级分类，指导资源分配
+    \item \textbf{碰撞/抵近筛查建议}：同轨道面、相近高度目标交叉检查
+\end{itemize}
+
+\section{航天工具联合使用}
+
+三个工具可以串联使用，形成完整的空间态势感知流水线：
+
+\begin{enumerate}
+    \item \textbf{IOD} 对原始观测进行轨道初定 $\rightarrow$ 获得卫星初轨状态
+    \item \textbf{Orbin} 基于初轨进行预测外推 $\rightarrow$ 获得未来轨道位置
+    \item \textbf{MLF} 对轨道参数序列进行机动检测 $\rightarrow$ 识别异常机动行为
+\end{enumerate}
+
+\begin{minted}{bash}
+astroone agent -m "
+请按以下流程进行空间态势分析：
+1. 使用 iod_orbit_determination 对 tools/iod/data/demo_input.csv 进行轨道初定
+2. 使用 orbin_orbit_prediction 基于初定结果进行轨道预测
+3. 使用 mlf_maneuver_detection 检测是否有轨道机动
+4. 综合以上结果，给出空间态势评估报告
+"
+\end{minted}
+
+% ════════════════════════════════════════════════════════════════
+% 第7章 聊天渠道
+% ════════════════════════════════════════════════════════════════
+\chapter{聊天渠道}
+
+\section{渠道概述}
+
+astro-one 支持 15+ 聊天平台，所有渠道通过统一的 \texttt{BaseChannel} 接口接入。渠道配置在 \texttt{config.json} 的 \texttt{channels} 部分。
+
+\begin{longtable}{L{2.5cm} L{5cm} L{7.5cm}}
+\toprule
+\textbf{渠道名} & \textbf{配置键} & \textbf{依赖包} \\
+\midrule
+飞书 & \texttt{feishu} & \texttt{lark-oapi} \\
+Telegram & \texttt{telegram} & \texttt{python-telegram-bot} \\
+Discord & \texttt{discord} & 内置 aiohttp \\
+Slack & \texttt{slack} & \texttt{slack-sdk} \\
+QQ & \texttt{qq} & \texttt{qq-botpy} \\
+WhatsApp & \texttt{whatsapp} & 内置 websocket-client \\
+微信 & \texttt{weixin} & \texttt{pycryptodome} \\
+钉钉 & \texttt{dingtalk} & \texttt{dingtalk-stream} \\
+企业微信 & \texttt{wecom} & \texttt{wecom-aibot-sdk-python} \\
+Matrix & \texttt{matrix} & \texttt{matrix-nio} \\
+Signal & \texttt{signal} & 可选 \\
+Email & \texttt{email} & 内置 SMTP/IMAP \\
+MS Teams & \texttt{msteams} & \texttt{PyJWT} \\
+MoChat & \texttt{mochat} & 内置 WebSocket \\
+WebSocket & \texttt{websocket} & \texttt{websockets}（Web UI 后端） \\
+\bottomrule
+\end{longtable}
+
+\section{飞书渠道配置详解}
+
+飞书（Feishu/Lark）是目前最完善的企业级渠道之一。
+
+\begin{minted}{json}
+{
+  "channels": {
+    "feishu": {
+      "enabled": true,
+      "appId": "cli_xxxxxxxxxxxx",
+      "appSecret": "xxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "verificationToken": "xxxxxxxxxxxx",
+      "allowFrom": ["ou_xxx", "ou_yyy"],
+      "streaming": true
+    }
+  }
+}
+\end{minted}
+
+\subsection{飞书特有功能}
+\begin{itemize}
+    \item \textbf{消息卡片}：支持富文本卡片回复
+    \item \textbf{流式输出}：支持 \texttt{send\_delta} 实现打字机效果
+    \item \textbf{推理展示}：支持推理过程折叠/展开（低强调 UI）
+    \item \textbf{代码块}：长代码自动包装为飞书代码块
+    \item \textbf{表格拆分}：大表格自动拆分为多条消息
+    \item \textbf{Markdown 渲染}：适配飞书 Markdown 语法
+\end{itemize}
+
+\section{渠道开发}
+
+如需开发新的渠道插件，继承 \texttt{BaseChannel} 并实现以下方法：
+
+\begin{minted}{python}
+from astro_one.channels.base import BaseChannel
+
+class MyChannel(BaseChannel):
+    name = "my_channel"
+    display_name = "我的渠道"
+
+    async def start(self) -> None:
+        """启动渠道，开始监听消息"""
+        # 1. 连接到平台
+        # 2. 循环接收消息
+        # 3. 调用 self._handle_message() 转发到总线
+        ...
+
+    async def stop(self) -> None:
+        """停止渠道，清理资源"""
+        ...
+
+    async def send(self, msg: OutboundMessage) -> None:
+        """发送消息到平台"""
+        ...
+\end{minted}
+
+% ════════════════════════════════════════════════════════════════
+% 第8章 LLM 提供商深度配置
+% ════════════════════════════════════════════════════════════════
+\chapter{LLM 提供商深度配置}
+
+\section{提供商匹配机制}
+
+astro-one 的提供商选择使用以下优先级：
+\begin{enumerate}
+    \item \textbf{显式 provider 前缀}：如模型名 \texttt{anthropic/claude-opus-4-7}
+    \item \textbf{关键词匹配}：如模型名含 "claude" 匹配 Anthropic
+    \item \textbf{本地提供商回退}：当有可用 \texttt{apiBase} 时
+    \item \textbf{已配置的 API Key 提供商}：按顺序匹配
+\end{enumerate}
+
+\section{常用提供商配置示例}
+
+\subsection{OpenAI}
+\begin{minted}{json}
+{
+  "providers": {
+    "openai": {
+      "apiKey": "sk-xxxxxxxxxxxxxxxxxxxxxxxx",
+      "apiBase": "https://api.openai.com/v1",
+      "apiType": "chat_completions"
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": "openai/gpt-4o",
+      "provider": "auto"
+    }
+  }
+}
+\end{minted}
+
+\subsection{Anthropic Claude}
+\begin{minted}{json}
+{
+  "providers": {
+    "anthropic": {
+      "apiKey": "sk-ant-api03-xxxxxxxxxxxxxxxxxxxxxxxx",
+      "extraHeaders": {
+        "anthropic-beta": "claude-code-20250529"
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": "anthropic/claude-opus-4-7",
+      "provider": "auto"
+    }
+  }
+}
+\end{minted}
+
+\subsection{本地 Ollama}
+\begin{minted}{json}
+{
+  "providers": {
+    "ollama": {
+      "apiBase": "http://localhost:11434"
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": "qwen3.5:27b",
+      "provider": "ollama"
+    }
+  }
+}
+\end{minted}
+
+\subsection{AWS Bedrock}
+\begin{minted}{json}
+{
+  "providers": {
+    "bedrock": {
+      "apiKey": "AKIAxxxxx",
+      "region": "us-east-1",
+      "profile": "default"
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": "bedrock/anthropic.claude-opus-4-7",
+      "provider": "auto"
+    }
+  }
+}
+\end{minted}
+
+\subsection{DeepSeek}
+\begin{minted}{json}
+{
+  "providers": {
+    "deepseek": {
+      "apiKey": "sk-xxxxxxxxxxxx",
+      "apiBase": "https://api.deepseek.com/v1"
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": "deepseek/deepseek-v4-pro",
+      "provider": "auto"
+    }
+  }
+}
+\end{minted}
+
+\section{备选模型（Fallback）}
+
+当主模型不可用时，自动切换到备选模型：
+
+\begin{minted}{json}
+{
+  "agents": {
+    "defaults": {
+      "model": "anthropic/claude-opus-4-7",
+      "fallbackModels": [
+        "smart",
+        {
+          "model": "openai/gpt-4o",
+          "provider": "openai",
+          "contextWindowTokens": 131072
+        }
+      ]
+    }
+  }
+}
+\end{minted}
+
+% ════════════════════════════════════════════════════════════════
+% 第9章 Agent 核心机制
+% ════════════════════════════════════════════════════════════════
+\chapter{Agent 核心机制}
+
+\section{状态机处理流程}
+
+Agent 的消息处理采用 8 阶段状态机：
+
+\begin{center}
+\begin{minipage}{0.9\textwidth}
+\begin{verbatim}
+  RESTORE ──ok──> COMPACT ──ok──> COMMAND ──dispatch──> BUILD
+                                                    shortcut
+                                                       ↓
+                                                     DONE
+
+  BUILD ──ok──> RUN ──ok──> SAVE ──ok──> RESPOND ──ok──> DONE
+\end{verbatim}
+\end{minipage}
+\end{center}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{L{2.5cm} L{10cm} L{2.5cm}}
+\toprule
+\textbf{状态} & \textbf{职责} & \textbf{下一状态} \\
+\midrule
+RESTORE & 恢复 checkpoint、提取文档、记录日志 & COMPACT \\
+COMPACT & 检查并执行会话自动压缩 & COMMAND \\
+COMMAND & 检查内置命令（/new、/model等）或模型指令 & BUILD 或 DONE \\
+BUILD & 构建 prompt、加载历史/记忆/技能、设置工具上下文 & RUN \\
+RUN & 调用 LLM 执行 Agent 循环、工具调用 & SAVE \\
+SAVE & 保存会话消息、清除 checkpoint、触发后巩固 & RESPOND \\
+RESPOND & 组装出站消息、处理流式标记 & DONE \\
+DONE & 结束处理 & — \\
+\bottomrule
+\end{tabular}
+\caption{状态机各阶段说明}
+\end{table}
+
+\section{上下文构建}
+
+\texttt{ContextBuilder} 负责为每次 LLM 调用构建完整的提示词，包含：
+
+\begin{enumerate}
+    \item \textbf{身份声明}：定义 Agent 名称、开发者、能力范围
+    \item \textbf{Bootstrap 文件}：加载工作空间中的 AGENTS.md、SOUL.md、USER.md、TOOLS.md
+    \item \textbf{工具契约}：工具使用规范和约束
+    \item \textbf{长期记忆}：从 MEMORY.md 加载关键信息
+    \item \textbf{活跃技能}：always 类型的技能内容
+    \item \textbf{技能摘要}：按需激活的技能列表
+    \item \textbf{近期历史}：从 history.jsonl 加载近期对话摘要
+    \item \textbf{会话摘要}：被压缩的历史归档摘要
+    \item \textbf{运行时上下文}：当前时间、渠道、聊天 ID、工作空间路径
+\end{enumerate}
+
+\section{记忆系统}
+
+astro-one 采用\textbf{三级记忆架构}：
+
+\begin{table}[H]
+\centering
+\begin{tabular}{L{3cm} L{5cm} L{7cm}}
+\toprule
+\textbf{层级} & \textbf{组件} & \textbf{功能} \\
+\midrule
+L1 — 工作记忆 & Session 消息列表 & 当前对话的完整消息历史 \\
+L2 — 短期记忆 & Consolidator & 将旧消息 LLM 摘要后写入 history.jsonl \\
+L3 — 长期记忆 & Dream & Cron 定时分析历史，更新 MEMORY.md / SOUL.md / USER.md \\
+\bottomrule
+\end{tabular}
+\caption{三级记忆架构}
+\end{table}
+
+\subsection{Dream 记忆处理器}
+
+Dream 是一个两阶段的记忆巩固处理器：
+\begin{enumerate}
+    \item \textbf{Phase 1 — 分析}：LLM 分析历史对话，提取关键信息、用户偏好、项目状态
+    \item \textbf{Phase 2 — 执行}：使用 AgentRunner + 文件编辑工具，增量更新 MEMORY.md、SOUL.md、USER.md 和技能文件
+\end{enumerate}
+
+Dream 默认每 2 小时触发一次，可通过配置调整：
+\begin{minted}{json}
+{
+  "agents": {
+    "defaults": {
+      "dream": {
+        "intervalH": 4,
+        "maxBatchSize": 30,
+        "maxIterations": 12
+      }
+    }
+  }
+}
+\end{minted}
+
+\section{子Agent（SubAgent）}
+
+\texttt{SubagentManager} 允许 Agent 生成后台子任务进行并发处理。子Agent 拥有：
+\begin{itemize}
+    \item 独立的消息上下文和工具集
+    \item 实时状态追踪（初始化 $\rightarrow$ 等待工具 $\rightarrow$ 完成）
+    \item 会话内的事件注入机制
+    \item 可配置的最大并发数
+\end{itemize}
+
+\section{会话管理}
+
+\begin{itemize}
+    \item \textbf{存储格式}：JSONL（每行一条 JSON）
+    \item \textbf{存储位置}：\texttt{workspace/sessions/<key>.jsonl}
+    \item \textbf{会话键}：默认 \texttt{<channel>:<chat\_id>}，支持 unified session 模式
+    \item \textbf{自动压缩}：达到上下文窗口限制时自动触发 Consolidator
+    \item \textbf{空闲回收}：配置 \texttt{sessionTtlMinutes} 后，空闲会话自动压缩
+    \item \textbf{故障恢复}：支持 checkpoint 恢复中断的会话和崩溃后的 pending user turn
+\end{itemize}
+
+% ════════════════════════════════════════════════════════════════
+% 第10章 工具系统
+% ════════════════════════════════════════════════════════════════
+\chapter{工具系统}
+
+\section{内置工具列表}
+
+\begin{longtable}{L{3cm} L{2.5cm} L{9.5cm}}
+\toprule
+\textbf{工具} & \textbf{Agent 名} & \textbf{功能} \\
+\midrule
+Shell 执行 & \texttt{exec} & 执行 shell 命令，支持长命令会话管理 \\
+文件系统 & \texttt{read\_file} & 读取文件内容 \\
+ & \texttt{edit\_file} & 精确字符串替换编辑 \\
+ & \texttt{write\_file} & 写入/覆写文件 \\
+ & \texttt{list\_dir} & 列出目录内容 \\
+ & \texttt{grep} & 正则搜索文件内容 \\
+ & \texttt{find\_files} & 按 glob 模式搜索文件 \\
+Web 工具 & \texttt{web\_search} & 网络搜索 \\
+ & \texttt{web\_fetch} & 获取网页内容转换为 Markdown \\
+MCP & 动态注册 & Model Context Protocol 工具 \\
+消息发送 & \texttt{message} & 向特定聊天渠道发送消息 \\
+定时任务 & \texttt{cron\_*} & 创建/删除/列出定时任务 \\
+自我配置 & \texttt{my\_*} & 运行时修改 Agent 配置 \\
+图片生成 & \texttt{image\_gen} & AI 图片生成 \\
+CLI 应用 & \texttt{cli\_apps} & 调用外部 CLI 工具 \\
+\bottomrule
+\end{longtable}
+
+\section{Shell 工具详解}
+
+\texttt{exec} 工具支持：
+\begin{itemize}
+    \item \textbf{命令超时}：可配置超时时间（默认 60 秒）
+    \item \textbf{会话管理}：支持后台长任务（ExecSession），可后续获取输出
+    \item \textbf{工作目录限制}：可配置是否限制在 workspace 内
+    \item \textbf{模式过滤}：deny\_patterns / allow\_patterns 支持正则表达式过滤危险命令
+    \item \textbf{输出截断}：大输出自动截断
+\end{itemize}
+
+\section{MCP 协议支持}
+
+astro-one 支持 MCP（Model Context Protocol）协议的三种传输方式：
+
+\begin{table}[H]
+\centering
+\begin{tabular}{L{2.5cm} L{5cm} L{7.5cm}}
+\toprule
+\textbf{传输类型} & \textbf{适用场景} & \textbf{配置示例} \\
+\midrule
+stdio & 本地进程 & \texttt{\{"command": "python", "args": ["-m", "server"]\}} \\
+sse & HTTP SSE & \texttt{\{"url": "http://localhost:3000/sse"\}} \\
+streamableHttp & HTTP 流式 & \texttt{\{"url": "http://localhost:3000/mcp"\}} \\
+\bottomrule
+\end{tabular}
+\caption{MCP 传输方式}
+\end{table}
+
+\section{工具扩展}
+
+创建自定义工具只需继承 \texttt{Tool} 基类：
+
+\begin{minted}{python}
+from astro_one.agent.tools.base import Tool
+from typing import Any
+
+class MyCustomTool(Tool):
+    @property
+    def name(self) -> str:
+        return "my_custom_tool"
+
+    @property
+    def description(self) -> str:
+        return "我的自定义工具 — 描述工具的功能"
+
+    @property
+    def parameters(self) -> dict[str, Any]:
+        return {
+            "type": "object",
+            "properties": {
+                "input_path": {
+                    "type": "string",
+                    "description": "输入文件路径"
+                }
+            },
+            "required": ["input_path"]
+        }
+
+    async def execute(self, input_path: str, **kwargs) -> str:
+        # 工具逻辑
+        return f"处理完成: {input_path}"
+\end{minted}
+
+% ════════════════════════════════════════════════════════════════
+% 第11章 安全机制
+% ════════════════════════════════════════════════════════════════
+\chapter{安全机制}
+
+\section{SSRF 防护}
+
+Web 工具（\texttt{web\_search}、\texttt{web\_fetch}）内置完整的 SSRF（服务端请求伪造）防护：
+
+\begin{itemize}
+    \item \textbf{DNS 解析检查}：所有 URL 的域名先解析为 IP
+    \item \textbf{内网 IP 拦截}：阻止访问 10.x、172.16–31.x、192.168.x、127.x、169.254.x 等私有/保留地址
+    \item \textbf{Cloud Metadata 防护}：阻止 169.254.169.254 等实例元数据地址
+    \item \textbf{白名单机制}：通过 \texttt{tools.ssrfWhitelist} 配置可信内网地址
+\end{itemize}
+
+\section{Workspace 隔离}
+
+\begin{itemize}
+    \item \textbf{文件工具}：read\_file、edit\_file、write\_file 支持限制在配置的 workspace 内
+    \item \textbf{Shell 工具}：支持 restrictToWorkspace 模式（通过配置文件控制）
+    \item \textbf{路径遍历防护}：检测 \texttt{../} 路径穿越尝试
+\end{itemize}
+
+\section{命令注入防护}
+
+Shell 工具的 \texttt{denyPatterns} 支持正则表达式过滤危险命令模式：
+
+\begin{minted}{json}
+{
+  "tools": {
+    "exec": {
+      "denyPatterns": [
+        "rm\\s+-rf\\s+/",
+        "mkfs\\.",
+        "dd\\s+if=",
+        ":(){ :|:& };:",
+        "chmod\\s+777"
+      ]
+    }
+  }
+}
+\end{minted}
+
+\section{访问控制}
+
+\begin{itemize}
+    \item \textbf{渠道级}：每个渠道的 \texttt{allowFrom} 白名单
+    \item \textbf{配对机制}：未授权用户收到配对码而非被静默忽略
+    \item \textbf{API 认证}：API 服务支持密钥认证
+\end{itemize}
+
+% ════════════════════════════════════════════════════════════════
+% 第12章 Docker 部署
+% ════════════════════════════════════════════════════════════════
+\chapter{Docker 部署}
+
+\section{快速部署}
+
+\begin{minted}{bash}
+# 克隆项目
+git clone https://github.com/astro-one/astro-one.git
+cd astro-one
+
+# 创建 .env 文件
+cat > .env << 'EOF'
+NANOBOT__PROVIDERS__ANTHROPIC__API_KEY=sk-ant-xxxxx
+NANOBOT__AGENTS__DEFAULTS__MODEL=anthropic/claude-opus-4-7
+EOF
+
+# 启动 Gateway
+docker compose up -d astro-one-gateway
+
+# 查看日志
+docker compose logs -f astro-one-gateway
+\end{minted}
+
+\section{docker-compose.yml 结构}
+
+\begin{minted}{yaml}
+services:
+  astro-one-gateway:
+    build: .
+    ports:
+      - "18790:18790"   # Gateway 端口
+      - "18791:18791"   # WebUI WebSocket 端口
+    volumes:
+      - ~/.astro_one:/root/.astro_one  # 持久化配置和会话
+      - ./tools:/app/tools              # 航天工具模型文件
+    environment:
+      - NANOBOT__PROVIDERS__ANTHROPIC__API_KEY=${ANTHROPIC_KEY}
+    restart: unless-stopped
+\end{minted}
+
+\section{多实例部署}
+
+可以为不同渠道创建独立的配置和实例：
+
+\begin{minted}{bash}
+# 实例 1 — Telegram
+astroone onboard \
+  --config ~/.astro-one-telegram/config.json \
+  --workspace ~/.astro-one-telegram/workspace
+
+# 实例 2 — 飞书
+astroone onboard \
+  --config ~/.astro-one-feishu/config.json \
+  --workspace ~/.astro-one-feishu/workspace
+
+# 分别启动
+astroone gateway --config ~/.astro-one-telegram/config.json &
+astroone gateway --config ~/.astro-one-feishu/config.json &
+\end{minted}
+
+% ════════════════════════════════════════════════════════════════
+% 第13章 技能系统
+% ════════════════════════════════════════════════════════════════
+\chapter{技能系统}
+
+\section{技能概述}
+
+技能（Skill）是 astro-one 的扩展机制，每个技能是一个包含 \texttt{SKILL.md} 文件的目录。SKILL.md 使用 YAML frontmatter 定义元数据和 markdown 正文作为 LLM 指令。
+
+\section{技能目录结构}
+
+\begin{minted}{text}
+workspace/skills/
+├── my-skill/
+│   └── SKILL.md         # 技能定义（YAML frontmatter + Markdown 指令）
+└── another-skill/
+    └── SKILL.md
+\end{minted}
+
+\section{SKILL.md 格式}
+
+\begin{minted}{markdown}
+---
+name: my-skill
+description: 我的自定义技能 — 帮助 Agent 理解特定领域知识
+type: on-demand       # always | on-demand
+priority: 10
+---
+
+# 我的技能
+
+当用户询问关于 XXX 的问题时，你应该：
+
+1. 首先检查 ...
+2. 使用 ... 工具获取数据
+3. 按照 ... 格式回复
+\end{minted}
+
+\section{内置技能}
+
+astro-one 内置的技能位于 \texttt{astro\_one/skills/} 目录下，包括但不限于：
+
+\begin{itemize}
+    \item \textbf{github}：GitHub 仓库操作
+    \item \textbf{weather}：天气查询
+    \item \textbf{tmux}：tmux 会话管理
+    \item \textbf{cron}：定时提醒
+    \item \textbf{skill-creator}：技能创建助手
+\end{itemize}
+
+% ════════════════════════════════════════════════════════════════
+% 第14章 API 服务
+% ════════════════════════════════════════════════════════════════
+\chapter{API 服务}
+
+\section{OpenAI 兼容 API}
+
+astro-one 提供 OpenAI 兼容的 API 端点，可直接替换 OpenAI SDK 的后端。
+
+\subsection{配置}
+\begin{minted}{json}
+{
+  "api": {
+    "host": "127.0.0.1",
+    "port": 8900,
+    "timeout": 120.0
+  }
+}
+\end{minted}
+
+\subsection{端点}
+\begin{itemize}
+    \item \texttt{POST /v1/chat/completions} — Chat Completion
+    \item \texttt{GET /v1/models} — 模型列表
+\end{itemize}
+
+\subsection{调用示例}
+\begin{minted}{bash}
+curl http://localhost:8900/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "anthropic/claude-opus-4-7",
+    "messages": [{"role": "user", "content": "解释开普勒定律"}],
+    "stream": false
+  }'
+\end{minted}
+
+% ════════════════════════════════════════════════════════════════
+% 第15章 Benchmark 测评
+% ════════════════════════════════════════════════════════════════
+\chapter{Benchmark 测评}
+
+\section{AeroBench — 航天垂直领域基准测评}
+
+astro-one 附带 \texttt{benchmark/AeroBench/} 专项测评工具，覆盖三项航天核心任务的量化评估。
+
+\subsection{运行方式}
+\begin{minted}{bash}
+# 模拟模式（快速 baseline）
+python -m benchmark.AeroBench.main --mode tool-sim --print-metrics
+
+# 真实模型模式
+python -m benchmark.AeroBench.main --mode tool-direct --device cpu --print-metrics
+
+# 选择任务和样本数
+python -m benchmark.AeroBench.main --mode tool-sim --tasks mlf iod --max-samples 500
+\end{minted}
+
+\subsection{测评任务}
+\begin{table}[H]
+\centering
+\begin{tabular}{L{3cm} L{4cm} L{8cm}}
+\toprule
+\textbf{任务} & \textbf{核心指标} & \textbf{说明} \\
+\midrule
+MLF 机动检测 & F1, ROC-AUC, 机动时间MAE & 评估机动检测的精确率和召回率 \\
+IOD 轨道初定 & 位置RMSE, 方向余弦相似度 & 评估轨道确定的定位精度 \\
+Orbin 轨道预测 & 位置RMSE, 倾角误差, 周期偏差 & 评估轨道预测的精度与稳定性 \\
+\bottomrule
+\end{tabular}
+\caption{AeroBench 测评任务}
+\end{table}
+
+% ════════════════════════════════════════════════════════════════
+% 第16章 常见问题与排错
+% ════════════════════════════════════════════════════════════════
+\chapter{常见问题与排错}
+
+\section{安装问题}
+
+\begin{notebox}
+\textbf{Q: pip install 报错 "Could not find a version..."}
+
+A: 确认 Python 版本 $\geq$ 3.11。使用 \texttt{pip install -e .} 从源码安装。
+\end{notebox}
+
+\begin{notebox}
+\textbf{Q: 缺少某些渠道的依赖包}
+
+A: 渠道依赖是可选的，使用 \texttt{pip install "astro-one-ai[wecom,matrix]"} 安装特定渠道依赖。
+\end{notebox}
+
+\section{配置问题}
+
+\begin{notebox}
+\textbf{Q: 启动报 "No API key configured"}
+
+A: 检查 \texttt{config.json} 中对应 provider 的 apiKey 字段，或设置环境变量 \texttt{NANOBOT\_\_PROVIDERS\_\_<PROVIDER>\_\_API\_KEY}。
+\end{notebox}
+
+\begin{notebox}
+\textbf{Q: 模型调用返回 "model not found"}
+
+A: 检查模型名称格式：provider 前缀（如 \texttt{anthropic/}）、模型版本号、provider 提供商是否支持该模型。
+\end{notebox}
+
+\section{运行时问题}
+
+\begin{notebox}
+\textbf{Q: Agent 循环卡住不返回}
+
+A: 可能是 LLM 调用超时。设置环境变量 \texttt{ASTRO\_ONE\_LLM\_TIMEOUT\_S=120} 缩短超时，或检查网络连接。
+\end{notebox}
+
+\begin{notebox}
+\textbf{Q: 工具调用返回 "outside the configured workspace"}
+
+A: 已启用 workspace 隔离。将文件放在 workspace 目录下，或在配置中设置 \texttt{restrictToWorkspace: false}。
+\end{notebox}
+
+\begin{notebox}
+\textbf{Q: 会话恢复时出现重复消息}
+
+A: 这是 checkpoint 恢复机制的正常行为。checkpoint 基于消息指纹进行去重，重复消息会在下次迭代时自动对齐。
+\end{notebox}
+
+\section{渠道问题}
+
+\begin{notebox}
+\textbf{Q: 飞书渠道收不到消息}
+
+A: 检查 \texttt{allowFrom} 白名单是否包含用户 ID，确认 appId/appSecret/verificationToken 配置正确，确认飞书应用已发布并订阅了相应事件。
+\end{notebox}
+
+\begin{notebox}
+\textbf{Q: Telegram Bot 不响应}
+
+A: 检查 Bot Token 是否正确，确认已运行 \texttt{astroone channels login --provider telegram} 进行登录，确认防火墙允许出站连接到 Telegram API。
+\end{notebox}
+
+\section{航天工具问题}
+
+\begin{notebox}
+\textbf{Q: MLF/IOD/Orbin 工具报 "模型加载失败"}
+
+A: 确认 \texttt{tools/<name>/models/} 目录下存在完整的模型文件（.pth/.pkl），确认 torch 版本与模型兼容，确认当前工作目录为项目根目录。
+\end{notebox}
+
+\begin{notebox}
+\textbf{Q: 航天工具执行缓慢}
+
+A: 默认使用 CPU 推理。如需加速，可在调用时指定 \texttt{device: "cuda"}（需要 NVIDIA GPU + CUDA）。
+\end{notebox}
+
+% ════════════════════════════════════════════════════════════════
+% 附录
+% ════════════════════════════════════════════════════════════════
+\appendix
+\chapter{完整配置示例}
+
+\section{生产环境配置参考}
+
+\begin{minted}{json}
+{
+  "agents": {
+    "defaults": {
+      "workspace": "/data/astro-one/workspace",
+      "model": "anthropic/claude-opus-4-7",
+      "provider": "auto",
+      "maxTokens": 8192,
+      "contextWindowTokens": 200000,
+      "temperature": 0.1,
+      "maxToolIterations": 200,
+      "maxConcurrentSubagents": 2,
+      "maxToolResultChars": 16000,
+      "timezone": "Asia/Shanghai",
+      "sessionTtlMinutes": 120,
+      "maxMessages": 120,
+      "consolidationRatio": 0.5,
+      "fallbackModels": ["fast"],
+      "dream": {
+        "intervalH": 4,
+        "maxBatchSize": 30,
+        "maxIterations": 12
+      }
+    }
+  },
+  "modelPresets": {
+    "fast": {
+      "label": "快速回退",
+      "model": "openai/gpt-4o-mini",
+      "provider": "openai",
+      "maxTokens": 4096,
+      "contextWindowTokens": 131072,
+      "temperature": 0.3
+    }
+  },
+  "providers": {
+    "anthropic": {
+      "apiKey": "sk-ant-xxxxx"
+    },
+    "openai": {
+      "apiKey": "sk-xxxxx"
+    }
+  },
+  "channels": {
+    "sendProgress": false,
+    "sendToolHints": false,
+    "feishu": {
+      "enabled": true,
+      "appId": "cli_xxxxx",
+      "appSecret": "xxxxx",
+      "allowFrom": ["ou_admin"]
+    },
+    "websocket": {
+      "enabled": true,
+      "port": 18791
+    }
+  },
+  "tools": {
+    "exec": {
+      "enable": true,
+      "timeout": 120,
+      "restrictToWorkspace": true
+    },
+    "restrictToWorkspace": true
+  },
+  "gateway": {
+    "host": "0.0.0.0",
+    "port": 18790,
+    "heartbeat": {
+      "enabled": true,
+      "intervalS": 1800
+    }
+  }
+}
+\end{minted}
+
+\chapter{命令行速查卡}
+
+\begin{longtable}{L{5cm} L{10cm}}
+\toprule
+\textbf{命令} & \textbf{说明} \\
+\midrule
+\texttt{astroone onboard} & 初始化配置和工作空间 \\
+\texttt{astroone agent} & 进入交互式对话模式 \\
+\texttt{astroone agent -m "..."} & 单次对话 \\
+\texttt{astroone agent --stream} & 流式输出交互模式 \\
+\texttt{astroone agent --thinking} & 显示推理过程 \\
+\texttt{astroone gateway} & 启动网关（加载所有渠道） \\
+\texttt{astroone status} & 查看运行状态 \\
+\texttt{astroone channels login} & 登录聊天渠道 \\
+\texttt{astroone provider login} & 登录 LLM 提供商 \\
+\texttt{/model} & 查看当前模型（交互模式内） \\
+\texttt{/model <name>} & 切换模型（交互模式内） \\
+\texttt{/new} & 新建会话（交互模式内） \\
+\texttt{python -m benchmark.AeroBench.main} & 运行航天基准测评 \\
+\bottomrule
+\end{longtable}
+
+\chapter{环境变量速查卡}
+
+\begin{longtable}{L{6.5cm} L{8.5cm}}
+\toprule
+\textbf{环境变量} & \textbf{说明} \\
+\midrule
+\texttt{NANOBOT\_\_AGENTS\_\_DEFAULTS\_\_MODEL} & 默认模型 \\
+\texttt{NANOBOT\_\_PROVIDERS\_\_<name>\_\_API\_KEY} & 指定提供商的 API 密钥 \\
+\texttt{NANOBOT\_\_PROVIDERS\_\_<name>\_\_API\_BASE} & 指定提供商的 API 端点 \\
+\texttt{ASTRO\_ONE\_MAX\_CONCURRENT\_REQUESTS} & 最大并发请求数（默认 3） \\
+\texttt{ASTRO\_ONE\_LLM\_TIMEOUT\_S} & LLM 调用超时秒数（默认 300） \\
+\texttt{ASTRO\_ONE\_STREAM\_IDLE\_TIMEOUT\_S} & 流式空闲超时秒数 \\
+\texttt{LITELLM\_MODEL\_COST\_MAP} & 设为 false 禁用成本表加载 \\
+\bottomrule
+\end{longtable}
+
+\end{document}

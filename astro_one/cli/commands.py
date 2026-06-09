@@ -228,6 +228,21 @@ async def _print_interactive_response(response: str, render_markdown: bool, meta
     await run_in_terminal(_write)
 
 
+def _streamed_final_fallback(
+    content: str,
+    metadata: dict | None,
+    renderer: StreamRenderer | None,
+) -> tuple[str, dict] | None:
+    """Return final content to print when a streamed turn produced no answer deltas."""
+    if not content or not (metadata or {}).get("_streamed"):
+        return None
+    if renderer is not None and renderer.streamed:
+        return None
+    clean_meta = dict(metadata or {})
+    clean_meta.pop("_streamed", None)
+    return content, clean_meta
+
+
 class ReasoningProgressBuffer:
     """Collect small reasoning deltas and print readable sentence-sized chunks."""
 
@@ -1198,6 +1213,13 @@ def agent(
                                 )
                             continue
                         if msg.metadata.get("_streamed"):
+                            fallback = _streamed_final_fallback(
+                                msg.content,
+                                msg.metadata,
+                                renderer,
+                            )
+                            if fallback:
+                                turn_response.append(fallback)
                             turn_done.set()
                             continue
 

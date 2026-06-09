@@ -1,0 +1,57 @@
+{
+  "cross_task_score": 33.62,
+  "metadata": {
+    "config": {
+      "mode": "tool-sim",
+      "tasks": [
+        "mlf",
+        "iod",
+        "orbin"
+      ],
+      "max_samples": 100,
+      "seed": 42
+    }
+  },
+  "mlf": {
+    "task": "mlf",
+    "dataset": "MLF Test",
+    "n_samples": 100,
+    "metrics": {
+      "accuracy": 0.77,
+      "precision": 0.733333,
+      "recall": 0.366667,
+      "f1_score": 0.488889,
+      "false_alarm_rate": 0.057143,
+      "roc_auc": 0.854762
+    }
+  },
+  "iod": {
+    "task": "iod",
+    "dataset": "IOD Test",
+    "n_samples": 100,
+    "metrics": {
+      "position_rmse_km": 61033.081643,
+      "position_mae_km": 61032.649226,
+      "velocity_rmse_km_s": 497.450341,
+      "velocity_mae_km_s": 433.663591,
+      "direction_cosine_sim": 1.0,
+      "altitude_rmse_km": 2079.008789,
+      "altitude_mae_km": 2066.635148
+    }
+  },
+  "orbin": {
+    "task": "orbin",
+    "dataset": "Orbin Test",
+    "n_samples": 100,
+    "metrics": {
+      "position_rmse_km": 8192.892301,
+      "position_mae_km": 7174.033364,
+      "velocity_rmse_km_s": 9.332984,
+      "velocity_mae_km_s": 8.17238,
+      "inclination_error_deg": 0.056297,
+      "semi_major_axis_error_km": 25.243769,
+      "orbital_period_rel_error_pct": 0.559975,
+      "prediction_stability_km": 3911.980631
+    }
+  }
+}

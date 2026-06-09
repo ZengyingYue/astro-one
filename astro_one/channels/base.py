@@ -76,6 +76,46 @@ class BaseChannel(ABC):
         """
         pass
 
+    async def send_reasoning_delta(
+        self,
+        chat_id: str,
+        delta: str,
+        metadata: dict[str, Any] | None = None,
+    ) -> None:
+        """Handle a reasoning delta.
+
+        Channels with a dedicated low-emphasis reasoning UI can override this.
+        Other channels intentionally drop reasoning so internal thoughts do not
+        appear as normal chat messages.
+        """
+        return None
+
+    async def send_reasoning_end(
+        self,
+        chat_id: str,
+        metadata: dict[str, Any] | None = None,
+    ) -> None:
+        """Handle the end of a reasoning stream."""
+        return None
+
+    async def send_reasoning(self, msg: OutboundMessage) -> None:
+        """Backward-compatible one-shot reasoning hook."""
+        await self.send_reasoning_delta(msg.chat_id, msg.content, msg.metadata)
+        await self.send_reasoning_end(msg.chat_id, msg.metadata)
+
+    async def send_delta(
+        self,
+        chat_id: str,
+        delta: str,
+        metadata: dict[str, Any] | None = None,
+    ) -> None:
+        """Handle a final-answer stream delta.
+
+        Non-streaming channels should not receive streamed turns, but this
+        default keeps channel dispatch robust if a stream marker slips through.
+        """
+        return None
+
     def is_allowed(self, sender_id: str) -> bool:
         """Check if *sender_id* is permitted.  Empty list → deny all; ``"*"`` → allow all."""
         allow_list = getattr(self.config, "allow_from", [])

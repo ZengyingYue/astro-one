@@ -157,6 +157,55 @@ def test_scan_once_uses_llm_repair_decision_after_tool_failure(tmp_path: Path) -
     asyncio.run(run())
 
 
+def test_scan_once_reroutes_orbin_csv_misplaced_in_iod_folder(tmp_path: Path) -> None:
+    async def run() -> None:
+        from astro_one.agent.auto_space_scan import AutoSpaceScanService
+
+        class RetryTools(FakeTools):
+            async def execute(self, name: str, params: dict) -> str:
+                self.calls.append((name, params))
+                if len(self.calls) == 1:
+                    return "Error: wrong columns for IOD"
+                return f"result from {name}"
+
+        data_root = tmp_path / "data"
+        file = data_root / "iod" / "16908bighuduan_vector_4d_001.csv"
+        file.parent.mkdir(parents=True, exist_ok=True)
+        file.write_text(
+            "Time_UTCG_,Azimuth_deg_,Elevation_deg_,Range_km_,"
+            "x_km_,y_km_,z_km_,vx_km_sec_,vy_km_sec_,vz_km_sec_,"
+            "eci_x_m,eci_y_m,eci_z_m,obs_vector_x,obs_vector_y,obs_vector_z\n"
+            "1 Jan 2025 00:54:04.000,272.299,5.001,4089.529803,"
+            "-5301,4637,3503,-5,-2,-4,2582352,3910508,4320302,-0.99,0.04,0.08\n",
+            encoding="utf-8",
+        )
+        tools = RetryTools()
+        reports: list[str] = []
+
+        service = AutoSpaceScanService(
+            data_root=data_root,
+            tools=tools,
+            on_report=reports.append,
+            poll_interval_s=0.01,
+            provider=None,
+            min_file_age_s=0,
+        )
+
+        processed = await service.scan_once()
+
+        assert processed == 1
+        assert [call[0] for call in tools.calls] == [
+            "iod_orbit_determination",
+            "orbin_orbit_prediction",
+        ]
+        assert tools.calls[1][1]["data_dir"] == str(file.parent)
+        assert not file.exists()
+        assert (data_root / "iod" / "processed" / file.name).exists()
+        assert "CSV列匹配 orbin_orbit_prediction" in reports[0]
+
+    asyncio.run(run())
+
+
 def test_scan_once_does_not_reprocess_tool_output_csv(tmp_path: Path) -> None:
     async def run() -> None:
         from astro_one.agent.auto_space_scan import AutoSpaceScanService

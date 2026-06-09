@@ -15,6 +15,7 @@ class ToolCallRequest:
     id: str
     name: str
     arguments: dict[str, Any]
+    extra_content: dict[str, Any] | None = None
     provider_specific_fields: dict[str, Any] | None = None
     function_provider_specific_fields: dict[str, Any] | None = None
 
@@ -28,6 +29,8 @@ class ToolCallRequest:
                 "arguments": json.dumps(self.arguments, ensure_ascii=False),
             },
         }
+        if self.extra_content:
+            tool_call["extra_content"] = self.extra_content
         if self.provider_specific_fields:
             tool_call["provider_specific_fields"] = self.provider_specific_fields
         if self.function_provider_specific_fields:
@@ -51,7 +54,7 @@ class LLMResponse:
     error_status_code: int | None = None
     error_should_retry: bool | None = None
     error_retry_after_s: float | None = None
-    
+
     @property
     def has_tool_calls(self) -> bool:
         """Check if response contains tool calls."""
@@ -81,7 +84,7 @@ class GenerationSettings:
 class LLMProvider(ABC):
     """
     Abstract base class for LLM providers.
-    
+
     Implementations should handle the specifics of each provider's API
     while maintaining a consistent interface.
     """
@@ -208,6 +211,9 @@ class LLMProvider(ABC):
                 result.append(dict(msg))
                 continue
             prev = result[-1]
+            if prev.get("role") == "tool":
+                result.append(dict(msg))
+                continue
             if prev.get("role") == "assistant" and (prev.get("tool_calls") or msg.get("tool_calls")):
                 result.append(dict(msg))
                 continue
@@ -227,7 +233,7 @@ class LLMProvider(ABC):
     ) -> LLMResponse:
         """
         Send a chat completion request.
-        
+
         Args:
             messages: List of message dicts with 'role' and 'content'.
             tools: Optional list of tool definitions.
@@ -235,7 +241,7 @@ class LLMProvider(ABC):
             max_tokens: Maximum tokens in response.
             temperature: Sampling temperature.
             tool_choice: Tool selection strategy ("auto", "required", or specific tool dict).
-        
+
         Returns:
             LLMResponse with content and/or tool calls.
         """

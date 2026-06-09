@@ -24,7 +24,6 @@ from astro_one.agent.hook import AgentHook, CompositeHook
 from astro_one.agent.memory import Consolidator, Dream
 from astro_one.agent.progress_hook import AgentProgressHook
 from astro_one.agent.runner import _MAX_INJECTIONS_PER_TURN, AgentRunner, AgentRunSpec
-from astro_one.agent.skills import BUILTIN_SKILLS_DIR
 from astro_one.agent.subagent import SubagentManager
 from astro_one.agent.tools.file_state import FileStateStore, bind_file_states, reset_file_states
 from astro_one.agent.tools.message import MessageTool
@@ -383,7 +382,7 @@ class AgentLoop:
             provider=provider,
             workspace=config.workspace_path,
             model=model,
-            max_iterations=defaults.max_tool_iterations,
+            max_iterations=None,
             max_concurrent_subagents=defaults.max_concurrent_subagents,
             context_window_tokens=context_window_tokens,
             context_block_limit=defaults.context_block_limit,
