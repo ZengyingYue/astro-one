@@ -1,17 +1,18 @@
 <div align="center">
-  <h1>🛰️ astro-one: 航天智能助手框架</h1>
+  <h1>🛰️ astro-one：航天智能助手框架</h1>
   <p>
     <img src="https://img.shields.io/badge/python-≥3.11-blue" alt="Python">
     <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
     <img src="https://img.shields.io/badge/version-0.2.0-orange" alt="Version">
   </p>
-  <p><em>Ultra-Lightweight Aerospace AI Assistant Framework</em></p>
-  <p><a href="./README_zh-CN.md">📖 中文文档</a></p>
+  <p><em>超轻量级航天 AI 助手框架</em></p>
 </div>
 
 ---
 
-**astro-one** 是一个超轻量级的航天 AI 助手框架，基于 [nanobot](https://github.com/HKUDS/nanobot) 构建。它在保留 nanobot 核心代理功能的基础上，集成了多种航天专用 ML 工具，提供卫星机动检测、初轨确定和轨道预测等能力。
+**astro-one** 是一个超轻量级的航天 AI 助手框架，基于 [nanobot](https://github.com/HKUDS/nanobot) 构建。它在保留 nanobot 核心代理功能的基础上，集成了多种航天专用机器学习工具，提供卫星机动检测、初轨确定和轨道预测等能力。
+
+> 📖 [English Documentation](./README.md)
 
 ## ✨ 核心特性
 
@@ -34,10 +35,10 @@
   - [MLF 机动检测](#mlf-机动检测)
   - [IOD 初轨确定](#iod-初轨确定)
   - [Orbin 轨道预测](#orbin-轨道预测)
-  - [Auto Space Scan](#auto-space-scan)
+  - [Auto Space Scan 自动巡天](#auto-space-scan-自动巡天)
 - [配置](#️-配置)
 - [聊天通道](#-聊天通道)
-- [LLM 提供商](#-llm-提供商)
+- [LLM 提供商](#llm-提供商)
 - [CLI 命令](#-cli-命令)
 - [Docker 部署](#-docker-部署)
 - [项目结构](#-项目结构)
@@ -106,7 +107,7 @@ astro-one 内置了三种基于机器学习的航天分析工具，可通过 Age
 
 ### MLF 机动检测
 
-基于 **Liquid State Machine** 模型的卫星机动检测工具。
+基于 **Liquid State Machine（液体状态机）** 模型的卫星机动检测工具。
 
 **功能：**
 - 从轨道参数预测卫星机动状态
@@ -180,7 +181,7 @@ astro-one 内置了三种基于机器学习的航天分析工具，可通过 Age
 - 位置 (x, y, z) 预测
 - 速度 (vx, vy, vz) 预测
 
-### Auto Space Scan
+### Auto Space Scan 自动巡天
 
 后台自动巡天服务，持续监控热文件夹中的航天数据。
 
@@ -231,6 +232,8 @@ astro-one 内置了三种基于机器学习的航天分析工具，可通过 Age
 
 ### 本地 Ollama 配置
 
+无需 API 密钥，本地运行大模型：
+
 ```json
 {
   "agents": { "defaults": { "model": "qwen3.5:27b", "provider": "ollama" } },
@@ -239,6 +242,8 @@ astro-one 内置了三种基于机器学习的航天分析工具，可通过 Age
 ```
 
 ### MCP 工具服务器
+
+配置与 Claude Desktop / Cursor 兼容，可直接复制 MCP 服务器的配置：
 
 ```json
 {
@@ -258,27 +263,32 @@ astro-one 内置了三种基于机器学习的航天分析工具，可通过 Age
 | 选项 | 默认值 | 描述 |
 |------|--------|------|
 | `tools.restrictToWorkspace` | `false` | 限制 Agent 仅在工作目录内操作 |
-| `channels.*.allowFrom` | `[]` | 白名单用户 ID，`["*"]` 允许所有人 |
+| `channels.*.allowFrom` | `[]` | 白名单用户 ID，空数组拒绝所有访问，`["*"]` 允许所有人 |
 
 ## 💬 聊天通道
 
-支持多种聊天平台接入：
+支持多种聊天平台接入，无需公网 IP 即可使用（大部分通道使用 WebSocket 长连接）：
 
-| 通道 | 所需凭证 |
-|------|----------|
-| **Telegram** | Bot Token（@BotFather 获取） |
-| **Discord** | Bot Token + Message Content Intent |
-| **飞书 (Feishu)** | App ID + App Secret |
-| **钉钉 (DingTalk)** | Client ID + Client Secret |
-| **Slack** | Bot Token + App-Level Token |
-| **微信 (WeCom)** | Bot ID + Bot Secret |
-| **QQ** | App ID + App Secret |
-| **WhatsApp** | QR 码扫码 |
-| **Matrix** | Access Token |
-| **Email** | IMAP/SMTP 凭证 |
-| **Microsoft Teams** | App 凭证 |
+| 通道 | 所需凭证 | 连接方式 |
+|------|----------|----------|
+| **飞书 (Feishu)** | App ID + App Secret | WebSocket 长连接 |
+| **钉钉 (DingTalk)** | Client ID + Client Secret | Stream 模式 |
+| **微信企业 (WeCom)** | Bot ID + Bot Secret | WebSocket 长连接 |
+| **QQ** | App ID + App Secret | WebSocket |
+| **Telegram** | Bot Token（@BotFather 获取） | 轮询/Webhook |
+| **Discord** | Bot Token + Message Content Intent | WebSocket |
+| **Slack** | Bot Token + App-Level Token | Socket Mode |
+| **WhatsApp** | QR 码扫码 | Bridge 桥接 |
+| **Matrix** | Access Token | 长连接 |
+| **Email** | IMAP/SMTP 凭证 | IMAP 轮询 |
+| **Microsoft Teams** | App 凭证 | WebSocket |
 
-配置示例（飞书）：
+### 飞书配置示例
+
+1. 前往 [飞书开放平台](https://open.feishu.cn/app) 创建应用，启用**机器人**能力
+2. 添加权限 `im:message` 和 `im:message.p2p_msg:readonly`
+3. 添加事件 `im.message.receive_v1`，选择**长连接**模式
+4. 配置：
 
 ```json
 {
@@ -294,30 +304,54 @@ astro-one 内置了三种基于机器学习的航天分析工具，可通过 Age
 }
 ```
 
-启动网关：
+5. 启动：
 
 ```bash
 astroone gateway
 ```
 
+> [!TIP]
+> 飞书使用 WebSocket 接收消息，无需 Webhook 或公网 IP！
+
+### 钉钉配置示例
+
+1. 前往 [钉钉开放平台](https://open-dev.dingtalk.com/) 创建应用，添加**机器人**能力
+2. 开启 **Stream 模式**
+3. 配置：
+
+```json
+{
+  "channels": {
+    "dingtalk": {
+      "enabled": true,
+      "clientId": "YOUR_APP_KEY",
+      "clientSecret": "YOUR_APP_SECRET",
+      "allowFrom": ["YOUR_STAFF_ID"]
+    }
+  }
+}
+```
+
 ## 🤖 LLM 提供商
 
-| 提供商 | 说明 |
-|--------|------|
-| `openrouter` | 推荐，支持所有主流模型 |
-| `openai` | GPT 系列 |
-| `anthropic` | Claude 系列 |
-| `deepseek` | DeepSeek |
-| `gemini` | Google Gemini |
-| `ollama` | 本地模型 |
-| `azure_openai` | Azure OpenAI |
-| `dashscope` | 通义千问 |
-| `moonshot` | Moonshot/Kimi |
-| `zhipu` | 智谱 GLM |
-| `groq` | 高速推理 |
-| `custom` | 任意 OpenAI 兼容端点 |
+| 提供商 | 说明 | 获取密钥 |
+|--------|------|----------|
+| `openrouter` | 推荐，支持所有主流模型 | [openrouter.ai](https://openrouter.ai) |
+| `openai` | GPT 系列 | [platform.openai.com](https://platform.openai.com) |
+| `anthropic` | Claude 系列 | [console.anthropic.com](https://console.anthropic.com) |
+| `deepseek` | DeepSeek | [platform.deepseek.com](https://platform.deepseek.com) |
+| `gemini` | Google Gemini | [aistudio.google.com](https://aistudio.google.com) |
+| `dashscope` | 通义千问 (Qwen) | [dashscope.console.aliyun.com](https://dashscope.console.aliyun.com) |
+| `moonshot` | Moonshot / Kimi | [platform.moonshot.cn](https://platform.moonshot.cn) |
+| `zhipu` | 智谱 GLM | [open.bigmodel.cn](https://open.bigmodel.cn) |
+| `siliconflow` | 硅基流动 | [siliconflow.cn](https://siliconflow.cn) |
+| `groq` | 高速推理 + 语音转录 | [console.groq.com](https://console.groq.com) |
+| `azure_openai` | Azure OpenAI | [portal.azure.com](https://portal.azure.com) |
+| `ollama` | 本地模型 | 无需密钥 |
+| `vllm` | 本地/兼容 OpenAI 的服务器 | 无需密钥 |
+| `custom` | 任意 OpenAI 兼容端点 | 按需 |
 
-添加新提供商仅需 2 步，详见 [Provider Registry](astro_one/providers/registry.py)。
+添加新提供商仅需 2 步，详见 `astro_one/providers/registry.py`。
 
 ## 💻 CLI 命令
 
@@ -345,13 +379,47 @@ vim ~/.astro-one/config.json                     # 配置 API 密钥
 docker compose up -d astro-one-gateway           # 启动网关
 ```
 
-### Docker
+### Docker 手动构建
 
 ```bash
+# 构建镜像
 docker build -t astro-one .
 
+# 首次初始化
 docker run -v ~/.astro-one:/root/.astro-one --rm astro-one onboard
+
+# 编辑配置
+vim ~/.astro-one/config.json
+
+# 启动网关
 docker run -v ~/.astro-one:/root/.astro-one -p 18790:18790 astro-one gateway
+
+# 单次命令
+docker run -v ~/.astro-one:/root/.astro-one --rm astro-one agent -m "Hello!"
+```
+
+### Linux 系统服务
+
+```bash
+# 创建 systemd 用户服务
+cat > ~/.config/systemd/user/astro-one-gateway.service << 'EOF'
+[Unit]
+Description=astro-one Gateway
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/astroone gateway
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target
+EOF
+
+# 启用并启动
+systemctl --user daemon-reload
+systemctl --user enable --now astro-one-gateway
 ```
 
 ## 📁 项目结构
@@ -366,15 +434,23 @@ astro_one/
 │   ├── subagent.py      #    后台任务执行
 │   ├── auto_space_scan.py #  🔭 自动巡天服务
 │   └── tools/           #    内置工具
-│       ├── mlf_tool.py  #      🛰️ 机动检测（LSM）
-│       ├── iod_tool.py  #      🛰️ 初轨确定（Transformer）
-│       ├── orbin_tool.py #     🛰️ 轨道预测（Informer）
+│       ├── mlf_tool.py  #      🛰️ 机动检测（LSM 模型）
+│       ├── iod_tool.py  #      🛰️ 初轨确定（Transformer 模型）
+│       ├── orbin_tool.py #     🛰️ 轨道预测（Informer 模型）
 │       ├── shell.py     #      Shell 命令执行
-│       ├── filesystem.py #     文件读写
+│       ├── filesystem.py #     文件系统操作
 │       ├── web.py       #      Web 搜索和抓取
 │       ├── mcp.py       #      MCP 协议工具
 │       └── ...          #      更多工具
 ├── channels/            # 📱 聊天平台集成（15+ 通道）
+│   ├── feishu.py        #    飞书
+│   ├── dingtalk.py      #    钉钉
+│   ├── wecom.py         #    企业微信
+│   ├── qq.py            #    QQ
+│   ├── telegram.py      #    Telegram
+│   ├── discord.py       #    Discord
+│   ├── slack.py         #    Slack
+│   └── ...              #    更多通道
 ├── providers/           # 🤖 LLM 提供商（10+ 提供商）
 ├── bus/                 # 🚌 消息路由（pub/sub）
 ├── cron/                # ⏰ 定时任务
@@ -400,16 +476,21 @@ pip install -e ".[dev]"
 ### 代码规范
 
 ```bash
-ruff check astro_one/      # Lint
-ruff format astro_one/     # 格式化
+ruff check astro_one/      # Lint 检查
+ruff format astro_one/     # 自动格式化
 ```
+
+- **行宽**：100 字符
+- **Python**：3.11+
+- **Lint 规则**：E, F, I, N, W（忽略 E501）
 
 ### 运行测试
 
 ```bash
-pytest tests/              # 全部测试
-pytest tests/test_auto_space_scan.py  # 航天工具测试
-pytest tests/ -k "test_name"          # 按名称匹配
+pytest tests/                                # 运行全部测试
+pytest tests/test_auto_space_scan.py         # 航天工具测试
+pytest tests/test_agent_runner_iterations.py # Agent 迭代测试
+pytest tests/ -k "test_name"                 # 按名称匹配
 ```
 
 ### 分支策略
@@ -419,9 +500,12 @@ pytest tests/ -k "test_name"          # 按名称匹配
 | `main` | 稳定发布 | 生产就绪 |
 | `nightly` | 实验性功能 | 可能存在 Bug |
 
-## 📄 License
+- **新功能、重构、API 变更** → 目标分支：`nightly`
+- **Bug 修复、文档、小幅调整** → 目标分支：`main`
 
-MIT License - 详见 [LICENSE](LICENSE)
+## 📄 许可证
+
+MIT License — 详见 [LICENSE](LICENSE)
 
 ---
 
