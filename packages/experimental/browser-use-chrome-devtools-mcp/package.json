@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-experimental-browser-use-chrome-devtools-mcp",
+  "name": "@astro-one/experimental-browser-use-chrome-devtools-mcp",
   "description": "Experimental per-Session Chromium browser tools through chrome-devtools-mcp",
   "version": "0.1.7-rc.1",
   "publishConfig": {
@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/experimental/browser-use-chrome-devtools-mcp"
   },
   "type": "module",
@@ -27,27 +27,27 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@deepseek-ai/dsh-experimental-browser-use-runtime": "workspace:*",
+    "@astro-one/experimental-browser-use-runtime": "workspace:*",
     "chrome-devtools-mcp": "1.9.0"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-browser-use": "workspace:*",
-    "@deepseek-ai/dsh-agent": "workspace:*",
-    "@deepseek-ai/dsh-tools": "workspace:*",
-    "@deepseek-ai/dsh-system-prompt": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/browser-use": "workspace:*",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/cordis-plugin-loader": "workspace:~",
-    "@deepseek-ai/cordis-plugin-include": "workspace:~",
-    "@deepseek-ai/dsh-browser-use": "workspace:*",
-    "@deepseek-ai/dsh-agent": "workspace:*",
-    "@deepseek-ai/dsh-agent-loop": "workspace:*",
-    "@deepseek-ai/dsh-llm": "workspace:*",
-    "@deepseek-ai/dsh-session": "workspace:*",
-    "@deepseek-ai/dsh-tools": "workspace:*",
-    "@deepseek-ai/dsh-system-prompt": "workspace:*",
-    "@deepseek-ai/dsh-session-projection": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/browser-use": "workspace:*",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-loop": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/session-projection": "workspace:*"
   }
 }

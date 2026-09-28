@@ -3,13 +3,13 @@ description: "进程本地后台任务注册表，供组合、容量评估或排
 kind: "package-reference"
 ---
 
-# @deepseek-ai/dsh-jobs-local
+# @astro-one/jobs-local
 
 [English](README.md) | 中文
 
 ## 概述
 
-`dsh-jobs-local` 在 agent（智能体）继续推进时，于 harness 进程内运行后台任务。拥有任务的 agent 可以读取、等待、列出和取消任务；同时挂载 `dsh-tool-jobs` 时，还会收到会话内完成通知。可配置的并发与输出保留上限约束资源使用。生产方可以提供供定期读取的输出，也可以直接追加；用户可以观察保留的输出，而不消耗 agent 尚未读取的内容。任务在拥有者或 harness 关闭时结束。
+`astro-one-jobs-local` 在 agent（智能体）继续推进时，于 harness 进程内运行后台任务。拥有任务的 agent 可以读取、等待、列出和取消任务；同时挂载 `astro-one-tool-jobs` 时，还会收到会话内完成通知。可配置的并发与输出保留上限约束资源使用。生产方可以提供供定期读取的输出，也可以直接追加；用户可以观察保留的输出，而不消耗 agent 尚未读取的内容。任务在拥有者或 harness 关闭时结束。
 
 ## 目录
 
@@ -25,7 +25,7 @@ kind: "package-reference"
 <a id="use-this-package"></a>
 ## 使用本包
 
-当组合需要进程内后台任务时加载本插件：长时间运行的工具注册其工作，拥有它的 agent 在不阻塞自身轮次的情况下读取、等待、列出和取消。它实现 [`dsh-jobs`](../jobs/README.zh.md) 约定；模型侧的 `job_output`、`job_list` 与 `job_kill` 工具来自 [`dsh-tool-jobs`](../tool-jobs/README.zh.md)。
+当组合需要进程内后台任务时加载本插件：长时间运行的工具注册其工作，拥有它的 agent 在不阻塞自身轮次的情况下读取、等待、列出和取消。它实现 [`astro-one-jobs`](../jobs/README.zh.md) 约定；模型侧的 `job_output`、`job_list` 与 `job_kill` 工具来自 [`astro-one-tool-jobs`](../tool-jobs/README.zh.md)。
 
 ### 何时选择
 
@@ -36,7 +36,7 @@ kind: "package-reference"
 加载插件即注册 `ctx.jobs`；每个字段都是可选的。
 
 ```yaml
-- name: '@deepseek-ai/dsh-jobs-local'
+- name: '@astro-one/jobs-local'
 ```
 
 | 字段 | 默认值 | 含义 |
@@ -46,7 +46,7 @@ kind: "package-reference"
 | `settledRetainBytes` | `16384` | 任务结算后保留的环容量，UTF-8 字节；模型尚未读取的字节保留到它的首次终态读取 |
 | `pumpPollMs` | `150` | 任务拉取源的轮询间隔，毫秒 |
 
-生成的[配置目录](../../../docs/config-catalog.zh.md#deepseek-aidsh-jobs-local)是每个受支持字段的穷尽式真源。
+生成的[配置目录](../../../docs/config-catalog.zh.md#astro-onejobs-local)是每个受支持字段的穷尽式真源。
 
 ### 每个所有者得到什么
 
@@ -58,7 +58,7 @@ kind: "package-reference"
 
 ### 可能出什么问题
 
-没有服务于所有者的控制器时无法启动工作——加载 `dsh-tool-jobs` 即附加一个，否则 `start()` 会以指出它的消息拒绝。返回但始终未结算 `done` 的生产方取消与缓慢停止无法区分，可能使销毁停滞并持续占用一个容量名额。每条记录都会在 harness 进程退出时消失。
+没有服务于所有者的控制器时无法启动工作——加载 `astro-one-tool-jobs` 即附加一个，否则 `start()` 会以指出它的消息拒绝。返回但始终未结算 `done` 的生产方取消与缓慢停止无法区分，可能使销毁停滞并持续占用一个容量名额。每条记录都会在 harness 进程退出时消失。
 
 -----
 
@@ -87,7 +87,7 @@ kind: "package-reference"
 | [`src/events.ts`](src/events.ts) | 按 scope 分层的事件路由：`{ owner }`、`{ owners: 'all' }` 与 `{ owners: 'scope' }` 订阅 |
 | [`src/ring.ts`](src/ring.ts) | 每个任务的有界输出环：追加、保留裁剪、按偏移读取 |
 | [`src/pump.ts`](src/pump.ts) | 注册表拥有的拉取泵：每个任务一个定时器，结算前最后一次排干 |
-| — | 不发布运行时不变式伴生入口；事件协议与事件对读取的检查位于 `@deepseek-ai/dsh-jobs/invariant`。此提供方的准入决策使用私有配置，并且必须在后端启动器运行前失败；当前生产方由 `LocalJobRegistry.start()` 同步执行该决策。发布后再重复聚合只会向 companion 暴露私有配置，也无法验证失败发生在启动前。 |
+| — | 不发布运行时不变式伴生入口；事件协议与事件对读取的检查位于 `@astro-one/jobs/invariant`。此提供方的准入决策使用私有配置，并且必须在后端启动器运行前失败；当前生产方由 `LocalJobRegistry.start()` 同步执行该决策。发布后再重复聚合只会向 companion 暴露私有配置，也无法验证失败发生在启动前。 |
 
 ### scope 分层
 
@@ -95,7 +95,7 @@ kind: "package-reference"
 
 ### 准入与结算
 
-`activeJobCount` 按精确所有者或共享无主桶统计权威记录。`settle` 只记录一次终止结果（把记录下来的 kill 原因合并进 `killed` 的 detail），清除进度行，把环裁剪到结算保留量（保留模型游标尚未消费的全部字节），解析每个等待方，然后发出带原因的 `settled` 与环的最终 `output` 信号。原因在 `JobRegistry.kill` 之后为 `kill`，在所有者或服务取消之后为 `teardown`，否则为 `producer`；`dsh-tool-jobs` 据此跳过没人能读的通知。
+`activeJobCount` 按精确所有者或共享无主桶统计权威记录。`settle` 只记录一次终止结果（把记录下来的 kill 原因合并进 `killed` 的 detail），清除进度行，把环裁剪到结算保留量（保留模型游标尚未消费的全部字节），解析每个等待方，然后发出带原因的 `settled` 与环的最终 `output` 信号。原因在 `JobRegistry.kill` 之后为 `kill`，在所有者或服务取消之后为 `teardown`，否则为 `producer`；`astro-one-tool-jobs` 据此跳过没人能读的通知。
 
 ### 销毁
 
@@ -122,7 +122,7 @@ kind: "package-reference"
 <a id="model-experience"></a>
 ## 模型体验
 
-通过生产方插件与 `dsh-tool-jobs` 间接影响模型，注册表后端把全部模型渲染委托给它们。
+通过生产方插件与 `astro-one-tool-jobs` 间接影响模型，注册表后端把全部模型渲染委托给它们。
 
 #### KV Cache 影响
 

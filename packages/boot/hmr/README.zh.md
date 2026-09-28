@@ -3,7 +3,7 @@ description: "通过统一协调队列热重载插件代码和 profile 配置。
 kind: "package-reference"
 ---
 
-# @deepseek-ai/dsh-hmr
+# @astro-one/hmr
 
 [English](README.md) | 中文
 
@@ -33,7 +33,7 @@ kind: "package-reference"
     root: ["."]
 ```
 
-已有配置将模块名 `@deepseek-ai/cordis-plugin-hmr` 替换为 `@deepseek-ai/dsh-hmr`。继续提供 `hmr` 服务键、`baseDir`、`config`、`getLinked()`、`getOuterStack()`、`hmr/change` 和 `hmr/reload`。工作区保留 vendored 包；DSH profile 使用本包。
+已有配置将模块名 `@astro-one/cordis-plugin-hmr` 替换为 `@astro-one/hmr`。继续提供 `hmr` 服务键、`baseDir`、`config`、`getLinked()`、`getOuterStack()`、`hmr/change` 和 `hmr/reload`。工作区保留 vendored 包；Astro One profile 使用本包。
 
 ### 配置
 
@@ -54,7 +54,7 @@ Chokidar 选项（包括轮询）保持原有含义。精确配置监听同时�
 <details>
 <summary>实现细节——点击展开</summary>
 
-`watchConfig()` 注册会被等待的配置处理器。`runExclusive()` 将配置变更、Loader 更新与自动重载串行化，并拒绝嵌套事务。包安装和删除在该队列之外执行。HMR 不获取包操作写锁；manifest 通知仅在有序的 `dsh.profile.bundles` 列表变化时触发重载。profile 与 home patch 变化也会触发重新组合。配置事务期间收到的文件事件在事务结束后处理。 Include 刷新和 profile 重载都通过普通的 Loader 条目更新到达插件；仅 volatile 变化由 Loader 就地提交。
+`watchConfig()` 注册会被等待的配置处理器。`runExclusive()` 将配置变更、Loader 更新与自动重载串行化，并拒绝嵌套事务。包安装和删除在该队列之外执行。HMR 不获取包操作写锁；manifest 通知仅在有序的 `astroOne.profile.bundles` 列表变化时触发重载。profile 与 home patch 变化也会触发重新组合。配置事务期间收到的文件事件在事务结束后处理。 Include 刷新和 profile 重载都通过普通的 Loader 条目更新到达插件；仅 volatile 变化由 Loader 就地提交。
 
 App-boot 负责 profile 解析和 patch 优先级规则。HMR 读取启动器提供的纯数据 `profileContext`，在初始化时注册 profile manifest 和两份用户 patch 的监听，并等待应用就绪后处理更改。销毁 HMR 时会关闭监听器并取消等待启动的重载。HMR 也负责模块缓存替换和重载调度。配置监听器在当前事务上下文之外启动，使后续通知可以进入队列。不发布 invariant 伴生入口，因为队列和监听注册没有独立的持久投影。
 

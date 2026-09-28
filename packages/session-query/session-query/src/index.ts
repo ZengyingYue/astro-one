@@ -1,20 +1,20 @@
 /**
  * Service Definition for combined session-history reads, traces, filters, and full-text search.
  *
- * @module @deepseek-ai/dsh-session-query
+ * @module @astro-one/session-query
  */
 
-import { currentSessionMessageProjections } from '@deepseek-ai/dsh-session-format-catalog/message-projections'
-import { Context, Service } from '@deepseek-ai/cordis'
+import { currentSessionMessageProjections } from '@astro-one/session-format-catalog/message-projections'
+import { Context, Service } from '@astro-one/cordis'
 import {
   Session,
   SessionSeq,
   snapshotSessionEvent,
   type SessionId,
   type SessionSeq as SessionSeqType,
-} from '@deepseek-ai/dsh-session'
-import { foldSessionTitle } from '@deepseek-ai/dsh-session-title'
-import type { SessionTitleSnapshot } from '@deepseek-ai/dsh-session-title'
+} from '@astro-one/session'
+import { foldSessionTitle } from '@astro-one/session-title'
+import type { SessionTitleSnapshot } from '@astro-one/session-title'
 import type {
   SessionEventResultFilter,
   SessionEventSearchPage,
@@ -82,7 +82,7 @@ export {
 export { assertSessionHeadersCompatible } from './sources.ts'
 export type { SessionObservation, SessionObservationOptions } from './observation.ts'
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     sessionQuery: SessionQueryEngine
   }

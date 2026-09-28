@@ -1,12 +1,12 @@
 /**
  * Exclusive named registration for the browser-use capability.
- * @module @deepseek-ai/dsh-browser-use
+ * @module @astro-one/browser-use
  */
 
-import { Context, Service } from '@deepseek-ai/cordis'
+import { Context, Service } from '@astro-one/cordis'
 import type { BrowserUseProviderName } from './brand.ts'
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     browserUse: BrowserUseRegistry
   }

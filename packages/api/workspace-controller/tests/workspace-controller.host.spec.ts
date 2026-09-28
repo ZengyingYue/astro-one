@@ -2,27 +2,27 @@ import { existsSync, mkdirSync, mkdtempSync, realpathSync, rmSync } from 'node:f
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import SessionStore, { SessionId } from '@deepseek-ai/dsh-session'
-import Storage from '@deepseek-ai/dsh-storage'
-import { DomainFacility } from '@deepseek-ai/dsh-storage-domain'
-import { RemoteError } from '@deepseek-ai/dsh-typert-protocol'
-import WorkspaceRegistry from '@deepseek-ai/dsh-workspace'
-import type { WorkspaceId } from '@deepseek-ai/dsh-workspace/types'
+import { Context } from '@astro-one/cordis'
+import SessionStore, { SessionId } from '@astro-one/session'
+import Storage from '@astro-one/storage'
+import { DomainFacility } from '@astro-one/storage-domain'
+import { RemoteError } from '@astro-one/typert-protocol'
+import WorkspaceRegistry from '@astro-one/workspace'
+import type { WorkspaceId } from '@astro-one/workspace/types'
 import WorkspaceController from '../src/index.ts'
 import { WorkspaceFeed } from '../src/feed.ts'
 import type { WorkspaceFollowFrame } from '../src/types.ts'
 import { MemoryStorageBackend } from '../../../storage/storage-domain/tests/helpers/memory-backend.ts'
 
 // The controller relays whatever families the providers report; this suite merges its own.
-declare module '@deepseek-ai/dsh-workspace/types' {
+declare module '@astro-one/workspace/types' {
   interface SessionActivityKindMap {
     probe: true
     'probe-items': true
   }
 }
 
-declare module '@deepseek-ai/dsh-typert-protocol' {
+declare module '@astro-one/typert-protocol' {
   interface RemoteErrorDetailsMap {
     'fixture/failure': {}
   }
@@ -50,7 +50,7 @@ function deferred<T>(): Deferred<T> {
 }
 
 async function harness(options: { systemDocuments?: boolean } = {}) {
-  const root = realpathSync.native(mkdtempSync(join(tmpdir(), 'dsh-workspace-controller-')))
+  const root = realpathSync.native(mkdtempSync(join(tmpdir(), 'astro-one-workspace-controller-')))
   tempDirs.push(root)
   const ctx = new Context()
   roots.push(ctx)
@@ -477,14 +477,14 @@ describe('first-use Remote', () => {
   it('uses the requested display title independently of the directory name', async () => {
     const { controller, root } = await harness()
     const result = await controller.initializeDefault({ directoryName: 'default-workspace', title: 'Default workspace' }, new AbortController().signal)
-    expect(result?.workspace).toMatchObject({ path: join(root, 'deepseek-harness', 'default-workspace'), title: 'Default workspace' })
+    expect(result?.workspace).toMatchObject({ path: join(root, 'astro-one', 'default-workspace'), title: 'Default workspace' })
   })
 
   it('returns a durable Workspace without allocating a Session', async () => {
     const { controller, ctx, root } = await harness()
     const signal = new AbortController().signal
     const result = await controller.initializeDefault({ directoryName: 'Default workspace', title: 'Default workspace' }, signal)
-    expect(result!.workspace.path).toBe(join(root, 'deepseek-harness', 'Default workspace'))
+    expect(result!.workspace.path).toBe(join(root, 'astro-one', 'Default workspace'))
     expect(existsSync(result!.workspace.path)).toBe(true)
     expect(ctx.sessions.list()).toEqual([])
     expect(await controller.initializeDefault({ directoryName: '默认工作区', title: '默认工作区' }, signal)).toEqual(result)

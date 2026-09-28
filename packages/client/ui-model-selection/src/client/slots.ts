@@ -4,9 +4,9 @@
  * entry; this package only contributes the single occupant, so no SlotMap
  * merge lives here.
  */
-import type { RemoteResult } from '@deepseek-ai/dsh-typert-protocol'
-import type { ModelSelection } from '@deepseek-ai/dsh-api-remotes/client'
-import type { SnapshotStore } from '@deepseek-ai/dsh-client-store'
+import type { RemoteResult } from '@astro-one/typert-protocol'
+import type { ModelSelection } from '@astro-one/api-remotes/client'
+import type { SnapshotStore } from '@astro-one/client-store'
 import type { ModelDirectoryState } from './directory.ts'
 
 /** Injected business face of the composer model seat. */

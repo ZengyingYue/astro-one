@@ -6,11 +6,11 @@ English | [中文](2026-09-15-narrow-pi-ai-runtime-imports.zh.md)
 
 ## Problem
 
-The base bundle mounts `dsh-llm-pi-ai` with no configured routes so the Models settings page can offer pi-ai providers. Importing pi-ai's aggregate entry point for model helpers also evaluates its exported TypeBox namespace, adding hundreds of modules to every application startup even when all Sessions use `dsh-llm-deepseek`.
+The base bundle mounts `astro-one-llm-pi-ai` with no configured routes so the Models settings page can offer pi-ai providers. Importing pi-ai's aggregate entry point for model helpers also evaluates its exported TypeBox namespace, adding hundreds of modules to every application startup even when all Sessions use `astro-one-llm-deepseek`.
 
 ## Decision
 
-`dsh-llm-pi-ai` has no runtime import of pi-ai's aggregate entry point. Catalog and login metadata continue through `providers/all`; protocol implementations use their existing `api/*.lazy` entries; overflow detection uses `utils/overflow`. Package-local `models.ts` supplies the three model helpers the adapter needs. Its collection comes from pi-ai's public `builtinModels()` implementation and is cleared before route providers are installed. Its provider constructor implements the static single-protocol case this adapter supplies. Its reasoning-level selection reads pi-ai's public `Model` metadata in pi-ai's escalation order.
+`astro-one-llm-pi-ai` has no runtime import of pi-ai's aggregate entry point. Catalog and login metadata continue through `providers/all`; protocol implementations use their existing `api/*.lazy` entries; overflow detection uses `utils/overflow`. Package-local `models.ts` supplies the three model helpers the adapter needs. Its collection comes from pi-ai's public `builtinModels()` implementation and is cleared before route providers are installed. Its provider constructor implements the static single-protocol case this adapter supplies. Its reasoning-level selection reads pi-ai's public `Model` metadata in pi-ai's escalation order.
 
 Type-only imports from the aggregate entry point remain because TypeScript erases them. Import profiling of the built package resolves 153 pi-ai modules and no TypeBox modules or pi-ai aggregate entry.
 

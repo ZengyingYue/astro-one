@@ -4,11 +4,11 @@
  * @module
  */
 
-import type { Context, Fiber } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import { ComputerUseProviderName } from '@deepseek-ai/dsh-computer-use/brand'
-import * as McpClient from '@deepseek-ai/dsh-mcp-client'
-import type {} from '@deepseek-ai/dsh-computer-use'
+import type { Context, Fiber } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
+import { ComputerUseProviderName } from '@astro-one/computer-use/brand'
+import * as McpClient from '@astro-one/mcp-client'
+import type {} from '@astro-one/computer-use'
 
 /** Cordis plugin identity for the installed Cua Driver provider. */
 export const name = 'experimental-computer-use-cua-driver-mcp'

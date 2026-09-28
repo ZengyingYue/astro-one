@@ -1,16 +1,16 @@
 /** ui-subagent browser half: catalog actions and read-only composer routing. */
-import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
-import { Context } from '@deepseek-ai/cordis'
-import { stubConfigForm } from '@deepseek-ai/dsh-client-test-runtime'
+import { createSnapshotStore } from '@astro-one/client-store'
+import { Context } from '@astro-one/cordis'
+import { stubConfigForm } from '@astro-one/client-test-runtime'
 import { describe, expect, it } from 'vitest'
 import type {
   SessionListState, SessionSnapshot, SessionSummary,
-} from '@deepseek-ai/dsh-api-session-controller/client'
-import type { SubagentAddress } from '@deepseek-ai/dsh-subagent/client'
-import { SlotRegistry } from '@deepseek-ai/dsh-client-ui-renderer/client'
-import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import type { ComposerChainProps } from '@deepseek-ai/dsh-client-ui-conversation/client'
-import { apply as applyLocale, inject as localeInject } from '@deepseek-ai/dsh-client-locale/client'
+} from '@astro-one/api-session-controller/client'
+import type { SubagentAddress } from '@astro-one/subagent/client'
+import { SlotRegistry } from '@astro-one/client-ui-renderer/client'
+import type { SessionId } from '@astro-one/session/types'
+import type { ComposerChainProps } from '@astro-one/client-ui-conversation/client'
+import { apply as applyLocale, inject as localeInject } from '@astro-one/client-locale/client'
 import {
   SubagentHeaderLineage, type SubagentCatalogInjected,
 } from '../src/client/SubagentHeaderLineage.tsx'
@@ -126,7 +126,7 @@ describe('apply', () => {
       {
         method: 'openResource',
         args: [
-          'dsh-resource://subagentchat/session/c1?parent=parent&mode=continuable',
+          'astro-one-resource://subagentchat/session/c1?parent=parent&mode=continuable',
           { kind: 'subagentchat', preferNewPane: true },
         ],
       },

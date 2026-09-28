@@ -10,7 +10,7 @@ A branch may need the history before a tool result arrives, including a historic
 
 ## Decision
 
-`SessionStore.fork` accepts any existing integer event seq exactly. It owns source membership, child identity and cut validation. `buildForkSeed`, the only export of `dsh-session/fork`, copies the inclusive prefix, inserts the child's inherited `session/end-seed` marker, and closes the open tail. The Host selects and builds from one immutable observation. Omitted `atSeq` means the latest completed turn with its independent tail, stopping before the next turn or queued user input. An explicit seq never moves.
+`SessionStore.fork` accepts any existing integer event seq exactly. It owns source membership, child identity and cut validation. `buildForkSeed`, the only export of `astro-one-session/fork`, copies the inclusive prefix, inserts the child's inherited `session/end-seed` marker, and closes the open tail. The Host selects and builds from one immutable observation. Omitted `atSeq` means the latest completed turn with its independent tail, stopping before the next turn or queued user input. An explicit seq never moves.
 
 Fork and crash recovery share the same tool-pairing algorithm. Only an open step receives missing error results before `step/end`; an open turn then receives `turn/end`. Closed steps and turns remain unchanged, including historical failures with missing results. The internal cause selects `forked` versus `interrupted`, deterministic result IDs and model-visible wording. Fork wording describes missing inherited records and warns that the parent may have executed the call after the cut. Retry advice distinguishes read-only or idempotent operations from operations with side effects.
 

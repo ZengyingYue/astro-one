@@ -3,16 +3,16 @@ import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import Include, { applyEntryPatches } from '@deepseek-ai/cordis-plugin-include'
-import { loadOverlayPatches } from '@deepseek-ai/dsh-app-boot'
-import { OfficeSourceKey, type OfficeToPdfRequest } from '@deepseek-ai/dsh-office-to-pdf'
-import * as LibreOfficeProvider from '@deepseek-ai/dsh-office-to-pdf'
+import { Context } from '@astro-one/cordis'
+import Loader from '@astro-one/cordis-plugin-loader'
+import Include, { applyEntryPatches } from '@astro-one/cordis-plugin-include'
+import { loadOverlayPatches } from '@astro-one/app-boot'
+import { OfficeSourceKey, type OfficeToPdfRequest } from '@astro-one/office-to-pdf'
+import * as LibreOfficeProvider from '@astro-one/office-to-pdf'
 import { expect, it, onTestFinished } from 'vitest'
 
 it('loads one shared conversion row and retains caller-owned PDFs after disposal', async () => {
-  const directory = await mkdtemp(join(tmpdir(), 'dsh-conversion-loader-'))
+  const directory = await mkdtemp(join(tmpdir(), 'astro-one-conversion-loader-'))
   const ctx = new Context()
   onTestFinished(async () => {
     try { await ctx.fiber.dispose() }
@@ -20,7 +20,7 @@ it('loads one shared conversion row and retains caller-owned PDFs after disposal
   })
   const rows = loadOverlayPatches('conversion-test', fileURLToPath(new URL('../cordis.patch.yml', import.meta.url)))
     .flatMap(patch => patch.insert ?? [])
-    .filter(row => row.name === '@deepseek-ai/dsh-office-to-pdf')
+    .filter(row => row.name === '@astro-one/office-to-pdf')
   expect(rows.map(row => row.id)).toEqual(['office-to-pdf'])
   const configured = applyEntryPatches(rows, [{ id: 'office-to-pdf', config: { maxConcurrentConversions: 1 } }],
     (message) => { throw new Error(message) })
@@ -33,7 +33,7 @@ it('loads one shared conversion row and retains caller-owned PDFs after disposal
   ctx.loader.internal = {
     version: 'v2',
     async import(specifier: string) {
-      if (specifier !== '@deepseek-ai/dsh-office-to-pdf') throw new Error(`Unexpected plugin: ${specifier}`)
+      if (specifier !== '@astro-one/office-to-pdf') throw new Error(`Unexpected plugin: ${specifier}`)
       return LibreOfficeProvider
     },
   } as unknown as NonNullable<typeof ctx.loader.internal>

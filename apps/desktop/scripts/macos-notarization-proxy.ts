@@ -5,7 +5,7 @@ import { closeSync, mkdirSync, openSync, readFileSync, rmSync, writeFileSync } f
 import { connect } from 'node:net'
 import { homedir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
-import { tryLockExclusive } from '@deepseek-ai/node-addon-system/flock'
+import { tryLockExclusive } from '@astro-one/node-addon-system/flock'
 
 interface ProxyState {
   readonly enabled: boolean
@@ -24,7 +24,7 @@ interface ProxyOperations {
   readonly ownerAlive: (pid: number) => boolean
 }
 
-const LOCK = join(homedir(), 'Library', 'Caches', 'com.deepseek.harness', 'notarization-proxy')
+const LOCK = join(homedir(), 'Library', 'Caches', 'com.astro.one', 'notarization-proxy')
 const RECOVERY = 'pnpm --dir apps/desktop run restore:mac-proxy'
 const NETWORKSETUP = '/usr/sbin/networksetup'
 const operations: ProxyOperations = {

@@ -6,7 +6,7 @@ English | [中文](2026-09-10-hosted-image-test-assumptions.zh.md)
 
 ## Problem
 
-The [failover leg](../process/2026-09-09-blacksmith-failover-leg.md) runs this suite on pools this repository does not own — Blacksmith's ephemeral images, and the in-house `vm-backup` and `dsh-win-ci` standbys. On the hosted image the coverage lanes failed on host properties their cases never named: whether the host offered a usable user-systemd scope decided which containment a mocked PTY exit raced; a managed scope reported a signal failure during ACP teardown; a starved reader coalesced writes the illegal-UTF-8 residual cases assumed arrived as separate chunks; and a Windows Server image refuses `CoCreateInstance(CLSID_FileOpenDialog)` outright.
+The [failover leg](../process/2026-09-09-blacksmith-failover-leg.md) runs this suite on pools this repository does not own — Blacksmith's ephemeral images, and the in-house `vm-backup` and `astro-one-win-ci` standbys. On the hosted image the coverage lanes failed on host properties their cases never named: whether the host offered a usable user-systemd scope decided which containment a mocked PTY exit raced; a managed scope reported a signal failure during ACP teardown; a starved reader coalesced writes the illegal-UTF-8 residual cases assumed arrived as separate chunks; and a Windows Server image refuses `CoCreateInstance(CLSID_FileOpenDialog)` outright.
 
 ## Decision
 
@@ -22,7 +22,7 @@ Both illegal-UTF-8 residual cases in `packages/experimental/ptc-runtime-python/t
 
 The stray-output sealing test in `packages/experimental/ptc-runtime-python/tests/stray-fragments.spec.ts` keeps a real Python child but splits its stdout reads into single-byte events. OS pipe coalescing cannot guarantee the 1024 fragments needed to seal a block: run 34465259316 passed all assertions but missed that branch. The controlled reads exercise repeated sealing and the final newline merge; exact output and bounded copy volume detect dropped bytes and repeated prefix copies.
 
-The Linux coverage lane grants `DSH_COVERAGE_TEST_TIMEOUT_MS: '90000'`, matching the Windows coverage lane, because the disposal cases in `subprocess-local` and `bash-sandbox` exceed the 5000ms default when the lane's partitions, workers, and sibling gates share one host.
+The Linux coverage lane grants `ASTRO_ONE_COVERAGE_TEST_TIMEOUT_MS: '90000'`, matching the Windows coverage lane, because the disposal cases in `subprocess-local` and `bash-sandbox` exceed the 5000ms default when the lane's partitions, workers, and sibling gates share one host.
 
 The Windows folder-dialog smoke probes `CoCreateInstance(CLSID_FileOpenDialog)` through PowerShell instead of gating on `process.platform`. An image that answers `CLASS_E_CLASSNOTAVAILABLE` (0x80040111) runs the clean-rejection case and skips the real-dialog case, so `win32-dialog.ts` keeps its file coverage without a host that can open a dialog. Every exception from that activation reads as refusal, so a host failing the probe for another reason only loses the real-dialog case; a probe that cannot run at all keeps the win32 assumption.
 

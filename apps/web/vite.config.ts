@@ -8,10 +8,10 @@ import { clientBuildEnvironmentDefines } from '../../scripts/client-build-enviro
 import { productWebBundleIsolation } from './product-isolation.ts'
 
 const src = (rel: string): string => fileURLToPath(new URL(rel, import.meta.url))
-const STANDALONE_ERROR = 'apps/web is not a standalone application: bare Vite cannot inject window.__DSH_BOOT__. '
-  + 'From a repository checkout, run `pnpm dsh web`; an installed package uses `dsh web`. '
-  + 'For client-plugin HMR, run `pnpm run dev:web`, which starts `dsh web` and the rebuild watchers together.'
-const DEFAULT_CLIENT_TITLE = 'DSH Local Build'
+const STANDALONE_ERROR = 'apps/web is not a standalone application: bare Vite cannot inject window.__ASTRO_ONE_BOOT__. '
+  + 'From a repository checkout, run `pnpm astro-one web`; an installed package uses `astro-one web`. '
+  + 'For client-plugin HMR, run `pnpm run dev:web`, which starts `astro-one web` and the rebuild watchers together.'
+const DEFAULT_CLIENT_TITLE = 'Astro One Local Build'
 
 /** Escape build-time text before placing it in the HTML title element. */
 function escapeHtmlText(value: string): string {
@@ -20,11 +20,11 @@ function escapeHtmlText(value: string): string {
 
 /** Project the public build title into the initial HTML document. */
 function clientDocumentTitle(): Plugin {
-  const title = escapeHtmlText(process.env.DSH_CLIENT_TITLE ?? DEFAULT_CLIENT_TITLE)
+  const title = escapeHtmlText(process.env.ASTRO_ONE_CLIENT_TITLE ?? DEFAULT_CLIENT_TITLE)
   return {
-    name: 'dsh-client-document-title',
+    name: 'astro-one-client-document-title',
     transformIndexHtml(html) {
-      return html.replace('<title>DSH Local Build</title>', `<title>${title}</title>`)
+      return html.replace('<title>Astro One Local Build</title>', `<title>${title}</title>`)
     },
   }
 }
@@ -32,7 +32,7 @@ function clientDocumentTitle(): Plugin {
 /** Fail before a Vite dev or preview server can expose the boot-manifest-free shell. */
 function rejectStandaloneServe(): Plugin {
   return {
-    name: 'dsh-reject-standalone-web-serve',
+    name: 'astro-one-reject-standalone-web-serve',
     config(_config, env) {
       if (env.command === 'serve') throw new Error(STANDALONE_ERROR)
     },
@@ -52,7 +52,7 @@ function emitPreviewPage(): Plugin {
   let written = false
   let outputDirectory = ''
   return {
-    name: 'dsh-emit-preview-page',
+    name: 'astro-one-emit-preview-page',
     configResolved(config) {
       write = config.build.write
       outputDirectory = resolve(config.root, config.build.outDir)

@@ -7,19 +7,19 @@
  */
 
 import { describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import { createScope } from '@deepseek-ai/dsh-scope'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import { PtcRuntime } from '@deepseek-ai/dsh-ptc-runtime'
-import type { PtcRunRequest, PtcRunResult } from '@deepseek-ai/dsh-ptc-runtime'
-import ToolRuntime, { RUN_CODE_NAME, defineTool } from '@deepseek-ai/dsh-tools'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import { SessionId } from '@deepseek-ai/dsh-session'
-import { apply, Config, inject, name } from '@deepseek-ai/dsh-agent-tool-presentation'
+import { Context } from '@astro-one/cordis'
+import { createScope } from '@astro-one/scope'
+import SystemPrompt from '@astro-one/system-prompt'
+import { PtcRuntime } from '@astro-one/ptc-runtime'
+import type { PtcRunRequest, PtcRunResult } from '@astro-one/ptc-runtime'
+import ToolRuntime, { RUN_CODE_NAME, defineTool } from '@astro-one/tools'
+import type { Agent } from '@astro-one/agent'
+import { SessionId } from '@astro-one/session'
+import { apply, Config, inject, name } from '@astro-one/agent-tool-presentation'
 
 /** A runtime that never runs anything: presentation never dispatches. */
 class StubRuntime extends PtcRuntime {
-  resolve(request: import('@deepseek-ai/dsh-ptc-runtime').PtcRunRequest): import('@deepseek-ai/dsh-ptc-runtime').PtcRunSpec { return { ...request, cwd: request.cwd ?? process.cwd(), timeoutMs: request.timeoutMs ?? 120_000 } }
+  resolve(request: import('@astro-one/ptc-runtime').PtcRunRequest): import('@astro-one/ptc-runtime').PtcRunSpec { return { ...request, cwd: request.cwd ?? process.cwd(), timeoutMs: request.timeoutMs ?? 120_000 } }
 
   readonly language = 'typescript'
   readonly isolation = 'stub'
@@ -105,7 +105,7 @@ describe('the tool-presentation row', () => {
 
     const { agent, row } = await mount(ctx, { mode: 'ptc' })
 
-    // Pending, not applied: `dsh-agent-preset-registry` rejects a mount holding a row
+    // Pending, not applied: `astro-one-agent-preset-registry` rejects a mount holding a row
     // that never reached a usable state, naming this id — so the preset fails
     // where the operator can act, instead of at the first request.
     expect(row.ctx.get('ptcRuntime')).toBeUndefined()

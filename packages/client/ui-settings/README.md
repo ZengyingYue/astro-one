@@ -1,9 +1,9 @@
 ---
-description: "Settings domain base plugin: shared configuration forms, schema service, and the canonical settings slot-type contract for the dsh web client."
+description: "Settings domain base plugin: shared configuration forms, schema service, and the canonical settings slot-type contract for the astro-one web client."
 kind: "package-reference"
 ---
 
-# @deepseek-ai/dsh-client-ui-settings
+# @astro-one/client-ui-settings
 
 English | [中文](README.zh.md)
 

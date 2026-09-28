@@ -1,12 +1,12 @@
 import { describe, expect, it, vi } from 'vitest'
-import type { NativeCommandRunner } from '@deepseek-ai/dsh-native-command'
+import type { NativeCommandRunner } from '@astro-one/native-command'
 import { defaultWorkspaceDirectory, validateDocumentsDirectory } from '../src/default-directory.ts'
 
 describe('system Documents directory', () => {
   it.each([
-    ['darwin', '/Users/a/文档/\n', '/Users/a/文档/deepseek-harness/默认工作区', 'osascript'],
-    ['win32', 'D:\\Redirected Documents\r\n', 'D:\\Redirected Documents\\deepseek-harness\\默认工作区', 'powershell.exe'],
-    ['linux', '/home/a/My Documents\n', '/home/a/My Documents/deepseek-harness/默认工作区', 'xdg-user-dir'],
+    ['darwin', '/Users/a/文档/\n', '/Users/a/文档/astro-one/默认工作区', 'osascript'],
+    ['win32', 'D:\\Redirected Documents\r\n', 'D:\\Redirected Documents\\astro-one\\默认工作区', 'powershell.exe'],
+    ['linux', '/home/a/My Documents\n', '/home/a/My Documents/astro-one/默认工作区', 'xdg-user-dir'],
   ] as const)('uses the %s account directory and preserves spaces and Unicode', async (platform, stdout, path, command) => {
     const run = vi.fn<NativeCommandRunner>(async () => ({ stdout, stderr: '' }))
     const signal = new AbortController().signal
@@ -17,7 +17,7 @@ describe('system Documents directory', () => {
   it.each(['Default workspace', '默认工作区', 'default-workspace'])('uses the configured directory with name %s', async (folder) => {
     const run = vi.fn<NativeCommandRunner>()
     await expect(defaultWorkspaceDirectory(folder, '/documents', new AbortController().signal, { platform: 'linux', run }))
-      .resolves.toBe(`/documents/deepseek-harness/${folder}`)
+      .resolves.toBe(`/documents/astro-one/${folder}`)
     expect(run).not.toHaveBeenCalled()
   })
 

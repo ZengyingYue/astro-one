@@ -12,7 +12,7 @@ Agent 空闲时，Session 仍可能持有写句柄。另一个 Host 无法恢复
 
 当恢复因 `SessionAlreadyOwnedError` 失败且不存在可复用 Agent 时，Session Controller 返回 `session/writer-held`，携带 `{ sessionId }`。Client 遵循 [Remote 失败词汇](../architecture/2026-08-28-ctx-remote-failure-vocabulary.zh.md)，按 code 判别。Controller 按 Error 名称识别持久化错误，与 Session Query 的可选依赖处理一致；加载 Controller 不需要持久化实现或错误类身份相同。
 
-发送和模型选择失败显示本地化指引，说明可能有其他 DSH 实例占用 Session，并建议退出其他实例后重试。模型选择将原始 Remote 结果返回给两个 UI 入口；错误分类不依赖稍后读取共享目录状态。[写租约决策](../feature/2026-08-31-cross-process-session-write-lease.zh.md) 继续拥有锁定和释放语义；此反馈既不抢占写权限，也不自动重试写入。
+发送和模型选择失败显示本地化指引，说明可能有其他 Astro One 实例占用 Session，并建议退出其他实例后重试。模型选择将原始 Remote 结果返回给两个 UI 入口；错误分类不依赖稍后读取共享目录状态。[写租约决策](../feature/2026-08-31-cross-process-session-write-lease.zh.md) 继续拥有锁定和释放语义；此反馈既不抢占写权限，也不自动重试写入。
 
 ## Alternatives considered
 

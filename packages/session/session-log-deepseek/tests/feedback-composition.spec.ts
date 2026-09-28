@@ -3,17 +3,17 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { afterEach, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import Include from '@deepseek-ai/cordis-plugin-include'
-import SessionStore, { SessionId } from '@deepseek-ai/dsh-session'
-import JsonlSessionPersistence from '@deepseek-ai/dsh-session-persistence-jsonl'
-import MessageFeedback from '@deepseek-ai/dsh-message-feedback'
-import { recordFeedback } from '@deepseek-ai/dsh-command-feedback'
-import LlmRuntime, { createAssistantMessage, createUserMessage } from '@deepseek-ai/dsh-llm'
-import * as LlmDeepSeek from '@deepseek-ai/dsh-llm-deepseek'
-import DeepSeekLlmApiExtensions from '@deepseek-ai/dsh-deepseek-llm-api-extensions'
-import { startMockLlmServer, type MockLlmServer } from '@deepseek-ai/dsh-llm-mock-server'
+import { Context } from '@astro-one/cordis'
+import Loader from '@astro-one/cordis-plugin-loader'
+import Include from '@astro-one/cordis-plugin-include'
+import SessionStore, { SessionId } from '@astro-one/session'
+import JsonlSessionPersistence from '@astro-one/session-persistence-jsonl'
+import MessageFeedback from '@astro-one/message-feedback'
+import { recordFeedback } from '@astro-one/command-feedback'
+import LlmRuntime, { createAssistantMessage, createUserMessage } from '@astro-one/llm'
+import * as LlmDeepSeek from '@astro-one/llm-deepseek'
+import DeepSeekLlmApiExtensions from '@astro-one/deepseek-llm-api-extensions'
+import { startMockLlmServer, type MockLlmServer } from '@astro-one/llm-mock-server'
 import * as SessionLogDeepSeek from '../src/index.ts'
 import type { DeepSeekSessionLogExtension } from '../src/types.ts'
 
@@ -32,29 +32,29 @@ afterEach(async () => {
 })
 
 it('uploads freeform feedback and message put/edit/delete through the unchanged provider route', async () => {
-  root = await mkdtemp(join(tmpdir(), 'dsh-feedback-upload-'))
-  vi.stubEnv('DSH_HOME', root)
+  root = await mkdtemp(join(tmpdir(), 'astro-one-feedback-upload-'))
+  vi.stubEnv('ASTRO_ONE_HOME', root)
   vi.stubEnv('DEEPSEEK_API_KEY', 'feedback-test-key')
   server = await startMockLlmServer({ sequence: ['invalid_request', 'success', 'success'] })
   const modules = new Map<string, unknown>([
-    ['@deepseek-ai/dsh-session', SessionStore],
-    ['@deepseek-ai/dsh-session-persistence-jsonl', JsonlSessionPersistence],
-    ['@deepseek-ai/dsh-message-feedback', MessageFeedback],
-    ['@deepseek-ai/dsh-llm', LlmRuntime],
-    ['@deepseek-ai/dsh-llm-deepseek', LlmDeepSeek],
-    ['@deepseek-ai/dsh-deepseek-llm-api-extensions', DeepSeekLlmApiExtensions],
-    ['@deepseek-ai/dsh-session-log-deepseek', SessionLogDeepSeek],
+    ['@astro-one/session', SessionStore],
+    ['@astro-one/session-persistence-jsonl', JsonlSessionPersistence],
+    ['@astro-one/message-feedback', MessageFeedback],
+    ['@astro-one/llm', LlmRuntime],
+    ['@astro-one/llm-deepseek', LlmDeepSeek],
+    ['@astro-one/deepseek-llm-api-extensions', DeepSeekLlmApiExtensions],
+    ['@astro-one/session-log-deepseek', SessionLogDeepSeek],
   ])
   const config = join(root, 'cordis.yml')
   await writeFile(config, JSON.stringify([...modules.keys()].map(name => ({
     name,
-    ...name === '@deepseek-ai/dsh-session-persistence-jsonl'
+    ...name === '@astro-one/session-persistence-jsonl'
       ? { config: { root: join(root!, 'sessions'), compression: 'none' } }
-      : name === '@deepseek-ai/dsh-message-feedback'
+      : name === '@astro-one/message-feedback'
         ? { config: { maxNoteBytes: 1024 } }
-        : name === '@deepseek-ai/dsh-llm-deepseek'
+        : name === '@astro-one/llm-deepseek'
           ? { config: { baseURL: server!.baseURL } }
-          : name === '@deepseek-ai/dsh-session-log-deepseek'
+          : name === '@astro-one/session-log-deepseek'
             ? { config: { enabled: true } }
             : {},
   }))))
@@ -97,8 +97,8 @@ it('uploads freeform feedback and message put/edit/delete through the unchanged 
     expect(await request()).toMatchObject({ type: 'finish', reason: { kind: 'error' } })
     expect(SessionLogDeepSeek.acceptedThrough(session)).toBe(-1)
     expect(await request()).toMatchObject({ type: 'finish', reason: { kind: 'stop' } })
-    const first = (server.requests[0]!.body as { dsh_session_log: DeepSeekSessionLogExtension }).dsh_session_log
-    const retry = (server.requests[1]!.body as { dsh_session_log: DeepSeekSessionLogExtension }).dsh_session_log
+    const first = (server.requests[0]!.body as { astro_one_session_log: DeepSeekSessionLogExtension }).astro_one_session_log
+    const retry = (server.requests[1]!.body as { astro_one_session_log: DeepSeekSessionLogExtension }).astro_one_session_log
     expect(retry).toEqual(first)
     expect(first.events).toEqual(initialPrefix)
     expect(first.events.slice(-2)).toMatchObject([
@@ -116,7 +116,7 @@ it('uploads freeform feedback and message put/edit/delete through the unchanged 
       sessionId: session.id, messageId: assistant.id, ifVersion: edited.value.version,
     })).toEqual({ ok: true, value: { absent: true } })
     expect(await request()).toMatchObject({ type: 'finish', reason: { kind: 'stop' } })
-    const suffix = (server.requests[2]!.body as { dsh_session_log: DeepSeekSessionLogExtension }).dsh_session_log
+    const suffix = (server.requests[2]!.body as { astro_one_session_log: DeepSeekSessionLogExtension }).astro_one_session_log
     expect(suffix.afterSeq).toBe(first.throughSeq)
     expect(suffix.events).toMatchObject([
       { type: 'session-log-deepseek/delivery-accepted' },
@@ -129,7 +129,7 @@ it('uploads freeform feedback and message put/edit/delete through the unchanged 
     expect(await ctx.messageFeedback.list({ sessionId: session.id })).toEqual({ ok: true, value: { items: [] } })
     for (const wire of server.requests) {
       expect(wire.path).toBe('/v1/messages')
-      expect(wire.body).not.toHaveProperty('dsh_feedback')
+      expect(wire.body).not.toHaveProperty('astro_one_feedback')
       expect(wire.body).toMatchObject({ model: 'deepseek-v4-flash', messages: [
         { role: 'user', content: [{ type: 'text', text: 'Question' }] },
         { role: 'assistant', content: [{ type: 'text', text: 'Answer' }] },

@@ -1,6 +1,6 @@
 /** Host configuration for the account settings client. */
-import type { Context } from '@deepseek-ai/cordis'
-import type {} from '@deepseek-ai/dsh-host-webserver'
+import type { Context } from '@astro-one/cordis'
+import type {} from '@astro-one/host-webserver'
 import { type Config, CONTACT_CONFIG_GLOBAL } from './contact-config.ts'
 export { Config } from './contact-config.ts'
 

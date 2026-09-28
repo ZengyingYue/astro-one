@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/archived/simplification/2026-08-04-drop-windows-powershell-picker-fallback.md
-2026-08-04-drop-windows-powershell-picker-fallback.md: 5f9dfc6a2b71bc9e6cc957aa1d492a9f3e80df5f
-2026-08-04-drop-windows-powershell-picker-fallback.zh.md: 01cd789f9a1c1fe36ef2e149a7e3106346cb158c
+2026-08-04-drop-windows-powershell-picker-fallback.md: fa8cc3628a28f5355150ae67c8c8c554543af5ec
+2026-08-04-drop-windows-powershell-picker-fallback.zh.md: 5de86b60c672808b8d7122d2883b0cd6ea0f43e8

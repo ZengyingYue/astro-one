@@ -38,7 +38,7 @@ const projectGraphqlData = ({
   organization: {
     projectV2: {
       id: 'project-id',
-      title: 'DSH Issue Management',
+      title: 'Astro One Issue Management',
       fields: {
         nodes: [
           {
@@ -285,11 +285,11 @@ test('removes reserved labels from Issues before validation', async (t) => {
   assert.deepEqual(validateIssue(repaired), [])
   assert.deepEqual(requests, [
     {
-      url: 'https://api.github.com/repos/deepseek-harness/deepseek-harness/issues/42/labels/kind%2Fbug-fix',
+      url: 'https://api.github.com/repos/ZengyingYue/astro-one/issues/42/labels/kind%2Fbug-fix',
       method: 'DELETE',
     },
     {
-      url: 'https://api.github.com/repos/deepseek-harness/deepseek-harness/issues/42/labels/bug-fix',
+      url: 'https://api.github.com/repos/ZengyingYue/astro-one/issues/42/labels/bug-fix',
       method: 'DELETE',
     },
   ])
@@ -321,7 +321,7 @@ test('deletes a stale audit comment after repairing its only violation', async (
         {
           id: 99,
           user: { type: 'Bot' },
-          body: '<!-- dsh-issue-policy -->\nold audit',
+          body: '<!-- astro-one-issue-policy -->\nold audit',
         },
       ])
     }
@@ -333,18 +333,18 @@ test('deletes a stale audit comment after repairing its only violation', async (
   assert.deepEqual(
     requests.map(({ url, method }) => ({ path: new URL(url).pathname + new URL(url).search, method })),
     [
-      { path: '/repos/deepseek-harness/deepseek-harness/issues/42', method: 'GET' },
+      { path: '/repos/ZengyingYue/astro-one/issues/42', method: 'GET' },
       { path: '/graphql', method: 'POST' },
       {
-        path: '/repos/deepseek-harness/deepseek-harness/issues/42/labels/kind%2Fbug-fix',
+        path: '/repos/ZengyingYue/astro-one/issues/42/labels/kind%2Fbug-fix',
         method: 'DELETE',
       },
       {
-        path: '/repos/deepseek-harness/deepseek-harness/issues/42/comments?per_page=100',
+        path: '/repos/ZengyingYue/astro-one/issues/42/comments?per_page=100',
         method: 'GET',
       },
       {
-        path: '/repos/deepseek-harness/deepseek-harness/issues/comments/99',
+        path: '/repos/ZengyingYue/astro-one/issues/comments/99',
         method: 'DELETE',
       },
     ],
@@ -371,8 +371,8 @@ test('keeps terminal Status aligned with the native close reason', () => {
 test('separates resolving and informational references', () => {
   assert.deepEqual(
     parseReferences({
-      body: 'Fixes #12\nRelated to #4\nRefs deepseekharness/dsh-test#7',
-      repository: 'deepseekharness/dsh-test',
+      body: 'Fixes #12\nRelated to #4\nRefs astroone/astro-one-test#7',
+      repository: 'astroone/astro-one-test',
     }),
     { all: [4, 7, 12], resolving: [12], related: [4, 7] },
   )
@@ -446,7 +446,7 @@ test('reads Priority and Status from Project custom fields', async (t) => {
   assert.equal(issue.priority, 'P1')
   assert.equal(issue.status, 'Inbox')
   assert.deepEqual(urls, [
-    'https://api.github.com/repos/deepseek-harness/deepseek-harness/issues/42',
+    'https://api.github.com/repos/ZengyingYue/astro-one/issues/42',
     'https://api.github.com/graphql',
   ])
 })
@@ -672,7 +672,7 @@ test('toggles automation-owned work on request changes and repeated review reque
   let status = nextResolvingIssueStatus(
     'In review',
     'changes-requested',
-    'dsh-issue-management',
+    'astro-one-issue-management',
   )
   assert.equal(status, 'In progress')
   status = nextResolvingIssueStatus(status, 'review-requested')
@@ -769,7 +769,7 @@ test('rejects multiple, unknown, legacy, and Issue-source PR labels', () => {
 const mockPolicyApi = (t, { pull = {}, requested = true, reviews = [], issues = {}, priority = 'P1', projectError = false } = {}) => {
   const environment = ['GH_TOKEN', 'GITHUB_TOKEN', 'PROJECT_TOKEN', 'GITHUB_API_URL', 'GITHUB_OUTPUT']
   const previous = new Map(environment.map((key) => [key, process.env[key]]))
-  const directory = mkdtempSync(join(tmpdir(), 'dsh-policy-'))
+  const directory = mkdtempSync(join(tmpdir(), 'astro-one-policy-'))
   t.after(() => {
     for (const [key, value] of previous) {
       if (value === undefined) delete process.env[key]
@@ -915,7 +915,7 @@ test('keeps trusted preflight before token minting and required policy unconditi
 })
 
 test('runs trusted rollout selection with absent and present capability markers', { skip: process.platform === 'win32' ? 'The policy workflow executes under hosted Ubuntu bash' : false }, (t) => {
-  const directory = mkdtempSync(join(tmpdir(), 'dsh-policy-rollout-'))
+  const directory = mkdtempSync(join(tmpdir(), 'astro-one-policy-rollout-'))
   t.after(() => rmSync(directory, { recursive: true, force: true }))
   const source = readFileSync(new URL('../workflows/issue-policy.yml', import.meta.url), 'utf8')
   const script = source.split('        run: |\n')[1].split('      - name: Create Project read token')[0]
@@ -996,7 +996,7 @@ test('keeps REST headers, null responses, and transport errors unchanged', async
       Accept: 'application/vnd.github+json',
       Authorization: 'Bearer preferred-token',
       'X-GitHub-Api-Version': '2026-03-10',
-      'User-Agent': 'dsh-issue-policy',
+      'User-Agent': 'astro-one-issue-policy',
     } },
   })
   assert.equal(await api('/empty'), null)
@@ -1024,7 +1024,7 @@ test('reads policy snapshots in reference order and only resolving Project prior
     references: { all: [2, 4], resolving: [2], related: [4] },
     issues: new Map([[2, { priority: 'P1' }], [4, { priority: null }]]),
   })
-  const repo = '/repos/deepseek-harness/deepseek-harness'
+  const repo = '/repos/ZengyingYue/astro-one'
   assert.deepEqual(fixture.requests, [
     repo + '/pulls/10',
     repo + '/pulls/10/requested_reviewers',
@@ -1048,7 +1048,7 @@ test('reads lifecycle references for draft Bot PRs without review or Project req
     issues: new Map([[2, { priority: null }], [4, { priority: null }]]),
     createdAt: '2026-08-27T16:00:00Z',
   })
-  const repo = '/repos/deepseek-harness/deepseek-harness'
+  const repo = '/repos/ZengyingYue/astro-one'
   assert.deepEqual(fixture.requests, [repo + '/pulls/10', repo + '/issues/2', repo + '/issues/4'])
   assert.deepEqual(fixture.output, [])
 })

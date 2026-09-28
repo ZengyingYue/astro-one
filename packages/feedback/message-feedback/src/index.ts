@@ -1,21 +1,21 @@
 /**
  * Canonical Session-log feedback for finalized assistant messages.
- * @module @deepseek-ai/dsh-message-feedback
+ * @module @astro-one/message-feedback
  */
 
 import { Buffer } from 'node:buffer'
 import { randomUUID } from 'node:crypto'
 import { isDeepStrictEqual } from 'node:util'
-import { Context, Service } from '@deepseek-ai/cordis'
-import s from '@deepseek-ai/schemastery'
+import { Context, Service } from '@astro-one/cordis'
+import s from '@astro-one/schemastery'
 import { z } from 'zod'
-import { FEEDBACK_CATEGORIES } from '@deepseek-ai/dsh-command-feedback'
-import { SessionSeq } from '@deepseek-ai/dsh-session/types'
-import { deriveEventMessage, isAppendSurfaceEvent } from '@deepseek-ai/dsh-session/surface'
-import type { SessionEvent, SessionId } from '@deepseek-ai/dsh-session/types'
-import type {} from '@deepseek-ai/dsh-session'
-import type { SessionInspection } from '@deepseek-ai/dsh-session-persistence'
-import { TypertRemoteService, Remote } from '@deepseek-ai/dsh-typert-protocol'
+import { FEEDBACK_CATEGORIES } from '@astro-one/command-feedback'
+import { SessionSeq } from '@astro-one/session/types'
+import { deriveEventMessage, isAppendSurfaceEvent } from '@astro-one/session/surface'
+import type { SessionEvent, SessionId } from '@astro-one/session/types'
+import type {} from '@astro-one/session'
+import type { SessionInspection } from '@astro-one/session-persistence'
+import { TypertRemoteService, Remote } from '@astro-one/typert-protocol'
 import type {
   MessageFeedbackDeleteRequest,
   MessageFeedbackDeleteResult,
@@ -42,7 +42,7 @@ export interface Config {
   readonly maxNoteBytes: number
 }
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     messageFeedback: MessageFeedbackService
   }

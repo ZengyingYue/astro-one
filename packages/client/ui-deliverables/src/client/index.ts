@@ -9,15 +9,15 @@
  * surface; the owning view renders an empty list and inert prose at zero cost.
  */
 import './file-actions.ts'
-import type { Context as ClientContext } from '@deepseek-ai/cordis'
-import type {} from '@deepseek-ai/dsh-api-remotes/client'
-import type {} from '@deepseek-ai/dsh-client-connection/client'
-import type { ChatFileMentions } from '@deepseek-ai/dsh-client-ui-chat/client'
-import type {} from '@deepseek-ai/dsh-client-locale/client'
-import type {} from '@deepseek-ai/dsh-client-ui-conversation/client'
-import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
-import type {} from '@deepseek-ai/dsh-client-ui-sidebar-right/client'
-import type {} from '@deepseek-ai/dsh-client-ui-settings/client'
+import type { Context as ClientContext } from '@astro-one/cordis'
+import type {} from '@astro-one/api-remotes/client'
+import type {} from '@astro-one/client-connection/client'
+import type { ChatFileMentions } from '@astro-one/client-ui-chat/client'
+import type {} from '@astro-one/client-locale/client'
+import type {} from '@astro-one/client-ui-conversation/client'
+import type {} from '@astro-one/client-ui-renderer/client'
+import type {} from '@astro-one/client-ui-sidebar-right/client'
+import type {} from '@astro-one/client-ui-settings/client'
 import { changesReviewAddress } from '../changes.ts'
 import { ChangesDiffStore } from './changes-diff.ts'
 import { ChangesSummaryStore } from './changes-summary.ts'
@@ -32,7 +32,7 @@ import {
   deliverablesDefinition, presentedForClosing, producedFileMentions, selectProducedFiles,
 } from './turn-deliverables.ts'
 
-declare module '@deepseek-ai/dsh-client-ui-slots' {
+declare module '@astro-one/client-ui-slots' {
   interface LocaleNamespaceMap {
     /** Changed-files card, review tab, delivery card, and file-mention copy. */
     'deliverables': DeliverablesKey
@@ -62,7 +62,7 @@ export function apply(ctx: ClientContext): void {
     'conversation.chat.turnTail',
     () => ctx.slots.register({
       name: 'conversation.chat.turnTail',
-      id: '@deepseek-ai/dsh-client-ui-deliverables',
+      id: '@astro-one/client-ui-deliverables',
       locale: NS,
       children: { 'deliverables.file.actions': { kind: 'list', scope: 'session' } },
       inject: (): DeliverablesInjected => ({

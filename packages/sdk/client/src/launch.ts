@@ -1,6 +1,6 @@
 /**
- * Resolve the public SDK launch configuration to one dsh subprocess.
- * @module @deepseek-ai/dsh-sdk-client/launch
+ * Resolve the public SDK launch configuration to one astro-one subprocess.
+ * @module @astro-one/sdk-client/launch
  */
 
 import { existsSync, readFileSync } from 'node:fs'
@@ -26,8 +26,8 @@ export interface RuntimeProcessOptions {
   disposeGraceMs?: number
 }
 
-/** Node argv plus internal profile patches required by one resolved dsh entry. */
-export interface DshNodeLaunch {
+/** Node argv plus internal profile patches required by one resolved astro-one entry. */
+export interface AstroOneNodeLaunch {
   /** Arguments before the profile selector. */
   nodeArgs: string[]
   /** Internal patches applied below caller-supplied patches. */
@@ -47,57 +47,57 @@ function manifest(url: string): PackageManifest {
 }
 
 /**
- * Resolve and version-check a dsh executable from package manifests.
- * @param dshManifestUrl - resolved URL of the dsh package manifest.
+ * Resolve and version-check a astro-one executable from package manifests.
+ * @param astroOneManifestUrl - resolved URL of the astro-one package manifest.
  * @param clientManifestUrl - resolved URL of the SDK client manifest.
- * @returns the absolute dsh executable path.
+ * @returns the absolute astro-one executable path.
  */
-export function resolveDshBinFromManifests(dshManifestUrl: string, clientManifestUrl: string): string {
-  const dshManifest = manifest(dshManifestUrl)
+export function resolveAstroOneBinFromManifests(astroOneManifestUrl: string, clientManifestUrl: string): string {
+  const astroOneManifest = manifest(astroOneManifestUrl)
   const clientManifest = manifest(clientManifestUrl)
-  if (typeof dshManifest.version !== 'string' || dshManifest.version !== clientManifest.version) {
-    throw new Error(`dsh SDK client ${String(clientManifest.version)} requires the same dsh version, got ${String(dshManifest.version)}`)
+  if (typeof astroOneManifest.version !== 'string' || astroOneManifest.version !== clientManifest.version) {
+    throw new Error(`astro-one SDK client ${String(clientManifest.version)} requires the same astro-one version, got ${String(astroOneManifest.version)}`)
   }
-  const bin = typeof dshManifest.bin === 'object' && dshManifest.bin !== null
-    ? (dshManifest.bin as Record<string, unknown>).dsh
-    : dshManifest.bin
-  if (typeof bin !== 'string' || bin === '') throw new Error('@deepseek-ai/dsh declares no dsh executable')
-  return resolve(dirname(fileURLToPath(dshManifestUrl)), bin)
+  const bin = typeof astroOneManifest.bin === 'object' && astroOneManifest.bin !== null
+    ? (astroOneManifest.bin as Record<string, unknown>)['astro-one']
+    : astroOneManifest.bin
+  if (typeof bin !== 'string' || bin === '') throw new Error('@astro-one/cli declares no astro-one executable')
+  return resolve(dirname(fileURLToPath(astroOneManifestUrl)), bin)
 }
 
 /**
- * Resolve and version-check the built dsh executable installed with this SDK.
+ * Resolve and version-check the built astro-one executable installed with this SDK.
  * @returns the absolute built executable path, whether or not it exists in a source checkout.
  */
-export function installedDshBin(): string {
-  return resolveDshBinFromManifests(
-    import.meta.resolve('@deepseek-ai/dsh/package.json'),
+export function installedAstroOneBin(): string {
+  return resolveAstroOneBinFromManifests(
+    import.meta.resolve('@astro-one/cli/package.json'),
     new URL('../package.json', import.meta.url).href,
   )
 }
 
 /**
- * Resolve the Node launch for one same-version dsh package.
- * @param dshManifestUrl - resolved URL of the dsh package manifest.
+ * Resolve the Node launch for one same-version astro-one package.
+ * @param astroOneManifestUrl - resolved URL of the astro-one package manifest.
  * @param clientManifestUrl - resolved URL of the SDK client manifest.
  * @param sourceLoaderUrl - optional absolute tsx loader URL for deterministic tests.
  * @returns built output, or the source entry plus its compatibility patch and tsx environment.
  */
-export function resolveDshNodeLaunchFromManifests(
-  dshManifestUrl: string,
+export function resolveAstroOneNodeLaunchFromManifests(
+  astroOneManifestUrl: string,
   clientManifestUrl: string,
   sourceLoaderUrl?: string,
-): DshNodeLaunch {
-  const bin = resolveDshBinFromManifests(dshManifestUrl, clientManifestUrl)
+): AstroOneNodeLaunch {
+  const bin = resolveAstroOneBinFromManifests(astroOneManifestUrl, clientManifestUrl)
   if (existsSync(bin)) return { nodeArgs: [bin], patches: [], environment: {} }
 
-  const packageDir = dirname(fileURLToPath(dshManifestUrl))
+  const packageDir = dirname(fileURLToPath(astroOneManifestUrl))
   const sourceBin = resolve(packageDir, 'src/bin.ts')
   const sourcePatch = resolve(packageDir, 'src/sdk-source.cordis.patch.yml')
   const sourceTsconfig = resolve(packageDir, 'tsconfig.json')
   if (!existsSync(sourceBin) || !existsSync(sourcePatch) || !existsSync(sourceTsconfig)) {
     throw new Error(
-      `@deepseek-ai/dsh is missing its built executable ${bin} and complete source launch files ${sourceBin}, ${sourcePatch}, ${sourceTsconfig}`,
+      `@astro-one/cli is missing its built executable ${bin} and complete source launch files ${sourceBin}, ${sourcePatch}, ${sourceTsconfig}`,
     )
   }
   const loader = sourceLoaderUrl ?? import.meta.resolve('tsx/esm')
@@ -109,45 +109,45 @@ export function resolveDshNodeLaunchFromManifests(
 }
 
 /**
- * Resolve the installed dsh package to a built or source Node launch.
+ * Resolve the installed astro-one package to a built or source Node launch.
  * @returns the launch descriptor for the current checkout or installed package.
  */
-function installedDshNodeLaunch(): DshNodeLaunch {
-  return resolveDshNodeLaunchFromManifests(
-    import.meta.resolve('@deepseek-ai/dsh/package.json'),
+function installedAstroOneNodeLaunch(): AstroOneNodeLaunch {
+  return resolveAstroOneNodeLaunchFromManifests(
+    import.meta.resolve('@astro-one/cli/package.json'),
     new URL('../package.json', import.meta.url).href,
   )
 }
 
 /**
- * Resolve caller-relative filesystem inputs and construct canonical dsh argv.
+ * Resolve caller-relative filesystem inputs and construct canonical astro-one argv.
  * @param options - public SDK launch options.
  * @param callerCwd - parent-process directory used for lexical resolution.
  * @returns one generic subprocess spec for the JSON-RPC transport.
  */
-export function resolveDshLaunch(
+export function resolveAstroOneLaunch(
   options: HarnessClientOptions = {},
   callerCwd: string = process.cwd(),
 ): RuntimeProcessOptions {
   const profile = options.profile ?? 'sdk'
-  const dshLaunch = options.dshBin === undefined
-    ? installedDshNodeLaunch()
-    : { nodeArgs: [resolve(callerCwd, options.dshBin)], patches: [], environment: {} }
+  const astroOneLaunch = options.astroOneBin === undefined
+    ? installedAstroOneNodeLaunch()
+    : { nodeArgs: [resolve(callerCwd, options.astroOneBin)], patches: [], environment: {} }
   const patches = [
-    ...dshLaunch.patches,
+    ...astroOneLaunch.patches,
     ...(options.patches ?? []).map(path => resolve(callerCwd, path)),
   ]
-  const dshHome = options.dshHome === undefined ? undefined : resolve(callerCwd, options.dshHome)
+  const astroOneHome = options.astroOneHome === undefined ? undefined : resolve(callerCwd, options.astroOneHome)
   return {
     command: process.execPath,
-    args: [...dshLaunch.nodeArgs, '--profile', profile, ...patches.flatMap(path => ['--patch', path])],
+    args: [...astroOneLaunch.nodeArgs, '--profile', profile, ...patches.flatMap(path => ['--patch', path])],
     ...options.processCwd === undefined ? {} : { cwd: resolve(callerCwd, options.processCwd) },
     environment: () => ({
       ...(options.env ?? process.env),
-      ...dshLaunch.environment,
-      ...dshHome === undefined ? {} : { DSH_HOME: dshHome },
+      ...astroOneLaunch.environment,
+      ...astroOneHome === undefined ? {} : { ASTRO_ONE_HOME: astroOneHome },
     }),
-    description: `dsh profile ${JSON.stringify(profile)}`,
+    description: `astro-one profile ${JSON.stringify(profile)}`,
     initializeTimeoutMs: options.initializeTimeoutMs ?? DEFAULT_INITIALIZE_TIMEOUT_MS,
     ...options.requestTimeoutMs === undefined ? {} : { requestTimeoutMs: options.requestTimeoutMs },
     ...options.shutdownTimeoutMs === undefined ? {} : { shutdownTimeoutMs: options.shutdownTimeoutMs },

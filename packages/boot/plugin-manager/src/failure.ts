@@ -1,5 +1,5 @@
 /** Localizable rejections shared by profile management operations. */
-import type { PluginCompatibility } from '@deepseek-ai/dsh-app-boot'
+import type { PluginCompatibility } from '@astro-one/app-boot'
 import type { IncompatiblePlugin, ManagementError } from './types.ts'
 
 /** Expected management rejection; presentation belongs to the caller's locale. */
@@ -10,7 +10,7 @@ export class ManagementFailure extends Error {
   readonly incompatible: IncompatiblePlugin[] | undefined
   /**
    * @param code Localizable management rejection.
-   * @param incompatible Packages the running DSH version rejects, for `incompatible-version`.
+   * @param incompatible Packages the running Astro One version rejects, for `incompatible-version`.
    */
   constructor(code: ManagementError['code'], incompatible?: IncompatiblePlugin[]) {
     super(code)

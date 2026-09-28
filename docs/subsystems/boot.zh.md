@@ -97,7 +97,7 @@ Manage profile files and apply their declared reload lifecycle.
 
 /** Grant or revoke one exact plugin/runtime exemption and reevaluate live plugins.
  * @param packageVersion Exact manifest package name followed by @ and its version; never an installation spec or alias.
- * @param runtimeVersion Exact current DSH version for grants; revocation may name a previous runtime.
+ * @param runtimeVersion Exact current Astro One version for grants; revocation may name a previous runtime.
  * @param enabled Whether to grant rather than revoke the exemption.
  * @param acceptRisk Required true for grants after the user accepts possible crashes and data loss.
  * @returns Saved and runtime outcomes. Startup-only profiles require restart.
@@ -109,7 +109,7 @@ Manage profile files and apply their declared reload lifecycle.
  */
 @Remote async listPlugins(): Promise<PluginInfo[]>
 
-/** Read the profile's installed bundles, the bundles this dsh installation supplies, and the selected names that are not bundles.
+/** Read the profile's installed bundles, the bundles this astro-one installation supplies, and the selected names that are not bundles.
  * A dependency without a bundle patch is listed, as a `not-bundle` problem, only while it is selected.
  * @returns Package versions, manifest descriptions, rows, optional display metadata, activation selections,
  * whether the installation offers the bundle, and removal availability.
@@ -144,7 +144,7 @@ Manage profile files and apply their declared reload lifecycle.
 @Remote setBundleEnabled(name: string, enabled: boolean): Promise<ChangeResult>
 
 /**
- * Install a package using the same pnpm implementation as dsh plugin. GitHub
+ * Install a package using the same pnpm implementation as astro-one plugin. GitHub
  * repositories get a connection check bounded by githubConnectionTimeoutMs before pnpm starts;
  * only network failures or timeouts stop installation, while pnpm owns authentication and transport fallback. A run
  * that fails, is cancelled, or adds a package without a bundle patch restores
@@ -170,7 +170,7 @@ Manage profile files and apply their declared reload lifecycle.
  */
 @Remote async cancelInstall(requestId: PluginInstallRequestId): Promise<PluginInstallCancellation>
 
-/** Unload and remove a profile-owned bundle dependency through dsh plugin's pnpm path.
+/** Unload and remove a profile-owned bundle dependency through astro-one plugin's pnpm path.
  * @param name Installed dependency name.
  * @returns Removal diagnostics and the remaining profile state.
  */

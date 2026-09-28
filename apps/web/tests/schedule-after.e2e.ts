@@ -7,18 +7,18 @@ import { fileURLToPath } from 'node:url'
 import type { Browser, Page } from 'playwright'
 import { chromium } from 'playwright'
 import { afterAll, beforeAll, describe, expect, it, onTestFailed } from 'vitest'
-import type { Agent, AgentHandle } from '@deepseek-ai/dsh-agent'
-import { bundlePatchPaths, composeEntries, loadOverlayPatches } from '@deepseek-ai/dsh-app-boot'
-import { ToolCallId, createUserMessage, LlmAdapter } from '@deepseek-ai/dsh-llm'
-import type { ContextFormed, GenerateOptions, StreamChunk } from '@deepseek-ai/dsh-llm'
-import { SessionId, type SessionEvent } from '@deepseek-ai/dsh-session'
+import type { Agent, AgentHandle } from '@astro-one/agent'
+import { bundlePatchPaths, composeEntries, loadOverlayPatches } from '@astro-one/app-boot'
+import { ToolCallId, createUserMessage, LlmAdapter } from '@astro-one/llm'
+import type { ContextFormed, GenerateOptions, StreamChunk } from '@astro-one/llm'
+import { SessionId, type SessionEvent } from '@astro-one/session'
 import {
   ScheduleId,
   createEveryScheduleRecord,
   foldScheduleEvents,
   resolveEveryOccurrence,
   type EveryScheduleRecord,
-} from '@deepseek-ai/dsh-schedule'
+} from '@astro-one/schedule'
 import {
   assertFixtureInventory,
   captureStableAria,
@@ -36,7 +36,7 @@ import {
   saveFailureShot,
 } from './support.ts'
 
-declare module '@deepseek-ai/dsh-llm' {
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'schedule-web-e2e': { kind: 'schedule-web-e2e' } & ContextFormed
   }
@@ -69,7 +69,7 @@ const CATALOG_FIXTURE = join(CATALOG_SNAPSHOT_DIR, 'session.v3.jsonl')
 const CATALOG_EXPECTED = join(CATALOG_SNAPSHOT_DIR, 'catalog.expected.md')
 const BASE_PATCH = fileURLToPath(new URL('../../../packages/bundle/base/cordis.patch.yml', import.meta.url))
 const WEB_BUNDLE = fileURLToPath(new URL('../../../packages/bundle/web-app/', import.meta.url))
-const WEB_PATCHES = bundlePatchPaths(WEB_BUNDLE, (JSON.parse(readFileSync(join(WEB_BUNDLE, 'package.json'), 'utf8')) as { dsh: { bundle: { patch: string[] } } }).dsh.bundle)
+const WEB_PATCHES = bundlePatchPaths(WEB_BUNDLE, (JSON.parse(readFileSync(join(WEB_BUNDLE, 'package.json'), 'utf8')) as { astroOne: { bundle: { patch: string[] } } }).astroOne.bundle)
 const CATALOG_NOW = Date.parse('2099-08-25T12:00:00.000Z')
 const CATALOG_SESSION_ID = SessionId('schedule-catalog-web-e2e')
 const CATALOG_TITLE = 'Active schedule catalog'
@@ -294,7 +294,7 @@ describe.skipIf(MODE === 'record')('web e2e: conversational reminders', () => {
       locale: 'en-US',
       timezoneId: AT_BROWSER_ZONE,
     })
-    await page.addInitScript(() => { localStorage.setItem('dsh.locale', 'en') })
+    await page.addInitScript(() => { localStorage.setItem('astro-one.locale', 'en') })
     tripwire = watchConsole(page)
     await page.goto(scaffold.authenticatedUrl, { waitUntil: 'load' })
     await page.waitForSelector('[class*="frame"]', { timeout: 30_000 })
@@ -636,7 +636,7 @@ describe.skipIf(MODE === 'record')('web e2e: active Schedule catalog', () => {
       timezoneId: AT_BROWSER_ZONE,
     })
     await page.clock.setFixedTime(new Date(CATALOG_NOW))
-    await page.addInitScript(() => { localStorage.setItem('dsh.locale', 'en') })
+    await page.addInitScript(() => { localStorage.setItem('astro-one.locale', 'en') })
     tripwire = watchConsole(page)
     await page.goto(scaffold.authenticatedUrl, { waitUntil: 'load' })
     await page.waitForSelector('[class*="frame"]', { timeout: 30_000 })
@@ -677,11 +677,11 @@ describe.skipIf(MODE === 'record')('web e2e: active Schedule catalog', () => {
       loadOverlayPatches('Schedule catalog overlay roster', OVERLAY),
     ])
     expect(base.find(entry => entry.id === 'ui-schedule')).toMatchObject({
-      name: '@deepseek-ai/dsh-client-ui-schedule',
+      name: '@astro-one/client-ui-schedule',
       disabled: true,
     })
     expect(scheduled.find(entry => entry.id === 'ui-schedule')).toMatchObject({
-      name: '@deepseek-ai/dsh-client-ui-schedule',
+      name: '@astro-one/client-ui-schedule',
       disabled: false,
     })
 

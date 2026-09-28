@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-18-plugin-install-registries.md
-2026-09-18-plugin-install-registries.md: bee870a87b1f5427af8f05a32396bd52bd1524b7
-2026-09-18-plugin-install-registries.zh.md: 65fe35c78910d1cdf1ce45aea7d9fa7ae8617006
+2026-09-18-plugin-install-registries.md: d5e8e86b357ef0dd89bd73c011492813fc9c45ea
+2026-09-18-plugin-install-registries.zh.md: d5035965b2e311c2bcd858a1c8cf339a821ae51e

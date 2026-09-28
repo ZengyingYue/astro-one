@@ -13,13 +13,13 @@ const root = process.argv[2]
 assert.ok(root)
 const project = join(root, 'project')
 const require = createRequire(join(project, 'package.json'))
-const { LlmAdapter, createUserMessage } = await import(pathToFileURL(require.resolve('@deepseek-ai/dsh-llm')).href)
+const { LlmAdapter, createUserMessage } = await import(pathToFileURL(require.resolve('@astro-one/llm')).href)
 const observed = []
-const { runProfile } = await import(pathToFileURL(require.resolve('@deepseek-ai/dsh/profile-boot')).href)
-const { loadLayeredEnv, loadProfileDirectory } = await import(pathToFileURL(require.resolve('@deepseek-ai/dsh-app-boot')).href)
-const installAnchor = require.resolve('@deepseek-ai/dsh/package.json')
-const running = await runProfile({ environment: loadLayeredEnv('dsh'), profile: 'desktop',
-  resolvedProfile: { profile: loadProfileDirectory('dsh', project, installAnchor), installAnchor },
+const { runProfile } = await import(pathToFileURL(require.resolve('@astro-one/cli/profile-boot')).href)
+const { loadLayeredEnv, loadProfileDirectory } = await import(pathToFileURL(require.resolve('@astro-one/app-boot')).href)
+const installAnchor = require.resolve('@astro-one/cli/package.json')
+const running = await runProfile({ environment: loadLayeredEnv('astro-one'), profile: 'desktop',
+  resolvedProfile: { profile: loadProfileDirectory('astro-one', project, installAnchor), installAnchor },
   patchFiles: [], args: ['--no-open', '--port', '0'] })
 const host = { updateTasks: installDesktopUpdateTaskControl(running.ctx), dispose: () => running.shutdown.shutdown(0) }
 const applicationUrl = running.ctx.connection.authenticatedUrl(`http://127.0.0.1:${running.ctx.webServer.port}`)

@@ -2,7 +2,7 @@
 
 English | [中文](python-sdk.zh.md)
 
-This tutorial installs the published Python SDK, runs the shipped standalone minimal profile, and shows how to customize the same `dsh` profile from your own program.
+This tutorial installs the published Python SDK, runs the shipped standalone minimal profile, and shows how to customize the same `astro-one` profile from your own program.
 
 ## Prerequisites
 
@@ -22,24 +22,24 @@ This tutorial installs the published Python SDK, runs the shipped standalone min
 ::: code-group
 
 ```sh [Linux/macOS]
-git clone https://github.com/deepseek-ai/deepseek-harness.git
-cd deepseek-harness
+git clone https://github.com/ZengyingYue/astro-one.git
+cd astro-one
 python -m venv .venv
 . .venv/bin/activate
-python -m pip install deepseek-harness-sdk
+python -m pip install astro-one-sdk
 ```
 
 ```powershell [Windows PowerShell]
-git clone https://github.com/deepseek-ai/deepseek-harness.git
-Set-Location deepseek-harness
+git clone https://github.com/ZengyingYue/astro-one.git
+Set-Location astro-one
 py -3.10 -m venv .venv
 .venv\Scripts\Activate.ps1
-python -m pip install deepseek-harness-sdk
+python -m pip install astro-one-sdk
 ```
 
 :::
 
-The installation includes a matching native runtime wheel and the `dsh` command. Normal SDK execution needs no system Node.js. Repository contributors who build the artifacts should use the [Python contributor workflow](../../../python/development.md).
+The installation includes a matching native runtime wheel and the `astro-one` command. Normal SDK execution needs no system Node.js. Repository contributors who build the artifacts should use the [Python contributor workflow](../../../python/development.md).
 
 ## Run the checked-in example
 
@@ -76,7 +76,7 @@ Run one task with explicit workspace and home paths:
 ```sh [Linux/macOS]
 python python/sdk/examples/minimal.py \
   --workspace /absolute/path/to/disposable-workspace \
-  --dsh-home /absolute/path/to/example-dsh-home \
+  --astro-one-home /absolute/path/to/example-astro-one-home \
   --session-id example-001 \
   "Inspect the repository and fix the failing tests."
 ```
@@ -84,30 +84,30 @@ python python/sdk/examples/minimal.py \
 ```powershell [Windows PowerShell]
 python python/sdk/examples/minimal.py `
   --workspace C:\work\disposable-workspace `
-  --dsh-home C:\work\example-dsh-home `
+  --astro-one-home C:\work\example-astro-one-home `
   --session-id example-001 `
   "Inspect the repository and fix the failing tests."
 ```
 
 :::
 
-The script prints the final assistant response. The selected home receives the generated `sdk-minimal` profile, installed plugins, and uncompressed JSONL session logs under `sessions/`. The example and SDK never silently read `~/.dsh`.
+The script prints the final assistant response. The selected home receives the generated `sdk-minimal` profile, installed plugins, and uncompressed JSONL session logs under `sessions/`. The example and SDK never silently read `~/.astro-one`.
 
 ## Use the SDK in your program
 
 ```python
 from pathlib import Path
 
-from deepseek_harness import DeepSeekHarness
+from astro_one import AstroOne
 
 workspace = Path("/absolute/path/to/disposable-workspace").resolve()
-dsh_home = Path("/absolute/path/to/example-dsh-home").resolve()
-with DeepSeekHarness(
+astro_one_home = Path("/absolute/path/to/example-astro-one-home").resolve()
+with AstroOne(
     provider="deepseek-official",
     model="deepseek-v4-flash",
     max_tokens=49_152,
     cwd=str(workspace),
-    dsh_home=str(dsh_home),
+    astro_one_home=str(astro_one_home),
     profile="sdk-minimal",
 ) as harness:
     result = harness.run(
@@ -118,11 +118,11 @@ with DeepSeekHarness(
 print(result.final_response)
 ```
 
-The SDK starts the bundled `dsh --profile sdk-minimal` process lazily and reuses it until context-manager exit. The profile, its persistent patch, the home patch, and any ordered `patches` tuple form the application configuration. There is no separate Python runtime bin or complete-config option.
+The SDK starts the bundled `astro-one --profile sdk-minimal` process lazily and reuses it until context-manager exit. The profile, its persistent patch, the home patch, and any ordered `patches` tuple form the application configuration. There is no separate Python runtime bin or complete-config option.
 
 ## Install or define plugins
 
-Use `dsh plugin` for dependencies and bundle layers that should persist in this home:
+Use `astro-one plugin` for dependencies and bundle layers that should persist in this home:
 
 <div>
 <a id="linux-and-macos-3"></a>
@@ -132,22 +132,22 @@ Use `dsh plugin` for dependencies and bundle layers that should persist in this 
 ::: code-group
 
 ```sh [Linux/macOS]
-export DSH_HOME=/absolute/path/to/example-dsh-home
-dsh --profile sdk-minimal --dump-default-config >/dev/null
-dsh plugin --profile sdk-minimal add file:/absolute/path/to/my-plugin-bundle
+export ASTRO_ONE_HOME=/absolute/path/to/example-astro-one-home
+astro-one --profile sdk-minimal --dump-default-config >/dev/null
+astro-one plugin --profile sdk-minimal add file:/absolute/path/to/my-plugin-bundle
 ```
 
 ```powershell [Windows PowerShell]
-$env:DSH_HOME = "C:\work\example-dsh-home"
-dsh --profile sdk-minimal --dump-default-config | Out-Null
-dsh plugin --profile sdk-minimal add file:C:/work/my-plugin-bundle
+$env:ASTRO_ONE_HOME = "C:\work\example-astro-one-home"
+astro-one --profile sdk-minimal --dump-default-config | Out-Null
+astro-one plugin --profile sdk-minimal add file:C:/work/my-plugin-bundle
 ```
 
 :::
 
-The first command initializes the shipped standalone profile. The second forwards package management to `pnpm`, then records any installed package that exports a `dsh.bundle` layer. Install `pnpm` only for this management command; launching the installed SDK does not need it. Edit `$DSH_HOME/profiles/sdk-minimal/cordis.patch.yml` for persistent row changes, or pass patch files from Python for per-launch changes.
+The first command initializes the shipped standalone profile. The second forwards package management to `pnpm`, then records any installed package that exports a `astroOne.bundle` layer. Install `pnpm` only for this management command; launching the installed SDK does not need it. Edit `$ASTRO_ONE_HOME/profiles/sdk-minimal/cordis.patch.yml` for persistent row changes, or pass patch files from Python for per-launch changes.
 
-Another `profile` is valid when it includes `@deepseek-ai/dsh-sdk-app` or another JSON-RPC server row. Missing server rows, unresolved plugins, and invalid patches fail during startup instead of falling back to another composition.
+Another `profile` is valid when it includes `@astro-one/sdk-app` or another JSON-RPC server row. Missing server rows, unresolved plugins, and invalid patches fail during startup instead of falling back to another composition.
 
 <a id="opt-in-to-str_replace_editor"></a>
 ### Opt in to `str_replace_editor`
@@ -157,30 +157,30 @@ The bundled runtime includes `str_replace_editor`, but `sdk-minimal` omits it fr
 ```yaml
 - insert:
     - id: fs-local
-      name: '@deepseek-ai/dsh-fs-local'
+      name: '@astro-one/fs-local'
       config:
         cwd: !!js process.cwd()
     - id: tool-str-replace-editor
-      name: '@deepseek-ai/dsh-tool-str-replace-editor'
+      name: '@astro-one/tool-str-replace-editor'
 ```
 
-Pass `patches=("/absolute/path/to/editor.patch.yml",)` when constructing `DeepSeekHarness(profile="sdk-minimal", ...)`, or put the patch in `$DSH_HOME/profiles/sdk-minimal/cordis.patch.yml` for persistent configuration. On the next runtime launch, model requests include `str_replace_editor` beside the persistent shell. The local filesystem provider uses the runtime working directory for relative paths; like the minimal shell, it does not confine access to that directory. For the standard `sdk` profile, insert only the editor row so it uses the existing filesystem provider and policies.
+Pass `patches=("/absolute/path/to/editor.patch.yml",)` when constructing `AstroOne(profile="sdk-minimal", ...)`, or put the patch in `$ASTRO_ONE_HOME/profiles/sdk-minimal/cordis.patch.yml` for persistent configuration. On the next runtime launch, model requests include `str_replace_editor` beside the persistent shell. The local filesystem provider uses the runtime working directory for relative paths; like the minimal shell, it does not confine access to that directory. For the standard `sdk` profile, insert only the editor row so it uses the existing filesystem provider and policies.
 
 ## Understand the minimal profile
 
 | Property | Value |
 |---|---|
-| System prompt | `DSH_SYSTEM_PROMPT`, falling back to `You are a helpful software engineer assistant.` |
-| Model in `minimal.py` | `--model`, then `DSH_MODEL`, then `deepseek-v4-flash` |
+| System prompt | `ASTRO_ONE_SYSTEM_PROMPT`, falling back to `You are a helpful software engineer assistant.` |
+| Model in `minimal.py` | `--model`, then `ASTRO_ONE_MODEL`, then `deepseek-v4-flash` |
 | Model-facing tool | Persistent `bash` on Linux/macOS or `pwsh` on Windows |
 | Shell timeout | 300 seconds |
 | Runtime context and compaction | Absent |
-| Session persistence | Uncompressed JSONL under `<dsh_home>/sessions` |
+| Session persistence | Uncompressed JSONL under `<astro_one_home>/sessions` |
 
-The profile's sole bundle inserts the complete tree over an empty root and does not include `dsh-base`; later base-profile tools therefore cannot appear implicitly. It contains the SDK protocol, one environment-configured DeepSeek adapter, local execution, and persistence, while filesystem tools, settings, managed credentials, OTel telemetry, Web tools, subagents, local instruction discovery, and compaction are absent. The [DeepSeek session-log contributor](../../../packages/session/session-log-deepseek/README.md) uploads complete unaccepted log suffixes with DeepSeek requests by default; set `session-log-deepseek.enabled: false` in a profile patch to disable it. It pins `danger-full-access`, so the platform-selected persistent shell can modify any path visible to the runtime; use a disposable checkout or container.
+The profile's sole bundle inserts the complete tree over an empty root and does not include `astro-one-base`; later base-profile tools therefore cannot appear implicitly. It contains the SDK protocol, one environment-configured DeepSeek adapter, local execution, and persistence, while filesystem tools, settings, managed credentials, OTel telemetry, Web tools, subagents, local instruction discovery, and compaction are absent. The [DeepSeek session-log contributor](../../../packages/session/session-log-deepseek/README.md) uploads complete unaccepted log suffixes with DeepSeek requests by default; set `session-log-deepseek.enabled: false` in a profile patch to disable it. It pins `danger-full-access`, so the platform-selected persistent shell can modify any path visible to the runtime; use a disposable checkout or container.
 
-The installed wheel still packages the full `web` profile and frontend assets. Run `dsh web` against an explicit `DSH_HOME` when a Python SDK deployment also needs the browser application; `web` is a separate CLI application and cannot serve a Python SDK client.
+The installed wheel still packages the full `web` profile and frontend assets. Run `astro-one web` against an explicit `ASTRO_ONE_HOME` when a Python SDK deployment also needs the browser application; `web` is a separate CLI application and cannot serve a Python SDK client.
 
 Use a fresh home when profiles, plugins, credentials, settings, and sessions must be isolated. Use a fresh session id for independent work; reuse a harness, home, and id only to continue the same durable conversation and session-owned resources.
 
-The [bundle reference](../../../packages/bundle/sdk-minimal/README.md) owns the exact tree, and the [example reference](../../../python/sdk/examples/README.md) owns the runnable program. The [Python SDK reference](../../../python/sdk/README.md) covers lifecycle, results, notifications, and low-level behavior; the [dsh CLI reference](../../../apps/cli/reference/README.md) covers profile layering.
+The [bundle reference](../../../packages/bundle/sdk-minimal/README.md) owns the exact tree, and the [example reference](../../../python/sdk/examples/README.md) owns the runnable program. The [Python SDK reference](../../../python/sdk/README.md) covers lifecycle, results, notifications, and low-level behavior; the [astro-one CLI reference](../../../apps/cli/reference/README.md) covers profile layering.

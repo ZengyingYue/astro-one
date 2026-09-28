@@ -42,7 +42,7 @@ async function writeBlob(command: CoverageCommand): Promise<void> {
 }
 
 async function temporaryRoot(): Promise<string> {
-  const root = await mkdtemp(join(tmpdir(), 'dsh-coverage-partitions-'))
+  const root = await mkdtemp(join(tmpdir(), 'astro-one-coverage-partitions-'))
   roots.push(root)
   return root
 }

@@ -1,9 +1,9 @@
 ---
-description: "dsh Web 客户端的 ask_user_question 功能：接管编辑器的提问 UI 与 plan-review 审批卡片。"
+description: "astro-one Web 客户端的 ask_user_question 功能：接管编辑器的提问 UI 与 plan-review 审批卡片。"
 kind: "package-reference"
 ---
 
-# @deepseek-ai/dsh-client-ui-user-questions
+# @astro-one/client-ui-user-questions
 
 [English](README.md) | 中文
 
@@ -33,7 +33,7 @@ kind: "package-reference"
 
 ### plan-review 卡片
 
-`plan-review` 意图——由 `dsh-plan-mode` 在 `exit_plan_mode` 审阅上设置——渲染紧凑审批卡片：顶部为带“查看全文”链接的“计划待审”条带，正文显示计划标题和两行纯文本摘要，底部提供“要求修改”和“同意执行”。条带使用共享 warning 状态点，并在任一操作结算期间切换为 ongoing loading。通过链接或聊天历史中的常驻卡片可在侧边栏阅读完整计划。“同意执行”用提问方的批准标签回答；“要求修改”以 `ASK_CANCELLED` 拒绝等待，让编辑器归位供用户输入反馈，不会提交批准。卡片不单列拒绝按钮。
+`plan-review` 意图——由 `astro-one-plan-mode` 在 `exit_plan_mode` 审阅上设置——渲染紧凑审批卡片：顶部为带“查看全文”链接的“计划待审”条带，正文显示计划标题和两行纯文本摘要，底部提供“要求修改”和“同意执行”。条带使用共享 warning 状态点，并在任一操作结算期间切换为 ongoing loading。通过链接或聊天历史中的常驻卡片可在侧边栏阅读完整计划。“同意执行”用提问方的批准标签回答；“要求修改”以 `ASK_CANCELLED` 拒绝等待，让编辑器归位供用户输入反馈，不会提交批准。卡片不单列拒绝按钮。
 
 ### 失败与恢复
 
@@ -55,7 +55,7 @@ kind: "package-reference"
 
 ### 文案与 locale
 
-编辑器外框文案（翻页器、按钮、占位符、校验提示）是双语的：插件在 `dsh-client-locale` 的 `question` 命名空间下注册 zh/en 词典，并通过 inject face 把绑定的翻译函数和 locale 快照源交给该条目，因此切换语言会重新渲染已挂载的编辑器。问题与选项文本来自模型并原样渲染；载体失败消息也不经翻译直接显示。
+编辑器外框文案（翻页器、按钮、占位符、校验提示）是双语的：插件在 `astro-one-client-locale` 的 `question` 命名空间下注册 zh/en 词典，并通过 inject face 把绑定的翻译函数和 locale 快照源交给该条目，因此切换语言会重新渲染已挂载的编辑器。问题与选项文本来自模型并原样渲染；载体失败消息也不经翻译直接显示。
 
 计划审批通过 `conversation.plan-review.actions` 插槽提供请求键、完整正文和可选的调用标识。计划插件从历史中打开已记录计划，并把没有调用标识的审批作为临时侧边栏预览打开。打开文档不会回答或关闭审批。
 
@@ -78,11 +78,11 @@ kind: "package-reference"
 <a id="model-experience"></a>
 ## 模型体验
 
-间接影响模型体验：本包在 Web 客户端呈现 `dsh-tool-ask-user` 所拥有的模型可见 schema 与答案渲染。
+间接影响模型体验：本包在 Web 客户端呈现 `astro-one-tool-ask-user` 所拥有的模型可见 schema 与答案渲染。
 
 #### KV Cache 影响
 
-不会直接失效；模型可见的工具调用与结果由 `dsh-tool-ask-user` 拥有。
+不会直接失效；模型可见的工具调用与结果由 `astro-one-tool-ask-user` 拥有。
 
 ## 已知限制与延期工作
 

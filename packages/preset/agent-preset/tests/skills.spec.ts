@@ -1,15 +1,15 @@
 /**
  * Shipped creator skills: every rendered skill stays below the pruner threshold, referenced
- * files exist, templates parse, and no skill bans reading DSH sources.
+ * files exist, templates parse, and no skill bans reading Astro One sources.
  */
 import { execFileSync } from 'node:child_process'
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import * as yaml from 'js-yaml'
-import { entryListSchema } from '@deepseek-ai/cordis-plugin-include'
-import { codePointLength } from '@deepseek-ai/dsh-compaction-tool-result-pruner'
-import { renderSkillContent } from '@deepseek-ai/dsh-skill'
+import { entryListSchema } from '@astro-one/cordis-plugin-include'
+import { codePointLength } from '@astro-one/compaction-tool-result-pruner'
+import { renderSkillContent } from '@astro-one/skill'
 import { describe, expect, it } from 'vitest'
 
 const skills = fileURLToPath(new URL('../skills/', import.meta.url))
@@ -60,8 +60,8 @@ describe('the shipped creator skills', () => {
     const templates = join(skills, 'cordis-plugin-development', 'templates')
     for (const name of readdirSync(templates)) {
       const dir = join(templates, name)
-      const manifest = JSON.parse(readFileSync(join(dir, 'package.json'), 'utf8')) as { dsh: { bundle: { patch: string } } }
-      const patch = yaml.load(readFileSync(join(dir, manifest.dsh.bundle.patch), 'utf8'), { schema: entryListSchema })
+      const manifest = JSON.parse(readFileSync(join(dir, 'package.json'), 'utf8')) as { astroOne: { bundle: { patch: string } } }
+      const patch = yaml.load(readFileSync(join(dir, manifest.astroOne.bundle.patch), 'utf8'), { schema: entryListSchema })
       expect(Array.isArray(patch)).toBe(true)
       for (const file of readdirSync(dir).filter(entry => entry.endsWith('.js'))) {
         execFileSync(process.execPath, ['--check', join(dir, file)])
@@ -69,11 +69,11 @@ describe('the shipped creator skills', () => {
     }
   })
 
-  it('never forbid reading DSH package sources and never route skill files through the shell', () => {
+  it('never forbid reading Astro One package sources and never route skill files through the shell', () => {
     for (const name of names) {
       for (const file of markdownFiles(join(skills, name))) {
         const text = readFileSync(file, 'utf8')
-        expect(text, file).not.toMatch(/do not read (DSH |package |DSH package )?sources/i)
+        expect(text, file).not.toMatch(/do not read (Astro One |package |Astro One package )?sources/i)
         // Desktop ships the skill directory inside app.asar, which only the Host process can open.
         expect(text, file).not.toMatch(/`(cat|cp|ls) /)
       }

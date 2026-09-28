@@ -1,22 +1,22 @@
 /**
  * Harness request-history conversion into pi-ai's Context vocabulary.
  *
- * @module dsh-llm-pi-ai/context
+ * @module astro-one-llm-pi-ai/context
  */
 
-import { brandString } from '@deepseek-ai/dsh-brand'
-import { contentHasImage, IMAGE_OFFLOAD_REQUIRED_CODE, LlmError, offloadedImageText, projectOffloadedImages, requestImageHandleText, requiredImageOffload } from '@deepseek-ai/dsh-llm'
-import type { ContentBlock, GenerateOptions, ImageAttachmentAccessResolver, Message, RequestMessage, ToolCallId } from '@deepseek-ai/dsh-llm'
+import { brandString } from '@astro-one/brand'
+import { contentHasImage, IMAGE_OFFLOAD_REQUIRED_CODE, LlmError, offloadedImageText, projectOffloadedImages, requestImageHandleText, requiredImageOffload } from '@astro-one/llm'
+import type { ContentBlock, GenerateOptions, ImageAttachmentAccessResolver, Message, RequestMessage, ToolCallId } from '@astro-one/llm'
 import type {
   AttachmentId,
   AttachmentStore,
   ImageAttachmentRef,
   ImageRequestTarget,
   RequestImageAttachment,
-} from '@deepseek-ai/dsh-attachment'
+} from '@astro-one/attachment'
 import type { Context as PiContext, ImageContent, Message as PiMessage, TextContent, Tool as PiTool } from '@earendil-works/pi-ai'
 import { toPiAssistant } from './replay.ts'
-import { requestImageDimensions } from '@deepseek-ai/dsh-attachment'
+import { requestImageDimensions } from '@astro-one/attachment'
 import { DEFAULT_REQUEST_IMAGE_MAX_BYTES, DEFAULT_REQUEST_IMAGE_PIXEL_BUDGET } from './config.ts'
 
 /** Join the text blocks of a harness message. */

@@ -22,19 +22,19 @@
  * that do not use a `./typert` artifact (hand-written wire schemas,
  * tests, non-loader compositions).
  *
- * @module @deepseek-ai/dsh-typert-loader
+ * @module @astro-one/typert-loader
  */
 
 import { readFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import { dirname, join } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import type { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import type {} from '@deepseek-ai/cordis-plugin-loader'
-import type {} from '@deepseek-ai/dsh-app-boot'
-import type {} from '@deepseek-ai/dsh-typert-registry'
-import type { TypertContribution } from '@deepseek-ai/dsh-typert-registry/types'
+import type { Context } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
+import type {} from '@astro-one/cordis-plugin-loader'
+import type {} from '@astro-one/app-boot'
+import type {} from '@astro-one/typert-registry'
+import type { TypertContribution } from '@astro-one/typert-registry/types'
 
 /** The package.json exports key naming a package's host-face typert artifact. */
 export const TYPERT_HOST_EXPORT = './typert'

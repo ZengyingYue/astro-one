@@ -29,8 +29,8 @@
 }
 
 .panel {
-  --dsh-dockkit-dock-layer: 10;
-  --dsh-dockkit-float-layer: 60;
+  --astro-one-dockkit-dock-layer: 10;
+  --astro-one-dockkit-float-layer: 60;
   position: absolute;
   top: 0;
   right: 0;
@@ -46,7 +46,7 @@
 .panel :global([data-dockkit-host='dock']),
 .panel :global([data-dockkit-empty]),
 .panel :global([data-dockkit-divider]) {
-  transform: translateX(var(--dsh-sidebar-width));
+  transform: translateX(var(--astro-one-sidebar-width));
   visibility: hidden;
   transition:
     transform var(--ds-transition-duration-slow) var(--ds-ease-in-out),
@@ -75,7 +75,7 @@
 }
 
 .panel[data-sidebar-right-panel='fullscreen'] {
-  --dsh-dockkit-dock-layer: 40;
+  --astro-one-dockkit-dock-layer: 40;
 }
 
 /* No whole-box subtraction here: Electron drag regions are window geometry,
@@ -91,11 +91,11 @@
 
 /* Windows keeps caption controls above fullscreen file and terminal panels. */
 :global([data-windows-titlebar]) .panel[data-sidebar-right-panel='fullscreen'] {
-  max-width: calc(100vw - var(--dsh-windows-sidebar-width));
+  max-width: calc(100vw - var(--astro-one-windows-sidebar-width));
 }
 
 :global([data-windows-titlebar]) .panel[data-sidebar-right-panel='fullscreen'] :global([data-dockkit-column='0'][data-dockkit-pane]) {
-  border-radius: var(--dsh-windows-content-radius) 0 0 0;
+  border-radius: var(--astro-one-windows-content-radius) 0 0 0;
   corner-shape: round;
 }
 
@@ -106,17 +106,17 @@
 :global([data-platform='darwin']) .panel[data-sidebar-right-panel='fullscreen'] :global([data-dockkit-host='dock'][data-dockkit-column='0']) {
   /* Lights end near x 68; 88 leaves the same 20px of air the conversation
      header's leading controls keep after them (ui-sidebar HeaderLeadingControls). */
-  --dsh-dockkit-strip-inline-start: 88px;
+  --astro-one-dockkit-strip-inline-start: 88px;
 }
 
 :global([data-platform='darwin']) .panel[data-sidebar-right-panel='fullscreen'] :global([data-dockkit-host='dock'][data-dockkit-column='1']) {
-  --dsh-dockkit-strip-inline-start: 10px;
+  --astro-one-dockkit-strip-inline-start: 10px;
 }
 
 /* Window fullscreen hides the traffic lights (html[data-fullscreen], desktop
    preload); the first pane's strip keeps only the ordinary inset. */
 :global([data-platform='darwin'][data-fullscreen]) .panel[data-sidebar-right-panel='fullscreen'] :global([data-dockkit-host='dock'][data-dockkit-column='0']) {
-  --dsh-dockkit-strip-inline-start: 10px;
+  --astro-one-dockkit-strip-inline-start: 10px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -169,5 +169,5 @@
   margin: 0;
   padding: 12px;
   color: var(--dsw-alias-label-tertiary);
-  font-size: var(--dsh-content-font-size-secondary, 13px);
+  font-size: var(--astro-one-content-font-size-secondary, 13px);
 }

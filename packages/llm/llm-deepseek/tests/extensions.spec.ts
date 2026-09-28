@@ -3,17 +3,17 @@ import { mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import LlmRuntime from '@deepseek-ai/dsh-llm'
-import DeepSeekLlmApiExtensionRegistry from '@deepseek-ai/dsh-deepseek-llm-api-extensions'
-import type { DeepSeekLlmApiExtensionRequest } from '@deepseek-ai/dsh-deepseek-llm-api-extensions'
-import { SessionId } from '@deepseek-ai/dsh-session'
+import { Context } from '@astro-one/cordis'
+import LlmRuntime from '@astro-one/llm'
+import DeepSeekLlmApiExtensionRegistry from '@astro-one/deepseek-llm-api-extensions'
+import type { DeepSeekLlmApiExtensionRequest } from '@astro-one/deepseek-llm-api-extensions'
+import { SessionId } from '@astro-one/session'
 import * as DeepSeek from '../src/index.ts'
 import { assemble, options, sse, textEvents } from './helpers.ts'
 
-declare module '@deepseek-ai/dsh-deepseek-llm-api-extensions' {
+declare module '@astro-one/deepseek-llm-api-extensions' {
   interface DeepSeekLlmApiExtensionMap {
-    dsh_messages_test: { value: string }
+    astro_one_messages_test: { value: string }
   }
 }
 
@@ -25,9 +25,9 @@ afterEach(async () => {
 })
 
 async function boot() {
-  const home = await mkdtemp(join(tmpdir(), 'dsh-messages-extensions-'))
+  const home = await mkdtemp(join(tmpdir(), 'astro-one-messages-extensions-'))
   cleanup.push(() => rm(home, { recursive: true, force: true }))
-  vi.stubEnv('DSH_HOME', home)
+  vi.stubEnv('ASTRO_ONE_HOME', home)
   vi.stubEnv('DEEPSEEK_API_KEY', 'test-key')
   const ctx = new Context()
   cleanup.push(() => ctx.fiber.dispose())
@@ -42,7 +42,7 @@ describe('Messages request extensions', () => {
     const ctx = await boot()
     let request: DeepSeekLlmApiExtensionRequest | undefined
     const accepted = vi.fn()
-    ctx.deepseekLlmApiExtensions.register('dsh_messages_test', {
+    ctx.deepseekLlmApiExtensions.register('astro_one_messages_test', {
       prepare: (value) => {
         request = value
         return { value: { value: 'inventory' }, accept: accepted }
@@ -62,16 +62,16 @@ describe('Messages request extensions', () => {
       sessionId: 'session-parity', purpose: 'compaction',
       body: { thinking: { type: 'enabled' }, messages: [{ role: 'user', content: [{ type: 'text', text: 'hello' }] }] },
     })
-    expect(request?.body).not.toHaveProperty('dsh_messages_test')
+    expect(request?.body).not.toHaveProperty('astro_one_messages_test')
     expect(fetch.mock.calls[0]?.[0]).toBe('https://messages.example.test/root/v1/messages')
     const body = fetch.mock.calls[0]?.[1]?.body
     if (typeof body !== 'string') throw new Error('Expected a serialized Messages request')
-    expect(JSON.parse(body)).toMatchObject({ dsh_messages_test: { value: 'inventory' } })
+    expect(JSON.parse(body)).toMatchObject({ astro_one_messages_test: { value: 'inventory' } })
   })
 
   it('rejects preparation before dispatch', async () => {
     const ctx = await boot()
-    ctx.deepseekLlmApiExtensions.register('dsh_messages_test', { prepare() { throw new Error('inventory unavailable') } })
+    ctx.deepseekLlmApiExtensions.register('astro_one_messages_test', { prepare() { throw new Error('inventory unavailable') } })
     const fetch = vi.fn<typeof globalThis.fetch>()
     vi.stubGlobal('fetch', fetch)
     const result = await assemble(ctx.llm.stream(options()))
@@ -82,7 +82,7 @@ describe('Messages request extensions', () => {
   it.each(['http', 'transport', 'stream'] as const)('records acceptance only for HTTP success despite a later %s failure', async (failure) => {
     const ctx = await boot()
     const accept = vi.fn()
-    ctx.deepseekLlmApiExtensions.register('dsh_messages_test', { prepare: () => ({ value: { value: 'log' }, accept }) })
+    ctx.deepseekLlmApiExtensions.register('astro_one_messages_test', { prepare: () => ({ value: { value: 'log' }, accept }) })
     vi.stubGlobal('fetch', vi.fn<typeof globalThis.fetch>().mockImplementation(() => {
       if (failure === 'transport') return Promise.reject(new Error('connection lost'))
       if (failure === 'http') return Promise.resolve(Response.json({ error: { message: 'rejected' } }, { status: 400 }))
@@ -95,7 +95,7 @@ describe('Messages request extensions', () => {
 
   it('retains the extension error category when acceptance fails', async () => {
     const ctx = await boot()
-    ctx.deepseekLlmApiExtensions.register('dsh_messages_test', {
+    ctx.deepseekLlmApiExtensions.register('astro_one_messages_test', {
       prepare: () => ({ value: { value: 'log' }, accept() { throw new Error('watermark storage failed') } }),
     })
     vi.stubGlobal('fetch', vi.fn<typeof globalThis.fetch>().mockResolvedValue(new Response(sse(textEvents))))

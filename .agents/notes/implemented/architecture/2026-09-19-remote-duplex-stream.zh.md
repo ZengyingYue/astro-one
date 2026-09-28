@@ -8,7 +8,7 @@ Status: implemented
 
 ### 现状
 
-`dsh-api-gateway` 在一条 WebSocket 上复用全部 Typert Remote 流，路径固定为 `/api/remote.mux`（`packages/api/gateway/src/stream-protocol.ts`）。一个 Host 方法用 `@Remote({ mode: 'stream' })` 修饰并返回 `Iterable` 或 `AsyncIterable`，就成为一条 Host 到 Client 的逻辑流；可选的末位 `signal: AbortSignal` 是唯一的保留参数，不进线路参数，由网关在解码后的业务参数之后追加（`packages/api/gateway/src/index.ts`）。客户端拿到的生成方法返回一个裸 `AsyncIterable`。
+`astro-one-api-gateway` 在一条 WebSocket 上复用全部 Typert Remote 流，路径固定为 `/api/remote.mux`（`packages/api/gateway/src/stream-protocol.ts`）。一个 Host 方法用 `@Remote({ mode: 'stream' })` 修饰并返回 `Iterable` 或 `AsyncIterable`，就成为一条 Host 到 Client 的逻辑流；可选的末位 `signal: AbortSignal` 是唯一的保留参数，不进线路参数，由网关在解码后的业务参数之后追加（`packages/api/gateway/src/index.ts`）。客户端拿到的生成方法返回一个裸 `AsyncIterable`。
 
 线路帧只有五种：
 
@@ -94,7 +94,7 @@ Host 方法也没有"这次调用是谁发起的"这个概念：`InvokeRemoteReq
 ### 类型签名
 
 ```text
-// @deepseek-ai/dsh-typert-protocol
+// @astro-one/typert-protocol
 /**
  * One Remote stream. Host face: the method returns it, and at runtime it is AsyncIterable<Out>.
  * On the Client face the generated method returns RemoteStreamHandle<Out, In>; each name has exactly one meaning.
@@ -150,7 +150,7 @@ export interface RemoteInvocation {
   uplink<In = unknown>(): AsyncIterable<In>
 }
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     /** The Remote call this Context was derived for; undefined on a Context not derived from a Remote call. */
     readonly invocation: RemoteInvocation | undefined
@@ -187,7 +187,7 @@ export interface PeerScope {
 }
 ```
 
-本 Host 只有一个 Peer：操作者。`@deepseek-ai/dsh-client-connection` 在服务 apply 时用 `createScope(connectionCtx, peer)` 建它，与 Agent 建自己的 scope 是同一机制：Peer 对象就是 ScopeKey，`peer.ctx` 承接连接期效果，`dispose()` 随 connection 释放让 fiber 静默。它以 `connection.operator` 暴露。
+本 Host 只有一个 Peer：操作者。`@astro-one/client-connection` 在服务 apply 时用 `createScope(connectionCtx, peer)` 建它，与 Agent 建自己的 scope 是同一机制：Peer 对象就是 ScopeKey，`peer.ctx` 承接连接期效果，`dispose()` 随 connection 释放让 fiber 静默。它以 `connection.operator` 暴露。
 
 | 成员 | 语义 |
 | --- | --- |
@@ -327,7 +327,7 @@ export type RemoteStream<Out, In = never> = AsyncIterable<Out> & { readonly [STR
 export type PeerId = Branded<'PeerId'>
 export interface PeerScope { readonly id: PeerId; readonly ctx: Context; dispose(): Promise<void> }
 export interface RemoteInvocation { … }              // see Host face
-declare module '@deepseek-ai/cordis' { interface Context { readonly invocation: RemoteInvocation | undefined } }
+declare module '@astro-one/cordis' { interface Context { readonly invocation: RemoteInvocation | undefined } }
 
 export interface InvocationDescriptor {
   // existing fields unchanged; mode still has only 'stream'
@@ -344,13 +344,13 @@ export interface InvocationDescriptor {
 ### typert generator（`packages/typert/generator/src`）
 
 - `model.ts`：`InvocationModel.uplink?: { boundary: RemoteBoundaryModel }`。
-- `analyzer.ts` `remoteResultType`：对 `mode: 'stream'`，接受的返回类型包装器为 `Iterable<Out>`、`AsyncIterable<Out>`、`RemoteStream<Out, In?>`。识别 `RemoteStream` 的方式与识别标准库 `AsyncIterable` 相同：符号名加声明所在文件（`@deepseek-ai/dsh-typert-protocol` 的 `types.ts`）。第一个类型参数是下行项，第二个存在且不是 `never` 时生成 `uplink` boundary，键名 `${endpoint}:uplink`。
+- `analyzer.ts` `remoteResultType`：对 `mode: 'stream'`，接受的返回类型包装器为 `Iterable<Out>`、`AsyncIterable<Out>`、`RemoteStream<Out, In?>`。识别 `RemoteStream` 的方式与识别标准库 `AsyncIterable` 相同：符号名加声明所在文件（`@astro-one/typert-protocol` 的 `types.ts`）。第一个类型参数是下行项，第二个存在且不是 `never` 时生成 `uplink` boundary，键名 `${endpoint}:uplink`。
 - `emitter.ts`：描述符字面量输出 `uplink: { codec }`；生成的 Client 签名返回 `RemoteStreamHandle<Out, In>`。
 - 参数循环不再识别任何名为 `uplink` 的参数。
 
 ### 两个名字，一个入口
 
-Host 方法用 `RemoteStream<Out, In>` 声明一条流；Client 持有的是 `RemoteStreamHandle<Out, In>`。两者都从 `@deepseek-ai/dsh-typert-protocol` 主入口导出，句柄接口没有任何 Host 依赖。生成的 Client 契约把返回类型写成 `RemoteStreamHandle<Out, In>`。一个名字只有一个含义：Client 代码从主入口拿到的 `RemoteStream` 永远是声明类型，不会与句柄混淆。
+Host 方法用 `RemoteStream<Out, In>` 声明一条流；Client 持有的是 `RemoteStreamHandle<Out, In>`。两者都从 `@astro-one/typert-protocol` 主入口导出，句柄接口没有任何 Host 依赖。生成的 Client 契约把返回类型写成 `RemoteStreamHandle<Out, In>`。一个名字只有一个含义：Client 代码从主入口拿到的 `RemoteStream` 永远是声明类型，不会与句柄混淆。
 
 ### 网关 Host（`packages/api/gateway/src`）
 
@@ -441,13 +441,13 @@ cancel : missing → ignore; otherwise control.abort(new Error('Remote stream ca
 
 | 包 | 承载 |
 | --- | --- |
-| `dsh-typert-protocol`（`types.ts`、`index.ts`） | `RemoteStream`、`RemoteStreamHandle`、`PeerId`、`PeerScope`、`RemoteInvocation`、`ctx.invocation` 声明合并、`InvocationDescriptor.uplink`；修饰器只认 `mode: 'stream'`；`TypertRemoteService` 构造时注册 `invocation` accessor |
-| `dsh-typert-registry` | 加载校验 `uplink.codec` 为有效的严格 codec |
-| `dsh-typert-generator`（`model.ts`、`analyzer.ts`、`emitter.ts`） | `remoteResultType` 识别 `RemoteStream<Out, In>` 并生成 `uplink` boundary；描述符输出 `uplink: { codec }`；生成的 Client 签名返回 `RemoteStreamHandle<Out, In>`；参数循环只认业务参数与末位 `signal` |
-| `dsh-client-connection`（`operator-peer.ts`、`rpc.ts`、`rpc-host.ts`、`index.ts`） | 操作者 `PeerScope`；`connection.operator` 与 `admit`；`/api` 与升级路由经 `admit` 取 Peer；`rpc.open` 的可选 `uplink` |
-| `dsh-api-gateway` Host（`stream-protocol.ts`、`stream-server.ts`、`types.ts`、`index.ts`） | `item` / `end` 帧；`UplinkInbox`；`Config.streamInboxBytes`；`GatewayInvocation` 与 `extend({ invocation })`；`UplinkDecoder`；`handleUpgrade(req, socket, head, peer)`；`operatorPeer()` |
-| `dsh-api-gateway` Client（`client/index.ts`、`client/stream-client.ts`） | `invokeStream` 返回句柄；上行泵由句柄的队列驱动 |
-| `dsh-webworker-runtime`、`dsh-remote-mock` | worker 隧道的两种上行帧与 `serveStream` 组装；`StreamHandle.uplink`；直接代理返回真句柄 |
+| `astro-one-typert-protocol`（`types.ts`、`index.ts`） | `RemoteStream`、`RemoteStreamHandle`、`PeerId`、`PeerScope`、`RemoteInvocation`、`ctx.invocation` 声明合并、`InvocationDescriptor.uplink`；修饰器只认 `mode: 'stream'`；`TypertRemoteService` 构造时注册 `invocation` accessor |
+| `astro-one-typert-registry` | 加载校验 `uplink.codec` 为有效的严格 codec |
+| `astro-one-typert-generator`（`model.ts`、`analyzer.ts`、`emitter.ts`） | `remoteResultType` 识别 `RemoteStream<Out, In>` 并生成 `uplink` boundary；描述符输出 `uplink: { codec }`；生成的 Client 签名返回 `RemoteStreamHandle<Out, In>`；参数循环只认业务参数与末位 `signal` |
+| `astro-one-client-connection`（`operator-peer.ts`、`rpc.ts`、`rpc-host.ts`、`index.ts`） | 操作者 `PeerScope`；`connection.operator` 与 `admit`；`/api` 与升级路由经 `admit` 取 Peer；`rpc.open` 的可选 `uplink` |
+| `astro-one-api-gateway` Host（`stream-protocol.ts`、`stream-server.ts`、`types.ts`、`index.ts`） | `item` / `end` 帧；`UplinkInbox`；`Config.streamInboxBytes`；`GatewayInvocation` 与 `extend({ invocation })`；`UplinkDecoder`；`handleUpgrade(req, socket, head, peer)`；`operatorPeer()` |
+| `astro-one-api-gateway` Client（`client/index.ts`、`client/stream-client.ts`） | `invokeStream` 返回句柄；上行泵由句柄的队列驱动 |
+| `astro-one-webworker-runtime`、`astro-one-remote-mock` | worker 隧道的两种上行帧与 `serveStream` 组装；`StreamHandle.uplink`；直接代理返回真句柄 |
 | 文档 | gateway、api 组、connection、protocol、generator 的 README；`docs/api-gateway`；`docs/subsystems/typert` 的 type-equiv 块；config 与 Cordis 目录 |
 
 ## 关键流程时序
@@ -575,7 +575,7 @@ for await (const reply of stream) replies.push(reply)   // ['> a', '> b']
 - **买到的**：一条流两个方向，终端按键、审批回答、后台任务 stdin 这类交互式场景不再各造一套"一条流加一个 unary"；Host 方法知道调用者；上行类型与下行类型在返回类型里一处声明，上行项来自浏览器，在 Host 逐项严格校验，下行项是 Host 自产的类型值，直接透传；既有 `AsyncIterable<Out>` 方法与 unary 方法的生成物与线路帧完全不变。
 - **`this.ctx.invocation` 在非 Remote 调用下是 `undefined`**，方法读它要处理可选；一个只被进程内直接调用的服务方法读到 `undefined` 是正确行为。
 - **inbox 上限对所有流生效**：一个不读上行的方法收到大量上行帧会整流失败。这是刻意的显式失败，README 记明。
-- **Peer 只有操作者一个**，`admit` 是唯一的接纳点；第一个需要第二个 Peer 的消费者要在 `dsh-client-connection` 加上打开、关联与事件。
+- **Peer 只有操作者一个**，`admit` 是唯一的接纳点；第一个需要第二个 Peer 的消费者要在 `astro-one-client-connection` 加上打开、关联与事件。
 - **上行与下行之间没有跨方向顺序保证**；需要请求应答配对的协议自带序号。
 - **上层协议尚未透出 `send`**：`$stream`、snapshot、journal 的消费者今天只用下行；它们拿到的对象已经是句柄。
 - **worker 隧道与 WebSocket 载体行为不同**：没有 inbox 上限，`end` 之后的项丢弃，因为页面到 worker 是同源可信边界。

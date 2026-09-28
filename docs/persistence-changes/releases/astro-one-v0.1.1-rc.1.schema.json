@@ -1,0 +1,417 @@
+{
+  "formatVersion": 1,
+  "roots": [
+    {
+      "key": "event:permission/preset",
+      "kind": "event",
+      "event": "permission/preset",
+      "surface": false,
+      "digest": "3b9bf22b76208fd75990df1fbe5fe523a2298366e1b733383137aa8a2e54acaf",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 7,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 8,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 8,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 9,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "origin",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "preset",
+                "type": 6,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "union",
+            "types": [
+              3,
+              4,
+              5
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "default"
+          },
+          {
+            "kind": "literal",
+            "value": "inferred"
+          },
+          {
+            "kind": "literal",
+            "value": "selection"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "permission/preset"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "digest": "546c2b19cfc9b771e888b6af913f7761c0d2d63c408fdc3e0eac11f9cefe65ef",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "primitive",
+            "type": "number"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "a4380bb2efbc62ecb286f502322dedab65d6fc08b8ba336c61df85dab191bb1d",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "inferred"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "fcf6898d4d89ad11a2caf3fc657f6fc693dd921d0c48fa6fbbb78dcfa30ba917",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "primitive",
+            "type": "string"
+          }
+        ]
+      },
+      "names": [
+        "packages/attachment/attachment/src/brand.ts#AttachmentId",
+        "packages/compaction/compaction/src/brand.ts#CompactionId",
+        "packages/core/session/src/types.ts#SessionId",
+        "packages/experimental/agent-team/src/types.ts#TeamId",
+        "packages/experimental/agent-team/src/types.ts#TeamMessageId",
+        "packages/experimental/agent-team/src/types.ts#TeamTaskId",
+        "packages/goal/goal/src/types.ts#GoalId",
+        "packages/host/apiproxy/src/api/rpc.ts#RpcId",
+        "packages/interaction/commands/src/brand.ts#CommandId",
+        "packages/interaction/user-approval/src/types.ts#ApprovalRequestId",
+        "packages/llm/llm-retry/src/brand.ts#RetryId",
+        "packages/llm/llm/src/brand.ts#CallId",
+        "packages/llm/llm/src/brand.ts#MessageId",
+        "packages/llm/llm/src/brand.ts#ProviderRequestId",
+        "packages/llm/llm/src/brand.ts#ReasoningEffortId",
+        "packages/schedule/schedule/src/types.ts#ScheduleId",
+        "packages/session/session-title/src/index.ts#SessionTitleProviderId",
+        "packages/workflow/workflow/src/types.ts#WorkflowRunId"
+      ],
+      "sources": [
+        "packages/attachment/attachment/src/brand.ts",
+        "packages/compaction/compaction/src/brand.ts",
+        "packages/core/session/src/types.ts",
+        "packages/experimental/agent-team/src/types.ts",
+        "packages/goal/goal/src/types.ts",
+        "packages/host/apiproxy/src/api/rpc.ts",
+        "packages/interaction/commands/src/brand.ts",
+        "packages/interaction/user-approval/src/types.ts",
+        "packages/llm/llm-retry/src/brand.ts",
+        "packages/llm/llm/src/brand.ts",
+        "packages/schedule/schedule/src/types.ts",
+        "packages/session/session-title/src/index.ts",
+        "packages/workflow/workflow/src/types.ts"
+      ]
+    },
+    {
+      "digest": "fa3d6d40b4bcc1c66c21425b7967453f6ab703c77ad6504f2063d2142e44144a",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "union",
+            "types": [
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "default"
+          },
+          {
+            "kind": "literal",
+            "value": "inferred"
+          },
+          {
+            "kind": "literal",
+            "value": "selection"
+          }
+        ]
+      },
+      "names": [
+        "event:permission/preset[0].data.origin"
+      ],
+      "sources": []
+    },
+    {
+      "digest": "3b9bf22b76208fd75990df1fbe5fe523a2298366e1b733383137aa8a2e54acaf",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 7,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 8,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 8,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 9,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "origin",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "preset",
+                "type": 6,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "union",
+            "types": [
+              3,
+              4,
+              5
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "default"
+          },
+          {
+            "kind": "literal",
+            "value": "inferred"
+          },
+          {
+            "kind": "literal",
+            "value": "selection"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "permission/preset"
+          }
+        ]
+      },
+      "names": [
+        "event:permission/preset",
+        "event:permission/preset[0]"
+      ],
+      "sources": [
+        "packages/core/session/src/types.ts"
+      ]
+    },
+    {
+      "digest": "b0663ddf838529b197a76fe8fab9bd0294ad61dff30e6446423301e251eeb46e",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "selection"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "a416a10ada844a6d3ed652ed00bcbf7b0a93400f4dfed76aa9e1cab4679500dd",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "permission/preset"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "765e8849f8b4b5fe183b2185bb59587136941769828cf53cc259b98d9e8675f8",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "default"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "e5f31a1a5321feeebb6d6cb6fe92065d0361482f24624b57ad766881874b8aed",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": true
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "db04ad5151815d0fd6a2ecee8ec5ac0b604a82d107ae23ea1b093782d6415d9b",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "origin",
+                "type": 1,
+                "optional": true
+              },
+              {
+                "name": "preset",
+                "type": 5,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "union",
+            "types": [
+              2,
+              3,
+              4
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "default"
+          },
+          {
+            "kind": "literal",
+            "value": "inferred"
+          },
+          {
+            "kind": "literal",
+            "value": "selection"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          }
+        ]
+      },
+      "names": [
+        "event:permission/preset[0].data"
+      ],
+      "sources": [
+        "packages/interaction/permission-presets/src/index.ts"
+      ]
+    }
+  ]
+}

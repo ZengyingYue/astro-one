@@ -5,21 +5,21 @@ import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { afterEach, describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import Include from '@deepseek-ai/cordis-plugin-include'
-import { agentEvents, type Agent } from '@deepseek-ai/dsh-agent'
-import { createUserMessage, ToolCallId } from '@deepseek-ai/dsh-llm'
-import * as systemPromptPlugin from '@deepseek-ai/dsh-system-prompt'
-import * as toolsPlugin from '@deepseek-ai/dsh-tools'
-import * as fsPlugin from '@deepseek-ai/dsh-fs-local'
-import * as toolFsPlugin from '@deepseek-ai/dsh-tool-fs'
-import * as sessionPlugin from '@deepseek-ai/dsh-session'
-import { Session, SessionId } from '@deepseek-ai/dsh-session'
-import * as queryPlugin from '@deepseek-ai/dsh-session-query-sqlite'
-import * as referencePlugin from '@deepseek-ai/dsh-session-reference'
-import * as spillPlugin from '@deepseek-ai/dsh-spill-local'
-import { sessionDir } from '@deepseek-ai/dsh-spill-local'
+import { Context } from '@astro-one/cordis'
+import Loader from '@astro-one/cordis-plugin-loader'
+import Include from '@astro-one/cordis-plugin-include'
+import { agentEvents, type Agent } from '@astro-one/agent'
+import { createUserMessage, ToolCallId } from '@astro-one/llm'
+import * as systemPromptPlugin from '@astro-one/system-prompt'
+import * as toolsPlugin from '@astro-one/tools'
+import * as fsPlugin from '@astro-one/fs-local'
+import * as toolFsPlugin from '@astro-one/tool-fs'
+import * as sessionPlugin from '@astro-one/session'
+import { Session, SessionId } from '@astro-one/session'
+import * as queryPlugin from '@astro-one/session-query-sqlite'
+import * as referencePlugin from '@astro-one/session-reference'
+import * as spillPlugin from '@astro-one/spill-local'
+import { sessionDir } from '@astro-one/spill-local'
 import * as sourcePlugin from './fixtures/source-session.ts'
 
 let context: Context | undefined
@@ -44,14 +44,14 @@ describe('session-reference real Loader composition', () => {
     await ctx.plugin(Loader)
     ctx.loader.builtins.include = Include
     const modules = new Map<string, unknown>([
-      ['@deepseek-ai/dsh-session', sessionPlugin],
-      ['@deepseek-ai/dsh-system-prompt', systemPromptPlugin],
-      ['@deepseek-ai/dsh-tools', toolsPlugin],
-      ['@deepseek-ai/dsh-fs-local', fsPlugin],
-      ['@deepseek-ai/dsh-tool-fs', toolFsPlugin],
-      ['@deepseek-ai/dsh-session-query-sqlite', queryPlugin],
-      ['@deepseek-ai/dsh-session-reference', referencePlugin],
-      ['@deepseek-ai/dsh-spill-local', spillPlugin],
+      ['@astro-one/session', sessionPlugin],
+      ['@astro-one/system-prompt', systemPromptPlugin],
+      ['@astro-one/tools', toolsPlugin],
+      ['@astro-one/fs-local', fsPlugin],
+      ['@astro-one/tool-fs', toolFsPlugin],
+      ['@astro-one/session-query-sqlite', queryPlugin],
+      ['@astro-one/session-reference', referencePlugin],
+      ['@astro-one/spill-local', spillPlugin],
       ['./source-session.ts', sourcePlugin],
     ])
     ctx.loader.internal = {

@@ -39,7 +39,7 @@ def main():
     assert numpy.arange(4).sum() == 6
     assert pandas.DataFrame({"n": [1, 2]}).n.sum() == 3
 
-    with tempfile.TemporaryDirectory(prefix="dsh-office-smoke-") as directory:
+    with tempfile.TemporaryDirectory(prefix="astro-one-office-smoke-") as directory:
         root = Path(directory)
         image = root / "chart.png"
         Image.new("RGB", (80, 40), "#2878bc").save(image)

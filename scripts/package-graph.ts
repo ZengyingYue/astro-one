@@ -8,11 +8,14 @@
 import { globSync, readFileSync } from 'node:fs'
 import { dirname, resolve, sep } from 'node:path'
 
-const SCOPE = '@deepseek-ai/dsh-'
+const SCOPE = '@astro-one/'
+
+/** Scope members that are vendored Cordis, native addon, or website packages rather than harness packages. */
+const NON_HARNESS = /^@astro-one\/(?:cordis|cosmokit|schemastery|node-addon-system|website)(?:-|$)/u
 
 /** One harness package and its in-repo peer-dependency edges. */
 export interface PackageGraphNode {
-  /** Package name with the `@deepseek-ai/dsh-` prefix removed. */
+  /** Package name with the `@astro-one/` prefix removed. */
   short: string
   /** Full npm package name. */
   name: string
@@ -43,7 +46,7 @@ export function collectPackageGraph(root: string, groupOrder: readonly string[],
     const [, group, leaf] = rel.split('/')
     if (group === undefined || leaf === undefined) throw new Error(`${gate}: unexpected package path ${rel}`)
     const deps = Object.keys(json.peerDependencies ?? {})
-      .filter(dep => dep.startsWith(SCOPE))
+      .filter(dep => dep.startsWith(SCOPE) && !NON_HARNESS.test(dep))
       .map(dep => dep.slice(SCOPE.length))
       .sort()
     packages.push({

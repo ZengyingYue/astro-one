@@ -3,13 +3,13 @@
  * timestamps, goal lifecycle clocks, and hook duration while preserving semantic payload values.
  * The prompt-text and tool-schema scrubbers stay composable so one scenario per header class can
  * pin prompt and tool-schema sidecars.
- * @module @deepseek-ai/dsh-session-snapshot/normalize
+ * @module @astro-one/session-snapshot/normalize
  */
 
 import {
   decodeSeqRanges,
-} from '@deepseek-ai/dsh-session'
-import { prepareSessionSnapshotFixtureForComparison } from '@deepseek-ai/dsh-llm-replay'
+} from '@astro-one/session'
+import { prepareSessionSnapshotFixtureForComparison } from '@astro-one/llm-replay'
 import { redactSessionSnapshotIds } from './identity.ts'
 import { sessionHeaderVersion } from './session-files.ts'
 
@@ -55,7 +55,7 @@ const LOCAL_SPILL_PATH_RE = new RegExp(
   'g',
 )
 const SNAPSHOT_SPILL_PATH_RE = new RegExp(
-  String.raw`(?:[A-Za-z]:)?[\\/]+(?:tmp|t)[\\/]+(?:dsh-acp-snap-[0-9a-f]{9}|dsh-acp-snapshot-spill)[\\/]+session-[0-9a-f]{12}[\\/]+[0-9a-f]{12}-([A-Za-z0-9._~-]+?)`
+  String.raw`(?:[A-Za-z]:)?[\\/]+(?:tmp|t)[\\/]+(?:astro-one-acp-snap-[0-9a-f]{9}|astro-one-acp-snapshot-spill)[\\/]+session-[0-9a-f]{12}[\\/]+[0-9a-f]{12}-([A-Za-z0-9._~-]+?)`
   + String.raw`(?=\. Use read with offset/limit|[\s)"]|\\+"|$)`,
   'g',
 )

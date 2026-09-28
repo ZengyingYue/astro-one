@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/archived/bug-fix/2026-07-19-windows-atomic-write-dacl-preservation.md
-2026-07-19-windows-atomic-write-dacl-preservation.md: d389f42d804666788e23d16c5db1bc5710284834
-2026-07-19-windows-atomic-write-dacl-preservation.zh.md: a0d5bf81b2abfa19300966724f6a893f26bb6ee7
+2026-07-19-windows-atomic-write-dacl-preservation.md: c3b7372346ee1d22810eeb96039bcb7c9e1aef5e
+2026-07-19-windows-atomic-write-dacl-preservation.zh.md: 93c836f7e8c4df56ead2dfa8d114ed9d2b191616

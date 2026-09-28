@@ -1,6 +1,6 @@
 {
-  "name": "DeepSeek Harness",
-  "short_name": "DSH",
+  "name": "Astro One",
+  "short_name": "Astro One",
   "start_url": "./",
   "scope": "./",
   "display": "fullscreen",

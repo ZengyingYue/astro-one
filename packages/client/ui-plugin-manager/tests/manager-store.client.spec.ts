@@ -4,30 +4,30 @@
  */
 
 import { describe, expect, it, onTestFinished, vi } from 'vitest'
-import type { BundleInfo, ChangeResult, ManagementError, PluginEntryId, PluginInfo, PluginInstallRequestId } from '@deepseek-ai/dsh-api-remotes/client'
-import { RemoteError } from '@deepseek-ai/dsh-client-test-runtime'
-import type { HostObservable } from '@deepseek-ai/dsh-client-ui-slots'
+import type { BundleInfo, ChangeResult, ManagementError, PluginEntryId, PluginInfo, PluginInstallRequestId } from '@astro-one/api-remotes/client'
+import { RemoteError } from '@astro-one/client-test-runtime'
+import type { HostObservable } from '@astro-one/client-ui-slots'
 import type { ConfigLedger } from '../src/client/config-ledger.ts'
 import { packageView, PluginManagerController, rowKey, sortPackages } from '../src/client/manager-store.ts'
 
-const INCOMPATIBLE = { name: 'dsh-late', version: '2.0.0', runtimeVersion: '0.1.0', peers: { '@deepseek-ai/dsh': '^0.2.0' } }
+const INCOMPATIBLE = { name: 'astro-one-late', version: '2.0.0', runtimeVersion: '0.1.0', peers: { '@astro-one/cli': '^0.2.0' } }
 const ROW_ENTRY = 'include:sidebar' as PluginEntryId
 
 const BUNDLE: BundleInfo = {
-  name: 'dsh-better-sidebar',
+  name: 'astro-one-better-sidebar',
   version: '0.16.0',
   description: 'A sidebar.',
   enabled: false,
   installed: true,
   optional: false,
   removable: true,
-  rows: [{ rowId: 'sidebar', moduleName: 'dsh-better-sidebar', entryId: ROW_ENTRY }, { rowId: 'theme', moduleName: 'dsh-better-sidebar/theme' }],
+  rows: [{ rowId: 'sidebar', moduleName: 'astro-one-better-sidebar', entryId: ROW_ENTRY }, { rowId: 'theme', moduleName: 'astro-one-better-sidebar/theme' }],
   overrides: [],
 }
 
 const PLUGINS: PluginInfo[] = [
-  { entryId: ROW_ENTRY, moduleName: 'dsh-better-sidebar', enabled: true, fiberPhase: 'active', patchId: 'sidebar' },
-  { entryId: 'include:core' as PluginEntryId, moduleName: '@deepseek-ai/dsh-base', enabled: true, fiberPhase: 'active', readOnlyReason: 'management-required' },
+  { entryId: ROW_ENTRY, moduleName: 'astro-one-better-sidebar', enabled: true, fiberPhase: 'active', patchId: 'sidebar' },
+  { entryId: 'include:core' as PluginEntryId, moduleName: '@astro-one/base', enabled: true, fiberPhase: 'active', readOnlyReason: 'management-required' },
 ]
 
 const MIRROR = 'https://registry.npmmirror.com/'
@@ -38,14 +38,14 @@ const CORP = 'https://npm.corp.example/'
 const REGISTRIES = { registry: null, fallbackRegistries: [MIRROR], resolved: OFFICIAL }
 
 /** What the check answers for a registry name. */
-const INSPECTED = { status: 'accepted' as const, kind: 'registry' as const, name: 'dsh-better-sidebar', version: '1.0.0', bundle: true, registry: null }
+const INSPECTED = { status: 'accepted' as const, kind: 'registry' as const, name: 'astro-one-better-sidebar', version: '1.0.0', bundle: true, registry: null }
 
-const APPLIED: ChangeResult = { changed: true, application: 'applied', stage: 'enable', target: 'dsh-better-sidebar' }
+const APPLIED: ChangeResult = { changed: true, application: 'applied', stage: 'enable', target: 'astro-one-better-sidebar' }
 
 /** A change the Host could not apply, with the refusal it names. */
 function failed(error?: ManagementError, packageResult?: ChangeResult['packageResult']): ChangeResult {
   return {
-    changed: false, application: 'failed', stage: 'enable', target: 'dsh-better-sidebar',
+    changed: false, application: 'failed', stage: 'enable', target: 'astro-one-better-sidebar',
     ...error === undefined ? {} : { error }, ...packageResult === undefined ? {} : { packageResult },
   }
 }
@@ -78,7 +78,7 @@ function bench(overrides: Partial<Record<string, ReturnType<typeof vi.fn>>> = {}
     listPlugins: vi.fn(() => Promise.resolve(ok(PLUGINS))),
     inspect: vi.fn(() => Promise.resolve(ok(INSPECTED))),
     registries: vi.fn(() => Promise.resolve(ok(REGISTRIES))),
-    installBundle: vi.fn(() => Promise.resolve(ok({ ...APPLIED, bundle: 'dsh-new' }))),
+    installBundle: vi.fn(() => Promise.resolve(ok({ ...APPLIED, bundle: 'astro-one-new' }))),
     waitForInstall: vi.fn(() => Promise.resolve(refused('gateway/internal', 'offline'))),
     cancelInstall: vi.fn(() => Promise.resolve(ok({ status: 'cancelled' }))),
     removeBundle: vi.fn(() => Promise.resolve(ok(APPLIED))),
@@ -111,25 +111,25 @@ it('hands a custom page the shared configuration form of its entry', () => {
 describe('packageView', () => {
   it('joins a bundle with the entries its rows run as', () => {
     expect(packageView(BUNDLE, PLUGINS)).toEqual({
-      name: 'dsh-better-sidebar', version: '0.16.0', description: 'A sidebar.',
+      name: 'astro-one-better-sidebar', version: '0.16.0', description: 'A sidebar.',
       installed: true, optional: false, enabled: false,
       rows: [
-        { rowId: 'sidebar', moduleName: 'dsh-better-sidebar', entryId: ROW_ENTRY, enabled: true, phase: 'active' },
-        { rowId: 'theme', moduleName: 'dsh-better-sidebar/theme', enabled: false, phase: null },
+        { rowId: 'sidebar', moduleName: 'astro-one-better-sidebar', entryId: ROW_ENTRY, enabled: true, phase: 'active' },
+        { rowId: 'theme', moduleName: 'astro-one-better-sidebar/theme', enabled: false, phase: null },
       ],
     })
     // A row the inventory no longer lists, a protected row, and a bundle the Host cannot read.
     const protectedBundle: BundleInfo = {
-      name: '@deepseek-ai/dsh-base', enabled: true, installed: false, optional: false, removable: false, readOnlyReason: 'management-required',
+      name: '@astro-one/base', enabled: true, installed: false, optional: false, removable: false, readOnlyReason: 'management-required',
       error: { code: 'operation-error', diagnostic: 'broken' },
-      rows: [{ rowId: 'core', moduleName: '@deepseek-ai/dsh-base', entryId: 'include:core' as PluginEntryId }, { rowId: 'gone', moduleName: 'x', entryId: 'include:gone' as PluginEntryId }],
+      rows: [{ rowId: 'core', moduleName: '@astro-one/base', entryId: 'include:core' as PluginEntryId }, { rowId: 'gone', moduleName: 'x', entryId: 'include:gone' as PluginEntryId }],
       overrides: [],
     }
     expect(packageView(protectedBundle, PLUGINS)).toEqual({
-      name: '@deepseek-ai/dsh-base', installed: false, optional: false, enabled: true, readOnlyReason: 'management-required',
+      name: '@astro-one/base', installed: false, optional: false, enabled: true, readOnlyReason: 'management-required',
       error: { code: 'operation-error', diagnostic: 'broken' },
       rows: [
-        { rowId: 'core', moduleName: '@deepseek-ai/dsh-base', entryId: 'include:core', enabled: true, phase: 'active', readOnlyReason: 'management-required' },
+        { rowId: 'core', moduleName: '@astro-one/base', entryId: 'include:core', enabled: true, phase: 'active', readOnlyReason: 'management-required' },
         { rowId: 'gone', moduleName: 'x', entryId: 'include:gone', enabled: false, phase: null },
       ],
     })
@@ -139,14 +139,14 @@ describe('packageView', () => {
 describe('sortPackages', () => {
   it('orders packages by the short name a person reads, not by the Host order or enablement', async () => {
     const plain = { enabled: true, installed: true, optional: false, removable: true, rows: [], overrides: [] }
-    const zeta: BundleInfo = { ...plain, name: 'dsh-zeta' }
-    const alpha: BundleInfo = { ...plain, name: '@acme/dsh-alpha', enabled: false }
+    const zeta: BundleInfo = { ...plain, name: 'astro-one-zeta' }
+    const alpha: BundleInfo = { ...plain, name: '@acme/astro-one-alpha', enabled: false }
     const views = [zeta, BUNDLE, alpha].map(bundle => packageView(bundle, PLUGINS))
-    expect(sortPackages(views).map(pkg => pkg.name)).toEqual(['@acme/dsh-alpha', 'dsh-better-sidebar', 'dsh-zeta'])
+    expect(sortPackages(views).map(pkg => pkg.name)).toEqual(['@acme/astro-one-alpha', 'astro-one-better-sidebar', 'astro-one-zeta'])
     // The store lists what it read in that order, whatever the Host's order.
     const { state, controller } = bench({ listBundles: vi.fn(() => Promise.resolve(ok([zeta, BUNDLE, alpha]))) })
     await controller.load()
-    expect(state().packages.map(pkg => pkg.name)).toEqual(['@acme/dsh-alpha', 'dsh-better-sidebar', 'dsh-zeta'])
+    expect(state().packages.map(pkg => pkg.name)).toEqual(['@acme/astro-one-alpha', 'astro-one-better-sidebar', 'astro-one-zeta'])
   })
 })
 
@@ -356,44 +356,44 @@ describe('PluginManagerController', () => {
     expect(plugins.inspect).not.toHaveBeenCalled()
     face.openInstall()
     expect(state().install).toMatchObject({ open: true, spec: '', phase: 'idle', inputError: null, subject: null })
-    face.editInstallSpec('  dsh-new ')
+    face.editInstallSpec('  astro-one-new ')
     face.runInstall()
     face.runInstall()
     expect(state().install.phase).toBe('checking')
     // Neither typing nor a second run reaches the Host while it checks.
     face.editInstallSpec('other')
-    expect(state().install.spec).toBe('  dsh-new ')
+    expect(state().install.spec).toBe('  astro-one-new ')
     await vi.waitFor(() => { expect(plugins.inspect).toHaveBeenCalledTimes(1) })
-    expect(plugins.inspect).toHaveBeenCalledWith('dsh-new', { registry: null }, expect.any(AbortSignal))
+    expect(plugins.inspect).toHaveBeenCalledWith('astro-one-new', { registry: null }, expect.any(AbortSignal))
     const requestId = await started()
-    expect(state().install.subject).toEqual({ spec: 'dsh-new', ...INSPECTED })
+    expect(state().install.subject).toEqual({ spec: 'astro-one-new', ...INSPECTED })
     expect(plugins.installBundle).toHaveBeenCalledTimes(1)
-    expect(plugins.installBundle).toHaveBeenCalledWith('dsh-new', { enabled: false, requestId, registry: null })
+    expect(plugins.installBundle).toHaveBeenCalledWith('astro-one-new', { enabled: false, requestId, registry: null })
     // The Host's acknowledgement makes the run stoppable; a chunk of another request is not this run's.
     controller.installProgress({ requestId, phase: 'installing' })
     expect(state().install.phase).toBe('running')
     controller.appendLog({ requestId: 'other' as PluginInstallRequestId, jobId: 'j1', argv: [], cwd: '/p', stream: 'stdout', text: 'x' })
     expect(state().install.runs).toEqual([])
-    const argv = ['pnpm', 'add', 'dsh-new']
+    const argv = ['pnpm', 'add', 'astro-one-new']
     controller.appendLog({ requestId, jobId: 'j1', argv, cwd: '/p', stream: 'stdout', text: 'Progress\n' })
     // A second run of the same install is its own terminal; a later chunk lands on the run it names.
     controller.appendLog({ requestId, jobId: 'j2', argv: ['pnpm', 'remove', 'lib'], cwd: '/p', stream: 'stdout', text: '- lib\n', exitCode: 0 })
     controller.appendLog({ requestId, jobId: 'j1', argv, cwd: '/p', stream: 'stderr', text: 'Done\n' })
     expect(state().install.runs).toEqual([
-      { jobId: 'j1', command: 'pnpm add dsh-new', cwd: '/p', output: 'Progress\nDone\n' },
+      { jobId: 'j1', command: 'pnpm add astro-one-new', cwd: '/p', output: 'Progress\nDone\n' },
       { jobId: 'j2', command: 'pnpm remove lib', cwd: '/p', output: '- lib\n', exitCode: 0 },
     ])
     face.toggleInstallDetails()
     expect(state().install.detailsOpen).toBe(true)
-    gate.resolve(ok({ ...APPLIED, bundle: 'dsh-new' }))
+    gate.resolve(ok({ ...APPLIED, bundle: 'astro-one-new' }))
     await vi.waitFor(() => { expect(state().install.phase).toBe('done') })
-    expect(state().install).toMatchObject({ installed: 'dsh-new', restartRequired: false, detailsOpen: true })
+    expect(state().install).toMatchObject({ installed: 'astro-one-new', restartRequired: false, detailsOpen: true })
     // The finished install settled its run; a trailing last chunk still lands
     // on it, while a chunk for a run the dialog never saw is dropped.
     controller.appendLog({ requestId, jobId: 'j1', argv, cwd: '/p', stream: 'stdout', text: '', exitCode: 0 })
     controller.appendLog({ requestId, jobId: 'j3', argv, cwd: '/p', stream: 'stdout', text: 'stray' })
     expect(state().install.runs).toEqual([
-      { jobId: 'j1', command: 'pnpm add dsh-new', cwd: '/p', output: 'Progress\nDone\n', exitCode: 0 },
+      { jobId: 'j1', command: 'pnpm add astro-one-new', cwd: '/p', output: 'Progress\nDone\n', exitCode: 0 },
       { jobId: 'j2', command: 'pnpm remove lib', cwd: '/p', output: '- lib\n', exitCode: 0 },
     ])
     await vi.waitFor(() => { expect(plugins.listBundles).toHaveBeenCalledTimes(2) })
@@ -411,7 +411,7 @@ describe('PluginManagerController', () => {
     const { plugins, face, state, controller } = bench({
       inspect: vi.fn()
         .mockResolvedValueOnce(ok({ status: 'refused', problem: 'not-found', reason: 'E404', registries: [null, MIRROR] }))
-        .mockResolvedValueOnce(ok({ status: 'refused', problem: 'not-a-bundle', reason: 'plain declares no dsh.bundle' }))
+        .mockResolvedValueOnce(ok({ status: 'refused', problem: 'not-a-bundle', reason: 'plain declares no astroOne.bundle' }))
         .mockResolvedValueOnce(refused('gateway/internal', 'offline')),
     })
     await controller.load()
@@ -429,7 +429,7 @@ describe('PluginManagerController', () => {
     expect(plugins.installBundle).not.toHaveBeenCalled()
     face.editInstallSpec('plain')
     face.runInstall()
-    await vi.waitFor(() => { expect(state().install.inputError).toEqual({ problem: 'not-a-bundle', reason: 'plain declares no dsh.bundle' }) })
+    await vi.waitFor(() => { expect(state().install.inputError).toEqual({ problem: 'not-a-bundle', reason: 'plain declares no astroOne.bundle' }) })
     // A refused answer, rather than a refused spec, reads as unknown with the transport's words.
     face.editInstallSpec('x')
     face.runInstall()
@@ -444,13 +444,13 @@ describe('PluginManagerController', () => {
     })
     await controller.load()
     face.openInstall()
-    face.editInstallSpec('dsh-x')
+    face.editInstallSpec('astro-one-x')
     face.runInstall()
     await vi.waitFor(() => { expect(plugins.inspect).toHaveBeenCalledOnce() })
     const checkSignal = (plugins.inspect.mock.calls[0] as unknown[])[2] as AbortSignal
     face.cancelInstall()
     expect(checkSignal.aborted).toBe(true)
-    expect(state().install).toMatchObject({ open: true, phase: 'idle', spec: 'dsh-x', inputError: null })
+    expect(state().install).toMatchObject({ open: true, phase: 'idle', spec: 'astro-one-x', inputError: null })
     // The settlement of the dropped check changes nothing.
     inspectGate.resolve(ok(INSPECTED))
     await Promise.resolve()
@@ -464,12 +464,12 @@ describe('PluginManagerController', () => {
     expect((plugins.inspect.mock.calls[1] as unknown[])[2]).toMatchObject({ aborted: true })
     // From the failed screen the same control goes back to the spec.
     face.openInstall()
-    face.editInstallSpec('dsh-x')
+    face.editInstallSpec('astro-one-x')
     face.runInstall()
     await vi.waitFor(() => { expect(state().install.phase).toBe('failed') })
     expect(state().install.failure).toEqual({ reason: 'ERR', code: 'operation-error', kind: 'network' })
     face.cancelInstall()
-    expect(state().install).toMatchObject({ open: true, phase: 'idle', spec: 'dsh-x', failure: null, subject: null })
+    expect(state().install).toMatchObject({ open: true, phase: 'idle', spec: 'astro-one-x', failure: null, subject: null })
   })
 
   it('asks the Host to stop a run, keeps the spec once it confirms, and forgets the stopped run', async () => {
@@ -808,8 +808,8 @@ describe('PluginManagerController', () => {
   it('enables what a finished install added from its screen, closes, and marks it in the list', async () => {
     const { plugins, face, state, controller } = bench({
       installBundle: vi.fn()
-        .mockResolvedValueOnce(ok({ ...APPLIED, bundle: 'dsh-a' }))
-        .mockResolvedValueOnce(ok({ ...APPLIED, bundle: 'dsh-a' }))
+        .mockResolvedValueOnce(ok({ ...APPLIED, bundle: 'astro-one-a' }))
+        .mockResolvedValueOnce(ok({ ...APPLIED, bundle: 'astro-one-a' }))
         .mockResolvedValueOnce(ok({ ...APPLIED, application: 'overridden' })),
       setBundleEnabled: vi.fn()
         .mockResolvedValueOnce(ok({ ...APPLIED, application: 'restart-required' }))
@@ -819,31 +819,31 @@ describe('PluginManagerController', () => {
     face.enableInstalled()
     expect(plugins.setBundleEnabled).not.toHaveBeenCalled()
     face.openInstall()
-    face.editInstallSpec('dsh-a')
+    face.editInstallSpec('astro-one-a')
     face.runInstall()
     await vi.waitFor(() => { expect(state().install.phase).toBe('done') })
     face.enableInstalled()
     face.enableInstalled()
     expect(state().install.enabling).toBe(true)
     await vi.waitFor(() => { expect(state().install.open).toBe(false) })
-    expect(plugins.setBundleEnabled).toHaveBeenCalledExactlyOnceWith('dsh-a', true)
+    expect(plugins.setBundleEnabled).toHaveBeenCalledExactlyOnceWith('astro-one-a', true)
     // A restart it waits for is said in passing; the list marks it.
-    expect(state().notice).toEqual({ kind: 'restart', packageName: 'dsh-a', seq: 1 })
-    expect(state().highlight).toBe('dsh-a')
+    expect(state().notice).toEqual({ kind: 'restart', packageName: 'astro-one-a', seq: 1 })
+    expect(state().highlight).toBe('astro-one-a')
     face.clearHighlight()
     face.clearHighlight()
     expect(state().highlight).toBeNull()
 
     // A refusal toasts it and still closes.
     face.openInstall()
-    face.editInstallSpec('dsh-a')
+    face.editInstallSpec('astro-one-a')
     face.runInstall()
     await vi.waitFor(() => { expect(state().install.phase).toBe('done') })
     face.enableInstalled()
     await vi.waitFor(() => { expect(state().install.open).toBe(false) })
     expect(plugins.setBundleEnabled).toHaveBeenCalledTimes(2)
-    expect(state().notice).toEqual({ kind: 'failed', action: 'enable', code: 'operation-error', reason: 'the tree rejected it', packageName: 'dsh-a', seq: 2 })
-    expect(state().highlight).toBe('dsh-a')
+    expect(state().notice).toEqual({ kind: 'failed', action: 'enable', code: 'operation-error', reason: 'the tree rejected it', packageName: 'astro-one-a', seq: 2 })
+    expect(state().highlight).toBe('astro-one-a')
 
     // An install that named no bundle has nothing to enable or mark: the screen just closes.
     face.openInstall()
@@ -885,10 +885,10 @@ describe('PluginManagerController', () => {
     const second = await started()
     expect(second).not.toBe(first)
     expect(plugins.installBundle).toHaveBeenLastCalledWith('x', { enabled: false, requestId: second, registry: null, approvedBuilds: ['native'] })
-    expect(state().install).toMatchObject({ subject: { spec: 'x', name: 'dsh-better-sidebar' }, failure: null })
-    gates[1]!.resolve(ok({ ...APPLIED, bundle: 'dsh-better-sidebar', approvedBuilds: ['native'] }))
+    expect(state().install).toMatchObject({ subject: { spec: 'x', name: 'astro-one-better-sidebar' }, failure: null })
+    gates[1]!.resolve(ok({ ...APPLIED, bundle: 'astro-one-better-sidebar', approvedBuilds: ['native'] }))
     await vi.waitFor(() => { expect(state().install.phase).toBe('done') })
-    expect(state().install).toMatchObject({ installed: 'dsh-better-sidebar', approvedBuilds: ['native'] })
+    expect(state().install).toMatchObject({ installed: 'astro-one-better-sidebar', approvedBuilds: ['native'] })
     expect(plugins.installBundle).toHaveBeenCalledTimes(2)
   })
 
@@ -897,11 +897,11 @@ describe('PluginManagerController', () => {
     const { plugins, face, state, controller } = bench({ setBundleEnabled: vi.fn().mockReturnValueOnce(enableGate.promise) })
     await controller.load()
     face.openInstall()
-    face.editInstallSpec('dsh-a')
+    face.editInstallSpec('astro-one-a')
     face.runInstall()
     await vi.waitFor(() => { expect(state().install.phase).toBe('done') })
     face.enableInstalled()
-    expect(plugins.setBundleEnabled).toHaveBeenCalledWith('dsh-new', true)
+    expect(plugins.setBundleEnabled).toHaveBeenCalledWith('astro-one-new', true)
     const before = state()
     controller.dispose()
     enableGate.resolve(ok(APPLIED))
@@ -1065,21 +1065,21 @@ describe('PluginManagerController', () => {
     face.changeRegistry()
     expect(state().install.registryOpen).toBe(true)
     face.chooseRegistry({ kind: 'offered', registry: MIRROR })
-    face.editInstallSpec('dsh-new')
+    face.editInstallSpec('astro-one-new')
     face.runInstall()
-    expect(plugins.inspect).toHaveBeenCalledWith('dsh-new', { registry: MIRROR }, expect.any(AbortSignal))
+    expect(plugins.inspect).toHaveBeenCalledWith('astro-one-new', { registry: MIRROR }, expect.any(AbortSignal))
     // A choice made while the Host checks or runs is dropped.
     face.chooseRegistry({ kind: 'offered', registry: null })
     expect(state().install.registry).toEqual({ kind: 'offered', registry: MIRROR })
     const requestId = await started()
     // The run starts at the registry that answered the check.
     expect(state().install.subject).toMatchObject({ registry: MIRROR })
-    expect(plugins.installBundle).toHaveBeenCalledWith('dsh-new', { enabled: false, requestId, registry: MIRROR })
+    expect(plugins.installBundle).toHaveBeenCalledWith('astro-one-new', { enabled: false, requestId, registry: MIRROR })
     // The Host names each registry it asks; the dialog keeps their order and how many there may be.
     controller.installProgress({ requestId, phase: 'installing', attempt: { registry: MIRROR, index: 1, total: 2 } })
     controller.installProgress({ requestId, phase: 'installing', attempt: { registry: null, index: 2, total: 2 } })
     expect(state().install).toMatchObject({ phase: 'running', attempts: { registries: [MIRROR, null], total: 2 } })
-    gate.resolve(ok({ ...APPLIED, bundle: 'dsh-new', registries: [MIRROR, null] }))
+    gate.resolve(ok({ ...APPLIED, bundle: 'astro-one-new', registries: [MIRROR, null] }))
     await vi.waitFor(() => { expect(state().install.phase).toBe('done') })
     expect(state().install.attempts).toEqual({ registries: [MIRROR, null], total: 2 })
   })
@@ -1093,11 +1093,11 @@ describe('PluginManagerController', () => {
     face.openInstall()
     await vi.waitFor(() => { expect(state().install.registries).toEqual(corporate) })
     expect(state().install.registry).toEqual({ kind: 'offered', registry: CORP })
-    face.editInstallSpec('dsh-new')
+    face.editInstallSpec('astro-one-new')
     face.runInstall()
-    expect(plugins.inspect).toHaveBeenCalledWith('dsh-new', { registry: CORP }, expect.any(AbortSignal))
+    expect(plugins.inspect).toHaveBeenCalledWith('astro-one-new', { registry: CORP }, expect.any(AbortSignal))
     await vi.waitFor(() => { expect(state().install.phase).toBe('done') })
-    expect(plugins.installBundle).toHaveBeenCalledWith('dsh-new', expect.objectContaining({ registry: CORP }))
+    expect(plugins.installBundle).toHaveBeenCalledWith('astro-one-new', expect.objectContaining({ registry: CORP }))
   })
 
   it('refuses a custom registry that is not an http(s) URL before asking the Host, and remembers the registry last used', async () => {
@@ -1112,7 +1112,7 @@ describe('PluginManagerController', () => {
         inspect: vi.fn(() => Promise.resolve(ok({ ...INSPECTED, registry: 'https://npm.corp.example/' }))),
       })
       face.openInstall()
-      face.editInstallSpec('dsh-new')
+      face.editInstallSpec('astro-one-new')
       face.chooseRegistry({ kind: 'custom', url: ' npm.corp.example ' })
       face.runInstall()
       expect(state().install).toMatchObject({ phase: 'idle', registryError: true })
@@ -1121,15 +1121,15 @@ describe('PluginManagerController', () => {
       face.chooseRegistry({ kind: 'custom', url: ' https://npm.corp.example ' })
       expect(state().install.registryError).toBe(false)
       face.runInstall()
-      expect(plugins.inspect).toHaveBeenCalledWith('dsh-new', { registry: 'https://npm.corp.example' }, expect.any(AbortSignal))
+      expect(plugins.inspect).toHaveBeenCalledWith('astro-one-new', { registry: 'https://npm.corp.example' }, expect.any(AbortSignal))
       await vi.waitFor(() => { expect(state().install.phase).toBe('done') })
-      expect(plugins.installBundle).toHaveBeenCalledWith('dsh-new', expect.objectContaining({ registry: 'https://npm.corp.example/' }))
+      expect(plugins.installBundle).toHaveBeenCalledWith('astro-one-new', expect.objectContaining({ registry: 'https://npm.corp.example/' }))
       // A dialog opened later, by another controller, starts from the registry last used.
       const later = bench()
       later.face.openInstall()
       expect(later.state().install.registry).toEqual({ kind: 'custom', url: 'https://npm.corp.example' })
       // A remembered registry the Host no longer offers is kept as a typed one.
-      storage.set('dsh.plugin-manager.install-registry', JSON.stringify({ kind: 'offered', registry: 'https://old.example/' }))
+      storage.set('astro-one.plugin-manager.install-registry', JSON.stringify({ kind: 'offered', registry: 'https://old.example/' }))
       const stale = bench()
       stale.face.openInstall()
       expect(stale.state().install.registry).toEqual({ kind: 'offered', registry: 'https://old.example/' })
@@ -1161,17 +1161,17 @@ describe('PluginManagerController', () => {
     }
     const { face, state } = bench({ installBundle: vi.fn(() => Promise.resolve(ok(outcome))) })
     face.openInstall()
-    face.editInstallSpec('dsh-new')
+    face.editInstallSpec('astro-one-new')
     face.runInstall()
     await vi.waitFor(() => { expect(state().install.phase).toBe('failed') })
     expect(state().install.failure).toMatchObject({ kind: 'network', failedAt: 'registry' })
     expect(state().install.attempts).toEqual({ registries: [null, MIRROR], total: 2 })
     face.changeRegistry()
-    expect(state().install).toMatchObject({ phase: 'idle', spec: 'dsh-new', registryOpen: true, runs: [], failure: null })
+    expect(state().install).toMatchObject({ phase: 'idle', spec: 'astro-one-new', registryOpen: true, runs: [], failure: null })
   })
 
   it.each(['network', 'timeout'] as const)('recovers a GitHub %s failure without retrying its URL through a mirror', async (kind) => {
-    const spec = 'https://github.com/example/dsh-plugin.git'
+    const spec = 'https://github.com/example/astro-one-plugin.git'
     const inspect = vi.fn().mockResolvedValueOnce(ok({ status: 'accepted', kind: 'git', bundle: null, registry: null, host: 'github.com' }))
       .mockResolvedValue(ok({ ...INSPECTED, registry: MIRROR }))
     const { face, state, plugins } = bench({
@@ -1182,7 +1182,7 @@ describe('PluginManagerController', () => {
       })).mockResolvedValueOnce(ok({
         ...failed(undefined, { exitCode: 1, output: 'Registry connection failed', truncated: false, logPath: '/l', kind: 'network' }),
         failedAt: 'registry',
-      })).mockResolvedValue(ok({ ...APPLIED, bundle: 'dsh-new' })),
+      })).mockResolvedValue(ok({ ...APPLIED, bundle: 'astro-one-new' })),
     })
     face.openInstall()
     await vi.waitFor(() => { expect(state().install.registries).toEqual(REGISTRIES) })
@@ -1197,15 +1197,15 @@ describe('PluginManagerController', () => {
       registryOpen: false, failure: null, runs: [],
     })
     expect(plugins.installBundle).toHaveBeenCalledTimes(1)
-    face.editInstallSpec('dsh-new')
+    face.editInstallSpec('astro-one-new')
     face.runInstall()
     await vi.waitFor(() => { expect(state().install.phase).toBe('failed') })
     face.changeRegistry()
-    expect(state().install).toMatchObject({ phase: 'idle', spec: 'dsh-new', mirrorRecovery: true, registryOpen: true })
+    expect(state().install).toMatchObject({ phase: 'idle', spec: 'astro-one-new', mirrorRecovery: true, registryOpen: true })
     face.runInstall()
     await vi.waitFor(() => { expect(state().install.phase).toBe('done') })
-    expect(plugins.inspect).toHaveBeenLastCalledWith('dsh-new', { registry: MIRROR }, expect.any(AbortSignal))
-    expect(plugins.installBundle).toHaveBeenLastCalledWith('dsh-new', expect.objectContaining({ registry: MIRROR }))
+    expect(plugins.inspect).toHaveBeenLastCalledWith('astro-one-new', { registry: MIRROR }, expect.any(AbortSignal))
+    expect(plugins.installBundle).toHaveBeenLastCalledWith('astro-one-new', expect.objectContaining({ registry: MIRROR }))
     face.closeInstall()
     face.openInstall()
     await vi.waitFor(() => { expect(state().install.registries).toEqual(REGISTRIES) })
@@ -1215,7 +1215,7 @@ describe('PluginManagerController', () => {
 
 describe('Host registry response recommendation', () => {
   it('inspects the remembered registry when the offered choice becomes custom during the initial read', async () => {
-    const key = 'dsh.plugin-manager.install-registry'
+    const key = 'astro-one.plugin-manager.install-registry'
     const registry = 'https://old.example/'
     const storage = new Map([[key, JSON.stringify({ kind: 'offered', registry })]])
     const registries = deferred<ReturnType<typeof ok<typeof REGISTRIES>>>()
@@ -1230,18 +1230,18 @@ describe('Host registry response recommendation', () => {
         inspect: vi.fn(async () => ok({ ...INSPECTED, registry })),
       })
       face.openInstall()
-      face.editInstallSpec('dsh-new')
+      face.editInstallSpec('astro-one-new')
       face.runInstall()
       expect(state().install.phase).toBe('checking')
       expect(plugins.inspect).not.toHaveBeenCalled()
       registries.resolve(ok(REGISTRIES))
       await vi.waitFor(() => { expect(plugins.inspect).toHaveBeenCalled() })
-      expect(plugins.inspect).toHaveBeenCalledWith('dsh-new', { registry }, expect.any(AbortSignal))
+      expect(plugins.inspect).toHaveBeenCalledWith('astro-one-new', { registry }, expect.any(AbortSignal))
       expect(state().install.registry).toEqual({ kind: 'custom', url: registry })
       expect(JSON.parse(storage.get(key)!)).toEqual({ kind: 'custom', url: registry })
       expect(probe.fastest).not.toHaveBeenCalled()
       await vi.waitFor(() => { expect(state().install.phase).toBe('done') })
-      expect(plugins.installBundle).toHaveBeenCalledWith('dsh-new', expect.objectContaining({ registry }))
+      expect(plugins.installBundle).toHaveBeenCalledWith('astro-one-new', expect.objectContaining({ registry }))
     } finally {
       registries.resolve(ok(REGISTRIES))
       vi.unstubAllGlobals()
@@ -1252,13 +1252,13 @@ describe('Host registry response recommendation', () => {
     const fastest = deferred<ReturnType<typeof ok<string | null>>>()
     const { face, state, plugins, probe } = bench({ fastest: vi.fn(() => fastest.promise) })
     face.openInstall()
-    face.editInstallSpec('dsh-new')
+    face.editInstallSpec('astro-one-new')
     face.runInstall()
     await vi.waitFor(() => { expect(probe.fastest).toHaveBeenCalledOnce() })
     expect(plugins.inspect).not.toHaveBeenCalled()
     fastest.resolve(ok(MIRROR))
     await vi.waitFor(() => { expect(plugins.inspect).toHaveBeenCalled() })
-    expect(plugins.inspect).toHaveBeenCalledWith('dsh-new', { registry: MIRROR }, expect.any(AbortSignal))
+    expect(plugins.inspect).toHaveBeenCalledWith('astro-one-new', { registry: MIRROR }, expect.any(AbortSignal))
     expect(state().install.registry).toEqual({ kind: 'offered', registry: MIRROR })
   })
 
@@ -1307,20 +1307,20 @@ describe('Host registry response recommendation', () => {
     face.openInstall()
     await vi.waitFor(() => { expect(probe.fastest).toHaveBeenCalledOnce() })
     face.chooseRegistry({ kind: 'custom', url: CORP })
-    face.editInstallSpec('dsh-new')
+    face.editInstallSpec('astro-one-new')
     face.runInstall()
     await vi.waitFor(() => { expect(plugins.inspect).toHaveBeenCalled() })
     fastest.resolve(ok(MIRROR))
     await fastest.promise
     expect(state().install.registry).toEqual({ kind: 'custom', url: CORP })
-    expect(plugins.inspect).toHaveBeenCalledWith('dsh-new', { registry: CORP }, expect.any(AbortSignal))
+    expect(plugins.inspect).toHaveBeenCalledWith('astro-one-new', { registry: CORP }, expect.any(AbortSignal))
   })
 
   it.each(['close', 'dispose'] as const)('discards a waiting install after %s', async (action) => {
     const fastest = deferred<ReturnType<typeof ok<string | null>>>()
     const { face, controller, plugins, probe } = bench({ fastest: vi.fn(() => fastest.promise) })
     face.openInstall()
-    face.editInstallSpec('dsh-new')
+    face.editInstallSpec('astro-one-new')
     face.runInstall()
     await vi.waitFor(() => { expect(probe.fastest).toHaveBeenCalledOnce() })
     if (action === 'close') face.closeInstall()

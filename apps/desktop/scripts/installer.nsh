@@ -118,7 +118,7 @@ ManifestDPIAware true
 !macro customInstallerExtract Archive
   !insertmacro InstallerPublishStage 1
   System::Store /NOUNLOAD "S"
-  System::Call /NOUNLOAD '$PLUGINSDIR\window-frame.dll::InstallerExtract(p $HWNDPARENT, w "$PLUGINSDIR\dsh-7za.exe", w "${Archive}", w "$INSTDIR", w "$PLUGINSDIR\extract.log") i.s ?c'
+  System::Call /NOUNLOAD '$PLUGINSDIR\window-frame.dll::InstallerExtract(p $HWNDPARENT, w "$PLUGINSDIR\astro-one-7za.exe", w "${Archive}", w "$INSTDIR", w "$PLUGINSDIR\extract.log") i.s ?c'
   System::Store "L"
   Pop $R0
   ; The failure report owns 7-Zip's UTF-8 output; the details view only needs the result code.
@@ -127,9 +127,9 @@ ManifestDPIAware true
 
 ; The report outlives $PLUGINSDIR so a user can send it; silent installs keep only the file. The updater cache
 ; directory is never an installation target and leaves with the application on uninstall.
-; The directory smoke fixture predefines DSH_INSTALLER_LOG_DIR to keep reports inside its scratch tree.
-!ifndef DSH_INSTALLER_LOG_DIR
-  !define DSH_INSTALLER_LOG_DIR "$LOCALAPPDATA\${DSH_UPDATER_CACHE_NAME}\installer-logs"
+; The directory smoke fixture predefines ASTRO_ONE_INSTALLER_LOG_DIR to keep reports inside its scratch tree.
+!ifndef ASTRO_ONE_INSTALLER_LOG_DIR
+  !define ASTRO_ONE_INSTALLER_LOG_DIR "$LOCALAPPDATA\${ASTRO_ONE_UPDATER_CACHE_NAME}\installer-logs"
 !endif
 
 !macro customInstallerExtractFailed Archive
@@ -142,12 +142,12 @@ ManifestDPIAware true
   Push $6
   ; GetTime yields zero-padded day, month, year, weekday, hour, minute, second.
   ${GetTime} "" "L" $0 $1 $2 $3 $4 $5 $6
-  StrCpy $0 "${DSH_INSTALLER_LOG_DIR}\extract-failure-$2$1$0-$4$5$6.log"
+  StrCpy $0 "${ASTRO_ONE_INSTALLER_LOG_DIR}\extract-failure-$2$1$0-$4$5$6.log"
   StrCpy $1 1
   ${If} ${Silent}
     StrCpy $1 0
   ${EndIf}
-  System::Call '$PLUGINSDIR\window-frame.dll::InstallerReportExtractFailure(p $HWNDPARENT, i R0, w "${Archive}", w "$dshNewDirectory", w "$PLUGINSDIR\extract.log", w r0, i r1, w "$(^SetupCaption)", w "$(INSTALLER_EXTRACT_FAILED)", w "$(INSTALLER_EXTRACT_HINT)", w "$(INSTALLER_EXTRACT_COPY)", w "$(INSTALLER_EXTRACT_EXPAND)", w "$(INSTALLER_EXTRACT_COLLAPSE)", w "$(INSTALLER_EXTRACT_SAVED)", w "$(INSTALLER_EXTRACT_UNSAVED)", w "$(INSTALLER_EXTRACT_COPIED)") i.r2 ?c'
+  System::Call '$PLUGINSDIR\window-frame.dll::InstallerReportExtractFailure(p $HWNDPARENT, i R0, w "${Archive}", w "$astroOneNewDirectory", w "$PLUGINSDIR\extract.log", w r0, i r1, w "$(^SetupCaption)", w "$(INSTALLER_EXTRACT_FAILED)", w "$(INSTALLER_EXTRACT_HINT)", w "$(INSTALLER_EXTRACT_COPY)", w "$(INSTALLER_EXTRACT_EXPAND)", w "$(INSTALLER_EXTRACT_COLLAPSE)", w "$(INSTALLER_EXTRACT_SAVED)", w "$(INSTALLER_EXTRACT_UNSAVED)", w "$(INSTALLER_EXTRACT_COPIED)") i.r2 ?c'
   ${If} $2 == 1
     DetailPrint $0
   ${EndIf}
@@ -202,7 +202,7 @@ ManifestDPIAware true
     StrCpy $0 1
   ${EndIf}
   !insertmacro InstallerPublishStage 4
-  !insertmacro dshFinishDirectories
+  !insertmacro astroOneFinishDirectories
   ; Standard uninstall-entry metadata read by inventory tools; the upstream template records it only under its private key.
   WriteRegStr SHELL_CONTEXT "${UNINSTALL_REGISTRY_KEY}" InstallLocation "$INSTDIR"
   ${If} $0 == 1

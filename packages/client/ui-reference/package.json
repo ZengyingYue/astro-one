@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-client-ui-reference",
+  "name": "@astro-one/client-ui-reference",
   "description": "Unified Web @file and @session reference source",
   "version": "0.1.7-rc.1",
   "publishConfig": {
@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/client/ui-reference"
   },
   "type": "module",
@@ -25,15 +25,15 @@
     "./src/*": "./src/*",
     "./package.json": "./package.json"
   },
-  "dsh": {
+  "astroOne": {
     "client": {
       "inject": [
-        "@deepseek-ai/dsh-api-remotes",
-        "@deepseek-ai/dsh-api-session-controller",
-        "@deepseek-ai/dsh-client-connection",
-        "@deepseek-ai/dsh-client-locale",
-        "@deepseek-ai/dsh-client-ui-input-trigger",
-        "@deepseek-ai/dsh-client-ui-sidebar-right"
+        "@astro-one/api-remotes",
+        "@astro-one/api-session-controller",
+        "@astro-one/client-connection",
+        "@astro-one/client-locale",
+        "@astro-one/client-ui-input-trigger",
+        "@astro-one/client-ui-sidebar-right"
       ],
       "platform": "web"
     }
@@ -44,23 +44,23 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/cordis": "workspace:~"
   },
   "devDependencies": {
-    "@deepseek-ai/dsh-api-remotes": "workspace:*",
-    "@deepseek-ai/dsh-api-session-controller": "workspace:*",
-    "@deepseek-ai/dsh-client-connection": "workspace:*",
-    "@deepseek-ai/dsh-client-locale": "workspace:*",
-    "@deepseek-ai/dsh-client-test-runtime": "workspace:*",
-    "@deepseek-ai/dsh-client-ui-input-trigger": "workspace:*",
-    "@deepseek-ai/dsh-client-ui-primitives": "workspace:*",
-    "@deepseek-ai/dsh-client-ui-slots": "workspace:*",
-    "@deepseek-ai/dsh-file-reference": "workspace:*",
-    "@deepseek-ai/dsh-session-reference": "workspace:*",
-    "@deepseek-ai/dsh-typert-protocol": "workspace:*",
-    "@deepseek-ai/dsh-util-workspace-path": "workspace:*",
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-client-ui-sidebar-right": "workspace:*"
+    "@astro-one/api-remotes": "workspace:*",
+    "@astro-one/api-session-controller": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/client-test-runtime": "workspace:*",
+    "@astro-one/client-ui-input-trigger": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
+    "@astro-one/file-reference": "workspace:*",
+    "@astro-one/session-reference": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/util-workspace-path": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/client-ui-sidebar-right": "workspace:*"
   },
   "files": [
     "lib/index.js",

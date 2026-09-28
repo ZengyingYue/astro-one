@@ -1,5 +1,5 @@
 /**
- * End-to-end tests for dsh-mcp-client. Exercises the REAL MCP protocol against:
+ * End-to-end tests for astro-one-mcp-client. Exercises the REAL MCP protocol against:
  * 1. A self-written fixture server over stdio (controlled edge cases)
  * 2. @modelcontextprotocol/server-everything (official integration test server)
  * 3. @modelcontextprotocol/server-filesystem (real filesystem operations)
@@ -14,18 +14,18 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@astro-one/cordis'
 import { createMcpHandler, McpServer, type CallToolResult } from '@modelcontextprotocol/server'
 import { toNodeHandler, type NodeIncomingMessageLike } from '@modelcontextprotocol/node'
 import { z } from 'zod'
-import LocalAttachmentStore from '@deepseek-ai/dsh-attachment-local'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime from '@deepseek-ai/dsh-tools'
-import { ToolCallId, LlmAdapter, LlmRuntime } from '@deepseek-ai/dsh-llm'
-import type { GenerateOptions, LlmResolvedModelInfo, StreamChunk } from '@deepseek-ai/dsh-llm'
-import { apply } from '@deepseek-ai/dsh-mcp-client/src/index.ts'
-import { publicToolName } from '@deepseek-ai/dsh-mcp-client/src/tools.ts'
-import type { Config } from '@deepseek-ai/dsh-mcp-client'
+import LocalAttachmentStore from '@astro-one/attachment-local'
+import SystemPrompt from '@astro-one/system-prompt'
+import ToolRuntime from '@astro-one/tools'
+import { ToolCallId, LlmAdapter, LlmRuntime } from '@astro-one/llm'
+import type { GenerateOptions, LlmResolvedModelInfo, StreamChunk } from '@astro-one/llm'
+import { apply } from '@astro-one/mcp-client/src/index.ts'
+import { publicToolName } from '@astro-one/mcp-client/src/tools.ts'
+import type { Config } from '@astro-one/mcp-client'
 
 const testToolSignal = new AbortController().signal
 
@@ -55,9 +55,9 @@ class ImageAdapter extends LlmAdapter {
   }
 }
 
-async function mountImageRegistry(dshHome: string): Promise<Context> {
+async function mountImageRegistry(astroOneHome: string): Promise<Context> {
   const ctx = await mountRegistry()
-  await ctx.plugin(LocalAttachmentStore, { dshHome })
+  await ctx.plugin(LocalAttachmentStore, { astroOneHome })
   await ctx.plugin(LlmRuntime)
   ctx.llm.registerAdapter(['visual'], new ImageAdapter())
   return ctx

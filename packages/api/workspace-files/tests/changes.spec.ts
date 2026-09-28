@@ -3,9 +3,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock, MockInstance } from 'vitest'
 import { mkdir, rename, rm, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
-import type { Context } from '@deepseek-ai/cordis'
-import type { FileSystem, FsObservation, FsTarget } from '@deepseek-ai/dsh-fs'
-import { FsVersion } from '@deepseek-ai/dsh-fs'
+import type { Context } from '@astro-one/cordis'
+import type { FileSystem, FsObservation, FsTarget } from '@astro-one/fs'
+import { FsVersion } from '@astro-one/fs'
 import { WorkspaceFiles } from '../src/index.ts'
 import { failureOf, openWorkspace, type Harness } from './harness.ts'
 
@@ -15,7 +15,7 @@ let unwatch: Mock<() => Promise<void>>
 const cleanups: Array<() => Promise<unknown>> = []
 
 beforeEach(async () => {
-  harness = await openWorkspace('dsh-workspace-files-changes-')
+  harness = await openWorkspace('astro-one-workspace-files-changes-')
   unwatch = vi.fn<() => Promise<void>>().mockResolvedValue(undefined)
   watch = vi.spyOn(harness.ctx.fs, 'watch').mockResolvedValue(unwatch)
 })

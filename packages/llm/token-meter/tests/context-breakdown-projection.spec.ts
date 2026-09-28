@@ -2,16 +2,16 @@
 // plus the shared estimator's pricing branches.
 
 import { afterEach, describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import { createMessage, createSystemMessage, createUserMessage } from '@deepseek-ai/dsh-llm'
-import type { ContentBlock, ToolSchema } from '@deepseek-ai/dsh-llm'
-import type { ContextFormed } from '@deepseek-ai/dsh-llm'
-import SessionStore, { SessionLogOffset, SessionSeq } from '@deepseek-ai/dsh-session'
-import type { Session, SessionEvent, SessionSeq as SessionSeqType } from '@deepseek-ai/dsh-session'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import TokenMeter from '@deepseek-ai/dsh-token-meter'
-import type { ContextBreakdownProjection } from '@deepseek-ai/dsh-token-meter/client'
-import { CompactionId } from '@deepseek-ai/dsh-compaction'
+import { Context } from '@astro-one/cordis'
+import { createMessage, createSystemMessage, createUserMessage } from '@astro-one/llm'
+import type { ContentBlock, ToolSchema } from '@astro-one/llm'
+import type { ContextFormed } from '@astro-one/llm'
+import SessionStore, { SessionLogOffset, SessionSeq } from '@astro-one/session'
+import type { Session, SessionEvent, SessionSeq as SessionSeqType } from '@astro-one/session'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import TokenMeter from '@astro-one/token-meter'
+import type { ContextBreakdownProjection } from '@astro-one/token-meter/client'
+import { CompactionId } from '@astro-one/compaction'
 import { contextBreakdownProjectionDefinition } from '../src/breakdown-projection.ts'
 import {
   estimateContent,
@@ -20,7 +20,7 @@ import {
   estimateToolsTokens,
 } from '../src/estimate.ts'
 
-declare module '@deepseek-ai/dsh-llm' {
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'test': { kind: 'test' } & ContextFormed
   }

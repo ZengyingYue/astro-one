@@ -14,8 +14,8 @@ import { join } from 'node:path'
 import type { Browser, Page } from 'playwright'
 import { chromium } from 'playwright'
 import { afterEach, describe, expect, it, onTestFailed, vi } from 'vitest'
-import type { ReplayOverrideDoc } from '@deepseek-ai/dsh-llm-replay'
-import type { SessionEvent } from '@deepseek-ai/dsh-session'
+import type { ReplayOverrideDoc } from '@astro-one/llm-replay'
+import type { SessionEvent } from '@astro-one/session'
 import {
   acknowledgeReloadConnectionLoss, assertFixtureInventory, captureStableAria, compareOrRefreshGolden, fixtureUserPrompts,
   launchWebScaffold, recordFixture, watchConsole, webSnapshotMode, type WebScaffold,
@@ -80,7 +80,7 @@ describe('web e2e: assistant IconActions wait for the turn to end', () => {
     }
     let overridePath: string | undefined
     if (buildOverride !== undefined) {
-      sidecarDir = await mkdtemp(join(tmpdir(), 'dsh-web-e2e-sidecar-'))
+      sidecarDir = await mkdtemp(join(tmpdir(), 'astro-one-web-e2e-sidecar-'))
       overridePath = join(sidecarDir, 'replay.override.json')
       await writeFile(overridePath, JSON.stringify(buildOverride(sidecarDir)))
     }

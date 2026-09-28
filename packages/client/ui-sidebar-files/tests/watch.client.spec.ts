@@ -1,8 +1,8 @@
 /** Directory notifications and disposal through the shared scripted Remote transport. */
 import { describe, expect, it, onTestFinished, vi } from 'vitest'
-import type { ClientRemote } from '@deepseek-ai/dsh-api-remotes/client'
-import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import type { SupervisedStreamOptions } from '@deepseek-ai/dsh-api-workspace-files/src/client/remote.ts'
+import type { ClientRemote } from '@astro-one/api-remotes/client'
+import type { SessionId } from '@astro-one/session/types'
+import type { SupervisedStreamOptions } from '@astro-one/api-workspace-files/src/client/remote.ts'
 import { FakeRemote } from '../../../api/workspace-files/tests/fake-remote.client.ts'
 import { createWatch } from '../src/client/face.ts'
 

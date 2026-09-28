@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-client-modules",
-  "description": "Client module system, dual-face: node half composes the __DSH_BOOT__ entry graph (incremental dsh.client scan, bundle route, index tap, webPlugins service); browser half is the lazy-CJS module table the vendored cordis Loader consumes as its internal seam",
+  "name": "@astro-one/client-modules",
+  "description": "Client module system, dual-face: node half composes the __ASTRO_ONE_BOOT__ entry graph (incremental astroOne.client scan, bundle route, index tap, webPlugins service); browser half is the lazy-CJS module table the vendored cordis Loader consumes as its internal seam",
   "version": "0.1.7-rc.1",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/client/modules"
   },
   "type": "module",
@@ -29,7 +29,7 @@
     "./src/*": "./src/*",
     "./package.json": "./package.json"
   },
-  "dsh": {
+  "astroOne": {
     "client": {
       "platform": "web",
       "inject": [],
@@ -42,12 +42,12 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@deepseek-ai/cordis-plugin-loader": "workspace:~",
-    "@deepseek-ai/dsh-host-webserver": "workspace:*",
-    "@deepseek-ai/dsh-invariants": "workspace:*",
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-package-manifest": "workspace:*",
-    "@deepseek-ai/dsh-client-store": "workspace:*"
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/host-webserver": "workspace:*",
+    "@astro-one/invariants": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/package-manifest": "workspace:*",
+    "@astro-one/client-store": "workspace:*"
   },
   "files": [
     "lib/index.js",
@@ -56,6 +56,6 @@
     "lib/types/**/*.d.ts"
   ],
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/cordis": "workspace:~"
   }
 }

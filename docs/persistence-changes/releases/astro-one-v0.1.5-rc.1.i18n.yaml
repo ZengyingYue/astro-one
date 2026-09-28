@@ -1,0 +1,6 @@
+# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. Both languages carry equal authority;
+# after editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/persistence-changes/releases/astro-one-v0.1.5-rc.1.md
+astro-one-v0.1.5-rc.1.md: d7ad8e2b2766cbb7fd952032dab846fdb2c2c752
+astro-one-v0.1.5-rc.1.zh.md: 8c9d8befcba52159814b318ea704dc0f10765ad1

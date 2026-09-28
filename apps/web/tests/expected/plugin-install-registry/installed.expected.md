@@ -4,7 +4,7 @@
   - paragraph: mirrored-package
   - paragraph: 版本 2.0.0
   - button "收起安装详情" [expanded]
-  - paragraph: 安装位置：{{cwd}}/.dsh-home/profiles/scaffold
+  - paragraph: 安装位置：{{cwd}}/.astro-one-home/profiles/scaffold
   - paragraph: 第 1 次 · 中国大陆镜像源
   - text: 失败 $ pnpm add mirrored-package --registry=https://registry.npmmirror.com/ 退出码 1
   - button "复制"

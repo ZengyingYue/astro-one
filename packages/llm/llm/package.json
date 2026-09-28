@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-llm",
-  "description": "Provider-neutral LLM service interface for the DeepSeek Harness",
+  "name": "@astro-one/llm",
+  "description": "Provider-neutral LLM service interface for the Astro One",
   "version": "0.1.7-rc.1",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/llm/llm"
   },
   "type": "module",
@@ -61,20 +61,20 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/cordis": "workspace:~"
   },
   "dependencies": {
-    "@deepseek-ai/dsh-util-crypto": "workspace:*",
-    "@deepseek-ai/schemastery": "workspace:~",
+    "@astro-one/util-crypto": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
     "zod": "^4.4.3",
-    "@deepseek-ai/dsh-timeout": "workspace:*",
-    "@deepseek-ai/dsh-brand": "workspace:*",
-    "@deepseek-ai/dsh-util-values": "workspace:*",
-    "@deepseek-ai/dsh-typert-protocol": "workspace:*"
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*"
   },
   "devDependencies": {
-    "@deepseek-ai/dsh-attachment": "workspace:*",
-    "@deepseek-ai/dsh-invariants": "workspace:*",
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/invariants": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
   }
 }

@@ -3,7 +3,7 @@ description: "Browser-worker VFS image packaging for maintainers building or deb
 kind: "package-library"
 ---
 
-# `@deepseek-ai/dsh-experimental-webworker-packer`
+# `@astro-one/experimental-webworker-packer`
 
 English | [中文](README.zh.md)
 
@@ -25,15 +25,15 @@ The VFS image packer: turns one composed profile into the gzip-compressed base t
 
 The public npm package exposes `packVfsImage` and `packVfsOverlay` through its library entry. Callers supply the composition, package directories, and resolution root; no profile layer is installed. The runtime's library entry supplies the module-proxy and replacement tables used during packing.
 
-The packer owns the internal `dsh.configTrees` declaration, its validation, and source directory resolution in [`src/repository.ts`](src/repository.ts). This field is not part of the public plugin manifest API.
+The packer owns the internal `astroOne.configTrees` declaration, its validation, and source directory resolution in [`src/repository.ts`](src/repository.ts). This field is not part of the public plugin manifest API.
 
 The pack is a three-layer standard stack:
 
-1. **Roster** — the composed profile's plugin rows (standard YAML parse under Include's dialect, `!!js` intact), plus the rows of every config tree the CLI declares in its `package.json` `dsh.configTrees` (agent presets), materialized as a Node-style dependency closure. External peer edges never bind the worker; workspace peers stay on the chain.
+1. **Roster** — the composed profile's plugin rows (standard YAML parse under Include's dialect, `!!js` intact), plus the rows of every config tree the CLI declares in its `package.json` `astroOne.configTrees` (agent presets), materialized as a Node-style dependency closure. External peer edges never bind the worker; workspace peers stay on the chain.
 2. **Publish view** — each workspace or vendored package contributes its built npm slice (`files` through picomatch) without source or workspace `dist/`. External packages retain published JavaScript under both `src/` and `dist/` because their `main` or `exports` may point there; only generic test, map, declaration, and archive exclusions apply.
 3. **Reachability sweep** — the runtime loader's own resolution walks from every non-wildcard workspace runtime export plus the worker assembly's seeds (`IMAGE_ENTRY_SEEDS`), lowering each reached module to the wrapper contract at pack time. Declaration-only condition trees do not seed the sweep; runtime requests for those exports still fail. The transform reports statically named imports, re-exports, and dynamic imports; calls through `require`; and module-scope direct calls of the form `createRequire(import.meta.url)('pkg')` through a named import from `node:module` or `module`, including an import alias. Page assets (`lib/client.js` behind `./client` exports) ship verbatim; an unresolvable request from our own code fails the pack, third-party ones are tolerated to fail loud at require time.
 
-`repository.ts` owns the repo-shaped inputs (workspace scan of `vendor/`, `packages/`, `native/system/packages/`, and `apps/`; profile composition through the real CLI dump path); `pack.ts` owns none of them, so the same library packs a different tree by being called differently. The native scan makes the Landlock entry package an ordinary published-view dependency while its executable remains a Worker platform implementation. The CLI is `dsh-pack-vfs-image --out <file> [--profile web]`; `apps/web`'s `build:preview` runs it after the preview shell build.
+`repository.ts` owns the repo-shaped inputs (workspace scan of `vendor/`, `packages/`, `native/system/packages/`, and `apps/`; profile composition through the real CLI dump path); `pack.ts` owns none of them, so the same library packs a different tree by being called differently. The native scan makes the Landlock entry package an ordinary published-view dependency while its executable remains a Worker platform implementation. The CLI is `astro-one-pack-vfs-image --out <file> [--profile web]`; `apps/web`'s `build:preview` runs it after the preview shell build.
 
 The repository adapter also declares the preview-only fixture trees under `webworker-runtime/tests/fixtures/`. The CLI packs each named fixture into a separate deterministic overlay archive plus a browser-readable manifest. Overlay files bypass npm publish-view and module-reachability exclusions, so dot directories and example source files remain intact; their mounts are limited to `home/` and `workspace/`. `packVfsOverlay` treats all files as opaque bytes.
 
@@ -58,7 +58,7 @@ None; this package neither assembles nor sends a provider request.
 - **Reachability infers only exact request forms** — computed `import` and `require` arguments, stored `createRequire` results, CommonJS-obtained `createRequire`, and bases other than `import.meta.url` resolve only at runtime and fail loud if the target was otherwise pruned; a target reachable only through those forms needs an explicit image entry seed.
 - **Vendored package sources (`src/*.ts`) are excluded** — nothing resolves them at runtime; a future in-worker source-inspection feature would need a dedicated include rule.
 - **The packer assumes built `lib/` artifacts are current**: it never compiles, so a stale workspace build packs stale bytes. Run the repository build first.
-- **The CLI requires its original repository location**: `dsh-pack-vfs-image` finds the checkout relative to its own installed file and reads the source CLI, configuration trees, and preview fixtures there. An npm installation supports the parameterized library API; the CLI and repository helpers require a complete, built DeepSeek Harness checkout.
+- **The CLI requires its original repository location**: `astro-one-pack-vfs-image` finds the checkout relative to its own installed file and reads the source CLI, configuration trees, and preview fixtures there. An npm installation supports the parameterized library API; the CLI and repository helpers require a complete, built Astro One checkout.
 - **Preview Session inputs use raw JSONL** — `packPreviewFixture` rejects compressed and noncanonical Session generation filenames. Generic overlays remain byte-preserving.
 
 

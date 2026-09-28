@@ -1,13 +1,13 @@
 - insert:
     - id: speech-to-text
-      name: '@deepseek-ai/dsh-experimental-speech-to-text'
+      name: '@astro-one/experimental-speech-to-text'
       config:
         defaultProvider: sensevoice-local
     - id: speech-to-text-sensevoice
-      name: '@deepseek-ai/dsh-experimental-speech-to-text-sensevoice'
+      name: '@astro-one/experimental-speech-to-text-sensevoice'
       config:
-        dataRoot: !!js dshHomePath('speech-to-text', 'sensevoice')
+        dataRoot: !!js astroOneHomePath('speech-to-text', 'sensevoice')
     - id: api-speech-to-text
-      name: '@deepseek-ai/dsh-experimental-api-speech-to-text'
+      name: '@astro-one/experimental-api-speech-to-text'
     - id: ui-voice-input
-      name: '@deepseek-ai/dsh-experimental-client-ui-voice-input'
+      name: '@astro-one/experimental-client-ui-voice-input'

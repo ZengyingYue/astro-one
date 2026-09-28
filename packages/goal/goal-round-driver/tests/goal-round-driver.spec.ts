@@ -1,19 +1,19 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import type { Agent, PreStepDecision } from '@deepseek-ai/dsh-agent'
-import { agentEvents } from '@deepseek-ai/dsh-agent'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import { mountAgentLoopTestDependencies } from '@deepseek-ai/dsh-agent-loop-testkit'
-import GoalService, { GoalId } from '@deepseek-ai/dsh-goal'
-import type { GoalView } from '@deepseek-ai/dsh-goal'
-import { createUserMessage, LlmAdapter, LlmError  } from '@deepseek-ai/dsh-llm'
-import type { GenerateOptions, StreamChunk } from '@deepseek-ai/dsh-llm'
-import type { ContextFormed } from '@deepseek-ai/dsh-llm'
-import { SessionId } from '@deepseek-ai/dsh-session'
-import type { UserMessage } from '@deepseek-ai/dsh-session'
+import { Context } from '@astro-one/cordis'
+import type { Agent, PreStepDecision } from '@astro-one/agent'
+import { agentEvents } from '@astro-one/agent'
+import AgentLoop from '@astro-one/agent-loop'
+import { mountAgentLoopTestDependencies } from '@astro-one/agent-loop-testkit'
+import GoalService, { GoalId } from '@astro-one/goal'
+import type { GoalView } from '@astro-one/goal'
+import { createUserMessage, LlmAdapter, LlmError  } from '@astro-one/llm'
+import type { GenerateOptions, StreamChunk } from '@astro-one/llm'
+import type { ContextFormed } from '@astro-one/llm'
+import { SessionId } from '@astro-one/session'
+import type { UserMessage } from '@astro-one/session'
 import * as goalSession from '../src/index.ts'
 
-declare module '@deepseek-ai/dsh-llm' {
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'test': { kind: 'test' } & ContextFormed
   }

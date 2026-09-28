@@ -28,11 +28,11 @@ The query itself must return the complete mandatory response; do not rely on int
 GET /api/v0/check_client_update?scenario=launch
 x-client-platform: desktop-win
 x-client-version: 0.1.3-rc.2
-x-client-bundle-id: com.deepseek.dsh
+x-client-bundle-id: com.astro.one
 x-client-locale: zh-CN
 x-client-arch: x64
 x-client-update-channel: nightly
-x-client-bundled-dsh-version: 0.1.3-rc.2
+x-client-bundled-astro-one-version: 0.1.3-rc.2
 ```
 
 All listed headers are required for Desktop. Values describing installed software come from the application and its release metadata, not editable UI fields.
@@ -40,12 +40,12 @@ All listed headers are required for Desktop. Values describing installed softwar
 | Header | Meaning and allowed values |
 |---|---|
 | `x-client-platform` | `desktop-win` or `desktop-mac` |
-| `x-client-version` | Full Desktop SemVer, retaining prerelease identifiers; initially equal to bundled dsh |
-| `x-client-bundle-id` | Application identity, for example `com.deepseek.dsh`; distinguishes Harness from Chat |
+| `x-client-version` | Full Desktop SemVer, retaining prerelease identifiers; initially equal to bundled astro-one |
+| `x-client-bundle-id` | Application identity, for example `com.astro.one`; distinguishes Harness from Chat |
 | `x-client-locale` | UI locale, for example `zh-CN`; selects localized content, not region |
 | `x-client-arch` | Windows `x64`; macOS `x64` or `arm64` |
 | `x-client-update-channel` | Initially always `nightly`, independent of version suffix |
-| `x-client-bundled-dsh-version` | Full bundled dsh version from release metadata |
+| `x-client-bundled-astro-one-version` | Full bundled astro-one version from release metadata |
 
 | Query | Client behavior | Initial backend behavior |
 |---|---|---|
@@ -78,7 +78,7 @@ This means the current client does not require a mandatory update, not that its 
   "msg": "Client version too low",
   "data": {
     "show_content": {
-      "title": "请更新 DeepSeek Harness",
+      "title": "请更新 Astro One",
       "detail": "当前版本已停止支持，请下载并安装新版本。"
     },
     "desktop_app_link": "https://example.com/harness/download"
@@ -102,7 +102,7 @@ Do not add `mode`, `force_update`, `show_key`, `target_version`, button copy, or
 
 Missing required headers, invalid SemVer, and unsupported platform/architecture/channel combinations return explicit parameter errors, not no-force success or a mandatory policy. Prefer the existing business meanings of `biz_code = 1` for a missing version and `biz_code = 2` for an invalid version; final error allocation belongs to the backend. Service failures must not masquerade as success because success may remove an existing block.
 
-Match application identity, platform, architecture, Desktop version, bundled dsh version, and channel using server-owned ranges and precedence. Use complete SemVer, not lexical sorting or truncated prerelease values. Initially the two versions are equal and channel is fixed Nightly; independent revisions and channel switching are deferred. Do not require a downgrade or stop returning `40005` merely because a client has queried or displayed it before.
+Match application identity, platform, architecture, Desktop version, bundled astro-one version, and channel using server-owned ranges and precedence. Use complete SemVer, not lexical sorting or truncated prerelease values. Initially the two versions are equal and channel is fixed Nightly; independent revisions and channel switching are deferred. Do not require a downgrade or stop returning `40005` merely because a client has queried or displayed it before.
 
 ### Policy publication and current decisions
 
@@ -121,7 +121,7 @@ Capacity and rate limits must account for recurring guest requests, client-side 
 
 ## Alternatives considered
 
-**Relying on remote business interception.** Local dsh requests need not reach the remote gateway; an independent guest query is necessary.
+**Relying on remote business interception.** Local astro-one requests need not reach the remote gateway; an independent guest query is necessary.
 
 **Reusing the mobile nested payload for Desktop.** The backend agreement flattens Desktop fields. Preserve mobile compatibility by platform, without making new Desktop clients support an undistributed nested variant.
 
@@ -136,7 +136,7 @@ Capacity and rate limits must account for recurring guest requests, client-side 
 | No policy match | `code = 0`, `biz_code = 0`, `biz_data = null` |
 | Policy match | Top-level `40005`, direct content and page under `data` |
 | Changed or omitted query parameters | Same decision for otherwise identical conditions |
-| Equal prerelease Desktop/dsh versions, fixed Nightly | Full SemVer matching, no downgrade or channel-switch requirement |
+| Equal prerelease Desktop/astro-one versions, fixed Nightly | Full SemVer matching, no downgrade or channel-switch requirement |
 | Client no longer matches, including after upgrading | No-force success; does not invalidate updater artifacts |
 | Unavailable resolving release, page, or applicable feed | Policy activation rejected |
 | Invalid required fields or service failure | Explicit error, not false no-force success |

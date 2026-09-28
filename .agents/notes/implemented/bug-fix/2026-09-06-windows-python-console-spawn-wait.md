@@ -6,11 +6,11 @@ English | [中文](2026-09-06-windows-python-console-spawn-wait.zh.md)
 
 ## Problem
 
-The installed Python `dsh.exe` console command intermittently exits with Windows access violation `0xc0000005` before initializing a profile. Its smoke assertion omitted the process status and reported only empty streams. A native faulthandler probe (run 34030851888) captures the fault in Python 3.10 `os._execvpe`, called by the runtime console entry, rather than in the bundled Node executable. Direct executable controls pass.
+The installed Python `astro-one.exe` console command intermittently exits with Windows access violation `0xc0000005` before initializing a profile. Its smoke assertion omitted the process status and reported only empty streams. A native faulthandler probe (run 34030851888) captures the fault in Python 3.10 `os._execvpe`, called by the runtime console entry, rather than in the bundled Node executable. Direct executable controls pass.
 
 ## Decision
 
-The [Python console entry](../../../../python/sdk-runtime/src/deepseek_harness_runtime/__init__.py) uses `subprocess.run` on Windows, inherits standard streams and environment, waits for runtime completion, and exits with the runtime status. POSIX retains `os.execvpe` process replacement. Windows CRT exec is not POSIX process replacement; the explicit spawn-and-wait path avoids the observed native exec operation.
+The [Python console entry](../../../../python/sdk-runtime/src/astro_one_runtime/__init__.py) uses `subprocess.run` on Windows, inherits standard streams and environment, waits for runtime completion, and exits with the runtime status. POSIX retains `os.execvpe` process replacement. Windows CRT exec is not POSIX process replacement; the explicit spawn-and-wait path avoids the observed native exec operation.
 
 The [installed-wheel smoke](../../../../scripts/smoke-python-runtime.py) reports decimal and unsigned 32-bit hexadecimal status alongside captured streams when profile installation fails. This preserves the distinction between ordinary command failure and native process exceptions.
 

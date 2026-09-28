@@ -9,11 +9,11 @@
  */
 import { statSync } from 'node:fs'
 import type { ServerResponse } from 'node:http'
-import type { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
+import type { Context } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
 // Type imports carry the clientModules/webServer Context merges.
-import type { ClientArtifactBaseline } from '@deepseek-ai/dsh-client-modules'
-import type {} from '@deepseek-ai/dsh-host-webserver'
+import type { ClientArtifactBaseline } from '@astro-one/client-modules'
+import type {} from '@astro-one/host-webserver'
 import type { PluginsEventFrame } from './events.ts'
 import { EVENTS_ENDPOINT } from './events.ts'
 

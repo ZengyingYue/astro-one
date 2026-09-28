@@ -1,12 +1,12 @@
 /** Real bundle dependency closures activate their requested client plugins without extra roster rows. */
-import { FiberState } from '@deepseek-ai/cordis'
+import { FiberState } from '@astro-one/cordis'
 import { describe, expect, vi } from 'vitest'
 import { createClientTest, webApp } from '../src/assembly/index.ts'
 
-const HMR = '@deepseek-ai/dsh-client-hmr'
-const MODULES = '@deepseek-ai/dsh-client-modules'
-const SESSIONS = '@deepseek-ai/dsh-api-session-controller'
-const FILE_UPLOAD = '@deepseek-ai/dsh-client-file-upload'
+const HMR = '@astro-one/client-hmr'
+const MODULES = '@astro-one/client-modules'
+const SESSIONS = '@astro-one/api-session-controller'
+const FILE_UPLOAD = '@astro-one/client-file-upload'
 const hmrRoster = webApp.closure([HMR])
 const sessionRoster = webApp.closure([SESSIONS])
 const hmrTest = createClientTest({ roster: hmrRoster }, { awaitConnected: false })

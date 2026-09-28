@@ -8,7 +8,7 @@ English | [中文](README.zh.md)
 
 ## Summary
 
-`@deepseek-ai/dsh-api-workspace-controller` owns the Host `ctx.workspaceController` service and the generated Client `ctx.remote.workspace` namespace. Its Remote methods create, rename, remove, and reorder Workspaces, reorder Sessions within a Workspace, archive and unarchive Sessions from Workspace navigation, and follow the complete Workspace projection. Use it through API Gateway when a Client must change or follow Workspace navigation. The package also owns `ctx.directoryPickerController` and the generated `ctx.remote.directoryPicker` namespace, because the directory-picking seam it carries is abstract and never a Loader entry of its own.
+`@astro-one/api-workspace-controller` owns the Host `ctx.workspaceController` service and the generated Client `ctx.remote.workspace` namespace. Its Remote methods create, rename, remove, and reorder Workspaces, reorder Sessions within a Workspace, archive and unarchive Sessions from Workspace navigation, and follow the complete Workspace projection. Use it through API Gateway when a Client must change or follow Workspace navigation. The package also owns `ctx.directoryPickerController` and the generated `ctx.remote.directoryPicker` namespace, because the directory-picking seam it carries is abstract and never a Loader entry of its own.
 
 ## Table of Contents
 
@@ -29,7 +29,7 @@ The Client entry provides `ClientWorkspaceModel` and `createWorkspaceStateStream
 <a id="first-use-workspace"></a>
 ### First-use Workspace
 
-`workspace.initializeDefault({ directoryName, title })` returns the durable default Workspace; the Client service exposes the same request as `workspaces.initializeDefault(request, signal?)`. The [Workspace Client](../../client/ui-workspace/README.md) resolves these names from its startup language. The Host places the directory under its account's `<Documents>/deepseek-harness`, including on remote Web hosts. The directory name must be one non-blank segment without separators, colon, NUL, surrounding whitespace, or a trailing dot; the title must be non-blank. OS filename restrictions also apply. Linux system lookup requires `xdg-user-dir` with an enabled Documents directory; hosts without it must configure `documentsDirectory` or use the folder picker.
+`workspace.initializeDefault({ directoryName, title })` returns the durable default Workspace; the Client service exposes the same request as `workspaces.initializeDefault(request, signal?)`. The [Workspace Client](../../client/ui-workspace/README.md) resolves these names from its startup language. The Host places the directory under its account's `<Documents>/astro-one`, including on remote Web hosts. The directory name must be one non-blank segment without separators, colon, NUL, surrounding whitespace, or a trailing dot; the title must be non-blank. OS filename restrictions also apply. Linux system lookup requires `xdg-user-dir` with an enabled Documents directory; hosts without it must configure `documentsDirectory` or use the folder picker.
 
 The [Workspace registry](../../workspace/workspace/README.md#first-use-workspace) owns eligibility, directory creation, and durable initialization. An existing default Workspace is returned without another Documents lookup; request names do not rename it. Ineligible first use returns `undefined`, so startup can leave directory selection to the user. Invalid names reject with `gateway/bad-request`; lookup and creation failures use standard Remote error handling. Initialization creates no Session and sends no message.
 

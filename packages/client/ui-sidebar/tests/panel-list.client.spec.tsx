@@ -1,18 +1,18 @@
 // @vitest-environment jsdom
 /** Global panel rows and DOM focus through the production slot renderer. */
-import type { Context } from '@deepseek-ai/cordis'
+import type { Context } from '@astro-one/cordis'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { act, cleanup, fireEvent, waitFor, within } from '@testing-library/react'
-import { SlotTestRuntime } from '@deepseek-ai/dsh-client-test-runtime'
-import { LocaleRuntime } from '@deepseek-ai/dsh-client-locale/client'
-import { en as commonEn } from '@deepseek-ai/dsh-client-locale/src/locales/en.ts'
-import { zh as commonZh } from '@deepseek-ai/dsh-client-locale/src/locales/zh.ts'
-import { IconGlobeOutlineRegular } from '@deepseek-ai/dsh-client-ui-primitives'
-import type { ILayout, MainPanelId } from '@deepseek-ai/dsh-client-ui-layout/client'
-import type { PropsRenderSlots, PropsRuntime, SlotLabel } from '@deepseek-ai/dsh-client-ui-slots'
+import { SlotTestRuntime } from '@astro-one/client-test-runtime'
+import { LocaleRuntime } from '@astro-one/client-locale/client'
+import { en as commonEn } from '@astro-one/client-locale/src/locales/en.ts'
+import { zh as commonZh } from '@astro-one/client-locale/src/locales/zh.ts'
+import { IconGlobeOutlineRegular } from '@astro-one/client-ui-primitives'
+import type { ILayout, MainPanelId } from '@astro-one/client-ui-layout/client'
+import type { PropsRenderSlots, PropsRuntime, SlotLabel } from '@astro-one/client-ui-slots'
 import { apply, inject } from '../src/client/index.ts'
 
-declare module '@deepseek-ai/dsh-client-ui-slots' {
+declare module '@astro-one/client-ui-slots' {
   interface LocaleNamespaceMap {
     'sidebar-panel-test': 'alpha'
   }

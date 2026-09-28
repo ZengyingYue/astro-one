@@ -1,15 +1,15 @@
 // @vitest-environment jsdom
-import type { GlobalStandardProps } from '@deepseek-ai/dsh-client-ui-slots'
+import type { GlobalStandardProps } from '@astro-one/client-ui-slots'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
-import type { SessionListState } from '@deepseek-ai/dsh-api-session-controller/client'
+import type { SessionListState } from '@astro-one/api-session-controller/client'
 import type {
   WorkspaceId, WorkspaceSnapshot, WorkspaceView,
-} from '@deepseek-ai/dsh-api-workspace-controller/client'
-import type {} from '@deepseek-ai/dsh-client-locale/client'
-import { bindSnapshotSelector, makeTranslate } from '@deepseek-ai/dsh-client-test-runtime'
-import { zh as commonZh } from '@deepseek-ai/dsh-client-locale/src/locales/zh.ts'
-import type { SessionStatusSnapshot } from '@deepseek-ai/dsh-client-ui-session/client'
+} from '@astro-one/api-workspace-controller/client'
+import type {} from '@astro-one/client-locale/client'
+import { bindSnapshotSelector, makeTranslate } from '@astro-one/client-test-runtime'
+import { zh as commonZh } from '@astro-one/client-locale/src/locales/zh.ts'
+import type { SessionStatusSnapshot } from '@astro-one/client-ui-session/client'
 import type { DirectoryFlowOwnerProps, WorkspacePickerProps } from '../src/client/contract/slots.ts'
 import { WorkspacePicker } from '../src/client/WorkspacePicker.tsx'
 import { zh } from '../src/client/locales.ts'

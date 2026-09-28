@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-09-05-nested-terminal-cards.md
-2026-09-05-nested-terminal-cards.md: c5946a332f2879588cb6ee334404fdaa92a8cb28
-2026-09-05-nested-terminal-cards.zh.md: 74056014ce5b9ac38574c5551420a4e25808b9b4
+2026-09-05-nested-terminal-cards.md: aaa8658f2fede978f913cb31017617e0dd3479c5
+2026-09-05-nested-terminal-cards.zh.md: 59d25081899f02007b82ebab58b85674986e6bca

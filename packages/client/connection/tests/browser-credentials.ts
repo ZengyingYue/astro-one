@@ -1,5 +1,5 @@
-import type { Context } from '@deepseek-ai/cordis'
-import type { CredentialProvider, CredentialRecord } from '@deepseek-ai/dsh-credentials'
+import type { Context } from '@astro-one/cordis'
+import type { CredentialProvider, CredentialRecord } from '@astro-one/credentials'
 
 /** Mutable credential-record double for Connection authentication tests. */
 export class RecordCredentials {

@@ -1,9 +1,9 @@
 ---
-description: "Web ask_user_question feature for the dsh web client: the composer-takeover question UI and the plan-review approval card."
+description: "Web ask_user_question feature for the astro-one web client: the composer-takeover question UI and the plan-review approval card."
 kind: "package-reference"
 ---
 
-# @deepseek-ai/dsh-client-ui-user-questions
+# @astro-one/client-ui-user-questions
 
 English | [中文](README.zh.md)
 
@@ -33,7 +33,7 @@ A multi-select draft keeps its selected labels while the user opens or edits the
 
 ### The plan-review card
 
-A `plan-review` intent — set by `dsh-plan-mode` on the `exit_plan_mode` review — renders a compact approval card: a `Plan review` strip with a `View full plan` link, the plan title and a two-line plain-text summary, and `Request changes` / `Approve` actions. The strip uses the shared warning dot and changes it to the ongoing loader while either action settles. The complete plan opens in the sidebar through the link or its permanent Chat card. Approve answers with the asker's approval label; `Request changes` rejects the wait as `ASK_CANCELLED`, returning the composer for the user's feedback without submitting an approval. The card has no separate refusal button.
+A `plan-review` intent — set by `astro-one-plan-mode` on the `exit_plan_mode` review — renders a compact approval card: a `Plan review` strip with a `View full plan` link, the plan title and a two-line plain-text summary, and `Request changes` / `Approve` actions. The strip uses the shared warning dot and changes it to the ongoing loader while either action settles. The complete plan opens in the sidebar through the link or its permanent Chat card. Approve answers with the asker's approval label; `Request changes` rejects the wait as `ASK_CANCELLED`, returning the composer for the user's feedback without submitting an approval. The card has no separate refusal button.
 
 ### Failure and recovery
 
@@ -55,7 +55,7 @@ The card accepts one question declaring the intent, carrying the plan as `detail
 
 ### Copy and locale
 
-Composer chrome copy (pager, buttons, placeholders, validation feedback) is bilingual: the plugin registers zh/en dictionaries under the `question` namespace of `dsh-client-locale` and hands the entry its bound translator plus the locale snapshot source through the inject face, so a locale switch re-renders a mounted composer. Question and option text arrives from the model and renders verbatim; carrier failure messages also display untranslated.
+Composer chrome copy (pager, buttons, placeholders, validation feedback) is bilingual: the plugin registers zh/en dictionaries under the `question` namespace of `astro-one-client-locale` and hands the entry its bound translator plus the locale snapshot source through the inject face, so a locale switch re-renders a mounted composer. Question and option text arrives from the model and renders verbatim; carrier failure messages also display untranslated.
 
 A plan review exposes `conversation.plan-review.actions` with its request key, full text, and optional invocation identity. The plan plugin opens logged plans from history and unlogged reviews as temporary sidebar previews. Opening a document does not answer or dismiss the review.
 
@@ -78,11 +78,11 @@ These pages cover the composer host, the tool seam, and the plan-mode consumer.
 <a id="model-experience"></a>
 ## Model Experience
 
-Indirectly, through `dsh-tool-ask-user`, whose model-visible schema and answer rendering this package presents in the Web client.
+Indirectly, through `astro-one-tool-ask-user`, whose model-visible schema and answer rendering this package presents in the Web client.
 
 #### KV Cache effect
 
-No direct invalidation; `dsh-tool-ask-user` owns the model-visible tool call and result.
+No direct invalidation; `astro-one-tool-ask-user` owns the model-visible tool call and result.
 
 ## Known Limitations and Deferred Work
 

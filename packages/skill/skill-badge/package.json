@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-skill-badge",
-  "description": "Bundled dsh badge skill provider for DeepSeek Harness",
+  "name": "@astro-one/skill-badge",
+  "description": "Bundled astro-one badge skill provider for Astro One",
   "version": "0.1.7-rc.1",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/skill/skill-badge"
   },
   "type": "module",
@@ -27,11 +27,11 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/dsh-skill": "workspace:*",
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/skill": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
   },
   "devDependencies": {
-    "@deepseek-ai/dsh-skill": "workspace:*",
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/skill": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
   }
 }

@@ -4,15 +4,15 @@ import { join, resolve, sep } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { inspect } from 'node:util'
 import { afterAll, describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import SystemPrompt, { renderPrompt } from '@deepseek-ai/dsh-system-prompt'
+import { Context } from '@astro-one/cordis'
+import SystemPrompt, { renderPrompt } from '@astro-one/system-prompt'
 import {
   addHarnessSourceSection, auditStartupEntries, boot, StartupError,
   FAIL_LOUD_RELEASE_TIMEOUT_MS, HARNESS_SOURCE_SECTION,
   installFailLoud, loadEnv, loadLayeredEnv, loadOverlayPatches, resolveConfigPath, type FailLoudEvent, type FailLoudProcess,
 } from '../src/index.ts'
 
-const NAME = 'dsh-test-bin'
+const NAME = 'astro-one-test-bin'
 
 const tempRoots: string[] = []
 afterAll(() => {
@@ -20,7 +20,7 @@ afterAll(() => {
 })
 
 const tmp = (): string => {
-  const dir = mkdtempSync(join(tmpdir(), 'dsh-app-boot-'))
+  const dir = mkdtempSync(join(tmpdir(), 'astro-one-app-boot-'))
   tempRoots.push(dir)
   return dir
 }
@@ -45,12 +45,12 @@ describe('resolveConfigPath', () => {
 describe('loadEnv', () => {
   it('loads variables from .env in the given dir', () => {
     const dir = tmp()
-    writeFileSync(join(dir, '.env'), 'DSH_APP_BOOT_SPEC_VAR=loaded\n')
+    writeFileSync(join(dir, '.env'), 'ASTRO_ONE_APP_BOOT_SPEC_VAR=loaded\n')
     const warn = vi.fn()
     loadEnv(NAME, dir, warn)
-    expect(process.env['DSH_APP_BOOT_SPEC_VAR']).toBe('loaded')
+    expect(process.env['ASTRO_ONE_APP_BOOT_SPEC_VAR']).toBe('loaded')
     expect(warn).not.toHaveBeenCalled()
-    delete process.env['DSH_APP_BOOT_SPEC_VAR']
+    delete process.env['ASTRO_ONE_APP_BOOT_SPEC_VAR']
   })
 
   it('stays silent when no .env exists (ambient environment wins)', () => {
@@ -70,7 +70,7 @@ describe('loadEnv', () => {
 
   it('defaults dir to the process cwd and warn to a stderr write', () => {
     const dir = tmp()
-    writeFileSync(join(dir, '.env'), 'DSH_APP_BOOT_SPEC_DEFAULTS=yes\n')
+    writeFileSync(join(dir, '.env'), 'ASTRO_ONE_APP_BOOT_SPEC_DEFAULTS=yes\n')
     const previous = process.cwd()
     process.chdir(dir)
     try {
@@ -78,8 +78,8 @@ describe('loadEnv', () => {
     } finally {
       process.chdir(previous)
     }
-    expect(process.env['DSH_APP_BOOT_SPEC_DEFAULTS']).toBe('yes')
-    delete process.env['DSH_APP_BOOT_SPEC_DEFAULTS']
+    expect(process.env['ASTRO_ONE_APP_BOOT_SPEC_DEFAULTS']).toBe('yes')
+    delete process.env['ASTRO_ONE_APP_BOOT_SPEC_DEFAULTS']
     // The default warn sink itself: point it at a broken .env with stderr
     // spied, so the arrow body runs without polluting the test output.
     const broken = tmp()
@@ -120,7 +120,7 @@ describe('loadLayeredEnv', () => {
       '',
     ].join('\n'))
     clear()
-    vi.stubEnv('DSH_HOME', home)
+    vi.stubEnv('ASTRO_ONE_HOME', home)
     vi.stubEnv('APP_BOOT_LAYERED_INHERITED', 'inherited')
     const warn = vi.fn()
     try {
@@ -137,10 +137,10 @@ describe('loadLayeredEnv', () => {
   })
 
   it.each([
-    ['a harness switch', 'DSH_PERMISSION_MODE=danger-full-access\n'],
+    ['a harness switch', 'ASTRO_ONE_PERMISSION_MODE=danger-full-access\n'],
     ['the executable search path', 'PATH=/tmp/evil\n'],
     ['a module preload', 'NODE_OPTIONS=--require /tmp/evil.js\n'],
-    ['a skill root', 'DSH_AGENTS_HOME=/tmp/injected\n'],
+    ['a skill root', 'ASTRO_ONE_AGENTS_HOME=/tmp/injected\n'],
     ['a network proxy', 'HTTPS_PROXY=http://attacker.example\n'],
     ['a lowercase network proxy', 'https_proxy=http://attacker.example\n'],
     ['a browser command', 'BROWSER=./script\n'],
@@ -149,7 +149,7 @@ describe('loadLayeredEnv', () => {
     const project = tmp()
     writeFileSync(join(project, '.env'), `${NAMES[1]}=applied-anyway\n${content}`)
     clear()
-    vi.stubEnv('DSH_HOME', home)
+    vi.stubEnv('ASTRO_ONE_HOME', home)
     try {
       expect(() => loadLayeredEnv(NAME, project, vi.fn())).toThrow(/only the launching environment may set/)
       expect(process.env[NAMES[1]]).toBeUndefined()
@@ -173,7 +173,7 @@ describe('loadLayeredEnv', () => {
     // supplies it, and that the launching shell outranks the file, is not.
     writeFileSync(join(home, '.env'), 'HTTP_PROXY=http://from-home:8080\nno_proxy=example.com\nHTTPS_PROXY=http://from-home:8443\n')
     clear(); clearProxy()
-    vi.stubEnv('DSH_HOME', home)
+    vi.stubEnv('ASTRO_ONE_HOME', home)
     vi.stubEnv('HTTPS_PROXY', 'http://exported:8080')
     try {
       const snapshot = loadLayeredEnv(NAME, project, vi.fn())
@@ -196,7 +196,7 @@ describe('loadLayeredEnv', () => {
     // not where traffic goes; the exemption must not widen to it.
     writeFileSync(join(home, '.env'), 'SSL_CERT_FILE=/tmp/ca.pem\n')
     clear()
-    vi.stubEnv('DSH_HOME', home)
+    vi.stubEnv('ASTRO_ONE_HOME', home)
     try {
       expect(() => loadLayeredEnv(NAME, project, vi.fn())).toThrow(/only the launching environment may set/)
     } finally {
@@ -210,7 +210,7 @@ describe('loadLayeredEnv', () => {
     const project = tmp()
     writeFileSync(join(project, '.env'), 'HTTP_PROXY=http://attacker.example\n')
     clear(); clearProxy()
-    vi.stubEnv('DSH_HOME', home)
+    vi.stubEnv('ASTRO_ONE_HOME', home)
     try {
       expect(() => loadLayeredEnv(NAME, project, vi.fn()))
         .toThrow(`export HTTP_PROXY, or put it in ${join(home, '.env')}, which does not travel with a repository`)
@@ -225,7 +225,7 @@ describe('loadLayeredEnv', () => {
     const home = tmp()
     writeFileSync(join(home, '.env'), 'HTTP_PROXY=http://from-home:8080\n')
     clear(); clearProxy()
-    vi.stubEnv('DSH_HOME', home)
+    vi.stubEnv('ASTRO_ONE_HOME', home)
     try {
       // Launched from inside the home itself, its one file is read as the project layer; the
       // exemption follows the directory, not the layer name.
@@ -242,7 +242,7 @@ describe('loadLayeredEnv', () => {
     writeFileSync(join(home, '.env'), `${NAMES[1]}=u\n`)
     writeFileSync(join(project, '.env'), `${NAMES[2]}=p\n`)
     clear()
-    vi.stubEnv('DSH_HOME', home)
+    vi.stubEnv('ASTRO_ONE_HOME', home)
     try {
       const snapshot = loadLayeredEnv(NAME, project, vi.fn())
       expect(snapshot.get(NAMES[1])).toEqual({ value: 'u', source: 'user-env', path: join(home, '.env') })
@@ -260,7 +260,7 @@ describe('loadLayeredEnv', () => {
     writeFileSync(join(home, '.env'), `${NAMES[1]}=real-home\n`)
     writeFileSync(join(project, '.env'), `${NAMES[2]}=set-by-project\n`)
     clear()
-    vi.stubEnv('DSH_HOME', home)
+    vi.stubEnv('ASTRO_ONE_HOME', home)
     try {
       loadLayeredEnv(NAME, project, vi.fn())
       expect(process.env[NAMES[1]]).toBe('real-home')
@@ -278,7 +278,7 @@ describe('loadLayeredEnv', () => {
     mkdirSync(join(home, '.env'))
     writeFileSync(join(project, '.env'), `${NAMES[2]}=project-only\n`)
     clear()
-    vi.stubEnv('DSH_HOME', home)
+    vi.stubEnv('ASTRO_ONE_HOME', home)
     const warn = vi.fn()
     try {
       const snapshot = loadLayeredEnv(NAME, project, warn)
@@ -298,7 +298,7 @@ describe('loadLayeredEnv', () => {
     mkdirSync(join(home, '.env'))
     writeFileSync(join(project, '.env'), `${NAMES[2]}=project-only\n`)
     clear()
-    vi.stubEnv('DSH_HOME', home)
+    vi.stubEnv('ASTRO_ONE_HOME', home)
     const write = vi.spyOn(process.stderr, 'write').mockReturnValue(true)
     try {
       const snapshot = loadLayeredEnv(NAME, project)
@@ -317,7 +317,7 @@ describe('loadLayeredEnv', () => {
     const project = tmp()
     writeFileSync(join(project, '.env'), `${NAMES[2]}=project-only\n`)
     clear()
-    vi.stubEnv('DSH_HOME', home)
+    vi.stubEnv('ASTRO_ONE_HOME', home)
     const warn = vi.fn()
     try {
       const snapshot = loadLayeredEnv(NAME, project, warn)
@@ -333,7 +333,7 @@ describe('loadLayeredEnv', () => {
     const home = tmp()
     const project = tmp()
     clear()
-    vi.stubEnv('DSH_HOME', home)
+    vi.stubEnv('ASTRO_ONE_HOME', home)
     vi.stubEnv('APP_BOOT_LAYERED_INHERITED', 'inherited')
     try {
       const snapshot = loadLayeredEnv(NAME, project, vi.fn())
@@ -348,7 +348,7 @@ describe('loadLayeredEnv', () => {
     const both = tmp()
     writeFileSync(join(both, '.env'), `${NAMES[2]}=one-file\n`)
     clear()
-    vi.stubEnv('DSH_HOME', both)
+    vi.stubEnv('ASTRO_ONE_HOME', both)
     try {
       const snapshot = loadLayeredEnv(NAME, both, vi.fn())
       expect(snapshot.get(NAMES[2])).toEqual({ value: 'one-file', source: 'project-env', path: join(both, '.env') })
@@ -519,15 +519,15 @@ describe('installFailLoud', () => {
   it('turns an uncaught exception into a labelled diagnostic with its enumerable properties and exits 1', () => {
     const proc = fakeProc()
     installFailLoud(NAME, proc)
-    const error = Object.assign(new Error("ENOENT: no such file or directory, open '/tmp/dsh-subprocess-x/out.log'"), {
-      errno: -2, code: 'ENOENT', syscall: 'open', path: '/tmp/dsh-subprocess-x/out.log',
+    const error = Object.assign(new Error("ENOENT: no such file or directory, open '/tmp/astro-one-subprocess-x/out.log'"), {
+      errno: -2, code: 'ENOENT', syscall: 'open', path: '/tmp/astro-one-subprocess-x/out.log',
     })
     proc.exception(error)
     expect(proc.written).toHaveLength(1)
     expect(proc.written[0]).toContain(`${NAME}: fatal uncaught exception: `)
     expect(proc.written[0]).toContain(error.stack)
     expect(proc.written[0]).toContain("syscall: 'open'")
-    expect(proc.written[0]).toContain("path: '/tmp/dsh-subprocess-x/out.log'")
+    expect(proc.written[0]).toContain("path: '/tmp/astro-one-subprocess-x/out.log'")
     expect(proc.exits).toEqual([1])
   })
 
@@ -610,7 +610,7 @@ describe('auditStartupEntries', () => {
     const original = new Error('todo apply failure')
     await auditStartupEntries(ctxWith([
       { options: { id: 'missing-tool', name: './missing.mjs' } },
-      { fiber: fiber(3, original), options: { id: 'tool-todo', name: '@deepseek-ai/dsh-tool-todo' } },
+      { fiber: fiber(3, original), options: { id: 'tool-todo', name: '@astro-one/tool-todo' } },
       {
         fiber: fiber(0, undefined, { ready: {}, missing: {} }, ['ready']),
         options: { id: 'waiting-tool', name: './waiting.mjs' },
@@ -620,7 +620,7 @@ describe('auditStartupEntries', () => {
     expect(warn).toHaveBeenCalledWith([
       `${NAME}: warning: 3 entries did not activate`,
       'missing-tool (./missing.mjs): failed to import',
-      `tool-todo (@deepseek-ai/dsh-tool-todo): ${original.stack!}`,
+      `tool-todo (@astro-one/tool-todo): ${original.stack!}`,
       'waiting-tool (./waiting.mjs): pending (waiting for service: missing)',
       '',
     ].join('\n'))
@@ -727,12 +727,12 @@ describe('auditStartupEntries', () => {
     const optionalError = new Error('todo unavailable')
     const error = await auditStartupEntries(ctxWith([
       { fiber: fiber(3, requiredError), options: { id, name: './required.mjs' } },
-      { fiber: fiber(3, optionalError), options: { id: 'tool-todo', name: '@deepseek-ai/dsh-tool-todo' } },
+      { fiber: fiber(3, optionalError), options: { id: 'tool-todo', name: '@astro-one/tool-todo' } },
     ]), NAME, warn).catch((error: unknown) => error)
     expect(error).toBeInstanceOf(StartupError)
     expect((error as Error).message).toContain(`${NAME}: startup failed: 1 required plugin did not activate`)
     expect((error as Error).message).toContain(`  ${id} (required)\n    Package: ./required.mjs`)
-    expect((error as Error).message).toContain('  tool-todo\n    Package: @deepseek-ai/dsh-tool-todo')
+    expect((error as Error).message).toContain('  tool-todo\n    Package: @astro-one/tool-todo')
     expect(((error as Error).cause as AggregateError).errors).toEqual([requiredError, optionalError])
     expect(warn).not.toHaveBeenCalled()
   })
@@ -791,17 +791,17 @@ describe('auditStartupEntries', () => {
     const warn = vi.fn()
     const error = await auditStartupEntries(ctxWith([
       { fiber: fiber(0, undefined, { webServer: {} }), options: { id: 'web-runtime', name: './web.mjs' } },
-      { fiber: fiber(3, original), options: { id: 'webserver', name: '@deepseek-ai/dsh-host-webserver' } },
+      { fiber: fiber(3, original), options: { id: 'webserver', name: '@astro-one/host-webserver' } },
       { fiber: fiber(0, undefined, { webRuntime: {} }), options: { id: 'connection', name: './connection.mjs' } },
       { fiber: fiber(0), options: { id: 'unknown', name: './unknown.mjs' } },
     ]), NAME, warn).catch((error: unknown) => error)
     expect(error).toBeInstanceOf(StartupError)
     expect((error as Error).message).toMatchInlineSnapshot(`
-      "dsh-test-bin: startup failed: 2 required plugins did not activate
+      "astro-one-test-bin: startup failed: 2 required plugins did not activate
 
       Failed plugins (1):
         webserver (required)
-          Package: @deepseek-ai/dsh-host-webserver
+          Package: @astro-one/host-webserver
           Error: listen EADDRINUSE: address already in use 127.0.0.1:3080
               at Server.listen (node:net:1:2)
 
@@ -817,7 +817,7 @@ describe('auditStartupEntries', () => {
   it('rejects a required entry pending on an injected service', async () => {
     await expect(auditStartupEntries(ctxWith([{
       fiber: fiber(0, undefined, { headlessStartup: {} }),
-      options: { id: 'headless-runner', name: '@deepseek-ai/dsh-headless' },
+      options: { id: 'headless-runner', name: '@astro-one/headless' },
     }]), NAME, vi.fn())).rejects.toThrow(
       'headless-runner (required)  headlessStartup',
     )
@@ -933,12 +933,12 @@ describe('boot', () => {
     const dir = tmp()
     const harness = tmp()
     const absolutePlugin = join(dir, 'absolute.mjs')
-    const shadow = join(dir, 'node_modules', '@deepseek-ai', 'dsh-system-prompt')
-    const harnessPlugin = join(harness, 'node_modules', '@deepseek-ai', 'dsh-system-prompt')
+    const shadow = join(dir, 'node_modules', '@astro-one', 'system-prompt')
+    const harnessPlugin = join(harness, 'node_modules', '@astro-one', 'system-prompt')
     mkdirSync(shadow, { recursive: true })
     mkdirSync(harnessPlugin, { recursive: true })
     writeFileSync(join(shadow, 'package.json'), JSON.stringify({
-      name: '@deepseek-ai/dsh-system-prompt',
+      name: '@astro-one/system-prompt',
       type: 'module',
       exports: './index.mjs',
     }))
@@ -949,7 +949,7 @@ describe('boot', () => {
       '',
     ].join('\n'))
     writeFileSync(join(harnessPlugin, 'package.json'), JSON.stringify({
-      name: '@deepseek-ai/dsh-system-prompt',
+      name: '@astro-one/system-prompt',
       type: 'module',
       exports: './index.mjs',
     }))
@@ -963,7 +963,7 @@ describe('boot', () => {
     writeFileSync(absolutePlugin, 'export function apply(ctx) { ctx.provide("absolutePluginLoaded", true) }\n')
     const entries = [
       '- id: prompt',
-      "  name: '@deepseek-ai/dsh-system-prompt'",
+      "  name: '@astro-one/system-prompt'",
       '- id: relative',
       "  name: './relative.mjs'",
     ]
@@ -1013,10 +1013,10 @@ describe('boot', () => {
     }
   })
 
-  it('exposes dshHomePath to Loader config expressions', async () => {
+  it('exposes astroOneHomePath to Loader config expressions', async () => {
     const dir = tmp()
-    const dshHome = join(dir, 'home')
-    vi.stubEnv('DSH_HOME', dshHome)
+    const astroOneHome = join(dir, 'home')
+    vi.stubEnv('ASTRO_ONE_HOME', astroOneHome)
     writeFileSync(join(dir, 'capture.mjs'), [
       'export const name = "capture"',
       'export function apply(ctx, config) {',
@@ -1028,13 +1028,13 @@ describe('boot', () => {
       '- id: capture',
       '  name: ./capture.mjs',
       '  config:',
-      "    path: !!js dshHomePath('sessions')",
+      "    path: !!js astroOneHomePath('sessions')",
       '',
     ].join('\n'))
     let ctx: Context | undefined
     try {
       ctx = await boot(NAME, join(dir, 'cordis.yml'))
-      expect(ctx.get('capturedPath')).toBe(join(dshHome, 'sessions'))
+      expect(ctx.get('capturedPath')).toBe(join(astroOneHome, 'sessions'))
     } finally {
       await ctx?.fiber.dispose()
       vi.unstubAllEnvs()
@@ -1182,8 +1182,8 @@ describe('boot', () => {
     let disposed = false
     writeFileSync(join(dir, 'good.mjs'), [
       'export function apply(ctx) {',
-      '  globalThis.__DSH_REQUIRED_TEST_DISPOSED__ = false',
-      '  ctx.effect(() => () => { globalThis.__DSH_REQUIRED_TEST_DISPOSED__ = true })',
+      '  globalThis.__ASTRO_ONE_REQUIRED_TEST_DISPOSED__ = false',
+      '  ctx.effect(() => () => { globalThis.__ASTRO_ONE_REQUIRED_TEST_DISPOSED__ = true })',
       '}',
       '',
     ].join('\n'))
@@ -1201,8 +1201,8 @@ describe('boot', () => {
       String.raw`webserver \(required\)`,
       'required apply failure',
     ].join(String.raw`[\s\S]*`)))
-    disposed = (globalThis as { __DSH_REQUIRED_TEST_DISPOSED__?: boolean }).__DSH_REQUIRED_TEST_DISPOSED__ ?? false
-    delete (globalThis as { __DSH_REQUIRED_TEST_DISPOSED__?: boolean }).__DSH_REQUIRED_TEST_DISPOSED__
+    disposed = (globalThis as { __ASTRO_ONE_REQUIRED_TEST_DISPOSED__?: boolean }).__ASTRO_ONE_REQUIRED_TEST_DISPOSED__ ?? false
+    delete (globalThis as { __ASTRO_ONE_REQUIRED_TEST_DISPOSED__?: boolean }).__ASTRO_ONE_REQUIRED_TEST_DISPOSED__
     expect(disposed).toBe(true)
   })
 
@@ -1268,7 +1268,7 @@ describe('boot', () => {
 
 describe('addHarnessSourceSection', () => {
   const SOURCE_ROOT = `${sep}opt${sep}harness-src`
-  const EXPECTED = `The DeepSeek Harness implementation checkout is at ${SOURCE_ROOT}. The checkout location and current working directory are separate values and may differ; never infer the working directory from this path. Use pwd to determine the current working directory. Use this checkout only to inspect or extend DSH itself.`
+  const EXPECTED = `The Astro One implementation checkout is at ${SOURCE_ROOT}. The checkout location and current working directory are separate values and may differ; never infer the working directory from this path. Use pwd to determine the current working directory. Use this checkout only to inspect or extend Astro One itself.`
 
   it('distinguishes the source path from the current workdir after reusable instructions', async () => {
     const ctx = new Context()
@@ -1284,7 +1284,7 @@ describe('addHarnessSourceSection', () => {
       expect(rendered).toContain(EXPECTED)
       // The >= 0 guards keep a drifted opener/persona string from a false pass
       // through `-1 < n`.
-      const identityAt = rendered.indexOf('You are an AI agent powered by DeepSeek Harness.')
+      const identityAt = rendered.indexOf('You are an AI agent powered by Astro One.')
       const sourceAt = rendered.indexOf(EXPECTED)
       const personaAt = rendered.indexOf('You are a coding agent.')
       expect(identityAt).toBeGreaterThanOrEqual(0)

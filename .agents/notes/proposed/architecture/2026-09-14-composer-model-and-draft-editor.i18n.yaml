@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/architecture/2026-09-14-composer-model-and-draft-editor.md
-2026-09-14-composer-model-and-draft-editor.md: 3f66ab2c73da0a8f66bf43a821cbe5f85363867a
-2026-09-14-composer-model-and-draft-editor.zh.md: aa040b0fa68961d4d5884d73791c4986b8bfab50
+2026-09-14-composer-model-and-draft-editor.md: 3aeb4ca46f35853c281490d7192274b46d343db2
+2026-09-14-composer-model-and-draft-editor.zh.md: 0d7c21db08f169f54f4a39fa95d658a56c2516ea

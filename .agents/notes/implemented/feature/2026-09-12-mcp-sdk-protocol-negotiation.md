@@ -10,7 +10,7 @@ MCP servers use different protocol revisions. A tool bridge that implements disc
 
 ## Decision
 
-`dsh-mcp-client` uses the official TypeScript client 2.0.0 with automatic protocol negotiation. The SDK owns modern discovery and legacy initialization, transport-specific negotiation, list-change subscriptions, pagination, request headers, cancellation, and output validation. The bridge uses high-level `listTools` and `callTool`, passing the complete discovered definition to each call.
+`astro-one-mcp-client` uses the official TypeScript client 2.0.0 with automatic protocol negotiation. The SDK owns modern discovery and legacy initialization, transport-specific negotiation, list-change subscriptions, pagination, request headers, cancellation, and output validation. The bridge uses high-level `listTools` and `callTool`, passing the complete discovered definition to each call.
 
 The bridge retains server-qualified names, atomic registration, and durable image admission. Servers without a tools capability publish no tools. Discovery failures preserve the last successful registration; duplicate names still reject the new generation. Malformed cursor chains stop at the SDK page limit; the bridge does not add a parallel pagination implementation.
 

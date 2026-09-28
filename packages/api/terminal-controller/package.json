@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-api-terminal-controller",
+  "name": "@astro-one/api-terminal-controller",
   "description": "Session-owned interactive terminals with shell discovery, screen recovery and typed Remote control",
   "version": "0.1.7-rc.1",
   "publishConfig": {
@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/api/terminal-controller"
   },
   "type": "module",
@@ -37,13 +37,13 @@
     "./src/*": "./src/*",
     "./package.json": "./package.json"
   },
-  "dsh": {
+  "astroOne": {
     "client": {
       "inject": [
-        "@deepseek-ai/dsh-api-gateway"
+        "@astro-one/api-gateway"
       ],
       "external": [
-        "@deepseek-ai/dsh-api-gateway/client"
+        "@astro-one/api-gateway/client"
       ],
       "platform": "web"
     }
@@ -54,33 +54,33 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@deepseek-ai/dsh-deque": "workspace:*",
-    "@deepseek-ai/dsh-lazy-require": "workspace:*",
-    "@deepseek-ai/dsh-typert-protocol": "workspace:*",
-    "@deepseek-ai/schemastery": "workspace:~",
+    "@astro-one/deque": "workspace:*",
+    "@astro-one/lazy-require": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
     "@xterm/headless": "^6.0.0",
     "@xterm/addon-serialize": "^0.14.0",
     "zod": "^4.4.3"
   },
   "peerDependencies": {
-    "@deepseek-ai/dsh-subprocess": "workspace:*",
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/subprocess": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-agent": "workspace:*",
-    "@deepseek-ai/dsh-api-gateway": "workspace:*",
-    "@deepseek-ai/dsh-brand": "workspace:*",
-    "@deepseek-ai/dsh-client-store": "workspace:*",
-    "@deepseek-ai/dsh-fs": "workspace:*",
-    "@deepseek-ai/dsh-remote-mock": "workspace:*",
-    "@deepseek-ai/dsh-sandbox": "workspace:*",
-    "@deepseek-ai/dsh-sandbox-policy": "workspace:*",
-    "@deepseek-ai/dsh-session": "workspace:*",
-    "@deepseek-ai/dsh-session-projection": "workspace:*",
-    "@deepseek-ai/dsh-subprocess": "workspace:*",
-    "@deepseek-ai/dsh-subprocess-local": "workspace:*",
-    "@deepseek-ai/dsh-util-crypto": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/api-gateway": "workspace:*",
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/client-store": "workspace:*",
+    "@astro-one/fs": "workspace:*",
+    "@astro-one/remote-mock": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/subprocess": "workspace:*",
+    "@astro-one/subprocess-local": "workspace:*",
+    "@astro-one/util-crypto": "workspace:*"
   },
   "files": [
     "lib/index.js",

@@ -3,10 +3,10 @@
  * {@link ../index.ts | PtcRuntime} and what it gets back. Pure types — no
  * runtime code lives here.
  *
- * @module @deepseek-ai/dsh-ptc-runtime/src/types
+ * @module @astro-one/ptc-runtime/src/types
  */
 
-import type { SandboxEnforcement, SandboxExecutionPolicy, SandboxMode } from '@deepseek-ai/dsh-sandbox'
+import type { SandboxEnforcement, SandboxExecutionPolicy, SandboxMode } from '@astro-one/sandbox'
 
 /**
  * One host-side function exposed to the program as an async callable. The
@@ -56,7 +56,7 @@ export interface PtcBindingNamespace {
    * of `language` — a JS-only spelling like `$tools` is rejected by design,
    * not just by the Python backend. Names that satisfy the identifier rule but
    * name a backend-owned slot (`RESERVED_BINDING_GLOBALS`, e.g. `console`,
-   * `__dsh_main__`) are also refused everywhere; see its declaration for the
+   * `__astro_one_main__`) are also refused everywhere; see its declaration for the
    * exact set and why each entry is reserved.
    */
   global: string

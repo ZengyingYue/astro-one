@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs'
 import { mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@astro-one/cordis'
 import { afterEach, describe, expect, it } from 'vitest'
 import LocalSubprocessRuntime from '../src/index.ts'
 
@@ -11,7 +11,7 @@ const cleanups: Array<() => Promise<void>> = []
 afterEach(async () => { for (const cleanup of cleanups.splice(0).reverse()) await cleanup() })
 
 async function shell(path: string, rc = '', envFile = '') {
-  const home = await mkdtemp(join(tmpdir(), 'dsh-shell-activity-test-'))
+  const home = await mkdtemp(join(tmpdir(), 'astro-one-shell-activity-test-'))
   cleanups.push(() => rm(home, { recursive: true, force: true }))
   await writeFile(join(home, '.zshenv'), envFile)
   await writeFile(join(home, '.zshrc'), `PROMPT='READY> '\n${rc}\n`)

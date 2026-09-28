@@ -1,20 +1,20 @@
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
-import type { ContextFormed } from '@deepseek-ai/dsh-llm'
+import { createUserMessage } from '@astro-one/llm'
+import type { ContextFormed } from '@astro-one/llm'
 import { describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@astro-one/cordis'
 import {
   CompactionId,
   CompactionEngine,
   compactCheckpointSource,
   isCompactCheckpointSource,
-} from '@deepseek-ai/dsh-compaction'
-import type { CompactionResult, CompactionTrigger } from '@deepseek-ai/dsh-compaction'
-import { Session, SessionId } from '@deepseek-ai/dsh-session'
-import type { SessionSeq } from '@deepseek-ai/dsh-session'
-import type { CompactionAgentContext } from '@deepseek-ai/dsh-compaction'
-import type { ManualCompactAgentContext } from '@deepseek-ai/dsh-compaction'
+} from '@astro-one/compaction'
+import type { CompactionResult, CompactionTrigger } from '@astro-one/compaction'
+import { Session, SessionId } from '@astro-one/session'
+import type { SessionSeq } from '@astro-one/session'
+import type { CompactionAgentContext } from '@astro-one/compaction'
+import type { ManualCompactAgentContext } from '@astro-one/compaction'
 
-declare module '@deepseek-ai/dsh-llm' {
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'other': { kind: 'other' } & ContextFormed
   }

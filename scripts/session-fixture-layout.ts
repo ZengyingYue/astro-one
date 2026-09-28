@@ -8,13 +8,13 @@ import {
   decodeSeqRanges,
   SessionLogOffset,
   type SessionEvent,
-} from '@deepseek-ai/dsh-session'
-import type { SessionLogOffset as SessionLogOffsetType } from '@deepseek-ai/dsh-session'
-import { sessionFormatCatalog } from '@deepseek-ai/dsh-session-format-catalog'
-import { SessionFormatEventCollector, type SessionFormatArtifactDecoder, type SessionFormatCodec } from '@deepseek-ai/dsh-session-format'
-import { releasedV0SessionFormatCodec, releasedV1SessionFormatCodec } from '@deepseek-ai/dsh-session-format-v0-to-v1'
-import { releasedV2SessionFormatCodec } from '@deepseek-ai/dsh-session-format-v1-to-v2'
-import { releasedV3SessionFormatCodec } from '@deepseek-ai/dsh-session-format-v2-to-v3'
+} from '@astro-one/session'
+import type { SessionLogOffset as SessionLogOffsetType } from '@astro-one/session'
+import { sessionFormatCatalog } from '@astro-one/session-format-catalog'
+import { SessionFormatEventCollector, type SessionFormatArtifactDecoder, type SessionFormatCodec } from '@astro-one/session-format'
+import { releasedV0SessionFormatCodec, releasedV1SessionFormatCodec } from '@astro-one/session-format-v0-to-v1'
+import { releasedV2SessionFormatCodec } from '@astro-one/session-format-v1-to-v2'
+import { releasedV3SessionFormatCodec } from '@astro-one/session-format-v2-to-v3'
 
 const historicalCodecs: readonly SessionFormatCodec[] = [
   releasedV0SessionFormatCodec, releasedV1SessionFormatCodec, releasedV2SessionFormatCodec,
@@ -62,7 +62,7 @@ function validationHeader(value: unknown): unknown {
   const header = { ...value as Record<string, unknown> }
   if (header.version === 0 && !Object.hasOwn(header, 'delegationDepth')) header.delegationDepth = 0
   if (typeof header.cwd === 'string' && /^\{\{cwd\}\}(?:\/|$)/.test(header.cwd)) {
-    header.cwd = header.cwd.replace('{{cwd}}', '/dsh-snapshot-cwd')
+    header.cwd = header.cwd.replace('{{cwd}}', '/astro-one-snapshot-cwd')
   }
   return header
 }

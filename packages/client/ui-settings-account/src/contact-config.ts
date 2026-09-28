@@ -1,5 +1,5 @@
 /** Public questionnaire deployment options shared by Host and Client. */
-import z from '@deepseek-ai/schemastery'
+import z from '@astro-one/schemastery'
 
 /** Questionnaire destination and its supported source option. */
 export interface Config {
@@ -14,4 +14,4 @@ export const Config: z<Partial<Config>, Config> = z.object({
   contactSource: z.string().default(''),
 })
 /** Bootstrap key containing no account credentials. */
-export const CONTACT_CONFIG_GLOBAL = '__DSH_CONTACT_CONFIG__'
+export const CONTACT_CONFIG_GLOBAL = '__ASTRO_ONE_CONTACT_CONFIG__'

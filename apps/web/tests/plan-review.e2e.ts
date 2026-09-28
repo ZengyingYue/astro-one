@@ -13,8 +13,8 @@ import { join } from 'node:path'
 import type { Browser, ConsoleMessage, Page } from 'playwright'
 import { chromium } from 'playwright'
 import { afterAll, beforeAll, describe, expect, it, onTestFailed } from 'vitest'
-import type { SessionEvent } from '@deepseek-ai/dsh-session'
-import type { SessionId } from '@deepseek-ai/dsh-session/types'
+import type { SessionEvent } from '@astro-one/session'
+import type { SessionId } from '@astro-one/session/types'
 import {
   assertFixtureInventory, captureExpandedTurnProcessAria, captureStableAria,
   compareOrRefreshGolden, fixtureUserPrompts,
@@ -181,10 +181,10 @@ describe('web e2e: plan review takeover round trip', () => {
     const outcome = asked.then((value) => { answered = true; return value }, (error: unknown) => ({ error }))
     try {
       const card = page.locator('[data-plan-review-key]')
-      const preview = page.locator('[data-plan-preview^="dsh-resource://plan-review/"]')
+      const preview = page.locator('[data-plan-preview^="astro-one-resource://plan-review/"]')
       await preview.waitFor({ state: 'visible' })
       expect(await preview.getByText('Ask before implementation.').isVisible()).toBe(true)
-      await compareOrRefreshGolden(TEMPORARY_EXPECTED, await captureStableAria(page, '[data-plan-preview^="dsh-resource://plan-review/"]', scaffold.workspaceCwd), MODE)
+      await compareOrRefreshGolden(TEMPORARY_EXPECTED, await captureStableAria(page, '[data-plan-preview^="astro-one-resource://plan-review/"]', scaffold.workspaceCwd), MODE)
       const tab = page.locator('[data-dockkit-tab]').filter({ hasText: 'Temporary review' })
       await card.getByRole('button', { name: 'Open plan in sidebar' }).click()
       expect(await tab.count()).toBe(1)
@@ -194,8 +194,8 @@ describe('web e2e: plan review takeover round trip', () => {
       await preview.waitFor({ state: 'visible' })
       expect(answered).toBe(false)
       const saved = await page.evaluate(() => Object.keys(localStorage)
-        .filter(key => key.startsWith('dsh.sidebar-right.v1.')).map(key => localStorage.getItem(key)).join('\n'))
-      expect(saved).toContain('dsh-resource://plan-review/')
+        .filter(key => key.startsWith('astro-one.sidebar-right.v1.')).map(key => localStorage.getItem(key)).join('\n'))
+      expect(saved).toContain('astro-one-resource://plan-review/')
       expect(saved).not.toContain('Ask before implementation.')
       await card.getByRole('button', { name: 'Approve', exact: true }).click()
       expect(await outcome).toEqual({ answers: [{ id: 'temporary', selected: ['Approve'] }] })
@@ -241,7 +241,7 @@ describe('web e2e: plan review takeover round trip', () => {
       await row.click()
       const card = page.locator('[data-plan-review-key]')
       await card.waitFor({ timeout: 10_000 })
-      const preview = page.locator('[data-plan-preview^="dsh-resource://plan-review/"]')
+      const preview = page.locator('[data-plan-preview^="astro-one-resource://plan-review/"]')
       await preview.waitFor({ state: 'visible', timeout: 10_000 })
       expect(await preview.getByText('Submitted while the Plugins panel was open.').isVisible()).toBe(true)
       expect(await card.getByRole('button', { name: 'Open plan in sidebar' }).count()).toBe(1)

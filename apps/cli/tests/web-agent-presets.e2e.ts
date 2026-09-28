@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os'
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@astro-one/cordis'
 import {
   initProfile,
   createRuntimeResolution,
@@ -13,33 +13,33 @@ import {
   loadProfile,
   PluginPackages,
   type Profile,
-} from '@deepseek-ai/dsh-app-boot'
-import { provideCmdline } from '@deepseek-ai/dsh-cmdline'
-import { SessionId, SessionLogOffset } from '@deepseek-ai/dsh-session'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import type { PatchOptions } from '@deepseek-ai/cordis-plugin-include'
+} from '@astro-one/app-boot'
+import { provideCmdline } from '@astro-one/cmdline'
+import { SessionId, SessionLogOffset } from '@astro-one/session'
+import type { Agent } from '@astro-one/agent'
+import type { PatchOptions } from '@astro-one/cordis-plugin-include'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 import { dump, load } from 'js-yaml'
-import { entryListSchema } from '@deepseek-ai/cordis-plugin-include'
-import { bundlePatchPaths, composeEntries } from '@deepseek-ai/dsh-app-boot'
+import { entryListSchema } from '@astro-one/cordis-plugin-include'
+import { bundlePatchPaths, composeEntries } from '@astro-one/app-boot'
 /** Profile entry ids whose volatile fields these scenarios edit through Settings. */
 const SETTINGS_NAMESPACE = 'agent-preset-registry'
 const SUBAGENT_MODEL_SELECTION_SETTINGS_NAMESPACE = 'subagent-model-selection-settings'
-import { applyChildComposition, childSessionMeta } from '@deepseek-ai/dsh-subagent'
-import { ToolCallId } from '@deepseek-ai/dsh-llm'
-import type {} from '@deepseek-ai/dsh-compaction-basic'
-import type {} from '@deepseek-ai/dsh-skill'
-import type {} from '@deepseek-ai/dsh-tools'
+import { applyChildComposition, childSessionMeta } from '@astro-one/subagent'
+import { ToolCallId } from '@astro-one/llm'
+import type {} from '@astro-one/compaction-basic'
+import type {} from '@astro-one/skill'
+import type {} from '@astro-one/tools'
 // Type-only: resolves `ctx.get('sessionProjections')` and `ctx.get('tokenMeter')`.
-import type {} from '@deepseek-ai/dsh-session-projection'
-import type {} from '@deepseek-ai/dsh-token-meter'
+import type {} from '@astro-one/session-projection'
+import type {} from '@astro-one/token-meter'
 
 const REPO_ROOT = fileURLToPath(new URL('../../..', import.meta.url))
-const { boot } = createRequire(import.meta.url)(join(REPO_ROOT, 'packages/boot/app-boot/lib/index.js')) as typeof import('@deepseek-ai/dsh-app-boot')
-/** The shipped Web surface: the dsh-base and dsh-web-app bundle patches over an empty profile. */
+const { boot } = createRequire(import.meta.url)(join(REPO_ROOT, 'packages/boot/app-boot/lib/index.js')) as typeof import('@astro-one/app-boot')
+/** The shipped Web surface: the astro-one-base and astro-one-web-app bundle patches over an empty profile. */
 const BASE_PATCH = join(REPO_ROOT, 'packages/bundle/base/cordis.patch.yml')
 const WEB_BUNDLE = join(REPO_ROOT, 'packages/bundle/web-app')
-const WEB_PATCHES = bundlePatchPaths(WEB_BUNDLE, (JSON.parse(readFileSync(join(WEB_BUNDLE, 'package.json'), 'utf8')) as { dsh: { bundle: { patch: string[] } } }).dsh.bundle)
+const WEB_PATCHES = bundlePatchPaths(WEB_BUNDLE, (JSON.parse(readFileSync(join(WEB_BUNDLE, 'package.json'), 'utf8')) as { astroOne: { bundle: { patch: string[] } } }).astroOne.bundle)
 const webPatches = (label: string): PatchOptions[] => WEB_PATCHES.flatMap(file => loadOverlayPatches(label, file))
 const CODEX_PACKAGE_DIR = join(REPO_ROOT, 'packages/subagent/subagent-codex')
 const CLAUDE_CODE_PACKAGE_DIR = join(REPO_ROOT, 'packages/subagent/subagent-claude-code')
@@ -67,8 +67,8 @@ async function bootWeb(
 ): Promise<Context> {
   const storageRoot = join(profileHome, 'storages')
   const overrides: PatchOptions[] = [
-    // storage-json's root is anchored to the real $DSH_HOME. Unpinned, this
-    // file writes the developer's own `~/.dsh/storages/` — and then reads it
+    // storage-json's root is anchored to the real $ASTRO_ONE_HOME. Unpinned, this
+    // file writes the developer's own `~/.astro-one/storages/` — and then reads it
     // back on the next run, so a stored document from any other build decides
     // this test's boot.
     { id: 'storage-json', config: { root: storageRoot } },
@@ -113,8 +113,8 @@ async function bootWeb(
     // supplies `directoryPicker` without one.
     { id: 'directory-picker', disabled: true },
     { insert: [
-      { id: 'directory-picker-browse', name: '@deepseek-ai/dsh-host-directory-picker-browse' },
-      { id: 'ui-directory-picker-browse', name: '@deepseek-ai/dsh-client-ui-directory-picker-browse' },
+      { id: 'directory-picker-browse', name: '@astro-one/host-directory-picker-browse' },
+      { id: 'ui-directory-picker-browse', name: '@astro-one/client-ui-directory-picker-browse' },
     ] },
     { id: 'agent-preset-registry', config: { default: 'standard' } },
     ...extra,
@@ -122,8 +122,8 @@ async function bootWeb(
   const home = profileHome
   const profileDir = join(home, 'profiles', 'spec')
   await mkdir(profileDir, { recursive: true })
-  if (profileBundles === undefined) initProfile(profileDir, ['@deepseek-ai/dsh-base', '@deepseek-ai/dsh-web-app'])
-  // Product Bundles are installed into the Profile, not the dsh app. Model
+  if (profileBundles === undefined) initProfile(profileDir, ['@astro-one/base', '@astro-one/web-app'])
+  // Product Bundles are installed into the Profile, not the astro-one app. Model
   // pnpm's package link for only the selected products; their own production
   // dependencies resolve from the linked workspace packages, while shared
   // peers still resolve through the installation fallback above.
@@ -141,34 +141,34 @@ async function bootWeb(
     patches: [],
   }
   let bundlePatches: PatchOptions[] = [
-    ...loadOverlayPatches('dsh-test', BASE_PATCH),
-    ...webPatches('dsh-test'),
+    ...loadOverlayPatches('astro-one-test', BASE_PATCH),
+    ...webPatches('astro-one-test'),
   ]
   if (profileBundles !== undefined) {
     await writeFile(join(profileDir, 'package.json'), JSON.stringify({
       private: true,
       dependencies: Object.fromEntries(profileBundles.map(name => [name, 'workspace:*'])),
-      dsh: { profile: { bundles: profileBundles } },
+      astroOne: { profile: { bundles: profileBundles } },
     }, null, 2) + '\n')
-    profile = loadProfile('dsh-test', 'spec', INSTALL_ANCHOR, home, { userLayer: false })
+    profile = loadProfile('astro-one-test', 'spec', INSTALL_ANCHOR, home, { userLayer: false })
     bundlePatches = profile.layers.flatMap(layer => layer.patches)
   }
   // Deployment defaults live in a bundle beneath the profile patch, so Settings writes are not shadowed by overlays.
-  const fixtureName = 'dsh-web-presets-defaults'
+  const fixtureName = 'astro-one-web-presets-defaults'
   const fixtureDir = join(profileDir, 'node_modules', fixtureName)
   await mkdir(fixtureDir, { recursive: true })
-  await writeFile(join(fixtureDir, 'package.json'), JSON.stringify({ name: fixtureName, version: '1.0.0', dsh: { bundle: { patch: 'cordis.patch.yml' } } }))
+  await writeFile(join(fixtureDir, 'package.json'), JSON.stringify({ name: fixtureName, version: '1.0.0', astroOne: { bundle: { patch: 'cordis.patch.yml' } } }))
   await writeFile(join(fixtureDir, 'cordis.patch.yml'), JSON.stringify(overrides))
-  const manifest = JSON.parse(await readFile(join(profileDir, 'package.json'), 'utf8')) as { dsh: { profile: { bundles: string[] } } }
-  manifest.dsh.profile.bundles.push(fixtureName)
+  const manifest = JSON.parse(await readFile(join(profileDir, 'package.json'), 'utf8')) as { astroOne: { profile: { bundles: string[] } } }
+  manifest.astroOne.profile.bundles.push(fixtureName)
   await writeFile(join(profileDir, 'package.json'), JSON.stringify(manifest))
   const resolution = await createRuntimeResolution({ installAnchor: INSTALL_ANCHOR, home, profile })
   const rootConfig = join(profileDir, 'cordis.yml')
   await writeFile(rootConfig, '[]\n')
-  return await boot('dsh-test', rootConfig, [...bundlePatches, ...overrides], async (bootCtx) => {
+  return await boot('astro-one-test', rootConfig, [...bundlePatches, ...overrides], async (bootCtx) => {
     bootCtx.provide('profileContext', { name: 'spec', dir: profileDir, patchPath: profile.patchPath,
       installAnchor: INSTALL_ANCHOR, home, cwd: home,
-      startedBundles: profileBundles ?? ['@deepseek-ai/dsh-base', '@deepseek-ai/dsh-web-app'],
+      startedBundles: profileBundles ?? ['@astro-one/base', '@astro-one/web-app'],
       overlays: [], telemetryDisabledEnv: '1' })
     await bootCtx.plugin(PluginPackages, { resolution })
     bootCtx.provide('connection', {
@@ -193,7 +193,7 @@ function toolParameterNames(ctx: Context, agent: Agent, toolName: string): strin
 }
 
 function enablePresetTool(composition: string, id: string): string {
-  const rows = load(composition, { schema: entryListSchema }) as import('@deepseek-ai/cordis-plugin-loader').EntryOptions[]
+  const rows = load(composition, { schema: entryListSchema }) as import('@astro-one/cordis-plugin-loader').EntryOptions[]
   const visit = (entries: typeof rows): boolean => entries.some((row) => {
     if (row.id === id) { row.disabled = false; return true }
     return row.group === true && visit(row.config as typeof rows)
@@ -204,7 +204,7 @@ function enablePresetTool(composition: string, id: string): string {
 
 let ctx: Context
 beforeAll(async () => {
-  ctx = await bootWeb(await mkdtemp(join(tmpdir(), 'dsh-web-presets-')))
+  ctx = await bootWeb(await mkdtemp(join(tmpdir(), 'astro-one-web-presets-')))
 }, 120_000)
 
 describe('the shipped Web composition', () => {
@@ -453,9 +453,9 @@ describe('the shipped Web composition', () => {
   })
 
   it('merges the global skill layer into a preset agent\'s catalog, keeping local discovery preset-side', async () => {
-    const proj = await mkdtemp(join(tmpdir(), 'dsh-preset-skill-proj-'))
-    await mkdir(join(proj, '.dsh', 'skills', 'project-proof'), { recursive: true })
-    await writeFile(join(proj, '.dsh', 'skills', 'project-proof', 'SKILL.md'), [
+    const proj = await mkdtemp(join(tmpdir(), 'astro-one-preset-skill-proj-'))
+    await mkdir(join(proj, '.astro-one', 'skills', 'project-proof'), { recursive: true })
+    await writeFile(join(proj, '.astro-one', 'skills', 'project-proof', 'SKILL.md'), [
       '---',
       'name: project-proof',
       'description: Proves the preset layer discovers project skills beside global ones.',
@@ -466,7 +466,7 @@ describe('the shipped Web composition', () => {
     ].join('\n'))
 
     const handle = await ctx.agents.create({
-      // Unique per run: the composition persists into the ambient DSH home,
+      // Unique per run: the composition persists into the ambient Astro One home,
       // and a fixed id would collide with a log an earlier run left there.
       sessionId: SessionId(`preset-skills-standard-${randomUUID()}`),
       setup: agentCtx => ctx.agentPresets.mount(agentCtx, 'standard').then(() => undefined),
@@ -474,24 +474,24 @@ describe('the shipped Web composition', () => {
     try {
       // The host (global) view carries the deployment-level provider alone:
       // local discovery moved behind the presets with `skill-filesystem`.
-      expect((await ctx.skills.list({ cwd: proj })).map(skill => skill.name)).toEqual(['dsh-badge'])
+      expect((await ctx.skills.list({ cwd: proj })).map(skill => skill.name)).toEqual(['astro-one-badge'])
 
       // The standard agent's view merges the global layer with its preset's
       // own local discovery over the session cwd.
       const scoped = (await ctx.skills.list({ cwd: proj, scope: handle.agent })).map(skill => skill.name)
-      expect(scoped).toContain('dsh-badge')
+      expect(scoped).toContain('astro-one-badge')
       expect(scoped).toContain('project-proof')
 
       // The preset's own loader tool resolves the global-layer skill.
       const loaded = await ctx.tools.execute({
         callId: ToolCallId('preset-skills-load'),
         name: 'skill',
-        arguments: { name: 'dsh-badge' },
+        arguments: { name: 'astro-one-badge' },
         signal: new AbortController().signal,
         agent: handle.agent,
       })
       expect(loaded.isError).toBe(false)
-      expect(JSON.stringify(loaded.content)).toContain('powered by dsh')
+      expect(JSON.stringify(loaded.content)).toContain('powered by astro-one')
     } finally {
       await handle.dispose()
     }
@@ -506,7 +506,7 @@ describe('the shipped Web composition', () => {
       // Layer visibility is the registry's; whether an agent can USE skills
       // stays the preset's choice — minimal mounts no `tool-skill`, so its
       // tool table has no loader even though the global layer is readable.
-      expect((await ctx.skills.list({ scope: handle.agent })).map(skill => skill.name)).toContain('dsh-badge')
+      expect((await ctx.skills.list({ scope: handle.agent })).map(skill => skill.name)).toContain('astro-one-badge')
       expect(toolNames(ctx, handle.agent)).toEqual(['bash'])
     } finally {
       await handle.dispose()
@@ -542,9 +542,9 @@ describe('product Bundle and user-preset intersection', () => {
   type PresetId = typeof presetIds[number]
 
   async function bootProducts(installed: readonly Product[]): Promise<Context> {
-    const root = await mkdtemp(join(tmpdir(), 'dsh-product-presets-'))
-    const definitions: import('@deepseek-ai/cordis-plugin-loader').EntryOptions[] = []
-    const standardConfig = composeEntries([webPatches('test')]).find(row => row.id === 'preset-standard')!.config as import('@deepseek-ai/dsh-agent-preset-registry').PresetDefinition
+    const root = await mkdtemp(join(tmpdir(), 'astro-one-product-presets-'))
+    const definitions: import('@astro-one/cordis-plugin-loader').EntryOptions[] = []
+    const standardConfig = composeEntries([webPatches('test')]).find(row => row.id === 'preset-standard')!.config as import('@astro-one/agent-preset-registry').PresetDefinition
     const standard = dump(standardConfig.plugins, { schema: entryListSchema })
     for (const id of presetIds) {
       let composition = standard
@@ -554,19 +554,19 @@ describe('product Bundle and user-preset intersection', () => {
       if (id === 'products-claude' || id === 'products-both') {
         composition = enablePresetTool(composition, 'tool-subagent-claude-code')
       }
-      definitions.push({ id: `preset-${id}`, name: '@deepseek-ai/dsh-agent-preset', config: { id, plugins: load(composition, { schema: entryListSchema }) } })
+      definitions.push({ id: `preset-${id}`, name: '@astro-one/agent-preset', config: { id, plugins: load(composition, { schema: entryListSchema }) } })
     }
     const packageDir = (product: Product): string => (
       product === 'codex' ? CODEX_PACKAGE_DIR : CLAUDE_CODE_PACKAGE_DIR
     )
     const packageName = (product: Product): string => (
       product === 'codex'
-        ? '@deepseek-ai/dsh-subagent-codex'
-        : '@deepseek-ai/dsh-subagent-claude-code'
+        ? '@astro-one/subagent-codex'
+        : '@astro-one/subagent-claude-code'
     )
     return await bootWeb(root, [{ insert: definitions }], installed.map(packageDir), [
-      '@deepseek-ai/dsh-base',
-      '@deepseek-ai/dsh-web-app',
+      '@astro-one/base',
+      '@astro-one/web-app',
       ...installed.map(packageName),
     ])
   }
@@ -633,13 +633,13 @@ describe('a user preset declared from the shipped cordis rows', () => {
 
   it('mounts beside the shipped `cordis` preset and reads the shared Host inspect providers', async () => {
     // The Host inspect providers are one process-global set registered by the
-    // host composition (`@deepseek-ai/dsh-tool-cordis/host`); each preset's
+    // host composition (`@astro-one/tool-cordis/host`); each preset's
     // `tool-cordis` row only registers the tools. Before that split the copy
     // failed to mount: its row re-registered provider "Service".
-    const root = await mkdtemp(join(tmpdir(), 'dsh-copied-preset-'))
-    const cordis = composeEntries([webPatches('test')]).find(row => row.id === 'preset-cordis')!.config as import('@deepseek-ai/dsh-agent-preset-registry').PresetDefinition
+    const root = await mkdtemp(join(tmpdir(), 'astro-one-copied-preset-'))
+    const cordis = composeEntries([webPatches('test')]).find(row => row.id === 'preset-cordis')!.config as import('@astro-one/agent-preset-registry').PresetDefinition
     const copyCtx = await bootWeb(root, [{ insert: [{
-      id: 'preset-cordis-copy', name: '@deepseek-ai/dsh-agent-preset',
+      id: 'preset-cordis-copy', name: '@astro-one/agent-preset',
       config: { ...cordis, id: 'cordis-copy', name: 'Cordis copy' },
     }] }])
     try {
@@ -701,7 +701,7 @@ describe('a user preset declared from the shipped cordis rows', () => {
           expect(page.isError, resultText(page)).toBe(false)
           return (JSON.parse(resultText(page)) as ConfigPage).data
         }
-        const toolsRows = await listConfigs({ name: '@deepseek-ai/dsh-tools' }, 'copied-preset-inspect-configs')
+        const toolsRows = await listConfigs({ name: '@astro-one/tools' }, 'copied-preset-inspect-configs')
         const toolsRow = toolsRows.entries[0]
         expect(toolsRow).toMatchObject({ patchId: 'tools', status: 'schema' })
         expect(toolsRows).toMatchObject({ total: 1, nextOffset: null })

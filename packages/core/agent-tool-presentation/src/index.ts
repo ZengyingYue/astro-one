@@ -11,18 +11,18 @@
  * process. One row per composition, not one per session.
  *
  * A PTC mode needs a TypeScript PTC runtime, which is a host-plane service
- * ([`dsh-ptc-runtime-node`](../../../ptc-runtime/ptc-runtime-node/README.md)).
+ * ([`astro-one-ptc-runtime-node`](../../../ptc-runtime/ptc-runtime-node/README.md)).
  * This row therefore waits for it rather than assuming it: a preset selecting
  * PTC mode against a deployment that composes no runtime fails at mount, named
  * in the preset's own activation audit, instead of at the first prompt.
- * @module @deepseek-ai/dsh-agent-tool-presentation
+ * @module @astro-one/agent-tool-presentation
  */
 
-import type { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import type { ToolPresentationMode } from '@deepseek-ai/dsh-tools'
+import type { Context } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
+import type { ToolPresentationMode } from '@astro-one/tools'
 // Type-only: brings the `ctx.tools` Context merge into this program.
-import type {} from '@deepseek-ai/dsh-tools'
+import type {} from '@astro-one/tools'
 
 /** Cordis plugin name. */
 export const name = 'tool-presentation'
@@ -65,7 +65,7 @@ export function apply(ctx: Context, config: Config): void {
     return
   }
   // The wait is the loud failure: an entry still pending on `ptcRuntime` is
-  // what `dsh-agent-preset-registry` reports as an unusable row, naming this id.
+  // what `astro-one-agent-preset-registry` reports as an unusable row, naming this id.
   ctx.inject(['ptcRuntime'], (runtimeCtx: Context) => {
     runtimeCtx.tools.presentAs(config.mode)
   })

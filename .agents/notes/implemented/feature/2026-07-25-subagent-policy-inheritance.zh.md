@@ -10,7 +10,7 @@ Auto 或 Full access 预设身份以及沙箱与审批覆盖项都是按会话�
 
 ## 决策
 
-委派边界会在第一次 await 之前调用共享的子 agent 辅助函数（`dsh-subagent` 中的 `captureDelegatedPolicyOverrides`／`appendDelegatedPolicyOverrides`）；一次性驱动器与[可继续启动](../../../../packages/subagent/subagent/README.zh.md)都会使用它们。当 `permissionPresets.current(parent.session)` 为 `auto` 或 `danger-full-access` 时，捕获会复制当前 `permission/preset` 身份，同时对 `sandboxPolicy.overrideOf(parent.session)` 获取快照，并把子 agent 的审批策略钉定为 `'never'`。父级后续的切换属于父级的未来；取消后重新委派会取得新快照。权限预设与沙箱策略服务都是可选的：只复制 Auto／Full access 共用旋钮组合的身份与显式沙箱会话覆盖项，绝不复制部署默认值或一次性授权。审批策略不继承——[审批钉定决策](2026-08-10-subagent-approval-pinned-never.zh.md)取代了本 note 原先的审批覆盖项继承。
+委派边界会在第一次 await 之前调用共享的子 agent 辅助函数（`astro-one-subagent` 中的 `captureDelegatedPolicyOverrides`／`appendDelegatedPolicyOverrides`）；一次性驱动器与[可继续启动](../../../../packages/subagent/subagent/README.zh.md)都会使用它们。当 `permissionPresets.current(parent.session)` 为 `auto` 或 `danger-full-access` 时，捕获会复制当前 `permission/preset` 身份，同时对 `sandboxPolicy.overrideOf(parent.session)` 获取快照，并把子 agent 的审批策略钉定为 `'never'`。父级后续的切换属于父级的未来；取消后重新委派会取得新快照。权限预设与沙箱策略服务都是可选的：只复制 Auto／Full access 共用旋钮组合的身份与显式沙箱会话覆盖项，绝不复制部署默认值或一次性授权。审批策略不继承——[审批钉定决策](2026-08-10-subagent-approval-pinned-never.zh.md)取代了本 note 原先的审批覆盖项继承。
 
 继承的 Auto 或 Full access 身份会成为一条 `permission/preset` 事件，捕获的沙箱值与钉定的审批值则会在子 agent 工厂的未发布设置阶段成为带来源标记的 `sandbox/mode` 与 `approval/policy` 事件。会话构造函数已把 `Session.firstLiveSeq` 固定在 constructor seed 之后，而 `Session.inheritedEventCount` 保留精确的 fork 前缀长度，因此继承事实会排在 fork 历史之后，却不改变其谱系 cut。生命周期本地遥测从 `firstLiveSeq` 开始，因此排除 constructor seed，并包含这些未发布设置事件。因此，既有的末事件胜出折叠会让委派快照压过陈旧的 fork 历史，并让子 agent 后续的切换压过该快照。孙代 agent 会折叠其父级已记录的状态，因此无需另一套继承机制即可组合此规则。
 
@@ -38,4 +38,4 @@ Auto review 不会把这条继承的 preset 事件变成授权回执。每次 ch
 - spawn、fork 和嵌套的进程内子 agent 会在父级选中 Auto 时保留其身份，保留父级显式的沙箱覆盖项，并被钉定为 `'never'` 审批。聚焦测试套件证明 Auto 身份、真实文件系统拒绝、陈旧 fork 优先级、委派时捕获、实时事件边界、默认值省略与上下文释放。
 - 在 Auto 下，这些 child 仍会为每次调用重新获得 low／medium／high 决定。human 指令在中风险动作上优先于直接父级任务调整，而且两种来源都不能授权高风险动作。
 - 无密钥 headless 快照是组装后应用层面的回归测试：只有父级是 `read-only`，部署默认值是 `workspace-write`；若移除捕获，子 agent 的持久化事件与被拒的磁盘写入这两项检查都会失败。
-- 每次委派最多增加三条仅日志事件。权限预设、沙箱策略与审批这三项服务的可选 peer 类型由 `dsh-subagent` 拥有——其共享辅助函数持有 `ctx.get` 消费；未组合这些服务的组合保持原有行为。进程外子 agent 仍采用自身的部署策略，正在运行的子 agent 不跟随父级后续切换。
+- 每次委派最多增加三条仅日志事件。权限预设、沙箱策略与审批这三项服务的可选 peer 类型由 `astro-one-subagent` 拥有——其共享辅助函数持有 `ctx.get` 消费；未组合这些服务的组合保持原有行为。进程外子 agent 仍采用自身的部署策略，正在运行的子 agent 不跟随父级后续切换。

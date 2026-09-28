@@ -6,7 +6,7 @@ Status: implemented
 
 ## 问题
 
-[故障切换支路](../process/2026-09-09-blacksmith-failover-leg.zh.md)会把这套测试跑在本仓库不拥有的池上——Blacksmith 的临时镜像，以及自有的 `vm-backup` 与 `dsh-win-ci` 备用池。在托管镜像上，coverage 各通道的失败来自用例从未点明的宿主属性：宿主是否提供可用的用户级 systemd scope，决定了被 mock 的 PTY 退出会与哪种 containment 竞争；受管 scope 在 ACP 拆卸时报告信号失败；读端被抢占时会把非法 UTF-8 残余用例假定为独立分块的写入合并成一个分块；以及 Windows Server 镜像直接拒绝 `CoCreateInstance(CLSID_FileOpenDialog)`。
+[故障切换支路](../process/2026-09-09-blacksmith-failover-leg.zh.md)会把这套测试跑在本仓库不拥有的池上——Blacksmith 的临时镜像，以及自有的 `vm-backup` 与 `astro-one-win-ci` 备用池。在托管镜像上，coverage 各通道的失败来自用例从未点明的宿主属性：宿主是否提供可用的用户级 systemd scope，决定了被 mock 的 PTY 退出会与哪种 containment 竞争；受管 scope 在 ACP 拆卸时报告信号失败；读端被抢占时会把非法 UTF-8 残余用例假定为独立分块的写入合并成一个分块；以及 Windows Server 镜像直接拒绝 `CoCreateInstance(CLSID_FileOpenDialog)`。
 
 ## 决策
 
@@ -22,7 +22,7 @@ Status: implemented
 
 `packages/experimental/ptc-runtime-python/tests/stray-fragments.spec.ts` 的原生输出分块封存测试保留真实 Python 子进程，但把 stdout 读取拆成单字节事件。操作系统的管道合并无法保证达到封存一块所需的 1024 个片段：run 34465259316 的全部断言通过，却未覆盖该分支。可控读取覆盖反复封存和末尾换行合并；精确输出与复制总量上限检测字节丢失和前缀反复复制。
 
-Linux coverage 通道授予 `DSH_COVERAGE_TEST_TIMEOUT_MS: '90000'`，与 Windows coverage 通道一致，因为当该通道的分区、worker 与同级门禁共用一个宿主时，`subprocess-local` 与 `bash-sandbox` 的处置用例会超过 5000ms 默认值。
+Linux coverage 通道授予 `ASTRO_ONE_COVERAGE_TEST_TIMEOUT_MS: '90000'`，与 Windows coverage 通道一致，因为当该通道的分区、worker 与同级门禁共用一个宿主时，`subprocess-local` 与 `bash-sandbox` 的处置用例会超过 5000ms 默认值。
 
 Windows 文件夹对话框冒烟测试改为通过 PowerShell 探测 `CoCreateInstance(CLSID_FileOpenDialog)`，而不再按 `process.platform` 分流。回答 `CLASS_E_CLASSNOTAVAILABLE`（0x80040111）的镜像会跑干净的拒绝用例并跳过真实对话框用例，因此 `win32-dialog.ts` 在没有可开对话框的宿主上仍保有文件覆盖率。该激活过程抛出的任何异常都按拒绝解读，因此因其它原因探测失败的宿主只会失去真实对话框用例；完全无法运行的探测则保留 win32 假设。
 

@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { DesktopMandatoryUpdatePolicy, desktopPolicyPage, resolveDesktopPolicyConfig, type DesktopPolicyState } from '../src/mandatory-update-policy.ts'
 
-const identity = { platform: 'win32', arch: 'x64', version: '0.1.5-rc.1', bundledDshVersion: '0.1.5-rc.1',
-  bundleId: 'com.deepseek.dsh', locale: 'zh-CN' } as const
+const identity = { platform: 'win32', arch: 'x64', version: '0.1.5-rc.1', bundledAstroOneVersion: '0.1.5-rc.1',
+  bundleId: 'com.astro.one', locale: 'zh-CN' } as const
 const force = { code: 40005, data: { show_content: { title: '<b>Update</b>', detail: 'Required upgrade' },
   desktop_app_link: 'https://downloads.example.com/desktop?os=win' } }
 const clear = { code: 0, msg: '', data: { biz_code: 0, biz_msg: '', biz_data: null } }
@@ -58,9 +58,9 @@ describe('mandatory update policy', () => {
     expect(url).toBeInstanceOf(URL)
     expect((url as URL).href).toBe('https://policy.example.com/api/v0/check_client_update?scenario=launch')
     expect(options).toMatchObject({ credentials: 'omit', cache: 'no-store', redirect: 'error', headers: {
-      'x-client-platform': 'desktop-win', 'x-client-version': '0.1.5-rc.1', 'x-client-bundle-id': 'com.deepseek.dsh',
+      'x-client-platform': 'desktop-win', 'x-client-version': '0.1.5-rc.1', 'x-client-bundle-id': 'com.astro.one',
       'x-client-locale': 'zh-CN', 'x-client-arch': 'x64', 'x-client-update-channel': 'nightly',
-      'x-client-bundled-dsh-version': '0.1.5-rc.1',
+      'x-client-bundled-astro-one-version': '0.1.5-rc.1',
     } })
   })
 

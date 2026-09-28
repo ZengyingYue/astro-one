@@ -11,7 +11,7 @@
 
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
-import type { PluginInstallFailureKind, Registry } from '@deepseek-ai/dsh-api-remotes/client'
+import type { PluginInstallFailureKind, Registry } from '@astro-one/api-remotes/client'
 import {
   Button, IconCheckCircleFillRegular, IconChevronDownOutlineRegular, IconChevronLeftOutlineMedium,
   IconChevronRightOutlineRegular, IconCloseOutlineMedium,
@@ -20,8 +20,8 @@ import {
   PluginArtworkDefault, PluginArtworkLoop, PluginArtworkSearch, PluginArtworkSubagent, PluginArtworkTerminal,
   StateDot, Switch, Tag, TerminalBlock, Toast, useAnchoredPosition, useDismissOnOutsidePointer,
   type IconProps, type StateDotState, type TerminalBlockLabels,
-} from '@deepseek-ai/dsh-client-ui-primitives'
-import type { InjectFace, PropsLocale, PropsRenderSlots, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
+} from '@astro-one/client-ui-primitives'
+import type { InjectFace, PropsLocale, PropsRenderSlots, PropsRuntime } from '@astro-one/client-ui-slots'
 import { rowConfigKey, type OfficialItem } from './config-ledger.ts'
 import type { PluginManagerLocaleKey } from './locales.ts'
 import {
@@ -62,12 +62,12 @@ const HIGHLIGHT_MS = 2_400
 
 /** Built-in profile bundles stay out of this page even when the profile declares them as dependencies. */
 const BUILTIN_PROFILE_BUNDLES = new Set([
-  '@deepseek-ai/dsh-base',
-  '@deepseek-ai/dsh-web-app',
-  '@deepseek-ai/dsh-headless',
-  '@deepseek-ai/dsh-sdk-app',
-  '@deepseek-ai/dsh-acp-app',
-  '@deepseek-ai/dsh-sdk-minimal',
+  '@astro-one/base',
+  '@astro-one/web-app',
+  '@astro-one/headless',
+  '@astro-one/sdk-app',
+  '@astro-one/acp-app',
+  '@astro-one/sdk-minimal',
 ])
 
 /** How long a toast holds: long enough to read a failure that names what broke. */

@@ -1,18 +1,18 @@
-import { Context, Inject, Service, type Plugin } from '@deepseek-ai/cordis'
-import type { Dict } from '@deepseek-ai/cosmokit'
-import { ModuleLoader, type ModuleJob, type ResolveResult } from '@deepseek-ai/cordis-plugin-loader'
-import type { Include } from '@deepseek-ai/cordis-plugin-include'
+import { Context, Inject, Service, type Plugin } from '@astro-one/cordis'
+import type { Dict } from '@astro-one/cosmokit'
+import { ModuleLoader, type ModuleJob, type ResolveResult } from '@astro-one/cordis-plugin-loader'
+import type { Include } from '@astro-one/cordis-plugin-include'
 import { FSWatcher, watch, type ChokidarOptions } from 'chokidar'
 import { relative, resolve } from 'node:path'
 import { realpath } from 'node:fs/promises'
 import { handleError } from './error.ts'
-import type {} from '@deepseek-ai/cordis-plugin-timer'
+import type {} from '@astro-one/cordis-plugin-timer'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { createRequire } from 'node:module'
 import picomatch from 'picomatch'
-import z from '@deepseek-ai/schemastery'
+import z from '@astro-one/schemastery'
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     hmr: Hmr
   }
@@ -419,7 +419,7 @@ namespace Hmr {
     ]),
     debounce: z.natural().role('ms').default(100),
   })
-  // [deepseek-harness] vendored modification: removed `.i18n({ 'en-US': enUS, 'zh-CN': zhCN })`
+  // [astro-one] vendored modification: removed `.i18n({ 'en-US': enUS, 'zh-CN': zhCN })`
   // and the corresponding `./locales/*.yml` imports, to avoid a runtime YAML import hook
   // (@cordisjs/unyaml) that we don't vendor. See vendor/README.md.
 }

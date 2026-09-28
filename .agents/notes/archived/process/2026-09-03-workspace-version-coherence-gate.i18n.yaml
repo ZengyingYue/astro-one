@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/archived/process/2026-09-03-workspace-version-coherence-gate.md
-2026-09-03-workspace-version-coherence-gate.md: 65c8a2e6c1eabd14d67a8dff10fc90c38d07eb64
-2026-09-03-workspace-version-coherence-gate.zh.md: 9c309e673945cbc6e9a3c73a6a48d9610ae868be
+2026-09-03-workspace-version-coherence-gate.md: a6a38d4eb0f3f2c390a2b9e000c91cf6095426b7
+2026-09-03-workspace-version-coherence-gate.zh.md: 4b598e08d3aa0dc7e4b97dcd910e941780dcac16

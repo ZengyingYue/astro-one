@@ -1,9 +1,9 @@
 /** The `--json` run projection: commit-point emission, ordering, bounding, and disposal. */
 
 import { describe, expect, it } from 'vitest'
-import type { Context } from '@deepseek-ai/cordis'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import type { Session, SessionEvent } from '@deepseek-ai/dsh-session'
+import type { Context } from '@astro-one/cordis'
+import type { Agent } from '@astro-one/agent'
+import type { Session, SessionEvent } from '@astro-one/session'
 import { boundJsonLine, MAX_STRING_BYTES, projectJsonRun, type JsonProjectionOptions } from '../src/json-stream.ts'
 
 interface ProjectionHarness {

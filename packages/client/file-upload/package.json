@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-client-file-upload",
+  "name": "@astro-one/client-file-upload",
   "description": "Agent-scoped browser file upload, streaming intake, and staged receipt service",
   "version": "0.1.7-rc.1",
   "publishConfig": {
@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/client/file-upload"
   },
   "type": "module",
@@ -37,10 +37,10 @@
     "./src/*": "./src/*",
     "./package.json": "./package.json"
   },
-  "dsh": {
+  "astroOne": {
     "client": {
       "inject": [
-        "@deepseek-ai/dsh-api-remotes"
+        "@astro-one/api-remotes"
       ],
       "platform": "web",
       "immediately": true
@@ -63,22 +63,22 @@
   ],
   "dependencies": {
     "zod": "^4.4.3",
-    "@deepseek-ai/dsh-typert-protocol": "workspace:*",
-    "@deepseek-ai/dsh-brand": "workspace:*"
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/brand": "workspace:*"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-scope": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/scope": "workspace:*"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-agent": "workspace:*",
-    "@deepseek-ai/dsh-client-connection": "workspace:*",
-    "@deepseek-ai/dsh-commands": "workspace:*",
-    "@deepseek-ai/dsh-scope": "workspace:*",
-    "@deepseek-ai/dsh-util-crypto": "workspace:*",
-    "@deepseek-ai/dsh-api-remotes": "workspace:*",
-    "@deepseek-ai/dsh-session": "workspace:*",
-    "@deepseek-ai/dsh-attachment": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/commands": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/util-crypto": "workspace:*",
+    "@astro-one/api-remotes": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/attachment": "workspace:*"
   }
 }

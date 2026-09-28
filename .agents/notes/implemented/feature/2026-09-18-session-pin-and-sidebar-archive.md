@@ -12,7 +12,7 @@ A visibility filter can hide a Session without removing it from its Workspace. S
 
 ## Decision
 
-The `dsh-workspace` registry stores registry-global pin and archive sets as Session id arrays (`pinnedSessionIds` and `archivedSessionIds`), with durable `pinSession`/`unpinSession` operations. The pin array keeps the most recently pinned id first. Pinning and archival are mutually exclusive: archiving drops the session's pin in the same durable write, and pinning an archived session fails with `WorkspaceArchivedSessionPinError`.
+The `astro-one-workspace` registry stores registry-global pin and archive sets as Session id arrays (`pinnedSessionIds` and `archivedSessionIds`), with durable `pinSession`/`unpinSession` operations. The pin array keeps the most recently pinned id first. Pinning and archival are mutually exclusive: archiving drops the session's pin in the same durable write, and pinning an archived session fails with `WorkspaceArchivedSessionPinError`.
 
 ### Complete Session order
 

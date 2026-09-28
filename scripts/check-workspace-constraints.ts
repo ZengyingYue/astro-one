@@ -14,9 +14,12 @@ import {
   PRIVATE_EXPERIMENTAL_PACKAGE_DIRECTORIES,
 } from './experimental-package-policy.ts'
 import { hasTypertRemoteNavigation, isForbiddenPublicationFile } from './publication-payload.ts'
-import type { DshBundleManifest } from '../packages/util/package-manifest/src/types.ts'
+import type { AstroOneBundleManifest } from '../packages/util/package-manifest/src/types.ts'
 import { OPTIONAL_BUNDLES, bundlePatchFiles } from '../packages/boot/app-boot/src/profile.ts'
 import { collectProjectReferenceFaceViolations } from './project-reference-faces.ts'
+
+/** Astro One package names: the `@astro-one` scope minus the vendored Cordis, native addon, and website packages. */
+const ASTRO_ONE_PACKAGE = /^@astro-one\/(?!(?:cordis|cosmokit|schemastery|node-addon-system|website)(?:-|$))/u
 
 const root = resolve(import.meta.dirname, '..')
 // Publication rules cover these package trees; dependency rules read all pnpm members.
@@ -28,47 +31,47 @@ const workspaceGlobs = [
   { dir: 'apps', depth: 1 },
 ] as const
 const vendoredPackages = new Set([
-  '@deepseek-ai/cordis',
-  '@deepseek-ai/cosmokit',
-  '@deepseek-ai/schemastery',
-  '@deepseek-ai/cordis-plugin-loader',
-  '@deepseek-ai/cordis-plugin-include',
-  '@deepseek-ai/cordis-plugin-group',
-  '@deepseek-ai/cordis-plugin-timer',
-  '@deepseek-ai/cordis-plugin-hmr',
-  '@deepseek-ai/cordis-plugin-logger-console',
+  '@astro-one/cordis',
+  '@astro-one/cosmokit',
+  '@astro-one/schemastery',
+  '@astro-one/cordis-plugin-loader',
+  '@astro-one/cordis-plugin-include',
+  '@astro-one/cordis-plugin-group',
+  '@astro-one/cordis-plugin-timer',
+  '@astro-one/cordis-plugin-hmr',
+  '@astro-one/cordis-plugin-logger-console',
 ])
 const publicNativePackages = new Set([
-  '@deepseek-ai/node-addon-system',
-  '@deepseek-ai/node-addon-system-darwin-arm64',
-  '@deepseek-ai/node-addon-system-darwin-x64',
-  '@deepseek-ai/node-addon-system-linux-arm64',
-  '@deepseek-ai/node-addon-system-linux-x64',
+  '@astro-one/node-addon-system',
+  '@astro-one/node-addon-system-darwin-arm64',
+  '@astro-one/node-addon-system-darwin-x64',
+  '@astro-one/node-addon-system-linux-arm64',
+  '@astro-one/node-addon-system-linux-x64',
 ])
 /** Deliberate source payloads whose exact bytes are part of the package's audit surface. */
 const publicationSourceAllowlist: Readonly<Record<string, readonly string[]>> = {
-  '@deepseek-ai/node-addon-system': ['src/main.c', 'src/flock.c'],
+  '@astro-one/node-addon-system': ['src/main.c', 'src/flock.c'],
 }
 /** Public source home recorded in maintained package manifests. */
-const publishedRepositoryUrl = 'git+https://github.com/deepseek-ai/deepseek-harness.git'
+const publishedRepositoryUrl = 'git+https://github.com/ZengyingYue/astro-one.git'
 /** Packages that participate in the experimental policy. */
 const experimentalPackageDirectory = /^packages\/experimental\/[^/]+$/
 /** npm namespace reserved for experimental packages. */
-const experimentalPackageNamePrefix = '@deepseek-ai/dsh-experimental-'
+const experimentalPackageNamePrefix = '@astro-one/experimental-'
 /** Ordinary directories whose packages this repository publishes: one release member each. */
 const standardReleaseMemberDirectory = /^(?:packages\/(?!experimental\/)[^/]+\/[^/]+|apps\/(?!desktop(?:-host)?$)[^/]+|vendor\/[^/]+)$/
 /** Installable application assembled by electron-builder rather than published to npm. */
 const desktopApplicationDirectory = 'apps/desktop'
 const localArtifactDirs = new Set(['node_modules'])
 const appPackageFiles: Readonly<Record<string, readonly string[]>> = {
-  '@deepseek-ai/dsh': ['lib/*.js', 'lib/types/*.d.ts'],
-  '@deepseek-ai/dsh-desktop-host': [
+  '@astro-one/cli': ['lib/*.js', 'lib/types/*.d.ts'],
+  '@astro-one/desktop-host': [
     'lib/index.js',
   ],
   // Sourcemaps stay out by payload policy; the worker-preview surface
   // (dist/preview.html and dist/preview/) backs opt-in experimental
   // packages and is not published.
-  '@deepseek-ai/dsh-web-frontend': ['dist', '!dist/**/*.map', '!dist/preview.html', '!dist/preview'],
+  '@astro-one/web-frontend': ['dist', '!dist/**/*.map', '!dist/preview.html', '!dist/preview'],
 }
 
 /** The subset of package.json fields this constraint check cares about. */
@@ -98,8 +101,8 @@ export interface PackageManifest {
   devDependencies?: Record<string, string>
   dependencies?: Record<string, string>
   optionalDependencies?: Record<string, string>
-  dsh?: {
-    bundle?: DshBundleManifest
+  astroOne?: {
+    bundle?: AstroOneBundleManifest
   }
 }
 
@@ -175,49 +178,49 @@ export function readWorkspaceManifests(repositoryRoot: string): WorkspaceManifes
 
 const packageFileExtras: Readonly<Record<string, readonly string[]>> = {
   // Owned Worker bundles import this public bootstrap before their business entry.
-  '@deepseek-ai/dsh-app-boot': ['lib/worker/profile-resolution-bootstrap.js'],
+  '@astro-one/app-boot': ['lib/worker/profile-resolution-bootstrap.js'],
   // Statically linked client libraries keep their stylesheets next to the emitted
   // JavaScript, which imports them by relative path: the compile shell runs
   // them through its own CSS pipeline, so the sheets are published artifacts.
   // The glob covers whichever sheets a package emits; sourcemaps stay
   // unpublished, as everywhere else in the repository.
-  '@deepseek-ai/dsh-client-ui-primitives': ['lib/**/*.css'],
-  '@deepseek-ai/dsh-client-ui-dockkit': ['lib/**/*.css'],
-  '@deepseek-ai/dsh-client-ui-sidebar-documentpreview': ['lib/client.*.js'],
-  '@deepseek-ai/dsh-client-ui-sidebar-terminal': ['lib/client.*.js'],
-  '@deepseek-ai/dsh-client-web': ['lib/**/*.css', 'lib/apply-injections.js'],
-  '@deepseek-ai/dsh-client-ui-theme': ['lib/styles'],
+  '@astro-one/client-ui-primitives': ['lib/**/*.css'],
+  '@astro-one/client-ui-dockkit': ['lib/**/*.css'],
+  '@astro-one/client-ui-sidebar-documentpreview': ['lib/client.*.js'],
+  '@astro-one/client-ui-sidebar-terminal': ['lib/client.*.js'],
+  '@astro-one/client-web': ['lib/**/*.css', 'lib/apply-injections.js'],
+  '@astro-one/client-ui-theme': ['lib/styles'],
   // The CPython side ships as source .py files, published as-is rather than built.
-  '@deepseek-ai/dsh-experimental-ptc-runtime-python': ['py/**/*.py'],
-  '@deepseek-ai/dsh-experimental-speech-to-text-sensevoice': ['runtime/assets.json'],
+  '@astro-one/experimental-ptc-runtime-python': ['py/**/*.py'],
+  '@astro-one/experimental-speech-to-text-sensevoice': ['runtime/assets.json'],
   // The isolated Node bootstrap is a separately launched bundle.
-  '@deepseek-ai/dsh-ptc-runtime-node': ['lib/process.js'],
+  '@astro-one/ptc-runtime-node': ['lib/process.js'],
   // The Host entry starts its sibling Worker by URL rather than a package export.
-  '@deepseek-ai/dsh-experimental-inspector': ['lib/worker.js'],
+  '@astro-one/experimental-inspector': ['lib/worker.js'],
   // Creator's composition guidance travels with the declaration package.
-  '@deepseek-ai/dsh-agent-preset': ['skills'],
+  '@astro-one/agent-preset': ['skills'],
   // The Web Host mounts the default-off settings owner independently of each
   // Agent-scoped delegation-tool instance.
-  '@deepseek-ai/dsh-tool-subagent': ['lib/model-selection-settings.js'],
+  '@astro-one/tool-subagent': ['lib/model-selection-settings.js'],
   // The JSONL backend resolves its private verification Worker relative to
   // import.meta.url; it is shipped without a public package subpath.
-  '@deepseek-ai/dsh-session-persistence-jsonl': ['lib/worker.cjs'],
+  '@astro-one/session-persistence-jsonl': ['lib/worker.cjs'],
   // The argv-prefix runner entry ships beside the lib as its own bundle;
   // sandbox-local resolves it through the package's ./runner export. tsdown
   // also shares its generated FFI code through a hashed runtime chunk.
-  '@deepseek-ai/dsh-sandbox-windows-acl': ['lib/runner.js', 'lib/types-*.js'],
-  '@deepseek-ai/dsh-skill-badge': ['assets'],
-  '@deepseek-ai/dsh-skill-office': ['assets'],
-  '@deepseek-ai/dsh-subprocess': ['lib/control.js'],
+  '@astro-one/sandbox-windows-acl': ['lib/runner.js', 'lib/types-*.js'],
+  '@astro-one/skill-badge': ['assets'],
+  '@astro-one/skill-office': ['assets'],
+  '@astro-one/subprocess': ['lib/control.js'],
   // SSH launches a private helper and shares wire definitions and TLS setup
   // between that helper and the connection owner.
-  '@deepseek-ai/dsh-ssh': [
+  '@astro-one/ssh': [
     'lib/helper.js', 'lib/protocol.js', 'lib/schemas.js',
     'lib/protocol-*.js', 'lib/schemas-*.js', 'lib/stream-security-*.js',
   ],
   // Ordinary native containment ships a path-loaded runner and its shared
   // runner chunk beside the existing node-pty permission repair.
-  '@deepseek-ai/dsh-subprocess-local': [
+  '@astro-one/subprocess-local': [
     'lib/runner.js',
     'lib/runner-*.js',
     'lib/output.js',
@@ -226,10 +229,10 @@ const packageFileExtras: Readonly<Record<string, readonly string[]>> = {
   // tsdown shares the repository/pack code between the lib entry and the bin
   // through a hashed chunk. The committed bin.js is the link target pnpm can
   // resolve at install time, before the build produces lib/bin.js.
-  '@deepseek-ai/dsh-experimental-webworker-packer': ['bin.js', 'lib/repository-*.js'],
+  '@astro-one/experimental-webworker-packer': ['bin.js', 'lib/repository-*.js'],
   // The headless entry and its startup row share the JSON projection code
   // through a hashed tsdown chunk; both import it by relative path.
-  '@deepseek-ai/dsh-headless': ['lib/json-stream-*.js'],
+  '@astro-one/headless': ['lib/json-stream-*.js'],
 }
 
 function sameStringList(actual: readonly string[] | undefined, expected: readonly string[]): boolean {
@@ -241,14 +244,14 @@ function sameStringList(actual: readonly string[] | undefined, expected: readonl
  * @param manifest - workspace package manifest.
  * @returns the icon and deduplicated locale targets followed by runtime and declaration payloads.
  */
-export function expectedDshPackageFiles(manifest: PackageManifest): readonly string[] {
+export function expectedAstroOnePackageFiles(manifest: PackageManifest): readonly string[] {
   const localeFiles = new Set<string>()
   for (const resource of Object.keys(manifest.exports ?? {})) {
     if (!/^\.\/(?:.+\/)?locale\/[^/]+\.json$/u.test(resource)) continue
     const target = exportDefault(manifest, resource)
     if (target?.startsWith('./') && target.endsWith('.json')) localeFiles.add(target.slice(2))
   }
-  const bundle = manifest.dsh?.bundle
+  const bundle = manifest.astroOne?.bundle
   const bundleFiles = bundle === undefined ? [] : bundlePatchFiles(bundle).map(file => file.replace(/^\.\//, ''))
   const extras = [
     ...bundleFiles,
@@ -354,21 +357,21 @@ function isReleaseMemberDirectory(dir: string): boolean {
 }
 
 /**
- * Require a dsh-family manifest to carry the workspace version.
+ * Require a astro-one-family manifest to carry the workspace version.
  *
- * The dsh release sequence publishes packages/ and apps/ members and every
- * private dsh package on one shared version, written by `release:dsh` and
+ * The astro-one release sequence publishes packages/ and apps/ members and every
+ * private astro-one package on one shared version, written by `release:astro-one` and
  * shared with the workspace root. This name test is that boundary: it covers
  * the family wherever the manifest lives, so apps/ members cannot drift with
  * only the release lane noticing.
  * @param manifest - the workspace package manifest.
- * @param expected - the version every dsh-family manifest must carry (the root's).
+ * @param expected - the version every astro-one-family manifest must carry (the root's).
  * @returns one violation naming the manifest and the expected version, or
  * undefined when the manifest is compliant or not in the family.
  */
-export function checkDshFamilyVersion(manifest: PackageManifest, expected: string | undefined): string | undefined {
+export function checkAstroOneFamilyVersion(manifest: PackageManifest, expected: string | undefined): string | undefined {
   const name = manifest.name
-  if (name !== '@deepseek-ai/dsh' && name?.startsWith('@deepseek-ai/dsh-') !== true) return undefined
+  if (name === undefined || !ASTRO_ONE_PACKAGE.test(name)) return undefined
   if (manifest.version !== expected) {
     return `${name}: package.json version must match root version ${expected ?? '(missing)'}`
   }
@@ -376,14 +379,14 @@ export function checkDshFamilyVersion(manifest: PackageManifest, expected: strin
 }
 
 /**
- * Check one workspace manifest against publication and dsh-package policy.
+ * Check one workspace manifest against publication and astro-one-package policy.
  * @param workspace - package directory and parsed manifest.
  * @returns path-qualified policy violations.
  */
 export function checkWorkspaceManifest({ dir, manifest }: WorkspaceManifest): string[] {
   const errors = checkExperimentalManifest({ dir, manifest })
   const label = manifest.name ?? dir
-  const familyVersionError = checkDshFamilyVersion(manifest, repositoryVersion)
+  const familyVersionError = checkAstroOneFamilyVersion(manifest, repositoryVersion)
   if (familyVersionError !== undefined) errors.push(familyVersionError)
   const isNativePackageDir = dir.startsWith('native/system/packages/')
   const isPublicNativePackage = isNativePackageDir
@@ -410,7 +413,7 @@ export function checkWorkspaceManifest({ dir, manifest }: WorkspaceManifest): st
     //
     // Access is per release sequence, not per scope: the vendored framework and
     // the Landlock packages publish publicly because outside consumers install
-    // them, and the dsh family published publicly with its own sequence on
+    // them, and the astro-one family published publicly with its own sequence on
     // 2026-08-13. No publish path passes `--access`; each packed manifest declares
     // it, and this gate requires every release member to be public.
     if (manifest.private === true) {
@@ -432,7 +435,7 @@ export function checkWorkspaceManifest({ dir, manifest }: WorkspaceManifest): st
     return errors
   }
 
-  if (manifest.name?.startsWith('@deepseek-ai/')) {
+  if (manifest.name?.startsWith('@astro-one/')) {
     const allowedSources = publicationSourceAllowlist[manifest.name] ?? []
     for (const file of manifest.files ?? []) {
       if (isForbiddenPublicationFile(file) && !allowedSources.includes(file)) {
@@ -441,7 +444,7 @@ export function checkWorkspaceManifest({ dir, manifest }: WorkspaceManifest): st
     }
   }
 
-  if (dir.startsWith('apps/') && dir !== desktopApplicationDirectory && manifest.name?.startsWith('@deepseek-ai/')) {
+  if (dir.startsWith('apps/') && dir !== desktopApplicationDirectory && manifest.name?.startsWith('@astro-one/')) {
     const expectedFiles = appPackageFiles[manifest.name]
     if (expectedFiles === undefined) {
       errors.push(`${label}: app package has no publication files policy`)
@@ -459,14 +462,14 @@ export function checkWorkspaceManifest({ dir, manifest }: WorkspaceManifest): st
     }
   }
 
-  if (dir.startsWith('packages/') && manifest.name?.startsWith('@deepseek-ai/dsh-')) {
-    const peer = manifest.peerDependencies?.['@deepseek-ai/cordis']
-    const dev = manifest.devDependencies?.['@deepseek-ai/cordis']
+  if (dir.startsWith('packages/') && manifest.name?.startsWith('@astro-one/')) {
+    const peer = manifest.peerDependencies?.['@astro-one/cordis']
+    const dev = manifest.devDependencies?.['@astro-one/cordis']
 
-    if (!peer) errors.push(`${label}: @deepseek-ai/cordis must be a peerDependency`)
-    if (!dev) errors.push(`${label}: @deepseek-ai/cordis must also be a devDependency`)
+    if (!peer) errors.push(`${label}: @astro-one/cordis must be a peerDependency`)
+    if (!dev) errors.push(`${label}: @astro-one/cordis must also be a devDependency`)
     if (peer && dev && peer !== dev) {
-      errors.push(`${label}: @deepseek-ai/cordis peer (${peer}) and dev (${dev}) ranges must match`)
+      errors.push(`${label}: @astro-one/cordis peer (${peer}) and dev (${dev}) ranges must match`)
     }
     if (manifest.type !== 'module') {
       errors.push(`${label}: package.json must set "type": "module"`)
@@ -496,7 +499,7 @@ export function checkWorkspaceManifest({ dir, manifest }: WorkspaceManifest): st
     if (invariantExport && (invariantExport.types === undefined || invariantExport.default === undefined)) {
       errors.push(`${label}: package.json exports["./invariant"] must declare both types and default targets`)
     }
-    const expectedFiles = expectedDshPackageFiles(manifest)
+    const expectedFiles = expectedAstroOnePackageFiles(manifest)
     if (!sameStringList(manifest.files, expectedFiles)) {
       errors.push(`${label}: package.json files must be ${JSON.stringify(expectedFiles)}`)
     }
@@ -532,8 +535,8 @@ function checkHierarchyShape(): string[] {
 }
 
 function checkRepositoryVersion(): string[] {
-  // The root carries the dsh release family's version, so a prerelease such as
-  // 0.0.1-rc.1 is a valid state between `release:dsh` and its publication.
+  // The root carries the astro-one release family's version, so a prerelease such as
+  // 0.0.1-rc.1 is a valid state between `release:astro-one` and its publication.
   if (repositoryVersion && /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(repositoryVersion)) return []
   return ['package.json: version must be X.Y.Z with an optional prerelease segment']
 }
@@ -544,7 +547,7 @@ const dependencySections = ['dependencies', 'devDependencies', 'peerDependencies
 const runtimeDependencySections = ['dependencies', 'optionalDependencies', 'peerDependencies'] as const
 
 /**
- * Prevent an official runtime from requiring an experimental package. The dsh installation's `dependencies`
+ * Prevent an official runtime from requiring an experimental package. The astro-one installation's `dependencies`
  * may hold the bundles the launcher's `OPTIONAL_BUNDLES` names: shipped switched off, they are not a requirement
  * ([rationale](../.agents/notes/implemented/process/2026-09-15-shipped-optional-bundles.md)).
  * @param manifests - release, private experimental, and deployment-root manifests.
@@ -561,7 +564,7 @@ export function checkExperimentalDependencyIsolation(
   const errors: string[] = []
   for (const { dir, manifest } of manifests) {
     if (!standardReleaseMemberDirectory.test(dir) && dir !== 'python/sdk-runtime') continue
-    const offered = manifest.name === '@deepseek-ai/dsh' ? new Set(optionalBundles) : new Set<string>()
+    const offered = manifest.name === '@astro-one/cli' ? new Set(optionalBundles) : new Set<string>()
     for (const section of runtimeDependencySections) {
       for (const name of Object.keys(manifest[section] ?? {})) {
         if (!experimentalNames.has(name)) continue
@@ -574,7 +577,7 @@ export function checkExperimentalDependencyIsolation(
 }
 
 /**
- * Require exact DSH ranges, tilde vendor/native ranges, and the workspace protocol elsewhere.
+ * Require exact Astro One ranges, tilde vendor/native ranges, and the workspace protocol elsewhere.
  *
  * A hand-written range says nothing about the version the workspace actually
  * carries, and `pnpm pack` leaves it alone: `^0.0.1` published from version
@@ -593,7 +596,7 @@ export function checkWorkspaceProtocol(manifests: readonly WorkspaceManifest[]):
     for (const section of dependencySections) {
       for (const [name, range] of Object.entries(manifest[section] ?? {})) {
         if (!members.has(name)) continue
-        const expected = name === '@deepseek-ai/dsh' || name.startsWith('@deepseek-ai/dsh-')
+        const expected = ASTRO_ONE_PACKAGE.test(name)
           ? 'workspace:*'
           : vendors.has(name) ? 'workspace:~' : undefined
         if (expected !== undefined ? range === expected : range.startsWith('workspace:')) continue

@@ -7,13 +7,13 @@ import { coverageExemptHeavySuites } from './coverage-exempt.ts'
 import { pnpmInvocation } from './pnpm-invocation.ts'
 
 /** Environment variable selecting the number of instrumented coverage processes. */
-export const COVERAGE_PARTITIONS_ENV = 'DSH_COVERAGE_PARTITIONS'
+export const COVERAGE_PARTITIONS_ENV = 'ASTRO_ONE_COVERAGE_PARTITIONS'
 
 /** Internal marker that suppresses reports and thresholds inside a partition process. */
-export const COVERAGE_PARTITION_MODE_ENV = 'DSH_COVERAGE_PARTITION_MODE'
+export const COVERAGE_PARTITION_MODE_ENV = 'ASTRO_ONE_COVERAGE_PARTITION_MODE'
 
 /** Environment variable overriding instrumented test, polling, and hook timeouts. */
-export const COVERAGE_TEST_TIMEOUT_ENV = 'DSH_COVERAGE_TEST_TIMEOUT_MS'
+export const COVERAGE_TEST_TIMEOUT_ENV = 'ASTRO_ONE_COVERAGE_TEST_TIMEOUT_MS'
 
 /**
  * Reporter that canonicalizes a partition's coverage locations before its blob

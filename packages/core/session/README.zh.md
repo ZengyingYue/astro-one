@@ -3,13 +3,13 @@ description: "面向用户与维护者的事件溯源会话日志与内存存储
 kind: "package-reference"
 ---
 
-# @deepseek-ai/dsh-session
+# @astro-one/session
 
 [English](README.md) | 中文
 
 ## 概述
 
-`dsh-session` 在仅追加的会话日志中记录每个模型可见事实，并从该记录派生模型历史。消费方可以检查、回放、fork 和刷新会话，同时保留历史事件；压缩（compaction）会在活跃对话中隐藏被取代的条目，但不会删除它们。除非添加持久化后端，否则会话仅保留在内存中；持久性检查点会等待配置的后端。agent 需要可重建的会话记录时请选择本包；它本身不调用模型。
+`astro-one-session` 在仅追加的会话日志中记录每个模型可见事实，并从该记录派生模型历史。消费方可以检查、回放、fork 和刷新会话，同时保留历史事件；压缩（compaction）会在活跃对话中隐藏被取代的条目，但不会删除它们。除非添加持久化后端，否则会话仅保留在内存中；持久性检查点会等待配置的后端。agent 需要可重建的会话记录时请选择本包；它本身不调用模型。
 
 ## 目录
 
@@ -25,7 +25,7 @@ kind: "package-reference"
 <a id="use-this-package"></a>
 ## 使用本包
 
-在必须存在会话的任何地方挂载 `dsh-session`。它在内存中创建并持有事件溯源的 `Session` 实例；持久存储由订阅 `session/event` 流的持久化插件叠加。
+在必须存在会话的任何地方挂载 `astro-one-session`。它在内存中创建并持有事件溯源的 `Session` 实例；持久存储由订阅 `session/event` 流的持久化插件叠加。
 
 ### 创建与检查会话
 
@@ -65,7 +65,7 @@ session.deriveMessages()         // the derived model history
 
 ### 派生会话的 fork
 
-`ctx.sessions.fork(source, boundary?, childSessionId?)` 从实时源会话复制包含切点的精确事件前缀（默认：最后一个事件）。`dsh-session/fork` 的 `buildForkSeed` 在复制事件之后放置继承标记，仅为开放步骤补缺失的错误工具结果，并以 `forked` 原因关闭步骤和轮次。已关闭的步骤与轮次保持原样，包括历史缺失结果。标记和结束事件属于子会话；`inheritedEventCount` 只统计复制的前缀。
+`ctx.sessions.fork(source, boundary?, childSessionId?)` 从实时源会话复制包含切点的精确事件前缀（默认：最后一个事件）。`astro-one-session/fork` 的 `buildForkSeed` 在复制事件之后放置继承标记，仅为开放步骤补缺失的错误工具结果，并以 `forked` 原因关闭步骤和轮次。已关闭的步骤与轮次保持原样，包括历史缺失结果。标记和结束事件属于子会话；`inheritedEventCount` 只统计复制的前缀。
 
 逻辑 `SessionHeader.isSeeded` 字段报告是否存在 fork 历史，而不公开位置整数。`Session.inheritedEventCount` 保留经过校验的精确 `SessionLogOffset`；`ownEvents()` 返回从该切点开始的事件，`isOwnSeq(seq)` 只接受已存在且由子会话拥有的位置。底层带 seed 构造必须显式提供 `seed` 与 `inheritedEventCount`，因为构造 seed 可以在继承前缀之后包含子会话自有的设置事件。
 
@@ -99,7 +99,7 @@ session.deriveMessages()         // the derived model history
 | [`src/types.ts`](src/types.ts) | `SessionEventMap`、`SessionEvent`、`UserMessage`、`SessionHeader`、`TurnEndReasonMap` |
 | [`src/surface.ts`](src/surface.ts) | 有序 surface 投影、替换校验、`deriveEventMessage` |
 | [`src/request-header.ts`](src/request-header.ts) | `request/header` 折叠与重建 |
-| [`dsh-util-values`](../../util/values/README.zh.md) | 共享无损 JSON 校验与分离式快照 |
+| [`astro-one-util-values`](../../util/values/README.zh.md) | 共享无损 JSON 校验与分离式快照 |
 | [`src/repair.ts`](src/repair.ts) | 崩溃遗留日志的冷修复 |
 | [`src/invariant.ts`](src/invariant.ts) | 不变式配套：序号、轮次／步骤闭合、工具调用／结果配对 |
 

@@ -12,11 +12,11 @@ import type { ReactNode, RefObject } from 'react'
 import { useCallback, useEffect, useState } from 'react'
 import {
   Button, IconFolderCloseRegular, IconPlusOutlineRegular, Menu, Modal, type MenuEntry,
-} from '@deepseek-ai/dsh-client-ui-primitives'
+} from '@astro-one/client-ui-primitives'
 import type {
   WorkspaceId, WorkspaceSnapshot, WorkspaceView,
-} from '@deepseek-ai/dsh-api-workspace-controller/client'
-import type { SnapshotSelectorHook } from '@deepseek-ai/dsh-client-ui-slots'
+} from '@astro-one/api-workspace-controller/client'
+import type { SnapshotSelectorHook } from '@astro-one/client-ui-slots'
 import type { DirectoryFlowOwnerProps, WorkspacePickerProps } from './contract/slots.ts'
 import css from './WorkspacePicker.module.css'
 

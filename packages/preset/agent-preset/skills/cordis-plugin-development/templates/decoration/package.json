@@ -4,12 +4,12 @@
   "private": true,
   "type": "module",
   "exports": { ".": "./index.js", "./client": "./client.js" },
-  "dsh": {
+  "astroOne": {
     "bundle": { "patch": "./cordis.patch.yml" },
     "client": {
       "platform": "web",
       "immediately": true,
-      "inject": ["@deepseek-ai/dsh-client-ui-conversation"]
+      "inject": ["@astro-one/client-ui-conversation"]
     }
   }
 }

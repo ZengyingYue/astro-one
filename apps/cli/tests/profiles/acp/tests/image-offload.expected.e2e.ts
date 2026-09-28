@@ -6,7 +6,7 @@ import { expect, it } from 'vitest'
 import {
   runScenario,
   type InputScript,
-} from '@deepseek-ai/dsh-session-snapshot'
+} from '@astro-one/session-snapshot'
 
 const AGENT = {
   binScript: fileURLToPath(new URL('../../../../src/bin.ts', import.meta.url)),
@@ -54,7 +54,7 @@ it('pins Messages Files offload and inline fallback in assembled requests', asyn
             type: 'file',
             size_bytes: file.size,
             created_at: new Date(createdAt * 1_000).toISOString(),
-            filename: 'dsh-snapshot.png',
+            filename: 'astro-one-snapshot.png',
             mime_type: file.type,
           }))
           return
@@ -112,8 +112,8 @@ it('pins Messages Files offload and inline fallback in assembled requests', asyn
       fixtureFile: join(SNAPSHOTS_DIR, 'image-offload-request', 'session.jsonl'),
       workspaceDir: READ_IMAGE_WORKSPACE,
       env: {
-        DSH_SNAPSHOT_API_KEY: 'snapshot-key',
-        DSH_SNAPSHOT_BASE_URL: `http://127.0.0.1:${address.port}`,
+        ASTRO_ONE_SNAPSHOT_API_KEY: 'snapshot-key',
+        ASTRO_ONE_SNAPSHOT_BASE_URL: `http://127.0.0.1:${address.port}`,
       },
     })
     expect(result.stderr).toBe('')
@@ -124,7 +124,7 @@ it('pins Messages Files offload and inline fallback in assembled requests', asyn
     const accessText = (cwd: string): string => {
       const attachmentPath = join(
         cwd,
-        '.dsh',
+        '.astro-one',
         'attachments',
         'v1',
         'objects',
@@ -140,7 +140,7 @@ it('pins Messages Files offload and inline fallback in assembled requests', asyn
     const offloadedImage = `[image omitted to fit request image limits; ${attachmentId}.${normalizedAccess}]`
     const imageHandle = `Image ${attachmentId}; request preview 1x1px.${normalizedAccess}`
     const runtimeContext = 'Current runtime context. This snapshot supersedes earlier runtime-context snapshots.\n\n'
-      + 'Current DSH file policy: danger-full-access. The DSH file sandbox does not restrict file modifications by available operations.\n\n'
+      + 'Current Astro One file policy: danger-full-access. The Astro One file sandbox does not restrict file modifications by available operations.\n\n'
       + 'Approval prompts are disabled in this session: actions that require approval are rejected automatically — do not request sandbox escalation (do not set `sandbox_permissions`).'
     const messages = requests[0]?.messages as { content?: unknown }[] | undefined
     const offloaded = messages?.find(message => JSON.stringify(message.content).includes('[image omitted'))
@@ -182,8 +182,8 @@ it('pins Messages Files offload and inline fallback in assembled requests', asyn
       fixtureFile: join(SNAPSHOTS_DIR, 'image-offload-request', 'session.jsonl'),
       workspaceDir: READ_IMAGE_WORKSPACE,
       env: {
-        DSH_SNAPSHOT_API_KEY: 'snapshot-fallback-key',
-        DSH_SNAPSHOT_BASE_URL: `http://127.0.0.1:${address.port}`,
+        ASTRO_ONE_SNAPSHOT_API_KEY: 'snapshot-fallback-key',
+        ASTRO_ONE_SNAPSHOT_BASE_URL: `http://127.0.0.1:${address.port}`,
       },
     })
     expect(fallback.stderr).toBe('')

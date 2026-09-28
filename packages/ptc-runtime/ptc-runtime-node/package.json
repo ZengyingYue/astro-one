@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-ptc-runtime-node",
-  "description": "Sandboxed Node process implementation of the DeepSeek Harness PTC execution capability",
+  "name": "@astro-one/ptc-runtime-node",
+  "description": "Sandboxed Node process implementation of the Astro One PTC execution capability",
   "version": "0.1.7-rc.1",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/ptc-runtime/ptc-runtime-node"
   },
   "type": "module",
@@ -31,31 +31,31 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-ptc-runtime": "workspace:*",
-    "@deepseek-ai/dsh-session": "workspace:*",
-    "@deepseek-ai/dsh-timeout": "workspace:*",
-    "@deepseek-ai/dsh-fs": "workspace:*",
-    "@deepseek-ai/dsh-subprocess": "workspace:*",
-    "@deepseek-ai/dsh-sandbox": "workspace:*",
-    "@deepseek-ai/dsh-sandbox-policy": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/ptc-runtime": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/fs": "workspace:*",
+    "@astro-one/subprocess": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*"
   },
   "dependencies": {
-    "@deepseek-ai/dsh-util-values": "workspace:*",
-    "@deepseek-ai/schemastery": "workspace:~"
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/schemastery": "workspace:~"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-ptc-runtime": "workspace:*",
-    "@deepseek-ai/dsh-session": "workspace:*",
-    "@deepseek-ai/dsh-timeout": "workspace:*",
-    "@deepseek-ai/dsh-fs": "workspace:*",
-    "@deepseek-ai/dsh-subprocess": "workspace:*",
-    "@deepseek-ai/dsh-sandbox": "workspace:*",
-    "@deepseek-ai/dsh-sandbox-policy": "workspace:*",
-    "@deepseek-ai/dsh-fs-local": "workspace:*",
-    "@deepseek-ai/dsh-subprocess-local": "workspace:*",
-    "@deepseek-ai/dsh-session-projection": "workspace:*",
-    "@deepseek-ai/dsh-sandbox-local": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/ptc-runtime": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/fs": "workspace:*",
+    "@astro-one/subprocess": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/fs-local": "workspace:*",
+    "@astro-one/subprocess-local": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/sandbox-local": "workspace:*"
   }
 }

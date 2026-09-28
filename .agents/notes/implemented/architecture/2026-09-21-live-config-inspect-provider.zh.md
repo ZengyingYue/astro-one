@@ -10,7 +10,7 @@ Status: implemented
 
 ## Decision
 
-`@deepseek-ai/dsh-tool-cordis/host` 注册 `Config` 检查 provider，不再注册 `Builtin` provider。`Config.listConfigs` 读取运行中的 Loader 树：无输入时返回每个 entry 的 id、插件名和 Config 状态；给定 entry id 时，通过 app-boot 的投影器把该 entry 的原生 Schemastery Config 投影为一份自包含的 JSON Schema 文档。未激活的 entry 报告 `inactive` 且不带 schema。
+`@astro-one/tool-cordis/host` 注册 `Config` 检查 provider，不再注册 `Builtin` provider。`Config.listConfigs` 读取运行中的 Loader 树：无输入时返回每个 entry 的 id、插件名和 Config 状态；给定 entry id 时，通过 app-boot 的投影器把该 entry 的原生 Schemastery Config 投影为一份自包含的 JSON Schema 文档。未激活的 entry 报告 `inactive` 且不带 schema。
 
 provider 遍历 `ctx.loader.entries()` 和每个 fiber 的运行时 Config，而不是运行免启动的收集器，因为运行中的 profile 已持有收集器要安装且禁止重叠的模块解析拦截。app-boot 为此导出投影器、原生 schema 判定和共享的 `loaderExpression` 定义；CLI dump 保留其 profile 组合语义。
 
@@ -18,7 +18,7 @@ provider 遍历 `ctx.loader.entries()` 和每个 fiber 的运行时 Config，而
 
 **在 Host 内重跑 `generateConfigSchema`。** 它会在第二层拦截下重新导入每个插件模块，而收集器禁止在已安装拦截时重叠，并且它描述的是 profile 文件而非已挂载的树。
 
-**让出货的 skill 去运行 CLI dump。** 它需要 agent 的 shell 里有 profile 名和 PATH 上的 `dsh` 可执行文件，会话都不保证，而且输出无界。
+**让出货的 skill 去运行 CLI dump。** 它需要 agent 的 shell 里有 profile 名和 PATH 上的 `astro-one` 可执行文件，会话都不保证，而且输出无界。
 
 ## Consequences
 

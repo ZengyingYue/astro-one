@@ -1,21 +1,21 @@
-import { createUserMessage, type GenerateOptions } from '@deepseek-ai/dsh-llm'
+import { createUserMessage, type GenerateOptions } from '@astro-one/llm'
 import { describe, expect, it } from 'vitest'
-import { Context, symbols, type EffectMeta } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import AgentRegistry, { type Agent } from '@deepseek-ai/dsh-agent'
-import { SessionId } from '@deepseek-ai/dsh-session'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import { mountAgentLoopTestDependencies } from '@deepseek-ai/dsh-agent-loop-testkit'
-import InvariantRegistry from '@deepseek-ai/dsh-invariants'
-import * as SessionInvariant from '@deepseek-ai/dsh-session/invariant'
-import * as AgentInvariant from '@deepseek-ai/dsh-agent/invariant'
-import * as AgentLoopInvariant from '@deepseek-ai/dsh-agent-loop/invariant'
-import SubagentRuntime, { type SubagentStartRequest } from '@deepseek-ai/dsh-subagent'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
+import { Context, symbols, type EffectMeta } from '@astro-one/cordis'
+import Loader from '@astro-one/cordis-plugin-loader'
+import AgentRegistry, { type Agent } from '@astro-one/agent'
+import { SessionId } from '@astro-one/session'
+import AgentLoop from '@astro-one/agent-loop'
+import { mountAgentLoopTestDependencies } from '@astro-one/agent-loop-testkit'
+import InvariantRegistry from '@astro-one/invariants'
+import * as SessionInvariant from '@astro-one/session/invariant'
+import * as AgentInvariant from '@astro-one/agent/invariant'
+import * as AgentLoopInvariant from '@astro-one/agent-loop/invariant'
+import SubagentRuntime, { type SubagentStartRequest } from '@astro-one/subagent'
+import SessionProjectionRegistry from '@astro-one/session-projection'
 import { MockAdapter, maxTokensResponse, textResponse, toolCallResponse } from '../../../core/agent-loop/tests/mock-adapter.ts'
 import * as spawn from '../src/index.ts'
-import { STRUCTURED_OUTPUT_TOOL } from '@deepseek-ai/dsh-subagent-in-process-driver'
-import { defineContentToolFixture } from '@deepseek-ai/dsh-tools'
+import { STRUCTURED_OUTPUT_TOOL } from '@astro-one/subagent-in-process-driver'
+import { defineContentToolFixture } from '@astro-one/tools'
 
 type Script = ConstructorParameters<typeof MockAdapter>[0]
 
@@ -73,7 +73,7 @@ function systemPromptOf(request: GenerateOptions): string {
   return head.content.flatMap(block => block.type === 'text' ? [block.text] : []).join('')
 }
 
-describe('dsh-subagent-spawn-in-process', () => {
+describe('astro-one-subagent-spawn-in-process', () => {
   it('runs a fresh child to completion and returns its final assistant output', async () => {
     // One model call for the child: a plain text answer.
     const { ctx, parent } = await setup([textResponse('child answer')])

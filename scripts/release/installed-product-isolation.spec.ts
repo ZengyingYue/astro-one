@@ -7,10 +7,10 @@ import { afterEach, describe, expect, it } from 'vitest'
 import { verifyInstalledProductIsolation } from './installed-product-isolation.ts'
 
 const roots: string[] = []
-const experimental = '@deepseek-ai/dsh-experimental-example'
+const experimental = '@astro-one/experimental-example'
 
 function fixture(): string {
-  const root = mkdtempSync(join(tmpdir(), 'dsh-installed-isolation-'))
+  const root = mkdtempSync(join(tmpdir(), 'astro-one-installed-isolation-'))
   roots.push(root)
   return root
 }
@@ -29,11 +29,11 @@ afterEach(() => {
 describe('installed default-product isolation', () => {
   it('ignores development dependencies and unrelated installed experimental packages', () => {
     const root = fixture()
-    const entry = writePackage(root, '@deepseek-ai/dsh', {
+    const entry = writePackage(root, '@astro-one/cli', {
       dependencies: { core: '1.0.0' },
       devDependencies: { [experimental]: '1.0.0' },
     })
-    writePackage(root, 'core', { peerDependencies: { '@deepseek-ai/dsh': '1.0.0' } })
+    writePackage(root, 'core', { peerDependencies: { '@astro-one/cli': '1.0.0' } })
     writePackage(root, experimental, {})
 
     expect(verifyInstalledProductIsolation(entry)).toBe(2)
@@ -43,32 +43,32 @@ describe('installed default-product isolation', () => {
     'rejects a transitive experimental %s',
     (section) => {
       const root = fixture()
-      const entry = writePackage(root, '@deepseek-ai/dsh', { dependencies: { thirdParty: '1.0.0' } })
+      const entry = writePackage(root, '@astro-one/cli', { dependencies: { thirdParty: '1.0.0' } })
       writePackage(root, 'thirdParty', { [section]: { [experimental]: '1.0.0' } })
 
       expect(() => verifyInstalledProductIsolation(entry)).toThrow(
-        `@deepseek-ai/dsh -> thirdParty -> ${experimental}`,
+        `@astro-one/cli -> thirdParty -> ${experimental}`,
       )
     },
   )
 
   it('skips the entry package\'s optional bundles, which must be installed, and still rejects other experimental edges', () => {
     const root = fixture()
-    const entry = writePackage(root, '@deepseek-ai/dsh', { dependencies: { core: '1.0.0', [experimental]: '1.0.0' } })
+    const entry = writePackage(root, '@astro-one/cli', { dependencies: { core: '1.0.0', [experimental]: '1.0.0' } })
     writePackage(root, 'core', {})
-    writePackage(root, experimental, { dependencies: { '@deepseek-ai/dsh-experimental-inner': '1.0.0' } })
+    writePackage(root, experimental, { dependencies: { '@astro-one/experimental-inner': '1.0.0' } })
     expect(verifyInstalledProductIsolation(entry, [experimental])).toBe(2)
 
     writePackage(root, 'core', { dependencies: { [experimental]: '1.0.0' } })
     expect(() => verifyInstalledProductIsolation(entry, [experimental])).toThrow(`core -> ${experimental}`)
 
-    const missing = writePackage(root, '@deepseek-ai/dsh-missing', { dependencies: { absent: '1.0.0' } })
-    expect(() => verifyInstalledProductIsolation(missing, ['absent'])).toThrow('optional bundle is missing: @deepseek-ai/dsh-missing -> absent')
+    const missing = writePackage(root, '@astro-one/missing', { dependencies: { absent: '1.0.0' } })
+    expect(() => verifyInstalledProductIsolation(missing, ['absent'])).toThrow('optional bundle is missing: @astro-one/missing -> absent')
   })
 
   it('rejects experimental identities hidden behind an installed alias', () => {
     const root = fixture()
-    const entry = writePackage(root, '@deepseek-ai/dsh', { dependencies: { safeName: 'file:../prototype' } })
+    const entry = writePackage(root, '@astro-one/cli', { dependencies: { safeName: 'file:../prototype' } })
     writePackage(root, 'safeName', { name: experimental })
 
     expect(() => verifyInstalledProductIsolation(entry)).toThrow(experimental)
@@ -76,7 +76,7 @@ describe('installed default-product isolation', () => {
 
   it('rejects experimental npm aliases even when an optional package is omitted', () => {
     const root = fixture()
-    const entry = writePackage(root, '@deepseek-ai/dsh', {
+    const entry = writePackage(root, '@astro-one/cli', {
       optionalDependencies: { safeName: `npm:${experimental}@1.0.0` },
     })
 
@@ -85,7 +85,7 @@ describe('installed default-product isolation', () => {
 
   it('follows nested installations rather than an unrelated hoisted package', () => {
     const root = fixture()
-    const entry = writePackage(root, '@deepseek-ai/dsh', { dependencies: { core: '1.0.0' } })
+    const entry = writePackage(root, '@astro-one/cli', { dependencies: { core: '1.0.0' } })
     writePackage(root, 'core', {})
     writePackage(entry, 'core', { dependencies: { [experimental]: '1.0.0' } })
 
@@ -94,14 +94,14 @@ describe('installed default-product isolation', () => {
 
   it('permits missing optional packages and optional peers but rejects missing dependencies', () => {
     const root = fixture()
-    const entry = writePackage(root, '@deepseek-ai/dsh', {
+    const entry = writePackage(root, '@astro-one/cli', {
       dependencies: { optional: '1.0.0' },
       optionalDependencies: { optional: '1.0.0' },
       peerDependencies: { peer: '1.0.0' },
       peerDependenciesMeta: { peer: { optional: true } },
     })
     expect(verifyInstalledProductIsolation(entry)).toBe(1)
-    writePackage(root, '@deepseek-ai/dsh', { dependencies: { missing: '1.0.0' } })
+    writePackage(root, '@astro-one/cli', { dependencies: { missing: '1.0.0' } })
     expect(() => verifyInstalledProductIsolation(entry)).toThrow('dependency is missing')
   })
 })

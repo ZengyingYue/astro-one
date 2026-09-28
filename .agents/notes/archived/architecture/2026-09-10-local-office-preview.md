@@ -17,7 +17,7 @@ The [WASM provider](../../../../packages/document/document-render-libreoffice-wa
 
 A VCL callback requests a font family before substitution or missing Unicode characters during glyph fallback. Host code indexes installed font metadata and copies selected files into engine memory, including complete font collections. Exact installed families precede configured alternatives; original-first fontconfig aliases preserve that ordering inside LibreOffice. Optional initial families use the same resolver. The engine has no Host filesystem mount, and rendering neither installs nor downloads fonts. The [build recipe](../../../../native/libreoffice-wasm/README.md) records source and toolchain revisions, patches, and asset hashes. Engine bundles remain immutable during provider use; a different build uses a new directory.
 
-The [independent engine release](../process/2026-09-11-independent-libreoffice-package.md) owns precompiled npm packaging and keeps engine compilation outside ordinary DSH builds.
+The [independent engine release](../process/2026-09-11-independent-libreoffice-package.md) owns precompiled npm packaging and keeps engine compilation outside ordinary Astro One builds.
 
 The provider returns caller-owned PDF bytes and independent `succeeded`, `timedOut`, and `cancelled` facts. PDF bytes are copied out of engine memory before teardown. The API consumer authorizes the source through [Workspace Files](2026-09-09-workspace-file-read-authority.md), requires successful uninterrupted conversion, and encodes the PDF directly. Source path and freshness version survive the PDF transport. Workspace Files limits source reads; the provider's `maxOutputBytes` alone limits generated PDFs. No temporary PDF or file lease is needed.
 

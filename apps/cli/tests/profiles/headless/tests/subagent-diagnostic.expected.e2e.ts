@@ -6,17 +6,17 @@
 import { readFile, readdir, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@astro-one/cordis'
 import {
   fixtureContext,
   normalizeSessionSnapshot,
   normalizeSessionSnapshots,
   type NormalizeContext,
-} from '@deepseek-ai/dsh-session-snapshot'
-import { LOADER_SMOKE_TEST_TIMEOUT_MS, runLoaderSmoke } from '@deepseek-ai/dsh-loader-smoke'
-import { createMessage, createUserMessage } from '@deepseek-ai/dsh-llm'
-import { SessionSeq, SESSION_FORMAT_VERSION, SessionId, type SessionEvent, type SessionHeader } from '@deepseek-ai/dsh-session'
-import JsonlSessionPersistence from '@deepseek-ai/dsh-session-persistence-jsonl'
+} from '@astro-one/session-snapshot'
+import { LOADER_SMOKE_TEST_TIMEOUT_MS, runLoaderSmoke } from '@astro-one/loader-smoke'
+import { createMessage, createUserMessage } from '@astro-one/llm'
+import { SessionSeq, SESSION_FORMAT_VERSION, SessionId, type SessionEvent, type SessionHeader } from '@astro-one/session'
+import JsonlSessionPersistence from '@astro-one/session-persistence-jsonl'
 import { describe, expect, it } from 'vitest'
 
 const fixtureDir = fileURLToPath(new URL('./expected/subagent-diagnostic', import.meta.url))
@@ -27,7 +27,7 @@ const binScript = fileURLToPath(new URL('../../../../../../packages/test-support
 const tsconfigPath = fileURLToPath(new URL('../../../../../../tsconfig.json', import.meta.url))
 const parentId = SessionId('subagent-diagnostic-parent')
 const childId = SessionId('subagent-diagnostic-child')
-const refreshing = process.env.DSH_SNAPSHOT === 'refresh'
+const refreshing = process.env.ASTRO_ONE_SNAPSHOT === 'refresh'
 const task = 'Call list_agents once and report what it shows.'
 
 /** Compare current normalized Session records without historical migration. */
@@ -110,15 +110,15 @@ describe('parent-owned cold child catalog snapshot', () => {
     let cwd = ''
     const result = await runLoaderSmoke({
       label: 'subagent diagnostic headless stream-json snapshot',
-      tempDirPrefix: 'dsh-subagent-diag-',
+      tempDirPrefix: 'astro-one-subagent-diag-',
       binScript,
       libBinScript: binScript,
       configPath,
       binArgs: [configPath, task],
       tsconfigPath,
       env: {
-        DSH_SNAPSHOT_FILE: replayOverride,
-        DSH_SNAPSHOT_OVERRIDE: replayOverride,
+        ASTRO_ONE_SNAPSHOT_FILE: replayOverride,
+        ASTRO_ONE_SNAPSHOT_OVERRIDE: replayOverride,
       },
       prepare: async (runCwd) => {
         cwd = runCwd

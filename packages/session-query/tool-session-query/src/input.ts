@@ -1,21 +1,21 @@
 /**
  * Model argument schemas, normalization, and filter construction.
  *
- * @module @deepseek-ai/dsh-tool-session-query/input
+ * @module @astro-one/tool-session-query/input
  */
 
 import {
   type SessionEventType,
   type SessionId as SessionIdValue,
-} from '@deepseek-ai/dsh-session'
-import { brandString } from '@deepseek-ai/dsh-brand'
+} from '@astro-one/session'
+import { brandString } from '@astro-one/brand'
 import {
   SessionQueryError,
   type SessionAvailability,
   type SessionEventMetadataFilter,
   type SessionEventSurface,
   type SessionResultFilter,
-} from '@deepseek-ai/dsh-session-query'
+} from '@astro-one/session-query'
 
 interface SessionSearchArgs {
   query: string

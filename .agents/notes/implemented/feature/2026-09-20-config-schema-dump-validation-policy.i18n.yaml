@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-09-20-config-schema-dump-validation-policy.md
-2026-09-20-config-schema-dump-validation-policy.md: a0f15b6aad1f534f80db15185a9a70d5c22bc7c2
-2026-09-20-config-schema-dump-validation-policy.zh.md: d94f040057e0a221057a8410523e1e154a8ae166
+2026-09-20-config-schema-dump-validation-policy.md: 2fabb39a24f4b6b20991f21d3c1f0da36ea6ecc3
+2026-09-20-config-schema-dump-validation-policy.zh.md: ae2e59e5bc0ec0d40e4bbc9cd3330de86b71544b

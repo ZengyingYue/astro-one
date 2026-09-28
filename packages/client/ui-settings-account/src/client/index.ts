@@ -1,11 +1,11 @@
 /** Desktop account settings registration and reconnecting Remote subscription. */
-import type { Context } from '@deepseek-ai/cordis'
-import type {} from '@deepseek-ai/dsh-client-locale/client'
-import type {} from '@deepseek-ai/dsh-client-ui-settings/client'
-import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
-import type {} from '@deepseek-ai/dsh-client-ui-theme/client'
-import type {} from '@deepseek-ai/dsh-api-remotes/client'
-import type { AccountView, AccountDetails } from '@deepseek-ai/dsh-deepseek-account/types'
+import type { Context } from '@astro-one/cordis'
+import type {} from '@astro-one/client-locale/client'
+import type {} from '@astro-one/client-ui-settings/client'
+import type {} from '@astro-one/client-ui-renderer/client'
+import type {} from '@astro-one/client-ui-theme/client'
+import type {} from '@astro-one/api-remotes/client'
+import type { AccountView, AccountDetails } from '@astro-one/deepseek-account/types'
 import type { PlatformBridge } from './PlatformOverlay.tsx'
 import { Config, CONTACT_CONFIG_GLOBAL } from '../contact-config.ts'
 import { contactUrl } from './contact-url.ts'
@@ -18,14 +18,14 @@ export type { AccountMenuProps } from './AccountMenu.tsx'
 export type { AccountSnapshot } from './AccountSection.tsx'
 export type { AccountKey } from './locales.ts'
 
-declare module '@deepseek-ai/dsh-client-ui-slots' {
+declare module '@astro-one/client-ui-slots' {
   interface LocaleNamespaceMap { 'settings.account': AccountKey }
 }
 /** Services required by account settings. */
 export const inject = ['slots', 'locale', 'remote', 'remote.account', 'theme']
 /** Register account UI only in the Desktop renderer. @param ctx - client plugin context. */
 export function apply(ctx: Context): void {
-  if (!('dshDesktop' in globalThis)) return
+  if (!('astroOneDesktop' in globalThis)) return
   ctx.effect(() => ctx.locale.register('settings.account', { en, zh }), 'account: dictionaries')
   const t = ctx.locale.bind('settings.account')
   const page = globalThis as Partial<Record<typeof CONTACT_CONFIG_GLOBAL, unknown>>
@@ -77,13 +77,13 @@ export function apply(ctx: Context): void {
       void refresh()
     }
   })().catch(() => { if (!disposed) publish({ ...snapshot, failed: true }) })
-  const nativePlatform = (globalThis as typeof globalThis & { dshPlatform?: PlatformBridge }).dshPlatform
+  const nativePlatform = (globalThis as typeof globalThis & { astroOnePlatform?: PlatformBridge }).astroOnePlatform
   const operations: AccountSectionInjected = {
     ...nativePlatform === undefined ? {} : { platform: nativePlatform },
     refresh,
     contactUs() {
       const url = contactUrl(config, {
-        version: process.env.DSH_CLIENT_VERSION,
+        version: process.env.ASTRO_ONE_CLIENT_VERSION,
         locale: ctx.locale.getSnapshot().active === 'zh' ? 'zh-CN' : 'en',
         width: window.screen.width, height: window.screen.height, pixelRatio: window.devicePixelRatio,
       })
@@ -104,8 +104,8 @@ export function apply(ctx: Context): void {
     async start() {
       publish({ ...snapshot, loginVisible: true, loginFailed: false })
       const transport = (globalThis as typeof globalThis & {
-        __DSH_TRANSPORT__?: { streamBaseUrl?: string }
-      }).__DSH_TRANSPORT__
+        __ASTRO_ONE_TRANSPORT__?: { streamBaseUrl?: string }
+      }).__ASTRO_ONE_TRANSPORT__
       try {
         const result = await ctx.remote.account.startSignIn(ctx.locale.getSnapshot().active,
           transport?.streamBaseUrl !== undefined ? new URL(transport.streamBaseUrl).origin : window.location.origin,

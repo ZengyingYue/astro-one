@@ -332,11 +332,11 @@ describe('current persistence schema anchors', () => {
     const expected = [
       '### Persistence type fingerprints', '', 'Frozen reference.', '',
       '| Root | Kind | SHA-256 | Resolved type |', '|---|---|---|---|',
-      '| `SessionHeader` | header | `c900da63847d1d27572277817e727f3a471d08f0abaf0b61b4984c32ffc6a332` | [`Recursive`](#persistence-type-recursive) |', '',
+      '| `SessionHeader` | header | `e21b068d155afe122e6aef72fa0d93d4830030fd32680645c2ee50920b1f7b56` | [`Recursive`](#persistence-type-recursive) |', '',
       '### Resolved persistence types', '',
       'Each definition appears once. References preserve sharing and recursion; the digest beside a definition includes its complete reachable structure. Source names and locations identify its declarations but are excluded from its digest.', '',
       '<a id="persistence-type-recursive"></a>', '', '#### `Recursive`', '',
-      'SHA-256: `c900da63847d1d27572277817e727f3a471d08f0abaf0b61b4984c32ffc6a332`', '',
+      'SHA-256: `e21b068d155afe122e6aef72fa0d93d4830030fd32680645c2ee50920b1f7b56`', '',
       'Sources: `packages/core/example/src/types.ts`', '',
       '| Property | Presence | Type |', '|---|---|---|',
       '| `next` | optional | [`Recursive`](#persistence-type-recursive) |', '',

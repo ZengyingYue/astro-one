@@ -2,29 +2,29 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
-import { Context } from '@deepseek-ai/cordis'
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import { mountAgentLoopTestDependencies } from '@deepseek-ai/dsh-agent-loop-testkit'
-import SessionStore, { SessionLogOffset, SessionSeq, SESSION_FORMAT_VERSION, SessionId } from '@deepseek-ai/dsh-session'
-import type { SessionEvent, SessionHeader } from '@deepseek-ai/dsh-session'
-import JsonlSessionPersistence from '@deepseek-ai/dsh-session-persistence-jsonl'
+import { Context } from '@astro-one/cordis'
+import { createUserMessage } from '@astro-one/llm'
+import AgentLoop from '@astro-one/agent-loop'
+import type { Agent } from '@astro-one/agent'
+import { mountAgentLoopTestDependencies } from '@astro-one/agent-loop-testkit'
+import SessionStore, { SessionLogOffset, SessionSeq, SESSION_FORMAT_VERSION, SessionId } from '@astro-one/session'
+import type { SessionEvent, SessionHeader } from '@astro-one/session'
+import JsonlSessionPersistence from '@astro-one/session-persistence-jsonl'
 import { generationLogPath } from '../../../session/session-persistence-jsonl/src/format.ts'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import SessionProjectionCache from '@deepseek-ai/dsh-session-projection-cache'
-import Storage from '@deepseek-ai/dsh-storage'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import SessionProjectionCache from '@astro-one/session-projection-cache'
+import Storage from '@astro-one/storage'
 import {
   apply as storageJsonApply, Config as storageJsonConfig, inject as storageJsonInject, name as storageJsonName,
-} from '@deepseek-ai/dsh-storage-json'
+} from '@astro-one/storage-json'
 import {
   apply as storageDomainApply, Config as storageDomainConfig, inject as storageDomainInject, name as storageDomainName,
-} from '@deepseek-ai/dsh-storage-domain'
+} from '@astro-one/storage-domain'
 import SubagentRuntime, {
   SUBAGENT_DESCRIPTOR_VERSION,
-} from '@deepseek-ai/dsh-subagent'
-import * as SubagentSpawn from '@deepseek-ai/dsh-subagent-spawn-in-process'
-import * as SubagentFork from '@deepseek-ai/dsh-subagent-fork-in-process'
+} from '@astro-one/subagent'
+import * as SubagentSpawn from '@astro-one/subagent-spawn-in-process'
+import * as SubagentFork from '@astro-one/subagent-fork-in-process'
 import { MockAdapter, textResponse } from '../../../core/agent-loop/tests/mock-adapter.ts'
 import { TestSessionQuery } from './test-session-query.ts'
 import { seedStoredSession } from './persistence-helpers.ts'
@@ -50,7 +50,7 @@ async function setup(
 ) {
   const ctx = new Context()
   await mountAgentLoopTestDependencies(ctx)
-  const root = mkdtempSync(join(tmpdir(), 'dsh-subagent-list-'))
+  const root = mkdtempSync(join(tmpdir(), 'astro-one-subagent-list-'))
   roots.push(root)
   const persistence = await ctx.plugin(JsonlSessionPersistence, {
     root,
@@ -59,7 +59,7 @@ async function setup(
   persistenceDisposers.push(() => persistence.dispose())
   await ctx.plugin(AgentLoop, { agents: [] })
   if (options.projectionCache === true) {
-    const root = mkdtempSync(join(tmpdir(), 'dsh-subagent-projcache-'))
+    const root = mkdtempSync(join(tmpdir(), 'astro-one-subagent-projcache-'))
     projCacheRoots.push(root)
     // The cache opens its domain through the storage stack; the json backend
     // lands it under this tmp root.

@@ -11,7 +11,7 @@ const fixture = await vi.hoisted(async () => {
     destroyed = false
     readonly webContents = Object.assign(new EventEmitter(), {
       send: vi.fn(),
-      mainFrame: { url: 'dsh-app://shell/update-dialog.html' },
+      mainFrame: { url: 'astro-one-app://shell/update-dialog.html' },
       setWindowOpenHandler: vi.fn(),
       insertCSS: vi.fn(async () => 'blur'),
       removeInsertedCSS: vi.fn(async () => {}),
@@ -121,7 +121,7 @@ it('denies navigation away from the owned document', async () => {
   const event = { preventDefault: vi.fn() }
   window.webContents.emit('will-navigate', event, 'https://example.com')
   expect(event.preventDefault).toHaveBeenCalledOnce()
-  window.webContents.emit('will-navigate', event, 'dsh-app://shell/update-dialog.html')
+  window.webContents.emit('will-navigate', event, 'astro-one-app://shell/update-dialog.html')
   expect(event.preventDefault).toHaveBeenCalledOnce()
   dialogs!.cancel()
   await pending

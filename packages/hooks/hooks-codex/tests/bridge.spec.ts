@@ -1,18 +1,18 @@
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
+import { createUserMessage } from '@astro-one/llm'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { chmodSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import { SessionId, type SessionEvent } from '@deepseek-ai/dsh-session'
-import { defineContentToolFixture } from '@deepseek-ai/dsh-tools'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import { mountAgentLoopTestDependencies } from '@deepseek-ai/dsh-agent-loop-testkit'
-import { LocalBashExecutor } from '@deepseek-ai/dsh-bash-local'
-import LocalSubprocessRuntime from '@deepseek-ai/dsh-subprocess-local'
-import * as HooksCodex from '@deepseek-ai/dsh-hooks-codex'
+import { Context } from '@astro-one/cordis'
+import Loader from '@astro-one/cordis-plugin-loader'
+import { SessionId, type SessionEvent } from '@astro-one/session'
+import { defineContentToolFixture } from '@astro-one/tools'
+import type { Agent } from '@astro-one/agent'
+import AgentLoop from '@astro-one/agent-loop'
+import { mountAgentLoopTestDependencies } from '@astro-one/agent-loop-testkit'
+import { LocalBashExecutor } from '@astro-one/bash-local'
+import LocalSubprocessRuntime from '@astro-one/subprocess-local'
+import * as HooksCodex from '@astro-one/hooks-codex'
 import { MockAdapter, textResponse, toolCallResponse } from '../../../core/agent-loop/tests/mock-adapter.ts'
 
 /**
@@ -29,7 +29,7 @@ afterEach(async () => {
 })
 
 function configDir(): string {
-  const dir = mkdtempSync(join(tmpdir(), 'dsh-hooks-codex-'))
+  const dir = mkdtempSync(join(tmpdir(), 'astro-one-hooks-codex-'))
   dirs.push(dir)
   return dir
 }

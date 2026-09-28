@@ -11,26 +11,26 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { mkdtemp, readFile, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@astro-one/cordis'
 import { z } from 'zod'
-import AgentRegistry from '@deepseek-ai/dsh-agent'
-import { AttachmentStore } from '@deepseek-ai/dsh-attachment'
-import { agentPresetProjectionDefinition } from '@deepseek-ai/dsh-agent-preset-registry'
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
-import SessionStore, { SESSION_FORMAT_VERSION, SessionId, SessionLogOffset, SessionSeq } from '@deepseek-ai/dsh-session'
-import type { Session, SessionEvent, SessionHeader, UserMessage } from '@deepseek-ai/dsh-session'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import type { ProjectionDefinition } from '@deepseek-ai/dsh-session-projection'
-import SessionProjectionCache, { projectionCacheDomainSpec } from '@deepseek-ai/dsh-session-projection-cache'
-import { titleProjectionDefinition } from '@deepseek-ai/dsh-session-title'
-import Storage from '@deepseek-ai/dsh-storage'
-import * as StorageDomain from '@deepseek-ai/dsh-storage-domain'
-import * as StorageJson from '@deepseek-ai/dsh-storage-json'
-import type { SessionControlFrame, SessionFollowFrame } from '@deepseek-ai/dsh-api-session-controller/types'
+import AgentRegistry from '@astro-one/agent'
+import { AttachmentStore } from '@astro-one/attachment'
+import { agentPresetProjectionDefinition } from '@astro-one/agent-preset-registry'
+import { createUserMessage } from '@astro-one/llm'
+import SessionStore, { SESSION_FORMAT_VERSION, SessionId, SessionLogOffset, SessionSeq } from '@astro-one/session'
+import type { Session, SessionEvent, SessionHeader, UserMessage } from '@astro-one/session'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import type { ProjectionDefinition } from '@astro-one/session-projection'
+import SessionProjectionCache, { projectionCacheDomainSpec } from '@astro-one/session-projection-cache'
+import { titleProjectionDefinition } from '@astro-one/session-title'
+import Storage from '@astro-one/storage'
+import * as StorageDomain from '@astro-one/storage-domain'
+import * as StorageJson from '@astro-one/storage-json'
+import type { SessionControlFrame, SessionFollowFrame } from '@astro-one/api-session-controller/types'
 import {
   mountAgentLoopTestDependencies,
   mountAgentLoopTestHarness,
-} from '@deepseek-ai/dsh-agent-loop-testkit'
+} from '@astro-one/agent-loop-testkit'
 import { createSessionTestRemote, testSessionPersistence, type TestSessionRemote } from './test-remote.ts'
 
 const ownedContexts = new Set<Context>()
@@ -40,7 +40,7 @@ afterEach(async () => {
 })
 let nextHarnessSession = 1
 
-declare module '@deepseek-ai/dsh-session-projection/types' {
+declare module '@astro-one/session-projection/types' {
   interface SessionProjectionStateMap {
     'test/last-user': LastUserState
     'test/internal-count': number
@@ -571,7 +571,7 @@ describe('session.list projections column', () => {
   })
 
   it('keeps persisted host-only state out of a cold session.list response', async () => {
-    const root = await mkdtemp(join(tmpdir(), 'dsh-api-projcache-'))
+    const root = await mkdtemp(join(tmpdir(), 'astro-one-api-projcache-'))
     const ctx = new Context()
     try {
       await ctx.plugin(Storage)
@@ -624,7 +624,7 @@ describe('session.list projections column', () => {
   })
 
   it('lists a forked Session\'s cached title after a Host restart without opening its body', async () => {
-    const root = await mkdtemp(join(tmpdir(), 'dsh-api-projcache-'))
+    const root = await mkdtemp(join(tmpdir(), 'astro-one-api-projcache-'))
     const id = SessionId('session-cold-fork')
     /** One Host process over `root`: storage stack, registry with the title unit, and the cache. */
     const boot = async (): Promise<Context> => {

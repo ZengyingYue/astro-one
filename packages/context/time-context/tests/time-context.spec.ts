@@ -1,19 +1,19 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import { createUserMessage, ToolCallId, LlmAdapter } from '@deepseek-ai/dsh-llm'
-import type { GenerateOptions, StreamChunk } from '@deepseek-ai/dsh-llm'
-import type { ContextFormed } from '@deepseek-ai/dsh-llm'
-import { Session, SessionId, type SessionEvent } from '@deepseek-ai/dsh-session'
-import AgentRegistry, { agentEvents, type Agent } from '@deepseek-ai/dsh-agent'
-import { defineContentToolFixture } from '@deepseek-ai/dsh-tools'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import { unsupportedInbox, mountAgentLoopTestDependencies } from '@deepseek-ai/dsh-agent-loop-testkit'
-import * as timeContext from '@deepseek-ai/dsh-time-context'
-import type { Config } from '@deepseek-ai/dsh-time-context'
+import { Context } from '@astro-one/cordis'
+import Loader from '@astro-one/cordis-plugin-loader'
+import { createUserMessage, ToolCallId, LlmAdapter } from '@astro-one/llm'
+import type { GenerateOptions, StreamChunk } from '@astro-one/llm'
+import type { ContextFormed } from '@astro-one/llm'
+import { Session, SessionId, type SessionEvent } from '@astro-one/session'
+import AgentRegistry, { agentEvents, type Agent } from '@astro-one/agent'
+import { defineContentToolFixture } from '@astro-one/tools'
+import AgentLoop from '@astro-one/agent-loop'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import { unsupportedInbox, mountAgentLoopTestDependencies } from '@astro-one/agent-loop-testkit'
+import * as timeContext from '@astro-one/time-context'
+import type { Config } from '@astro-one/time-context'
 
-declare module '@deepseek-ai/dsh-llm' {
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'compaction-basic': { kind: 'compaction-basic' } & ContextFormed
     'time-context-test': { kind: 'time-context-test' } & ContextFormed

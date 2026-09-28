@@ -1,19 +1,19 @@
 /** Public plugin management records shared with clients. */
-import type { Branded } from '@deepseek-ai/dsh-brand'
-import type { PluginLocalizedMeta } from '@deepseek-ai/dsh-package-manifest'
-import type { PluginInventoryEntry } from '@deepseek-ai/dsh-host-plugin-inventory/types'
-export type { PluginEntryId } from '@deepseek-ai/dsh-host-plugin-inventory/types'
-import type { PluginEntryId } from '@deepseek-ai/dsh-host-plugin-inventory/types'
+import type { Branded } from '@astro-one/brand'
+import type { PluginLocalizedMeta } from '@astro-one/package-manifest'
+import type { PluginInventoryEntry } from '@astro-one/host-plugin-inventory/types'
+export type { PluginEntryId } from '@astro-one/host-plugin-inventory/types'
+import type { PluginEntryId } from '@astro-one/host-plugin-inventory/types'
 
 /** Reasons a profile control cannot modify its target. */
 export type ReadOnlyReason = 'management-required' | 'unaddressable'
 
-/** A package whose declared DSH peers reject the running DSH version, without an exemption for the exact pair. */
+/** A package whose declared Astro One peers reject the running Astro One version, without an exemption for the exact pair. */
 export interface IncompatiblePlugin {
   name: string
   version: string
   runtimeVersion: string
-  /** Only the DSH peer ranges the running version does not satisfy. */
+  /** Only the Astro One peer ranges the running version does not satisfy. */
   peers: Record<string, string>
 }
 
@@ -21,7 +21,7 @@ export interface IncompatiblePlugin {
 export interface ManagementError {
   code: ReadOnlyReason | 'unknown-plugin' | 'invalid-spec' | 'ambiguous-install' | 'not-bundle' | 'not-removable' | 'stop-profile' | 'bundle-in-use' | 'stale-approval' | 'incompatible-version' | 'operation-error'
   diagnostic?: string
-  /** Present with `incompatible-version`: the packages the running DSH version rejects. */
+  /** Present with `incompatible-version`: the packages the running Astro One version rejects. */
   incompatible?: IncompatiblePlugin[]
 }
 
@@ -53,7 +53,7 @@ export interface BundleInfo {
   description?: string
   /** Selected in the profile manifest; a load error means its layer was skipped. */
   enabled: boolean
-  /** Whether the profile's own dependencies hold the package; false for a bundle the dsh installation supplies. */
+  /** Whether the profile's own dependencies hold the package; false for a bundle the astro-one installation supplies. */
   installed: boolean
   /**
    * Whether the installation ships the bundle for the person to switch on: named by the launcher's `OPTIONAL_BUNDLES`,
@@ -103,7 +103,7 @@ export interface PackageResult {
   kind?: PluginInstallFailureKind
   /** The manager terminated the run after it printed nothing for its silence bound; `exitCode` still reports how it ended. */
   timedOut?: boolean
-  /** Present when a compatibility check refused the run: the packages the running DSH version rejects. */
+  /** Present when a compatibility check refused the run: the packages the running Astro One version rejects. */
   incompatible?: IncompatiblePlugin[]
 }
 
@@ -231,7 +231,7 @@ export interface PluginChange {
   readonly reason: 'plugin' | 'bundle' | 'install' | 'remove'
 }
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Events {
     /**
      * The profile's plugins, bundles, or composition changed: a manager

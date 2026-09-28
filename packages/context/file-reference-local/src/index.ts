@@ -1,17 +1,17 @@
 /**
  * Local-filesystem implementation of `ctx.fileReferences`.
  *
- * @module @deepseek-ai/dsh-file-reference-local
+ * @module @astro-one/file-reference-local
  */
 
-import { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import type { Agent } from '@deepseek-ai/dsh-agent'
+import { Context } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
+import type { Agent } from '@astro-one/agent'
 import FileReferenceService, {
   FILE_REFERENCE_PROMPT,
   type FileReferenceCandidate,
-} from '@deepseek-ai/dsh-file-reference'
-import type {} from '@deepseek-ai/dsh-tools'
+} from '@astro-one/file-reference'
+import type {} from '@astro-one/tools'
 import {
   DEFAULT_FILE_SEARCH_EXCLUDED_DIRECTORIES,
   DEFAULT_FILE_SEARCH_MAX_ENTRIES,
@@ -27,8 +27,8 @@ export {
   WorkspaceFileSearch,
 } from './search.ts'
 export type { FileSearchConfig } from './search.ts'
-export { FILE_REFERENCE_PROMPT } from '@deepseek-ai/dsh-file-reference'
-export { activeAtToken, formatFileMention } from '@deepseek-ai/dsh-file-reference/grammar'
+export { FILE_REFERENCE_PROMPT } from '@astro-one/file-reference'
+export { activeAtToken, formatFileMention } from '@astro-one/file-reference/grammar'
 
 /** Local file-reference discovery configuration. */
 export interface Config {

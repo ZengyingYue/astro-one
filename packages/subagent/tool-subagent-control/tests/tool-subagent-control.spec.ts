@@ -2,18 +2,18 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { Context } from '@deepseek-ai/cordis'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import { ToolCallId, createUserMessage } from '@deepseek-ai/dsh-llm'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import { mountAgentLoopTestDependencies } from '@deepseek-ai/dsh-agent-loop-testkit'
-import { SessionId } from '@deepseek-ai/dsh-session'
-import JsonlSessionPersistence from '@deepseek-ai/dsh-session-persistence-jsonl'
-import SubagentRuntime from '@deepseek-ai/dsh-subagent'
-import * as SubagentFork from '@deepseek-ai/dsh-subagent-fork-in-process'
-import * as SubagentSpawn from '@deepseek-ai/dsh-subagent-spawn-in-process'
-import type { GenerateOptions, StreamChunk } from '@deepseek-ai/dsh-llm'
-import { LlmAdapter } from '@deepseek-ai/dsh-llm'
+import { Context } from '@astro-one/cordis'
+import type { Agent } from '@astro-one/agent'
+import { ToolCallId, createUserMessage } from '@astro-one/llm'
+import AgentLoop from '@astro-one/agent-loop'
+import { mountAgentLoopTestDependencies } from '@astro-one/agent-loop-testkit'
+import { SessionId } from '@astro-one/session'
+import JsonlSessionPersistence from '@astro-one/session-persistence-jsonl'
+import SubagentRuntime from '@astro-one/subagent'
+import * as SubagentFork from '@astro-one/subagent-fork-in-process'
+import * as SubagentSpawn from '@astro-one/subagent-spawn-in-process'
+import type { GenerateOptions, StreamChunk } from '@astro-one/llm'
+import { LlmAdapter } from '@astro-one/llm'
 import { MockAdapter, textResponse } from '../../../core/agent-loop/tests/mock-adapter.ts'
 import * as tool from '../src/index.ts'
 import { parkParent } from './park-parent.ts'
@@ -61,7 +61,7 @@ async function setupWith(adapter: MockAdapter | GatedAdapter, park = true) {
   const ctx = new Context()
   contexts.add(ctx)
   await mountAgentLoopTestDependencies(ctx)
-  const root = mkdtempSync(join(tmpdir(), 'dsh-tool-subagent-control-'))
+  const root = mkdtempSync(join(tmpdir(), 'astro-one-tool-subagent-control-'))
   roots.push(root)
   await ctx.plugin(JsonlSessionPersistence, { root })
   await ctx.plugin(TestSessionQuery)
@@ -108,7 +108,7 @@ async function waitNoActivation(ctx: Context, childId: SessionId): Promise<void>
   }, { timeout: 5_000 })
 }
 
-describe('dsh-tool-subagent-control', () => {
+describe('astro-one-tool-subagent-control', () => {
   it('registers send_message once, globally, with the two required parameters', async () => {
     const { ctx } = await setup([])
     const schemas = ctx.tools.schemas().filter(schema => schema.name === 'send_message')
@@ -354,7 +354,7 @@ describe('dsh-tool-subagent-control', () => {
   })
 })
 
-describe('dsh-tool-subagent-control interrupt_agent', () => {
+describe('astro-one-tool-subagent-control interrupt_agent', () => {
   it('registers interrupt_agent with the single agent_id parameter and current-turn wording', async () => {
     const { ctx } = await setup([])
     const schemas = ctx.tools.schemas().filter(schema => schema.name === 'interrupt_agent')

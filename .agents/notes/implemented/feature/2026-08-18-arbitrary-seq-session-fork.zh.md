@@ -10,7 +10,7 @@ Status: implemented
 
 ## Decision
 
-`SessionStore.fork` 精确接受任意已有的整数事件 seq，并拥有源会话归属、子会话标识和切点校验。`dsh-session/fork` 唯一导出的 `buildForkSeed` 复制含切点的前缀，插入子会话的继承 `session/end-seed` 标记，再关闭开放尾部。Host 从同一份不可变观察中选点和构建。省略 `atSeq` 表示最近已完成轮次及其独立尾部，在下一轮次或排队用户输入前停止。显式 seq 永不移动。
+`SessionStore.fork` 精确接受任意已有的整数事件 seq，并拥有源会话归属、子会话标识和切点校验。`astro-one-session/fork` 唯一导出的 `buildForkSeed` 复制含切点的前缀，插入子会话的继承 `session/end-seed` 标记，再关闭开放尾部。Host 从同一份不可变观察中选点和构建。省略 `atSeq` 表示最近已完成轮次及其独立尾部，在下一轮次或排队用户输入前停止。显式 seq 永不移动。
 
 Fork 与崩溃恢复共用相同的工具配对算法。只有开放步骤会在 `step/end` 前补缺失的错误结果；开放轮次随后补 `turn/end`。已关闭的步骤和轮次保持原样，包括缺少结果的历史失败。内部 cause 选择 `forked` 或 `interrupted`、确定性的结果 ID 及模型可见文案。Fork 文案描述缺少的继承记录，并提醒父会话可能已在切点后执行调用。重试建议区分只读或幂等操作与有副作用的操作。
 

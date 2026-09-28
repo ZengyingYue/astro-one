@@ -9,7 +9,7 @@ import { packageMetaProblems } from './verify-package-meta.ts'
 let root: string
 let dir: string
 beforeEach(() => {
-  root = mkdtempSync(join(tmpdir(), 'dsh-meta-gate-'))
+  root = mkdtempSync(join(tmpdir(), 'astro-one-meta-gate-'))
   dir = join(root, 'packages', 'test', 'plugin')
   mkdirSync(dir, { recursive: true })
 })

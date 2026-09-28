@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from 'vitest'
-import { Context, FiberState, Service, ValidationError } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import z from '@deepseek-ai/schemastery'
-import InvariantRegistry from '@deepseek-ai/dsh-invariants'
-import type { InvariantInstaller } from '@deepseek-ai/dsh-invariants'
+import { Context, FiberState, Service, ValidationError } from '@astro-one/cordis'
+import Loader from '@astro-one/cordis-plugin-loader'
+import z from '@astro-one/schemastery'
+import InvariantRegistry from '@astro-one/invariants'
+import type { InvariantInstaller } from '@astro-one/invariants'
 import { packageInvariantOwners } from './package-invariants.ts'
 import {
   TEST_INVARIANT_READY_SERVICE,
@@ -13,7 +13,7 @@ import {
   usesManualInvariantTree,
 } from './test-invariants.ts'
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     testInvariantProbe: TestInvariantProbe
   }

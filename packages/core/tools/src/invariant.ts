@@ -1,11 +1,11 @@
-/** Package-owned tool-pipeline invariants. @module @deepseek-ai/dsh-tools/invariant */
+/** Package-owned tool-pipeline invariants. @module @astro-one/tools/invariant */
 
-import type { Context } from '@deepseek-ai/cordis'
-import type { Session, SessionEvent } from '@deepseek-ai/dsh-session'
-import type { InvariantFailure, InvariantInstaller } from '@deepseek-ai/dsh-invariants'
+import type { Context } from '@astro-one/cordis'
+import type { Session, SessionEvent } from '@astro-one/session'
+import type { InvariantFailure, InvariantInstaller } from '@astro-one/invariants'
 import type { ToolExecution, ToolExecutionResult } from './index.ts'
 
-const PACKAGE_NAME = '@deepseek-ai/dsh-tools'
+const PACKAGE_NAME = '@astro-one/tools'
 
 /** Cordis companion plugin name. */
 export const name = 'tools-invariant'

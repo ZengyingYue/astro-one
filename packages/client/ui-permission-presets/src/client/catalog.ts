@@ -1,9 +1,9 @@
 /** Identity-stable process permission catalog shared by both selection surfaces. */
 
-import type { Context as ClientContext } from '@deepseek-ai/cordis'
-import type { ConnectionHandle } from '@deepseek-ai/dsh-client-connection/client'
-import { createSnapshotStore, type SnapshotStore } from '@deepseek-ai/dsh-client-store'
-import type { PermissionCatalog } from '@deepseek-ai/dsh-permission-presets/client'
+import type { Context as ClientContext } from '@astro-one/cordis'
+import type { ConnectionHandle } from '@astro-one/client-connection/client'
+import { createSnapshotStore, type SnapshotStore } from '@astro-one/client-store'
+import type { PermissionCatalog } from '@astro-one/permission-presets/client'
 
 /** Observable complete catalog for the current Host generation. */
 export interface PermissionCatalogState {

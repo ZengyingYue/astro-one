@@ -1,6 +1,6 @@
-import type { ObservableSnapshot } from '@deepseek-ai/dsh-client-store'
-import type { InjectFace, PropsLocale, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
-import type {} from '@deepseek-ai/dsh-client-ui-conversation/client'
+import type { ObservableSnapshot } from '@astro-one/client-store'
+import type { InjectFace, PropsLocale, PropsRuntime } from '@astro-one/client-ui-slots'
+import type {} from '@astro-one/client-ui-conversation/client'
 import { NS, type OpenInAppKey } from './locales.ts'
 import { OpenTargetButton } from './OpenTargetButton.tsx'
 

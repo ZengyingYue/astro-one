@@ -18,7 +18,7 @@ ui-open-in-app 填满这两个 slot：一个「打开 ▾」分体按钮，主�
 
 **新建自带 Host 路由的 `ui-open-locally` 包**（PR #4120）是这对 slot、失败分类、分体按钮设计和 toast 规则的来源。放弃它是因为仓库已经有 open-in-app 功能，再来一个负责本地打开的包属于重复；共享的 Session Remote 负责通过当前文件系统验证 Host 路径。
 
-**在 `dsh-host-open-in-app` 里加 Host 路由**提供桌面信息和按路径打开，能让 Host 报出文件管理器的名字，并区分文件不存在和启动失败。但这会让 Host 半边为了 Session Remote 已经发布的两个调用而依赖 `sessionController`、`workspaceFiles` 与 `fs`，所以直接使用 Remote，定位标签保持通用说法。
+**在 `astro-one-host-open-in-app` 里加 Host 路由**提供桌面信息和按路径打开，能让 Host 报出文件管理器的名字，并区分文件不存在和启动失败。但这会让 Host 半边为了 Session Remote 已经发布的两个调用而依赖 `sessionController`、`workspaceFiles` 与 `fs`，所以直接使用 Remote，定位标签保持通用说法。
 
 **现在就把交付卡片迁到这些控件上**会重做 PR #4120 里最大的那部分，包括评审否决的跨插件运行时导入，以及它不得不迁移的交付录制场景。本期卡片保留自己的路由。
 

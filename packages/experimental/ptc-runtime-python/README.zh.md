@@ -1,9 +1,9 @@
 ---
-description: "CPython 子进程 PTC 运行时：为 Python 模型代码实现 dsh-ptc-runtime seam，及其使用的 fd-3 wire 协议。"
+description: "CPython 子进程 PTC 运行时：为 Python 模型代码实现 astro-one-ptc-runtime seam，及其使用的 fd-3 wire 协议。"
 kind: "package-reference"
 ---
 
-# @deepseek-ai/dsh-experimental-ptc-runtime-python
+# @astro-one/experimental-ptc-runtime-python
 
 [English](README.md) | 中文
 
@@ -25,7 +25,7 @@ kind: "package-reference"
 <a id="use-this-package"></a>
 ## 使用本包
 
-仅在显式组合中选择这个已发布的实验包。将 `PythonPtcRuntime` 与 `dsh-tools` 一起注册后，`run(resolve(request))` 会在全新的 CPython 3.10+ 子进程中执行每个程序；成功时以 `result.value` resolve，失败时以 `result.error` resolve（正交的 `PtcRunFailure.kind` 分类涵盖解析失败、抛出异常、无效完成值、输出溢出、预算到期、中止与执行基底终止）。仅有 seam 误用会 reject——binding 命名空间不合法，或在 dispose 后调用。配置在加载期拒绝：非 Unix 平台；不是可执行普通文件的显式 `pythonBin`，或无法在 `PATH` 上解析的裸名；非 CPython、低于 3.10 或探测失败的解释器；非正或非整数预算；低于截断标记下限（64）的 `maxLogBytes`；会被 `setTimeout` 截断的定时器值；超过有效 fd-3 帧上限的预算（宿主堆无法安全解析接近上限的帧时，该上限会降低）；或最坏峰值会突破 `RLIMIT_AS` 的 `addressSpaceMb`／输出预算组合。
+仅在显式组合中选择这个已发布的实验包。将 `PythonPtcRuntime` 与 `astro-one-tools` 一起注册后，`run(resolve(request))` 会在全新的 CPython 3.10+ 子进程中执行每个程序；成功时以 `result.value` resolve，失败时以 `result.error` resolve（正交的 `PtcRunFailure.kind` 分类涵盖解析失败、抛出异常、无效完成值、输出溢出、预算到期、中止与执行基底终止）。仅有 seam 误用会 reject——binding 命名空间不合法，或在 dispose 后调用。配置在加载期拒绝：非 Unix 平台；不是可执行普通文件的显式 `pythonBin`，或无法在 `PATH` 上解析的裸名；非 CPython、低于 3.10 或探测失败的解释器；非正或非整数预算；低于截断标记下限（64）的 `maxLogBytes`；会被 `setTimeout` 截断的定时器值；超过有效 fd-3 帧上限的预算（宿主堆无法安全解析接近上限的帧时，该上限会降低）；或最坏峰值会突破 `RLIMIT_AS` 的 `addressSpaceMb`／输出预算组合。
 
 `resolve(request)` 接受绝对 `cwd`，并使用提供方配置的 `maxWallMs` 截止时间（默认 600,000 ms）。显式 `timeoutMs` 覆盖与沙箱策略不受支持，会在执行前拒绝。本提供方不声明 `sandboxMode`，也不返回约束事实。
 
@@ -99,7 +99,7 @@ kind: "package-reference"
 <a id="model-experience"></a>
 ## 模型体验
 
-间接地，通过 `dsh-tools` 中的 PTC mode；当显式组合挂载本提供方时，它会把程序的完成值或失败渲染成保留的 `run_code` 结果，且已发布 profile 均不挂载这个实验包。
+间接地，通过 `astro-one-tools` 中的 PTC mode；当显式组合挂载本提供方时，它会把程序的完成值或失败渲染成保留的 `run_code` 结果，且已发布 profile 均不挂载这个实验包。
 
 #### KV Cache 效应
 
@@ -120,7 +120,7 @@ kind: "package-reference"
 - **工作流执行需要 Node**——使用本 Python 提供方的组合禁用 `workflow-ptc`、`tool-workflow` 和 `tool-ralph`；工作流提供方在加载时拒绝不兼容的运行时。
 - **跨通道日志交错由后端决定**——Python stdout、stderr 与 fd-3 日志帧彼此独立传输；每个通道保留自身顺序，但它们在 `result.logs` 中的总顺序可能不同。
 - **需要 CPython 3.10 或更高版本**——配置的可执行文件会在加载期完成解析与版本探测；不受支持的解释器会在 `ctx.ptcRuntime` 注册前失败。
-- **诊断与临时目录前缀省略包名中的 experimental 限定词**——标记 `[dsh-ptc-runtime-python] log capture truncated at <N> bytes` 与 `dsh-ptc-runtime-python-` 目录前缀独立于 npm 包名来标识本提供方。协议镜像检查 TypeScript 与 Python 的标记字节完全相同。
+- **诊断与临时目录前缀省略包名中的 experimental 限定词**——标记 `[astro-one-ptc-runtime-python] log capture truncated at <N> bytes` 与 `astro-one-ptc-runtime-python-` 目录前缀独立于 npm 包名来标识本提供方。协议镜像检查 TypeScript 与 Python 的标记字节完全相同。
 - **`run()` 是一次性的**——`logs` 只有在 `PtcRunResult` resolve 后才能获得；没有为运行中程序产生的输出提供流式日志或进度接口。
 - **运行之间不保留状态**——每次请求都在全新子进程中执行；持久 REPL 风格内核在某个后端带来自己的日志方案之前保持延期。
 - **原始长度超过有效帧解析上限的 fd-3 帧会让本次运行以 worker-exit 结算**——上限为 64 MiB，或当宿主的配置堆无法安全解析接近上限的帧时更低（`hostFrameParseCeiling`）；`maxLogBytes`/`maxValueBytes` 在加载期被限制到同一上限，因此诚实子进程的帧总能放得下；模型构造的超过该上限的 binding 实参（一个在 seam 层没有预算的值）会触发同一上限——这是该 OOM 防护的已接受残余。

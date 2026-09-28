@@ -2,11 +2,11 @@ import { cp, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import Include from '@deepseek-ai/cordis-plugin-include'
-import SkillRegistry from '@deepseek-ai/dsh-skill'
-import * as SkillOffice from '@deepseek-ai/dsh-skill-office'
+import { Context } from '@astro-one/cordis'
+import Loader from '@astro-one/cordis-plugin-loader'
+import Include from '@astro-one/cordis-plugin-include'
+import SkillRegistry from '@astro-one/skill'
+import * as SkillOffice from '@astro-one/skill-office'
 import { isSea } from 'node:sea'
 import { describe, expect, it, vi } from 'vitest'
 import { execa } from 'execa'
@@ -26,7 +26,7 @@ describe('bundled Office skills', () => {
       expect(catalog.map(skill => skill.name)).toEqual(names)
       for (const skill of catalog) {
         expect(skill.description.length).toBeLessThanOrEqual(500)
-        expect(skill).toMatchObject({ source: 'bundled', provider: 'dsh-office', invocation: { modelInvocable: true, userInvocable: true } })
+        expect(skill).toMatchObject({ source: 'bundled', provider: 'astro-one-office', invocation: { modelInvocable: true, userInvocable: true } })
         const loaded = await ctx.skills.get(skill.name)
         expect(loaded?.resourceBase).toEqual({ kind: 'directory', path: join(assets, skill.name) })
         const raw = await readFile(join(assets, skill.name, 'SKILL.md'), 'utf8')
@@ -42,15 +42,15 @@ describe('bundled Office skills', () => {
   })
 
   it('loads relocated resources through a real cordis.yml composition', async () => {
-    const root = await mkdtemp(join(tmpdir(), 'dsh-office-skills-'))
+    const root = await mkdtemp(join(tmpdir(), 'astro-one-office-skills-'))
     const ctx = new Context()
     try {
       const external = join(root, '中文 assets')
       await cp(assets, external, { recursive: true })
       const configPath = join(root, 'cordis.yml')
       await writeFile(configPath, [
-        "- name: '@deepseek-ai/dsh-skill'",
-        "- name: '@deepseek-ai/dsh-skill-office'",
+        "- name: '@astro-one/skill'",
+        "- name: '@astro-one/skill-office'",
         '  config:',
         `    assetRoot: ${JSON.stringify(external)}`,
         '',
@@ -59,8 +59,8 @@ describe('bundled Office skills', () => {
       await ctx.plugin(Loader)
       ctx.loader.builtins.include = Include
       const modules = new Map<string, unknown>([
-        ['@deepseek-ai/dsh-skill', SkillRegistry],
-        ['@deepseek-ai/dsh-skill-office', SkillOffice],
+        ['@astro-one/skill', SkillRegistry],
+        ['@astro-one/skill-office', SkillOffice],
       ])
       ctx.loader.internal = {
         version: 'v2',
@@ -86,7 +86,7 @@ describe('bundled Office skills', () => {
     ['description: "Quoted: description"', '\r\n', 'Quoted: description'],
     ['description: >-\n  Folded\n  description', '\n', 'Folded description'],
   ])('parses frontmatter %s and leaves body metadata-like lines intact', async (header, newline, description) => {
-    const root = await mkdtemp(join(tmpdir(), 'dsh-office-metadata-'))
+    const root = await mkdtemp(join(tmpdir(), 'astro-one-office-metadata-'))
     const ctx = new Context()
     try {
       await cp(assets, root, { recursive: true })
@@ -104,7 +104,7 @@ describe('bundled Office skills', () => {
   })
 
   it('rejects relative resource paths and incomplete asset trees before registration', async () => {
-    const root = await mkdtemp(join(tmpdir(), 'dsh-office-invalid-'))
+    const root = await mkdtemp(join(tmpdir(), 'astro-one-office-invalid-'))
     const ctx = new Context()
     try {
       await ctx.plugin(SkillRegistry)
@@ -130,7 +130,7 @@ describe('bundled Office skills', () => {
 })
 
 it('rejects unavailable CLI and Node paths before exposing an executable command', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'dsh-office-command-'))
+  const root = await mkdtemp(join(tmpdir(), 'astro-one-office-command-'))
   const ctx = new Context()
   try {
     await ctx.plugin(SkillRegistry)

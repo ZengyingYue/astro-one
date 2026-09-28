@@ -1,4 +1,4 @@
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@astro-one/cordis'
 import { describe, expect, it } from 'vitest'
 import AttachmentStore, {
   AttachmentError,

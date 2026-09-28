@@ -1,6 +1,6 @@
-import type { Context } from '@deepseek-ai/cordis'
-import type {} from '@deepseek-ai/dsh-system-prompt'
-import type {} from '@deepseek-ai/dsh-tools'
+import type { Context } from '@astro-one/cordis'
+import type {} from '@astro-one/system-prompt'
+import type {} from '@astro-one/tools'
 
 export const name = 'in-history-prompt-update'
 export const inject = ['systemPrompt']

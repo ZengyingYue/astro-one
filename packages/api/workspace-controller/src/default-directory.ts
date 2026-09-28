@@ -2,7 +2,7 @@
 
 import { homedir } from 'node:os'
 import { posix, win32 } from 'node:path'
-import { runNativeCommand, type NativeCommandRunner } from '@deepseek-ai/dsh-native-command'
+import { runNativeCommand, type NativeCommandRunner } from '@astro-one/native-command'
 
 /** Platform observations replaceable in directory-resolution tests. */
 interface DocumentsDirectoryInternals {
@@ -75,5 +75,5 @@ export async function defaultWorkspaceDirectory(
   }
   directory = validateDocumentsDirectory(directory, platform)
   signal.throwIfAborted()
-  return paths.join(directory, 'deepseek-harness', directoryName)
+  return paths.join(directory, 'astro-one', directoryName)
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import type { SessionEvent, SurfaceEvent, SurfaceEventType } from '@deepseek-ai/dsh-session'
+import type { SessionEvent, SurfaceEvent, SurfaceEventType } from '@astro-one/session'
 import {
   Session,
   SessionId,
@@ -11,8 +11,8 @@ import {
   isReplacementSurfaceEvent,
   isSurfaceEligibleType,
   isSurfaceEvent,
-} from '@deepseek-ai/dsh-session'
-import { SurfaceManager } from '@deepseek-ai/dsh-session/surface'
+} from '@astro-one/session'
+import { SurfaceManager } from '@astro-one/session/surface'
 import {
   MessageId,
   ToolCallId,
@@ -22,10 +22,10 @@ import {
   createToolResultMessage,
   createUserMessage,
   freezeMessage,
-} from '@deepseek-ai/dsh-llm'
-import type { ContextFormed, MessageSource } from '@deepseek-ai/dsh-llm'
+} from '@astro-one/llm'
+import type { ContextFormed, MessageSource } from '@astro-one/llm'
 
-declare module '@deepseek-ai/dsh-llm' {
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'test': { kind: 'test' } & ContextFormed
     'watcher': { kind: 'watcher' } & ContextFormed

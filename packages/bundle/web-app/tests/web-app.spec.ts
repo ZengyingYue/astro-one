@@ -12,12 +12,12 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { PassThrough } from 'node:stream'
 import { afterEach, beforeEach, describe, expect, it, onTestFinished, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import * as AppBoot from '@deepseek-ai/dsh-app-boot'
-import { createLaunchEnvironmentSnapshot, DSH_LAUNCH_ENVIRONMENT_KEY } from '@deepseek-ai/dsh-launch-environment'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import type { WebServer } from '@deepseek-ai/dsh-host-webserver'
+import { Context } from '@astro-one/cordis'
+import Loader from '@astro-one/cordis-plugin-loader'
+import * as AppBoot from '@astro-one/app-boot'
+import { createLaunchEnvironmentSnapshot, ASTRO_ONE_LAUNCH_ENVIRONMENT_KEY } from '@astro-one/launch-environment'
+import SystemPrompt from '@astro-one/system-prompt'
+import type { WebServer } from '@astro-one/host-webserver'
 import { apply, Config, internals } from '../src/index.ts'
 
 vi.mock('node:child_process', async importOriginal => ({
@@ -62,7 +62,7 @@ function launcher(): BrowserLauncher {
 
 /** Stage a dist fixture and point the bundle's resolver at it. */
 function stageDist(): string {
-  dist = mkdtempSync(join(tmpdir(), 'dsh-web-app-'))
+  dist = mkdtempSync(join(tmpdir(), 'astro-one-web-app-'))
   mkdirSync(join(dist, 'dist'))
   const index = join(dist, 'dist', 'index.html')
   writeFileSync(index, '<head></head><body>shell</body>')
@@ -116,7 +116,7 @@ describe('web-app runtime glue', () => {
     stageDist()
     const ctx = new Context()
     // Editor markers and a project .env SSH value do not establish a remote launch.
-    ctx.provide(DSH_LAUNCH_ENVIRONMENT_KEY, createLaunchEnvironmentSnapshot([
+    ctx.provide(ASTRO_ONE_LAUNCH_ENVIRONMENT_KEY, createLaunchEnvironmentSnapshot([
       { source: 'process', values: { VSCODE_IPC_HOOK_CLI: '/tmp/local-vscode-ipc' } },
       { source: 'project-env', path: '/work/.env', values: { SSH_CONNECTION: 'stale-project-value' } },
     ]))
@@ -145,23 +145,23 @@ describe('web-app runtime glue', () => {
       lanAddresses: ['192.168.1.5'],
       trustedHosts: ['192.168.1.5', 'lab.internal'],
     })
-    expect(log).toHaveBeenCalledWith('dsh web: http://127.0.0.1:4567/?token=test-token (LAN: http://192.168.1.5:4567/?token=test-token)')
-    expect(log).toHaveBeenCalledWith('dsh web: opening the default browser; pass --no-open to disable')
+    expect(log).toHaveBeenCalledWith('astro-one web: http://127.0.0.1:4567/?token=test-token (LAN: http://192.168.1.5:4567/?token=test-token)')
+    expect(log).toHaveBeenCalledWith('astro-one web: opening the default browser; pass --no-open to disable')
     expect(openBrowser).toHaveBeenCalledWith('http://127.0.0.1:4567/?token=test-token')
     expect(lifecycle).toEqual([
-      'dsh web: http://127.0.0.1:4567/?token=test-token (LAN: http://192.168.1.5:4567/?token=test-token)',
-      'dsh web: opening the default browser; pass --no-open to disable',
+      'astro-one web: http://127.0.0.1:4567/?token=test-token (LAN: http://192.168.1.5:4567/?token=test-token)',
+      'astro-one web: opening the default browser; pass --no-open to disable',
       'open:http://127.0.0.1:4567/?token=test-token',
     ])
     const assembly = await ctx.systemPrompt.assemble()
-    expect(assembly.sections.find(entry => entry.name === 'harness:source')?.text).toContain('DeepSeek Harness implementation checkout')
+    expect(assembly.sections.find(entry => entry.name === 'harness:source')?.text).toContain('Astro One implementation checkout')
     const section = assembly.sections.find(entry => entry.name === 'app:web-surface')
     expect(section?.text).toContain('http://127.0.0.1:4567')
     // The single update contract: the receiver is always on; no-refresh
     // reloads additionally need the rebuild watcher.
     expect(section?.text).toContain('pnpm run dev:web')
     const webRuntime = contributions.find(contribution => contribution.name === 'web-runtime')
-    expect(webRuntime?.resolve()).toEqual({ DSH_WEB_URL: 'http://127.0.0.1:4567' })
+    expect(webRuntime?.resolve()).toEqual({ ASTRO_ONE_WEB_URL: 'http://127.0.0.1:4567' })
     await ctx.fiber.dispose()
   })
 
@@ -214,7 +214,7 @@ describe('web-app runtime glue', () => {
     const log = vi.spyOn(console, 'log').mockImplementation(() => {})
     apply(ctx, new Config({ openBrowser: false, printUrl: true, surfaceContext: true, trustedHosts: [] }))
     await new Promise(resolve => setTimeout(resolve, 0))
-    expect(log).toHaveBeenCalledWith('dsh web: http://127.0.0.1:4567/?token=test-token')
+    expect(log).toHaveBeenCalledWith('astro-one web: http://127.0.0.1:4567/?token=test-token')
     await ctx.fiber.dispose()
   })
 
@@ -250,7 +250,7 @@ describe('web-app runtime glue', () => {
     internals.openBrowser = openBrowser
     apply(ctx, new Config({ openBrowser: true, printUrl: true, surfaceContext: false, trustedHosts: [] }))
     await new Promise(resolve => setTimeout(resolve, 0))
-    expect(log).toHaveBeenCalledWith('dsh web: http://127.0.0.1:4567/?token=test-token')
+    expect(log).toHaveBeenCalledWith('astro-one web: http://127.0.0.1:4567/?token=test-token')
     expect(openBrowser).not.toHaveBeenCalled()
     await ctx.fiber.dispose()
   })
@@ -274,7 +274,7 @@ describe('web-app runtime glue', () => {
     expect(openBrowser).not.toHaveBeenCalled()
     release!()
     await new Promise(resolve => setTimeout(resolve, 0))
-    expect(log).toHaveBeenCalledWith('dsh web: http://127.0.0.1:4567/?token=test-token')
+    expect(log).toHaveBeenCalledWith('astro-one web: http://127.0.0.1:4567/?token=test-token')
     expect(openBrowser).toHaveBeenCalledWith('http://127.0.0.1:4567/?token=test-token')
     await settled.fiber.dispose()
 
@@ -340,7 +340,7 @@ describe('web-app runtime glue', () => {
     await vi.waitFor(() => { expect(audit).toHaveBeenCalledOnce() })
     await Promise.allSettled(audit.mock.results.map(result => result.value as Promise<void>))
     if (announces) {
-      expect(log).toHaveBeenCalledWith('dsh web: http://127.0.0.1:4567/?token=test-token')
+      expect(log).toHaveBeenCalledWith('astro-one web: http://127.0.0.1:4567/?token=test-token')
       expect(openBrowser).toHaveBeenCalledWith('http://127.0.0.1:4567/?token=test-token')
     } else {
       expect(log).not.toHaveBeenCalled()
@@ -385,9 +385,9 @@ describe('web-app runtime glue', () => {
     const diagnostic = vi.spyOn(console, 'error').mockImplementation(() => {})
     apply(ctx, new Config({ openBrowser: true, printUrl: false, surfaceContext: false, trustedHosts: [] }))
     await new Promise(resolve => setTimeout(resolve, 0))
-    expect(log).toHaveBeenCalledWith('dsh web: opening the default browser; pass --no-open to disable')
+    expect(log).toHaveBeenCalledWith('astro-one web: opening the default browser; pass --no-open to disable')
     expect(diagnostic).toHaveBeenCalledWith(
-      `web-app: could not open the default browser because ${reason}; use the dsh web URL printed at startup`,
+      `web-app: could not open the default browser because ${reason}; use the astro-one web URL printed at startup`,
     )
     expect(ctx.get('webServer')).toBeDefined()
     await ctx.fiber.dispose()
@@ -395,7 +395,7 @@ describe('web-app runtime glue', () => {
 
   it('scrubs the helper environment and reports helper spawn or exit failures', async () => {
     vi.stubEnv('DEEPSEEK_API_KEY', 'must-not-reach-browser')
-    vi.stubEnv('DSH_HOME', '/must-not-reach-browser')
+    vi.stubEnv('ASTRO_ONE_HOME', '/must-not-reach-browser')
     const completed = launcher()
     vi.mocked(spawn).mockReturnValueOnce(completed)
     const completion = originalOpenBrowser('http://127.0.0.1:4567')
@@ -409,7 +409,7 @@ describe('web-app runtime glue', () => {
     expect(args?.[2]).toContain("if (process.platform === 'win32')")
     expect(args?.[2]).toContain('launcher.ref()')
     expect(options?.env).not.toHaveProperty('DEEPSEEK_API_KEY')
-    expect(options?.env).not.toHaveProperty('DSH_HOME')
+    expect(options?.env).not.toHaveProperty('ASTRO_ONE_HOME')
     expect(options?.env?.PATH).toBe(process.env.PATH)
     expect(options?.stdio).toEqual(['ignore', 'inherit', 'pipe'])
     completed.emit('close', 0)

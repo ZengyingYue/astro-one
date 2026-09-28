@@ -9,19 +9,19 @@
  */
 
 import { describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import AgentRegistry, { agentEvents } from '@deepseek-ai/dsh-agent'
-import type { Agent, AgentStatus } from '@deepseek-ai/dsh-agent'
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
-import type { ContextFormed } from '@deepseek-ai/dsh-llm'
-import SessionStore from '@deepseek-ai/dsh-session'
-import type { Session } from '@deepseek-ai/dsh-session'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import GoalService, { GoalId, applyGoalProjection, foldGoal, goalProjectionDefinition } from '@deepseek-ai/dsh-goal'
-import type { GoalProjection, GoalProjectionState, GoalRef } from '@deepseek-ai/dsh-goal'
-import { unsupportedInbox } from '@deepseek-ai/dsh-agent-loop-testkit'
+import { Context } from '@astro-one/cordis'
+import AgentRegistry, { agentEvents } from '@astro-one/agent'
+import type { Agent, AgentStatus } from '@astro-one/agent'
+import { createUserMessage } from '@astro-one/llm'
+import type { ContextFormed } from '@astro-one/llm'
+import SessionStore from '@astro-one/session'
+import type { Session } from '@astro-one/session'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import GoalService, { GoalId, applyGoalProjection, foldGoal, goalProjectionDefinition } from '@astro-one/goal'
+import type { GoalProjection, GoalProjectionState, GoalRef } from '@astro-one/goal'
+import { unsupportedInbox } from '@astro-one/agent-loop-testkit'
 
-declare module '@deepseek-ai/dsh-llm' {
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'test': { kind: 'test' } & ContextFormed
   }

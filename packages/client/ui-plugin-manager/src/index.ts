@@ -1,11 +1,11 @@
 /** Host registry-response probing for the plugin installation dialog. */
 
-import type { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import { MAX_TIMER_DELAY_MS } from '@deepseek-ai/dsh-timeout'
-import { Remote, TypertRemoteService } from '@deepseek-ai/dsh-typert-protocol'
+import type { Context } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
+import { MAX_TIMER_DELAY_MS } from '@astro-one/timeout'
+import { Remote, TypertRemoteService } from '@astro-one/typert-protocol'
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     pluginRegistryProbe: PluginRegistryProbe
   }

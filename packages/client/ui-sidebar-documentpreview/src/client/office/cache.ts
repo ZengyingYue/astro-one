@@ -1,7 +1,7 @@
 /** Session-authorized, version-checked Office bytes shared by concurrent preview reads. */
-import type { OfficeToPdfPriority, OfficeToPdfGeneration } from '@deepseek-ai/dsh-office-to-pdf/types'
-import type { RemoteResult } from '@deepseek-ai/dsh-api-remotes/client'
-import type { WorkspaceFileStat } from '@deepseek-ai/dsh-api-workspace-files/types'
+import type { OfficeToPdfPriority, OfficeToPdfGeneration } from '@astro-one/office-to-pdf/types'
+import type { RemoteResult } from '@astro-one/api-remotes/client'
+import type { WorkspaceFileStat } from '@astro-one/api-workspace-files/types'
 import type { DocumentFileBytes, SessionFile } from '../rpc.ts'
 
 /** PDF bytes and conversion metadata owned by Office preview. */

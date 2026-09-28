@@ -33,10 +33,10 @@ async function main(): Promise<void> {
   const arch = target.endsWith('arm64') ? 'arm64' : 'x64'
   const require = createRequire(import.meta.url)
   const { version } = require('electron/package.json') as { version: string }
-  const archive = await packagingStep(process.env.DSH_DESKTOP_PACKAGING_RUN_DIR, 'download:electron',
+  const archive = await packagingStep(process.env.ASTRO_ONE_DESKTOP_PACKAGING_RUN_DIR, 'download:electron',
     () => downloadArtifact({ version, platform, arch, artifactName: 'electron', cacheRoot: BUILD_PATHS.downloads }))
   rmSync(BUILD_PATHS.electron, { recursive: true, force: true })
-  await packagingStep(process.env.DSH_DESKTOP_PACKAGING_RUN_DIR, 'extract:electron', () => extractZip(archive, { dir: BUILD_PATHS.electron }))
+  await packagingStep(process.env.ASTRO_ONE_DESKTOP_PACKAGING_RUN_DIR, 'extract:electron', () => extractZip(archive, { dir: BUILD_PATHS.electron }))
   const executable = join(BUILD_PATHS.electron, platform === 'win32' ? 'electron.exe' : 'Electron.app/Contents/MacOS/Electron')
   const nodeVersion = execFileSync(executable, ['-p', 'process.versions.node'], {
     encoding: 'utf8', env: { ...process.env, ELECTRON_RUN_AS_NODE: '1' },
@@ -51,7 +51,7 @@ async function main(): Promise<void> {
     node: nodeVersion,
     pnpm: pnpmVersion,
   }, undefined, 2)}\n`)
-  await packagingStep(process.env.DSH_DESKTOP_PACKAGING_RUN_DIR, 'prepare:primary-runtime',
+  await packagingStep(process.env.ASTRO_ONE_DESKTOP_PACKAGING_RUN_DIR, 'prepare:primary-runtime',
     () => preparePrimaryRuntime({ deferSmoke: values['defer-primary-runtime-smoke'] }))
 }
 

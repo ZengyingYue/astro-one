@@ -3,19 +3,19 @@ import { afterEach, describe, expect, it } from 'vitest'
 import { mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { Context } from '@deepseek-ai/cordis'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import JsonlSessionPersistence from '@deepseek-ai/dsh-session-persistence-jsonl'
-import { mountAgentLoopTestDependencies } from '@deepseek-ai/dsh-agent-loop-testkit'
-import { SessionId } from '@deepseek-ai/dsh-session'
-import { defineContentToolFixture } from '@deepseek-ai/dsh-tools'
-import { bindScopeParent, createScope, scopeOf } from '@deepseek-ai/dsh-scope'
-import LocalFileReference from '@deepseek-ai/dsh-file-reference-local'
-import SubagentRuntime from '@deepseek-ai/dsh-subagent'
-import * as SubagentSpawn from '@deepseek-ai/dsh-subagent-spawn-in-process'
-import * as SubagentTool from '@deepseek-ai/dsh-tool-subagent'
-import Selection from '@deepseek-ai/dsh-tool-subagent/model-selection-settings'
-import * as Schedule from '@deepseek-ai/dsh-schedule'
+import { Context } from '@astro-one/cordis'
+import AgentLoop from '@astro-one/agent-loop'
+import JsonlSessionPersistence from '@astro-one/session-persistence-jsonl'
+import { mountAgentLoopTestDependencies } from '@astro-one/agent-loop-testkit'
+import { SessionId } from '@astro-one/session'
+import { defineContentToolFixture } from '@astro-one/tools'
+import { bindScopeParent, createScope, scopeOf } from '@astro-one/scope'
+import LocalFileReference from '@astro-one/file-reference-local'
+import SubagentRuntime from '@astro-one/subagent'
+import * as SubagentSpawn from '@astro-one/subagent-spawn-in-process'
+import * as SubagentTool from '@astro-one/tool-subagent'
+import Selection from '@astro-one/tool-subagent/model-selection-settings'
+import * as Schedule from '@astro-one/schedule'
 
 const roots: string[] = []
 const contexts: Context[] = []
@@ -80,7 +80,7 @@ describe('serial creation listener integrations', () => {
   })
 
   it('starts due Schedule work only after every creation listener finishes', async () => {
-    const root = await mkdtemp(join(tmpdir(), 'dsh-serial-schedule-'))
+    const root = await mkdtemp(join(tmpdir(), 'astro-one-serial-schedule-'))
     roots.push(root)
     const ctx = await core(root)
     await ctx.plugin(Schedule)

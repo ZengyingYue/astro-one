@@ -24,16 +24,16 @@
 
 /* The Windows caption row remains outside every conversation and file panel. */
 :global([data-windows-titlebar]) .frame {
-  --dsh-windows-content-radius: 16px;
+  --astro-one-windows-content-radius: 16px;
   box-sizing: border-box;
-  padding-top: var(--dsh-windows-titlebar-height);
+  padding-top: var(--astro-one-windows-titlebar-height);
   grid-template-rows: minmax(0, 1fr);
   background: var(--dsw-specific-sidebar-fill);
 }
 
 :global([data-windows-titlebar]) .centerCol {
   background: var(--dsw-alias-bg-base);
-  border-radius: var(--dsh-windows-content-radius) 0 0 0;
+  border-radius: var(--astro-one-windows-content-radius) 0 0 0;
   corner-shape: round;
 }
 
@@ -41,7 +41,7 @@
   content: '';
   position: absolute;
   inset: 0 0 auto;
-  height: var(--dsh-windows-titlebar-height);
+  height: var(--astro-one-windows-titlebar-height);
   background: var(--dsw-specific-sidebar-fill);
   -webkit-app-region: drag;
 }
@@ -51,7 +51,7 @@
 }
 
 :global([data-windows-titlebar]) .handle {
-  top: var(--dsh-windows-titlebar-height);
+  top: var(--astro-one-windows-titlebar-height);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -91,7 +91,7 @@
    viewport margin. Declared on the root element rather than the frame so
    overlays portalled to document.body inherit it too. */
 :global(html[data-platform='darwin']) {
-  --dsh-frame-top-clearance: 48px;
+  --astro-one-frame-top-clearance: 48px;
 }
 
 :global([data-platform='darwin']) .sidebarCol {
@@ -163,7 +163,7 @@
    (28 + 8 + 28), then 8px of air. Main panels whose content reaches the
    top-left corner pad by this. */
 :global([data-platform='darwin']) .frame[data-sidebar-collapsed] {
-  --dsh-frame-leading-clearance: 160px;
+  --astro-one-frame-leading-clearance: 160px;
 }
 
 /* Fullscreen hides the traffic lights (preload mirrors the window state onto
@@ -172,7 +172,7 @@
    expanded sidebar strip's inline padding (ui-sidebar .topStrip), so
    collapsing never shifts the toggle. */
 :global([data-platform='darwin'][data-fullscreen]) .frame[data-sidebar-collapsed] {
-  --dsh-frame-leading-clearance: 84px;
+  --astro-one-frame-leading-clearance: 84px;
 }
 
 :global([data-platform='darwin'][data-fullscreen]) .leadingSeat {

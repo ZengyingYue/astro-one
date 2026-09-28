@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-09-12-mcp-sdk-protocol-negotiation.md
-2026-09-12-mcp-sdk-protocol-negotiation.md: 74f027cead92688b0af71c1028d536b26f2a8059
-2026-09-12-mcp-sdk-protocol-negotiation.zh.md: bc8a9a41b8ccd8cbc844b4b9de8b39a646d1dcbf
+2026-09-12-mcp-sdk-protocol-negotiation.md: 7c0f193d281babaa25cbbf8b8834414228e322dd
+2026-09-12-mcp-sdk-protocol-negotiation.zh.md: 0dc398e3b08469aa8da2499b4be9f0af696bd6e4

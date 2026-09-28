@@ -1,15 +1,15 @@
 import { describe, expect, expectTypeOf, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import { AssistantStreamAccumulator, createAssistantMessage, createUserMessage, createSystemMessage, ToolCallId, createMessage } from '@deepseek-ai/dsh-llm'
-import type { ContentBlock, Message, TokenUsage } from '@deepseek-ai/dsh-llm'
-import type { ContextFormed } from '@deepseek-ai/dsh-llm'
-import SessionStore, { Session, SessionId, SessionSeq, canonicalHeader } from '@deepseek-ai/dsh-session'
-import type { EpochHeader, SessionEvent, SessionSeq as SessionSeqType } from '@deepseek-ai/dsh-session'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import TokenMeter from '@deepseek-ai/dsh-token-meter'
-import type { TokenMeasurement, TokenMeterConfig } from '@deepseek-ai/dsh-token-meter'
+import { Context } from '@astro-one/cordis'
+import { AssistantStreamAccumulator, createAssistantMessage, createUserMessage, createSystemMessage, ToolCallId, createMessage } from '@astro-one/llm'
+import type { ContentBlock, Message, TokenUsage } from '@astro-one/llm'
+import type { ContextFormed } from '@astro-one/llm'
+import SessionStore, { Session, SessionId, SessionSeq, canonicalHeader } from '@astro-one/session'
+import type { EpochHeader, SessionEvent, SessionSeq as SessionSeqType } from '@astro-one/session'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import TokenMeter from '@astro-one/token-meter'
+import type { TokenMeasurement, TokenMeterConfig } from '@astro-one/token-meter'
 
-declare module '@deepseek-ai/dsh-llm' {
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'test': { kind: 'test' } & ContextFormed
   }

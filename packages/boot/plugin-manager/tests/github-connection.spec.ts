@@ -18,7 +18,7 @@ vi.mock('execa', async (original) => {
 })
 
 async function fixture() {
-  const dir = await mkdtemp(join(tmpdir(), 'dsh-github-check-'))
+  const dir = await mkdtemp(join(tmpdir(), 'astro-one-github-check-'))
   onTestFinished(() => rm(dir, { recursive: true, force: true }))
   const controller = new AbortController()
   const tasks: Promise<unknown>[] = []

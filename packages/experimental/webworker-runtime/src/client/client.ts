@@ -5,7 +5,7 @@
  * (boot payload, bundle transport, ApiClient, Typert RPC) speaks plain HTTP.
  */
 
-import type { IndexInjection } from '@deepseek-ai/dsh-host-webserver'
+import type { IndexInjection } from '@astro-one/host-webserver'
 import type {
   TunnelAbortFrame as AbortFrame,
   TunnelOutboundFrame as ResponseFrame,
@@ -56,12 +56,12 @@ interface TunnelStreamFailureMarker {
 
 /** Error carrying stream semantics across independently bundled Client code. */
 class TunnelLogicalStreamError extends Error {
-  readonly dshRemoteStreamFailure: TunnelStreamFailureMarker
+  readonly astroOneRemoteStreamFailure: TunnelStreamFailureMarker
 
   constructor(failure: TunnelStreamErrorFrame['failure'], options?: ErrorOptions) {
     super(failure.message, options)
     this.name = 'TunnelLogicalStreamError'
-    this.dshRemoteStreamFailure = failure.kind === 'remote'
+    this.astroOneRemoteStreamFailure = failure.kind === 'remote'
       ? { kind: 'remote', code: failure.code, details: failure.details }
       : { kind: 'carrier' }
   }

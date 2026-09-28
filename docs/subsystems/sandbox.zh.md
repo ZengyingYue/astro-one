@@ -2,7 +2,7 @@
 
 [English](sandbox.md) | 中文
 
-[dsh-sandbox](../../packages/sandbox/sandbox) 的进程沙箱 seam 将与配套子进程提供方共享执行环境的子进程 argv 包装在文件效果策略中，而不将消费方耦合到特定平台运行器。[dsh-sandbox-local](../../packages/sandbox/sandbox-local) 提供 Linux bwrap/Landlock、macOS Seatbelt 与 Windows ACL 受限令牌后端；[dsh-bash-sandbox](../../packages/shell/bash-sandbox) 和 [dsh-pwsh-sandbox](../../packages/shell/pwsh-sandbox) 是其消费方。[dsh-sandbox-ssh](../../packages/ssh/sandbox-ssh/README.zh.md) 通过与 SSH 文件系统及子进程提供方配套的远端后端执行同一策略。
+[astro-one-sandbox](../../packages/sandbox/sandbox) 的进程沙箱 seam 将与配套子进程提供方共享执行环境的子进程 argv 包装在文件效果策略中，而不将消费方耦合到特定平台运行器。[astro-one-sandbox-local](../../packages/sandbox/sandbox-local) 提供 Linux bwrap/Landlock、macOS Seatbelt 与 Windows ACL 受限令牌后端；[astro-one-bash-sandbox](../../packages/shell/bash-sandbox) 和 [astro-one-pwsh-sandbox](../../packages/shell/pwsh-sandbox) 是其消费方。[astro-one-sandbox-ssh](../../packages/ssh/sandbox-ssh/README.zh.md) 通过与 SSH 文件系统及子进程提供方配套的远端后端执行同一策略。
 
 源码：[`packages/sandbox/sandbox/src/index.ts`](../../packages/sandbox/sandbox/src/index.ts)
 
@@ -54,7 +54,7 @@ interface SandboxExecutionPolicy {
   /** Absolute root directory `workspace-write` may write under. */
   workspaceRoot: string
   /**
-   * Opaque identity of the calling session (the branded `dsh-session`
+   * Opaque identity of the calling session (the branded `astro-one-session`
    * SessionId). Backends key per-session state off it (e.g. windows-acl gives
    * each live session/workspace pair a random private temp directory and SID,
    * while the workspace SID and standing grant remain per-workspace); absent

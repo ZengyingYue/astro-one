@@ -1,18 +1,18 @@
 /**
- * Commander adapter for the `dsh` command line.
+ * Commander adapter for the `astro-one` command line.
  *
  * The launcher parses only what it owns — which profile to boot, which extra
  * patch overlays to apply, and the config dumps — and hands **everything after
  * its own flags** to the booted tree verbatim, where injected app plugins parse
  * their own flag families and print their own `--help` (see
- * `@deepseek-ai/dsh-cmdline`). Launcher flags therefore come first: the first
+ * `@astro-one/cmdline`). Launcher flags therefore come first: the first
  * token this parser does not recognize starts the inner arguments, so
- * `dsh --profile tui --resume abc` boots the tui profile with `--resume abc`,
- * and `dsh --profile web -h` prints the web app's help, not this one's.
+ * `astro-one --profile tui --resume abc` boots the tui profile with `--resume abc`,
+ * and `astro-one --profile web -h` prints the web app's help, not this one's.
  *
- * `dsh <name>` abbreviates `dsh --profile <name>`; `plugin` manages a profile's
+ * `astro-one <name>` abbreviates `astro-one --profile <name>`; `plugin` manages a profile's
  * plugin dependencies by forwarding to pnpm.
- * @module @deepseek-ai/dsh/args
+ * @module @astro-one/cli/args
  */
 
 import { Command, CommanderError, InvalidArgumentError } from 'commander'
@@ -57,8 +57,8 @@ interface PluginInvocation {
   args: string[]
 }
 
-/** The resolved `dsh` invocation. Help, version, and errors exit inside {@link parseDshArgs}. */
-export type DshInvocation = ProfileInvocation | DumpConfigInvocation | DumpConfigSchemaInvocation | PluginInvocation
+/** The resolved `astro-one` invocation. Help, version, and errors exit inside {@link parseAstroOneArgs}. */
+export type AstroOneInvocation = ProfileInvocation | DumpConfigInvocation | DumpConfigSchemaInvocation | PluginInvocation
 
 /** Launcher flags for profile boot and configuration dumps. */
 interface BootOptions {
@@ -89,14 +89,14 @@ function rejectElectronProfile(program: Command, profile: string): void {
 /** The launcher's own help text; each app prints its own. */
 const HELP_EXAMPLES = `
 Examples:
-  dsh web                                   boot the web profile (same as: dsh --profile web)
-  dsh rescue --from-default-profile web
+  astro-one web                                   boot the web profile (same as: astro-one --profile web)
+  astro-one rescue --from-default-profile web
                                             create rescue from the shipped web template, then boot it
-  dsh headless "run the tests"              answer one task, print the result, and exit
-  dsh tui --patch ./extra.yml               boot a custom profile with one extra overlay
-  dsh tui --resume <session>                arguments after the launcher flags reach the app
-  dsh web --help                            the web app's own flags and help
-  dsh plugin --profile tui add <package>    install a plugin into the tui profile
+  astro-one headless "run the tests"              answer one task, print the result, and exit
+  astro-one tui --patch ./extra.yml               boot a custom profile with one extra overlay
+  astro-one tui --resume <session>                arguments after the launcher flags reach the app
+  astro-one web --help                            the web app's own flags and help
+  astro-one plugin --profile tui add <package>    install a plugin into the tui profile
 `
 
 /**
@@ -108,7 +108,7 @@ Examples:
  * @param args - the leftover arguments, in argv order.
  * @returns the resolved invocation.
  */
-function resolveBoot(program: Command, profile: string, options: BootOptions, args: string[]): DshInvocation {
+function resolveBoot(program: Command, profile: string, options: BootOptions, args: string[]): AstroOneInvocation {
   const patches = options.patch ?? []
   if (patches.includes('')) program.error('error: --patch needs a path')
   if (options.fromDefaultProfile === '') program.error('error: --from-default-profile needs a name')
@@ -142,29 +142,29 @@ function resolveBoot(program: Command, profile: string, options: BootOptions, ar
  * @param version - version string printed by `--version`.
  * @returns the resolved invocation.
  */
-export function parseDshArgs(argv: readonly string[], version: string): DshInvocation {
+export function parseAstroOneArgs(argv: readonly string[], version: string): AstroOneInvocation {
   const first = argv[0]
-  let resolved: DshInvocation | undefined
+  let resolved: AstroOneInvocation | undefined
   // Annotated, not inferred: the actions below call back into `program`, and an
   // inferred type would be circular through its own chain.
   const program: Command = new Command()
   program
-    .name('dsh')
+    .name('astro-one')
     .version(version, '-V, --version', 'output the version number')
-    .usage('[--profile] <name> [options] [app-args...]\n       dsh plugin --profile <name> <pnpm-args...>')
-    .description('dsh: boot a DeepSeek Harness profile — an ordered stack of plugin-bundle patch layers under your own overrides.')
+    .usage('[--profile] <name> [options] [app-args...]\n       astro-one plugin --profile <name> <pnpm-args...>')
+    .description('astro-one: boot a Astro One profile — an ordered stack of plugin-bundle patch layers under your own overrides.')
     .addHelpText('after', HELP_EXAMPLES)
     .exitOverride()
     // The launcher's flags come first and end at the first token it does not
     // know; everything from there on belongs to the booted app, including
-    // its -h. `dsh -h` with no profile still prints this help, below.
+    // its -h. `astro-one -h` with no profile still prints this help, below.
     .helpOption(false)
     .helpCommand(false)
     .allowUnknownOption()
     .passThroughOptions()
     .enablePositionalOptions()
-    .argument('[args...]', 'arguments for the booted profile\'s app (see: dsh --profile <name> --help)')
-    .option('--profile <name>', 'the profile under $DSH_HOME/profiles to boot', selectProfile)
+    .argument('[args...]', 'arguments for the booted profile\'s app (see: astro-one --profile <name> --help)')
+    .option('--profile <name>', 'the profile under $ASTRO_ONE_HOME/profiles to boot', selectProfile)
     .option('--from-default-profile <name>', 'initialize a new custom profile from a shipped profile template')
     .option('--patch <path>', 'extra patch-list overlay applied after the profile layer (repeatable)', collect)
     .option('--dump-config', 'print the composed profile tree and exit')
@@ -172,7 +172,7 @@ export function parseDshArgs(argv: readonly string[], version: string): DshInvoc
     .option('--dump-default-config', 'print the profile tree without its user layer or --patch overlays and exit')
     .action((args: string[], options: BootOptions & { profile?: string }) => {
       // With the app owning -h, the launcher's own help is what a bare
-      // `dsh -h` (no profile to hand it to) must print.
+      // `astro-one -h` (no profile to hand it to) must print.
       if (options.profile === undefined) {
         if (args.some(argument => argument === '-h' || argument === '--help')) program.help()
         program.error('error: --profile <name> is required')
@@ -206,6 +206,6 @@ export function parseDshArgs(argv: readonly string[], version: string): DshInvoc
     return process.exit(error instanceof CommanderError ? error.exitCode : 1)
   }
   /* v8 ignore next -- an action resolves or Commander throws */
-  if (resolved === undefined) throw new Error('dsh: no invocation resolved')
+  if (resolved === undefined) throw new Error('astro-one: no invocation resolved')
   return resolved
 }

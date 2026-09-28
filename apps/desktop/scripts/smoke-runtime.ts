@@ -13,7 +13,7 @@ import type { DesktopRuntimeDescriptor } from '../src/runtime-tree.ts'
 
 /**
  * Check Host startup, its matching frontend, external plugins and real Office-to-PDF conversion.
- * @param root - Materialized dsh resources.
+ * @param root - Materialized astro-one resources.
  * @param node - Prepared target Electron executable.
  * @param runtime - Verified resource descriptor.
  * @param environment - Credential-scrubbed build environment and private native cache.
@@ -23,9 +23,9 @@ import type { DesktopRuntimeDescriptor } from '../src/runtime-tree.ts'
 export async function smokeDesktopRuntime(
   root: string, node: string, runtime: DesktopRuntimeDescriptor, environment: NodeJS.ProcessEnv, resourcesRuntime: string,
 ): Promise<void> {
-  const home = mkdtempSync(join(tmpdir(), 'dsh-desktop-smoke-'))
+  const home = mkdtempSync(join(tmpdir(), 'astro-one-desktop-smoke-'))
   const profile = join(home, 'profiles', 'desktop')
-  const host = new DesktopHostProcess(node, root, profile, undefined, { ...environment, DSH_HOME: home },
+  const host = new DesktopHostProcess(node, root, profile, undefined, { ...environment, ASTRO_ONE_HOME: home },
     undefined, join(resourcesRuntime, 'primary-runtime'),
     { pnpm: join(resourcesRuntime, 'pnpm', 'bin', 'pnpm.cjs'), nodeBin: join(resourcesRuntime, 'bin') })
   let timer: ReturnType<typeof setTimeout> | undefined
@@ -41,14 +41,14 @@ export async function smokeDesktopRuntime(
     { env: environment, timeout: 120_000, windowsHide: true })
     const inputs = ['docx', 'xlsx', 'pptx'].map(extension => ({ extension,
       bytes: readFileSync(join(home, `input.${extension}`)).toString('base64') }))
-    const cordis = runtime.sharedPackages.find(entry => entry.name === '@deepseek-ai/cordis')
+    const cordis = runtime.sharedPackages.find(entry => entry.name === '@astro-one/cordis')
     if (cordis === undefined) throw new Error('desktop runtime: missing shared Cordis package')
     writeFileSync(join(plugin, 'package.json'), JSON.stringify({
       name: pluginName, version: '1.0.0', type: 'module', exports: './index.js',
-      peerDependencies: { '@deepseek-ai/cordis': cordis.version }, dsh: { bundle: { patch: './bundle.yml' } },
+      peerDependencies: { '@astro-one/cordis': cordis.version }, astroOne: { bundle: { patch: './bundle.yml' } },
     }))
     writeFileSync(join(plugin, 'index.js'), `
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@astro-one/cordis'
 import { inspect, promisify } from 'node:util'
 import { execFile } from 'node:child_process'
 import { readFile } from 'node:fs/promises'
@@ -93,10 +93,10 @@ export function apply(ctx) {
     writeFileSync(join(plugin, 'bundle.yml'), '- insert:\n    - id: desktop-runtime-smoke-plugin\n      name: desktop-runtime-smoke-plugin\n      inject: [webServer, officeToPdf, skills]\n')
     const manifest = JSON.parse(readFileSync(join(profile, 'package.json'), 'utf8')) as {
       dependencies: Record<string, string>
-      dsh: { profile: { bundles: string[] } }
+      astroOne: { profile: { bundles: string[] } }
     }
     manifest.dependencies[pluginName] = '1.0.0'
-    manifest.dsh.profile.bundles.push(pluginName)
+    manifest.astroOne.profile.bundles.push(pluginName)
     writeFileSync(join(profile, 'package.json'), JSON.stringify(manifest))
     writeFileSync(join(profile, 'cordis.patch.yml'), '- id: webserver\n  config:\n    host: 127.0.0.1\n    port: 0\n')
     const ready = await Promise.race([host.start(), new Promise<never>((_, reject) => {

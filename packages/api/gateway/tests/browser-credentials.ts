@@ -1,4 +1,4 @@
-import type { Context } from '@deepseek-ai/cordis'
+import type { Context } from '@astro-one/cordis'
 
 const browserCookies = new WeakMap<Context, string>()
 

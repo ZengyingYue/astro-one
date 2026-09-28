@@ -10,7 +10,7 @@ Status: implemented
 
 ## 决策
 
-检查点值 schema 使用 `dsh-util-values` 中既有的 `isJsonValue` 谓词。它执行与检查点写入器 `snapshotJsonValue` 相同的无损 JSON 规则，不重建有效对象。校验仍拒绝非 JSON 和有损值。Storage-domain 表值是不可变的借用记录；校验器不提供防御性复制保证。
+检查点值 schema 使用 `astro-one-util-values` 中既有的 `isJsonValue` 谓词。它执行与检查点写入器 `snapshotJsonValue` 相同的无损 JSON 规则，不重建有效对象。校验仍拒绝非 JSON 和有损值。Storage-domain 表值是不可变的借用记录；校验器不提供防御性复制保证。
 
 ## 备选方案
 

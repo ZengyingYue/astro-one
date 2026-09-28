@@ -3,10 +3,10 @@ import { mkdir, mkdtemp, readdir, realpath, rename, rm, stat, writeFile } from '
 import { homedir, tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import type {} from '@deepseek-ai/dsh-agent'
-import SessionStore, { SessionId, type Session } from '@deepseek-ai/dsh-session'
-import LocalSubprocessRuntime from '@deepseek-ai/dsh-subprocess-local'
+import { Context } from '@astro-one/cordis'
+import type {} from '@astro-one/agent'
+import SessionStore, { SessionId, type Session } from '@astro-one/session'
+import LocalSubprocessRuntime from '@astro-one/subprocess-local'
 import * as WorkspaceChanges from '../src/index.ts'
 import { changes, endTurn, git, mutate, scratchDir, settle, startTurn, toolCall } from './support.ts'
 
@@ -34,7 +34,7 @@ function looseObjects(cwd: string): number {
 }
 
 async function repository(): Promise<string> {
-  const cwd = await scratchDir('dsh-workspace-changes-repo-', cleanups)
+  const cwd = await scratchDir('astro-one-workspace-changes-repo-', cleanups)
   git(cwd, 'init', '-q', '-b', 'main')
   await writeFile(join(cwd, 'a.txt'), 'l1\nl2\nl3\n')
   await writeFile(join(cwd, 'b.txt'), 'x\n')
@@ -162,7 +162,7 @@ describe('workspace-changes in a repository', () => {
   })
 
   it('records nothing and stays quiet about captures for a working directory that no longer exists', async () => {
-    const root = await scratchDir('dsh-workspace-changes-gone-', cleanups)
+    const root = await scratchDir('astro-one-workspace-changes-gone-', cleanups)
     const cwd = join(root, 'gone')
     const { ctx } = await boot()
     const warn = vi.spyOn(ctx.logger, 'warn').mockImplementation(() => undefined)
@@ -180,7 +180,7 @@ describe('workspace-changes in a repository', () => {
     const root = await repository()
     const cwd = join(root, 'pkg')
     await mkdir(cwd)
-    const outside = await mkdtemp(join(homedir(), '.dsh-workspace-changes-test-'))
+    const outside = await mkdtemp(join(homedir(), '.astro-one-workspace-changes-test-'))
     cleanups.push(() => rm(outside, { recursive: true, force: true }))
     const { ctx } = await boot()
     const session = ctx.sessions.create(SessionId('nested'), { meta: { cwd } })
@@ -329,10 +329,10 @@ describe('workspace-changes in a repository', () => {
 
 describe('workspace-changes without a repository', () => {
   it('summarizes file-tool edits only for a working directory outside any git repository', async () => {
-    const cwd = await scratchDir('dsh-workspace-changes-plain-', cleanups)
+    const cwd = await scratchDir('astro-one-workspace-changes-plain-', cleanups)
     await writeFile(join(cwd, 'existing.txt'), 'before\n')
     await writeFile(join(cwd, 'shell.txt'), 'shell\n')
-    const outside = await mkdtemp(join(homedir(), '.dsh-workspace-changes-plain-'))
+    const outside = await mkdtemp(join(homedir(), '.astro-one-workspace-changes-plain-'))
     cleanups.push(() => rm(outside, { recursive: true, force: true }))
     const { ctx } = await boot()
     const warn = vi.spyOn(ctx.logger, 'warn').mockImplementation(() => undefined)
@@ -371,9 +371,9 @@ describe('workspace-changes without a repository', () => {
   })
 
   it('lists oversized and binary captured files without counts and serves no lines for them', async () => {
-    const cwd = await scratchDir('dsh-workspace-changes-bounds-', cleanups)
+    const cwd = await scratchDir('astro-one-workspace-changes-bounds-', cleanups)
     // The recorder places its temporary directory under the platform temp root; point that root at a scratch directory.
-    const tempRoot = await scratchDir('dsh-workspace-changes-temp-', cleanups)
+    const tempRoot = await scratchDir('astro-one-workspace-changes-temp-', cleanups)
     // POSIX reads TMPDIR, Windows reads TMP then TEMP.
     const previous = { TMPDIR: process.env.TMPDIR, TMP: process.env.TMP, TEMP: process.env.TEMP }
     for (const name of ['TMPDIR', 'TMP', 'TEMP'] as const) process.env[name] = tempRoot
@@ -383,7 +383,7 @@ describe('workspace-changes without a repository', () => {
       }
     })
     // Other tooling may create its own directories under the redirected temp root; only the recorder's count.
-    const recorderDirs = async (): Promise<string[]> => (await readdir(tempRoot)).filter(name => name.startsWith('dsh-workspace-changes-'))
+    const recorderDirs = async (): Promise<string[]> => (await readdir(tempRoot)).filter(name => name.startsWith('astro-one-workspace-changes-'))
     await writeFile(join(cwd, 'grows.txt'), 'small\n')
     await writeFile(join(cwd, 'huge.txt'), 'a'.repeat(20))
     await writeFile(join(cwd, 'mixed.dat'), Uint8Array.of(65, 0, 66))
@@ -512,7 +512,7 @@ describe('workspace-changes without git', () => {
     ]
     for (const probe of probes) {
       probe.done.catch(() => undefined)
-      const cwd = await scratchDir('dsh-workspace-changes-stub-', cleanups)
+      const cwd = await scratchDir('astro-one-workspace-changes-stub-', cleanups)
       const { ctx } = await boot()
       vi.spyOn(ctx.subprocess, 'resolveExecutable').mockResolvedValue(probe.executable ?? '/usr/bin/git')
       const real = ctx.subprocess.spawn.bind(ctx.subprocess)

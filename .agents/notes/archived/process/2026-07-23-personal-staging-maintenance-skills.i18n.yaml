@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-07-23-personal-staging-maintenance-skills.md
-2026-07-23-personal-staging-maintenance-skills.md: 86654be1afe986107e7dae4440b497a266636012
-2026-07-23-personal-staging-maintenance-skills.zh.md: 7593a2e8cafc93df02c9418c94f84bbd3f154a0c
+2026-07-23-personal-staging-maintenance-skills.md: 8d089df65fd7960c2eeb980257a72ac3beacf36f
+2026-07-23-personal-staging-maintenance-skills.zh.md: 0143eac2b046aa6f1ad19ff7d73e43c2cf2ce773

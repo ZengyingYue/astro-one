@@ -1,0 +1,29 @@
+# SDK-profile patch for the child runtime in the cwd-inheritance proof.
+
+- id: llm-deepseek
+  name: '@astro-one/llm-deepseek'
+  disabled: true
+
+- id: system-prompt
+  name: '@astro-one/system-prompt'
+  config:
+    personaPrefix: 'Echo where you run.'
+
+- id: agent-instructions
+  name: '@astro-one/agent-instructions'
+  disabled: true
+
+- id: skill-filesystem
+  name: '@astro-one/skill-filesystem'
+  config:
+    includeDefaultRoots: false
+
+- id: session-persistence-jsonl
+  name: '@astro-one/session-persistence-jsonl'
+  config:
+    root: !!js astroOneHomePath('sessions')
+    compression: none
+
+- insert:
+    - id: child-mock-llm
+      name: './child-mock-llm.ts'

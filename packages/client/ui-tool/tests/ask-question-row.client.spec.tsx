@@ -7,14 +7,14 @@
  * fallbacks on malformed results.
  */
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
-import { useDisclosure } from '@deepseek-ai/dsh-client-ui-chat/src/client/chat/use-disclosure.ts'
+import { useDisclosure } from '@astro-one/client-ui-chat/src/client/chat/use-disclosure.ts'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import type { ToolResultNode } from '@deepseek-ai/dsh-client-ui-chat/client'
-import { makeTranslate } from '@deepseek-ai/dsh-client-test-runtime'
-import { zh as commonZh } from '@deepseek-ai/dsh-client-locale/src/locales/zh.ts'
+import type { ToolResultNode } from '@astro-one/client-ui-chat/client'
+import { makeTranslate } from '@astro-one/client-test-runtime'
+import { zh as commonZh } from '@astro-one/client-locale/src/locales/zh.ts'
 // Export discipline: packages/client/AGENTS.md.
 import { AskQuestionRow, askQuestionToolview } from '../src/client/tool/toolviews/ask-question-row.tsx'
-import { zh } from '@deepseek-ai/dsh-client-ui-conversation/src/client/locales.ts'
+import { zh } from '@astro-one/client-ui-conversation/src/client/locales.ts'
 
 afterEach(cleanup)
 
@@ -67,7 +67,7 @@ describe('AskQuestionRow', () => {
 
   it('expands a successful result as paired questions and readable answer lines', () => {
     render(<AskQuestionRow {...rowProps(resultNode(READABLE_ARGS, answers([
-      { id: 'scope', selected: ['deepseek-harness'] },
+      { id: 'scope', selected: ['astro-one'] },
       { id: 'goal', selected: ['Develop a feature'], custom: 'Keep the API small' },
       { id: 'notes', selected: [] },
     ])))} />)
@@ -78,7 +78,7 @@ describe('AskQuestionRow', () => {
     expect(screen.getByText('Develop a feature')).toBeTruthy()
     expect(screen.getByText('Keep the API small')).toBeTruthy()
     expect(screen.getByText('Which project should this apply to?')).toBeTruthy()
-    expect(screen.getByText('deepseek-harness')).toBeTruthy()
+    expect(screen.getByText('astro-one')).toBeTruthy()
     expect(screen.getByText('Anything else?')).toBeTruthy()
     expect(screen.getByText('未回答')).toBeTruthy()
     expect(screen.queryByText(/"questions"/)).toBeNull()
@@ -88,7 +88,7 @@ describe('AskQuestionRow', () => {
   it('keeps generic diagnostics when a valid answer result includes a non-text block', () => {
     const resultText = answers([
       { id: 'goal', selected: ['Develop a feature'] },
-      { id: 'scope', selected: ['deepseek-harness'] },
+      { id: 'scope', selected: ['astro-one'] },
       { id: 'notes', selected: [] },
     ])
     const view = render(<AskQuestionRow {...rowProps(resultNode(READABLE_ARGS, resultText, {

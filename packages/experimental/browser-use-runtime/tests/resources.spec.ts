@@ -1,8 +1,8 @@
-import { Context } from '@deepseek-ai/cordis'
-import AgentRegistry from '@deepseek-ai/dsh-agent'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import { unsupportedInbox } from '@deepseek-ai/dsh-agent-loop-testkit'
-import { Session, SessionId } from '@deepseek-ai/dsh-session'
+import { Context } from '@astro-one/cordis'
+import AgentRegistry from '@astro-one/agent'
+import type { Agent } from '@astro-one/agent'
+import { unsupportedInbox } from '@astro-one/agent-loop-testkit'
+import { Session, SessionId } from '@astro-one/session'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { SessionResources } from '../src/index.ts'
 

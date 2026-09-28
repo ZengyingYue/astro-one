@@ -5,7 +5,7 @@ import type { SchemaNode, SchemaProperty, SourceCompatibility } from './persiste
 // Reserve role and shared-consumer identities, frozen rename targets, and request-only producer identities against reuse.
 // Existing kinds outside this set also reject retroactive qualification during comparison.
 const RESERVED_SOURCE_KINDS = new Set([
-  'user', 'model', 'tool', 'system-prompt', 'compact-checkpoint', 'dsh-session-title-llm', 'tool-registry', 'runtime-context', 'plugin',
+  'user', 'model', 'tool', 'system-prompt', 'compact-checkpoint', 'astro-one-session-title-llm', 'tool-registry', 'runtime-context', 'plugin',
   'auto-review', 'compact-basic', 'ptc-mode',
 ])
 

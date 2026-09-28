@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/archived/simplification/2026-08-24-owner-local-profile-tests-and-guides.md
-2026-08-24-owner-local-profile-tests-and-guides.md: fb9f1ad5c79fbf686cb84c4a9c8e4e4b835c6aef
-2026-08-24-owner-local-profile-tests-and-guides.zh.md: 904d21d32651728fa567f3a18146cb8a36351371
+2026-08-24-owner-local-profile-tests-and-guides.md: fbc510c70b4ae6522e4dea2973eefce74d735349
+2026-08-24-owner-local-profile-tests-and-guides.zh.md: 96d0b6014a526cf348d4a5af2a6cfd03ae9c717c

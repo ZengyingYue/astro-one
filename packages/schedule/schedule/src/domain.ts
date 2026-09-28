@@ -1,10 +1,10 @@
 /**
  * Strict Schedule decoding, replay, time validation, and framing.
- * @module @deepseek-ai/dsh-schedule
+ * @module @astro-one/schedule
  */
 
-import { SessionLogOffset } from '@deepseek-ai/dsh-session'
-import type { SessionEvent, SessionLogOffset as SessionLogOffsetType } from '@deepseek-ai/dsh-session'
+import { SessionLogOffset } from '@astro-one/session'
+import type { SessionEvent, SessionLogOffset as SessionLogOffsetType } from '@astro-one/session'
 import type {
   AfterScheduleRecord,
   AtInput,

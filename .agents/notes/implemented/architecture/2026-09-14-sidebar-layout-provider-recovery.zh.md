@@ -14,7 +14,7 @@ Status: implemented
 
 terminal provider 读取已采用的 Session 标签记录，先恢复终端模型，再查询尚无视图的 Host 终端。其 Client controller 在分配前将全局唯一内容与终端身份的关联保存为独立记录，刷新后复用，并在记录显式关闭意图后删除。布局内的 tab id 标识独立活动视图，不能跨窗口标识持久化进程；逐条记录的写入和删除避免覆盖无关关联。恢复身份不允许创建替代进程。Host 负责进程存活状态、标题和屏幕内容；保存的关联只是恢复目标。没有对应恢复标签的关联不会阻止 Host 探测。
 
-OpenCode 的 `packages/app/src/context/layout.tsx` 保存 Session 标签，`context/terminal.tsx` 独立保存终端身份。DSH 使用现有 Session 作用域 store 和 provider 服务实现相同的职责划分，终端仍归 Session 所有。
+OpenCode 的 `packages/app/src/context/layout.tsx` 保存 Session 标签，`context/terminal.tsx` 独立保存终端身份。Astro One 使用现有 Session 作用域 store 和 provider 服务实现相同的职责划分，终端仍归 Session 所有。
 
 本决策部分替代 [Web 终端决策](../feature/2026-09-09-web-sidebar-terminal.zh.md)中不持久化的限定。原记录继续保留，因为进程归属、清理、流传输和输入控制决策仍适用。
 

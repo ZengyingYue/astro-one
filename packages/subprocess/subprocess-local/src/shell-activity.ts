@@ -2,7 +2,7 @@
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { basename, join } from 'node:path'
-import type { SubprocessTerminalActivity, SubprocessTerminalSpawnSpec } from '@deepseek-ai/dsh-subprocess'
+import type { SubprocessTerminalActivity, SubprocessTerminalSpawnSpec } from '@astro-one/subprocess'
 
 function quote(value: string): string { return `'${value.replaceAll("'", "'\\''")}'` }
 
@@ -63,7 +63,7 @@ export function prepareShellActivity(
   if (spec.shellActivity !== true || platform === 'win32' || spec.argv.length !== 2 || spec.argv[1] !== '-i') return undefined
   const shell = basename(spec.argv[0] as string)
   if (shell !== 'bash' && shell !== 'zsh') return undefined
-  const directory = mkdtempSync(join(tmpdir(), 'dsh-shell-'))
+  const directory = mkdtempSync(join(tmpdir(), 'astro-one-shell-'))
   const state = quote(join(directory, 'state'))
   const guards = quote(join(directory, 'guards'))
   try {
@@ -72,24 +72,24 @@ export function prepareShellActivity(
       writeFileSync(rc, [
         '[[ ! -r ~/.bashrc ]] || builtin source ~/.bashrc',
         'if (( BASH_VERSINFO[0] > 4 || (BASH_VERSINFO[0] == 4 && BASH_VERSINFO[1] >= 4) )) && [[ ! $(declare -p PROMPT_COMMAND PS0 2>/dev/null) =~ declare\\ -[^[:space:]]*r ]]; then',
-        '  __dsh_shell_pid=$BASHPID; __dsh_shell_sequence=0',
-        '  __dsh_shell_idle() {',
+        '  __astro_one_shell_pid=$BASHPID; __astro_one_shell_sequence=0',
+        '  __astro_one_shell_idle() {',
         '    local result=$?',
-        '    if [[ $BASHPID == "$__dsh_shell_pid" ]]; then',
-        '      (( ++__dsh_shell_sequence ))',
+        '    if [[ $BASHPID == "$__astro_one_shell_pid" ]]; then',
+        '      (( ++__astro_one_shell_sequence ))',
         '      local activity=idle',
         `      builtin trap -p >| ${guards}`,
         `      [[ ! -s ${guards} ]] || activity=unknown`,
-        `      builtin printf '%s:%s:%s\\n' "$BASHPID" "$__dsh_shell_sequence" "$activity" >| ${state}`,
+        `      builtin printf '%s:%s:%s\\n' "$BASHPID" "$__astro_one_shell_sequence" "$activity" >| ${state}`,
         '    fi',
         '    return "$result"',
         '  }',
         '  if [[ $(declare -p PROMPT_COMMAND 2>/dev/null) == "declare -a "* ]]; then',
-        '    PROMPT_COMMAND+=(__dsh_shell_idle)',
+        '    PROMPT_COMMAND+=(__astro_one_shell_idle)',
         '  else',
-        '    PROMPT_COMMAND="${PROMPT_COMMAND}"$\'\\n\'"__dsh_shell_idle"',
+        '    PROMPT_COMMAND="${PROMPT_COMMAND}"$\'\\n\'"__astro_one_shell_idle"',
         '  fi',
-        `  PS0+=${quote(`$(builtin printf '%s:%s:busy' "$__dsh_shell_pid" "$__dsh_shell_sequence" >| ${state})`)}`,
+        `  PS0+=${quote(`$(builtin printf '%s:%s:busy' "$__astro_one_shell_pid" "$__astro_one_shell_sequence" >| ${state})`)}`,
         'fi',
         '',
       ].join('\n'), { mode: 0o600, flag: 'wx' })
@@ -98,29 +98,29 @@ export function prepareShellActivity(
     writeFileSync(join(directory, '.zshenv'), [
       env.ZDOTDIR === undefined ? 'unset ZDOTDIR' : `ZDOTDIR=${quote(env.ZDOTDIR)}`,
       '[[ ! -r ${ZDOTDIR:-$HOME}/.zshenv ]] || builtin source "${ZDOTDIR:-$HOME}/.zshenv"',
-      'typeset -g __dsh_shell_pid=$$ __dsh_shell_sequence=0',
-      '__dsh_shell_activity() {',
-      '  (( ZSH_SUBSHELL == 0 && $$ == __dsh_shell_pid )) || return',
-      '  (( ++__dsh_shell_sequence ))',
-      `  builtin printf '%s:%s:%s\\n' "$$" "$__dsh_shell_sequence" "$1" >| ${state}`,
+      'typeset -g __astro_one_shell_pid=$$ __astro_one_shell_sequence=0',
+      '__astro_one_shell_activity() {',
+      '  (( ZSH_SUBSHELL == 0 && $$ == __astro_one_shell_pid )) || return',
+      '  (( ++__astro_one_shell_sequence ))',
+      `  builtin printf '%s:%s:%s\\n' "$$" "$__astro_one_shell_sequence" "$1" >| ${state}`,
       '  return 0',
       '}',
-      '__dsh_shell_idle() {',
+      '__astro_one_shell_idle() {',
       `  { builtin trap; zle -F; } >| ${guards}`,
-      '  if [[ $CONTEXT != start || -n $BUFFER ]]; then __dsh_shell_activity busy',
-      `  elif [[ -s ${guards}` + ' || -n ${(k)functions[(I)TRAP*]} ]]; then __dsh_shell_activity unknown',
-      '  else __dsh_shell_activity idle; fi',
+      '  if [[ $CONTEXT != start || -n $BUFFER ]]; then __astro_one_shell_activity busy',
+      `  elif [[ -s ${guards}` + ' || -n ${(k)functions[(I)TRAP*]} ]]; then __astro_one_shell_activity unknown',
+      '  else __astro_one_shell_activity idle; fi',
       '}',
-      '__dsh_shell_busy() { __dsh_shell_activity busy }',
-      '__dsh_shell_init() {',
+      '__astro_one_shell_busy() { __astro_one_shell_activity busy }',
+      '__astro_one_shell_init() {',
       '  autoload -Uz add-zle-hook-widget add-zsh-hook',
-      '  add-zle-hook-widget line-init __dsh_shell_idle',
-      '  add-zle-hook-widget line-finish __dsh_shell_busy',
-      '  add-zsh-hook preexec __dsh_shell_busy',
-      '  precmd_functions=(${precmd_functions:#__dsh_shell_init})',
+      '  add-zle-hook-widget line-init __astro_one_shell_idle',
+      '  add-zle-hook-widget line-finish __astro_one_shell_busy',
+      '  add-zsh-hook preexec __astro_one_shell_busy',
+      '  precmd_functions=(${precmd_functions:#__astro_one_shell_init})',
       '}',
       'typeset -ga precmd_functions',
-      'precmd_functions+=(__dsh_shell_init)',
+      'precmd_functions+=(__astro_one_shell_init)',
       '',
     ].join('\n'), { mode: 0o600, flag: 'wx' })
     return new ShellActivity(directory, spec.argv, { ...env, ZDOTDIR: directory })

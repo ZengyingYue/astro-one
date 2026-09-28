@@ -26,7 +26,7 @@ Update：[jobs seam 收敛](../architecture/2026-09-03-jobs-seam-consolidation.z
 
 **后台能力面跟随注册表，注册表保持可选。** 工具的 `inject` 不写 `jobs`。没有注册表时它注册纯前台定义；`ctx.jobs` 出现后，`ctx.inject(['jobs'], …)` fork 用带 job 的定义替换它，注册表存在多久就保持多久；注册表在插件仍在时卸载，则恢复纯前台定义。因此没有注册表的组合保留一个 schema 既不宣传 `run_in_background` 也不宣传移交的普通 `bash`，模型也看不到任何 `job_*` 工具。登记是尽力而为的：`promoteOnTimeout: false`，或注册表在启动时拒绝该 job（持有者的准入上限、没有已附加的控制器），都改为在执行器的 `'kill'` deadline 下运行命令，并记录日志。
 
-**注册表报告等待方已经收走了什么。** `settled` 事件带 `awaited`：本次结算是否释放了一个存活的 `wait`，工具等待自己的前台命令时为真，`job_output` 的等待亦然。`dsh-tool-jobs` 对已 awaited 的结算和模型经 `job_kill` 请求的杀停不发完成通知，其私有的认领台账已删除；超时或中止的等待早已离开注册表的等待方集合，之后的结算照常通知。来自 web 控制器的人类杀停两者都不是，因此拥有者 agent 照常收到带原因的通知。
+**注册表报告等待方已经收走了什么。** `settled` 事件带 `awaited`：本次结算是否释放了一个存活的 `wait`，工具等待自己的前台命令时为真，`job_output` 的等待亦然。`astro-one-tool-jobs` 对已 awaited 的结算和模型经 `job_kill` 请求的杀停不发完成通知，其私有的认领台账已删除；超时或中止的等待早已离开注册表的等待方集合，之后的结算照常通知。来自 web 控制器的人类杀停两者都不是，因此拥有者 agent 照常收到带原因的通知。
 
 ## 备选方案
 
@@ -48,5 +48,5 @@ Update：[jobs seam 收敛](../architecture/2026-09-03-jobs-seam-consolidation.z
 - `bash`/`pwsh` 的工具描述与 `timeoutMs` schema 文案取决于注册表是否存在（模型可见）；输出 union 保留 `promoted` arm，前台 arm 新增可选的 `stopped` 原因——PTC 系统提示词快照随之重录。
 - 已登记的命令完全没有 deadline：前台调用的超时只限定等待，之后停下命令靠 `job_kill` 或 Web 停止控件。
 - Web 任务列表显示每条运行中的前台命令并经 `job.list`/`job.follow` 流式观看；完成的命令随结果离开。
-- `JobRegistry` 新增 `remove` 与 `settled` 事件的 `awaited` 标志；`dsh-tool-jobs` 只保留模型杀停过的 job 集合。
+- `JobRegistry` 新增 `remove` 与 `settled` 事件的 `awaited` 标志；`astro-one-tool-jobs` 只保留模型杀停过的 job 集合。
 - `start()` 时代同步 spawn 抛错逃逸给调用方的行为不复存在：调用方从 `result()`/读路径读失败。沙箱「同步 EACCES 指名 runner」的分类现在以 `result()` rejection 或句柄的 `runnerFailed` 事实呈现。

@@ -3,10 +3,10 @@ import { mkdtempSync, realpathSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { Context } from '@deepseek-ai/cordis'
-import Loader, { ModuleLoader } from '@deepseek-ai/cordis-plugin-loader'
-import Include from '@deepseek-ai/cordis-plugin-include'
-import Timer from '@deepseek-ai/cordis-plugin-timer'
+import { Context } from '@astro-one/cordis'
+import Loader, { ModuleLoader } from '@astro-one/cordis-plugin-loader'
+import Include from '@astro-one/cordis-plugin-include'
+import Timer from '@astro-one/cordis-plugin-timer'
 import { FSWatcher } from 'chokidar'
 import { expect, it, onTestFinished, vi } from 'vitest'
 import Hmr from '../src/index.ts'
@@ -24,7 +24,7 @@ vi.mock('chokidar', async (original) => {
 })
 
 async function fixture(config: Partial<Hmr.Config> = {}) {
-  const dir = mkdtempSync(join(tmpdir(), 'dsh-hmr-coordination-'))
+  const dir = mkdtempSync(join(tmpdir(), 'astro-one-hmr-coordination-'))
   const ctx = new Context()
   ctx.baseUrl = pathToFileURL(dir).href + '/'
   onTestFinished(async () => { await ctx.fiber.dispose(); rmSync(dir, { recursive: true, force: true }) })

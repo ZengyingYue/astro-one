@@ -24,7 +24,7 @@ The page passes `view: 'page'` for each form. Official plugin cards and details 
 
 ## Consequences
 
-- A bundle's browser half registers a form with one slot registration and its own dictionary; the bundle's patch must declare the row under the id in the key, and the registration exists while the row that carries the bundle's browser half is on: `dsh-client-modules` attaches that half to the row whose specifier is the bare package name, so a row-level page keyed to a subpath row disappears with the root row, not with its own.
+- A bundle's browser half registers a form with one slot registration and its own dictionary; the bundle's patch must declare the row under the id in the key, and the registration exists while the row that carries the bundle's browser half is on: `astro-one-client-modules` attaches that half to the row whose specifier is the bare package name, so a row-level page keyed to a subpath row disappears with the root row, not with its own.
 - The four pages use the existing forms and settings write path; `ui-settings-plugins` owns the Settings section, and the configuration pages live on the Plugins page.
 - Settings lists the inventory only; the Settings browser goldens cover that read-only section.
 

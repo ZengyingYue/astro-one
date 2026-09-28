@@ -24,7 +24,7 @@ PKG = "http://schemas.openxmlformats.org/package/2006/relationships"
 
 class OfficeCheckTest(unittest.TestCase):
     def setUp(self):
-        self.directory = tempfile.TemporaryDirectory(prefix="dsh-office-check-")
+        self.directory = tempfile.TemporaryDirectory(prefix="astro-one-office-check-")
         self.addCleanup(self.directory.cleanup)
         self.root = Path(self.directory.name)
 

@@ -1,14 +1,14 @@
 import { describe, expect, it } from 'vitest'
 import { PassThrough } from 'node:stream'
-import { Context } from '@deepseek-ai/cordis'
-import { scrubbedParentEnv, SubprocessRuntime } from '@deepseek-ai/dsh-subprocess'
+import { Context } from '@astro-one/cordis'
+import { scrubbedParentEnv, SubprocessRuntime } from '@astro-one/subprocess'
 import type {
   SubprocessHandle,
   SubprocessOutputRead,
   SubprocessSpawnSpec,
   SubprocessTerminalHandle,
   SubprocessTerminalSpawnSpec,
-} from '@deepseek-ai/dsh-subprocess'
+} from '@astro-one/subprocess'
 
 /**
  * Minimal concrete service: a hand-built handle. The seam is spawn-only —
@@ -78,23 +78,23 @@ describe('SubprocessRuntime seam', () => {
     await expect(ctx.plugin(SecondService)).rejects.toThrow(/service "subprocess" has been registered/)
   })
 
-  it('scrubbedParentEnv drops credential-shaped and DSH_ names (case-insensitively) but keeps PATH', () => {
-    process.env.DSH_SCRUB_PROBE = 'stale'
-    process.env.dsh_scrub_probe_lower = 'stale'
+  it('scrubbedParentEnv drops credential-shaped and ASTRO_ONE_ names (case-insensitively) but keeps PATH', () => {
+    process.env.ASTRO_ONE_SCRUB_PROBE = 'stale'
+    process.env.astro_one_scrub_probe_lower = 'stale'
     process.env.SCRUB_PROBE_TOKEN = 'secret'
     process.env.SCRUB_PROBE_PASSWORD = 'secret'
     process.env.SCRUB_PROBE_PLAIN = 'visible'
     try {
       const env = scrubbedParentEnv()
-      expect(env.DSH_SCRUB_PROBE).toBeUndefined()
-      expect(env.dsh_scrub_probe_lower).toBeUndefined()
+      expect(env.ASTRO_ONE_SCRUB_PROBE).toBeUndefined()
+      expect(env.astro_one_scrub_probe_lower).toBeUndefined()
       expect(env.SCRUB_PROBE_TOKEN).toBeUndefined()
       expect(env.SCRUB_PROBE_PASSWORD).toBeUndefined()
       expect(env.SCRUB_PROBE_PLAIN).toBe('visible')
       expect(env.PATH).toBeDefined()
     } finally {
-      delete process.env.DSH_SCRUB_PROBE
-      delete process.env.dsh_scrub_probe_lower
+      delete process.env.ASTRO_ONE_SCRUB_PROBE
+      delete process.env.astro_one_scrub_probe_lower
       delete process.env.SCRUB_PROBE_TOKEN
       delete process.env.SCRUB_PROBE_PASSWORD
       delete process.env.SCRUB_PROBE_PLAIN

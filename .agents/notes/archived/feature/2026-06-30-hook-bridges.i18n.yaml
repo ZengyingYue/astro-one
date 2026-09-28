@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/archived/feature/2026-06-30-hook-bridges.md
-2026-06-30-hook-bridges.md: c3f8dc53ea91d4cb5546385ba0ff595b6dbb36bc
-2026-06-30-hook-bridges.zh.md: c2ce08607e01f6cd0bae87a2822b674e610da1cc
+2026-06-30-hook-bridges.md: da5b9bc59eb41c2b6d39a17725886f2349d5121b
+2026-06-30-hook-bridges.zh.md: fee838effb442740f4ecf9cd44b1f12091337ee3

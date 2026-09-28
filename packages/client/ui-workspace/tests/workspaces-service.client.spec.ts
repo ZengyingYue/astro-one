@@ -1,21 +1,21 @@
 import { setImmediate } from 'node:timers/promises'
-import { Context } from '@deepseek-ai/cordis'
-import { LocaleRuntime } from '@deepseek-ai/dsh-client-locale/client'
+import { Context } from '@astro-one/cordis'
+import { LocaleRuntime } from '@astro-one/client-locale/client'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type {
   ISessions, SessionListState, SessionReference, SessionSummary,
-} from '@deepseek-ai/dsh-api-session-controller/client'
-import { SessionCreateError } from '@deepseek-ai/dsh-api-session-controller/client'
-import type { SubagentAddress } from '@deepseek-ai/dsh-subagent/client'
+} from '@astro-one/api-session-controller/client'
+import { SessionCreateError } from '@astro-one/api-session-controller/client'
+import type { SubagentAddress } from '@astro-one/subagent/client'
 import type {
   IWorkspaces, WorkspaceId, WorkspaceSnapshot, WorkspaceView,
-} from '@deepseek-ai/dsh-api-workspace-controller/client'
-import type { ClientRemote, DirectoryListing } from '@deepseek-ai/dsh-api-remotes/client'
-import { RemoteError } from '@deepseek-ai/dsh-client-test-runtime'
-import type { RemoteResult } from '@deepseek-ai/dsh-api-remotes/client'
-import { SessionId } from '@deepseek-ai/dsh-session/types'
-import { LayoutController } from '@deepseek-ai/dsh-client-ui-layout/client'
-import type { MainPanelId } from '@deepseek-ai/dsh-client-ui-layout/client'
+} from '@astro-one/api-workspace-controller/client'
+import type { ClientRemote, DirectoryListing } from '@astro-one/api-remotes/client'
+import { RemoteError } from '@astro-one/client-test-runtime'
+import type { RemoteResult } from '@astro-one/api-remotes/client'
+import { SessionId } from '@astro-one/session/types'
+import { LayoutController } from '@astro-one/client-ui-layout/client'
+import type { MainPanelId } from '@astro-one/client-ui-layout/client'
 import type { RowToast } from '../src/client/contract/slots.ts'
 import { DirectoryBrowseError, UiWorkspaceService } from '../src/client/navigation.ts'
 import { createWorkspaceViewStore, FLAT_SESSION_ORDER_KEY } from '../src/client/stores.ts'
@@ -36,7 +36,7 @@ function persistSelection(selection: {
   readonly sessionId?: SessionId
   readonly subagentAddress?: SubagentAddress
 }): Map<string, string> {
-  const backing = new Map([['dsh.sessions.current', JSON.stringify(selection)]])
+  const backing = new Map([['astro-one.sessions.current', JSON.stringify(selection)]])
   vi.stubGlobal('localStorage', {
     getItem: (key: string) => backing.get(key) ?? null,
     setItem: (key: string, value: string) => { backing.set(key, value) },
@@ -1007,7 +1007,7 @@ describe('UiWorkspaceService', () => {
 
     b.uiWorkspace.openSession(address.childSessionId)
 
-    expect(JSON.parse(backing.get('dsh.sessions.current')!)).toEqual({
+    expect(JSON.parse(backing.get('astro-one.sessions.current')!)).toEqual({
       sessionId: address.childSessionId,
       subagentAddress: address,
     })

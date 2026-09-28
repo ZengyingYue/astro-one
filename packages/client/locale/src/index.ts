@@ -1,9 +1,9 @@
 /** Host registration for the browser locale preference. */
-import type {} from '@deepseek-ai/dsh-settings'
+import type {} from '@astro-one/settings'
 
-import type { Volatile, Context } from '@deepseek-ai/cordis'
+import type { Volatile, Context } from '@astro-one/cordis'
 
-import z from '@deepseek-ai/schemastery'
+import z from '@astro-one/schemastery'
 import { LOCALE_PREFERENCE_FIELD } from './locale-settings.ts'
 
 import { LocaleSettingsFields } from './locale-settings.ts'

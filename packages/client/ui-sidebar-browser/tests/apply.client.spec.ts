@@ -1,9 +1,9 @@
 // @vitest-environment jsdom
 /** Browser type, Slot, locale, and HMR disposal through the real registries. */
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
-import { SidebarRightTabRegistry } from '@deepseek-ai/dsh-client-ui-sidebar-right/src/client/tab-registry.ts'
+import { Context } from '@astro-one/cordis'
+import { createSnapshotStore } from '@astro-one/client-store'
+import { SidebarRightTabRegistry } from '@astro-one/client-ui-sidebar-right/src/client/tab-registry.ts'
 import { BrowserBody } from '../src/client/view/BrowserBody.tsx'
 import { BrowserTitle } from '../src/client/view/BrowserTitle.tsx'
 import type { BrowserInjected } from '../src/client/browser/BrowserController.ts'
@@ -11,7 +11,7 @@ import { BROWSER_ID, BROWSER_KIND } from '../src/client/definition.tsx'
 import { apply, inject } from '../src/client/index.ts'
 import { en, zh } from '../src/client/locales.ts'
 import { createBrowserStore } from '../src/client/browser/store.ts'
-import type { TabId } from '@deepseek-ai/dsh-client-ui-dockkit'
+import type { TabId } from '@astro-one/client-ui-dockkit'
 import type { DesktopBrowserBridge, DesktopBrowserLeaseId } from '../src/types.ts'
 
 const contexts: Context[] = []
@@ -70,7 +70,7 @@ describe('ui-sidebar-browser apply', () => {
       release: vi.fn(async () => {}),
       onOpenRequested: vi.fn(() => () => {}),
     }
-    vi.stubGlobal('dshDesktop', { protocolVersion, browser: bridge })
+    vi.stubGlobal('astroOneDesktop', { protocolVersion, browser: bridge })
     const h = await boot()
     expect(h.tabs.get(BROWSER_KIND)?.keepMounted).toBe(protocolVersion === 1)
     const injectFace = h.registered.find(entry => entry.name === 'sidebar.right.pane.tab')!.inject as
@@ -85,7 +85,7 @@ describe('ui-sidebar-browser apply', () => {
     const signal = new AbortController()
     const tabId = 'apply-tab' as TabId
     try {
-      controller.mount({ tabId, signal: signal.signal, viewportId: host.id, applicationOrigin: 'https://dsh.example',
+      controller.mount({ tabId, signal: signal.signal, viewportId: host.id, applicationOrigin: 'https://astro-one.example',
         initial: undefined, initialUrl: 'https://example.test/', openTab: vi.fn() })
       expect(replacementStore.getSnapshot().byTab[tabId]).toBeDefined()
       expect(firstStore.getSnapshot().byTab[tabId]).toBeUndefined()
@@ -95,13 +95,13 @@ describe('ui-sidebar-browser apply', () => {
       signal.abort()
       expect(replacementStore.getSnapshot().byTab[tabId]).toBeUndefined()
       const reopened = new AbortController()
-      controller.mount({ tabId, signal: reopened.signal, viewportId: host.id, applicationOrigin: 'https://dsh.example',
+      controller.mount({ tabId, signal: reopened.signal, viewportId: host.id, applicationOrigin: 'https://astro-one.example',
         initial: undefined, initialUrl: 'https://retained.example/', openTab: vi.fn() })
       h.openTabs.set([{ sessionId: 'session', tabId }])
       reopened.abort()
       expect(replacementStore.getSnapshot().byTab[tabId]).toBeDefined()
       const active = new AbortController()
-      controller.mount({ tabId, signal: active.signal, viewportId: host.id, applicationOrigin: 'https://dsh.example',
+      controller.mount({ tabId, signal: active.signal, viewportId: host.id, applicationOrigin: 'https://astro-one.example',
         initial: undefined, initialUrl: undefined, openTab: vi.fn() })
       await h.fiber.dispose()
       expect(controller.keyedHooks.browserState(tabId)).toBeUndefined()

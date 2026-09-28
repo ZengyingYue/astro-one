@@ -1,6 +1,6 @@
-import { Context } from '@deepseek-ai/cordis'
-import { SESSION_FORMAT_VERSION, SessionId, SessionSeq } from '@deepseek-ai/dsh-session'
-import JsonlSessionPersistence from '@deepseek-ai/dsh-session-persistence-jsonl'
+import { Context } from '@astro-one/cordis'
+import { SESSION_FORMAT_VERSION, SessionId, SessionSeq } from '@astro-one/session'
+import JsonlSessionPersistence from '@astro-one/session-persistence-jsonl'
 import { mkdir, mkdtemp, readFile, rm, stat, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
@@ -26,7 +26,7 @@ describe('current event admission at EOF', () => {
   let ctx: Context
 
   beforeEach(async () => {
-    root = await mkdtemp(join(tmpdir(), 'dsh-current-admission-'))
+    root = await mkdtemp(join(tmpdir(), 'astro-one-current-admission-'))
     ctx = new Context()
     await ctx.plugin(JsonlSessionPersistence, { root, compression: 'none' })
   })

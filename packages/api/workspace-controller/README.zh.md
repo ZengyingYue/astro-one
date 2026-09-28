@@ -8,7 +8,7 @@ kind: "package-reference"
 
 ## 概述
 
-`@deepseek-ai/dsh-api-workspace-controller` 拥有 Host 的 `ctx.workspaceController` 服务和生成的 Client `ctx.remote.workspace` namespace。它的 Remote 方法负责创建、重命名、移除和重排 Workspace，在 Workspace 内重排 Session，归档与取消归档 Session，以及跟随完整的 Workspace 投影。当 Client 必须修改或跟随 Workspace 导航时，请通过 API 网关使用它。本包同时拥有 `ctx.directoryPickerController` 与生成的 `ctx.remote.directoryPicker` namespace，因为它承载的选目录 seam 是抽象的，自身从不作为 Loader entry。
+`@astro-one/api-workspace-controller` 拥有 Host 的 `ctx.workspaceController` 服务和生成的 Client `ctx.remote.workspace` namespace。它的 Remote 方法负责创建、重命名、移除和重排 Workspace，在 Workspace 内重排 Session，归档与取消归档 Session，以及跟随完整的 Workspace 投影。当 Client 必须修改或跟随 Workspace 导航时，请通过 API 网关使用它。本包同时拥有 `ctx.directoryPickerController` 与生成的 `ctx.remote.directoryPicker` namespace，因为它承载的选目录 seam 是抽象的，自身从不作为 Loader entry。
 
 ## 目录
 
@@ -29,7 +29,7 @@ Client 入口提供 `ClientWorkspaceModel` 和 `createWorkspaceStateStream()`。
 <a id="first-use-workspace"></a>
 ### 首次使用工作区
 
-`workspace.initializeDefault({ directoryName, title })` 返回持久化的默认工作区；Client service 通过 `workspaces.initializeDefault(request, signal?)` 提供同一请求。[Workspace Client](../../client/ui-workspace/README.zh.md)按启动时的语言解析这些名称。Host 将目录放在其账户的 `<Documents>/deepseek-harness` 下，远程 Web Host 也遵循此规则。目录名必须是非空的单个片段，不能含分隔符、冒号、NUL、首尾空白或末尾句点；标题不能为空。操作系统的文件名限制同样适用。Linux 系统查询要求存在 `xdg-user-dir` 且启用了 Documents 目录；不具备该条件的 Host 必须配置 `documentsDirectory` 或使用文件夹选择器。
+`workspace.initializeDefault({ directoryName, title })` 返回持久化的默认工作区；Client service 通过 `workspaces.initializeDefault(request, signal?)` 提供同一请求。[Workspace Client](../../client/ui-workspace/README.zh.md)按启动时的语言解析这些名称。Host 将目录放在其账户的 `<Documents>/astro-one` 下，远程 Web Host 也遵循此规则。目录名必须是非空的单个片段，不能含分隔符、冒号、NUL、首尾空白或末尾句点；标题不能为空。操作系统的文件名限制同样适用。Linux 系统查询要求存在 `xdg-user-dir` 且启用了 Documents 目录；不具备该条件的 Host 必须配置 `documentsDirectory` 或使用文件夹选择器。
 
 [Workspace 注册表](../../workspace/workspace/README.zh.md#first-use-workspace)负责资格判断、目录创建和持久化初始化。已有默认工作区直接返回，不再查询 Documents；请求中的名称不会将其重命名。不满足首次使用条件时返回 `undefined`，启动流程可将目录选择留给用户。名称无效时以 `gateway/bad-request` 拒绝；查询和创建失败遵循标准 Remote 错误处理。初始化不创建 Session，也不发送消息。
 

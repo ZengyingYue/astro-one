@@ -2,25 +2,25 @@ import { mkdtempSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import { ToolCallId } from '@deepseek-ai/dsh-llm'
-import { Session, SessionId } from '@deepseek-ai/dsh-session'
-import { SESSION_FORMAT_VERSION } from '@deepseek-ai/dsh-session/types'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime, { TOOL_ABORTED } from '@deepseek-ai/dsh-tools'
-import AgentRegistry from '@deepseek-ai/dsh-agent'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import { unsupportedInbox } from '@deepseek-ai/dsh-agent-loop-testkit'
-import LocalJobRegistry from '@deepseek-ai/dsh-jobs-local'
-import type { JobId } from '@deepseek-ai/dsh-jobs'
-import * as ToolTasks from '@deepseek-ai/dsh-tool-jobs'
-import type { ShellExecution, ShellProcess } from '@deepseek-ai/dsh-shell'
-import { LocalBashExecutor } from '@deepseek-ai/dsh-bash-local'
-import LocalSubprocessRuntime from '@deepseek-ai/dsh-subprocess-local'
-import * as ToolBash from '@deepseek-ai/dsh-tool-bash'
+import { Context } from '@astro-one/cordis'
+import { ToolCallId } from '@astro-one/llm'
+import { Session, SessionId } from '@astro-one/session'
+import { SESSION_FORMAT_VERSION } from '@astro-one/session/types'
+import SystemPrompt from '@astro-one/system-prompt'
+import ToolRuntime, { TOOL_ABORTED } from '@astro-one/tools'
+import AgentRegistry from '@astro-one/agent'
+import type { Agent } from '@astro-one/agent'
+import { unsupportedInbox } from '@astro-one/agent-loop-testkit'
+import LocalJobRegistry from '@astro-one/jobs-local'
+import type { JobId } from '@astro-one/jobs'
+import * as ToolTasks from '@astro-one/tool-jobs'
+import type { ShellExecution, ShellProcess } from '@astro-one/shell'
+import { LocalBashExecutor } from '@astro-one/bash-local'
+import LocalSubprocessRuntime from '@astro-one/subprocess-local'
+import * as ToolBash from '@astro-one/tool-bash'
 import { processSources, ringDelta } from '../src/background.ts'
 import { renderPromoted } from '../src/render.ts'
-import * as BashEnvPlugin from '@deepseek-ai/dsh-shell-env'
+import * as BashEnvPlugin from '@astro-one/shell-env'
 
 // Readiness polling stays on wall time while a test controls the execution deadline.
 const pollingTimeout = setTimeout
@@ -29,7 +29,7 @@ const pollingTimeout = setTimeout
 const silentReader = { readFrom: (fromByte: number) => ({ text: '', nextOffset: fromByte, lossy: false }) }
 
 const testToolSignal = new AbortController().signal
-const spillDir = mkdtempSync(join(tmpdir(), 'dsh-tool-bash-background-spec-'))
+const spillDir = mkdtempSync(join(tmpdir(), 'astro-one-tool-bash-background-spec-'))
 
 /** Job harness with a fast registry pump for tests. */
 async function setup() {
@@ -118,7 +118,7 @@ describe('background bash output', () => {
     const started = await call(ctx, {
       command: 'true',
       description: 'test command',
-      workdir: '/nonexistent-dsh',
+      workdir: '/nonexistent-astro-one',
       run_in_background: true,
     })
     expect(text(started)).toMatch(/^started background job bash-\d+$/)

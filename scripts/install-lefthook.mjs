@@ -17,20 +17,20 @@ import { dirname, isAbsolute, join, resolve } from 'node:path'
 import lefthookPackage from 'lefthook/package.json' with { type: 'json' }
 
 const MINIMUM_GIT = [2, 26, 0]
-const HOOKS_DIRECTORY = 'dsh-hooks'
-const OWNERSHIP_MARKER = '.dsh-lefthook-owned'
+const HOOKS_DIRECTORY = 'astro-one-hooks'
+const OWNERSHIP_MARKER = '.astro-one-lefthook-owned'
 const OWNERSHIP_MARKER_VERSION = 1
-const OWNERSHIP_MARKER_OWNER = 'deepseek-harness worktree-local lefthook hooks'
-const INSTALL_LOCK = 'dsh-lefthook-install.lock'
+const OWNERSHIP_MARKER_OWNER = 'astro-one worktree-local lefthook hooks'
+const INSTALL_LOCK = 'astro-one-lefthook-install.lock'
 const INSTALL_LOCK_TIMEOUT_MS = 30_000
 const INSTALL_LOCK_INITIALIZATION_TIMEOUT_MS = 5_000
 const INSTALL_LOCK_POLL_MS = 50
-const ALLOW_HOOKS_PATH_OVERRIDE = 'DSH_LEFTHOOK_ALLOW_HOOKS_PATH_OVERRIDE'
+const ALLOW_HOOKS_PATH_OVERRIDE = 'ASTRO_ONE_LEFTHOOK_ALLOW_HOOKS_PATH_OVERRIDE'
 const REPOSITORY_EXTENSION_PATTERN = '^extensions\\.'
 const PAIRING_MERGE_DRIVER_CONFIG = [
-  ['merge.dsh-translation-pairing.name', 'DeepSeek Harness bilingual pairing records'],
+  ['merge.astro-one-translation-pairing.name', 'Astro One bilingual pairing records'],
   [
-    'merge.dsh-translation-pairing.driver',
+    'merge.astro-one-translation-pairing.driver',
     'scripts/merge-translation-pairing-driver.sh %O %A %B %P',
   ],
 ]
@@ -393,14 +393,14 @@ async function acquireInstallLock(commonDirectory) {
   const deadline = Date.now() + INSTALL_LOCK_TIMEOUT_MS
   const ownedRecord = `${String(process.pid)} ${randomUUID()}\n`
   let initializingLock
-  let observeBarrier = process.env.DSH_TEST_LEFTHOOK_LOCK_OBSERVE_BARRIER
+  let observeBarrier = process.env.ASTRO_ONE_TEST_LEFTHOOK_LOCK_OBSERVE_BARRIER
   while (true) {
     try {
       const lockHandle = openSync(lockPath, 'wx', 0o600)
       let ownedStat
       try {
         ownedStat = fstatSync(lockHandle)
-        const publicationBarrier = process.env.DSH_TEST_LEFTHOOK_LOCK_PUBLISH_BARRIER
+        const publicationBarrier = process.env.ASTRO_ONE_TEST_LEFTHOOK_LOCK_PUBLISH_BARRIER
         if (publicationBarrier !== undefined) await waitForLockTestBarrier(publicationBarrier)
         writeFileSync(lockHandle, ownedRecord)
       } finally {

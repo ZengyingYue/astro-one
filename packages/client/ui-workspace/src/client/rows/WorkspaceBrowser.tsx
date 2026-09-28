@@ -22,13 +22,13 @@ import {
   IconFlatListOutlineRegular, IconFolderCloseRegular, IconProjectAddOutlineRegular,
   IconSearchOutlineRegular, IconSlidersTwoOutlineRegular,
   IconWorkspaceTreeOutlineRegular, Menu, Modal, Tooltip,
-} from '@deepseek-ai/dsh-client-ui-primitives'
+} from '@astro-one/client-ui-primitives'
 import type {
   SessionListState, SessionSearchResultItem,
-} from '@deepseek-ai/dsh-api-session-controller/client'
-import type { WorkspaceId, WorkspaceView } from '@deepseek-ai/dsh-api-workspace-controller/client'
-import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import type { PropsRenderSlots } from '@deepseek-ai/dsh-client-ui-slots'
+} from '@astro-one/api-session-controller/client'
+import type { WorkspaceId, WorkspaceView } from '@astro-one/api-workspace-controller/client'
+import type { SessionId } from '@astro-one/session/types'
+import type { PropsRenderSlots } from '@astro-one/client-ui-slots'
 import type { WorkspaceBrowserProps } from '../contract/slots.ts'
 import type { ArchivedFilter, GroupNode, SessionNode, SessionOrderBy, SessionRowState } from '../tree.ts'
 import {
@@ -431,7 +431,7 @@ function SessionTree({
     // (WorkspaceBrowser.module.css).
       <div
         key={group.key}
-        style={{ '--dsh-workspace-indent': `${depth * 12}px` } as CSSProperties}
+        style={{ '--astro-one-workspace-indent': `${depth * 12}px` } as CSSProperties}
         className={clsx(
           css.groupSection,
           workspaceMarker === 'before' && css.workspaceDropBefore,

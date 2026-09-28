@@ -5,19 +5,19 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { afterEach, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import Include from '@deepseek-ai/cordis-plugin-include'
-import AgentRegistry from '@deepseek-ai/dsh-agent'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import BrowserUseRegistry from '@deepseek-ai/dsh-browser-use'
-import LocalAttachmentStore from '@deepseek-ai/dsh-attachment-local'
-import LlmRuntime, { LlmAdapter, ToolCallId, createUserMessage } from '@deepseek-ai/dsh-llm'
-import type { GenerateOptions, LlmResolvedModelInfo, StreamChunk } from '@deepseek-ai/dsh-llm'
-import SessionStore, { SessionId } from '@deepseek-ai/dsh-session'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime from '@deepseek-ai/dsh-tools'
+import { Context } from '@astro-one/cordis'
+import Loader from '@astro-one/cordis-plugin-loader'
+import Include from '@astro-one/cordis-plugin-include'
+import AgentRegistry from '@astro-one/agent'
+import AgentLoop from '@astro-one/agent-loop'
+import BrowserUseRegistry from '@astro-one/browser-use'
+import LocalAttachmentStore from '@astro-one/attachment-local'
+import LlmRuntime, { LlmAdapter, ToolCallId, createUserMessage } from '@astro-one/llm'
+import type { GenerateOptions, LlmResolvedModelInfo, StreamChunk } from '@astro-one/llm'
+import SessionStore, { SessionId } from '@astro-one/session'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import SystemPrompt from '@astro-one/system-prompt'
+import ToolRuntime from '@astro-one/tools'
 import * as Provider from '../src/index.ts'
 import { resetFixture, screenshotBase64 } from './fixtures/stagehand.ts'
 
@@ -73,24 +73,24 @@ afterEach(async () => {
 
 it('loads browser tools from cordis.yml, logs browser results, and admits the screenshot', async () => {
   resetFixture()
-  root = await mkdtemp(join(tmpdir(), 'dsh-stagehand-composition-'))
+  root = await mkdtemp(join(tmpdir(), 'astro-one-stagehand-composition-'))
   const modules = new Map<string, unknown>([
-    ['@deepseek-ai/dsh-llm', LlmRuntime],
-    ['@deepseek-ai/dsh-session', SessionStore],
-    ['@deepseek-ai/dsh-session-projection', SessionProjectionRegistry],
-    ['@deepseek-ai/dsh-system-prompt', SystemPrompt],
-    ['@deepseek-ai/dsh-tools', ToolRuntime],
-    ['@deepseek-ai/dsh-agent', AgentRegistry],
-    ['@deepseek-ai/dsh-agent-loop', AgentLoop],
-    ['@deepseek-ai/dsh-attachment-local', LocalAttachmentStore],
-    ['@deepseek-ai/dsh-browser-use', BrowserUseRegistry],
-    ['@deepseek-ai/dsh-experimental-browser-use-stagehand-native', Provider],
+    ['@astro-one/llm', LlmRuntime],
+    ['@astro-one/session', SessionStore],
+    ['@astro-one/session-projection', SessionProjectionRegistry],
+    ['@astro-one/system-prompt', SystemPrompt],
+    ['@astro-one/tools', ToolRuntime],
+    ['@astro-one/agent', AgentRegistry],
+    ['@astro-one/agent-loop', AgentLoop],
+    ['@astro-one/attachment-local', LocalAttachmentStore],
+    ['@astro-one/browser-use', BrowserUseRegistry],
+    ['@astro-one/experimental-browser-use-stagehand-native', Provider],
   ])
   const configPath = join(root, 'cordis.yml')
   await writeFile(configPath, [...modules.keys()].flatMap(name => [
     `- name: '${name}'`,
-    ...name === '@deepseek-ai/dsh-attachment-local' ? ['  config:', `    dshHome: ${JSON.stringify(root)}`] : [],
-    ...name === '@deepseek-ai/dsh-experimental-browser-use-stagehand-native' ? ['  config:', '    mode: launch', '    model:', '      modelName: openai/gpt-5.4-mini', '      apiKey: fixture-model-key'] : [],
+    ...name === '@astro-one/attachment-local' ? ['  config:', `    astroOneHome: ${JSON.stringify(root)}`] : [],
+    ...name === '@astro-one/experimental-browser-use-stagehand-native' ? ['  config:', '    mode: launch', '    model:', '      modelName: openai/gpt-5.4-mini', '      apiKey: fixture-model-key'] : [],
   ]).join('\n') + '\n')
   const context = ctx = new Context()
   context.baseUrl = pathToFileURL(root).href + '/'

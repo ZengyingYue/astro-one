@@ -2,7 +2,7 @@ import { createServer, type IncomingHttpHeaders } from 'node:http'
 import { once } from 'node:events'
 import { gunzipSync } from 'node:zlib'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@astro-one/cordis'
 import { LoggerProvider } from '@opentelemetry/sdk-logs'
 import { SeverityNumber } from '@opentelemetry/api-logs'
 import ProductTelemetry, { Config } from '../src/index.ts'
@@ -78,7 +78,7 @@ describe('explicit product telemetry', () => {
     service.emit(event)
     expect(target.captures).toHaveLength(1)
     const [capture] = target.captures
-    expect(capture?.headers['x-channel']).toBe('dsh_otel_report')
+    expect(capture?.headers['x-channel']).toBe('astro_one_otel_report')
     expect(capture?.headers['content-encoding']).toBe(compression === 'gzip' ? 'gzip' : undefined)
     const logs = capture?.body.resourceLogs.flatMap(r => r.scopeLogs.flatMap(s => s.logRecords))
     expect(logs).toHaveLength(2)
@@ -107,7 +107,7 @@ describe('explicit product telemetry', () => {
     ctx.productTelemetry.emit(event)
     await fiber.dispose()
     expect(target.captures).toHaveLength(1)
-    expect(target.captures[0]?.headers).toMatchObject({ 'x-channel': 'dsh_otel_report' })
+    expect(target.captures[0]?.headers).toMatchObject({ 'x-channel': 'astro_one_otel_report' })
     expect(target.captures[0]?.headers).not.toHaveProperty('authorization')
     expect(target.captures[0]?.headers).not.toHaveProperty('x-user-id')
     expect(target.captures[0]?.headers).not.toHaveProperty('x-log-token')

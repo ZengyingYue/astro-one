@@ -1,41 +1,41 @@
 /** Explicit exceptions and Host packages for the published dependency policy. */
 
-/** Packages treated as Client/Host packages without declaring `dsh.client`. */
+/** Packages treated as Client/Host packages without declaring `astroOne.client`. */
 const CLIENT_FACE_INCLUDE: readonly string[] = []
 
-/** Packages exempted from automatic Client/Host treatment despite declaring `dsh.client`. */
+/** Packages exempted from automatic Client/Host treatment despite declaring `astroOne.client`. */
 const CLIENT_FACE_EXCLUDE: readonly string[] = [
-  '@deepseek-ai/dsh-api-session-controller',
-  '@deepseek-ai/dsh-api-workspace-controller',
+  '@astro-one/api-session-controller',
+  '@astro-one/api-workspace-controller',
 ]
 
 /** Host-only packages whose peer relays are deliberately flattened. */
 const HOST_DEPENDENCY_PACKAGES: readonly string[] = [
-  '@deepseek-ai/dsh-llm',
-  '@deepseek-ai/dsh-session',
+  '@astro-one/llm',
+  '@astro-one/session',
 ]
 
 /** Development-only package relationships not represented by source imports. */
 const CONFIGURATION_ONLY_DEV_DEPENDENCIES = {
-  '@deepseek-ai/dsh-client-locale': ['@deepseek-ai/dsh-api-remotes'],
-  '@deepseek-ai/dsh-client-ui-conversation': [
-    '@deepseek-ai/dsh-api-remotes',
-    '@deepseek-ai/dsh-client-ui-workspace',
+  '@astro-one/client-locale': ['@astro-one/api-remotes'],
+  '@astro-one/client-ui-conversation': [
+    '@astro-one/api-remotes',
+    '@astro-one/client-ui-workspace',
   ],
-  '@deepseek-ai/dsh-client-ui-model-selection': ['@deepseek-ai/dsh-client-ui-input-trigger'],
-  '@deepseek-ai/dsh-client-ui-sidebar': ['@deepseek-ai/dsh-client-ui-workspace'],
-  '@deepseek-ai/dsh-client-ui-subagent': ['@deepseek-ai/dsh-client-ui-input-trigger'],
-  '@deepseek-ai/dsh-client-ui-theme': ['@deepseek-ai/dsh-api-remotes'],
-  '@deepseek-ai/dsh-client-ui-tool': ['@deepseek-ai/dsh-api-remotes'],
+  '@astro-one/client-ui-model-selection': ['@astro-one/client-ui-input-trigger'],
+  '@astro-one/client-ui-sidebar': ['@astro-one/client-ui-workspace'],
+  '@astro-one/client-ui-subagent': ['@astro-one/client-ui-input-trigger'],
+  '@astro-one/client-ui-theme': ['@astro-one/api-remotes'],
+  '@astro-one/client-ui-tool': ['@astro-one/api-remotes'],
 } as const satisfies Readonly<Record<string, readonly string[]>>
 
 /** Workspace packages whose complete runtime surface is safe across duplicate installations. */
 const DUPLICATE_SAFE_PACKAGES: readonly string[] = [
-  '@deepseek-ai/dsh-brand',
-  '@deepseek-ai/dsh-lazy-require',
-  '@deepseek-ai/dsh-typert-protocol',
-  '@deepseek-ai/dsh-util-crypto',
-  '@deepseek-ai/dsh-util-values',
+  '@astro-one/brand',
+  '@astro-one/lazy-require',
+  '@astro-one/typert-protocol',
+  '@astro-one/util-crypto',
+  '@astro-one/util-values',
 ]
 
 /**
@@ -45,21 +45,21 @@ const DUPLICATE_SAFE_PACKAGES: readonly string[] = [
  * prominent heading in the pull request description.
  */
 const SAFE_HOST_DEPENDENCY_EXPORTS = {
-  '@deepseek-ai/dsh-credentials': ['credentialKey'],
-  '@deepseek-ai/dsh-deque': ['Deque'],
-  '@deepseek-ai/dsh-llm': ['callConfigEquals'],
-  '@deepseek-ai/dsh-session-format': ['sessionFormatLogFilename'],
-  '@deepseek-ai/dsh-timeout': ['MAX_TIMER_DELAY_MS'],
-  '@deepseek-ai/schemastery': ['default'],
+  '@astro-one/credentials': ['credentialKey'],
+  '@astro-one/deque': ['Deque'],
+  '@astro-one/llm': ['callConfigEquals'],
+  '@astro-one/session-format': ['sessionFormatLogFilename'],
+  '@astro-one/timeout': ['MAX_TIMER_DELAY_MS'],
+  '@astro-one/schemastery': ['default'],
 } as const satisfies HostDependencyExports
 
 /** Runtime exports that require every consumer to resolve the provider's shared peer instance. */
 const PEER_REQUIRED_HOST_EXPORTS = {
-  '@deepseek-ai/dsh-client-connection': ['OperatorPeer'],
-  '@deepseek-ai/dsh-subprocess': ['SubprocessExecutableNotFoundError'],
-  '@deepseek-ai/dsh-scope': ['carrierKeyOf', 'createScope', 'scopeOf', 'scopeTarget'],
-  '@deepseek-ai/dsh-session': ['SESSION_FORMAT_VERSION'],
-  '@deepseek-ai/dsh-session-persistence': ['SessionPersistenceNotFoundError'],
+  '@astro-one/client-connection': ['OperatorPeer'],
+  '@astro-one/subprocess': ['SubprocessExecutableNotFoundError'],
+  '@astro-one/scope': ['carrierKeyOf', 'createScope', 'scopeOf', 'scopeTarget'],
+  '@astro-one/session': ['SESSION_FORMAT_VERSION'],
+  '@astro-one/session-persistence': ['SessionPersistenceNotFoundError'],
 } as const satisfies HostDependencyExports
 
 /** Exact import specifier to reviewed runtime exports. */
@@ -92,20 +92,20 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 /** Whether a package manifest declares a dynamically loaded Client entry. */
-export function hasClientDeclaration(dshField: unknown): boolean {
-  return isRecord(dshField) && Object.hasOwn(dshField, 'client')
+export function hasClientDeclaration(astroOneField: unknown): boolean {
+  return isRecord(astroOneField) && Object.hasOwn(astroOneField, 'client')
 }
 
 /** Whether the repository policy flattens one package's non-Cordis peers. */
 export function usesFlattenedPackageDependencies(
   manifestPath: string,
   packageName: string,
-  dshField: unknown,
+  astroOneField: unknown,
   policy: PackageDependencyPolicy = PACKAGE_DEPENDENCY_POLICY,
 ): boolean {
   if (!manifestPath.startsWith('packages/') || manifestPath.startsWith('packages/experimental/')) return false
   if (policy.hostPackages.includes(packageName)) return true
   if (manifestPath.startsWith('packages/client/')) return true
-  const included = hasClientDeclaration(dshField) || policy.clientFaceInclude.includes(packageName)
+  const included = hasClientDeclaration(astroOneField) || policy.clientFaceInclude.includes(packageName)
   return included && !policy.clientFaceExclude.includes(packageName)
 }

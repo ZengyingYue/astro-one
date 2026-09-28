@@ -1,20 +1,20 @@
 /**
- * Shared profile boot for every `dsh` surface: resolve the profile, stack its
- * patch layers (bundle layers in `dsh.profile.bundles` order, the profile's
+ * Shared profile boot for every `astro-one` surface: resolve the profile, stack its
+ * patch layers (bundle layers in `astroOne.profile.bundles` order, the profile's
  * own `cordis.patch.yml`, `--patch` overlays, the telemetry switch), mount the
  * tree over the profile's empty root config, and wire fail-loud plus bounded shutdown.
  *
  * App flags are not the launcher's business: the invocation's inner arguments
  * are provided to the tree through `ctx.cmdlineArgs`, where any injected app
  * plugin may read the same immutable snapshot.
- * @module @deepseek-ai/dsh/profile-boot
+ * @module @astro-one/cli/profile-boot
  */
 
 import { existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { FiberState, type Context } from '@deepseek-ai/cordis'
-import type { PatchOptions } from '@deepseek-ai/cordis-plugin-include'
+import { FiberState, type Context } from '@astro-one/cordis'
+import type { PatchOptions } from '@astro-one/cordis-plugin-include'
 import {
   boot,
   readProfilePatches,
@@ -30,14 +30,14 @@ import {
   type ProfileContext,
   type Profile,
   type RuntimeResolution,
-} from '@deepseek-ai/dsh-app-boot'
-import { resolveDshHome } from '@deepseek-ai/dsh-home-paths'
-import { installProxyFromEnvironment } from '@deepseek-ai/dsh-http-proxy'
-import { DSH_LAUNCH_ENVIRONMENT_KEY, type LaunchEnvironmentSnapshot } from '@deepseek-ai/dsh-launch-environment'
-import { provideCmdline, type AppReady } from '@deepseek-ai/dsh-cmdline'
+} from '@astro-one/app-boot'
+import { resolveAstroOneHome } from '@astro-one/home-paths'
+import { installProxyFromEnvironment } from '@astro-one/http-proxy'
+import { ASTRO_ONE_LAUNCH_ENVIRONMENT_KEY, type LaunchEnvironmentSnapshot } from '@astro-one/launch-environment'
+import { provideCmdline, type AppReady } from '@astro-one/cmdline'
 import { createProcessShutdown, type ProcessShutdown } from './process-shutdown.ts'
 
-const NAME = 'dsh'
+const NAME = 'astro-one'
 
 /** Launcher-owned readiness signal committed only after boot and host setup succeed. */
 function createAppReady(): { service: AppReady; commit(): void } {
@@ -64,21 +64,21 @@ function createAppReady(): { service: AppReady; commit(): void } {
 }
 
 /**
- * The home-level user patch layer (`$DSH_HOME/cordis.patch.yml`), applied
+ * The home-level user patch layer (`$ASTRO_ONE_HOME/cordis.patch.yml`), applied
  * over every profile's own layer. Resolved per call, not at module load:
- * `$DSH_HOME` may be set by the test or launcher after import.
+ * `$ASTRO_ONE_HOME` may be set by the test or launcher after import.
  * @returns the absolute patch-file path.
  */
 export function homePatchPath(): string {
-  return join(resolveDshHome(), PROFILE_PATCH_FILENAME)
+  return join(resolveAstroOneHome(), PROFILE_PATCH_FILENAME)
 }
 
-/** Absolute path of this dsh installation's package.json (both anchors: src/ and lib/ sit one level under apps/cli). */
+/** Absolute path of this astro-one installation's package.json (both anchors: src/ and lib/ sit one level under apps/cli). */
 export const INSTALL_ANCHOR = fileURLToPath(new URL('../package.json', import.meta.url))
 
 /** The empty root entry list every profile tree patches over. */
-const PROFILE_ROOT_CONFIG = `# dsh profile root — an empty entry list. The tree is composed as patches:
-# each bundle in package.json's dsh.profile.bundles, then cordis.patch.yml, then any
+const PROFILE_ROOT_CONFIG = `# astro-one profile root — an empty entry list. The tree is composed as patches:
+# each bundle in package.json's astroOne.profile.bundles, then cordis.patch.yml, then any
 # --patch overlays. Edit cordis.patch.yml, not this file.
 []
 `
@@ -100,7 +100,7 @@ export const PROFILE_ROOT_FILENAME = 'cordis.yml'
 export function initializeProfileFromDefault(
   name: string,
   fromDefaultProfile: string,
-  home: string = resolveDshHome(),
+  home: string = resolveAstroOneHome(),
 ): void {
   const dir = resolveProfileDir(name, home)
   const template = Object.hasOwn(PROFILE_TEMPLATES, fromDefaultProfile)
@@ -181,9 +181,9 @@ interface ComposedProfile {
 
 /**
  * Load `name` and compose its effective patch stack: bundle layers in
- * `dsh.profile.bundles` order (a base-backed profile gets the base bundle's
+ * `astroOne.profile.bundles` order (a base-backed profile gets the base bundle's
  * platform-gated shell rows), the profile's user layer, the home-level user
- * layer (`$DSH_HOME/cordis.patch.yml` — machine-local preferences that apply
+ * layer (`$ASTRO_ONE_HOME/cordis.patch.yml` — machine-local preferences that apply
  * to every profile, so it outranks the per-profile layer), `--patch` overlays,
  * then the telemetry switch.
  * @param name - the profile name.
@@ -210,7 +210,7 @@ async function composeProfile(
 export interface ResolvedProfileRuntime {
   /** Profile already loaded from the application's own directory. */
   profile: Profile
-  /** Absolute package.json path of the application's dsh installation. */
+  /** Absolute package.json path of the application's astro-one installation. */
   installAnchor: string
 }
 
@@ -257,7 +257,7 @@ export async function runProfile(options: RunProfileOptions): Promise<{ ctx: Con
       try { await release() } catch (error) { failures.push(error) }
     }
     if (failures.length === 1) throw failures[0]
-    if (failures.length > 1) throw new AggregateError(failures, 'dsh: profile cleanup failed')
+    if (failures.length > 1) throw new AggregateError(failures, 'astro-one: profile cleanup failed')
   })()
   try {
     const composed = await composeProfile(
@@ -288,15 +288,15 @@ export async function runProfile(options: RunProfileOptions): Promise<{ ctx: Con
       dir: composed.profile.dir, patchPath: composed.profile.patchPath,
       installAnchor: options.resolvedProfile?.installAnchor ?? INSTALL_ANCHOR,
       startedBundles: composed.profile.layers.map(layer => layer.packageName),
-      cwd: process.cwd(), home: resolveDshHome(),
-      overlays: composed.overlays, telemetryDisabledEnv: process.env.DSH_TELEMETRY_DISABLED,
+      cwd: process.cwd(), home: resolveAstroOneHome(),
+      overlays: composed.overlays, telemetryDisabledEnv: process.env.ASTRO_ONE_TELEMETRY_DISABLED,
     }
     const ctx = await boot(NAME, rootConfig, readProfilePatches(NAME, profileContext, composed.profile), async (hostCtx) => {
       app.current = hostCtx
       hostCtx.provide('profileContext', profileContext)
       // Before any config-tree entry mounts, so plugins resolve all launch-time
       // environment values from the same immutable launch snapshot.
-      hostCtx.provide(DSH_LAUNCH_ENVIRONMENT_KEY, options.environment)
+      hostCtx.provide(ASTRO_ONE_LAUNCH_ENVIRONMENT_KEY, options.environment)
       await hostCtx.plugin(PluginPackages, {
         resolution: composed.resolution,
       })
@@ -317,7 +317,7 @@ export async function runProfile(options: RunProfileOptions): Promise<{ ctx: Con
     return { ctx, shutdown }
   } catch (error) {
     try { await dispose() } catch (cleanupError) {
-      throw new AggregateError([error, cleanupError], 'dsh: profile startup and cleanup failed')
+      throw new AggregateError([error, cleanupError], 'astro-one: profile startup and cleanup failed')
     }
     throw error
   }

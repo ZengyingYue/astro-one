@@ -1,8 +1,8 @@
 /** Interpreted retired content must fail before migration publication or recoverable native-tail suppression. */
-import { Context } from '@deepseek-ai/cordis'
-import { SessionId } from '@deepseek-ai/dsh-session'
-import { SessionFormatUnsupportedError, SessionPersistenceCorruptionError } from '@deepseek-ai/dsh-session-persistence'
-import JsonlSessionPersistence from '@deepseek-ai/dsh-session-persistence-jsonl'
+import { Context } from '@astro-one/cordis'
+import { SessionId } from '@astro-one/session'
+import { SessionFormatUnsupportedError, SessionPersistenceCorruptionError } from '@astro-one/session-persistence'
+import JsonlSessionPersistence from '@astro-one/session-persistence-jsonl'
 import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { basename, dirname, join } from 'node:path'
@@ -17,7 +17,7 @@ const modes = (['none', 'zstd'] as const).flatMap(compression =>
 
 describe.each(modes)('retired content in JSONL ($compression, $access)', ({ compression, access }) => {
   async function stored(version: 3 | 4, opaque: boolean, corruptPrefix: boolean) {
-    const root = await mkdtemp(join(tmpdir(), 'dsh-retired-content-'))
+    const root = await mkdtemp(join(tmpdir(), 'astro-one-retired-content-'))
     const ctx = new Context()
     onTestFinished(async () => {
       try { await ctx.fiber.dispose() } finally { await rm(root, { recursive: true, force: true }) }

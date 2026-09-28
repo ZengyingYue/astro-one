@@ -1,19 +1,19 @@
 /**
  * Default model selection for an Agent without a session-specific selection.
  *
- * @module @deepseek-ai/dsh-agent-default-model
+ * @module @astro-one/agent-default-model
  */
-import type {} from '@deepseek-ai/dsh-settings'
+import type {} from '@astro-one/settings'
 
-import type { Volatile } from '@deepseek-ai/cordis'
+import type { Volatile } from '@astro-one/cordis'
 
-import { Context, Service } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import type { ModelSelection } from '@deepseek-ai/dsh-agent'
-import { ReasoningEffortId } from '@deepseek-ai/dsh-llm'
-import type {} from '@deepseek-ai/dsh-config-editor'
+import { Context, Service } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
+import type { ModelSelection } from '@astro-one/agent'
+import { ReasoningEffortId } from '@astro-one/llm'
+import type {} from '@astro-one/config-editor'
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     /** Default model selection for Agents created without an explicit model. */
     agentDefaultModel: AgentDefaultModelConfig

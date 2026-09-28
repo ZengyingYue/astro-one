@@ -1,22 +1,22 @@
 /**
  * Six model-facing persistent terminal tools. Owner identity comes from the exact
  * tool execution Agent; generic `ctx.jobs` owns background ids and collection.
- * @module @deepseek-ai/dsh-tool-terminal
+ * @module @astro-one/tool-terminal
  */
 
-import { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import type { ContentBlock } from '@deepseek-ai/dsh-llm'
-import { TerminalSessionId } from '@deepseek-ai/dsh-terminal'
-import type { TerminalSendOperation, TerminalSendResult, TerminalSessionId as TerminalSessionIdType, TerminalSignal } from '@deepseek-ai/dsh-terminal'
-import type {} from '@deepseek-ai/dsh-jobs'
-import { defineTool } from '@deepseek-ai/dsh-tools'
-import type { ToolDefinition } from '@deepseek-ai/dsh-tools'
+import { Context } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
+import type { Agent } from '@astro-one/agent'
+import type { ContentBlock } from '@astro-one/llm'
+import { TerminalSessionId } from '@astro-one/terminal'
+import type { TerminalSendOperation, TerminalSendResult, TerminalSessionId as TerminalSessionIdType, TerminalSignal } from '@astro-one/terminal'
+import type {} from '@astro-one/jobs'
+import { defineTool } from '@astro-one/tools'
+import type { ToolDefinition } from '@astro-one/tools'
 import { sendSource } from './background.ts'
 import { boundTerminalText, renderList, renderRead, renderSend, renderSpawn } from './render.ts'
 
-declare module '@deepseek-ai/dsh-jobs' {
+declare module '@astro-one/jobs' {
   interface JobKindMap {
     'pty-send': 'pty-send'
   }
@@ -251,7 +251,7 @@ export function apply(ctx: Context, config: Config = {}): void {
       if (args.run_in_background === true) {
         if (!enableRunInBackground) throw new Error('background terminal sends are disabled by tool-terminal configuration')
         const jobs = ctx.get('jobs')
-        if (jobs === undefined) throw new Error('background terminal sends require @deepseek-ai/dsh-jobs and @deepseek-ai/dsh-tool-jobs')
+        if (jobs === undefined) throw new Error('background terminal sends require @astro-one/jobs and @astro-one/tool-jobs')
         let cancelRequested = false
         let operation: TerminalSendOperation | undefined
         const jobId = jobs.start({

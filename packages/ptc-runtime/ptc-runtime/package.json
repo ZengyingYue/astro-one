@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-ptc-runtime",
-  "description": "Abstract PTC execution seam (ctx.ptcRuntime) for the DeepSeek Harness",
+  "name": "@astro-one/ptc-runtime",
+  "description": "Abstract PTC execution seam (ctx.ptcRuntime) for the Astro One",
   "version": "0.1.7-rc.1",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/ptc-runtime/ptc-runtime"
   },
   "type": "module",
@@ -27,11 +27,11 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-sandbox": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/sandbox": "workspace:*"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-sandbox": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/sandbox": "workspace:*"
   }
 }

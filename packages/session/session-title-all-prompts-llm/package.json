@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-session-title-all-prompts-llm",
-  "description": "All-user-messages LLM provider plugin for DeepSeek Harness session titles",
+  "name": "@astro-one/session-title-all-prompts-llm",
+  "description": "All-user-messages LLM provider plugin for Astro One session titles",
   "version": "0.1.7-rc.1",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/session/session-title-all-prompts-llm"
   },
   "type": "module",
@@ -23,22 +23,22 @@
   "files": ["lib/index.js", "lib/types/**/*.d.ts"],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/dsh-llm": "workspace:*",
-    "@deepseek-ai/dsh-session": "workspace:*",
-    "@deepseek-ai/dsh-session-title": "workspace:*",
-    "@deepseek-ai/dsh-session-title-llm": "workspace:*",
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-title": "workspace:*",
+    "@astro-one/session-title-llm": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
   },
   "dependencies": {
-    "@deepseek-ai/schemastery": "workspace:~"
+    "@astro-one/schemastery": "workspace:~"
   },
   "devDependencies": {
-    "@deepseek-ai/dsh-llm": "workspace:*",
-    "@deepseek-ai/dsh-session": "workspace:*",
-    "@deepseek-ai/dsh-session-title": "workspace:*",
-    "@deepseek-ai/dsh-session-title-llm": "workspace:*",
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-session-projection": "workspace:*",
-    "@deepseek-ai/dsh-agent-loop": "workspace:*"
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-title": "workspace:*",
+    "@astro-one/session-title-llm": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/agent-loop": "workspace:*"
   }
 }

@@ -3,7 +3,7 @@ description: "The load_workspace_dependencies tool: absolute paths into a bundle
 kind: "package-reference"
 ---
 
-# @deepseek-ai/dsh-tool-workspace-dependencies
+# @astro-one/tool-workspace-dependencies
 
 English | [中文](README.zh.md)
 
@@ -25,12 +25,12 @@ Deployments that ship their own script runtimes (Desktop's primary runtime, or a
 <a id="use-this-package"></a>
 ## Use this package
 
-Mount the plugin beside the tool registry with the payload directory. Configuration validation requires a nonempty `source` and rejects empty `root` values before activation; both paths must be absolute. The bundled Office skills (`@deepseek-ai/dsh-skill-office`) reference this tool by name for their default interpreter.
+Mount the plugin beside the tool registry with the payload directory. Configuration validation requires a nonempty `source` and rejects empty `root` values before activation; both paths must be absolute. The bundled Office skills (`@astro-one/skill-office`) reference this tool by name for their default interpreter.
 
 ### Minimal configuration
 
 ```yaml
-- name: '@deepseek-ai/dsh-tool-workspace-dependencies'
+- name: '@astro-one/tool-workspace-dependencies'
   config:
     source: /path/to/primary-runtime
 ```
@@ -44,13 +44,13 @@ Mount the plugin beside the tool registry with the payload directory. Configurat
 
 `runtime.json` records `desktopVersion`, `platform` (`win32`, `darwin`, or `linux`), `arch`, optional `payloadDigest`, top-level `python`, optional `node`/`pnpm` versions, and the complete `pythonPackages` distribution-version map. A pnpm entry requires Node.js. Python libraries, including numpy and pandas, appear only in `pythonPackages`. Entries live under `dependencies/`: `python/bin/python3` (`python/python.exe` on Windows) with `site-packages` beneath it, and, when declared, `node/bin/node` with `node/node_modules` and `pnpm/bin/pnpm.mjs`. A manifest whose platform or architecture differs from the running process is rejected.
 
-The packaged `sdk` profile uses its bundled Python and Office skills by default; `DSH_PRIMARY_RUNTIME` overrides the resource location, and an empty value opts out. Source launches without a carrier default remain opt-in. See [runtime configuration](../../../python/sdk-runtime/README.md) for independent skill selection. Missing skill resources produce a startup warning; invalid or incomplete external runtime payloads fail the first tool call. Profile configuration changes require restarting the SDK process.
+The packaged `sdk` profile uses its bundled Python and Office skills by default; `ASTRO_ONE_PRIMARY_RUNTIME` overrides the resource location, and an empty value opts out. Source launches without a carrier default remain opt-in. See [runtime configuration](../../../python/sdk-runtime/README.md) for independent skill selection. Missing skill resources produce a startup warning; invalid or incomplete external runtime payloads fail the first tool call. Profile configuration changes require restarting the SDK process.
 
 ### Build a carrier payload
 
-From a repository checkout with dependencies installed, `CI=true pnpm run prepare:primary-runtime --target linux-x64 --output /tmp/dsh-office` writes `primary-runtime/` and `office-skills/`. The shared [download lock](../../../scripts/primary-runtime/lock.json) also covers `linux-arm64`, `mac-arm64`, `mac-x64`, and `win-x64`. `--python-only` omits Node.js and pnpm; `--cache` selects the hash-verified archive cache. The entry executes interpreter and Office read/write checks only for a native target. Cross-target builds require those checks on the target host before deployment.
+From a repository checkout with dependencies installed, `CI=true pnpm run prepare:primary-runtime --target linux-x64 --output /tmp/astro-one-office` writes `primary-runtime/` and `office-skills/`. The shared [download lock](../../../scripts/primary-runtime/lock.json) also covers `linux-arm64`, `mac-arm64`, `mac-x64`, and `win-x64`. `--python-only` omits Node.js and pnpm; `--cache` selects the hash-verified archive cache. The entry executes interpreter and Office read/write checks only for a native target. Cross-target builds require those checks on the target host before deployment.
 
-A container can copy both directories into an immutable image layer and set `DSH_PRIMARY_RUNTIME` to the absolute `primary-runtime/` path. The SDK queries that payload in place. Desktop uses the same builder and retains its Harness-home installation and signing checks.
+A container can copy both directories into an immutable image layer and set `ASTRO_ONE_PRIMARY_RUNTIME` to the absolute `primary-runtime/` path. The SDK queries that payload in place. Desktop uses the same builder and retains its Harness-home installation and signing checks.
 
 -----
 
@@ -86,7 +86,7 @@ A container can copy both directories into an immutable image layer and set `DSH
 
 #### What the model sees
 
-The model sees the generated [`load_workspace_dependencies` schema](../../../docs/tool-catalog.md#deepseek-aidsh-tool-workspace-dependencies).
+The model sees the generated [`load_workspace_dependencies` schema](../../../docs/tool-catalog.md#astro-onetool-workspace-dependencies).
 
 #### Token effect
 

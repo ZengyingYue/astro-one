@@ -1,18 +1,18 @@
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
+import { createUserMessage } from '@astro-one/llm'
 import { describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import AgentRegistry, { type Agent } from '@deepseek-ai/dsh-agent'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import LlmRuntime from '@deepseek-ai/dsh-llm'
-import type { MessageSource } from '@deepseek-ai/dsh-llm'
-import type { ContextFormed } from '@deepseek-ai/dsh-llm'
-import SessionStore, { SessionId } from '@deepseek-ai/dsh-session'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime from '@deepseek-ai/dsh-tools'
+import { Context } from '@astro-one/cordis'
+import AgentRegistry, { type Agent } from '@astro-one/agent'
+import AgentLoop from '@astro-one/agent-loop'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import LlmRuntime from '@astro-one/llm'
+import type { MessageSource } from '@astro-one/llm'
+import type { ContextFormed } from '@astro-one/llm'
+import SessionStore, { SessionId } from '@astro-one/session'
+import SystemPrompt from '@astro-one/system-prompt'
+import ToolRuntime from '@astro-one/tools'
 import { MockAdapter, textResponse } from './mock-adapter.ts'
 
-declare module '@deepseek-ai/dsh-llm' {
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'p': { kind: 'p' } & ContextFormed
     'test': { kind: 'test' } & ContextFormed

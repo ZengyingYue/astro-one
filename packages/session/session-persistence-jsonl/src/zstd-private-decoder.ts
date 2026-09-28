@@ -1,6 +1,6 @@
 /**
  * Node-private synchronous Zstandard frame decoder optimization.
- * @module dsh-session-persistence-jsonl/zstd-private-decoder
+ * @module astro-one-session-persistence-jsonl/zstd-private-decoder
  */
 
 import { constants as bufferConstants } from 'node:buffer'

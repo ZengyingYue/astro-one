@@ -1928,7 +1928,7 @@
     "aa1a9402165afaeb270967390b13cae2a59916bc52f13b4f600315d7a0fe2032": 1,
     "fa05a5e504ed74b5a07cb6281c787b507eb6c44db768803f4dad034dd69cb3b9": 1
   },
-  "packages/subagent/subagent-dsh-sdk/tests/subagent-dsh-sdk.spec.ts": {
+  "packages/subagent/subagent-astro-one-sdk/tests/subagent-astro-one-sdk.spec.ts": {
     "daa15206e19d6a8fbae646d678889b2e6933ece824e48dd06c95d2096861d5c1": 2,
     "f77e5cbd2d2d911087f7faecc4b0b5bffdfb44ca5d0bcf7823ba9777feca7799": 1
   },

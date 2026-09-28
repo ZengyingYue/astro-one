@@ -3,7 +3,7 @@
  * repository declares.
  *
  * A production release publishes the version in the manifests, aligned with the
- * `dsh` npm package. A test build publishes a version that appends a date and a
+ * `astro-one` npm package. A test build publishes a version that appends a date and a
  * sequence number, so one test feed can carry several builds of a single
  * product version: `0.1.6-alpha.1.20260916.1` from a prerelease base and
  * `0.1.6-test.20260916.1` from a stable one, as the release versions table in
@@ -23,7 +23,7 @@
 import { parse } from 'semver'
 
 /** Environment variable that carries the build version through one packaging and upload run. */
-export const DESKTOP_BUILD_VERSION_ENV = 'DSH_DESKTOP_BUILD_VERSION'
+export const DESKTOP_BUILD_VERSION_ENV = 'ASTRO_ONE_DESKTOP_BUILD_VERSION'
 
 /** Prerelease field that opens a test build's suffix on a stable product version. */
 const STABLE_TEST_FIELD = 'test'

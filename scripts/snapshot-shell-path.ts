@@ -1,6 +1,6 @@
 /** Exact recorded shell-command path translation; execution and reported outcomes remain real. */
-import type { Context } from '@deepseek-ai/cordis'
-import type {} from '@deepseek-ai/dsh-shell'
+import type { Context } from '@astro-one/cordis'
+import type {} from '@astro-one/shell'
 
 export const name = 'snapshot-shell-path'
 export const inject = ['shell']

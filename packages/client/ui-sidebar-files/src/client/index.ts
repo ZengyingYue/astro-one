@@ -10,11 +10,11 @@
  * it draws (`FilesBody.tsx`, `FilesTitle.tsx`), what it says (`locales.ts`),
  * and this module, which only wires them together.
  */
-import type { Context as ClientContext } from '@deepseek-ai/cordis'
-import type {} from '@deepseek-ai/dsh-api-remotes/client'
-import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
-import type {} from '@deepseek-ai/dsh-client-ui-session/client'
-import type {} from '@deepseek-ai/dsh-client-ui-sidebar-right/client'
+import type { Context as ClientContext } from '@astro-one/cordis'
+import type {} from '@astro-one/api-remotes/client'
+import type {} from '@astro-one/client-ui-renderer/client'
+import type {} from '@astro-one/client-ui-session/client'
+import type {} from '@astro-one/client-ui-sidebar-right/client'
 import { FILES_ID, filesDefinition } from './definition.tsx'
 import { createList, createWatch, filesFace } from './face.ts'
 import { FilesBody } from './FilesBody.tsx'

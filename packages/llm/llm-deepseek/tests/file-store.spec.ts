@@ -2,8 +2,8 @@ import { mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { AttachmentId, ImageVariantId } from '@deepseek-ai/dsh-attachment'
-import type { ImageAttachmentRef, RequestImageAttachment } from '@deepseek-ai/dsh-attachment'
+import { AttachmentId, ImageVariantId } from '@astro-one/attachment'
+import type { ImageAttachmentRef, RequestImageAttachment } from '@astro-one/attachment'
 import { DeepSeekFileStore, MAX_IMAGE_BYTES } from '../src/file-store.ts'
 import { DeepSeekFileId } from '../src/file-id.ts'
 import { deepSeekFileScope, DeepSeekUploadIndex } from '../src/upload-index.ts'
@@ -53,7 +53,7 @@ function uploadFetch(now: () => number = () => NOW) {
         type: 'file',
         size_bytes: 3,
         created_at: new Date(createdAt * 1_000).toISOString(),
-        filename: `dsh-${'a'.repeat(16)}-${'b'.repeat(8)}.png`,
+        filename: `astro-one-${'a'.repeat(16)}-${'b'.repeat(8)}.png`,
         mime_type: 'image/png',
       }), { status: 200 })
     }
@@ -68,7 +68,7 @@ function uploadFetch(now: () => number = () => NOW) {
 
 describe('DeepSeekFileStore', () => {
   it('reuses equivalent API roots and isolates other endpoints across invalidation and expiry', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'dsh-file-scope-'))
+    const dir = await mkdtemp(join(tmpdir(), 'astro-one-file-scope-'))
     roots.push(dir)
     let now = NOW
     const remote = uploadFetch(() => now)
@@ -98,12 +98,12 @@ describe('DeepSeekFileStore', () => {
   })
 
   it('reclaims the oldest owned native file across descending pages before retrying an upload', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'dsh-native-file-quota-'))
+    const dir = await mkdtemp(join(tmpdir(), 'astro-one-native-file-quota-'))
     roots.push(dir)
     const deleted: string[] = []
     const cursors: (string | null)[] = []
     let uploads = 0
-    const file = (id: string, age: number, filename = 'dsh-owned.png') => ({
+    const file = (id: string, age: number, filename = 'astro-one-owned.png') => ({
       id, type: 'file', size_bytes: 3, created_at: new Date(NOW - age).toISOString(), filename, mime_type: 'image/png',
     })
     const fetchImpl: typeof fetch = async (input, init) => {
@@ -133,7 +133,7 @@ describe('DeepSeekFileStore', () => {
   })
 
   it('singleflights the first upload and reuses the durable mapping across store instances', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'dsh-file-store-'))
+    const dir = await mkdtemp(join(tmpdir(), 'astro-one-file-store-'))
     roots.push(dir)
     const index = new DeepSeekUploadIndex(join(dir, 'index.json'))
     const remote = uploadFetch()
@@ -154,7 +154,7 @@ describe('DeepSeekFileStore', () => {
   })
 
   it('keeps a shared upload alive while another waiter remains', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'dsh-file-store-'))
+    const dir = await mkdtemp(join(tmpdir(), 'astro-one-file-store-'))
     roots.push(dir)
     const index = new DeepSeekUploadIndex(join(dir, 'index.json'))
     let complete: ((response: Response) => void) | undefined
@@ -186,14 +186,14 @@ describe('DeepSeekFileStore', () => {
       type: 'file',
       size_bytes: 3,
       created_at: new Date(NOW).toISOString(),
-      filename: `dsh-${'a'.repeat(16)}-${'b'.repeat(8)}.png`,
+      filename: `astro-one-${'a'.repeat(16)}-${'b'.repeat(8)}.png`,
       mime_type: 'image/png',
     }), { status: 200 }))
     await expect(completed).resolves.toMatchObject({ record: { fileId: 'file-api-shared' } })
   })
 
   it('aborts the shared upload after its only waiter cancels', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'dsh-file-store-'))
+    const dir = await mkdtemp(join(tmpdir(), 'astro-one-file-store-'))
     roots.push(dir)
     const index = new DeepSeekUploadIndex(join(dir, 'index.json'))
     let uploadSignal: AbortSignal | undefined
@@ -220,7 +220,7 @@ describe('DeepSeekFileStore', () => {
   })
 
   it('normalizes a non-Error cancellation reason', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'dsh-file-store-'))
+    const dir = await mkdtemp(join(tmpdir(), 'astro-one-file-store-'))
     roots.push(dir)
     const fetchImpl = vi.fn((_url: string | URL | Request, init?: RequestInit) => (
       new Promise<Response>((_resolve, reject) => {
@@ -248,7 +248,7 @@ describe('DeepSeekFileStore', () => {
   })
 
   it('starts a fresh upload while the cancelled transport is settling', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'dsh-file-store-'))
+    const dir = await mkdtemp(join(tmpdir(), 'astro-one-file-store-'))
     roots.push(dir)
     let requests = 0
     const fetchImpl = vi.fn((_url: string | URL | Request, init?: RequestInit) => {
@@ -264,7 +264,7 @@ describe('DeepSeekFileStore', () => {
       }
       return Promise.resolve(new Response(JSON.stringify({
         id: 'file-api-retry', type: 'file', size_bytes: 3, created_at: new Date(NOW).toISOString(),
-        filename: 'dsh-retry.png', mime_type: 'image/png',
+        filename: 'astro-one-retry.png', mime_type: 'image/png',
       }), { status: 200 }))
     }) as typeof fetch
     const store = new DeepSeekFileStore({
@@ -294,7 +294,7 @@ describe('DeepSeekFileStore', () => {
   })
 
   it('does not persist an upload whose response is missing and retries on the next request', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'dsh-file-store-'))
+    const dir = await mkdtemp(join(tmpdir(), 'astro-one-file-store-'))
     roots.push(dir)
     const index = new DeepSeekUploadIndex(join(dir, 'index.json'))
     const good = uploadFetch()
@@ -315,11 +315,11 @@ describe('DeepSeekFileStore', () => {
   })
 
   it('rejects an upload response whose byte count differs from the request version', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'dsh-file-store-'))
+    const dir = await mkdtemp(join(tmpdir(), 'astro-one-file-store-'))
     roots.push(dir)
     const fetchImpl = vi.fn(() => Promise.resolve(new Response(JSON.stringify({
       id: 'file-api-wrong-size', type: 'file', size_bytes: 2, created_at: new Date(NOW).toISOString(),
-      filename: 'dsh-wrong.png', mime_type: 'image/png',
+      filename: 'astro-one-wrong.png', mime_type: 'image/png',
     }), { status: 200 }))) as typeof fetch
     const store = new DeepSeekFileStore({
       index: new DeepSeekUploadIndex(join(dir, 'index.json')),
@@ -335,7 +335,7 @@ describe('DeepSeekFileStore', () => {
     ['image/webp', 'webp'],
     ['image/gif', 'gif'],
   ] as const)('uses the %s filename extension for uploads', async (mediaType, extension) => {
-    const dir = await mkdtemp(join(tmpdir(), 'dsh-file-store-'))
+    const dir = await mkdtemp(join(tmpdir(), 'astro-one-file-store-'))
     roots.push(dir)
     const remote = uploadFetch()
     const store = new DeepSeekFileStore({
@@ -353,7 +353,7 @@ describe('DeepSeekFileStore', () => {
   })
 
   it('normalizes a non-Error failure from the durable upload index', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'dsh-file-store-'))
+    const dir = await mkdtemp(join(tmpdir(), 'astro-one-file-store-'))
     roots.push(dir)
     const index = new DeepSeekUploadIndex(join(dir, 'index.json'))
     vi.spyOn(index, 'get').mockRejectedValue('index unavailable')
@@ -366,7 +366,7 @@ describe('DeepSeekFileStore', () => {
   })
 
   it('reuses the local expiry above the refresh margin and uploads again at the margin', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'dsh-file-store-'))
+    const dir = await mkdtemp(join(tmpdir(), 'astro-one-file-store-'))
     roots.push(dir)
     const index = new DeepSeekUploadIndex(join(dir, 'index.json'))
     let now = NOW
@@ -387,7 +387,7 @@ describe('DeepSeekFileStore', () => {
   })
 
   it('releases an indexed file through DELETE and removes only that mapping', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'dsh-file-store-'))
+    const dir = await mkdtemp(join(tmpdir(), 'astro-one-file-store-'))
     roots.push(dir)
     const index = new DeepSeekUploadIndex(join(dir, 'index.json'))
     const remote = uploadFetch()
@@ -400,7 +400,7 @@ describe('DeepSeekFileStore', () => {
   })
 
   it('removes a losing upload and keeps the winning durable mapping when duplicate cleanup fails', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'dsh-file-store-'))
+    const dir = await mkdtemp(join(tmpdir(), 'astro-one-file-store-'))
     roots.push(dir)
     const index = new DeepSeekUploadIndex(join(dir, 'index.json'))
     vi.spyOn(index, 'commit').mockResolvedValue({
@@ -430,7 +430,7 @@ describe('DeepSeekFileStore', () => {
   })
 
   it('reclaims one owned file after quota rejection and retries the upload once', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'dsh-file-store-'))
+    const dir = await mkdtemp(join(tmpdir(), 'astro-one-file-store-'))
     roots.push(dir)
     let uploads = 0
     const fetchImpl = vi.fn((input: string | URL | Request, init?: RequestInit) => {
@@ -441,7 +441,7 @@ describe('DeepSeekFileStore', () => {
         }), { status: 400 }))
         return Promise.resolve(new Response(JSON.stringify({
           id: 'file-api-recovered', type: 'file', size_bytes: 3, created_at: new Date(NOW).toISOString(),
-          filename: 'dsh-recovered.png', mime_type: 'image/png',
+          filename: 'astro-one-recovered.png', mime_type: 'image/png',
         }), { status: 200 }))
       }
       if (init?.method === 'DELETE') {
@@ -453,7 +453,7 @@ describe('DeepSeekFileStore', () => {
       return Promise.resolve(new Response(JSON.stringify({
         data: [{
           id: 'file-api-old', type: 'file', size_bytes: 3, created_at: new Date(NOW).toISOString(),
-          filename: 'dsh-old.png', mime_type: 'image/png',
+          filename: 'astro-one-old.png', mime_type: 'image/png',
         }],
         first_id: 'file-api-old', last_id: 'file-api-old', has_more: false,
       }), { status: 200 }))
@@ -471,7 +471,7 @@ describe('DeepSeekFileStore', () => {
   })
 
   it('preserves a quota error when no harness-owned file can be reclaimed', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'dsh-file-store-'))
+    const dir = await mkdtemp(join(tmpdir(), 'astro-one-file-store-'))
     roots.push(dir)
     const fetchImpl = vi.fn((_input: string | URL | Request, init?: RequestInit) => {
       if (init?.method === 'POST') return Promise.resolve(new Response(JSON.stringify({
@@ -495,7 +495,7 @@ describe('DeepSeekFileStore', () => {
   })
 
   it('finishes pagination before deleting cursor files during quota recovery', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'dsh-file-store-'))
+    const dir = await mkdtemp(join(tmpdir(), 'astro-one-file-store-'))
     roots.push(dir)
     const deleted = new Set<string>()
     const fetchImpl = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
@@ -514,7 +514,7 @@ describe('DeepSeekFileStore', () => {
           type: 'file',
           size_bytes: 3,
           created_at: new Date(NOW).toISOString(),
-          filename: `dsh-${id}.png`,
+          filename: `astro-one-${id}.png`,
           mime_type: 'image/png',
         }],
         first_id: id,
@@ -533,7 +533,7 @@ describe('DeepSeekFileStore', () => {
   })
 
   it('stops pagination when a page omits or repeats its cursor', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'dsh-file-store-'))
+    const dir = await mkdtemp(join(tmpdir(), 'astro-one-file-store-'))
     roots.push(dir)
     for (const mode of ['missing', 'repeated'] as const) {
       let page = 0
@@ -560,7 +560,7 @@ describe('DeepSeekFileStore', () => {
   })
 
   it('releases every batch and clears the scoped upload index', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'dsh-file-store-'))
+    const dir = await mkdtemp(join(tmpdir(), 'astro-one-file-store-'))
     roots.push(dir)
     const index = new DeepSeekUploadIndex(join(dir, 'index.json'))
     const store = new DeepSeekFileStore({ index, now: () => NOW, fetch: vi.fn() as typeof fetch })

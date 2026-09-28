@@ -1,13 +1,13 @@
 /** Reloaded tab identities and nonblocking close requests use independent lifetimes. */
 import { setImmediate } from 'node:timers/promises'
 import { afterEach, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
-import { RemoteError, type RemoteResult } from '@deepseek-ai/dsh-typert-protocol'
-import { streamMethod } from '@deepseek-ai/dsh-remote-mock'
-import { RemoteStream, type ClientRemote } from '@deepseek-ai/dsh-api-gateway/client'
-import type {} from '@deepseek-ai/dsh-api-terminal-controller/remote'
-import type { SessionId } from '@deepseek-ai/dsh-session/types'
+import { Context } from '@astro-one/cordis'
+import { createSnapshotStore } from '@astro-one/client-store'
+import { RemoteError, type RemoteResult } from '@astro-one/typert-protocol'
+import { streamMethod } from '@astro-one/remote-mock'
+import { RemoteStream, type ClientRemote } from '@astro-one/api-gateway/client'
+import type {} from '@astro-one/api-terminal-controller/remote'
+import type { SessionId } from '@astro-one/session/types'
 import type { WebTerminalId, WebTerminalInfo, TerminalEnvironment } from '../src/types.ts'
 import { TerminalView, type TerminalRemote } from '../src/client/model.ts'
 import { TerminalCloseRequests } from '../src/client/close-requests.ts'
@@ -285,7 +285,7 @@ it('retains an inactive close failure with its tab title until retry succeeds', 
   const { service } = await h.service()
   vi.mocked(h.remote.close).mockResolvedValueOnce(failure('Host refused cleanup'))
   service.close(sessionId, 'Build', 'Build', info.id)
-  expect(data.has(`dsh.terminal.close.v1.${info.id}`)).toBe(true)
+  expect(data.has(`astro-one.terminal.close.v1.${info.id}`)).toBe(true)
   await expect.poll(() => service.closeFailures.getSnapshot()).toEqual([{ id: info.id, title: 'Build', message: 'Host refused cleanup' }])
   vi.mocked(h.remote.list).mockResolvedValueOnce(success([info]))
   expect(await service.recover(sessionId)).toEqual([])
@@ -331,19 +331,19 @@ it('persists occurrence identities before allocation and removes them on close w
   const h = fixture()
   const { service } = await h.service()
   const model = service.view(sessionId, 'new-tab', 'new-tab')
-  const key = 'dsh.terminal.binding.v1.' + JSON.stringify([sessionId, 'new-tab'])
+  const key = 'astro-one.terminal.binding.v1.' + JSON.stringify([sessionId, 'new-tab'])
   expect(JSON.parse(data.get(key)!)).toBe(model.id)
   await model.refresh()
   expect(model.id).toMatch(/^[0-9a-f-]{36}$/)
-  expect([...data.keys()]).toEqual([key, 'dsh.terminal.shell'])
+  expect([...data.keys()]).toEqual([key, 'astro-one.terminal.shell'])
   const pending = Promise.withResolvers<RemoteResult<void>>()
   vi.mocked(h.remote.close).mockReturnValueOnce(pending.promise)
   service.close(sessionId, 'new-tab', 'new-tab')
   const request = { sessionId, id: model.id, title: info.title }
   expect(data.has(key)).toBe(false)
-  expect(data.get(`dsh.terminal.close.v1.${model.id}`)).toBe(JSON.stringify(request))
+  expect(data.get(`astro-one.terminal.close.v1.${model.id}`)).toBe(JSON.stringify(request))
   pending.resolve(success(undefined))
-  await expect.poll(() => [...data.keys()]).toEqual(['dsh.terminal.shell'])
+  await expect.poll(() => [...data.keys()]).toEqual(['astro-one.terminal.shell'])
 })
 
 it('restores the same terminal in the same occurrence after reload without opening a recovery duplicate', async () => {
@@ -422,7 +422,7 @@ it('reports a missing saved terminal after reload and never starts a replacement
 
 it.each(['{broken', 'null', '{}', '[{}]', '{"sessionId":"s","id":"bad/id","title":"x"}', '{"sessionId":"s","id":"different","title":"x"}'])('discards malformed saved cleanup: %s', (raw) => {
   const data = storage()
-  data.set('dsh.terminal.close.v1.terminal', raw)
+  data.set('astro-one.terminal.close.v1.terminal', raw)
   const error = vi.spyOn(console, 'error').mockImplementation(() => {})
   expect(new TerminalCloseRequests().pending()).toEqual([])
   expect(error).toHaveBeenCalledOnce()
@@ -432,11 +432,11 @@ it('skips unrelated storage and cleanup keys removed during enumeration', () => 
   const getItem = vi.fn(() => null)
   vi.stubGlobal('localStorage', {
     length: 3,
-    key: (index: number) => ['unrelated', 'dsh.terminal.close.v1.gone', null][index],
+    key: (index: number) => ['unrelated', 'astro-one.terminal.close.v1.gone', null][index],
     getItem,
   })
   expect(new TerminalCloseRequests().pending()).toEqual([])
-  expect(getItem).toHaveBeenCalledExactlyOnceWith('dsh.terminal.close.v1.gone')
+  expect(getItem).toHaveBeenCalledExactlyOnceWith('astro-one.terminal.close.v1.gone')
 })
 
 it('keeps close requests usable without browser storage', () => {
@@ -475,7 +475,7 @@ it.each(['saved', 'view'] as const)('clears a %s close request after the Host co
   await expect.poll(() => vi.mocked(h.remote.close).mock.calls.length).toBe(1)
   await dispose()
   expect([...data.entries()]).toEqual(source === 'view'
-    ? [['dsh.terminal.shell', info.shell.path]] : [])
+    ? [['astro-one.terminal.shell', info.shell.path]] : [])
   expect(service.closeFailures.getSnapshot()).toEqual([])
   expect(new TerminalCloseRequests().pending()).toEqual([])
   await h.service()
@@ -535,7 +535,7 @@ it('discovers menu choices without creating a process and remembers a choice bef
     shells: [info.shell, alternate], selectedShell: info.shell.path,
   })
   service.selectShell(alternate.path)
-  expect(data.get('dsh.terminal.shell')).toBe(alternate.path)
+  expect(data.get('astro-one.terminal.shell')).toBe(alternate.path)
   expect(h.remote.create).not.toHaveBeenCalled()
   expect((await service.launchShells(sessionId, new AbortController().signal)).selectedShell).toBe(alternate.path)
   const model = service.view(sessionId, 'chosen', 'chosen', undefined, alternate.path)
@@ -567,7 +567,7 @@ it('retains the last selection across a failed automatic launch', async () => {
   vi.mocked(h.remote.create).mockResolvedValueOnce(failure('shell disappeared'))
   const model = h.view()
   await model.refresh()
-  expect(data.get('dsh.terminal.shell')).toBe(info.shell.path)
+  expect(data.get('astro-one.terminal.shell')).toBe(info.shell.path)
   expect(model.state.getSnapshot().error).toBe('shell disappeared')
   await model.refresh()
   expect(h.remote.create).toHaveBeenCalledTimes(2)

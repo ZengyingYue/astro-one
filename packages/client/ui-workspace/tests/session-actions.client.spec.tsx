@@ -10,15 +10,15 @@
  */
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
-import type { SessionListState, SessionSummary } from '@deepseek-ai/dsh-api-session-controller/client'
-import type { WorkspaceId, WorkspaceSnapshot } from '@deepseek-ai/dsh-api-workspace-controller/client'
-import type { SessionStatusSnapshot } from '@deepseek-ai/dsh-client-ui-session/client'
-import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
-import type { GlobalStandardProps, PropsLocale, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
-import { bindSnapshotSelector, makeTranslate } from '@deepseek-ai/dsh-client-test-runtime'
-import { en as commonEn } from '@deepseek-ai/dsh-client-locale/src/locales/en.ts'
-import { zh as commonZh } from '@deepseek-ai/dsh-client-locale/src/locales/zh.ts'
+import type { SessionListState, SessionSummary } from '@astro-one/api-session-controller/client'
+import type { WorkspaceId, WorkspaceSnapshot } from '@astro-one/api-workspace-controller/client'
+import type { SessionStatusSnapshot } from '@astro-one/client-ui-session/client'
+import type { SessionId } from '@astro-one/session/types'
+import { createSnapshotStore } from '@astro-one/client-store'
+import type { GlobalStandardProps, PropsLocale, PropsRuntime } from '@astro-one/client-ui-slots'
+import { bindSnapshotSelector, makeTranslate } from '@astro-one/client-test-runtime'
+import { en as commonEn } from '@astro-one/client-locale/src/locales/en.ts'
+import { zh as commonZh } from '@astro-one/client-locale/src/locales/zh.ts'
 import type {
   MenuOpenState, RowToast, RowToastState, SessionArchiveConfirmInjected, SessionArchiveConfirmRequest,
   SessionRenameDialogInjected, SessionRenameTarget,
@@ -449,7 +449,7 @@ describe('SessionArchiveConfirmDialog', () => {
 
 // A provider outside this package may merge its own family into the kind map;
 // the dialog must describe it without knowing its copy.
-declare module '@deepseek-ai/dsh-workspace/types' {
+declare module '@astro-one/workspace/types' {
   interface SessionActivityKindMap {
     probe: true
   }

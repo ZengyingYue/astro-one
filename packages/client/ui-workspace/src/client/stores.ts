@@ -5,9 +5,9 @@
  * register() receives the factory and the browser derives its PropsStore
  * share from the return type.
  */
-import { defineStore, type EngineStoreHandle } from '@deepseek-ai/dsh-client-store'
-import type { SessionListState } from '@deepseek-ai/dsh-api-session-controller/client'
-import type { SessionId } from '@deepseek-ai/dsh-session/types'
+import { defineStore, type EngineStoreHandle } from '@astro-one/client-store'
+import type { SessionListState } from '@astro-one/api-session-controller/client'
+import type { SessionId } from '@astro-one/session/types'
 import { reconcileManualOrder, type ArchivedFilter, type SessionRowState } from './tree.ts'
 
 /** Browser-local order account for the hierarchy-free flat Session list. */
@@ -88,7 +88,7 @@ export function createWorkspaceViewStore(): EngineStoreHandle<WorkspaceViewState
       sessionOrderByAccount: {},
       archivedFilter: 'default',
     }),
-    persist: 'dsh.workspace.view.v5',
+    persist: 'astro-one.workspace.view.v5',
     actions: {
       setGroupBy: (d, mode: SessionGroupBy) => { d.groupBy = mode },
       setOrderBy: (d, mode: SessionOrderBy, initialOrders) => {

@@ -87,15 +87,15 @@
 .root {
   display: flex;
   align-items: center;
-  height: calc(24px + var(--dsh-content-font-delta, 0px));
+  height: calc(24px + var(--astro-one-content-font-delta, 0px));
   min-width: 0;
 }
 
 .leading {
   position: relative; /* .chevronHover overlay anchor */
   flex: none;
-  width: calc(16px + var(--dsh-content-font-delta, 0px));
-  height: calc(16px + var(--dsh-content-font-delta, 0px));
+  width: calc(16px + var(--astro-one-content-font-delta, 0px));
+  height: calc(16px + var(--astro-one-content-font-delta, 0px));
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -110,8 +110,8 @@
    .compactionLeading, and MessageIconActions); migrating the bash row onto
    the shared DisclosureRow would collapse them to one. */
 .leading svg:not([data-state]) {
-  width: calc(14px + var(--dsh-content-font-delta, 0px));
-  height: calc(14px + var(--dsh-content-font-delta, 0px));
+  width: calc(14px + var(--astro-one-content-font-delta, 0px));
+  height: calc(14px + var(--astro-one-content-font-delta, 0px));
 }
 
 .chevron {
@@ -144,8 +144,8 @@
 
 .title {
   flex: none;
-  font-size: var(--dsh-content-font-size-secondary, 13px);
-  line-height: calc(24px + var(--dsh-content-font-delta, 0px));
+  font-size: var(--astro-one-content-font-size-secondary, 13px);
+  line-height: calc(24px + var(--astro-one-content-font-delta, 0px));
   color: var(--dsw-alias-label-secondary);
   transition: color 100ms ease;
 }
@@ -165,8 +165,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: var(--dsh-content-font-size-secondary, 13px);
-  line-height: calc(24px + var(--dsh-content-font-delta, 0px));
+  font-size: var(--astro-one-content-font-size-secondary, 13px);
+  line-height: calc(24px + var(--astro-one-content-font-delta, 0px));
   color: var(--dsw-alias-label-tertiary);
   transition: color 100ms ease;
 }

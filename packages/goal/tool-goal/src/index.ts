@@ -1,23 +1,23 @@
 /**
  * Model-facing `get_goal`, `create_goal`, and `update_goal` tools over the
  * persisted same-session goal domain.
- * @module @deepseek-ai/dsh-tool-goal
+ * @module @astro-one/tool-goal
  */
 
-import type { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import { GoalId } from '@deepseek-ai/dsh-goal'
-import type { GoalRef, GoalView } from '@deepseek-ai/dsh-goal'
-import { boundContextSummary, createUserMessage, HarnessError } from '@deepseek-ai/dsh-llm'
-import type { ContextFormed } from '@deepseek-ai/dsh-llm'
-declare module '@deepseek-ai/dsh-llm' {
+import type { Context } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
+import { GoalId } from '@astro-one/goal'
+import type { GoalRef, GoalView } from '@astro-one/goal'
+import { boundContextSummary, createUserMessage, HarnessError } from '@astro-one/llm'
+import type { ContextFormed } from '@astro-one/llm'
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'tool-goal': { kind: 'tool-goal' } & ContextFormed
   }
 }
 
-import { defineTool } from '@deepseek-ai/dsh-tools'
-import type { GenericCallView } from '@deepseek-ai/dsh-tools'
+import { defineTool } from '@astro-one/tools'
+import type { GenericCallView } from '@astro-one/tools'
 import {
   completionAuthority,
   goalToolExecution,

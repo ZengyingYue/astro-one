@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/archived/simplification/2026-08-27-persistence-export-and-pre-release-trims.md
-2026-08-27-persistence-export-and-pre-release-trims.md: 5a99bb7b38e0ce0ce6974897b09ec90fbe6bb074
-2026-08-27-persistence-export-and-pre-release-trims.zh.md: 2eb87104cf292d31e0775b8aa94e32947dd4f36b
+2026-08-27-persistence-export-and-pre-release-trims.md: 6d33c36dbc4602688448efc70743865d33c64c45
+2026-08-27-persistence-export-and-pre-release-trims.zh.md: b384cfd896b6cc2c120c697885eab471b1500e14

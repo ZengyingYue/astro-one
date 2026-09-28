@@ -12,7 +12,7 @@ harness 此前把每张 DeepSeek 请求图片投影到 640,000 总像素预算�
 
 ## 决策
 
-请求图片的尺寸由路由决定，附件提供方只负责缩放和编码。`dsh-attachment` 里的 `ImageRequestPolicy` 改为 `ImageRequestTarget`，即一张附件的目标宽、高和字节目标。`readImageRequest` 只按源图长边缩放且不放大，编码器按路由预测的方式推出短边；缓存按附件 id、目标尺寸、字节目标、编码参数和新的 `request-image-v6` 变换版本取键，因此之前的缓存条目和上传映射都不会被复用。`dsh-attachment` 保留两个提供方无关的几何导出：按总像素预算的 `requestImageDimensions`，以及长边精确、短边四舍五入的 `longEdgeDimensions`。
+请求图片的尺寸由路由决定，附件提供方只负责缩放和编码。`astro-one-attachment` 里的 `ImageRequestPolicy` 改为 `ImageRequestTarget`，即一张附件的目标宽、高和字节目标。`readImageRequest` 只按源图长边缩放且不放大，编码器按路由预测的方式推出短边；缓存按附件 id、目标尺寸、字节目标、编码参数和新的 `request-image-v6` 变换版本取键，因此之前的缓存条目和上传映射都不会被复用。`astro-one-attachment` 保留两个提供方无关的几何导出：按总像素预算的 `requestImageDimensions`，以及长边精确、短边四舍五入的 `longEdgeDimensions`。
 
 提供方规则归 `llm-deepseek`。`image-tokens.ts` 保留逐字移植的 `v41` 求解器，并新增 `deepSeekRequestImageDimensions`：补齐 patch 后的网格在上限内就发源图本身，否则按源图宽高比取求解网格的长边，于是 3840×2160 的源图以 1708×961 发送，提供方再把它补齐到 1708×966 的网格。`resolveRequestImageTarget` 在省略 `imagePixelBudget` 时用这个求解器，正整数或 512×512 的 `low` 预设用 `requestImageDimensions`，然后对每张请求图片加 4096 像素单边上限，使图片数量不会改变目标，最后带上路由的 2 MiB 字节目标。计价对同一个目标算 `deepSeekImageTokens`，预估器和发出的图片来自同一个求解器。pi-ai 路由从它不变的 2048×2048 像素预算推导目标。小图不放大，因为提供方自己会放大 544×544 像素以下的图片。
 
@@ -20,7 +20,7 @@ harness 此前把每张 DeepSeek 请求图片投影到 640,000 总像素预算�
 
 **把像素预算提高到 1302×1302。** 总像素预算只对正方形正确：16:9 的源图会按 169 万像素发送而网格只保留 165 万，4:1 的源图网格只保留 159 万，极端比例又会丢掉网格本会保留的细节。一条复现提供方的规则消除了猜测。
 
-**在附件策略上加 `token-grid` 投影种类，求解器放进 `dsh-attachment`。** 最初就是这样做的：策略变成 `pixel-budget` 和 `token-grid` 的封闭联合，求解器搬进 `request-projection.ts`，`deepSeekImageTokens` 再从那里引回来。这把一家提供方的布局公式和 patch 常量放进了提供方无关的包，还起了个看似通用的名字；存储层需要一个 `unscaled` 标志来区分「发源图」和「发求解尺寸」；以后每多一家提供方规则，联合就要多长一个分支。把算好的目标交给存储层，提供方规则和它的计价放在一起，存储层不需要任何投影词汇。
+**在附件策略上加 `token-grid` 投影种类，求解器放进 `astro-one-attachment`。** 最初就是这样做的：策略变成 `pixel-budget` 和 `token-grid` 的封闭联合，求解器搬进 `request-projection.ts`，`deepSeekImageTokens` 再从那里引回来。这把一家提供方的布局公式和 patch 常量放进了提供方无关的包，还起了个看似通用的名字；存储层需要一个 `unscaled` 标志来区分「发源图」和「发求解尺寸」；以后每多一家提供方规则，联合就要多长一个分支。把算好的目标交给存储层，提供方规则和它的计价放在一起，存储层不需要任何投影词汇。
 
 **用填充缩放发送求解器的精确网格尺寸。** 求解出的网格边长是整数个 patch，与源图宽高比相差不到一个 patch。填充到这个框会轻微变形，尽管提供方那侧也会这样做；保持源图宽高比可能改变取整后短边覆盖的 token 格数。1224×1429 的源图以 1187×1386 发送，官方计算器对源图计 959 token，对发送尺寸计 992 token。请求生成和定价共享目标尺寸，定价按目标尺寸应用官方计算规则。
 

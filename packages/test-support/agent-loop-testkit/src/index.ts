@@ -2,21 +2,21 @@
  * Shared service mounting, real AgentLoop drivers, and structural Inbox stubs
  * for agent-loop tests. Callers retain ownership of their contexts, adapters,
  * optional plugins, agents, and teardown.
- * @module @deepseek-ai/dsh-agent-loop-testkit
+ * @module @astro-one/agent-loop-testkit
  */
 
-import type { Context } from '@deepseek-ai/cordis'
-import AgentRegistry from '@deepseek-ai/dsh-agent'
-import type { Agent, AgentOptions, Inbox, InboxTarget } from '@deepseek-ai/dsh-agent'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import LlmRuntime from '@deepseek-ai/dsh-llm'
-import SessionStore from '@deepseek-ai/dsh-session'
-import type { SessionHeader, SessionId, UserMessage } from '@deepseek-ai/dsh-session'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import type { Config as SystemPromptConfig } from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime from '@deepseek-ai/dsh-tools'
-import type { Config as ToolRuntimeConfig } from '@deepseek-ai/dsh-tools'
+import type { Context } from '@astro-one/cordis'
+import AgentRegistry from '@astro-one/agent'
+import type { Agent, AgentOptions, Inbox, InboxTarget } from '@astro-one/agent'
+import AgentLoop from '@astro-one/agent-loop'
+import LlmRuntime from '@astro-one/llm'
+import SessionStore from '@astro-one/session'
+import type { SessionHeader, SessionId, UserMessage } from '@astro-one/session'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import SystemPrompt from '@astro-one/system-prompt'
+import type { Config as SystemPromptConfig } from '@astro-one/system-prompt'
+import ToolRuntime from '@astro-one/tools'
+import type { Config as ToolRuntimeConfig } from '@astro-one/tools'
 
 export { createInboxStub, unsupportedInbox } from './inbox.ts'
 

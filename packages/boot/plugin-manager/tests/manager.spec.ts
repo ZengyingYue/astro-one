@@ -8,18 +8,18 @@ import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { execa } from 'execa'
-import type { Context } from '@deepseek-ai/cordis'
+import type { Context } from '@astro-one/cordis'
 import { expect, it, onTestFinished, vi } from 'vitest'
 import {
   boot, composeEntries, initProfile, loadProfileDirectory, readProfilePatches, readProfileManifest,
-  reconcileProfilePatches, OPTIONAL_BUNDLES, PluginPackages, readPluginMeta, getDshRuntimeVersion,
+  reconcileProfilePatches, OPTIONAL_BUNDLES, PluginPackages, readPluginMeta, getAstroOneRuntimeVersion,
   type ProfileContext, type RuntimeResolution,
-} from '@deepseek-ai/dsh-app-boot'
+} from '@astro-one/app-boot'
 import PluginManager, { type Config, type PluginChange, type PluginInstallLogChunk, type PluginInstallProgress, type PluginInstallRequestId } from '../src/index.ts'
-import Hmr from '@deepseek-ai/dsh-hmr'
-import Timer from '@deepseek-ai/cordis-plugin-timer'
-import type { PatchOptions } from '@deepseek-ai/cordis-plugin-include'
-import { Group } from '@deepseek-ai/cordis-plugin-loader'
+import Hmr from '@astro-one/hmr'
+import Timer from '@astro-one/cordis-plugin-timer'
+import type { PatchOptions } from '@astro-one/cordis-plugin-include'
+import { Group } from '@astro-one/cordis-plugin-loader'
 import * as operations from '../src/operations.ts'
 import * as githubConnection from '../src/github-connection.ts'
 import { parse, parseDocument } from 'yaml'
@@ -37,7 +37,7 @@ async function fixture(reload: 'live' | 'startup' = 'live', overlay = false, pre
   const bundle = (name: string, rows: unknown[]) => {
     const path = join(dir, 'node_modules', name)
     mkdirSync(path, { recursive: true })
-    writeFileSync(join(path, 'package.json'), JSON.stringify({ name, version: '1.0.0', dsh: { bundle: { patch: './cordis.patch.yml' } } }))
+    writeFileSync(join(path, 'package.json'), JSON.stringify({ name, version: '1.0.0', astroOne: { bundle: { patch: './cordis.patch.yml' } } }))
     writeFileSync(join(path, 'cordis.patch.yml'), JSON.stringify([{ insert: rows }]))
     writeFileSync(join(path, 'plugin.mjs'), 'export function apply(ctx, config) { if (config?.fail) throw new Error("test activation failed"); ctx.provide(config?.service ?? "managedProbe", true) }\n')
   }
@@ -84,7 +84,7 @@ it.each(['network', 'timeout'] as const)('stops a GitHub %s before pnpm and attr
   connection.mockResolvedValue(failure)
   const pnpm = vi.spyOn(operations, 'runProfilePnpm')
   onTestFinished(() => { pnpm.mockRestore() })
-  expect(await manager.installBundle('https://github.com/acme/dsh-plugin.git')).toMatchObject({
+  expect(await manager.installBundle('https://github.com/acme/astro-one-plugin.git')).toMatchObject({
     application: 'failed', changed: false, stage: 'install', failedAt: 'spec-host', packageResult: failure,
   })
   expect(pnpm).not.toHaveBeenCalled()
@@ -118,7 +118,7 @@ it('cancels an active GitHub check before starting pnpm', async () => {
   const pnpm = vi.spyOn(operations, 'runProfilePnpm')
   onTestFinished(() => { pnpm.mockRestore() })
   const requestId = '824103ec-bc45-489d-bb85-5b4fe0aefc78' as PluginInstallRequestId
-  const installing = manager.installBundle('github:acme/dsh-plugin', { requestId })
+  const installing = manager.installBundle('github:acme/astro-one-plugin', { requestId })
   await entered.promise
   expect(await manager.cancelInstall(requestId)).toEqual({ status: 'cancelled' })
   expect(await installing).toMatchObject({ application: 'cancelled', changed: false })
@@ -143,7 +143,7 @@ it('waits for the GitHub check before installing and activating the bundle', asy
   expect(pnpm).not.toHaveBeenCalled()
   release.resolve(undefined)
   expect(await installing).toMatchObject({ application: 'applied', changed: true, bundle: 'addon' })
-  expect(readProfileManifest('test', dir).dsh?.profile?.bundles).toContain('addon')
+  expect(readProfileManifest('test', dir).astroOne?.profile?.bundles).toContain('addon')
 })
 
 it('disposal waits for an active GitHub check to stop', async () => {
@@ -181,7 +181,7 @@ it.each(['github:acme/connected', 'https://github.com/acme/connected.git', 'git+
     const git = (args: string[]) => execa('git', args, { cwd: repository, env })
     await git(['init', '--initial-branch=main'])
     const name = '@test/github-connected'
-    writeFileSync(join(repository, 'package.json'), JSON.stringify({ name, version: '1.0.0', dsh: { bundle: { patch: './cordis.patch.yml' } } }))
+    writeFileSync(join(repository, 'package.json'), JSON.stringify({ name, version: '1.0.0', astroOne: { bundle: { patch: './cordis.patch.yml' } } }))
     writeFileSync(join(repository, 'cordis.patch.yml'), '[]\n')
     await git(['add', '.'])
     await git(['-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false', 'commit', '-m', 'fixture bundle'])
@@ -238,7 +238,7 @@ it.each(['missing package', 'invalid manifest', 'not a bundle', 'missing patch',
       enabled: true, error: { code: failure === 'not a bundle' ? 'not-bundle' : 'operation-error' }, rows: [],
     })
     expect(await manager.setBundleEnabled('extra', false)).toMatchObject({ changed: true, application: 'applied' })
-    expect(readProfileManifest('test', dir).dsh?.profile?.bundles).toEqual(['core'])
+    expect(readProfileManifest('test', dir).astroOne?.profile?.bundles).toEqual(['core'])
     expect(await manager.setBundleEnabled('extra', true)).toMatchObject({ changed: false, application: 'failed' })
   },
 )
@@ -261,7 +261,7 @@ it.each(['live', 'startup'] as const)('removes a bundle skipped at startup in a 
   })
   const remove = vi.spyOn(operations, 'runProfilePnpm').mockImplementation(async () => {
     const manifest = readProfileManifest('test', dir)
-    expect(manifest.dsh?.profile?.bundles).toEqual(['core'])
+    expect(manifest.astroOne?.profile?.bundles).toEqual(['core'])
     delete manifest.dependencies?.extra
     writeFileSync(join(dir, 'package.json'), JSON.stringify(manifest))
     return { exitCode: 0, output: 'removed', truncated: false, logPath: join(dir, 'pnpm.log') }
@@ -306,7 +306,7 @@ it('describes a bundle by its manifest and patch: one-liner, rows without a live
   const { manager, dir, bundle } = await fixture()
   bundle('described', [{ id: 'described-row', name: './plugin.mjs' }])
   writeFileSync(join(dir, 'node_modules', 'described', 'package.json'), JSON.stringify({
-    name: 'described', version: '2.0.0', description: 'Describes itself.', dsh: { bundle: { patch: './cordis.patch.yml' } },
+    name: 'described', version: '2.0.0', description: 'Describes itself.', astroOne: { bundle: { patch: './cordis.patch.yml' } },
   }))
   // An anonymous row is not addressable and is left out of the rows.
   writeFileSync(join(dir, 'node_modules', 'described', 'cordis.patch.yml'), JSON.stringify([
@@ -341,7 +341,7 @@ it.each(['native', 'runtime'] as const)('reads a disabled bundle and its indepen
   mkdirSync(join(child, 'first-locale'), { recursive: true })
   mkdirSync(join(child, 'second-locale'), { recursive: true })
   writeFileSync(join(root, 'package.json'), JSON.stringify({ name: 'localized',
-    exports: { './locale/*.json': './locale/*.json' }, dsh: {
+    exports: { './locale/*.json': './locale/*.json' }, astroOne: {
       bundle: { patch: './cordis.patch.yml' },
     } }))
   writeFileSync(join(root, 'locale', 'en.json'), '{"meta":{"title":"Local bundle"}}')
@@ -363,7 +363,7 @@ it.each(['native', 'runtime'] as const)('reads a disabled bundle and its indepen
     for (const path of [
       join(root, 'node_modules'), join(dir, 'node_modules', 'local-child'),
       join(profile.home, 'profiles', 'node_modules'), join(profile.home, 'node_modules'),
-      join(dir, '.dsh-module-fallback'),
+      join(dir, '.astro-one-module-fallback'),
     ]) expect(lstatSync(path, { throwIfNoEntry: false }), path).toBeUndefined()
   }
   const resolution: RuntimeResolution = {
@@ -402,7 +402,7 @@ it.each([
   const root = join(dir, 'node_modules', 'unnamed')
   mkdirSync(join(root, 'locale'))
   writeFileSync(join(root, 'package.json'), JSON.stringify({
-    version: '1.0.0', exports, dsh: { bundle: { patch: './cordis.patch.yml' } },
+    version: '1.0.0', exports, astroOne: { bundle: { patch: './cordis.patch.yml' } },
   }))
   writeFileSync(join(root, 'locale', 'en.json'), '{"meta":{"title":"Nameless bundle"}}')
   const manifest = readProfileManifest('test', dir)
@@ -434,7 +434,7 @@ it('retains installed dependencies when toggling a bundle and appends it when re
   expect(readProfileManifest('test', dir).dependencies).toEqual({ extra: '1.0.0' })
   expect((await manager.listPlugins()).some(row => row.patchId === 'managed')).toBe(false)
   await manager.setBundleEnabled('extra', true)
-  expect(readProfileManifest('test', dir).dsh?.profile?.bundles).toEqual(['core', 'third', 'extra'])
+  expect(readProfileManifest('test', dir).astroOne?.profile?.bundles).toEqual(['core', 'third', 'extra'])
 })
 
 it('reports an overlay overriding a saved plugin toggle', async () => {
@@ -514,7 +514,7 @@ it('reports blocked scripts after a failed installation and retries only after e
   expect(await manager.installBundle('addon', { approvedBuilds: ['native'], enabled: false })).toMatchObject({
     application: 'applied', changed: true, approvedBuilds: ['native'],
   })
-  expect(readProfileManifest('test', dir).dsh?.profile?.bundles).not.toContain('addon')
+  expect(readProfileManifest('test', dir).astroOne?.profile?.bundles).not.toContain('addon')
 })
 
 it('retains approved policy and reports it as changed when the registry fails before adding a dependency', async () => {
@@ -533,7 +533,7 @@ it('runs a real pnpm dependency script only after approval and retry', async () 
   const addon = join(profile.cwd, 'addon')
   mkdirSync(addon)
   writeFileSync(join(addon, 'package.json'), JSON.stringify({ name: 'approval-fixture-addon', version: '1.0.0',
-    scripts: { install: 'node build.cjs' }, dsh: { bundle: { patch: './cordis.patch.yml' } } }))
+    scripts: { install: 'node build.cjs' }, astroOne: { bundle: { patch: './cordis.patch.yml' } } }))
   writeFileSync(join(addon, 'build.cjs'), 'require("node:fs").writeFileSync("built.txt", "built")\n')
   writeFileSync(join(addon, 'cordis.patch.yml'), '[]\n')
   writeFileSync(join(dir, 'package.json'), '{"name":"approval-fixture","private":true}\n')
@@ -664,7 +664,7 @@ it('reports a selected plain dependency as a problem, omits an unselected one, a
   // Switched off, a dependency without a bundle patch is a library the page has no business with.
   expect((await manager.listBundles()).some(row => row.name === 'extra')).toBe(false)
   expect(await manager.setBundleEnabled('extra', true)).toMatchObject({ changed: false, application: 'failed' })
-  writeFileSync(join(dir, 'node_modules', 'core', 'package.json'), '{"name":"core","dsh":{"bundle":{"patch":"./cordis.patch.yml"}}}')
+  writeFileSync(join(dir, 'node_modules', 'core', 'package.json'), '{"name":"core","astroOne":{"bundle":{"patch":"./cordis.patch.yml"}}}')
   expect((await manager.listBundles())[0]?.version).toBeUndefined()
   writeFileSync(join(dir, 'package.json'), '{}')
   expect(await manager.listBundles()).toEqual([])
@@ -680,9 +680,9 @@ it('refuses management bundle disablement and permits repeated bundle selections
 })
 
 it.each([
-  '@deepseek-ai/dsh-host-plugin-inventory',
-  '@deepseek-ai/dsh-typert-registry',
-  '@deepseek-ai/dsh-api-remotes',
+  '@astro-one/host-plugin-inventory',
+  '@astro-one/typert-registry',
+  '@astro-one/api-remotes',
 ])('protects the management dependency %s and its containing bundle', async (name) => {
   const { ctx, manager, bundle, profile, dir } = await fixture('startup')
   bundle('extra', [{ id: 'dependency', name, disabled: true }])
@@ -740,7 +740,7 @@ it('restores the manifest when the package pnpm added declares no bundle', async
   })
   // The manifest is put back rather than cleaned through another pnpm run.
   expect(install).toHaveBeenCalledOnce()
-  expect(readProfileManifest('test', dir)).toMatchObject({ dependencies: { extra: '1.0.0' }, dsh: { profile: { bundles: ['core', 'extra'] } } })
+  expect(readProfileManifest('test', dir)).toMatchObject({ dependencies: { extra: '1.0.0' }, astroOne: { profile: { bundles: ['core', 'extra'] } } })
   expect((await manager.listBundles()).some(row => row.name === 'plain')).toBe(false)
 })
 
@@ -917,18 +917,18 @@ it('reads what a spec names before installing it', async () => {
   const view = vi.spyOn(operations, 'viewProfilePackage')
   onTestFinished(() => { view.mockRestore() })
   const answers = (stdout: string) => view.mockResolvedValueOnce({ exitCode: 0, stdout, stderr: '', timedOut: false })
-  answers(JSON.stringify({ name: 'dsh-x', version: '1.4.2', description: 'A sidebar.', dsh: { bundle: { patch: './cordis.patch.yml' } } }))
-  expect(await manager.inspect('dsh-x')).toEqual({
-    status: 'accepted', kind: 'registry', name: 'dsh-x', version: '1.4.2', description: 'A sidebar.', bundle: true, registry: null,
+  answers(JSON.stringify({ name: 'astro-one-x', version: '1.4.2', description: 'A sidebar.', astroOne: { bundle: { patch: './cordis.patch.yml' } } }))
+  expect(await manager.inspect('astro-one-x')).toEqual({
+    status: 'accepted', kind: 'registry', name: 'astro-one-x', version: '1.4.2', description: 'A sidebar.', bundle: true, registry: null,
   })
-  expect(view).toHaveBeenCalledWith(dir, 'dsh-x', { command: 'pnpm-test', timeoutMs: 1000, registry: null })
+  expect(view).toHaveBeenCalledWith(dir, 'astro-one-x', { command: 'pnpm-test', timeoutMs: 1000, registry: null })
   const signal = AbortSignal.abort()
-  answers(JSON.stringify([{ name: 'dsh-lib', version: '1.0.0', dsh: { bundle: {} } }, { name: 'dsh-lib', version: '1.1.0', dsh: null }]))
-  expect(await manager.inspect('dsh-lib@^1', undefined, signal)).toEqual({ status: 'refused', problem: 'not-a-bundle', reason: 'dsh-lib declares no dsh.bundle', registries: [null] })
-  expect(view).toHaveBeenLastCalledWith(dir, 'dsh-lib@^1', { command: 'pnpm-test', timeoutMs: 1000, signal, registry: null })
+  answers(JSON.stringify([{ name: 'astro-one-lib', version: '1.0.0', astroOne: { bundle: {} } }, { name: 'astro-one-lib', version: '1.1.0', astroOne: null }]))
+  expect(await manager.inspect('astro-one-lib@^1', undefined, signal)).toEqual({ status: 'refused', problem: 'not-a-bundle', reason: 'astro-one-lib declares no astroOne.bundle', registries: [null] })
+  expect(view).toHaveBeenLastCalledWith(dir, 'astro-one-lib@^1', { command: 'pnpm-test', timeoutMs: 1000, signal, registry: null })
   // An answer that names no package keeps the name the spec gave; colour escapes around the JSON are dropped.
-  answers('\x1b[36m' + JSON.stringify({ version: '0.0.1', description: '', dsh: { bundle: { patch: './p.yml' } } }) + '\x1b[39m\n')
-  expect(await manager.inspect('dsh-bare')).toEqual({ status: 'accepted', kind: 'registry', name: 'dsh-bare', version: '0.0.1', bundle: true, registry: null })
+  answers('\x1b[36m' + JSON.stringify({ version: '0.0.1', description: '', astroOne: { bundle: { patch: './p.yml' } } }) + '\x1b[39m\n')
+  expect(await manager.inspect('astro-one-bare')).toEqual({ status: 'accepted', kind: 'registry', name: 'astro-one-bare', version: '0.0.1', bundle: true, registry: null })
   const failure = (stderr: string, exitCode: number | null = 1, more: Partial<operations.PackageViewResult> = {}) =>
     view.mockResolvedValueOnce({ exitCode, stdout: '', stderr, timedOut: false, ...more })
   failure('npm error code E404\nnpm error 404 Not Found - GET https://registry/nope\n')
@@ -955,24 +955,24 @@ it('reads what a spec names before installing it', async () => {
   // What is installed, or supplied by the installation, is refused before the registry is asked.
   expect(await manager.inspect('extra')).toEqual({ status: 'refused', problem: 'already-installed', reason: 'extra is already installed' })
   expect(await manager.inspect('./relative')).toEqual({ status: 'refused', problem: 'invalid-spec', reason: 'a local path must be absolute' })
-  expect(await manager.inspect('github:acme/dsh-remote')).toEqual({ status: 'accepted', kind: 'git', bundle: null, registry: null, host: 'github.com' })
+  expect(await manager.inspect('github:acme/astro-one-remote')).toEqual({ status: 'accepted', kind: 'git', bundle: null, registry: null, host: 'github.com' })
   const tarball = join(profile.home, 'pack.tgz')
   expect(await manager.inspect(tarball)).toEqual({ status: 'refused', problem: 'not-a-package', reason: 'the tarball does not exist' })
   writeFileSync(tarball, '')
   expect(await manager.inspect(tarball)).toEqual({ status: 'accepted', kind: 'tarball', bundle: null, registry: null })
-  expect(await manager.inspect('https://cdn.example.com/x/y/z/dsh-x-1.0.0.tgz')).toEqual({ status: 'accepted', kind: 'tarball', bundle: null, registry: null, host: 'cdn.example.com' })
+  expect(await manager.inspect('https://cdn.example.com/x/y/z/astro-one-x-1.0.0.tgz')).toEqual({ status: 'accepted', kind: 'tarball', bundle: null, registry: null, host: 'cdn.example.com' })
   // A directory answers from its own manifest.
-  const local = join(profile.home, 'dev', 'dsh-local')
+  const local = join(profile.home, 'dev', 'astro-one-local')
   mkdirSync(local, { recursive: true })
   expect(await manager.inspect(join(profile.home, 'dev', 'missing'))).toEqual({ status: 'refused', problem: 'not-a-package', reason: 'the path does not exist' })
   expect(await manager.inspect(local)).toMatchObject({ status: 'refused', problem: 'not-a-package', reason: expect.stringContaining('no readable package.json') as string })
   writeFileSync(join(local, 'package.json'), '{"version":"1.0.0"}')
   expect(await manager.inspect(local)).toEqual({ status: 'refused', problem: 'not-a-package', reason: 'the package.json names no package' })
-  writeFileSync(join(local, 'package.json'), JSON.stringify({ name: 'dsh-local', version: '0.1.0', description: 'Local.' }))
-  expect(await manager.inspect(local)).toEqual({ status: 'refused', problem: 'not-a-bundle', reason: 'dsh-local declares no dsh.bundle' })
-  writeFileSync(join(local, 'package.json'), JSON.stringify({ name: 'dsh-local', version: '0.1.0', description: 'Local.', dsh: { bundle: { patch: './p.yml' } } }))
-  expect(await manager.inspect(`file:${local}`)).toEqual({ status: 'accepted', kind: 'path', name: 'dsh-local', version: '0.1.0', description: 'Local.', bundle: true, registry: null })
-  writeFileSync(join(local, 'package.json'), JSON.stringify({ name: 'core', dsh: { bundle: { patch: './p.yml' } } }))
+  writeFileSync(join(local, 'package.json'), JSON.stringify({ name: 'astro-one-local', version: '0.1.0', description: 'Local.' }))
+  expect(await manager.inspect(local)).toEqual({ status: 'refused', problem: 'not-a-bundle', reason: 'astro-one-local declares no astroOne.bundle' })
+  writeFileSync(join(local, 'package.json'), JSON.stringify({ name: 'astro-one-local', version: '0.1.0', description: 'Local.', astroOne: { bundle: { patch: './p.yml' } } }))
+  expect(await manager.inspect(`file:${local}`)).toEqual({ status: 'accepted', kind: 'path', name: 'astro-one-local', version: '0.1.0', description: 'Local.', bundle: true, registry: null })
+  writeFileSync(join(local, 'package.json'), JSON.stringify({ name: 'core', astroOne: { bundle: { patch: './p.yml' } } }))
   expect(await manager.inspect(local)).toEqual({ status: 'refused', problem: 'already-installed', reason: 'core is already installed' })
   // A profile and an installation that list nothing know nothing.
   writeFileSync(join(dir, 'package.json'), '{}')
@@ -1036,7 +1036,7 @@ it('offers the launcher\'s optional bundles switched off and never removable', a
   const supplied = join(profile.home, 'node_modules', offered)
   mkdirSync(supplied, { recursive: true })
   writeFileSync(join(supplied, 'package.json'), JSON.stringify({
-    name: offered, version: '3.0.0', description: 'Package one-liner.', dsh: { bundle: { patch: './cordis.patch.yml' } },
+    name: offered, version: '3.0.0', description: 'Package one-liner.', astroOne: { bundle: { patch: './cordis.patch.yml' } },
   }))
   writeFileSync(join(supplied, 'cordis.patch.yml'), JSON.stringify([{ insert: [{ id: 'offered-row', name: './plugin.mjs', config: { service: 'offeredProbe' } }] }]))
   writeFileSync(join(supplied, 'plugin.mjs'), 'export function apply(ctx, config) { ctx.provide(config?.service ?? "offeredProbe", true) }\n')
@@ -1094,7 +1094,7 @@ it('applies watched configuration while pnpm installation is still running', asy
   expect(pnpm).toHaveBeenCalledOnce()
   release.resolve(undefined)
   expect(await installing).toMatchObject({ application: 'applied', changed: true })
-  expect(readProfileManifest('test', dir).dsh?.profile?.bundles).toEqual(['core', 'extra', 'new-bundle'])
+  expect(readProfileManifest('test', dir).astroOne?.profile?.bundles).toEqual(['core', 'extra', 'new-bundle'])
   expect(ctx.get('managedProbe')).toBeUndefined()
 })
 
@@ -1106,7 +1106,7 @@ it('installs and removes with the bundled pnpm when PATH contains no pnpm', asyn
   const target = join(dir, 'local-bundle')
   mkdirSync(target)
   writeFileSync(join(target, 'package.json'), JSON.stringify({ name: '@test/desktop-manager', version: '1.0.0',
-    dsh: { bundle: { patch: './cordis.patch.yml' } } }))
+    astroOne: { bundle: { patch: './cordis.patch.yml' } } }))
   writeFileSync(join(target, 'cordis.patch.yml'), '[]\n')
   // Fixture-only packages need no registry resolution during this local install.
   const manifest = readProfileManifest('test', dir)
@@ -1138,48 +1138,48 @@ it('asks the registries in turn while one is unreachable or stale, and names the
   const failure = (stderr: string, exitCode = 1) => view.mockResolvedValueOnce({ exitCode, stdout: '', stderr, timedOut: false })
   const answers = (stdout: string) => view.mockResolvedValueOnce({ exitCode: 0, stdout, stderr: '', timedOut: false })
   const asked = (from: number) => view.mock.calls.slice(from).map(call => call[2].registry)
-  const manifest = JSON.stringify({ name: 'dsh-x', version: '1.0.0', dsh: { bundle: { patch: './cordis.patch.yml' } } })
+  const manifest = JSON.stringify({ name: 'astro-one-x', version: '1.0.0', astroOne: { bundle: { patch: './cordis.patch.yml' } } })
   // pnpm's own registry is unreachable; the mirror answers and the install is told to start there.
-  failure('ERR_PNPM_META_FETCH_FAIL  GET https://registry.npmjs.org/dsh-x: ETIMEDOUT\n')
+  failure('ERR_PNPM_META_FETCH_FAIL  GET https://registry.npmjs.org/astro-one-x: ETIMEDOUT\n')
   answers(manifest)
-  expect(await manager.inspect('dsh-x')).toEqual({ status: 'accepted', kind: 'registry', name: 'dsh-x', version: '1.0.0', bundle: true, registry: MIRROR })
+  expect(await manager.inspect('astro-one-x')).toEqual({ status: 'accepted', kind: 'registry', name: 'astro-one-x', version: '1.0.0', bundle: true, registry: MIRROR })
   expect(asked(0)).toEqual([null, MIRROR])
   expect(read).toHaveBeenCalledWith(dir, { command: 'pnpm', timeoutMs: 1000 })
-  expect(view).toHaveBeenLastCalledWith(expect.any(String), 'dsh-x', { command: 'pnpm', timeoutMs: 1000, registry: MIRROR })
+  expect(view).toHaveBeenLastCalledWith(expect.any(String), 'astro-one-x', { command: 'pnpm', timeoutMs: 1000, registry: MIRROR })
   // pnpm prints a refusal as JSON on stdout with nothing on stderr: it is read the same way, and the reason is its message.
-  view.mockResolvedValueOnce({ exitCode: 1, stdout: '{\n  "error": {\n    "code": "ERR_PNPM_META_FETCH_FAIL",\n    "message": "GET https://registry.npmjs.org/dsh-x: fetch failed"\n  }\n}\n', stderr: '', timedOut: false })
+  view.mockResolvedValueOnce({ exitCode: 1, stdout: '{\n  "error": {\n    "code": "ERR_PNPM_META_FETCH_FAIL",\n    "message": "GET https://registry.npmjs.org/astro-one-x: fetch failed"\n  }\n}\n', stderr: '', timedOut: false })
   answers(manifest)
-  expect(await manager.inspect('dsh-x')).toMatchObject({ status: 'accepted', registry: MIRROR })
+  expect(await manager.inspect('astro-one-x')).toMatchObject({ status: 'accepted', registry: MIRROR })
   expect(asked(2)).toEqual([null, MIRROR])
   // A requested registry goes first. A mirror's 404 may be a copy not yet synced, so the lookup goes on; every registry's 404 is not-found.
-  view.mockResolvedValueOnce({ exitCode: 1, stdout: '{"error":{"code":"ERR_PNPM_FETCH_404","message":"GET https://registry.npmmirror.com/dsh-x: Not Found - 404"}}', stderr: '', timedOut: false })
-  failure('ERR_PNPM_FETCH_404  GET https://registry.npmjs.org/dsh-x: Not Found - 404\n')
-  expect(await manager.inspect('dsh-x', { registry: MIRROR })).toMatchObject({
-    status: 'refused', problem: 'not-found', reason: 'ERR_PNPM_FETCH_404  GET https://registry.npmjs.org/dsh-x: Not Found - 404', registries: [MIRROR, null],
+  view.mockResolvedValueOnce({ exitCode: 1, stdout: '{"error":{"code":"ERR_PNPM_FETCH_404","message":"GET https://registry.npmmirror.com/astro-one-x: Not Found - 404"}}', stderr: '', timedOut: false })
+  failure('ERR_PNPM_FETCH_404  GET https://registry.npmjs.org/astro-one-x: Not Found - 404\n')
+  expect(await manager.inspect('astro-one-x', { registry: MIRROR })).toMatchObject({
+    status: 'refused', problem: 'not-found', reason: 'ERR_PNPM_FETCH_404  GET https://registry.npmjs.org/astro-one-x: Not Found - 404', registries: [MIRROR, null],
   })
   expect(asked(4)).toEqual([MIRROR, null])
   // A registry outside the configured set is asked alone.
-  failure('ERR_PNPM_META_FETCH_FAIL  GET https://npm.corp.example/dsh-x: ECONNREFUSED\n')
-  expect(await manager.inspect('dsh-x', { registry: 'https://npm.corp.example' })).toMatchObject({ status: 'refused', problem: 'network', registries: ['https://npm.corp.example/'] })
+  failure('ERR_PNPM_META_FETCH_FAIL  GET https://npm.corp.example/astro-one-x: ECONNREFUSED\n')
+  expect(await manager.inspect('astro-one-x', { registry: 'https://npm.corp.example' })).toMatchObject({ status: 'refused', problem: 'network', registries: ['https://npm.corp.example/'] })
   expect(asked(6)).toEqual(['https://npm.corp.example/'])
   // A failure no registry changes ends the round at once.
   failure('', 4)
-  expect(await manager.inspect('dsh-x')).toMatchObject({ status: 'refused', problem: 'unknown', registries: [null] })
+  expect(await manager.inspect('astro-one-x')).toMatchObject({ status: 'refused', problem: 'unknown', registries: [null] })
   expect(asked(7)).toEqual([null])
   // A registry that never answered is unreachable, like one that refused the connection: the round goes on, and the
   // refusal is a network one.
   view.mockResolvedValueOnce({ exitCode: null, stdout: '', stderr: '', timedOut: true })
   view.mockResolvedValueOnce({ exitCode: null, stdout: '', stderr: '', timedOut: true })
-  expect(await manager.inspect('dsh-x')).toEqual({ status: 'refused', problem: 'network', reason: 'pnpm view timed out after 1000ms', registries: [null, MIRROR] })
+  expect(await manager.inspect('astro-one-x')).toEqual({ status: 'refused', problem: 'network', reason: 'pnpm view timed out after 1000ms', registries: [null, MIRROR] })
   expect(asked(8)).toEqual([null, MIRROR])
   // A lookup the caller dropped is not carried to the next registry.
   const controller = new AbortController()
   view.mockImplementationOnce(async () => { controller.abort(); return { exitCode: 1, stdout: '', stderr: 'ECONNRESET\n', timedOut: false } })
-  expect(await manager.inspect('dsh-x', {}, controller.signal)).toMatchObject({ status: 'refused', problem: 'network', registries: [null] })
+  expect(await manager.inspect('astro-one-x', {}, controller.signal)).toMatchObject({ status: 'refused', problem: 'network', registries: [null] })
   expect(asked(10)).toEqual([null])
   // The other forms ask no registry and carry the one the install starts with.
-  expect(await manager.inspect('github:acme/dsh-remote', { registry: MIRROR })).toEqual({ status: 'accepted', kind: 'git', bundle: null, registry: MIRROR, host: 'github.com' })
-  expect(await manager.inspect('github:acme/dsh-remote')).toEqual({ status: 'accepted', kind: 'git', bundle: null, registry: null, host: 'github.com' })
+  expect(await manager.inspect('github:acme/astro-one-remote', { registry: MIRROR })).toEqual({ status: 'accepted', kind: 'git', bundle: null, registry: MIRROR, host: 'github.com' })
+  expect(await manager.inspect('github:acme/astro-one-remote')).toEqual({ status: 'accepted', kind: 'git', bundle: null, registry: null, host: 'github.com' })
   expect(view).toHaveBeenCalledTimes(11)
 })
 
@@ -1188,11 +1188,11 @@ it('keeps pnpm\'s own registry alone when it names a private one, or cannot be r
   const read = pnpmNames('https://npm.corp.example/')
   const view = vi.spyOn(operations, 'viewProfilePackage')
   onTestFinished(() => { view.mockRestore() })
-  view.mockResolvedValue({ exitCode: 1, stdout: '', stderr: 'ERR_PNPM_META_FETCH_FAIL  GET https://npm.corp.example/dsh-x: ETIMEDOUT\n', timedOut: false })
-  expect(await manager.inspect('dsh-x')).toMatchObject({ status: 'refused', problem: 'network', registries: [null] })
-  expect(await manager.inspect('dsh-x', { registry: MIRROR })).toMatchObject({ status: 'refused', problem: 'network', registries: [MIRROR] })
+  view.mockResolvedValue({ exitCode: 1, stdout: '', stderr: 'ERR_PNPM_META_FETCH_FAIL  GET https://npm.corp.example/astro-one-x: ETIMEDOUT\n', timedOut: false })
+  expect(await manager.inspect('astro-one-x')).toMatchObject({ status: 'refused', problem: 'network', registries: [null] })
+  expect(await manager.inspect('astro-one-x', { registry: MIRROR })).toMatchObject({ status: 'refused', problem: 'network', registries: [MIRROR] })
   read.mockResolvedValue(null)
-  expect(await manager.inspect('dsh-x')).toMatchObject({ status: 'refused', problem: 'network', registries: [null] })
+  expect(await manager.inspect('astro-one-x')).toMatchObject({ status: 'refused', problem: 'network', registries: [null] })
   expect(await manager.registries()).toEqual({ registry: null, fallbackRegistries: [MIRROR], resolved: null })
   expect(view).toHaveBeenCalledTimes(3)
 })
@@ -1238,7 +1238,7 @@ it('installs from the next registry after one is unreachable, restoring the file
 it('does not ask the next registry after the manager terminated a silent run', async () => {
   const { manager } = await fixture()
   const install = vi.spyOn(operations, 'runProfilePnpm').mockResolvedValue({
-    exitCode: 1, output: 'installing\ndsh: pnpm printed nothing for 600000ms and was terminated\n',
+    exitCode: 1, output: 'installing\nastro-one: pnpm printed nothing for 600000ms and was terminated\n',
     truncated: false, logPath: '/dev/null', timedOut: true,
   })
   onTestFinished(() => { install.mockRestore() })
@@ -1256,7 +1256,7 @@ it('drops the earlier registry failure once a later attempt is terminated for si
       truncated: false, logPath: '/dev/null',
     })
     .mockResolvedValueOnce({
-      exitCode: 1, output: 'installing\ndsh: pnpm printed nothing for 600000ms and was terminated\n',
+      exitCode: 1, output: 'installing\nastro-one: pnpm printed nothing for 600000ms and was terminated\n',
       truncated: false, logPath: '/dev/null', timedOut: true,
     })
   onTestFinished(() => { install.mockRestore() })
@@ -1284,18 +1284,18 @@ it('stops at a failure no registry changes, at a host the spec itself is fetched
   expect(blocked).toMatchObject({ application: 'failed', registries: [null], packageResult: { kind: 'build-blocked' } })
   expect(blocked.failedAt).toBeUndefined()
   expect(install).toHaveBeenCalledTimes(1)
-  install.mockResolvedValue(failing('fatal: unable to access \'https://github.com/acme/dsh-x/\': Could not resolve host: github.com'))
-  expect(await manager.installBundle('github:acme/dsh-x')).toMatchObject({ application: 'failed', registries: [null], failedAt: 'spec-host', packageResult: { kind: 'network' } })
+  install.mockResolvedValue(failing('fatal: unable to access \'https://github.com/acme/astro-one-x/\': Could not resolve host: github.com'))
+  expect(await manager.installBundle('github:acme/astro-one-x')).toMatchObject({ application: 'failed', registries: [null], failedAt: 'spec-host', packageResult: { kind: 'network' } })
   expect(install).toHaveBeenCalledTimes(2)
-  install.mockResolvedValue(failing('ERR_PNPM_META_FETCH_FAIL  GET https://npm.corp.example/dsh-x: ECONNREFUSED'))
-  expect(await manager.installBundle('dsh-x', { registry: 'https://npm.corp.example' })).toMatchObject({
+  install.mockResolvedValue(failing('ERR_PNPM_META_FETCH_FAIL  GET https://npm.corp.example/astro-one-x: ECONNREFUSED'))
+  expect(await manager.installBundle('astro-one-x', { registry: 'https://npm.corp.example' })).toMatchObject({
     application: 'failed', registries: ['https://npm.corp.example/'], failedAt: 'registry', packageResult: { kind: 'network' },
   })
   expect(install).toHaveBeenCalledTimes(3)
-  expect(install).toHaveBeenLastCalledWith(expect.anything(), ['add', 'dsh-x', '--registry=https://npm.corp.example/'], expect.anything())
+  expect(install).toHaveBeenLastCalledWith(expect.anything(), ['add', 'astro-one-x', '--registry=https://npm.corp.example/'], expect.anything())
   // Every configured registry unreachable: the failure is the last attempt's, and all of them are named.
-  install.mockResolvedValue(failing('ERR_PNPM_META_FETCH_FAIL  GET https://registry/dsh-x: ETIMEDOUT'))
-  expect(await manager.installBundle('dsh-x')).toMatchObject({ application: 'failed', registries: [null, MIRROR], failedAt: 'registry', packageResult: { kind: 'network' } })
+  install.mockResolvedValue(failing('ERR_PNPM_META_FETCH_FAIL  GET https://registry/astro-one-x: ETIMEDOUT'))
+  expect(await manager.installBundle('astro-one-x')).toMatchObject({ application: 'failed', registries: [null, MIRROR], failedAt: 'registry', packageResult: { kind: 'network' } })
   expect(install).toHaveBeenCalledTimes(5)
 })
 
@@ -1310,7 +1310,7 @@ it('reports a stop that lands before a run starts, while the registries are read
   })
   const install = vi.spyOn(operations, 'runProfilePnpm')
   onTestFinished(() => { read.mockRestore(); install.mockRestore() })
-  const result = await manager.installBundle('dsh-x', { requestId })
+  const result = await manager.installBundle('astro-one-x', { requestId })
   expect(result).toMatchObject({ application: 'cancelled', registries: [] })
   expect(result.error).toBeUndefined()
   expect(install).not.toHaveBeenCalled()
@@ -1328,15 +1328,15 @@ it.each(['live', 'startup'] as const)('requires exact risk acknowledgement and p
   const { manager, dir, ctx } = await fixture(mode, false, undefined, {}, undefined, (dir) => {
     const file = join(dir, 'node_modules', 'extra', 'package.json')
     const metadata = JSON.parse(readFileSync(file, 'utf8')) as Record<string, unknown>
-    writeFileSync(file, JSON.stringify({ ...metadata, peerDependencies: { '@deepseek-ai/dsh': '999.0.0' } }))
+    writeFileSync(file, JSON.stringify({ ...metadata, peerDependencies: { '@astro-one/cli': '999.0.0' } }))
   })
-  const runtime = getDshRuntimeVersion()
+  const runtime = getAstroOneRuntimeVersion()
   const managed = () => [...ctx.loader.entries()].find(entry => entry.id === 'include:managed')
   // The bundle's own peers are incompatible, so its whole layer is skipped and contributes no row.
   expect(managed()).toBeUndefined()
   expect((await manager.listBundles()).find(bundle => bundle.name === 'extra')?.error).toEqual({
     code: 'incompatible-version',
-    incompatible: [{ name: 'extra', version: '1.0.0', runtimeVersion: runtime, peers: { '@deepseek-ai/dsh': '999.0.0' } }],
+    incompatible: [{ name: 'extra', version: '1.0.0', runtimeVersion: runtime, peers: { '@astro-one/cli': '999.0.0' } }],
   })
   expect(await manager.setBundleEnabled('extra', true)).toMatchObject({ changed: false, application: 'failed' })
   expect(await manager.setVersionExemption('extra@1.0.0', runtime, true)).toMatchObject({ changed: false, application: 'failed' })
@@ -1348,7 +1348,7 @@ it.each(['live', 'startup'] as const)('requires exact risk acknowledgement and p
   expect(manager.listVersionExemptions()).toEqual({ exemptions: { 'extra@1.0.0': [runtime] }, warnings: [] })
   // The grant is persisted only in the profile's compatibility file, never in its package manifest.
   expect(JSON.parse(readFileSync(join(dir, 'compatibility.json'), 'utf8'))).toEqual({ 'extra@1.0.0': [runtime] })
-  expect(readProfileManifest('test', dir).dsh?.profile?.bundles).toEqual(['core', 'extra'])
+  expect(readProfileManifest('test', dir).astroOne?.profile?.bundles).toEqual(['core', 'extra'])
   // `setVersionExemption` reconciles the profile itself, so a live tree re-admits the bundle here;
   // no manifest watch or Loader instrumentation participates. A startup-only profile keeps it out until restart.
   if (mode === 'live') expect(managed()?.fiber?.state).toBe(2)
@@ -1361,25 +1361,25 @@ it.each(['live', 'startup'] as const)('requires exact risk acknowledgement and p
 
 it('reports a package run refused for compatibility as a typed refusal', async () => {
   const { manager } = await fixture()
-  const incompatible = [{ name: 'dsh-x', version: '2.0.0', runtimeVersion: getDshRuntimeVersion(), peers: { '@deepseek-ai/dsh': '999.0.0' } }]
+  const incompatible = [{ name: 'astro-one-x', version: '2.0.0', runtimeVersion: getAstroOneRuntimeVersion(), peers: { '@astro-one/cli': '999.0.0' } }]
   const install = vi.spyOn(operations, 'runProfilePnpm').mockResolvedValue({
-    exitCode: 1, output: 'dsh: installation rejected', truncated: false, logPath: 'pnpm.log', kind: 'unknown', incompatible,
+    exitCode: 1, output: 'astro-one: installation rejected', truncated: false, logPath: 'pnpm.log', kind: 'unknown', incompatible,
   })
   onTestFinished(() => { install.mockRestore() })
-  const result = await manager.installBundle('dsh-x')
+  const result = await manager.installBundle('astro-one-x')
   expect(result).toMatchObject({ application: 'failed', changed: false, error: { code: 'incompatible-version', incompatible } })
   expect(install).toHaveBeenCalledTimes(1)
 })
 
 it.each([false, true])('rechecks installed bundle peers before accepting a disabled installation (exempted=%s)', async (exempted) => {
   const { manager, dir, bundle } = await fixture()
-  if (exempted) await manager.setVersionExemption('incompatible@1.0.0', getDshRuntimeVersion(), true, true)
+  if (exempted) await manager.setVersionExemption('incompatible@1.0.0', getAstroOneRuntimeVersion(), true, true)
   const before = readFileSync(join(dir, 'package.json'), 'utf8')
   const install = vi.spyOn(operations, 'runProfilePnpm').mockImplementation(async () => {
     bundle('incompatible', [])
     const file = join(dir, 'node_modules', 'incompatible', 'package.json')
     const metadata = JSON.parse(readFileSync(file, 'utf8')) as Record<string, unknown>
-    writeFileSync(file, JSON.stringify({ ...metadata, peerDependencies: { '@deepseek-ai/dsh': '<0.0.0' } }))
+    writeFileSync(file, JSON.stringify({ ...metadata, peerDependencies: { '@astro-one/cli': '<0.0.0' } }))
     const profile = readProfileManifest('test', dir)
     profile.dependencies = { ...profile.dependencies, incompatible: '1.0.0' }
     writeFileSync(join(dir, 'package.json'), JSON.stringify(profile))
@@ -1392,5 +1392,5 @@ it.each([false, true])('rechecks installed bundle peers before accepting a disab
     expect(result.error).toMatchObject({ code: 'incompatible-version', incompatible: [{ name: 'incompatible', version: '1.0.0' }] })
     expect(readFileSync(join(dir, 'package.json'), 'utf8')).toBe(before)
   }
-  expect(readProfileManifest('test', dir).dsh?.profile?.bundles).toEqual(['core', 'extra'])
+  expect(readProfileManifest('test', dir).astroOne?.profile?.bundles).toEqual(['core', 'extra'])
 })

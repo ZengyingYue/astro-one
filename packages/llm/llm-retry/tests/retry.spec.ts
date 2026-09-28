@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, expectTypeOf, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import type { Fiber } from '@deepseek-ai/cordis'
-import LlmRuntime, { createUserMessage, ToolCallId, EMPTY_RESPONSE_CODE, LlmAdapter, LlmError, expandAssistantStream, resolveRetryPolicy  } from '@deepseek-ai/dsh-llm'
+import { Context } from '@astro-one/cordis'
+import type { Fiber } from '@astro-one/cordis'
+import LlmRuntime, { createUserMessage, ToolCallId, EMPTY_RESPONSE_CODE, LlmAdapter, LlmError, expandAssistantStream, resolveRetryPolicy  } from '@astro-one/llm'
 import type {
   AlwaysRetryPolicyConfig,
   BackoffConfig,
@@ -10,16 +10,16 @@ import type {
   ResolvedRetryPolicy,
   RetryPolicyConfig,
   StreamChunk,
-} from '@deepseek-ai/dsh-llm'
-import SessionStore, { SessionId } from '@deepseek-ai/dsh-session'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import type { SessionEvent, SessionEventMap } from '@deepseek-ai/dsh-session'
-import type { LlmRetryEventData } from '@deepseek-ai/dsh-llm-retry/types'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime, { defineContentToolFixture } from '@deepseek-ai/dsh-tools'
-import AgentRegistry from '@deepseek-ai/dsh-agent'
-import type { Agent, RequestErrorAction } from '@deepseek-ai/dsh-agent'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
+} from '@astro-one/llm'
+import SessionStore, { SessionId } from '@astro-one/session'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import type { SessionEvent, SessionEventMap } from '@astro-one/session'
+import type { LlmRetryEventData } from '@astro-one/llm-retry/types'
+import SystemPrompt from '@astro-one/system-prompt'
+import ToolRuntime, { defineContentToolFixture } from '@astro-one/tools'
+import AgentRegistry from '@astro-one/agent'
+import type { Agent, RequestErrorAction } from '@astro-one/agent'
+import AgentLoop from '@astro-one/agent-loop'
 import * as retry from '../src/index.ts'
 
 type ScriptEntry = Error | Iterable<StreamChunk> | AsyncIterable<StreamChunk>

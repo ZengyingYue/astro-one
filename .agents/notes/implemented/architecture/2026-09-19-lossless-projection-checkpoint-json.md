@@ -10,7 +10,7 @@ Projection checkpoints can contain opaque extension data and message metadata. A
 
 ## Decision
 
-The checkpoint value schema uses the existing `isJsonValue` predicate from `dsh-util-values`. It enforces the same lossless JSON rules as the checkpoint writer's `snapshotJsonValue` without rebuilding valid objects. Validation still rejects non-JSON and lossy values. Storage-domain table values are immutable borrowed records; the validator does not supply a defensive-copy guarantee.
+The checkpoint value schema uses the existing `isJsonValue` predicate from `astro-one-util-values`. It enforces the same lossless JSON rules as the checkpoint writer's `snapshotJsonValue` without rebuilding valid objects. Validation still rejects non-JSON and lossy values. Storage-domain table values are immutable borrowed records; the validator does not supply a defensive-copy guarantee.
 
 ## Alternatives considered
 

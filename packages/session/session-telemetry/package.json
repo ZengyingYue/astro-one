@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-session-telemetry",
-  "description": "SessionTelemetryBackend seam for the DeepSeek Harness: session-event capture, projection, redaction, and handoff to a reporting backend",
+  "name": "@astro-one/session-telemetry",
+  "description": "SessionTelemetryBackend seam for the Astro One: session-event capture, projection, redaction, and handoff to a reporting backend",
   "version": "0.1.7-rc.1",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/session/session-telemetry"
   },
   "type": "module",
@@ -27,13 +27,13 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/dsh-agent": "workspace:*",
-    "@deepseek-ai/dsh-session": "workspace:*",
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
   },
   "devDependencies": {
-    "@deepseek-ai/dsh-agent": "workspace:*",
-    "@deepseek-ai/dsh-session": "workspace:*",
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
   }
 }

@@ -3,7 +3,7 @@ description: "Prepare and operate a local CPU SenseVoice worker on demand."
 kind: "package-reference"
 ---
 
-# @deepseek-ai/dsh-experimental-speech-to-text-sensevoice
+# @astro-one/experimental-speech-to-text-sensevoice
 
 English | [中文](README.zh.md)
 
@@ -25,7 +25,7 @@ This provider recognizes speech with SenseVoiceSmall ONNX and Silero VAD on the 
 <a id="use-this-package"></a>
 ## Use this package
 
-The [bundle](../voice-input-bundle/README.md) supplies an absolute `dataRoot` under the DSH home. Preparation downloads revision-pinned model files, verifies their sizes and SHA-256 hashes, then loads them. `precision` defaults to `int8`; `fp32` selects the larger reference weights. `modelDirectory` supplies an existing absolute directory containing the selected ONNX file and `tokens.txt`; `vadModelPath` selects an existing Silero ONNX file. Verified completed files remain reusable after cancellation or failure.
+The [bundle](../voice-input-bundle/README.md) supplies an absolute `dataRoot` under the Astro One home. Preparation downloads revision-pinned model files, verifies their sizes and SHA-256 hashes, then loads them. `precision` defaults to `int8`; `fp32` selects the larger reference weights. `modelDirectory` supplies an existing absolute directory containing the selected ONNX file and `tokens.txt`; `vadModelPath` selects an existing Silero ONNX file. Verified completed files remain reusable after cancellation or failure.
 
 Before each missing asset is downloaded, the Host compares the Hugging Face-compatible `modelOrigins`, which default to `https://huggingface.co` and [HF-Mirror](https://hf-mirror.com). Concurrent HEAD requests follow the pinned file path and redirects through the Host's fetch proxy; the first 2xx response is tried first. `modelProbeTimeoutMs` defaults to 3000 ms; when every probe fails, downloads use the configured order. Network, HTTP, certificate and integrity failures try the remaining sources; cancellation, storage failures and unclassified failures stop preparation. Pinned revisions, sizes and SHA-256 hashes apply to every source. Response latency does not measure download throughput; the preparation deadline still bounds the complete download.
 
@@ -43,7 +43,7 @@ Every activation checks the selected model, tokens and VAD on disk. Complete ver
 <details>
 <summary>Maintainer details — click to expand</summary>
 
-One managed Node subprocess serializes inference. Recordings submitted during wake-up join the bounded queue. At execution, the worker requires ready or standby resources. Transcription never starts preparation downloads. `threads`, `segmentSeconds`, `vadThreshold`, `minSpeechSeconds` and `minSilenceSeconds` tune CPU inference and segmentation; `maxPending` bounds accepted work. Preparation and inference have separate deadlines. Invalid language or WAV input is rejected before native inference and retains the loaded worker; inference failures, malformed responses and transport failures reclaim it. Cancellation terminates an active worker and joins its process range; cancelled queued recordings never run. `idleTimeoutMs` releases the worker after inactivity, with zero retaining it until disposal. Models remain cached. Authenticated loopback requests keep audio in memory. Electron workers run in Node mode and copy VAD buffers to satisfy the V8 memory cage. No runtime invariant companion is published because `dsh-subprocess` owns process-range observations and this provider has no independent projection to reconcile.
+One managed Node subprocess serializes inference. Recordings submitted during wake-up join the bounded queue. At execution, the worker requires ready or standby resources. Transcription never starts preparation downloads. `threads`, `segmentSeconds`, `vadThreshold`, `minSpeechSeconds` and `minSilenceSeconds` tune CPU inference and segmentation; `maxPending` bounds accepted work. Preparation and inference have separate deadlines. Invalid language or WAV input is rejected before native inference and retains the loaded worker; inference failures, malformed responses and transport failures reclaim it. Cancellation terminates an active worker and joins its process range; cancelled queued recordings never run. `idleTimeoutMs` releases the worker after inactivity, with zero retaining it until disposal. Models remain cached. Authenticated loopback requests keep audio in memory. Electron workers run in Node mode and copy VAD buffers to satisfy the V8 memory cage. No runtime invariant companion is published because `astro-one-subprocess` owns process-range observations and this provider has no independent projection to reconcile.
 
 The Host owns preparation across page and Session changes: check resources, download recognition weights and tokens, download VAD, verify files, and load the worker. Explicit model paths omit their download steps. Downloads report bytes; other steps report elapsed time. An idle worker retains prepared paths and needs only model loading on wake-up. Cancellation after a preparation result is published waits for cleanup without replacing that result.
 

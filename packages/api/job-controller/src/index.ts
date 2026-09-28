@@ -5,20 +5,20 @@
  * projections of `ctx.jobs`; the model's consuming cursor and notice state
  * never observe them, and a human kill is not the model's own, so the
  * completion notice still reaches the owning agent.
- * @module @deepseek-ai/dsh-api-job-controller
+ * @module @astro-one/api-job-controller
  */
 
-import { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import type {} from '@deepseek-ai/dsh-jobs'
-import { Remote, RemoteError, TypertRemoteService } from '@deepseek-ai/dsh-typert-protocol'
+import { Context } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
+import type {} from '@astro-one/jobs'
+import { Remote, RemoteError, TypertRemoteService } from '@astro-one/typert-protocol'
 import { observeJobOutput } from './observe.ts'
 import { streamJobRows } from './rows.ts'
 import type { JobKillRequest, JobKillValue, JobFollowFrame, JobFollowRequest, JobListFrame, JobListRequest } from './types.ts'
 
 export type * from './types.ts'
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     /** Host job Remote namespace owner. */
     jobController: JobController

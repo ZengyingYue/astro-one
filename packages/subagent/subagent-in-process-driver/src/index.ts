@@ -8,17 +8,17 @@
  * composes and drives them directly, so this driver owns exactly one turn with
  * one result.
  *
- * @module @deepseek-ai/dsh-subagent-in-process-driver
+ * @module @astro-one/subagent-in-process-driver
  */
 
 import { randomUUID } from 'node:crypto'
-import type { Context } from '@deepseek-ai/cordis'
-import { brandString } from '@deepseek-ai/dsh-brand'
-import { foldConsumedWork } from '@deepseek-ai/dsh-agent'
-import type { Agent, AgentHandle } from '@deepseek-ai/dsh-agent'
-import { SessionLogOffset } from '@deepseek-ai/dsh-session'
-import type { SessionEvent, SessionId, SessionLogOffset as SessionLogOffsetType, TurnEndReason } from '@deepseek-ai/dsh-session'
-import { createUserMessage, type ContentBlock } from '@deepseek-ai/dsh-llm'
+import type { Context } from '@astro-one/cordis'
+import { brandString } from '@astro-one/brand'
+import { foldConsumedWork } from '@astro-one/agent'
+import type { Agent, AgentHandle } from '@astro-one/agent'
+import { SessionLogOffset } from '@astro-one/session'
+import type { SessionEvent, SessionId, SessionLogOffset as SessionLogOffsetType, TurnEndReason } from '@astro-one/session'
+import { createUserMessage, type ContentBlock } from '@astro-one/llm'
 import {
   appendDelegatedPolicyOverrides,
   applyChildComposition,
@@ -28,14 +28,14 @@ import {
   finalAssistantOutput,
   resolveChildAgentOptions,
   resolveChildDepth,
-} from '@deepseek-ai/dsh-subagent'
+} from '@astro-one/subagent'
 import type {
   ResolvedSubagentStartRequest,
   SubagentDescriptorData,
   SubagentResult,
   SubagentRun,
   SubagentStopReason,
-} from '@deepseek-ai/dsh-subagent'
+} from '@astro-one/subagent'
 import {
   attachStructuredRuntime,
   type StructuredAttachment,

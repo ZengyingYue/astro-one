@@ -2,15 +2,15 @@
  * Concrete agent-loop plugin: creates scoped ReactLoopAgents, publishes them
  * through the agent/session registries, and owns their ordered teardown.
  *
- * @module @deepseek-ai/dsh-agent-loop
+ * @module @astro-one/agent-loop
  */
-import type { Volatile } from '@deepseek-ai/cosmokit'
+import type { Volatile } from '@astro-one/cosmokit'
 
-import { Context, FiberState, Service } from '@deepseek-ai/cordis'
+import { Context, FiberState, Service } from '@astro-one/cordis'
 import { randomUUID } from 'node:crypto'
-import z from '@deepseek-ai/schemastery'
+import z from '@astro-one/schemastery'
 import { z as zod } from 'zod'
-import { brandString } from '@deepseek-ai/dsh-brand'
+import { brandString } from '@astro-one/brand'
 import type {
   Agent,
   AgentFactory,
@@ -21,16 +21,16 @@ import type {
   ResumeAgentOptions,
   SessionStartSource,
   TurnBoundaryProjection,
-} from '@deepseek-ai/dsh-agent'
-import { errorChain, ReasoningEffortId } from '@deepseek-ai/dsh-llm'
-import { interruptedTurnClosers, SessionLogOffset, SessionPreparation, SessionSeq } from '@deepseek-ai/dsh-session'
-import type { Session, SessionHeader, SessionId } from '@deepseek-ai/dsh-session'
-import type {} from '@deepseek-ai/dsh-system-prompt'
-import type {} from '@deepseek-ai/dsh-tools'
-import type {} from '@deepseek-ai/dsh-session-projection'
-import type { ProjectionDefinition } from '@deepseek-ai/dsh-session-projection'
-import { SessionPersistenceNotFoundError } from '@deepseek-ai/dsh-session-persistence'
-import type { SessionHandle, SessionPersistence } from '@deepseek-ai/dsh-session-persistence'
+} from '@astro-one/agent'
+import { errorChain, ReasoningEffortId } from '@astro-one/llm'
+import { interruptedTurnClosers, SessionLogOffset, SessionPreparation, SessionSeq } from '@astro-one/session'
+import type { Session, SessionHeader, SessionId } from '@astro-one/session'
+import type {} from '@astro-one/system-prompt'
+import type {} from '@astro-one/tools'
+import type {} from '@astro-one/session-projection'
+import type { ProjectionDefinition } from '@astro-one/session-projection'
+import { SessionPersistenceNotFoundError } from '@astro-one/session-persistence'
+import type { SessionHandle, SessionPersistence } from '@astro-one/session-persistence'
 import { ReactLoopAgent } from './agent.ts'
 import { inboxProjectionDefinition } from './inbox.ts'
 import { DEFAULT_MAX_PARALLEL_TOOL_CALLS } from './constants.ts'
@@ -212,7 +212,7 @@ interface PreparedAgent {
   dispose(): Promise<void>
 }
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     agentLoop: AgentLoop
     /**
@@ -807,7 +807,7 @@ export class AgentLoop extends Service implements AgentFactory {
   async resume(ownerCtx: Context, options: ResumeAgentOptions): Promise<AgentHandle> {
     const persistence = this.runtime.ctx.get('sessionPersistence')
     if (persistence === undefined) {
-      throw new Error('cannot resume: session persistence is not configured (load a dsh-session-persistence backend)')
+      throw new Error('cannot resume: session persistence is not configured (load a astro-one-session-persistence backend)')
     }
     return this.resumeWith(ownerCtx, persistence, options)
   }

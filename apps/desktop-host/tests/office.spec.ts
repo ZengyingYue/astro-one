@@ -2,13 +2,13 @@ import { cp, mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import Include from '@deepseek-ai/cordis-plugin-include'
-import AgentRegistry from '@deepseek-ai/dsh-agent'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import SkillRegistry from '@deepseek-ai/dsh-skill'
-import ToolRuntime from '@deepseek-ai/dsh-tools'
+import { Context } from '@astro-one/cordis'
+import Loader from '@astro-one/cordis-plugin-loader'
+import Include from '@astro-one/cordis-plugin-include'
+import AgentRegistry from '@astro-one/agent'
+import SystemPrompt from '@astro-one/system-prompt'
+import SkillRegistry from '@astro-one/skill'
+import ToolRuntime from '@astro-one/tools'
 import { expect, it } from 'vitest'
 import * as desktopOffice from '../src/office.ts'
 
@@ -42,7 +42,7 @@ it('loads Desktop Office CLI paths and removes them on disposal', async () => {
       '- name: agents', '- name: systemPrompt', '- name: tools', '- name: skills', '- name: office',
       '  config:', `    source: ${JSON.stringify(join(root, 'runtime', 'primary-runtime'))}`,
       `    root: ${JSON.stringify(join(root, 'installed'))}`,
-      `    runtimeDir: ${JSON.stringify(join(root, 'dsh'))}`, '',
+      `    runtimeDir: ${JSON.stringify(join(root, 'astro-one'))}`, '',
     ].join('\n'))
     await ctx.loader.create({ name: 'cordis:include', config: { path: pathToFileURL(config).href } })
     await ctx.loader.await()

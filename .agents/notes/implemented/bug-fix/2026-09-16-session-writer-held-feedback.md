@@ -12,7 +12,7 @@ A Session can retain its write handle while its Agent is idle. Another Host cann
 
 Session Controller reports `session/writer-held` with `{ sessionId }` when resume fails with `SessionAlreadyOwnedError` and no reusable Agent exists. Clients discriminate by code, following the [Remote failure vocabulary](../architecture/2026-08-28-ctx-remote-failure-vocabulary.md). The controller recognizes the persistence error by its Error name, matching Session Query's optional-dependency handling; loading the controller requires no persistence implementation or error-class identity.
 
-Send and model-selection failures show localized guidance that another DSH instance may hold the Session and suggest quitting other instances before retrying. Model selection returns the original Remote result to both UI entries; error classification does not depend on a later read of shared directory state. The [write-lease decision](../feature/2026-08-31-cross-process-session-write-lease.md) continues to own locking and release semantics; this feedback neither takes ownership nor retries writes automatically.
+Send and model-selection failures show localized guidance that another Astro One instance may hold the Session and suggest quitting other instances before retrying. Model selection returns the original Remote result to both UI entries; error classification does not depend on a later read of shared directory state. The [write-lease decision](../feature/2026-08-31-cross-process-session-write-lease.md) continues to own locking and release semantics; this feedback neither takes ownership nor retries writes automatically.
 
 ## Alternatives considered
 

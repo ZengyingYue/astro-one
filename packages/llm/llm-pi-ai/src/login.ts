@@ -4,13 +4,13 @@
  * vocabulary and pi-ai's `AuthInteraction`; nothing above it knows which
  * library ran the conversation.
  *
- * @module dsh-llm-pi-ai/login
+ * @module astro-one-llm-pi-ai/login
  */
 
 import type { AuthEvent, AuthPrompt, AuthType, Provider } from '@earendil-works/pi-ai'
-import type { Context } from '@deepseek-ai/cordis'
-import type { AuthorizationMethod, AuthorizationPrompt, AuthorizationSession } from '@deepseek-ai/dsh-authorization'
-import { isCredentialKeySegment } from '@deepseek-ai/dsh-credentials'
+import type { Context } from '@astro-one/cordis'
+import type { AuthorizationMethod, AuthorizationPrompt, AuthorizationSession } from '@astro-one/authorization'
+import { isCredentialKeySegment } from '@astro-one/credentials'
 import { catalogProvider, catalogProviderIds } from './catalog.ts'
 import { recordKeyFor } from './auth.ts'
 import type { PiAiAuthInjection } from './adapter.ts'

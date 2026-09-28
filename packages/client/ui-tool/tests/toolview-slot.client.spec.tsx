@@ -1,20 +1,20 @@
 // @vitest-environment jsdom
 
-import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
+import { createSnapshotStore } from '@astro-one/client-store'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { cleanup, fireEvent } from '@testing-library/react'
-import type { ISession } from '@deepseek-ai/dsh-api-session-controller/client'
-import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import type { WorkspaceId } from '@deepseek-ai/dsh-workspace/types'
+import type { ISession } from '@astro-one/api-session-controller/client'
+import type { SessionId } from '@astro-one/session/types'
+import type { WorkspaceId } from '@astro-one/workspace/types'
 import {
   apply as applyChat, inject as injectChat, type ToolResultNode,
-} from '@deepseek-ai/dsh-client-ui-chat/client'
-import type { PropsRenderSlots } from '@deepseek-ai/dsh-client-ui-slots'
-import { SlotTestRuntime, stubConfigForm } from '@deepseek-ai/dsh-client-test-runtime'
-import { LocaleRuntime } from '@deepseek-ai/dsh-client-locale/client'
-import { apply as applyConversation, inject as injectConversation } from '@deepseek-ai/dsh-client-ui-conversation/client'
-import { apply as applyTool, inject as injectTool } from '@deepseek-ai/dsh-client-ui-tool/client'
-import type { ToolCallViewProps } from '@deepseek-ai/dsh-client-ui-tool/client'
+} from '@astro-one/client-ui-chat/client'
+import type { PropsRenderSlots } from '@astro-one/client-ui-slots'
+import { SlotTestRuntime, stubConfigForm } from '@astro-one/client-test-runtime'
+import { LocaleRuntime } from '@astro-one/client-locale/client'
+import { apply as applyConversation, inject as injectConversation } from '@astro-one/client-ui-conversation/client'
+import { apply as applyTool, inject as injectTool } from '@astro-one/client-ui-tool/client'
+import type { ToolCallViewProps } from '@astro-one/client-ui-tool/client'
 import { toolSessionEvents } from './tool-fixtures.client.ts'
 
 const SID = 's1' as SessionId
@@ -218,7 +218,7 @@ describe('keyed toolview hole through the real machinery', () => {
     const view = b.runtime.renderRoot()
     view.getByText('src/a.ts').click()
     await vi.waitFor(() => {
-      expect(b.sidebarRight.openResource).toHaveBeenCalledWith('dsh-resource://file/session/s1/src/a.ts')
+      expect(b.sidebarRight.openResource).toHaveBeenCalledWith('astro-one-resource://file/session/s1/src/a.ts')
     })
     // Nothing on this path reaches the local machine any more.
     expect(b.openWorkspacePath).not.toHaveBeenCalled()

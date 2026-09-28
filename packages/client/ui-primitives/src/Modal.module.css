@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: max(24px, var(--dsh-frame-top-clearance, 24px)) 24px;
+  padding: max(24px, var(--astro-one-frame-top-clearance, 24px)) 24px;
 }
 
 /* User/spec mask: rgba(0,0,0,0.24) + blur(2px) via --dsw-alias-bg-mask-1 /

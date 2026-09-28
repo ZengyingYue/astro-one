@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, expectTypeOf, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@astro-one/cordis'
 import SessionStore, {
   SESSION_FORMAT_VERSION,
   Session,
@@ -9,11 +9,11 @@ import SessionStore, {
   type CreateSessionOptions,
   type SessionEvent,
   type SessionHeader,
-} from '@deepseek-ai/dsh-session'
-import { createSessionFormatCatalogWithChildren } from '@deepseek-ai/dsh-session-format-catalog'
-import DeepSeekLlmApiExtensionRegistry from '@deepseek-ai/dsh-deepseek-llm-api-extensions'
-import { createDeveloperMessage, createAssistantMessage, createSystemMessage, createUserMessage } from '@deepseek-ai/dsh-llm'
-import type { JsonValue } from '@deepseek-ai/dsh-util-values'
+} from '@astro-one/session'
+import { createSessionFormatCatalogWithChildren } from '@astro-one/session-format-catalog'
+import DeepSeekLlmApiExtensionRegistry from '@astro-one/deepseek-llm-api-extensions'
+import { createDeveloperMessage, createAssistantMessage, createSystemMessage, createUserMessage } from '@astro-one/llm'
+import type { JsonValue } from '@astro-one/util-values'
 import * as SessionLogDeepSeek from '../src/index.ts'
 import type { DeepSeekSessionLogExtension, DeepSeekSessionLogWireEvent, DeepSeekSessionLogWireSurfaceOp } from '../src/types.ts'
 
@@ -95,7 +95,7 @@ describe('incremental DeepSeek session-log upload', () => {
       message: createDeveloperMessage({ content: [{ type: 'tool-removal', toolName: 'search' }], source: { kind: 'tool-registry' } }),
     }, { surfaceOp: { op: 'replace', startSeq: first.seq, endSeq: first.seq }, sourceEventSeqs: [first.seq] })
     const prepared = await ctx.deepseekLlmApiExtensions.prepare({ body: body(), signal: SIGNAL, sessionId: session.id })
-    expect(prepared.fields.dsh_session_log?.events).toEqual(session.snapshotEvents())
+    expect(prepared.fields.astro_one_session_log?.events).toEqual(session.snapshotEvents())
   })
 
   it('uploads Assistant provider metadata only through its embedded stream', async () => {
@@ -112,7 +112,7 @@ describe('incremental DeepSeek session-log upload', () => {
     const prepared = await ctx.deepseekLlmApiExtensions.prepare({
       body: body(), signal: SIGNAL, sessionId: session.id,
     })
-    expect(prepared.fields.dsh_session_log?.events).toEqual([{
+    expect(prepared.fields.astro_one_session_log?.events).toEqual([{
       type: assistant.type,
       seq: Number(assistant.seq),
       time: assistant.time,
@@ -132,7 +132,7 @@ describe('incremental DeepSeek session-log upload', () => {
       turn: 1, step: 3, message: createSystemMessage('new head'),
     }, { surfaceOp: { op: 'replace', startSeq: head.seq, endSeq: head.seq }, sourceEventSeqs: [head.seq] })
     const prepared = await ctx.deepseekLlmApiExtensions.prepare({ body: body(), signal: SIGNAL, sessionId: session.id })
-    expect(prepared.fields.dsh_session_log?.events).toEqual(session.snapshotEvents())
+    expect(prepared.fields.astro_one_session_log?.events).toEqual(session.snapshotEvents())
   })
 
   it.each(['extension/event', 'tool/code-dispatch', 'tool/code-dispatch-start'])('uploads opaque ignorable %s without interpreting its metadata', async (type) => {
@@ -147,7 +147,7 @@ describe('incremental DeepSeek session-log upload', () => {
       } as unknown as SessionEvent
       const { ctx, session } = await harness('wire-opaque', [event])
       const prepared = await ctx.deepseekLlmApiExtensions.prepare({ body: body(), signal: SIGNAL, sessionId: session.id })
-      expect(prepared.fields.dsh_session_log?.events[0]).toStrictEqual(event)
+      expect(prepared.fields.astro_one_session_log?.events[0]).toStrictEqual(event)
       expect(session.deriveMessages()).toEqual([])
     }
   })
@@ -173,7 +173,7 @@ describe('incremental DeepSeek session-log upload', () => {
     const prepared = await ctx.deepseekLlmApiExtensions.prepare({
       body: body(), signal: SIGNAL, sessionId: session.id,
     })
-    expect(prepared.fields).not.toHaveProperty('dsh_session_log')
+    expect(prepared.fields).not.toHaveProperty('astro_one_session_log')
   })
 
   it('uploads the full first prefix, records acceptance, then sends only the appended suffix', async () => {
@@ -182,7 +182,7 @@ describe('incremental DeepSeek session-log upload', () => {
     session.append('step/start', { turn: 1, step: 1 })
 
     const first = await ctx.deepseekLlmApiExtensions.prepare({ body: body(), signal: SIGNAL, sessionId: session.id })
-    const firstPayload = first.fields.dsh_session_log
+    const firstPayload = first.fields.astro_one_session_log
     expect(firstPayload).toMatchObject({
       sessionFormatVersion: SESSION_FORMAT_VERSION,
       afterSeq: -1,
@@ -199,9 +199,9 @@ describe('incremental DeepSeek session-log upload', () => {
 
     session.append('step/end', { turn: 1, step: 1 })
     const second = await ctx.deepseekLlmApiExtensions.prepare({ body: body(), signal: SIGNAL, sessionId: session.id })
-    expect(second.fields.dsh_session_log).toMatchObject({ afterSeq: 1, throughSeq: 3 })
-    expect(second.fields.dsh_session_log?.events).toHaveLength(2)
-    expect(second.fields.dsh_session_log?.events[0]).toMatchObject({
+    expect(second.fields.astro_one_session_log).toMatchObject({ afterSeq: 1, throughSeq: 3 })
+    expect(second.fields.astro_one_session_log?.events).toHaveLength(2)
+    expect(second.fields.astro_one_session_log?.events[0]).toMatchObject({
       type: 'session-log-deepseek/delivery-accepted',
       seq: 2,
     })
@@ -219,7 +219,7 @@ describe('incremental DeepSeek session-log upload', () => {
     const resumedPayload = await resumed.ctx.deepseekLlmApiExtensions.prepare({
       body: body(), signal: SIGNAL, sessionId: resumed.session.id,
     })
-    expect(resumedPayload.fields.dsh_session_log?.afterSeq).toBe(0)
+    expect(resumedPayload.fields.astro_one_session_log?.afterSeq).toBe(0)
 
     const fork = await harness('child', seed, {
       inheritedEventCount: SessionLogOffset(seed.length),
@@ -227,7 +227,7 @@ describe('incremental DeepSeek session-log upload', () => {
     })
     expect(SessionLogDeepSeek.acceptedThrough(fork.session)).toBe(-1)
     const forkPayload = await fork.ctx.deepseekLlmApiExtensions.prepare({ body: body(), signal: SIGNAL, sessionId: fork.session.id })
-    expect(forkPayload.fields.dsh_session_log).toMatchObject({ afterSeq: -1, throughSeq: fork.session.seq - 1 })
+    expect(forkPayload.fields.astro_one_session_log).toMatchObject({ afterSeq: -1, throughSeq: fork.session.seq - 1 })
   })
 
   it('uploads a migrated V3 log from the beginning before resuming current-generation acknowledgements', async () => {
@@ -247,16 +247,16 @@ describe('incremental DeepSeek session-log upload', () => {
     ctx.effect(() => ctx.sessions.enter(session))
 
     const first = await ctx.deepseekLlmApiExtensions.prepare({ body: body(), signal: SIGNAL, sessionId: id })
-    expect(first.fields.dsh_session_log).toMatchObject({ sessionFormatVersion: SESSION_FORMAT_VERSION, afterSeq: -1 })
-    expect(first.fields.dsh_session_log?.events[0]?.seq).toBe(0)
-    expect(first.fields.dsh_session_log?.events[1]).toMatchObject({ data: { sessionFormatVersion: 3, throughSeq: 0 } })
+    expect(first.fields.astro_one_session_log).toMatchObject({ sessionFormatVersion: SESSION_FORMAT_VERSION, afterSeq: -1 })
+    expect(first.fields.astro_one_session_log?.events[0]?.seq).toBe(0)
+    expect(first.fields.astro_one_session_log?.events[1]).toMatchObject({ data: { sessionFormatVersion: 3, throughSeq: 0 } })
     const throughSeq = session.seq - 1
     await first.accept()
     expect(session.snapshotEvents().at(-1)?.data).toEqual({ sessionId: id, sessionFormatVersion: SESSION_FORMAT_VERSION, throughSeq })
 
     const second = await ctx.deepseekLlmApiExtensions.prepare({ body: body(), signal: SIGNAL, sessionId: id })
-    expect(second.fields.dsh_session_log?.afterSeq).toBe(throughSeq)
-    expect(second.fields.dsh_session_log?.events.map(event => event.seq)).toEqual([throughSeq + 1])
+    expect(second.fields.astro_one_session_log?.afterSeq).toBe(throughSeq)
+    expect(second.fields.astro_one_session_log?.events.map(event => event.seq)).toEqual([throughSeq + 1])
     expect(session.eventAt(SessionSeq(1))?.data).toMatchObject({ sessionFormatVersion: 3, throughSeq: 0 })
   })
 
@@ -395,7 +395,7 @@ describe('incremental DeepSeek session-log upload', () => {
     const first = await ctx.deepseekLlmApiExtensions.prepare({ body: body(), signal: SIGNAL, sessionId: session.id })
     await first.accept()
     const current = await ctx.deepseekLlmApiExtensions.prepare({ body: body(), signal: SIGNAL, sessionId: session.id })
-    expect(current.fields.dsh_session_log).toMatchObject({
+    expect(current.fields.astro_one_session_log).toMatchObject({
       afterSeq: 0,
       throughSeq: 1,
       events: [{ type: 'session-log-deepseek/delivery-accepted' }],
@@ -406,7 +406,7 @@ describe('incremental DeepSeek session-log upload', () => {
     const { ctx, session } = await harness('direct-events')
     session.append('turn/start', { turn: 1 })
     const prepared = await ctx.deepseekLlmApiExtensions.prepare({ body: {}, signal: SIGNAL, sessionId: session.id })
-    expect(prepared.fields.dsh_session_log?.events).toEqual(session.snapshotEvents())
+    expect(prepared.fields.astro_one_session_log?.events).toEqual(session.snapshotEvents())
   })
 
   it('translates logical brands and isSeeded into the raw upload DTO', async () => {
@@ -451,7 +451,7 @@ describe('incremental DeepSeek session-log upload', () => {
     const prepared = await ctx.deepseekLlmApiExtensions.prepare({
       body: body(), signal: SIGNAL, sessionId: session.id,
     })
-    const wire = JSON.parse(JSON.stringify(prepared.fields.dsh_session_log)) as Record<string, unknown>
+    const wire = JSON.parse(JSON.stringify(prepared.fields.astro_one_session_log)) as Record<string, unknown>
     expect(wire.session).toMatchObject({
       version: SESSION_FORMAT_VERSION,
       id: 'wire-child',
@@ -512,7 +512,7 @@ describe('incremental DeepSeek session-log upload', () => {
     const prepared = await ctx.deepseekLlmApiExtensions.prepare({
       body: body(), signal: SIGNAL, sessionId: session.id,
     })
-    const events = prepared.fields.dsh_session_log?.events ?? []
+    const events = prepared.fields.astro_one_session_log?.events ?? []
 
     expect(events[0]).not.toHaveProperty('surfaceOp')
     expect(events[0]).not.toHaveProperty('sourceEventSeqs')
@@ -570,9 +570,9 @@ describe('incremental DeepSeek session-log upload', () => {
     const { ctx, session, disposeUpload } = await harness('hmr')
     session.append('turn/start', { turn: 1 })
     expect((await ctx.deepseekLlmApiExtensions.prepare({ body: body(), signal: SIGNAL, sessionId: session.id })).fields)
-      .toHaveProperty('dsh_session_log')
+      .toHaveProperty('astro_one_session_log')
     await disposeUpload()
     expect((await ctx.deepseekLlmApiExtensions.prepare({ body: body(), signal: SIGNAL, sessionId: session.id })).fields)
-      .not.toHaveProperty('dsh_session_log')
+      .not.toHaveProperty('astro_one_session_log')
   })
 })

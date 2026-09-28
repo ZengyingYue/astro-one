@@ -30,8 +30,8 @@
   overflow: hidden;
   flex: 1 1 auto;
   color: var(--dsw-alias-label-tertiary);
-  font-size: var(--dsh-content-font-size-secondary, 13px);
-  line-height: calc(24px + var(--dsh-content-font-delta, 0px));
+  font-size: var(--astro-one-content-font-size-secondary, 13px);
+  line-height: calc(24px + var(--astro-one-content-font-delta, 0px));
   text-overflow: ellipsis;
   white-space: nowrap;
   transition: color 100ms ease;

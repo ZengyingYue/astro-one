@@ -4,29 +4,29 @@
  * matchers, snake_case payloads without a trailing newline, no hook environment
  * or command substitution, and no pre-tool approval or rewrite path; only
  * blocking decisions are honored. Shared execution and parsing live in
- * `dsh-hook-protocol`.
- * @module @deepseek-ai/dsh-hooks-codex
+ * `astro-one-hook-protocol`.
+ * @module @astro-one/hooks-codex
  */
 
 // Each dialect bridge keeps its complete dependency list visible at the entry
 // point; a cross-package facade for imports alone would add indirection.
 /* jscpd:ignore-start */
 import { readFileSync } from 'node:fs'
-import type { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import type { Agent, PreStepDecision } from '@deepseek-ai/dsh-agent'
-import type {} from '@deepseek-ai/dsh-session-projection'
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
-import type { ContextFormed } from '@deepseek-ai/dsh-llm'
-declare module '@deepseek-ai/dsh-llm' {
+import type { Context } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
+import type { Agent, PreStepDecision } from '@astro-one/agent'
+import type {} from '@astro-one/session-projection'
+import { createUserMessage } from '@astro-one/llm'
+import type { ContextFormed } from '@astro-one/llm'
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'hooks-codex': { kind: 'hooks-codex' } & ContextFormed
   }
 }
 
-import type { ContentBlock, MessageSource } from '@deepseek-ai/dsh-llm'
-import type { UserMessage } from '@deepseek-ai/dsh-session'
-import type { PostToolDecision, PreToolDecision, ToolExecution, ToolExecutionResult } from '@deepseek-ai/dsh-tools'
+import type { ContentBlock, MessageSource } from '@astro-one/llm'
+import type { UserMessage } from '@astro-one/session'
+import type { PostToolDecision, PreToolDecision, ToolExecution, ToolExecutionResult } from '@astro-one/tools'
 import {
   appendHookInvoked,
   appendHookResult,
@@ -39,7 +39,7 @@ import {
   type HookOutput,
   type MatcherGroup,
   type MergedHookOutcome,
-} from '@deepseek-ai/dsh-hook-protocol'
+} from '@astro-one/hook-protocol'
 import { parseCodexConfig, type CodexHookConfig } from './config.ts'
 /* jscpd:ignore-end */
 

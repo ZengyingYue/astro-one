@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/archived/architecture/2026-08-20-web-composer-lexical-editor.md
-2026-08-20-web-composer-lexical-editor.md: 434d08af0218abfbd52d7f4a7423e14ae578702f
-2026-08-20-web-composer-lexical-editor.zh.md: bf466aa7d641ceb29a29fb3e8a772a2152ffbe83
+2026-08-20-web-composer-lexical-editor.md: a8538b0785caf1d17a75a28af7acb519499bdf85
+2026-08-20-web-composer-lexical-editor.zh.md: e8b5760ce09ea3602ed13f092f6bb64f1649f5c6

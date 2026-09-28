@@ -64,22 +64,22 @@ describe.skipIf(!existsSync(preload('preload-app')))('built sandboxed Desktop pr
         if (id !== 'electron') throw new Error(`sandbox cannot load ${id}`)
         return electron
       },
-      process: { argv: ['electron', '--dsh-welcome-locale=en'] },
-      location: new URL('dsh-app://app/'),
+      process: { argv: ['electron', '--astro-one-welcome-locale=en'] },
+      location: new URL('astro-one-app://app/'),
       exports: {},
     })
     if (name === 'preload-app') {
       browser.loadTheme('dark')
-      expect(send).toHaveBeenCalledWith('dsh-desktop:native-theme-set', 'dark')
+      expect(send).toHaveBeenCalledWith('astro-one-desktop:native-theme-set', 'dark')
       browser.changeTheme('light')
-      expect(send).toHaveBeenCalledWith('dsh-desktop:native-theme-set', 'light')
-      const bridge = exposed.get('__DSH_LOCALE__') as { read(): unknown; onChange(locale: string): void }
+      expect(send).toHaveBeenCalledWith('astro-one-desktop:native-theme-set', 'light')
+      const bridge = exposed.get('__ASTRO_ONE_LOCALE__') as { read(): unknown; onChange(locale: string): void }
       bridge.read()
-      expect(invoke).toHaveBeenCalledWith('dsh-desktop:locale-bootstrap')
+      expect(invoke).toHaveBeenCalledWith('astro-one-desktop:locale-bootstrap')
       bridge.onChange('zh')
-      expect(send).toHaveBeenCalledWith('dsh-desktop:locale-changed', 'zh')
+      expect(send).toHaveBeenCalledWith('astro-one-desktop:locale-changed', 'zh')
     } else {
-      expect(exposed.has('dshWelcome')).toBe(true)
+      expect(exposed.has('astroOneWelcome')).toBe(true)
     }
   })
 })

@@ -6,15 +6,15 @@
  * Export discipline:
  * packages/client/AGENTS.md.
  */
-import type { Context as ClientContext } from '@deepseek-ai/cordis'
+import type { Context as ClientContext } from '@astro-one/cordis'
 // Type-only: pulls the shell's SlotMap merge (the 'settings.section' entry).
-import type {} from '@deepseek-ai/dsh-client-ui-settings/client'
+import type {} from '@astro-one/client-ui-settings/client'
 // Type-only: pulls the locale plugin's Context merge (ctx.locale).
-import type {} from '@deepseek-ai/dsh-client-locale/client'
-import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
+import type {} from '@astro-one/client-locale/client'
+import type {} from '@astro-one/client-ui-renderer/client'
 // Type-only: pulls the ctx.remote merge and the forwarded-event key face
 // (settings/credentials invalidations ride the allowlist) into this program.
-import type {} from '@deepseek-ai/dsh-api-remotes/client'
+import type {} from '@astro-one/api-remotes/client'
 import { ModelsSection } from './ModelsSection.tsx'
 import type { ModelsSectionInjected } from './ModelsSection.tsx'
 import { DeepSeekOnboardingDialog } from './DeepSeekOnboardingDialog.tsx'
@@ -33,7 +33,7 @@ export type { ModelsSectionInjected, ModelsSectionProps } from './ModelsSection.
 export type { ModelsFooterOwnerProps, ProviderCardExtrasOwnerProps } from './slot-contract.ts'
 export type { ModelsKey } from './locales.ts'
 
-declare module '@deepseek-ai/dsh-client-ui-slots' {
+declare module '@astro-one/client-ui-slots' {
   interface LocaleNamespaceMap {
     /** The Models page + product-onboarding copy. */
     'settings.models': ModelsKey
@@ -78,7 +78,7 @@ export function apply(ctx: ClientContext): void {
   const page = globalThis as Partial<Record<typeof ONBOARDING_CONFIG_GLOBAL, unknown>>
   const payload = page[ONBOARDING_CONFIG_GLOBAL]
   const configured = Config(payload === undefined ? {} : payload)
-  const credentialOnboarding = configured.credentialOnboarding && !('dshDesktop' in globalThis)
+  const credentialOnboarding = configured.credentialOnboarding && !('astroOneDesktop' in globalThis)
   ctx.effect(() => ctx.locale.register(NS, { zh, en }), 'ui-settings-models: copy dictionaries')
 
   const schema = createSettingsSchemaOperations(ctx.settingsSchema)

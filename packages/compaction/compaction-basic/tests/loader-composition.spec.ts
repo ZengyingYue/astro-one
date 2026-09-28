@@ -3,15 +3,15 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { afterEach, describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import Include from '@deepseek-ai/cordis-plugin-include'
-import LlmRuntime from '@deepseek-ai/dsh-llm'
-import SessionStore from '@deepseek-ai/dsh-session'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import TokenMeter from '@deepseek-ai/dsh-token-meter'
-import BasicCompactionEngine from '@deepseek-ai/dsh-compaction-basic'
-import ToolResultPruner from '@deepseek-ai/dsh-compaction-tool-result-pruner'
+import { Context } from '@astro-one/cordis'
+import Loader from '@astro-one/cordis-plugin-loader'
+import Include from '@astro-one/cordis-plugin-include'
+import LlmRuntime from '@astro-one/llm'
+import SessionStore from '@astro-one/session'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import TokenMeter from '@astro-one/token-meter'
+import BasicCompactionEngine from '@astro-one/compaction-basic'
+import ToolResultPruner from '@astro-one/compaction-tool-result-pruner'
 
 let root: string | undefined
 let context: Context | undefined
@@ -24,7 +24,7 @@ afterEach(async () => {
 })
 
 async function loadYaml(lines: readonly string[]): Promise<Context> {
-  root = await mkdtemp(join(tmpdir(), 'dsh-token-meter-loader-'))
+  root = await mkdtemp(join(tmpdir(), 'astro-one-token-meter-loader-'))
   const configPath = join(root, 'cordis.yml')
   await writeFile(configPath, [...lines, ''].join('\n'))
 
@@ -33,12 +33,12 @@ async function loadYaml(lines: readonly string[]): Promise<Context> {
   await context.plugin(Loader)
   context.loader.builtins.include = Include
   const modules = new Map<string, unknown>([
-    ['@deepseek-ai/dsh-llm', LlmRuntime],
-    ['@deepseek-ai/dsh-session', SessionStore],
-    ['@deepseek-ai/dsh-session-projection', SessionProjectionRegistry],
-    ['@deepseek-ai/dsh-token-meter', TokenMeter],
-    ['@deepseek-ai/dsh-compaction-tool-result-pruner', ToolResultPruner],
-    ['@deepseek-ai/dsh-compaction-basic', BasicCompactionEngine],
+    ['@astro-one/llm', LlmRuntime],
+    ['@astro-one/session', SessionStore],
+    ['@astro-one/session-projection', SessionProjectionRegistry],
+    ['@astro-one/token-meter', TokenMeter],
+    ['@astro-one/compaction-tool-result-pruner', ToolResultPruner],
+    ['@astro-one/compaction-basic', BasicCompactionEngine],
   ])
   context.loader.internal = {
     version: 'v2',
@@ -58,16 +58,16 @@ async function loadYaml(lines: readonly string[]): Promise<Context> {
 describe('real Loader composition', () => {
   it('loads the shipped token-meter, pruning, and compaction-basic YAML order', async () => {
     const loaded = await loadYaml([
-      "- name: '@deepseek-ai/dsh-llm'",
-      "- name: '@deepseek-ai/dsh-session'",
-      "- name: '@deepseek-ai/dsh-session-projection'",
-      "- name: '@deepseek-ai/dsh-token-meter'",
-      "- name: '@deepseek-ai/dsh-compaction-tool-result-pruner'",
+      "- name: '@astro-one/llm'",
+      "- name: '@astro-one/session'",
+      "- name: '@astro-one/session-projection'",
+      "- name: '@astro-one/token-meter'",
+      "- name: '@astro-one/compaction-tool-result-pruner'",
       '  config:',
       '    thresholdChars: 100',
       '    headChars: 20',
       '    tailChars: 10',
-      "- name: '@deepseek-ai/dsh-compaction-basic'",
+      "- name: '@astro-one/compaction-basic'",
       '  config:',
       '    thresholdRatio: 0.5',
       '    headroomTokens: 4000',

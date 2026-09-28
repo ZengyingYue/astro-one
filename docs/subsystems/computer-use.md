@@ -2,11 +2,11 @@
 
 English | [中文](computer-use.zh.md)
 
-Computer use lets a model observe and operate the local desktop through a configured provider. The shared DSH capability is called **computer use**; **Cua Driver** names the upstream implementation.
+Computer use lets a model observe and operate the local desktop through a configured provider. The shared Astro One capability is called **computer use**; **Cua Driver** names the upstream implementation.
 
 ## Choose a provider
 
-Mount [`dsh-computer-use`](../../packages/computer-use/computer-use/README.md) and one provider in the same composition. Both Cua Driver providers are experimental public npm packages and require explicit activation.
+Mount [`astro-one-computer-use`](../../packages/computer-use/computer-use/README.md) and one provider in the same composition. Both Cua Driver providers are experimental public npm packages and require explicit activation.
 
 | Provider | Runtime |
 |---|---|
@@ -19,7 +19,7 @@ Each provider supplies its upstream tool catalog. The shared service registers o
 
 A provider retains its registration while it shuts down its tools and owned resources. Startup failure releases the attempted registration. The MCP provider keeps its registration during reconnects.
 
-One registered provider does not reserve a desktop for a Session. Callers coordinate complete observe, act, and verify workflows across Sessions and separate DSH processes. A cancelled call cannot undo input that the desktop already received.
+One registered provider does not reserve a desktop for a Session. Callers coordinate complete observe, act, and verify workflows across Sessions and separate Astro One processes. A cancelled call cannot undo input that the desktop already received.
 
 ## Results and platform requirements
 

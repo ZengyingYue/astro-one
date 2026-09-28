@@ -2,7 +2,7 @@
 /** Excel preview lifecycle and read-only renderer settings. */
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { afterEach, expect, it, vi } from 'vitest'
-import { makeTranslate } from '@deepseek-ai/dsh-client-test-runtime'
+import { makeTranslate } from '@astro-one/client-test-runtime'
 import { Config } from '../src/config.ts'
 import { en, zh } from '../src/client/excel/locales.ts'
 import type { ExcelBodyProps, LoadedExcelBodyProps } from '../src/client/excel/LazyExcelBody.tsx'
@@ -13,7 +13,7 @@ vi.mock('@fortune-sheet/react', () => ({ Workbook: mocked.workbook }))
 import { ExcelBody } from '../src/client/excel/excel.tsx'
 import { LazyExcelBody } from '../src/client/excel/LazyExcelBody.tsx'
 
-const props = { content: { kind: 'bytes', data: new Uint8Array([1]) }, limits: Config({}).excel, t: makeTranslate(en), resourceAddress: 'dsh-resource://file/session/s1/book.xlsx' } as ExcelBodyProps
+const props = { content: { kind: 'bytes', data: new Uint8Array([1]) }, limits: Config({}).excel, t: makeTranslate(en), resourceAddress: 'astro-one-resource://file/session/s1/book.xlsx' } as ExcelBodyProps
 const loadedProps = { ...props, format: 'xlsx' } as LoadedExcelBodyProps
 const value = { sheets: [{ name: 'Budget', celldata: [] }], missingResults: 0, unsupportedFeatures: [] }
 const formulaValue = { sheets: [{ name: 'Budget', celldata: [{ r: 0, c: 0, v: { f: '=SUM(1,2)', m: '' } }] }], missingResults: 1, unsupportedFeatures: [] }
@@ -107,7 +107,7 @@ it('rejects non-byte content without allocating a parser', () => {
 
 it.each(['xlsx', 'xls', 'csv', 'tsv'])('loads the spreadsheet chunk for %s', async (format) => {
   mocked.parse.mockResolvedValue(value)
-  render(<LazyExcelBody {...props} resourceAddress={`dsh-resource://file/session/s1/book.${format}`} />)
+  render(<LazyExcelBody {...props} resourceAddress={`astro-one-resource://file/session/s1/book.${format}`} />)
   await waitFor(() => { expect(mocked.workbook).toHaveBeenCalledOnce() })
   expect(screen.queryByRole('button', { name: en.formulaWarning })).toBeNull()
   expect(mocked.parse.mock.calls[0]![1]).toBe(format)

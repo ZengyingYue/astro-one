@@ -1,91 +1,91 @@
 import { describe, expect, it } from 'vitest'
 import type { NpmPackageLock, RegistryIndex } from './benchmark-npm-resolution.ts'
 import {
-  assertDualDshInstallLayout,
-  buildDualDshRegistry,
+  assertDualAstroOneInstallLayout,
+  buildDualAstroOneRegistry,
 } from './verify-npm-install-layout.ts'
 
 function validLayout(): NpmPackageLock {
   return {
     lockfileVersion: 3,
     packages: {
-      '': { dependencies: { '@deepseek-ai/dsh': '0.2.0', 'dsh-previous': 'npm:@deepseek-ai/dsh@0.1.0' } },
-      'node_modules/@deepseek-ai/cordis': { version: '4.0.1' },
-      'node_modules/@deepseek-ai/dsh': {
+      '': { dependencies: { '@astro-one/cli': '0.2.0', 'astro-one-previous': 'npm:@astro-one/cli@0.1.0' } },
+      'node_modules/@astro-one/cordis': { version: '4.0.1' },
+      'node_modules/@astro-one/cli': {
         version: '0.2.0',
-        dependencies: { '@deepseek-ai/dsh-child': '^0.2.0' },
-        peerDependencies: { '@deepseek-ai/cordis': '^4.0.1' },
+        dependencies: { '@astro-one/child': '^0.2.0' },
+        peerDependencies: { '@astro-one/cordis': '^4.0.1' },
       },
-      'node_modules/@deepseek-ai/dsh-child': {
+      'node_modules/@astro-one/child': {
         version: '0.2.0',
-        dependencies: { '@deepseek-ai/dsh-leaf': '^0.2.0' },
+        dependencies: { '@astro-one/leaf': '^0.2.0' },
       },
-      'node_modules/@deepseek-ai/dsh-leaf': { version: '0.2.0' },
-      'node_modules/dsh-previous': {
-        name: '@deepseek-ai/dsh',
+      'node_modules/@astro-one/leaf': { version: '0.2.0' },
+      'node_modules/astro-one-previous': {
+        name: '@astro-one/cli',
         version: '0.1.0',
-        dependencies: { '@deepseek-ai/dsh-child': '^0.1.0' },
-        peerDependencies: { '@deepseek-ai/cordis': '^4.0.1' },
+        dependencies: { '@astro-one/child': '^0.1.0' },
+        peerDependencies: { '@astro-one/cordis': '^4.0.1' },
       },
-      'node_modules/dsh-previous/node_modules/@deepseek-ai/dsh-child': {
+      'node_modules/astro-one-previous/node_modules/@astro-one/child': {
         version: '0.1.0',
-        dependencies: { '@deepseek-ai/dsh-leaf': '^0.1.0' },
+        dependencies: { '@astro-one/leaf': '^0.1.0' },
       },
-      'node_modules/dsh-previous/node_modules/@deepseek-ai/dsh-leaf': { version: '0.1.0' },
+      'node_modules/astro-one-previous/node_modules/@astro-one/leaf': { version: '0.1.0' },
     },
   }
 }
 
 describe('npm install layout verifier', () => {
-  it('creates two incompatible versions of every DSH package', () => {
+  it('creates two incompatible versions of every Astro One package', () => {
     const index: RegistryIndex = new Map([
-      ['@deepseek-ai/dsh', new Map([['0.1.1-rc.2', {
-        name: '@deepseek-ai/dsh',
+      ['@astro-one/cli', new Map([['0.1.1-rc.2', {
+        name: '@astro-one/cli',
         version: '0.1.1-rc.2',
-        dependencies: { '@deepseek-ai/dsh-child': '^0.1.1-rc.2' },
-        peerDependencies: { '@deepseek-ai/cordis': '^4.0.1' },
+        dependencies: { '@astro-one/child': '^0.1.1-rc.2' },
+        peerDependencies: { '@astro-one/cordis': '^4.0.1' },
       }]])],
-      ['@deepseek-ai/dsh-child', new Map([['0.1.1-rc.2', {
-        name: '@deepseek-ai/dsh-child',
+      ['@astro-one/child', new Map([['0.1.1-rc.2', {
+        name: '@astro-one/child',
         version: '0.1.1-rc.2',
       }]])],
-      ['@deepseek-ai/cordis', new Map([['4.0.1', {
-        name: '@deepseek-ai/cordis',
+      ['@astro-one/cordis', new Map([['4.0.1', {
+        name: '@astro-one/cordis',
         version: '4.0.1',
       }]])],
     ])
 
-    const dual = buildDualDshRegistry(index, '0.1.1-rc.2')
+    const dual = buildDualAstroOneRegistry(index, '0.1.1-rc.2')
 
-    expect([...dual.get('@deepseek-ai/dsh')?.keys() ?? []]).toEqual(['0.1.0', '0.2.0'])
-    expect(dual.get('@deepseek-ai/dsh')?.get('0.1.0')).toMatchObject({
+    expect([...dual.get('@astro-one/cli')?.keys() ?? []]).toEqual(['0.1.0', '0.2.0'])
+    expect(dual.get('@astro-one/cli')?.get('0.1.0')).toMatchObject({
       version: '0.1.0',
-      dependencies: { '@deepseek-ai/dsh-child': '^0.1.0' },
-      peerDependencies: { '@deepseek-ai/cordis': '^4.0.1' },
+      dependencies: { '@astro-one/child': '^0.1.0' },
+      peerDependencies: { '@astro-one/cordis': '^4.0.1' },
     })
-    expect(dual.get('@deepseek-ai/dsh')?.get('0.2.0')).toMatchObject({
+    expect(dual.get('@astro-one/cli')?.get('0.2.0')).toMatchObject({
       version: '0.2.0',
-      dependencies: { '@deepseek-ai/dsh-child': '^0.2.0' },
+      dependencies: { '@astro-one/child': '^0.2.0' },
     })
-    expect(dual.get('@deepseek-ai/cordis')).toBe(index.get('@deepseek-ai/cordis'))
+    expect(dual.get('@astro-one/cordis')).toBe(index.get('@astro-one/cordis'))
   })
 
-  it('accepts isolated DSH releases with one shared Cordis installation', () => {
-    expect(assertDualDshInstallLayout(validLayout())).toEqual({
-      dshPackagesPerVersion: 3,
-      checkedDshEdges: 4,
+  it('accepts isolated Astro One releases with one shared Cordis installation', () => {
+    expect(assertDualAstroOneInstallLayout(validLayout())).toEqual({
+      astroOnePackagesPerVersion: 3,
+      checkedAstroOneEdges: 4,
     })
   })
 
   it.each([
     ['react', 'node_modules/react'],
     ['react-dom', 'node_modules/react-dom'],
-    ['react', 'node_modules/dsh-previous/node_modules/react'],
-    ['react-dom', 'node_modules/dsh-previous/node_modules/react-dom'],
-  ])('rejects browser runtime %s installed at %s in the DSH-only consumer', (name, path) => {
+    ['react', 'node_modules/astro-one-previous/node_modules/react'],
+    ['react-dom', 'node_modules/astro-one-previous/node_modules/react-dom'],
+  ])('rejects browser runtime %s installed at %s in the Astro One-only consumer', (name, path) => {
     const layout = validLayout()
     const packages = { ...layout.packages, [path]: { version: '18.3.1' } }
-    expect(() => assertDualDshInstallLayout({ ...layout, packages })).toThrow(
+    expect(() => assertDualAstroOneInstallLayout({ ...layout, packages })).toThrow(
       `${path}: ${name} is a browser build input`,
     )
   })
@@ -93,11 +93,11 @@ describe('npm install layout verifier', () => {
   it('rejects an internal edge that crosses release versions', () => {
     const layout = validLayout()
     const packages = { ...layout.packages }
-    Reflect.deleteProperty(packages, 'node_modules/dsh-previous/node_modules/@deepseek-ai/dsh-leaf')
+    Reflect.deleteProperty(packages, 'node_modules/astro-one-previous/node_modules/@astro-one/leaf')
 
-    expect(() => assertDualDshInstallLayout({ ...layout, packages })).toThrow(
-      'node_modules/dsh-previous/node_modules/@deepseek-ai/dsh-child: dependencies '
-      + '@deepseek-ai/dsh-leaf resolves to node_modules/@deepseek-ai/dsh-leaf@0.2.0, expected 0.1.0',
+    expect(() => assertDualAstroOneInstallLayout({ ...layout, packages })).toThrow(
+      'node_modules/astro-one-previous/node_modules/@astro-one/child: dependencies '
+      + '@astro-one/leaf resolves to node_modules/@astro-one/leaf@0.2.0, expected 0.1.0',
     )
   })
 
@@ -105,11 +105,11 @@ describe('npm install layout verifier', () => {
     const layout = validLayout()
     const packages = {
       ...layout.packages,
-      'node_modules/dsh-previous/node_modules/@deepseek-ai/cordis': { version: '4.0.1' },
+      'node_modules/astro-one-previous/node_modules/@astro-one/cordis': { version: '4.0.1' },
     }
 
-    expect(() => assertDualDshInstallLayout({ ...layout, packages })).toThrow(
-      'expected one shared @deepseek-ai/cordis',
+    expect(() => assertDualAstroOneInstallLayout({ ...layout, packages })).toThrow(
+      'expected one shared @astro-one/cordis',
     )
   })
 })

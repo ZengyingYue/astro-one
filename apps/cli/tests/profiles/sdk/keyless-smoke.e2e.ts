@@ -5,10 +5,10 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
 import { zstdDecompress } from 'node:zlib'
-import { resolveExampleLaunch } from '@deepseek-ai/dsh-loader-smoke'
+import { resolveExampleLaunch } from '@astro-one/loader-smoke'
 import { execa } from 'execa'
 import { describe, expect, it, onTestFinished } from 'vitest'
-import { workspaceDependencyPaths, type PrimaryRuntimeManifest } from '@deepseek-ai/dsh-tool-workspace-dependencies'
+import { workspaceDependencyPaths, type PrimaryRuntimeManifest } from '@astro-one/tool-workspace-dependencies'
 
 const repoRoot = fileURLToPath(new URL('../../../../../', import.meta.url))
 const launch = resolveExampleLaunch({
@@ -60,19 +60,19 @@ function waitForLine(
   })
 }
 
-describe('Python SDK dsh profile keyless smoke', () => {
+describe('Python SDK astro-one profile keyless smoke', () => {
   it.each([
     { label: 'reports max-token turns with the default mapping config', envValue: undefined, editorEnabled: false },
     { label: 'reports max-token turns with mapping enabled through env', envValue: 'true', editorEnabled: false },
     { label: 'reports max-token turns with mapping disabled through env', envValue: 'false', editorEnabled: false },
     { label: 'allows an explicit patch to enable str_replace_editor', envValue: undefined, editorEnabled: true },
   ])('$label', async ({ envValue, editorEnabled }) => {
-    const root = await mkdtemp(join(tmpdir(), 'dsh-python-sdk-runtime-smoke-'))
+    const root = await mkdtemp(join(tmpdir(), 'astro-one-python-sdk-runtime-smoke-'))
     const editorPatch = join(root, 'editor.patch.yml')
     if (editorEnabled) await writeFile(editorPatch, [
       '- insert:',
       '    - id: tool-str-replace-editor',
-      "      name: '@deepseek-ai/dsh-tool-str-replace-editor'",
+      "      name: '@astro-one/tool-str-replace-editor'",
       '',
     ].join('\n'))
     const modelRequests: Record<string, unknown>[] = []
@@ -100,12 +100,12 @@ describe('Python SDK dsh profile keyless smoke', () => {
       cwd: repoRoot,
       env: {
         ...launch.env,
-        DSH_HOME: join(root, '.dsh'),
-        DSH_PERMISSION_MODE: 'danger-full-access',
-        DSH_TELEMETRY_DISABLED: '1',
+        ASTRO_ONE_HOME: join(root, '.astro-one'),
+        ASTRO_ONE_PERMISSION_MODE: 'danger-full-access',
+        ASTRO_ONE_TELEMETRY_DISABLED: '1',
         DEEPSEEK_API_KEY: 'keyless-smoke-no-call',
         DEEPSEEK_BASE_URL: `http://127.0.0.1:${address.port}`,
-        ...(envValue === undefined ? {} : { DSH_MAX_TOKENS_AS_SUCCESS: envValue }),
+        ...(envValue === undefined ? {} : { ASTRO_ONE_MAX_TOKENS_AS_SUCCESS: envValue }),
       },
       timeout: 35_000,
       killSignal: 'SIGKILL',
@@ -139,7 +139,7 @@ describe('Python SDK dsh profile keyless smoke', () => {
       expect(initialized).toMatchObject({
         jsonrpc: '2.0',
         id: 1,
-        result: { serverInfo: { name: 'deepseek-harness-sdk-runtime' } },
+        result: { serverInfo: { name: 'astro-one-sdk-runtime' } },
       })
 
       child.stdin.write(`${JSON.stringify({
@@ -185,7 +185,7 @@ describe('Python SDK dsh profile keyless smoke', () => {
       expect(shutdown).toMatchObject({ jsonrpc: '2.0', id: 3, result: {} })
       const exit = await child
       expect(exit.exitCode, `signal=${String(exit.signal)}; stderr=${stderr}`).toBe(0)
-      const sessionsRoot = join(root, '.dsh', 'sessions')
+      const sessionsRoot = join(root, '.astro-one', 'sessions')
       const files = await readdir(sessionsRoot, { recursive: true })
       const log = files.find(file => file.endsWith('.jsonl.zstd'))
       expect(log).toBeDefined()
@@ -205,7 +205,7 @@ describe('Python SDK dsh profile keyless smoke', () => {
     { label: 'boots the standalone minimal profile through its generated manifest', editorEnabled: false },
     { label: 'executes the documented editor opt-in patch with sdk-minimal', editorEnabled: true },
   ])('$label', async ({ editorEnabled }) => {
-    const root = await mkdtemp(join(tmpdir(), 'dsh-python-sdk-minimal-'))
+    const root = await mkdtemp(join(tmpdir(), 'astro-one-python-sdk-minimal-'))
     const editorPatch = join(root, 'editor.patch.yml')
     if (editorEnabled) {
       const guide = await readFile(join(repoRoot, 'docs/user/guide/python-sdk.md'), 'utf8')
@@ -249,8 +249,8 @@ describe('Python SDK dsh profile keyless smoke', () => {
       cwd: repoRoot,
       env: {
         ...launch.env,
-        DSH_HOME: join(root, '.dsh'),
-        DSH_SYSTEM_PROMPT: 'Minimal allowlist prompt.',
+        ASTRO_ONE_HOME: join(root, '.astro-one'),
+        ASTRO_ONE_SYSTEM_PROMPT: 'Minimal allowlist prompt.',
         DEEPSEEK_API_KEY: 'keyless-smoke-no-call',
         DEEPSEEK_BASE_URL: `http://127.0.0.1:${address.port}`,
       },
@@ -293,10 +293,10 @@ describe('Python SDK dsh profile keyless smoke', () => {
       })
 
       const profile = JSON.parse(
-        await readFile(join(root, '.dsh', 'profiles', 'sdk-minimal', 'package.json'), 'utf8'),
-      ) as { dsh?: { profile?: { bundles?: string[] } } }
-      expect(profile.dsh?.profile).toEqual({
-        bundles: ['@deepseek-ai/dsh-sdk-minimal'],
+        await readFile(join(root, '.astro-one', 'profiles', 'sdk-minimal', 'package.json'), 'utf8'),
+      ) as { astroOne?: { profile?: { bundles?: string[] } } }
+      expect(profile.astroOne?.profile).toEqual({
+        bundles: ['@astro-one/sdk-minimal'],
       })
       expect(modelRequests[0]?.tools).toEqual(expect.any(Array))
       const tools = modelRequests[0]?.tools as { name?: string }[]
@@ -338,8 +338,8 @@ describe('Python SDK dsh profile keyless smoke', () => {
   }, 40_000)
 
   it.each([false, true])('exits after startup failure with stdin open (logs blocked: %s)', async (blocked) => {
-    const root = await mkdtemp(join(tmpdir(), 'dsh-sdk-startup-exit-'))
-    const home = join(root, '.dsh')
+    const root = await mkdtemp(join(tmpdir(), 'astro-one-sdk-startup-exit-'))
+    const home = join(root, '.astro-one')
     const patch = join(root, 'failure.yml')
     await mkdir(home)
     if (blocked) await writeFile(join(home, 'logs'), 'blocked')
@@ -348,7 +348,7 @@ describe('Python SDK dsh profile keyless smoke', () => {
       ...launch.args, '--profile', 'sdk', '--patch', patch,
     ], {
       cwd: repoRoot,
-      env: { ...launch.env, DSH_HOME: home, DSH_TELEMETRY_DISABLED: '1', DEEPSEEK_API_KEY: 'keyless-no-call' },
+      env: { ...launch.env, ASTRO_ONE_HOME: home, ASTRO_ONE_TELEMETRY_DISABLED: '1', DEEPSEEK_API_KEY: 'keyless-no-call' },
       stdin: 'pipe',
       stripFinalNewline: false,
       timeout: 25_000,
@@ -379,7 +379,7 @@ describe('Python SDK dsh profile keyless smoke', () => {
   }, 30_000)
 
   it('rejects an invalid max-token success env value', async () => {
-    const root = await mkdtemp(join(tmpdir(), 'dsh-python-sdk-runtime-invalid-'))
+    const root = await mkdtemp(join(tmpdir(), 'astro-one-python-sdk-runtime-invalid-'))
     try {
       const { exitCode, stdout, stderr } = await execa(launch.command, [
         ...launch.args,
@@ -389,9 +389,9 @@ describe('Python SDK dsh profile keyless smoke', () => {
         cwd: repoRoot,
         env: {
           ...launch.env,
-          DSH_HOME: join(root, '.dsh'),
+          ASTRO_ONE_HOME: join(root, '.astro-one'),
           DEEPSEEK_API_KEY: 'keyless-smoke-no-call',
-          DSH_MAX_TOKENS_AS_SUCCESS: 'sometimes',
+          ASTRO_ONE_MAX_TOKENS_AS_SUCCESS: 'sometimes',
         },
         stdin: 'ignore',
         timeout: 25_000,
@@ -402,7 +402,7 @@ describe('Python SDK dsh profile keyless smoke', () => {
       expect(exitCode, stderr).toBe(1)
       expect(stdout).toBe('')
       expect(stderr).toContain('startup failed:')
-      expect(stderr).toContain('sdk-jsonrpc-server (required)\n    Package: @deepseek-ai/dsh-sdk-jsonrpc-server\n    SyntaxError')
+      expect(stderr).toContain('sdk-jsonrpc-server (required)\n    Package: @astro-one/sdk-jsonrpc-server\n    SyntaxError')
       expect(stderr).toContain('sometimes')
     } finally {
       await rm(root, { recursive: true, force: true })
@@ -465,9 +465,9 @@ it.each(['unset', 'empty', 'bundled', 'full', 'python-only', 'python-only-no-cli
   const officeLaunch = resolveExampleLaunch({
     srcBin: fileURLToPath(new URL('../../../src/bin.ts', import.meta.url)), mode: 'lib',
     configArgs: ['--profile', 'sdk', '--patch', cliPatch],
-    env: { DSH_HOME: home, DSH_PRIMARY_RUNTIME: mode === 'unset' || mode === 'bundled' ? undefined : mode === 'empty' ? '' : source + '/',
-      DSH_BUNDLED_PRIMARY_RUNTIME: mode === 'unset' ? undefined : mode === 'bundled' || mode === 'empty' ? source : join(root, 'unused-default'),
-      DSH_PERMISSION_MODE: 'danger-full-access', DSH_TELEMETRY_DISABLED: '1',
+    env: { ASTRO_ONE_HOME: home, ASTRO_ONE_PRIMARY_RUNTIME: mode === 'unset' || mode === 'bundled' ? undefined : mode === 'empty' ? '' : source + '/',
+      ASTRO_ONE_BUNDLED_PRIMARY_RUNTIME: mode === 'unset' ? undefined : mode === 'bundled' || mode === 'empty' ? source : join(root, 'unused-default'),
+      ASTRO_ONE_PERMISSION_MODE: 'danger-full-access', ASTRO_ONE_TELEMETRY_DISABLED: '1',
       DEEPSEEK_API_KEY: 'local-fixture', DEEPSEEK_BASE_URL: `http://127.0.0.1:${address.port}` },
   })
   const child = execa(officeLaunch.command, officeLaunch.args, { cwd: repoRoot, env: officeLaunch.env, timeout: 60_000, reject: false })
@@ -530,5 +530,5 @@ it.each(['unset', 'empty', 'bundled', 'full', 'python-only', 'python-only-no-cli
   expect(exit.timedOut).toBe(false)
   expect(exit.signal).toBeUndefined()
   expect(exit.exitCode, stderr).toBe(0)
-  await expect(readFile(join(home, 'dsh-runtimes', 'dsh-primary-runtime', 'runtime.json'))).rejects.toMatchObject({ code: 'ENOENT' })
+  await expect(readFile(join(home, 'astro-one-runtimes', 'astro-one-primary-runtime', 'runtime.json'))).rejects.toMatchObject({ code: 'ENOENT' })
 })

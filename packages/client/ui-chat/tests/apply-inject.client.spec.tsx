@@ -1,24 +1,24 @@
 // @vitest-environment jsdom
 /** Chat inject factories exercised over independently mounted Conversation and Chat plugins. */
-import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
+import { createSnapshotStore } from '@astro-one/client-store'
 import { describe, expect, it, vi } from 'vitest'
-import { AttachmentId } from '@deepseek-ai/dsh-attachment'
-import type { ISession, SessionReference } from '@deepseek-ai/dsh-api-session-controller/client'
-import { LocaleRuntime } from '@deepseek-ai/dsh-client-locale/client'
+import { AttachmentId } from '@astro-one/attachment'
+import type { ISession, SessionReference } from '@astro-one/api-session-controller/client'
+import { LocaleRuntime } from '@astro-one/client-locale/client'
 import {
   SlotTestRuntime, stubConfigForm, usePinnedBrowserLanguages,
-} from '@deepseek-ai/dsh-client-test-runtime'
-import type { SessionBehaviorOverrides } from '@deepseek-ai/dsh-client-test-runtime'
-import type { ClientRemote } from '@deepseek-ai/dsh-api-remotes/client'
+} from '@astro-one/client-test-runtime'
+import type { SessionBehaviorOverrides } from '@astro-one/client-test-runtime'
+import type { ClientRemote } from '@astro-one/api-remotes/client'
 import {
   apply as applyConversation, inject as injectConversation,
   type GroupKey,
-} from '@deepseek-ai/dsh-client-ui-conversation/client'
+} from '@astro-one/client-ui-conversation/client'
 import {
   apply as applyChat, inject as injectChat, type ChatViewInjected,
-} from '@deepseek-ai/dsh-client-ui-chat/client'
-import { SessionSeq, type SessionId } from '@deepseek-ai/dsh-session/types'
-import type { WorkspaceId } from '@deepseek-ai/dsh-workspace/types'
+} from '@astro-one/client-ui-chat/client'
+import { SessionSeq, type SessionId } from '@astro-one/session/types'
+import type { WorkspaceId } from '@astro-one/workspace/types'
 import { createChatStore } from '../src/client/stores.ts'
 import { CHAT_SETTINGS_NAMESPACE, type ChatSettings } from '../src/chat-settings.ts'
 import type { LinkOpeningRowInjected } from '../src/client/settings/LinkOpeningRow.tsx'
@@ -192,20 +192,20 @@ describe('Chat inject API', () => {
     await injected.openFile('src/a.ts')
     // Files stay in the product: a relative path is handed to the Sidebar as an
     // address under this session's scope, not to a desktop opener.
-    expect(b.sidebarRight.openResource).toHaveBeenCalledWith('dsh-resource://file/session/root-1/src/a.ts')
+    expect(b.sidebarRight.openResource).toHaveBeenCalledWith('astro-one-resource://file/session/root-1/src/a.ts')
     expect(b.openWorkspacePath).not.toHaveBeenCalled()
 
     // An absolute path inside the session's workspace is the same session-relative address.
     await injected.openFile('/proj/src/a.ts')
-    expect(b.sidebarRight.openResource).toHaveBeenLastCalledWith('dsh-resource://file/session/root-1/src/a.ts')
+    expect(b.sidebarRight.openResource).toHaveBeenLastCalledWith('astro-one-resource://file/session/root-1/src/a.ts')
 
     // A name a URL would otherwise mangle survives the round trip.
     await injected.openFile('src/a b#c.ts')
-    expect(b.sidebarRight.openResource).toHaveBeenLastCalledWith('dsh-resource://file/session/root-1/src/a%20b%23c.ts')
+    expect(b.sidebarRight.openResource).toHaveBeenLastCalledWith('astro-one-resource://file/session/root-1/src/a%20b%23c.ts')
 
     // A line travels as the `file` type's navigation parameter, not in the address.
     await injected.openFile('src/a.ts', { line: 7 })
-    expect(b.sidebarRight.openResource).toHaveBeenLastCalledWith('dsh-resource://file/session/root-1/src/a.ts', { params: { line: 7 } })
+    expect(b.sidebarRight.openResource).toHaveBeenLastCalledWith('astro-one-resource://file/session/root-1/src/a.ts', { params: { line: 7 } })
     await b.runtime.dispose()
   })
 
@@ -365,10 +365,10 @@ describe('Chat inject API', () => {
     // The Host resolves the relative path against the root it holds for the
     // Session; the Client need not know it.
     await injected.openFile('src/a.ts')
-    expect(b.sidebarRight.openResource).toHaveBeenCalledWith('dsh-resource://file/session/root-2/src/a.ts')
+    expect(b.sidebarRight.openResource).toHaveBeenCalledWith('astro-one-resource://file/session/root-2/src/a.ts')
     // An absolute path outside every known root still names its Session.
     await injected.openFile('/abs/a.ts')
-    expect(b.sidebarRight.openResource).toHaveBeenLastCalledWith('dsh-resource://file/session/root-2//abs/a.ts')
+    expect(b.sidebarRight.openResource).toHaveBeenLastCalledWith('astro-one-resource://file/session/root-2//abs/a.ts')
     await b.runtime.dispose()
   })
 

@@ -1,4 +1,4 @@
-/** Public dsh launch resolution for the TypeScript SDK. */
+/** Public astro-one launch resolution for the TypeScript SDK. */
 
 import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
@@ -7,10 +7,10 @@ import { pathToFileURL } from 'node:url'
 import { afterEach, describe, expect, it } from 'vitest'
 import {
   DEFAULT_INITIALIZE_TIMEOUT_MS,
-  installedDshBin,
-  resolveDshNodeLaunchFromManifests,
-  resolveDshBinFromManifests,
-  resolveDshLaunch,
+  installedAstroOneBin,
+  resolveAstroOneNodeLaunchFromManifests,
+  resolveAstroOneBinFromManifests,
+  resolveAstroOneLaunch,
 } from '../src/launch.ts'
 
 const cleanups: string[] = []
@@ -18,25 +18,25 @@ afterEach(() => {
   for (const path of cleanups.splice(0)) rmSync(path, { recursive: true, force: true })
 })
 
-function manifestPair(dsh: object, client: object): { dshUrl: string; clientUrl: string; root: string } {
-  const root = mkdtempSync(join(tmpdir(), 'dsh-sdk-manifests-'))
+function manifestPair(astroOne: object, client: object): { astroOneUrl: string; clientUrl: string; root: string } {
+  const root = mkdtempSync(join(tmpdir(), 'astro-one-sdk-manifests-'))
   cleanups.push(root)
-  const dshPath = join(root, 'dsh-package.json')
+  const astroOnePath = join(root, 'astro-one-package.json')
   const clientPath = join(root, 'client-package.json')
-  writeFileSync(dshPath, JSON.stringify(dsh))
+  writeFileSync(astroOnePath, JSON.stringify(astroOne))
   writeFileSync(clientPath, JSON.stringify(client))
   return {
-    dshUrl: pathToFileURL(dshPath).href,
+    astroOneUrl: pathToFileURL(astroOnePath).href,
     clientUrl: pathToFileURL(clientPath).href,
     root,
   }
 }
 
-describe('SDK dsh launch resolution', () => {
-  it('resolves the same-version installed dsh entry by default', () => {
-    const bin = installedDshBin()
+describe('SDK astro-one launch resolution', () => {
+  it('resolves the same-version installed astro-one entry by default', () => {
+    const bin = installedAstroOneBin()
     expect(bin.endsWith(join('apps', 'cli', 'lib', 'bin.js'))).toBe(true)
-    const launch = resolveDshLaunch()
+    const launch = resolveAstroOneLaunch()
     expect(launch.command).toBe(process.execPath)
     expect(launch.args).toEqual(existsSync(bin)
       ? [bin, '--profile', 'sdk']
@@ -46,18 +46,18 @@ describe('SDK dsh launch resolution', () => {
         '--patch', resolve(bin, '..', '..', 'src/sdk-source.cordis.patch.yml'),
       ])
     expect(launch.initializeTimeoutMs).toBe(DEFAULT_INITIALIZE_TIMEOUT_MS)
-    expect(launch.description).toBe('dsh profile "sdk"')
+    expect(launch.description).toBe('astro-one profile "sdk"')
   })
 
   it('makes every filesystem input absolute before spawn and preserves patch order', () => {
     const caller = resolve('/tmp', 'sdk-launch-caller')
-    const launch = resolveDshLaunch({
-      dshBin: './bin/dsh',
+    const launch = resolveAstroOneLaunch({
+      astroOneBin: './bin/astro-one',
       profile: 'custom-sdk',
       patches: ['./first.yml', '../second.yml'],
-      dshHome: './home',
+      astroOneHome: './home',
       processCwd: './worker',
-      env: { PATH: '/bin', DSH_HOME: '/stale' },
+      env: { PATH: '/bin', ASTRO_ONE_HOME: '/stale' },
       initializeTimeoutMs: 123,
       requestTimeoutMs: 456,
       shutdownTimeoutMs: 789,
@@ -67,20 +67,20 @@ describe('SDK dsh launch resolution', () => {
     expect(launch).toMatchObject({
       command: process.execPath,
       args: [
-        join(caller, 'bin/dsh'),
+        join(caller, 'bin/astro-one'),
         '--profile', 'custom-sdk',
         '--patch', join(caller, 'first.yml'),
         '--patch', resolve(caller, '../second.yml'),
       ],
       cwd: join(caller, 'worker'),
-      description: 'dsh profile "custom-sdk"',
+      description: 'astro-one profile "custom-sdk"',
       initializeTimeoutMs: 123,
       requestTimeoutMs: 456,
       shutdownTimeoutMs: 789,
       disposeEofGraceMs: 12,
       disposeGraceMs: 34,
     })
-    expect(launch.environment()).toEqual({ PATH: '/bin', DSH_HOME: join(caller, 'home') })
+    expect(launch.environment()).toEqual({ PATH: '/bin', ASTRO_ONE_HOME: join(caller, 'home') })
   })
 
   it('falls back to the same package source entry through an absolute tsx loader', () => {
@@ -93,13 +93,13 @@ describe('SDK dsh launch resolution', () => {
     writeFileSync(sourcePatch, '[]\n')
     writeFileSync(sourceTsconfig, '{}\n')
 
-    expect(resolveDshNodeLaunchFromManifests(pair.dshUrl, pair.clientUrl, 'file:///tsx-loader.mjs'))
+    expect(resolveAstroOneNodeLaunchFromManifests(pair.astroOneUrl, pair.clientUrl, 'file:///tsx-loader.mjs'))
       .toEqual({
         nodeArgs: ['--import', 'file:///tsx-loader.mjs', sourceBin],
         patches: [sourcePatch],
         environment: { TSX_TSCONFIG_PATH: sourceTsconfig },
       })
-    expect(resolveDshNodeLaunchFromManifests(pair.dshUrl, pair.clientUrl))
+    expect(resolveAstroOneNodeLaunchFromManifests(pair.astroOneUrl, pair.clientUrl))
       .toEqual({
         nodeArgs: ['--import', import.meta.resolve('tsx/esm'), sourceBin],
         patches: [sourcePatch],
@@ -113,7 +113,7 @@ describe('SDK dsh launch resolution', () => {
     mkdirSync(join(pair.root, 'lib'))
     writeFileSync(bin, '')
 
-    expect(resolveDshNodeLaunchFromManifests(pair.dshUrl, pair.clientUrl)).toEqual({
+    expect(resolveAstroOneNodeLaunchFromManifests(pair.astroOneUrl, pair.clientUrl)).toEqual({
       nodeArgs: [bin],
       patches: [],
       environment: {},
@@ -125,45 +125,45 @@ describe('SDK dsh launch resolution', () => {
     mkdirSync(join(pair.root, 'src'))
     const sourceFiles = ['src/bin.ts', 'src/sdk-source.cordis.patch.yml', 'tsconfig.json']
     for (const source of sourceFiles.slice(0, presentCount)) writeFileSync(join(pair.root, source), '')
-    expect(() => resolveDshNodeLaunchFromManifests(pair.dshUrl, pair.clientUrl, 'file:///tsx-loader.mjs'))
+    expect(() => resolveAstroOneNodeLaunchFromManifests(pair.astroOneUrl, pair.clientUrl, 'file:///tsx-loader.mjs'))
       .toThrow('is missing its built executable')
   })
 
   it('reads explicit and inherited environments when the child starts', () => {
     const explicit: NodeJS.ProcessEnv = { MARKER: 'before' }
-    const explicitLaunch = resolveDshLaunch({ dshBin: '/bin/dsh', env: explicit })
+    const explicitLaunch = resolveAstroOneLaunch({ astroOneBin: '/bin/astro-one', env: explicit })
     explicit.MARKER = 'after'
     expect(explicitLaunch.environment().MARKER).toBe('after')
 
-    const inheritedLaunch = resolveDshLaunch({ dshBin: '/bin/dsh' })
-    process.env.DSH_SDK_LATE_ENV_TEST = 'late'
+    const inheritedLaunch = resolveAstroOneLaunch({ astroOneBin: '/bin/astro-one' })
+    process.env.ASTRO_ONE_SDK_LATE_ENV_TEST = 'late'
     try {
-      expect(inheritedLaunch.environment().DSH_SDK_LATE_ENV_TEST).toBe('late')
+      expect(inheritedLaunch.environment().ASTRO_ONE_SDK_LATE_ENV_TEST).toBe('late')
     } finally {
-      delete process.env.DSH_SDK_LATE_ENV_TEST
+      delete process.env.ASTRO_ONE_SDK_LATE_ENV_TEST
     }
   })
 
   it.each([2, '2.0.0'])(
-    'rejects a dsh version that differs from the client (%j)',
+    'rejects a astro-one version that differs from the client (%j)',
     (version) => {
       const pair = manifestPair({ version, bin: 'bin.js' }, { version: '1.0.0' })
-      expect(() => resolveDshBinFromManifests(pair.dshUrl, pair.clientUrl))
-        .toThrow(`requires the same dsh version, got ${String(version)}`)
+      expect(() => resolveAstroOneBinFromManifests(pair.astroOneUrl, pair.clientUrl))
+        .toThrow(`requires the same astro-one version, got ${String(version)}`)
     },
   )
 
   it('accepts the string npm bin form', () => {
     const pair = manifestPair({ version: '1.0.0', bin: './bin.js' }, { version: '1.0.0' })
-    expect(resolveDshBinFromManifests(pair.dshUrl, pair.clientUrl)).toBe(join(pair.root, 'bin.js'))
+    expect(resolveAstroOneBinFromManifests(pair.astroOneUrl, pair.clientUrl)).toBe(join(pair.root, 'bin.js'))
   })
 
   it.each([null, {}, ''])(
-    'rejects a manifest without a usable dsh executable (%j)',
+    'rejects a manifest without a usable astro-one executable (%j)',
     (bin) => {
       const pair = manifestPair({ version: '1.0.0', bin }, { version: '1.0.0' })
-      expect(() => resolveDshBinFromManifests(pair.dshUrl, pair.clientUrl))
-        .toThrow('declares no dsh executable')
+      expect(() => resolveAstroOneBinFromManifests(pair.astroOneUrl, pair.clientUrl))
+        .toThrow('declares no astro-one executable')
     },
   )
 })

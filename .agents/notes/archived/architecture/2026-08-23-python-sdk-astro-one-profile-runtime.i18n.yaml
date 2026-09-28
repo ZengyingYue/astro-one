@@ -1,0 +1,6 @@
+# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. Both languages carry equal authority;
+# after editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/archived/architecture/2026-08-23-python-sdk-astro-one-profile-runtime.md
+2026-08-23-python-sdk-astro-one-profile-runtime.md: 070d7624e0b423c09c6b4937dd1a32e163bfe419
+2026-08-23-python-sdk-astro-one-profile-runtime.zh.md: a748a08288764ac1b6de14afbb3331d00f1e5691

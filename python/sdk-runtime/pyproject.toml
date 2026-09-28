@@ -3,36 +3,36 @@ requires = ["hatchling==1.30.1"]
 build-backend = "hatchling.build"
 
 [project]
-name = "deepseek-harness-runtime-bin"
+name = "astro-one-runtime-bin"
 version = "0.0.0.dev0"
-description = "Bundled dsh CLI runtime for the DeepSeek Harness Python SDK"
+description = "Bundled astro-one CLI runtime for the Astro One Python SDK"
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
 authors = [{ name = "DeepSeek" }]
 
 [project.urls]
-Homepage = "https://github.com/deepseek-ai/deepseek-harness"
-Documentation = "https://github.com/deepseek-ai/deepseek-harness/blob/master/python/sdk-runtime/README.md"
-Issues = "https://github.com/deepseek-ai/deepseek-harness/issues"
-Source = "https://github.com/deepseek-ai/deepseek-harness"
+Homepage = "https://github.com/ZengyingYue/astro-one"
+Documentation = "https://github.com/ZengyingYue/astro-one/blob/master/python/sdk-runtime/README.md"
+Issues = "https://github.com/ZengyingYue/astro-one/issues"
+Source = "https://github.com/ZengyingYue/astro-one"
 
 [project.scripts]
-dsh = "deepseek_harness_runtime:main"
+astro-one = "astro_one_runtime:main"
 
-# Include the injected dsh executable and sidecars; exclude the dev-only node closure.
+# Include the injected astro-one executable and sidecars; exclude the dev-only node closure.
 [tool.hatch.build]
 artifacts = [
-  "src/deepseek_harness_runtime/runtime/deepseek-harness-sdk-runtime-*",
-  "src/deepseek_harness_runtime/runtime/deepseek-harness-sdk-runtime-*/**",
-  "src/deepseek_harness_runtime/runtime/linux-*/**",
-  "src/deepseek_harness_runtime/runtime/macos-*/**",
-  "src/deepseek_harness_runtime/runtime/win-*/**",
+  "src/astro_one_runtime/runtime/astro-one-sdk-runtime-*",
+  "src/astro_one_runtime/runtime/astro-one-sdk-runtime-*/**",
+  "src/astro_one_runtime/runtime/linux-*/**",
+  "src/astro_one_runtime/runtime/macos-*/**",
+  "src/astro_one_runtime/runtime/win-*/**",
 ]
-exclude = ["src/deepseek_harness_runtime/runtime/node"]
+exclude = ["src/astro_one_runtime/runtime/node"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/deepseek_harness_runtime"]
+packages = ["src/astro_one_runtime"]
 
 [tool.hatch.build.targets.wheel.hooks.custom]
 

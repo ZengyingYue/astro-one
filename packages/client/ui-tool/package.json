@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-client-ui-tool",
+  "name": "@astro-one/client-ui-tool",
   "description": "Client Tool call-tree renderer and keyed per-tool presentation slot",
   "version": "0.1.7-rc.1",
   "publishConfig": {
@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/client/ui-tool"
   },
   "type": "module",
@@ -25,13 +25,13 @@
     "./src/*": "./src/*",
     "./package.json": "./package.json"
   },
-  "dsh": {
+  "astroOne": {
     "client": {
       "inject": [
-        "@deepseek-ai/dsh-api-workspace-controller",
-        "@deepseek-ai/dsh-client-connection",
-        "@deepseek-ai/dsh-client-locale",
-        "@deepseek-ai/dsh-client-ui-conversation"
+        "@astro-one/api-workspace-controller",
+        "@astro-one/client-connection",
+        "@astro-one/client-locale",
+        "@astro-one/client-ui-conversation"
       ],
       "platform": "web"
     }
@@ -42,40 +42,40 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/cordis": "workspace:~"
   },
   "devDependencies": {
-    "@deepseek-ai/dsh-spill-policy": "workspace:*",
-    "@deepseek-ai/dsh-agent": "workspace:*",
-    "@deepseek-ai/dsh-llm": "workspace:*",
-    "@deepseek-ai/dsh-session": "workspace:*",
-    "@deepseek-ai/dsh-system-prompt": "workspace:*",
-    "@deepseek-ai/dsh-tools": "workspace:*",
-    "@deepseek-ai/dsh-tool-jobs": "workspace:*",
-    "@deepseek-ai/dsh-tool-session-query": "workspace:*",
-    "@deepseek-ai/dsh-tool-terminal": "workspace:*",
-    "@deepseek-ai/dsh-spill": "workspace:*",
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-api-remotes": "workspace:*",
-    "@deepseek-ai/dsh-client-connection": "workspace:*",
-    "@deepseek-ai/dsh-client-locale": "workspace:*",
-    "@deepseek-ai/dsh-client-test-runtime": "workspace:*",
-    "@deepseek-ai/dsh-client-ui-conversation": "workspace:*",
-    "@deepseek-ai/dsh-client-ui-primitives": "workspace:*",
-    "@deepseek-ai/dsh-client-ui-slots": "workspace:*",
+    "@astro-one/spill-policy": "workspace:*",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/tool-jobs": "workspace:*",
+    "@astro-one/tool-session-query": "workspace:*",
+    "@astro-one/tool-terminal": "workspace:*",
+    "@astro-one/spill": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/api-remotes": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/client-test-runtime": "workspace:*",
+    "@astro-one/client-ui-conversation": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
     "@testing-library/react": "^16.1.0",
     "@types/react": "~18.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@deepseek-ai/dsh-api-workspace-controller": "workspace:*",
-    "@deepseek-ai/dsh-client-ui-chat": "workspace:*",
-    "@deepseek-ai/dsh-client-ui-renderer": "workspace:*",
-    "@deepseek-ai/dsh-client-ui-session": "workspace:*",
-    "@deepseek-ai/dsh-util-workspace-path": "workspace:*",
-    "@deepseek-ai/dsh-attachment": "workspace:*",
+    "@astro-one/api-workspace-controller": "workspace:*",
+    "@astro-one/client-ui-chat": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-session": "workspace:*",
+    "@astro-one/util-workspace-path": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
     "clsx": "^2.0.0",
-    "@deepseek-ai/dsh-ptc-runtime": "workspace:*",
-    "@deepseek-ai/dsh-token-meter": "workspace:*"
+    "@astro-one/ptc-runtime": "workspace:*",
+    "@astro-one/token-meter": "workspace:*"
   },
   "files": [
     "lib/index.js",

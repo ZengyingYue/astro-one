@@ -1,8 +1,8 @@
 /** Native JSONL reads enforce developer relationships before exposing stored data. */
-import { Context } from '@deepseek-ai/cordis'
-import { SESSION_FORMAT_VERSION, SessionId } from '@deepseek-ai/dsh-session'
-import { SessionPersistenceCorruptionError } from '@deepseek-ai/dsh-session-persistence'
-import JsonlSessionPersistence from '@deepseek-ai/dsh-session-persistence-jsonl'
+import { Context } from '@astro-one/cordis'
+import { SESSION_FORMAT_VERSION, SessionId } from '@astro-one/session'
+import { SessionPersistenceCorruptionError } from '@astro-one/session-persistence'
+import JsonlSessionPersistence from '@astro-one/session-persistence-jsonl'
 import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
@@ -19,7 +19,7 @@ const developer = { type: 'developer/message', surfaceOp: 'append', data: {
 
 describe.each(modes)('native developer admission ($compression, $access)', ({ compression, access }) => {
   async function stored(event: object, corruptPrefix = false) {
-    const root = await mkdtemp(join(tmpdir(), 'dsh-native-developer-'))
+    const root = await mkdtemp(join(tmpdir(), 'astro-one-native-developer-'))
     const ctx = new Context()
     onTestFinished(async () => {
       try {

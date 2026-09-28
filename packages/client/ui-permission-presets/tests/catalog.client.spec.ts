@@ -1,10 +1,10 @@
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@astro-one/cordis'
 import { describe, expect, it, vi } from 'vitest'
 import type {
   ConnectionGeneration, ConnectionHandle,
-} from '@deepseek-ai/dsh-client-connection/client'
-import { TestRemote } from '@deepseek-ai/dsh-client-test-runtime'
-import type { PermissionCatalog } from '@deepseek-ai/dsh-permission-presets/client'
+} from '@astro-one/client-connection/client'
+import { TestRemote } from '@astro-one/client-test-runtime'
+import type { PermissionCatalog } from '@astro-one/permission-presets/client'
 import { PermissionCatalogDirectory } from '../src/client/catalog.ts'
 
 const FIRST: PermissionCatalog = {

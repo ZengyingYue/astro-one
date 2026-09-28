@@ -8,7 +8,7 @@ English | [中文](2026-09-19-remote-duplex-stream.zh.md)
 
 ### Current state
 
-`dsh-api-gateway` multiplexes every Typert Remote stream over one WebSocket at the fixed path `/api/remote.mux` (`packages/api/gateway/src/stream-protocol.ts`). A Host method decorated with `@Remote({ mode: 'stream' })` that returns an `Iterable` or `AsyncIterable` becomes one Host-to-Client logical stream; the optional final `signal: AbortSignal` is the only reserved parameter, never enters the wire arguments, and is appended by the Gateway after the decoded business parameters (`packages/api/gateway/src/index.ts`). The generated method the Client receives returns a bare `AsyncIterable`.
+`astro-one-api-gateway` multiplexes every Typert Remote stream over one WebSocket at the fixed path `/api/remote.mux` (`packages/api/gateway/src/stream-protocol.ts`). A Host method decorated with `@Remote({ mode: 'stream' })` that returns an `Iterable` or `AsyncIterable` becomes one Host-to-Client logical stream; the optional final `signal: AbortSignal` is the only reserved parameter, never enters the wire arguments, and is appended by the Gateway after the decoded business parameters (`packages/api/gateway/src/index.ts`). The generated method the Client receives returns a bare `AsyncIterable`.
 
 There are only five wire frames:
 
@@ -94,7 +94,7 @@ Every Remote stream accepts a Client uplink. The method's return type `RemoteStr
 ### Type signatures
 
 ```text
-// @deepseek-ai/dsh-typert-protocol
+// @astro-one/typert-protocol
 /**
  * One Remote stream. Host face: the method returns it, and at runtime it is AsyncIterable<Out>.
  * On the Client face the generated method returns RemoteStreamHandle<Out, In>; each name has exactly one meaning.
@@ -150,7 +150,7 @@ export interface RemoteInvocation {
   uplink<In = unknown>(): AsyncIterable<In>
 }
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     /** The Remote call this Context was derived for; undefined on a Context not derived from a Remote call. */
     readonly invocation: RemoteInvocation | undefined
@@ -187,7 +187,7 @@ export interface PeerScope {
 }
 ```
 
-This Host has exactly one Peer: the operator. `@deepseek-ai/dsh-client-connection` creates it with `createScope(connectionCtx, peer)` when the service applies, the same mechanism an Agent uses to create its own scope: the Peer object is the ScopeKey, `peer.ctx` carries connection-lifetime effects, and `dispose()` runs with the Connection's release and quiets the fiber. It is exposed as `connection.operator`.
+This Host has exactly one Peer: the operator. `@astro-one/client-connection` creates it with `createScope(connectionCtx, peer)` when the service applies, the same mechanism an Agent uses to create its own scope: the Peer object is the ScopeKey, `peer.ctx` carries connection-lifetime effects, and `dispose()` runs with the Connection's release and quiets the fiber. It is exposed as `connection.operator`.
 
 | Member | Semantics |
 | --- | --- |
@@ -327,7 +327,7 @@ export type RemoteStream<Out, In = never> = AsyncIterable<Out> & { readonly [STR
 export type PeerId = Branded<'PeerId'>
 export interface PeerScope { readonly id: PeerId; readonly ctx: Context; dispose(): Promise<void> }
 export interface RemoteInvocation { … }              // see Host face
-declare module '@deepseek-ai/cordis' { interface Context { readonly invocation: RemoteInvocation | undefined } }
+declare module '@astro-one/cordis' { interface Context { readonly invocation: RemoteInvocation | undefined } }
 
 export interface InvocationDescriptor {
   // existing fields unchanged; mode still has only 'stream'
@@ -344,13 +344,13 @@ The `Remote` decorator, `RemoteMethodOptions`, and `RemoteMethodMarker` recogniz
 ### typert generator (`packages/typert/generator/src`)
 
 - `model.ts`: `InvocationModel.uplink?: { boundary: RemoteBoundaryModel }`.
-- `analyzer.ts` `remoteResultType`: for `mode: 'stream'`, the accepted return-type wrappers are `Iterable<Out>`, `AsyncIterable<Out>`, and `RemoteStream<Out, In?>`. `RemoteStream` is recognized the same way as the standard library's `AsyncIterable`: by symbol name plus declaring file (`types.ts` of `@deepseek-ai/dsh-typert-protocol`). The first type argument is the downlink item; when the second is present and is not `never`, an `uplink` boundary is generated under the key `${endpoint}:uplink`.
+- `analyzer.ts` `remoteResultType`: for `mode: 'stream'`, the accepted return-type wrappers are `Iterable<Out>`, `AsyncIterable<Out>`, and `RemoteStream<Out, In?>`. `RemoteStream` is recognized the same way as the standard library's `AsyncIterable`: by symbol name plus declaring file (`types.ts` of `@astro-one/typert-protocol`). The first type argument is the downlink item; when the second is present and is not `never`, an `uplink` boundary is generated under the key `${endpoint}:uplink`.
 - `emitter.ts`: the descriptor literal emits `uplink: { codec }`; the generated Client signature returns `RemoteStreamHandle<Out, In>`.
 - The parameter loop recognizes no parameter named `uplink`.
 
 ### Two names, one entry point
 
-A Host method declares a stream with `RemoteStream<Out, In>`; the Client holds a `RemoteStreamHandle<Out, In>`. Both are exported from the main entry point of `@deepseek-ai/dsh-typert-protocol`, and the handle interface has no Host dependency. The generated Client contract writes the return type as `RemoteStreamHandle<Out, In>`. One name has one meaning: the `RemoteStream` that Client code obtains from the main entry point is always the declaration type and is never confused with the handle.
+A Host method declares a stream with `RemoteStream<Out, In>`; the Client holds a `RemoteStreamHandle<Out, In>`. Both are exported from the main entry point of `@astro-one/typert-protocol`, and the handle interface has no Host dependency. The generated Client contract writes the return type as `RemoteStreamHandle<Out, In>`. One name has one meaning: the `RemoteStream` that Client code obtains from the main entry point is always the declaration type and is never confused with the handle.
 
 ### Gateway Host (`packages/api/gateway/src`)
 
@@ -441,13 +441,13 @@ cancel : missing → ignore; otherwise control.abort(new Error('Remote stream ca
 
 | Package | Carries |
 | --- | --- |
-| `dsh-typert-protocol` (`types.ts`, `index.ts`) | `RemoteStream`, `RemoteStreamHandle`, `PeerId`, `PeerScope`, `RemoteInvocation`, the `ctx.invocation` declaration merge, `InvocationDescriptor.uplink`; the decorator recognizes only `mode: 'stream'`; `TypertRemoteService` registers the `invocation` accessor when constructed |
-| `dsh-typert-registry` | Load-time validation that `uplink.codec` is a valid strict codec |
-| `dsh-typert-generator` (`model.ts`, `analyzer.ts`, `emitter.ts`) | `remoteResultType` recognizes `RemoteStream<Out, In>` and generates the `uplink` boundary; the descriptor emits `uplink: { codec }`; the generated Client signature returns `RemoteStreamHandle<Out, In>`; the parameter loop accepts only business parameters and a final `signal` |
-| `dsh-client-connection` (`operator-peer.ts`, `rpc.ts`, `rpc-host.ts`, `index.ts`) | The operator `PeerScope`; `connection.operator` and `admit`; the `/api` and upgrade routes obtain the Peer through `admit`; the optional `uplink` of `rpc.open` |
-| `dsh-api-gateway` Host (`stream-protocol.ts`, `stream-server.ts`, `types.ts`, `index.ts`) | `item` / `end` frames; `UplinkInbox`; `Config.streamInboxBytes`; `GatewayInvocation` and `extend({ invocation })`; `UplinkDecoder`; `handleUpgrade(req, socket, head, peer)`; `operatorPeer()` |
-| `dsh-api-gateway` Client (`client/index.ts`, `client/stream-client.ts`) | `invokeStream` returns the handle; the uplink pump is driven by the handle's queue |
-| `dsh-webworker-runtime`, `dsh-remote-mock` | The worker tunnel's two uplink frames and the `serveStream` assembly; `StreamHandle.uplink`; the direct proxy returns the real handle |
+| `astro-one-typert-protocol` (`types.ts`, `index.ts`) | `RemoteStream`, `RemoteStreamHandle`, `PeerId`, `PeerScope`, `RemoteInvocation`, the `ctx.invocation` declaration merge, `InvocationDescriptor.uplink`; the decorator recognizes only `mode: 'stream'`; `TypertRemoteService` registers the `invocation` accessor when constructed |
+| `astro-one-typert-registry` | Load-time validation that `uplink.codec` is a valid strict codec |
+| `astro-one-typert-generator` (`model.ts`, `analyzer.ts`, `emitter.ts`) | `remoteResultType` recognizes `RemoteStream<Out, In>` and generates the `uplink` boundary; the descriptor emits `uplink: { codec }`; the generated Client signature returns `RemoteStreamHandle<Out, In>`; the parameter loop accepts only business parameters and a final `signal` |
+| `astro-one-client-connection` (`operator-peer.ts`, `rpc.ts`, `rpc-host.ts`, `index.ts`) | The operator `PeerScope`; `connection.operator` and `admit`; the `/api` and upgrade routes obtain the Peer through `admit`; the optional `uplink` of `rpc.open` |
+| `astro-one-api-gateway` Host (`stream-protocol.ts`, `stream-server.ts`, `types.ts`, `index.ts`) | `item` / `end` frames; `UplinkInbox`; `Config.streamInboxBytes`; `GatewayInvocation` and `extend({ invocation })`; `UplinkDecoder`; `handleUpgrade(req, socket, head, peer)`; `operatorPeer()` |
+| `astro-one-api-gateway` Client (`client/index.ts`, `client/stream-client.ts`) | `invokeStream` returns the handle; the uplink pump is driven by the handle's queue |
+| `astro-one-webworker-runtime`, `astro-one-remote-mock` | The worker tunnel's two uplink frames and the `serveStream` assembly; `StreamHandle.uplink`; the direct proxy returns the real handle |
 | Documentation | The READMEs of gateway, the api group, connection, protocol, and generator; `docs/api-gateway`; the type-equiv blocks of `docs/subsystems/typert`; the config and Cordis catalogs |
 
 ## Key sequences
@@ -575,7 +575,7 @@ for await (const reply of stream) replies.push(reply)   // ['> a', '> b']
 - **Bought**: one stream with two directions, so interactive scenarios such as terminal keystrokes, approval answers, and background-job stdin no longer each build their own "one stream plus one unary"; a Host method knows its caller; the uplink and downlink types are declared in one place, the return type; uplink items come from the browser and are validated strictly per item at the Host, while downlink items are Host-produced typed values that pass straight through; the generated output and wire frames of existing `AsyncIterable<Out>` methods and unary methods are completely unchanged.
 - **`this.ctx.invocation` is `undefined` outside a Remote call**, so a method that reads it must handle the optional; a service method invoked only directly in process correctly reads `undefined`.
 - **The inbox limit applies to every stream**: a method that does not read its uplink fails as a whole when it receives many uplink frames. This is a deliberate explicit failure, recorded in the README.
-- **The operator is the only Peer**, and `admit` is the only admission point; the first consumer that needs a second Peer must add opening, association, and events in `dsh-client-connection`.
+- **The operator is the only Peer**, and `admit` is the only admission point; the first consumer that needs a second Peer must add opening, association, and events in `astro-one-client-connection`.
 - **No cross-direction ordering guarantee between uplink and downlink**; a protocol that needs request-response pairing carries its own sequence numbers.
 - **Upper-layer protocols do not yet expose `send`**: consumers of `$stream`, snapshot, and journal use only the downlink today; the object they receive is already the handle.
 - **The worker tunnel behaves differently from the WebSocket carrier**: no inbox limit, and items after `end` are dropped, because page to worker is a same-origin trusted boundary.

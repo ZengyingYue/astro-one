@@ -1,17 +1,17 @@
 // @vitest-environment jsdom
 /** Desktop account operations and ordinary-browser isolation in the shipped client composition. */
 import { afterEach, expect, vi } from 'vitest'
-import { ok } from '@deepseek-ai/dsh-remote-mock'
-import { RemoteError } from '@deepseek-ai/dsh-typert-protocol'
-import { createClientTest, type TestClient, webApp } from '@deepseek-ai/dsh-client-test-runtime/src/assembly/index.ts'
-import type { AccountDetails, AccountView, AccountUserId, SignInAttemptId } from '@deepseek-ai/dsh-deepseek-account/types'
-import type { ThemeRuntime } from '@deepseek-ai/dsh-client-ui-theme/client'
-import { resolveSlotLabel } from '@deepseek-ai/dsh-client-ui-slots'
+import { ok } from '@astro-one/remote-mock'
+import { RemoteError } from '@astro-one/typert-protocol'
+import { createClientTest, type TestClient, webApp } from '@astro-one/client-test-runtime/src/assembly/index.ts'
+import type { AccountDetails, AccountView, AccountUserId, SignInAttemptId } from '@astro-one/deepseek-account/types'
+import type { ThemeRuntime } from '@astro-one/client-ui-theme/client'
+import { resolveSlotLabel } from '@astro-one/client-ui-slots'
 import type { AccountSectionInjected } from '../src/client/AccountSection.tsx'
 import { CONTACT_CONFIG_GLOBAL } from '../src/contact-config.ts'
 
 const it = createClientTest({ roster: webApp })
-const SELF = '@deepseek-ai/dsh-client-ui-settings-account'
+const SELF = '@astro-one/client-ui-settings-account'
 const view: AccountView = { status: 'signed-out', attempt: null, links: { usageUrl: '', topUpUrl: '' } }
 const stored: AccountView = { ...view, status: 'credential-stored' }
 const profile: AccountDetails['profile'] = { status: 'ready', value: { id: 'account-user' as AccountUserId, name: 'User', contact: null } }
@@ -37,7 +37,7 @@ it('keeps account UI and account RPC inactive in a plain browser, including afte
 it('shares account actions across seats, publishes dialog ownership, and opens contextual support', async ({ start }) => {
   vi.stubGlobal(CONTACT_CONFIG_GLOBAL, { contactFormUrl: 'https://example.test/form/', contactSource: 'harness' })
   const open = vi.spyOn(window, 'open').mockReturnValue(null)
-  vi.stubGlobal('dshDesktop', {})
+  vi.stubGlobal('astroOneDesktop', {})
   const c = await start()
   const actions = operations(c)
   expect(c.ctx.slots.entries('settings.models.sign-in')[0]!.inject!()).toBe(actions)
@@ -83,7 +83,7 @@ it('shares account actions across seats, publishes dialog ownership, and opens c
 }, 60_000)
 
 it('coalesces refreshes, publishes independent failures, and rejects stale responses after sign-out or unload', async ({ start }) => {
-  vi.stubGlobal('dshDesktop', {})
+  vi.stubGlobal('astroOneDesktop', {})
   const c = await start()
   const actions = operations(c)
   const pending = Promise.withResolvers<ReturnType<typeof ok<AccountDetails['profile'] | null>>>()
@@ -113,7 +113,7 @@ it('coalesces refreshes, publishes independent failures, and rejects stale respo
 
 it('uses the Desktop login carrier and exposes operation errors', async ({ start, mock }) => {
   vi.spyOn(window, 'open').mockReturnValue(null)
-  vi.stubGlobal('dshDesktop', {})
+  vi.stubGlobal('astroOneDesktop', {})
   const c = await start()
   const actions = operations(c)
   mock.remote.account.startSignIn.mockResolvedValue(ok(view))
@@ -133,11 +133,11 @@ it('uses the Desktop login carrier and exposes operation errors', async ({ start
 }, 60_000)
 
 it('uses the Desktop stream origin and exposes the native platform bridge', async ({ start, mock }) => {
-  vi.stubGlobal('dshDesktop', {})
+  vi.stubGlobal('astroOneDesktop', {})
   const c = await start()
-  vi.stubGlobal('__DSH_TRANSPORT__', { streamBaseUrl: 'http://localhost:9876/stream' })
+  vi.stubGlobal('__ASTRO_ONE_TRANSPORT__', { streamBaseUrl: 'http://localhost:9876/stream' })
   const platform = { open: vi.fn(), setBounds: vi.fn(), close: vi.fn() }
-  vi.stubGlobal('dshPlatform', platform)
+  vi.stubGlobal('astroOnePlatform', platform)
   await c.reload(SELF)
   const actions = operations(c)
   expect(actions.platform).toBe(platform)
@@ -148,7 +148,7 @@ it('uses the Desktop stream origin and exposes the native platform bridge', asyn
 
 
 it('publishes a terminal state-stream failure without mistaking it for plugin disposal', async ({ start }) => {
-  vi.stubGlobal('dshDesktop', {})
+  vi.stubGlobal('astroOneDesktop', {})
   const c = await start()
   const actions = operations(c)
   await c.mock.streams.opened('account/watch', 1)
@@ -157,7 +157,7 @@ it('publishes a terminal state-stream failure without mistaking it for plugin di
 }, 60_000)
 
 it('ignores a terminal stream error when plugin disposal already owns teardown', async ({ start }) => {
-  vi.stubGlobal('dshDesktop', {})
+  vi.stubGlobal('astroOneDesktop', {})
   const c = await start()
   let disposal: Promise<void> | undefined
   const original = c.ctx.remote.$stream.bind(c.ctx.remote)

@@ -1,5 +1,5 @@
 /**
- * User patch-layer behavior of `dsh-app-boot`: the optional patch-list loader
+ * User patch-layer behavior of `astro-one-app-boot`: the optional patch-list loader
  * (a profile's `cordis.patch.yml`) and `boot()` applying the user layer over
  * a real Loader tree with live file watching.
  */
@@ -9,17 +9,17 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterAll, describe, expect, it, onTestFinished, vi } from 'vitest'
 import { FSWatcher, type ChokidarOptions } from 'chokidar'
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@astro-one/cordis'
 import Hmr from '../src/index.ts'
-import Timer from '@deepseek-ai/cordis-plugin-timer'
+import Timer from '@astro-one/cordis-plugin-timer'
 import {
   boot,
   loadOptionalPatches,
   PROFILE_PATCH_FILENAME,
   reconcileProfilePatches,
-} from '@deepseek-ai/dsh-app-boot'
+} from '@astro-one/app-boot'
 
-const NAME = 'dsh-test-bin'
+const NAME = 'astro-one-test-bin'
 
 const configWatch = vi.hoisted(() => ({
   create: undefined as ((options?: ChokidarOptions) => FSWatcher) | undefined,
@@ -41,7 +41,7 @@ afterAll(() => {
 })
 
 const tmp = (): string => {
-  const dir = mkdtempSync(join(tmpdir(), 'dsh-user-patches-'))
+  const dir = mkdtempSync(join(tmpdir(), 'astro-one-user-patches-'))
   tempRoots.push(dir)
   return dir
 }

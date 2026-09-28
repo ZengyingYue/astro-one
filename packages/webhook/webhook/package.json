@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-webhook",
-  "description": "Fire-and-forget webhook rule runtime that creates Workspace-backed DeepSeek Harness Sessions",
+  "name": "@astro-one/webhook",
+  "description": "Fire-and-forget webhook rule runtime that creates Workspace-backed Astro One Sessions",
   "version": "0.1.7-rc.1",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/webhook/webhook"
   },
   "type": "module",
@@ -37,33 +37,33 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-agent": "workspace:*",
-    "@deepseek-ai/dsh-agent-default-model": "workspace:*",
-    "@deepseek-ai/dsh-agent-preset-registry": "workspace:*",
-    "@deepseek-ai/dsh-invariants": "workspace:*",
-    "@deepseek-ai/dsh-llm": "workspace:*",
-    "@deepseek-ai/dsh-permission-presets": "workspace:*",
-    "@deepseek-ai/dsh-session": "workspace:*",
-    "@deepseek-ai/dsh-session-title": "workspace:*",
-    "@deepseek-ai/dsh-workspace": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-default-model": "workspace:*",
+    "@astro-one/agent-preset-registry": "workspace:*",
+    "@astro-one/invariants": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/permission-presets": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-title": "workspace:*",
+    "@astro-one/workspace": "workspace:*"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/cordis-plugin-include": "workspace:~",
-    "@deepseek-ai/cordis-plugin-loader": "workspace:~",
-    "@deepseek-ai/dsh-agent": "workspace:*",
-    "@deepseek-ai/dsh-agent-default-model": "workspace:*",
-    "@deepseek-ai/dsh-agent-preset-registry": "workspace:*",
-    "@deepseek-ai/dsh-invariants": "workspace:*",
-    "@deepseek-ai/dsh-llm": "workspace:*",
-    "@deepseek-ai/dsh-permission-presets": "workspace:*",
-    "@deepseek-ai/dsh-session": "workspace:*",
-    "@deepseek-ai/dsh-session-title": "workspace:*",
-    "@deepseek-ai/dsh-workspace": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-default-model": "workspace:*",
+    "@astro-one/agent-preset-registry": "workspace:*",
+    "@astro-one/invariants": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/permission-presets": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-title": "workspace:*",
+    "@astro-one/workspace": "workspace:*"
   },
   "dependencies": {
-    "@deepseek-ai/dsh-brand": "workspace:*",
-    "@deepseek-ai/dsh-util-values": "workspace:*"
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/util-values": "workspace:*"
   }
 }

@@ -5,20 +5,20 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import Include from '@deepseek-ai/cordis-plugin-include'
-import LlmRuntime from '@deepseek-ai/dsh-llm'
-import AgentRegistry from '@deepseek-ai/dsh-agent'
-import SessionStore, { SessionId } from '@deepseek-ai/dsh-session'
-import { credentialRef } from '@deepseek-ai/dsh-credentials'
-import LocalCredentialProvider from '@deepseek-ai/dsh-credentials-local'
+import { Context } from '@astro-one/cordis'
+import Loader from '@astro-one/cordis-plugin-loader'
+import Include from '@astro-one/cordis-plugin-include'
+import LlmRuntime from '@astro-one/llm'
+import AgentRegistry from '@astro-one/agent'
+import SessionStore, { SessionId } from '@astro-one/session'
+import { credentialRef } from '@astro-one/credentials'
+import LocalCredentialProvider from '@astro-one/credentials-local'
 import { profileComposition } from '../../../settings/settings/tests/profile-composition.ts'
-import { getOrCreateAnonymousUserId } from '@deepseek-ai/dsh-anonymous-user-id'
-import DeepSeekLlmApiExtensionRegistry from '@deepseek-ai/dsh-deepseek-llm-api-extensions'
-import * as SessionLogDeepSeek from '@deepseek-ai/dsh-session-log-deepseek'
-import * as DeepSeekPluginPackageInventory from '@deepseek-ai/dsh-plugin-package-inventory-deepseek'
-import * as LlmDeepSeek from '@deepseek-ai/dsh-llm-deepseek'
+import { getOrCreateAnonymousUserId } from '@astro-one/anonymous-user-id'
+import DeepSeekLlmApiExtensionRegistry from '@astro-one/deepseek-llm-api-extensions'
+import * as SessionLogDeepSeek from '@astro-one/session-log-deepseek'
+import * as DeepSeekPluginPackageInventory from '@astro-one/plugin-package-inventory-deepseek'
+import * as LlmDeepSeek from '@astro-one/llm-deepseek'
 import { assemble } from './assemble.ts'
 import { closeMockServers, mockServer, textEvents } from './mock-server.ts'
 import { sourceModuleLoader } from './helpers.ts'
@@ -44,8 +44,8 @@ async function loadComposition(
   // A reused root is the restart case: the same harness home, its documents
   // exactly as the previous process left them.
   const fresh = options.reuseRoot === undefined
-  root = options.reuseRoot ?? await mkdtemp(join(tmpdir(), 'dsh-llm-composition-'))
-  vi.stubEnv('DSH_HOME', root)
+  root = options.reuseRoot ?? await mkdtemp(join(tmpdir(), 'astro-one-llm-composition-'))
+  vi.stubEnv('ASTRO_ONE_HOME', root)
   const settingsPath = join(root, 'profile', 'cordis.patch.yml')
   const credentialsPath = join(root, '.credentials.yaml')
   if (options.withDynamic && fresh) {
@@ -55,31 +55,31 @@ async function loadComposition(
   const configPath = join(root, 'cordis.yml')
   await writeFile(configPath, [
     '- id: llm',
-    "  name: '@deepseek-ai/dsh-llm'",
+    "  name: '@astro-one/llm'",
     '- id: session',
-    "  name: '@deepseek-ai/dsh-session'",
+    "  name: '@astro-one/session'",
     '- id: agents',
-    "  name: '@deepseek-ai/dsh-agent'",
+    "  name: '@astro-one/agent'",
     '- id: deepseek-llm-api-extensions',
-    "  name: '@deepseek-ai/dsh-deepseek-llm-api-extensions'",
+    "  name: '@astro-one/deepseek-llm-api-extensions'",
     '- id: session-log-deepseek',
-    "  name: '@deepseek-ai/dsh-session-log-deepseek'",
+    "  name: '@astro-one/session-log-deepseek'",
     ...options.enableSessionLog !== undefined
       ? ['  config:', `    enabled: ${String(options.enableSessionLog)}`]
       : [],
     '- id: plugin-package-inventory-deepseek',
-    "  name: '@deepseek-ai/dsh-plugin-package-inventory-deepseek'",
+    "  name: '@astro-one/plugin-package-inventory-deepseek'",
     ...options.withDynamic
       ? [
         '- id: credentials',
-        "  name: '@deepseek-ai/dsh-credentials-local'",
+        "  name: '@astro-one/credentials-local'",
         '  config:',
         `    path: ${JSON.stringify(credentialsPath)}`,
         '    debounceMs: 10',
       ]
       : [],
     '- id: llm-deepseek',
-    "  name: '@deepseek-ai/dsh-llm-deepseek'",
+    "  name: '@astro-one/llm-deepseek'",
     '  config:',
     `    baseURL: ${JSON.stringify(options.baseURL)}`,
     '',
@@ -91,14 +91,14 @@ async function loadComposition(
   await ctx.plugin(Loader)
   ctx.loader.builtins.include = Include
   const modules = new Map<string, unknown>([
-    ['@deepseek-ai/dsh-llm', LlmRuntime],
-    ['@deepseek-ai/dsh-session', SessionStore],
-    ['@deepseek-ai/dsh-agent', AgentRegistry],
-    ['@deepseek-ai/dsh-deepseek-llm-api-extensions', DeepSeekLlmApiExtensionRegistry],
-    ['@deepseek-ai/dsh-session-log-deepseek', SessionLogDeepSeek],
-    ['@deepseek-ai/dsh-plugin-package-inventory-deepseek', DeepSeekPluginPackageInventory],
-    ['@deepseek-ai/dsh-credentials-local', LocalCredentialProvider],
-    ['@deepseek-ai/dsh-llm-deepseek', LlmDeepSeek],
+    ['@astro-one/llm', LlmRuntime],
+    ['@astro-one/session', SessionStore],
+    ['@astro-one/agent', AgentRegistry],
+    ['@astro-one/deepseek-llm-api-extensions', DeepSeekLlmApiExtensionRegistry],
+    ['@astro-one/session-log-deepseek', SessionLogDeepSeek],
+    ['@astro-one/plugin-package-inventory-deepseek', DeepSeekPluginPackageInventory],
+    ['@astro-one/credentials-local', LocalCredentialProvider],
+    ['@astro-one/llm-deepseek', LlmDeepSeek],
   ])
   // The custom importer bypasses Node resolution; mirror the package manifests
   // a deployed cordis.yml has beside its declared dependencies.
@@ -133,14 +133,14 @@ describe('llm-deepseek real dynamic composition', () => {
     session.append('turn/start', { turn: 1 })
 
     await assemble(ctx, { model: 'deepseek-v4-flash', messages: [], sessionId: session.id })
-    const request = server.requests[0] as { dsh_plugin_packages: { version: number; packages: unknown[] } }
-    expect(request).not.toHaveProperty('dsh_session_log')
-    expect(request.dsh_plugin_packages.packages).toEqual(expect.arrayContaining([
-      { name: '@deepseek-ai/dsh-deepseek-llm-api-extensions', version: '0.1.0-rc.8' },
-      { name: '@deepseek-ai/dsh-llm-deepseek', version: '0.1.0-rc.8' },
-      { name: '@deepseek-ai/dsh-session-log-deepseek', version: '0.1.0-rc.8' },
+    const request = server.requests[0] as { astro_one_plugin_packages: { version: number; packages: unknown[] } }
+    expect(request).not.toHaveProperty('astro_one_session_log')
+    expect(request.astro_one_plugin_packages.packages).toEqual(expect.arrayContaining([
+      { name: '@astro-one/deepseek-llm-api-extensions', version: '0.1.0-rc.8' },
+      { name: '@astro-one/llm-deepseek', version: '0.1.0-rc.8' },
+      { name: '@astro-one/session-log-deepseek', version: '0.1.0-rc.8' },
     ]))
-    expect(request.dsh_plugin_packages.version).toBe(1)
+    expect(request.astro_one_plugin_packages.version).toBe(1)
     expect(SessionLogDeepSeek.acceptedThrough(session)).toBe(-1)
   })
 
@@ -156,7 +156,7 @@ describe('llm-deepseek real dynamic composition', () => {
 
     await assemble(ctx, { model: 'deepseek-v4-flash', messages: [], sessionId: session.id })
     const request = server.requests[0] as {
-      dsh_session_log?: {
+      astro_one_session_log?: {
         version: number
         session: { id: string }
         afterSeq: number
@@ -164,7 +164,7 @@ describe('llm-deepseek real dynamic composition', () => {
         events: Array<{ type: string; seq: number }>
       }
     }
-    expect(request.dsh_session_log).toMatchObject({
+    expect(request.astro_one_session_log).toMatchObject({
       version: 1,
       session: { id: 'extension-composition-enabled' },
       afterSeq: -1,
@@ -183,7 +183,7 @@ describe('llm-deepseek real dynamic composition', () => {
     expect(ctx.settings.describe().map(entry => entry.ns)).toContain(NS)
     await assemble(ctx, { model: 'deepseek-v4-flash', messages: [] })
     expect(serverA.headers[0]?.['x-api-key']).toBe('boot-key')
-    expect(serverA.headers[0]?.['x-deepseek-harness-user-id']).toBe(getOrCreateAnonymousUserId())
+    expect(serverA.headers[0]?.['x-astro-one-user-id']).toBe(getOrCreateAnonymousUserId())
 
     // External edits, exactly as a user or the web UI would leave them on disk.
     await writeFile(settingsPath, JSON.stringify([{ id: NS, config: { baseURL: serverB.url } }]))

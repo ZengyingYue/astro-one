@@ -13,11 +13,11 @@ Archived: 2026-09-04
 
 ## 决策
 
-`headless-runner` 在启动工作完全停稳后、提交任务前，为其创建的精确 Agent 观察 `agent/assistant-stream`。自身持有的区间以 `turn/start` 打开后，每个非空 `reasoning-delta` chunk frame 都会立即写入 stderr。一段连续 reasoning 以独占一行的 `dsh: reasoning:` 开始；各 delta 保持 provider 顺序，不添加 token 边界装饰。Reasoning block boundary 与 usage metadata 会保持该段打开；之后出现非 reasoning block 或 output delta、stream end、新 turn 或 listener dispose 时，如果 provider 没有输出末尾换行，runner 会用一个换行终止该段。
+`headless-runner` 在启动工作完全停稳后、提交任务前，为其创建的精确 Agent 观察 `agent/assistant-stream`。自身持有的区间以 `turn/start` 打开后，每个非空 `reasoning-delta` chunk frame 都会立即写入 stderr。一段连续 reasoning 以独占一行的 `astro-one: reasoning:` 开始；各 delta 保持 provider 顺序，不添加 token 边界装饰。Reasoning block boundary 与 usage metadata 会保持该段打开；之后出现非 reasoning block 或 output delta、stream end、新 turn 或 listener dispose 时，如果 provider 没有输出末尾换行，runner 会用一个换行终止该段。
 
 该输出是进程本地 Assistant stream 的瞬态投影。runner 仍从 flush 后的持久 Session settlement 而非进度呈现状态推导最终文本与退出状态。SDK 投影不公开 live frame。
 
-推理进度不按 TTY 启用，也没有单独 flag。重定向的 stderr 流与监督进程会收到和已连接终端相同的提供方报告内容。没有推理内容的成功运行仍不会写入 stderr；终止态模型错误与驱动器错误继续在任何已打开推理段终止后输出既有的 `dsh:` 诊断。
+推理进度不按 TTY 启用，也没有单独 flag。重定向的 stderr 流与监督进程会收到和已连接终端相同的提供方报告内容。没有推理内容的成功运行仍不会写入 stderr；终止态模型错误与驱动器错误继续在任何已打开推理段终止后输出既有的 `astro-one:` 诊断。
 
 ## 验证
 

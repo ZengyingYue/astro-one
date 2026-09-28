@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-09-14-unattended-browser-terminal-reclamation.md
-2026-09-14-unattended-browser-terminal-reclamation.md: 6eca6faa222ed744b8ebd4ef59b2dbaec25fd8ce
-2026-09-14-unattended-browser-terminal-reclamation.zh.md: 9065fe53a7d7970c4523beaffb08b3df30a4944f
+2026-09-14-unattended-browser-terminal-reclamation.md: 2d00bdb2a5098c1a39d4127af2c2c5212bc3493a
+2026-09-14-unattended-browser-terminal-reclamation.zh.md: 5702deadf458b5b16c161dbde2ff4eafb498cf4e

@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-skill-filesystem",
-  "description": "Local filesystem skill provider for the DeepSeek Harness",
+  "name": "@astro-one/skill-filesystem",
+  "description": "Local filesystem skill provider for the Astro One",
   "version": "0.1.7-rc.1",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/skill/skill-filesystem"
   },
   "type": "module",
@@ -27,20 +27,20 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/dsh-fs": "workspace:*",
-    "@deepseek-ai/dsh-home-paths": "workspace:*",
-    "@deepseek-ai/dsh-skill": "workspace:*",
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/fs": "workspace:*",
+    "@astro-one/home-paths": "workspace:*",
+    "@astro-one/skill": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
   },
   "dependencies": {
     "chokidar": "^5.0.0",
-    "@deepseek-ai/schemastery": "workspace:~",
+    "@astro-one/schemastery": "workspace:~",
     "yaml": "^2.4.2"
   },
   "devDependencies": {
-    "@deepseek-ai/dsh-fs": "workspace:*",
-    "@deepseek-ai/dsh-home-paths": "workspace:*",
-    "@deepseek-ai/dsh-skill": "workspace:*",
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/fs": "workspace:*",
+    "@astro-one/home-paths": "workspace:*",
+    "@astro-one/skill": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
   }
 }

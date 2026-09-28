@@ -3,7 +3,7 @@ description: "Shell layout for the Web GUI: the three-column AppFrame whose righ
 kind: "package-reference"
 ---
 
-# @deepseek-ai/dsh-client-ui-layout
+# @astro-one/client-ui-layout
 
 English | [中文](README.zh.md)
 
@@ -31,13 +31,13 @@ Global panels occupy the root-scoped `main` keyed slot; `conversation` is the re
 
 ### Window-chrome seat
 
-On macOS desktop (`html[data-platform='darwin']`, set only by the desktop preload) a collapsed sidebar hides its column entirely instead of keeping the rail, and the frame mounts the single root-scoped `shell.leading` seat at its top-left — beside the hiddenInset traffic lights, over every main panel; ui-sidebar occupies it with the reopen and New Session controls. While the seat is mounted the frame publishes `--dsh-frame-leading-clearance`, the inline band the window chrome occupies measured from the frame's left edge; a main panel whose content reaches the top-left corner pads by it so nothing lands under the lights or the controls. The frame also always publishes `--dsh-frame-top-clearance` (48px) on the root element, the constant step below the window's top strip; entry pages in the main panel (plugin manager and similar, not the conversation) pad their top by it, and overlay primitives (portal menus, bottom-anchored overlays, the settings panel) keep it as their top viewport margin — the root-element home lets overlays portalled to `document.body` read it too. The full-width window drag band is 52px; while the Conversation is selected and its header shows the view tab strip, the band deepens to the 76px header block (title row plus tab strip), so blank header space drags while header controls stay clickable.
+On macOS desktop (`html[data-platform='darwin']`, set only by the desktop preload) a collapsed sidebar hides its column entirely instead of keeping the rail, and the frame mounts the single root-scoped `shell.leading` seat at its top-left — beside the hiddenInset traffic lights, over every main panel; ui-sidebar occupies it with the reopen and New Session controls. While the seat is mounted the frame publishes `--astro-one-frame-leading-clearance`, the inline band the window chrome occupies measured from the frame's left edge; a main panel whose content reaches the top-left corner pads by it so nothing lands under the lights or the controls. The frame also always publishes `--astro-one-frame-top-clearance` (48px) on the root element, the constant step below the window's top strip; entry pages in the main panel (plugin manager and similar, not the conversation) pad their top by it, and overlay primitives (portal menus, bottom-anchored overlays, the settings panel) keep it as their top viewport margin — the root-element home lets overlays portalled to `document.body` read it too. The full-width window drag band is 52px; while the Conversation is selected and its header shows the view tab strip, the band deepens to the 76px header block (title row plus tab strip), so blank header space drags while header controls stay clickable.
 
-Windows Electron's `data-windows-titlebar` marker reserves the caption height above all columns and removes the collapsed sidebar rail. Only the content area's top-left corner has a 16px radius; the other corners and the internal divider remain square. The frame publishes `--dsh-windows-content-radius` and `--dsh-windows-sidebar-width` for ui-sidebar-right's fullscreen corner and sidebar clearance. Ordinary Web documents do not receive the marker; macOS retains its separate layout.
+Windows Electron's `data-windows-titlebar` marker reserves the caption height above all columns and removes the collapsed sidebar rail. Only the content area's top-left corner has a 16px radius; the other corners and the internal divider remain square. The frame publishes `--astro-one-windows-content-radius` and `--astro-one-windows-sidebar-width` for ui-sidebar-right's fullscreen corner and sidebar clearance. Ordinary Web documents do not receive the marker; macOS retains its separate layout.
 
 ### Theme presentation
 
-The presenter consumes resolved theme snapshots and projects them onto the document: `html { color-scheme }` for native UA chrome, `body[data-ds-dark-theme]` from the active color scheme, the theme's alias tokens and `--dsh-content-font-size` as inline variables on body, and one owned `<meta name="theme-color">` whose content follows the computed body background. Disposing the presenter removes its metadata node with its other global writes.
+The presenter consumes resolved theme snapshots and projects them onto the document: `html { color-scheme }` for native UA chrome, `body[data-ds-dark-theme]` from the active color scheme, the theme's alias tokens and `--astro-one-content-font-size` as inline variables on body, and one owned `<meta name="theme-color">` whose content follows the computed body background. Disposing the presenter removes its metadata node with its other global writes.
 
 -----
 

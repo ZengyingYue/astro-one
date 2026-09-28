@@ -19,7 +19,7 @@ import {
   validateIssue,
 } from './rules.mjs'
 
-const AUDIT_MARKER = '<!-- dsh-issue-policy -->'
+const AUDIT_MARKER = '<!-- astro-one-issue-policy -->'
 
 /**
  * Initialize every referenced Issue from a newly opened PR.

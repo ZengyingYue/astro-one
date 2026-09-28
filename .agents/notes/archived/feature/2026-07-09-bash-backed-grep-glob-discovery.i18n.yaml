@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write
-2026-07-09-bash-backed-grep-glob-discovery.md: 63dacd97443e0dfa44108fec42b5f1cf1640c96f
-2026-07-09-bash-backed-grep-glob-discovery.zh.md: 325e27c54ed975522819053863cc57705991fbdb
+2026-07-09-bash-backed-grep-glob-discovery.md: b342f7fe5bc7f8f7b4663b0e41d8e6174b0b7ee9
+2026-07-09-bash-backed-grep-glob-discovery.zh.md: d940fa434464dadf46f722592625fd6b07ef5e78

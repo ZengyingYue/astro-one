@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-11-node-office-kit.md
-2026-09-11-node-office-kit.md: 2c95b7e27e059f6aaee21970fb30fca9ba1bb11b
-2026-09-11-node-office-kit.zh.md: bec5d6bb59f987f629ebfd81bb753eee121566f3
+2026-09-11-node-office-kit.md: e85f524bb61c48f92b46273e436aefa8accc66dd
+2026-09-11-node-office-kit.zh.md: 2b4fe20f62acfbe89de70266292de4c3ca4538b7

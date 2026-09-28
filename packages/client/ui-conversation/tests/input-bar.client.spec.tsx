@@ -9,21 +9,21 @@
 // the shell (jsdom's beforeinput lacks the ranges Lexical needs).
 
 import './control-row-dom.ts'
-import type { InboxState } from '@deepseek-ai/dsh-agent/types'
-import type { GlobalStandardProps } from '@deepseek-ai/dsh-client-ui-slots'
+import type { InboxState } from '@astro-one/agent/types'
+import type { GlobalStandardProps } from '@astro-one/client-ui-slots'
 import { afterEach, describe, expect, it, onTestFinished, vi } from 'vitest'
 import { act, cleanup, fireEvent, render } from '@testing-library/react'
 import { $getRoot, $isTextNode } from 'lexical'
 import {
   bindSnapshotSelector, conversationSnapshot as conversationFixture, makeTranslate, RemoteError,
   sessionSnapshot as sessionFixture,
-} from '@deepseek-ai/dsh-client-test-runtime'
-import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
-import type { SessionListState, SessionSnapshot } from '@deepseek-ai/dsh-api-session-controller/client'
-import type { ContextPressureProjection } from '@deepseek-ai/dsh-token-meter/client'
-import { zh as commonZh } from '@deepseek-ai/dsh-client-locale/src/locales/zh.ts'
-import type { Context } from '@deepseek-ai/cordis'
-import type { SessionId } from '@deepseek-ai/dsh-session/types'
+} from '@astro-one/client-test-runtime'
+import { createSnapshotStore } from '@astro-one/client-store'
+import type { SessionListState, SessionSnapshot } from '@astro-one/api-session-controller/client'
+import type { ContextPressureProjection } from '@astro-one/token-meter/client'
+import { zh as commonZh } from '@astro-one/client-locale/src/locales/zh.ts'
+import type { Context } from '@astro-one/cordis'
+import type { SessionId } from '@astro-one/session/types'
 import type { SubmitOutcome } from '../src/client/contract/input.ts'
 import { SessionInputShell } from '../src/client/input/facade.ts'
 import { $replaceDetectSpanWithText, $selectDetectSpan } from '../src/client/input/editor/span-map.ts'
@@ -1362,11 +1362,11 @@ describe('decorations', () => {
       shell.editor.update(() => {}, { discrete: true }) // flush the queued decoration refresh
     })
     expect(tokenSpanOf(view.container)?.textContent).toBe('/goal ')
-    expect(textarea.style.getPropertyValue('--dsh-composer-hint')).toBe(JSON.stringify('目标内容'))
+    expect(textarea.style.getPropertyValue('--astro-one-composer-hint')).toBe(JSON.stringify('目标内容'))
     // Args typed: the hint disappears, the token style stays.
     act(() => { shell.setDraft('/goal 发布') })
     act(() => { shell.editor.update(() => {}, { discrete: true }) }) // flush the queued decoration refresh
-    expect(textarea.style.getPropertyValue('--dsh-composer-hint')).toBe('')
+    expect(textarea.style.getPropertyValue('--astro-one-composer-hint')).toBe('')
     expect(tokenSpanOf(view.container)).not.toBeNull()
   })
 
@@ -1379,7 +1379,7 @@ describe('decorations', () => {
         { start: 0, end: 6, draftRev: shell.snapshot.draftRev },
       )
     })
-    expect(textarea.style.getPropertyValue('--dsh-composer-hint')).toBe(JSON.stringify('输入目标，智能体将持续执行'))
+    expect(textarea.style.getPropertyValue('--astro-one-composer-hint')).toBe(JSON.stringify('输入目标，智能体将持续执行'))
   })
 
   it('the hint lookup keys on the claim name, so a localized claim token keeps the locale entry', () => {
@@ -1391,7 +1391,7 @@ describe('decorations', () => {
         { start: 0, end: 4, draftRev: shell.snapshot.draftRev },
       )
     })
-    expect(textarea.style.getPropertyValue('--dsh-composer-hint')).toBe(JSON.stringify('输入目标，智能体将持续执行'))
+    expect(textarea.style.getPropertyValue('--astro-one-composer-hint')).toBe(JSON.stringify('输入目标，智能体将持续执行'))
   })
 
   it('suppresses placeholders throughout native composition, including a temporarily empty draft', async () => {
@@ -1422,7 +1422,7 @@ describe('decorations', () => {
     act(() => { shell.setDraft('/目标 这') })
     await act(async () => {})
     expect(textarea.hasAttribute('data-composer-composing')).toBe(false)
-    expect(textarea.style.getPropertyValue('--dsh-composer-hint')).toBe('')
+    expect(textarea.style.getPropertyValue('--astro-one-composer-hint')).toBe('')
   })
 
   it('an inserted reference renders a real chip capsule with its icon and label', () => {

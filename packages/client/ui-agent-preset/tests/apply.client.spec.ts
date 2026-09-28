@@ -5,15 +5,15 @@
  * that are already showing, so a default set from one converges the other.
  */
 
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@astro-one/cordis'
 import { describe, expect, it, vi } from 'vitest'
-import { resolveSlotLabel } from '@deepseek-ai/dsh-client-ui-slots'
-import { SlotRegistry } from '@deepseek-ai/dsh-client-ui-renderer/client'
-import { LocaleRuntime } from '@deepseek-ai/dsh-client-locale/client'
-import { RemoteError, TestRemote } from '@deepseek-ai/dsh-client-test-runtime'
-import { SessionId } from '@deepseek-ai/dsh-session'
-import { apply as settingsApply, inject as settingsInject } from '@deepseek-ai/dsh-client-ui-settings/client'
-import { apply, inject } from '@deepseek-ai/dsh-client-ui-agent-preset/client'
+import { resolveSlotLabel } from '@astro-one/client-ui-slots'
+import { SlotRegistry } from '@astro-one/client-ui-renderer/client'
+import { LocaleRuntime } from '@astro-one/client-locale/client'
+import { RemoteError, TestRemote } from '@astro-one/client-test-runtime'
+import { SessionId } from '@astro-one/session'
+import { apply as settingsApply, inject as settingsInject } from '@astro-one/client-ui-settings/client'
+import { apply, inject } from '@astro-one/client-ui-agent-preset/client'
 import { AgentPresetLabel } from '../src/client/AgentPresetLabel.tsx'
 import type { AgentPresetLabelInjected } from '../src/client/AgentPresetLabel.tsx'
 import { AgentPresetSection } from '../src/client/AgentPresetSection.tsx'
@@ -1035,7 +1035,7 @@ describe('AgentPresetSeatController reconciliation', () => {
   })
 
   it('keeps the bare cause of a mount failure, not the frame that names the preset again', async () => {
-    const reason = 'failed to import loader entry ctx (@deepseek-ai/dsh-gone): Cannot find package'
+    const reason = 'failed to import loader entry ctx (@astro-one/gone): Cannot find package'
     const controller = new AgentPresetSeatController({
       remote: {
         agentPresets: {

@@ -2,14 +2,14 @@
  * Incremental session-log contribution for official DeepSeek LLM API requests.
  * Accepted sequence watermarks live in the canonical log, so restart recovery
  * can conservatively resend uncertain tails without maintaining another store.
- * @module @deepseek-ai/dsh-session-log-deepseek
+ * @module @astro-one/session-log-deepseek
  */
 
-import type { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import { brandString } from '@deepseek-ai/dsh-brand'
-import type {} from '@deepseek-ai/dsh-deepseek-llm-api-extensions'
-import { KNOWN_SESSION_EVENT_TYPES, SessionLogOffset, SessionSeq } from '@deepseek-ai/dsh-session'
+import type { Context } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
+import { brandString } from '@astro-one/brand'
+import type {} from '@astro-one/deepseek-llm-api-extensions'
+import { KNOWN_SESSION_EVENT_TYPES, SessionLogOffset, SessionSeq } from '@astro-one/session'
 import type {
   Session,
   SessionEvent,
@@ -18,8 +18,8 @@ import type {
   SessionSeq as SessionSeqType,
   SessionSeqCursor,
   SurfaceOp,
-} from '@deepseek-ai/dsh-session'
-import type { JsonValue } from '@deepseek-ai/dsh-util-values'
+} from '@astro-one/session'
+import type { JsonValue } from '@astro-one/util-values'
 import type {
   DeepSeekSessionLogExtension,
   DeepSeekSessionLogWireEvent,
@@ -36,7 +36,7 @@ export const inject = ['deepseekLlmApiExtensions', 'sessions']
 
 /** Session-log request contribution configuration. */
 export interface Config {
-  /** Contribute `dsh_session_log` to official DeepSeek requests. Defaults to `true`. */
+  /** Contribute `astro_one_session_log` to official DeepSeek requests. Defaults to `true`. */
   enabled?: boolean
 }
 
@@ -152,13 +152,13 @@ export function acceptedThrough(session: Session): SessionSeqCursor {
 }
 
 /**
- * Register the incremental `dsh_session_log` request contribution when enabled.
+ * Register the incremental `astro_one_session_log` request contribution when enabled.
  * @param ctx - plugin context carrying Sessions and the DeepSeek request-extension registry.
  * @param config - validated configuration.
  */
 export function apply(ctx: Context, config: Config): void {
   if (config.enabled !== true) return
-  ctx.deepseekLlmApiExtensions.register('dsh_session_log', {
+  ctx.deepseekLlmApiExtensions.register('astro_one_session_log', {
     prepare: (request) => {
       // TODO: Define an explicit wire result for direct or stale-session calls if they become a supported product path.
       if (request.sessionId === undefined) return undefined

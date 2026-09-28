@@ -1,4 +1,4 @@
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@astro-one/cordis'
 import type {
   AgentContext,
   ISessions,
@@ -7,11 +7,11 @@ import type {
   SessionReference,
   SessionRetainInfo,
   SessionSnapshot,
-} from '@deepseek-ai/dsh-api-session-controller/client'
-import { MutableSessionEventSource } from '@deepseek-ai/dsh-api-session-controller/client'
-import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
-import type { HostObservable, RootStandardSourceContribution } from '@deepseek-ai/dsh-client-ui-slots'
-import type { SessionId } from '@deepseek-ai/dsh-session/types'
+} from '@astro-one/api-session-controller/client'
+import { MutableSessionEventSource } from '@astro-one/api-session-controller/client'
+import { createSnapshotStore } from '@astro-one/client-store'
+import type { HostObservable, RootStandardSourceContribution } from '@astro-one/client-ui-slots'
+import type { SessionId } from '@astro-one/session/types'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   apply,

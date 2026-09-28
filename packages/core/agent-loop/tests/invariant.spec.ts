@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import SessionStore, { SessionId } from '@deepseek-ai/dsh-session'
-import InvariantRegistry from '@deepseek-ai/dsh-invariants'
-import * as AgentLoopInvariant from '@deepseek-ai/dsh-agent-loop/invariant'
-import { createUserMessage, markAgentLoopRequest, type GenerateOptions  } from '@deepseek-ai/dsh-llm'
-import type { ContextFormed } from '@deepseek-ai/dsh-llm'
+import { Context } from '@astro-one/cordis'
+import SessionStore, { SessionId } from '@astro-one/session'
+import InvariantRegistry from '@astro-one/invariants'
+import * as AgentLoopInvariant from '@astro-one/agent-loop/invariant'
+import { createUserMessage, markAgentLoopRequest, type GenerateOptions  } from '@astro-one/llm'
+import type { ContextFormed } from '@astro-one/llm'
 
-declare module '@deepseek-ai/dsh-llm' {
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'x': { kind: 'x' } & ContextFormed
   }

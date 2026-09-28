@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-api-remotes",
+  "name": "@astro-one/api-remotes",
   "description": "Remote BFF assembly for application-selected Host capabilities",
   "version": "0.1.7-rc.1",
   "publishConfig": {
@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/api/remotes"
   },
   "type": "module",
@@ -29,10 +29,10 @@
     "./src/*": "./src/*",
     "./package.json": "./package.json"
   },
-  "dsh": {
+  "astroOne": {
     "client": {
       "inject": [
-        "@deepseek-ai/dsh-api-gateway"
+        "@astro-one/api-gateway"
       ],
       "platform": "web",
       "immediately": true
@@ -50,53 +50,53 @@
     "lib/types/**/*.d.ts"
   ],
   "dependencies": {
-    "@deepseek-ai/dsh-deque": "workspace:*",
-    "@deepseek-ai/dsh-session": "workspace:*",
-    "@deepseek-ai/dsh-util-values": "workspace:*"
+    "@astro-one/deque": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/util-values": "workspace:*"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-scope": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/scope": "workspace:*"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-agent": "workspace:*",
-    "@deepseek-ai/dsh-agent-preset-registry": "workspace:*",
-    "@deepseek-ai/dsh-api-gateway": "workspace:*",
-    "@deepseek-ai/dsh-api-job-controller": "workspace:*",
-    "@deepseek-ai/dsh-api-session-controller": "workspace:*",
-    "@deepseek-ai/dsh-api-settings-controller": "workspace:*",
-    "@deepseek-ai/dsh-api-workspace-controller": "workspace:*",
-    "@deepseek-ai/dsh-client-connection": "workspace:*",
-    "@deepseek-ai/dsh-client-file-upload": "workspace:*",
-    "@deepseek-ai/dsh-commands": "workspace:*",
-    "@deepseek-ai/dsh-cordis-host-runner": "workspace:*",
-    "@deepseek-ai/dsh-credentials": "workspace:*",
-    "@deepseek-ai/dsh-file-reference": "workspace:*",
-    "@deepseek-ai/dsh-goal": "workspace:*",
-    "@deepseek-ai/dsh-host-plugin-inventory": "workspace:*",
-    "@deepseek-ai/dsh-llm": "workspace:*",
-    "@deepseek-ai/dsh-message-feedback": "workspace:*",
-    "@deepseek-ai/dsh-scope": "workspace:*",
-    "@deepseek-ai/dsh-permission-presets": "workspace:*",
-    "@deepseek-ai/dsh-session-reference": "workspace:*",
-    "@deepseek-ai/dsh-settings": "workspace:*",
-    "@deepseek-ai/dsh-subagent": "workspace:*",
-    "@deepseek-ai/dsh-typert-protocol": "workspace:*",
-    "@deepseek-ai/dsh-user-approval": "workspace:*",
-    "@deepseek-ai/dsh-user-questions": "workspace:*",
-    "@deepseek-ai/dsh-client-connection": "workspace:*",
-    "@deepseek-ai/dsh-client-file-upload": "workspace:*",
-    "@deepseek-ai/dsh-typert-protocol": "workspace:*",
-    "@deepseek-ai/dsh-scope": "workspace:*",
-    "@deepseek-ai/dsh-api-session-controller": "workspace:*",
-    "@deepseek-ai/dsh-api-workspace-files": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-preset-registry": "workspace:*",
+    "@astro-one/api-gateway": "workspace:*",
+    "@astro-one/api-job-controller": "workspace:*",
+    "@astro-one/api-session-controller": "workspace:*",
+    "@astro-one/api-settings-controller": "workspace:*",
+    "@astro-one/api-workspace-controller": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/client-file-upload": "workspace:*",
+    "@astro-one/commands": "workspace:*",
+    "@astro-one/cordis-host-runner": "workspace:*",
+    "@astro-one/credentials": "workspace:*",
+    "@astro-one/file-reference": "workspace:*",
+    "@astro-one/goal": "workspace:*",
+    "@astro-one/host-plugin-inventory": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/message-feedback": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/permission-presets": "workspace:*",
+    "@astro-one/session-reference": "workspace:*",
+    "@astro-one/settings": "workspace:*",
+    "@astro-one/subagent": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/user-approval": "workspace:*",
+    "@astro-one/user-questions": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/client-file-upload": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/api-session-controller": "workspace:*",
+    "@astro-one/api-workspace-files": "workspace:*",
     "zod": "^4.4.3",
-    "@deepseek-ai/dsh-command-feedback": "workspace:*",
-    "@deepseek-ai/dsh-api-terminal-controller": "workspace:*",
-    "@deepseek-ai/dsh-plugin-manager": "workspace:*",
-    "@deepseek-ai/dsh-client-ui-plugin-manager": "workspace:*",
-    "@deepseek-ai/dsh-office-to-pdf": "workspace:*",
-    "@deepseek-ai/dsh-api-account-controller": "workspace:*"
+    "@astro-one/command-feedback": "workspace:*",
+    "@astro-one/api-terminal-controller": "workspace:*",
+    "@astro-one/plugin-manager": "workspace:*",
+    "@astro-one/client-ui-plugin-manager": "workspace:*",
+    "@astro-one/office-to-pdf": "workspace:*",
+    "@astro-one/api-account-controller": "workspace:*"
   }
 }

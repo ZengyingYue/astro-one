@@ -3,13 +3,13 @@ description: "Incremental canonical session-log upload for deployments enabling 
 kind: "package-reference"
 ---
 
-# @deepseek-ai/dsh-session-log-deepseek
+# @astro-one/session-log-deepseek
 
 English | [中文](README.zh.md)
 
 ## Summary
 
-Incremental canonical session-log upload for official DeepSeek LLM API requests. This function plugin injects `ctx.sessions` and `ctx.deepseekLlmApiExtensions`, then owns the `dsh_session_log` request field and the durable `session-log-deepseek/delivery-accepted` event from which it derives the acceptance watermark. Disable it only when the official API must not receive a Session-log suffix.
+Incremental canonical session-log upload for official DeepSeek LLM API requests. This function plugin injects `ctx.sessions` and `ctx.deepseekLlmApiExtensions`, then owns the `astro_one_session_log` request field and the durable `session-log-deepseek/delivery-accepted` event from which it derives the acceptance watermark. Disable it only when the official API must not receive a Session-log suffix.
 
 ## Table of Contents
 
@@ -27,7 +27,7 @@ Incremental canonical session-log upload for official DeepSeek LLM API requests.
 
 | Key | Default | Meaning |
 |---|---:|---|
-| `enabled` | `true` | Register the `dsh_session_log` contribution. Set it to `false` to stop Session-log upload. |
+| `enabled` | `true` | Register the `astro_one_session_log` contribution. Set it to `false` to stop Session-log upload. |
 
 Shipped profiles mount the plugin, so the default configuration registers the request field and appends the acceptance watermark; an overlay opts out with `enabled: false`.
 
@@ -43,7 +43,7 @@ The DeepSeek adapter calls the prepared contribution's `accept()` after HTTP 2xx
 
 A crash after server acceptance but before the watermark reaches persistence can replay an accepted range after restart. This is the at-least-once failure direction: uncertainty creates duplicates, never a skipped sequence. The ordinary session checkpoint policy persists the watermark at the next semantic checkpoint; this plugin performs no independent I/O.
 
-Direct requests without a live Session omit `dsh_session_log`. Normal agent, compaction, and session-title calls carry their live Session id.
+Direct requests without a live Session omit `astro_one_session_log`. Normal agent, compaction, and session-title calls carry their live Session id.
 
 <a id="model-experience"></a>
 ## Model Experience
@@ -52,7 +52,7 @@ Direct requests without a live Session omit `dsh_session_log`. Normal agent, com
 
 #### What the model sees
 
-Nothing. `dsh_session_log` is a sibling of the DeepSeek request's model-input fields and is not inserted into `messages`, the system prompt, or tool schemas.
+Nothing. `astro_one_session_log` is a sibling of the DeepSeek request's model-input fields and is not inserted into `messages`, the system prompt, or tool schemas.
 
 #### Token effect
 

@@ -1,16 +1,16 @@
 /**
- * dsh-llm's owned branded ids: tool-call correlation and provider request
+ * astro-one-llm's owned branded ids: tool-call correlation and provider request
  * diagnostics.
  *
  * The `Branded<B>` primitive and stateless constructor live in
- * `@deepseek-ai/dsh-brand` so every owner of a cross-boundary id can brand it
- * without depending on dsh-llm; see that package's README for the
+ * `@astro-one/brand` so every owner of a cross-boundary id can brand it
+ * without depending on astro-one-llm; see that package's README for the
  * nominal-typing policy.
  *
- * @module @deepseek-ai/dsh-llm/brand
+ * @module @astro-one/llm/brand
  */
 
-import { brandString, type Branded } from '@deepseek-ai/dsh-brand'
+import { brandString, type Branded } from '@astro-one/brand'
 
 /** Stable identity carried by one message across inbox, log, and model-request boundaries. */
 export type MessageId = Branded<'MessageId'>

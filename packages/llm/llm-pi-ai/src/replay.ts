@@ -5,11 +5,11 @@
  * module stores only the provider-native metadata needed to reconstruct a
  * pi-ai assistant message on a later request.
  *
- * @module dsh-llm-pi-ai/replay
+ * @module astro-one-llm-pi-ai/replay
  */
 
-import { LlmError } from '@deepseek-ai/dsh-llm'
-import type { AssistantMessage as HarnessAssistantMessage, ModelMessageSource, ReplayEnvelope } from '@deepseek-ai/dsh-llm'
+import { LlmError } from '@astro-one/llm'
+import type { AssistantMessage as HarnessAssistantMessage, ModelMessageSource, ReplayEnvelope } from '@astro-one/llm'
 import type { Api, AssistantMessage, Usage as PiUsage } from '@earendil-works/pi-ai'
 
 /** Per-block half of the pi-ai replay envelope, one entry per content block. */
@@ -175,7 +175,7 @@ function foreignAssistant(message: HarnessAssistantMessage): AssistantMessage {
     content,
     // Deliberately never equals a catalog API: absent replay state is foreign
     // even if source names the same provider/model as this request.
-    api: 'dsh-foreign',
+    api: 'astro-one-foreign',
     provider: source.provider,
     model: source.model,
     usage: emptyPiUsage(),

@@ -6,9 +6,9 @@ import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { chromium, type Browser, type Page } from 'playwright'
 import { afterAll, beforeAll, describe, expect, it, onTestFinished } from 'vitest'
-import type {} from '@deepseek-ai/dsh-workspace-changes'
-import type { ChangesSummary } from '@deepseek-ai/dsh-client-ui-deliverables/src/changes.ts'
-import { deriveReplayScript, parseSessionLog } from '@deepseek-ai/dsh-llm-replay'
+import type {} from '@astro-one/workspace-changes'
+import type { ChangesSummary } from '@astro-one/client-ui-deliverables/src/changes.ts'
+import { deriveReplayScript, parseSessionLog } from '@astro-one/llm-replay'
 import {
   assertFinalWorkspaceSnapshot, captureExpandedTurnProcessAria, compareOrRefreshGolden,
   fixtureUserPrompts, launchWebScaffold, recordFixture, watchConsole,
@@ -67,7 +67,7 @@ describe('web e2e: a git workspace turn ends with its changed files', () => {
   beforeAll(async () => {
     let replayOverride: string | undefined
     if (MODE !== 'record') {
-      replayRoot = await mkdtemp(join(tmpdir(), 'dsh-changed-files-turn-replay-'))
+      replayRoot = await mkdtemp(join(tmpdir(), 'astro-one-changed-files-turn-replay-'))
       replayOverride = join(replayRoot, 'replay.override.json')
       const script = deriveReplayScript(parseSessionLog(await readFile(FIXTURE, 'utf8')))
       // Recorded absolute paths must follow each isolated Session's working directory.

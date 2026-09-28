@@ -4,26 +4,26 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import Include from '@deepseek-ai/cordis-plugin-include'
-import { ToolCallId } from '@deepseek-ai/dsh-llm'
-import { SESSION_FORMAT_VERSION, Session, SessionId } from '@deepseek-ai/dsh-session'
-import AgentRegistry from '@deepseek-ai/dsh-agent'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import TerminalSessionService from '@deepseek-ai/dsh-terminal'
-import type { TerminalWaitReason } from '@deepseek-ai/dsh-terminal'
-import * as TerminalBash from '@deepseek-ai/dsh-terminal-bash'
-import SandboxProvider from '@deepseek-ai/dsh-sandbox'
-import type { ConfinedArgv, SandboxPolicy } from '@deepseek-ai/dsh-sandbox'
-import SandboxPolicyService from '@deepseek-ai/dsh-sandbox-policy'
-import LocalSubprocessService from '@deepseek-ai/dsh-subprocess-local'
-import { resolvePwshPath } from '@deepseek-ai/dsh-pwsh-local/src/resolve.ts'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRegistry from '@deepseek-ai/dsh-tools'
-import * as ToolPwshPersistent from '@deepseek-ai/dsh-tool-pwsh-persistent'
-import { unsupportedInbox } from '@deepseek-ai/dsh-agent-loop-testkit'
+import { Context } from '@astro-one/cordis'
+import Loader from '@astro-one/cordis-plugin-loader'
+import Include from '@astro-one/cordis-plugin-include'
+import { ToolCallId } from '@astro-one/llm'
+import { SESSION_FORMAT_VERSION, Session, SessionId } from '@astro-one/session'
+import AgentRegistry from '@astro-one/agent'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import type { Agent } from '@astro-one/agent'
+import TerminalSessionService from '@astro-one/terminal'
+import type { TerminalWaitReason } from '@astro-one/terminal'
+import * as TerminalBash from '@astro-one/terminal-bash'
+import SandboxProvider from '@astro-one/sandbox'
+import type { ConfinedArgv, SandboxPolicy } from '@astro-one/sandbox'
+import SandboxPolicyService from '@astro-one/sandbox-policy'
+import LocalSubprocessService from '@astro-one/subprocess-local'
+import { resolvePwshPath } from '@astro-one/pwsh-local/src/resolve.ts'
+import SystemPrompt from '@astro-one/system-prompt'
+import ToolRegistry from '@astro-one/tools'
+import * as ToolPwshPersistent from '@astro-one/tool-pwsh-persistent'
+import { unsupportedInbox } from '@astro-one/agent-loop-testkit'
 
 const hasPwsh = spawnSync(
   resolvePwshPath(), ['-NoLogo', '-NoProfile', '-NonInteractive', '-Command', '$true'],
@@ -77,21 +77,21 @@ function text(result: { content: { type: string; text?: string }[] }): string {
 
 describe.skipIf(!hasPwsh)('persistent pwsh through a real cordis.yml Loader composition', () => {
   it('preserves cwd and environment across calls', async () => {
-    root = await realpath(await mkdtemp(join(tmpdir(), 'dsh-persistent-pwsh-loader-')))
+    root = await realpath(await mkdtemp(join(tmpdir(), 'astro-one-persistent-pwsh-loader-')))
     const configPath = join(root, 'cordis.yml')
     await writeFile(configPath, [
-      "- name: '@deepseek-ai/dsh-agent'",
-      "- name: '@deepseek-ai/dsh-system-prompt'",
-      "- name: '@deepseek-ai/dsh-tools'",
-      "- name: '@deepseek-ai/dsh-terminal'",
-      "- name: '@deepseek-ai/dsh-test-sandbox'",
-      "- name: '@deepseek-ai/dsh-session-projection'",
-      "- name: '@deepseek-ai/dsh-sandbox-policy'",
+      "- name: '@astro-one/agent'",
+      "- name: '@astro-one/system-prompt'",
+      "- name: '@astro-one/tools'",
+      "- name: '@astro-one/terminal'",
+      "- name: '@astro-one/test-sandbox'",
+      "- name: '@astro-one/session-projection'",
+      "- name: '@astro-one/sandbox-policy'",
       '  config:',
       '    mode: danger-full-access',
       `    workspaceRoot: ${JSON.stringify(root)}`,
-      "- name: '@deepseek-ai/dsh-subprocess-local'",
-      "- name: '@deepseek-ai/dsh-terminal-bash'",
+      "- name: '@astro-one/subprocess-local'",
+      "- name: '@astro-one/terminal-bash'",
       '  config:',
       '    shellDialect: pwsh',
       '    pollIntervalMs: 10',
@@ -105,13 +105,13 @@ describe.skipIf(!hasPwsh)('persistent pwsh through a real cordis.yml Loader comp
       // PSReadLine + Defender) inside the tool deadline; a 60s bound on the
       // fully loaded self-hosted Windows pool is exceeded often enough to
       // reset the session mid-test (2026-09-01, two runs ~62s each). 300s
-      // matches the dsh-tool-pwsh-persistent product default; the
-      // dsh-terminal-bash value bounds one send plus the complete startup
+      // matches the astro-one-tool-pwsh-persistent product default; the
+      // astro-one-terminal-bash value bounds one send plus the complete startup
       // sequence, so it covers the same cold start (its 30s product default
       // would not).
       '    timeoutMs: 300000',
       '    disposeGraceMs: 500',
-      "- name: '@deepseek-ai/dsh-tool-pwsh-persistent'",
+      "- name: '@astro-one/tool-pwsh-persistent'",
       '  config:',
       '    timeoutMs: 300000',
       '',
@@ -122,16 +122,16 @@ describe.skipIf(!hasPwsh)('persistent pwsh through a real cordis.yml Loader comp
     await context.plugin(Loader)
     context.loader.builtins.include = Include
     const modules = new Map<string, unknown>([
-      ['@deepseek-ai/dsh-agent', AgentRegistry],
-      ['@deepseek-ai/dsh-system-prompt', SystemPrompt],
-      ['@deepseek-ai/dsh-tools', ToolRegistry],
-      ['@deepseek-ai/dsh-terminal', TerminalSessionService],
-      ['@deepseek-ai/dsh-test-sandbox', PassthroughSandbox],
-      ['@deepseek-ai/dsh-session-projection', SessionProjectionRegistry],
-      ['@deepseek-ai/dsh-sandbox-policy', SandboxPolicyService],
-      ['@deepseek-ai/dsh-subprocess-local', LocalSubprocessService],
-      ['@deepseek-ai/dsh-terminal-bash', TerminalBash],
-      ['@deepseek-ai/dsh-tool-pwsh-persistent', ToolPwshPersistent],
+      ['@astro-one/agent', AgentRegistry],
+      ['@astro-one/system-prompt', SystemPrompt],
+      ['@astro-one/tools', ToolRegistry],
+      ['@astro-one/terminal', TerminalSessionService],
+      ['@astro-one/test-sandbox', PassthroughSandbox],
+      ['@astro-one/session-projection', SessionProjectionRegistry],
+      ['@astro-one/sandbox-policy', SandboxPolicyService],
+      ['@astro-one/subprocess-local', LocalSubprocessService],
+      ['@astro-one/terminal-bash', TerminalBash],
+      ['@astro-one/tool-pwsh-persistent', ToolPwshPersistent],
     ])
     context.loader.internal = {
       version: 'v2',
@@ -173,14 +173,14 @@ describe.skipIf(!hasPwsh)('persistent pwsh through a real cordis.yml Loader comp
     await execute('state', '$env:KEEP = "loader"; New-Item -ItemType Directory -Force -Path nested | Out-Null; Set-Location nested')
     const observed = text(await execute('observe', 'Write-Output "cwd=$PWD keep=$env:KEEP"'))
     expect(observed).toContain(`cwd=${join(root, 'nested')} keep=loader`)
-    expect(observed).not.toContain('DSH_PERSISTENT_PWSH')
+    expect(observed).not.toContain('ASTRO_ONE_PERSISTENT_PWSH')
 
     const multiline = text(await execute(
       'multiline',
       '$value = "line one"\nWrite-Output "${value}:it\'s fine"',
     ))
     expect(multiline).toBe("line one:it's fine")
-    expect(multiline).not.toContain('DSH_PERSISTENT_PWSH')
+    expect(multiline).not.toContain('ASTRO_ONE_PERSISTENT_PWSH')
 
     const hereString = text(await execute(
       'here-string',

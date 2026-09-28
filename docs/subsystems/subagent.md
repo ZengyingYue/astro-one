@@ -4,7 +4,7 @@ English | [中文](subagent.zh.md)
 
 The subagent seam lets an agent delegate work to a child agent. Like [bash](shell.md), it is **one optional capability**, not part of the agent loop, so its types live here rather than in [core.md](core.md). It differs from the other capability seams because **multiple provider implementations coexist** in one context, registered by name (`ctx.subagents`), while bash allows only one executor. Its registry follows the [LLM adapter registry](llm-streaming.md), not the single-service bash executor.
 
-Service Definition: [dsh-subagent](../../packages/subagent/subagent) (`ctx.subagents` + the vocabulary below). Service Providers are sibling packages (`dsh-subagent-spawn-in-process`, `dsh-subagent-fork-in-process`, `dsh-subagent-acp`, `dsh-subagent-codex`, `dsh-subagent-claude-code`, `dsh-subagent-dsh-sdk`); the model-facing Consumers are [dsh-tool-subagent](../../packages/subagent/tool-subagent) (per-provider delegation) and [dsh-tool-subagent-control](../../packages/subagent/tool-subagent-control) (the optional global `send_message`, `interrupt_agent`, and `list_agents` controls). The same `ctx.subagents` service owns continuable-child orchestration through an internal activation manager, direct-child discovery through the parent catalog, and complete descendant discovery through the Session corpus. Product-provider rationale lives in [the Codex and Claude Code Agent Note](../../.agents/notes/implemented/feature/2026-08-04-claude-code-and-codex-subagent-backends.md); common-seam rationale lives in [the subagent Agent Note](../../.agents/notes/implemented/feature/2026-06-21-subagent-capability-seam.md), [the continuable subagents Agent Note](../../.agents/notes/implemented/feature/2026-07-28-continuable-subagent-conversations.md), and [the adjacent-Agent messaging Agent Note](../../.agents/notes/implemented/architecture/2026-08-27-adjacent-agent-steer-messaging.md); [the archived list-identity-projection record](../../.agents/notes/archived/architecture/2026-08-06-subagent-list-identity-projection.md) documents the original list-identity decision.
+Service Definition: [astro-one-subagent](../../packages/subagent/subagent) (`ctx.subagents` + the vocabulary below). Service Providers are sibling packages (`astro-one-subagent-spawn-in-process`, `astro-one-subagent-fork-in-process`, `astro-one-subagent-acp`, `astro-one-subagent-codex`, `astro-one-subagent-claude-code`, `astro-one-subagent-astro-one-sdk`); the model-facing Consumers are [astro-one-tool-subagent](../../packages/subagent/tool-subagent) (per-provider delegation) and [astro-one-tool-subagent-control](../../packages/subagent/tool-subagent-control) (the optional global `send_message`, `interrupt_agent`, and `list_agents` controls). The same `ctx.subagents` service owns continuable-child orchestration through an internal activation manager, direct-child discovery through the parent catalog, and complete descendant discovery through the Session corpus. Product-provider rationale lives in [the Codex and Claude Code Agent Note](../../.agents/notes/implemented/feature/2026-08-04-claude-code-and-codex-subagent-backends.md); common-seam rationale lives in [the subagent Agent Note](../../.agents/notes/implemented/feature/2026-06-21-subagent-capability-seam.md), [the continuable subagents Agent Note](../../.agents/notes/implemented/feature/2026-07-28-continuable-subagent-conversations.md), and [the adjacent-Agent messaging Agent Note](../../.agents/notes/implemented/architecture/2026-08-27-adjacent-agent-steer-messaging.md); [the archived list-identity-projection record](../../.agents/notes/archived/architecture/2026-08-06-subagent-list-identity-projection.md) documents the original list-identity decision.
 
 Sources: [`packages/subagent/subagent/src/types.ts`](../../packages/subagent/subagent/src/types.ts), [`packages/subagent/subagent/src/index.ts`](../../packages/subagent/subagent/src/index.ts), and [`packages/subagent/subagent/src/continuation.ts`](../../packages/subagent/subagent/src/continuation.ts)
 
@@ -37,7 +37,7 @@ interface SubagentCapabilities {
 
 ## The one-shot start request
 
-The tool layer builds this request from the model input and its own config; the service validates it against the named provider before `start`. Required `parent` supplies the session cwd, lineage, and delegation depth. Optional Agent provider, model, reasoning-effort, and token overrides, output schema, depth, tool filter, and persona require matching capability flags. In-process backends merge `agentOptions` over the parent Agent's options, scope filters and personas to child creation, and implement the supported object-rooted schema with a forced capture tool. The DSH SDK backend merges the four Agent route fields over its instance defaults and validates them in the child runtime's initialization; ACP, Codex, and Claude Code reject `agentOptions` before starting their transports.
+The tool layer builds this request from the model input and its own config; the service validates it against the named provider before `start`. Required `parent` supplies the session cwd, lineage, and delegation depth. Optional Agent provider, model, reasoning-effort, and token overrides, output schema, depth, tool filter, and persona require matching capability flags. In-process backends merge `agentOptions` over the parent Agent's options, scope filters and personas to child creation, and implement the supported object-rooted schema with a forced capture tool. The Astro One SDK backend merges the four Agent route fields over its instance defaults and validates them in the child runtime's initialization; ACP, Codex, and Claude Code reject `agentOptions` before starting their transports.
 
 ```ts type-equiv
 /**
@@ -70,7 +70,7 @@ interface SubagentStartRequest {
    * Optional host-Agent provider, model, reasoning-effort, and output-token
    * overrides. Requires {@link SubagentCapabilities.agentOptions}; in-process
    * providers merge them over the parent Agent's options when they create the
-   * child, while the DSH SDK provider merges them over its instance defaults
+   * child, while the Astro One SDK provider merges them over its instance defaults
    * before initializing the separate child runtime.
    */
   readonly agentOptions?: AgentOptions
@@ -694,7 +694,7 @@ A published child settled. Scope-filtered dispatch uses the same delegating pare
  * parent carrier as `subagent/start`, so the lifecycle pair reaches the
  * same scoped audience.
  * @param info - the run identity and terminal outcome.
- * @dshScopeScan unsupported
+ * @astroOneScopeScan unsupported
  * @mode emit
  */
 'subagent/end'(this: Scoped<SubagentRuntime>, info: SubagentRunEndInfo): void
@@ -752,7 +752,7 @@ A provider established a published child. For in-process providers, `ctx.agents.
  * parent-scoped listener observes only its own delegations. Paired with
  * `subagent/end`.
  * @param info - the provider and published child identity.
- * @dshScopeScan unsupported
+ * @astroOneScopeScan unsupported
  * @mode emit
  */
 'subagent/start'(this: Scoped<SubagentRuntime>, info: SubagentRunInfo): void

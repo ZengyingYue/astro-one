@@ -1,9 +1,9 @@
 /** Direct Messages transport with one cancellable lifecycle per model request. */
 
-import { attributionHeaders, LlmAdapter, LlmError } from '@deepseek-ai/dsh-llm'
-import type { GenerateOptions, ImageAttachmentAccessResolver, PreparedAdapterCall, StreamChunk } from '@deepseek-ai/dsh-llm'
-import type { DeepSeekLlmApiJson } from '@deepseek-ai/dsh-deepseek-llm-api-extensions'
-import { idleWatchdog, timeoutOf } from '@deepseek-ai/dsh-timeout'
+import { attributionHeaders, LlmAdapter, LlmError } from '@astro-one/llm'
+import type { GenerateOptions, ImageAttachmentAccessResolver, PreparedAdapterCall, StreamChunk } from '@astro-one/llm'
+import type { DeepSeekLlmApiJson } from '@astro-one/deepseek-llm-api-extensions'
+import { idleWatchdog, timeoutOf } from '@astro-one/timeout'
 import { catalogModelInfo, modelInfo } from './model-info.ts'
 import type { DeepSeekAdapterOptions, DeepSeekConnectionOptions as Connection } from './types.ts'
 import { DeepSeekFileStore } from './file-store.ts'
@@ -115,12 +115,12 @@ export class DeepSeekAdapter extends LlmAdapter {
         headers: {
           ...attributionHeaders(),
           'content-type': 'application/json', 'accept': 'text/event-stream',
-          ...accountToken === undefined ? { 'x-api-key': key } : { 'x-dsh-auth-token': accountToken },
+          ...accountToken === undefined ? { 'x-api-key': key } : { 'x-astro-one-auth-token': accountToken },
           'anthropic-version': '2023-06-01',
           ...fileIds === undefined || fileIds.size === 0 ? {} : { 'anthropic-beta': MESSAGES_FILES_BETA },
-          'x-deepseek-harness-user-id': this.dependencies.resolveUserId(),
-          ...options.sessionId === undefined ? {} : { 'x-deepseek-harness-session-id': String(options.sessionId) },
-          ...options.purpose === 'compaction' ? { 'x-deepseek-harness-compact': '1' } : {},
+          'x-astro-one-user-id': this.dependencies.resolveUserId(),
+          ...options.sessionId === undefined ? {} : { 'x-astro-one-session-id': String(options.sessionId) },
+          ...options.purpose === 'compaction' ? { 'x-astro-one-compact': '1' } : {},
         },
       })
       if (!response.ok) {

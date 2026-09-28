@@ -8,7 +8,7 @@ kind: "package-reference"
 
 ## 概述
 
-`@deepseek-ai/dsh-api-session-controller` 拥有 Host 的 `ctx.sessionController` 服务，以及生成的 Client `session`、`skills` 和 `fileReferences` Remote namespace。它提供 Session 生命周期与历史、Host generation 模型目录、人工后台任务终止、工作区路径打开、用户可调用 skill（技能）发现和 Agent（智能体）范围的文件引用。当 Client 需要按 Session 寻址的操作时，请通过 API Gateway 使用它。
+`@astro-one/api-session-controller` 拥有 Host 的 `ctx.sessionController` 服务，以及生成的 Client `session`、`skills` 和 `fileReferences` Remote namespace。它提供 Session 生命周期与历史、Host generation 模型目录、人工后台任务终止、工作区路径打开、用户可调用 skill（技能）发现和 Agent（智能体）范围的文件引用。当 Client 需要按 Session 寻址的操作时，请通过 API Gateway 使用它。
 
 ## 目录
 
@@ -37,7 +37,7 @@ Client 列表行和驻留 Session 使用当前 `sessionListMetadata` 投影纠�
 
 Client 列表刷新保留未变化的行对象，并在顺序和值均相同时复用条目数组。每行的 `retainedBy` 包含正数的本地引用来源计数，Host 元数据刷新不能覆盖它们。缓存成员检查使用每次刷新构建的 ID 集合，因此对账成本随当前列表和保留缓存的规模线性增长。 Host 摘要更新会替换运行状态与 Agent 可用性；本地 create/fork 响应只补充已有行缺失的元数据。普通 Session 被移除后，仅在目录仍有子项时保留其投影 store。
 
-后台 job 的名册行与观测流属于 [`dsh-api-job-controller`](../job-controller/README.zh.md)；控制流只承载投影。
+后台 job 的名册行与观测流属于 [`astro-one-api-job-controller`](../job-controller/README.zh.md)；控制流只承载投影。
 
 投影读取独立于其值保留加载与失败状态。重连会取消上一连接的读取，并重新加载已请求的投影；实时成员更新通过 control stream 到达。父 Agent 可用性来自 Host 摘要，在收到对应摘要或成功的列表 baseline 前保持未知。地址查找直接解析投影中的子项，不会选择它们或创建 scope。
 
@@ -89,7 +89,7 @@ Client 的首次 `follow`、重连首屏与 `loadOlder()` 至少请求 50 条以
 |---|---:|---|
 | `nativeOpen` | 平台探测 | 是否能把 Session 工作区路径交给原生桌面打开器 |
 
-生成的[配置目录](../../../docs/config-catalog.zh.md#deepseek-aidsh-api-session-controller)是所有受支持字段及其 JSDoc 的完整来源。
+生成的[配置目录](../../../docs/config-catalog.zh.md#astro-oneapi-session-controller)是所有受支持字段及其 JSDoc 的完整来源。
 
 -----
 

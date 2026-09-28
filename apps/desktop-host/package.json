@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-desktop-host",
+  "name": "@astro-one/desktop-host",
   "description": "Private Node-mode host process for the Electron desktop application",
   "version": "0.1.7-rc.1",
   "private": true,
@@ -11,16 +11,16 @@
   ],
   "dependencies": {
     "@deepseek-ai/libreoffice-kit": "^0.1.0",
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh": "workspace:*",
-    "@deepseek-ai/dsh-agent": "workspace:*",
-    "@deepseek-ai/dsh-app-boot": "workspace:*",
-    "@deepseek-ai/dsh-client-connection": "workspace:*",
-    "@deepseek-ai/dsh-host-webserver": "workspace:*",
-    "@deepseek-ai/dsh-home-paths": "workspace:*",
-    "@deepseek-ai/dsh-jobs": "workspace:*",
-    "@deepseek-ai/dsh-tool-workspace-dependencies": "workspace:*",
-    "@deepseek-ai/dsh-skill-office": "workspace:*",
-    "@deepseek-ai/dsh-deepseek-account": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cli": "workspace:*",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/app-boot": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/host-webserver": "workspace:*",
+    "@astro-one/home-paths": "workspace:*",
+    "@astro-one/jobs": "workspace:*",
+    "@astro-one/tool-workspace-dependencies": "workspace:*",
+    "@astro-one/skill-office": "workspace:*",
+    "@astro-one/deepseek-account": "workspace:*"
   }
 }

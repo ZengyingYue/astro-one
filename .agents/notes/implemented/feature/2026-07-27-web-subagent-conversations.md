@@ -16,7 +16,7 @@ The UI must also preserve the membership and modes of the [durable catalog](../a
 
 The Web product exposes the selected session's direct session-backed subagents from the current-title lineage region in the header. Users can lazily expand descendant catalogs and open either mode in the existing conversation region. A one-shot child is permanently read-only. A continuable child accepts human follow-ups only while its exact direct-parent Agent is live; otherwise its persisted transcript remains readable with a recovery explanation.
 
-The same header row can open a child in the right Sidebar as `dsh-resource://subagentchat/session/<childSessionId>?parent=<parentSessionId>&mode=<mode>`. The open prefers a separate pane and falls back to the current pane when no split is available. The Sidebar tab renders the shared Conversation Component Factory with its width controls omitted, so main and embedded conversations share one assembly without sharing layout chrome.
+The same header row can open a child in the right Sidebar as `astro-one-resource://subagentchat/session/<childSessionId>?parent=<parentSessionId>&mode=<mode>`. The open prefers a separate pane and falls back to the current pane when no split is available. The Sidebar tab renders the shared Conversation Component Factory with its width controls omitted, so main and embedded conversations share one assembly without sharing layout chrome.
 
 Every opened child carries a catalog-derived address `{ parentSessionId, childSessionId, mode }`. The mode-bearing address, not lineage or the coarse origin marker, selects dedicated history and prompt transports. History reads the persisted session without activation. A continuable prompt carries Queue or Steer delivery through `subagent.prompt` and succeeds at inbox acceptance with `{ messageId }`; it does not expose an Activation, wait for completion, or return an outcome. Adjacent-Agent model messages use the separately owned fixed-Steer operation.
 
@@ -53,7 +53,7 @@ Agent-bound auxiliary controls are unavailable in addressed child views. In part
 
 ## Host adapter and wire contract
 
-The Session Controller owns catalog and history reads; `@deepseek-ai/dsh-subagent` owns continuation controls:
+The Session Controller owns catalog and history reads; `@astro-one/subagent` owns continuation controls:
 
 - `session.projections` takes `sessionId` and returns one live-preferred Session observation’s complete projection baseline without activating an Agent. The Client seeds the standard projection store; subagent consumers select `subagentCatalog`. Parent Agent availability comes from Session-list summaries and lifecycle events.
 - `session.page` and `session.follow` take the full mode-bearing address. They validate the child header, direct parent, descriptor identity, and mode at the observed cut, then return ordinary raw events, pagination, live reconciliation, and Host projection baselines without publishing an Agent.
@@ -65,13 +65,13 @@ Viewing persisted history creates no Agent by itself. When a follow-up materiali
 
 The ordinary `session.page` and `session.follow` address is likewise observation-only for both ordinary and subagent sessions, but it does not carry the catalog address or grant continuation authority. Every ordinary route that needs an Agent resolves through the shared ownership fence before cold resume; `session.cancel` retains that fence. `session.updateQueue` has one target-local exception for a live child whose current projected identity is continuable and comes from its own non-seed suffix; one-shot, missing, unknown, corrupt, seed-only, or cold children remain fenced.
 
-The adapter stays behind the generated Remote namespace; `dsh-host-webserver` remains a carrier. Browser code imports the contract through the existing connection package and never reaches host `ctx`, preserving the [archived GUI RPC layering decision](../../archived/architecture/2026-07-19-gui-layering-and-rpc-protocol.md).
+The adapter stays behind the generated Remote namespace; `astro-one-host-webserver` remains a carrier. Browser code imports the contract through the existing connection package and never reaches host `ctx`, preserving the [archived GUI RPC layering decision](../../archived/architecture/2026-07-19-gui-layering-and-rpc-protocol.md).
 
 ## Client object layer and presentation
 
 The React-free runtime owns catalogs, single-flight refreshes, retained addresses, availability hints, transport selection, and a reference-stable map of each list row's current projection values. Re-selecting a known child retains its address so navigation cannot silently switch to ordinary session APIs. A missing intermediate breadcrumb address can be recovered from an already-loaded ancestor catalog, but it is not retained for transport and creates no scope until the user selects that breadcrumb. Restored navigation persists the full mode-bearing address.
 
-Catalogs ride the standard `useSessions` snapshot. Component-local state owns menu visibility, expanded branches, focus, and hover timers. `ui-conversation` declares a lineage slot for the current ordinary title and every subagent breadcrumb, passes plain breadcrumb identity and display text plus an upward-navigation callback for ancestors, and retains the ordinary title as the render fallback. `@deepseek-ai/dsh-client-ui-subagent` occupies each lineage slot with direct-parent catalog navigation and elects a reason-specific read-only composer from ordinary owner props. Components receive derived props and callbacks, never `ctx`.
+Catalogs ride the standard `useSessions` snapshot. Component-local state owns menu visibility, expanded branches, focus, and hover timers. `ui-conversation` declares a lineage slot for the current ordinary title and every subagent breadcrumb, passes plain breadcrumb identity and display text plus an upward-navigation callback for ancestors, and retains the ordinary title as the render fallback. `@astro-one/client-ui-subagent` occupies each lineage slot with direct-parent catalog navigation and elects a reason-specific read-only composer from ordinary owner props. Components receive derived props and callbacks, never `ctx`.
 
 Every in-process subagent child stamps `SessionHeader.origin: 'subagent'` before publication. Session list summaries and incremental Host frames project it so grouped and flat sidebars omit duplicate child rows while preserving ordinary forks. Parent catalog projection owns membership and tree structure; descriptor identity and exact-parent checks own addressed history and continuation validation.
 

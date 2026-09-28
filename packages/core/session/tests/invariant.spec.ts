@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import { createScope, scopeTarget } from '@deepseek-ai/dsh-scope'
-import { createDeveloperMessage, createSystemMessage, createUserMessage, ToolCallId, createMessage, createToolResultMessage, freezeMessage } from '@deepseek-ai/dsh-llm'
-import type { ContextFormed } from '@deepseek-ai/dsh-llm'
-import SessionStore, { SessionId, SessionSeq, TOOL_NOT_STARTED } from '@deepseek-ai/dsh-session'
-import * as SessionInvariant from '@deepseek-ai/dsh-session/invariant'
-import InvariantRegistry, { InvariantError } from '@deepseek-ai/dsh-invariants'
+import { Context } from '@astro-one/cordis'
+import { createScope, scopeTarget } from '@astro-one/scope'
+import { createDeveloperMessage, createSystemMessage, createUserMessage, ToolCallId, createMessage, createToolResultMessage, freezeMessage } from '@astro-one/llm'
+import type { ContextFormed } from '@astro-one/llm'
+import SessionStore, { SessionId, SessionSeq, TOOL_NOT_STARTED } from '@astro-one/session'
+import * as SessionInvariant from '@astro-one/session/invariant'
+import InvariantRegistry, { InvariantError } from '@astro-one/invariants'
 
-declare module '@deepseek-ai/dsh-llm' {
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'test': { kind: 'test' } & ContextFormed
   }

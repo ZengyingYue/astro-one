@@ -107,12 +107,12 @@ async function main(args: string[]): Promise<number> {
   if (Object.keys(workerEnv).length > 0) console.log(`run-gates: worker settings ${JSON.stringify(workerEnv)}`)
   const gates = gatesForMode(mode)
   const concurrencyDefault = defaultConcurrency(mode, gates.length)
-  const concurrencyOverride = process.env.DSH_GATE_CONCURRENCY
-  const maxConcurrency = concurrencyFromEnv('DSH_GATE_CONCURRENCY', concurrencyDefault.workers)
+  const concurrencyOverride = process.env.ASTRO_ONE_GATE_CONCURRENCY
+  const maxConcurrency = concurrencyFromEnv('ASTRO_ONE_GATE_CONCURRENCY', concurrencyDefault.workers)
   const concurrencySource = concurrencyOverride === undefined || concurrencyOverride === ''
     ? concurrencyDefault.source
-    : '$DSH_GATE_CONCURRENCY'
-  const failFast = flagEnabled('DSH_GATE_FAIL_FAST')
+    : '$ASTRO_ONE_GATE_CONCURRENCY'
+  const failFast = flagEnabled('ASTRO_ONE_GATE_FAIL_FAST')
   const startedAt = performance.now()
   console.log(`run-gates: ${mode} running ${gates.length} gate(s) with ${maxConcurrency} worker(s) from ${concurrencySource}${failFast ? ', fail-fast after first blocking failure' : ''}.`)
 
@@ -127,7 +127,7 @@ async function main(args: string[]): Promise<number> {
  * The options the CLI entrypoint hands to the scheduler. Host signal
  * forwarding always follows fail-fast: children are detached only then, so
  * without it the forwarding would have no tree to drain.
- * @param failFast - whether `DSH_GATE_FAIL_FAST` is enabled.
+ * @param failFast - whether `ASTRO_ONE_GATE_FAIL_FAST` is enabled.
  * @returns the scheduler options for the entrypoint.
  */
 export function cliGateOptions(failFast: boolean): RunGatesOptions {
@@ -207,16 +207,16 @@ export function ciWorkerEnvironment(
     if (env[name] === undefined || env[name] === '') additions[name] = String(value)
   }
   const shared = Math.max(1, Math.floor(available / 2))
-  setDefault('DSH_OXLINT_THREADS', shared)
-  setDefault('DSH_PUBLINT_CONCURRENCY', shared)
-  setDefault('DSH_SNAPSHOT_MAX_WORKERS', 1)
-  setDefault('DSH_SNAPSHOT_MAX_CONCURRENCY', shared)
-  setDefault('DSH_WEB_SNAPSHOT_WORKERS', env.DSH_GATE_CONCURRENCY === '1' ? 1 : available)
-  setDefault('DSH_COVERAGE_MAX_WORKERS', available)
-  const coverageBudget = env.DSH_COVERAGE_MAX_WORKERS || String(available)
+  setDefault('ASTRO_ONE_OXLINT_THREADS', shared)
+  setDefault('ASTRO_ONE_PUBLINT_CONCURRENCY', shared)
+  setDefault('ASTRO_ONE_SNAPSHOT_MAX_WORKERS', 1)
+  setDefault('ASTRO_ONE_SNAPSHOT_MAX_CONCURRENCY', shared)
+  setDefault('ASTRO_ONE_WEB_SNAPSHOT_WORKERS', env.ASTRO_ONE_GATE_CONCURRENCY === '1' ? 1 : available)
+  setDefault('ASTRO_ONE_COVERAGE_MAX_WORKERS', available)
+  const coverageBudget = env.ASTRO_ONE_COVERAGE_MAX_WORKERS || String(available)
   const total = Number(coverageBudget)
   if (!Number.isSafeInteger(total) || total < 1) {
-    throw new Error(`run-gates: DSH_COVERAGE_MAX_WORKERS must be a positive integer, got ${JSON.stringify(coverageBudget)}.`)
+    throw new Error(`run-gates: ASTRO_ONE_COVERAGE_MAX_WORKERS must be a positive integer, got ${JSON.stringify(coverageBudget)}.`)
   }
   const instrumented = Math.max(1, total - Math.max(1, Math.floor(total / 3)))
   if (instrumented > 1) setDefault(COVERAGE_PARTITIONS_ENV, instrumented)
@@ -320,7 +320,7 @@ export function gatesForMode(selected: Mode): Gate[] {
         ...hygieneLeafGates({ artifactNeeds: ['build'] }),
         ...docSyncLeafGates({
           docTypecheckNeeds: ['build'],
-          docTypecheckEnv: { DSH_DOC_TYPECHECK_USE_BUILD_OUTPUT: '1' },
+          docTypecheckEnv: { ASTRO_ONE_DOC_TYPECHECK_USE_BUILD_OUTPUT: '1' },
           docTypecheckScript: 'doc-typecheck:contracts-ready',
         }),
         pnpmScript('module-graph', 'verify-module-graph', { label: 'module graph' }),
@@ -345,7 +345,7 @@ function ciSharedStaticGates(): Gate[] {
     pnpmScript('application-entrypoints', 'verify-application-entrypoints', { label: 'application entrypoints' }),
     pnpmScript('constraints', 'constraints'),
     pnpmScript('package-dependencies', 'verify-package-dependencies', { label: 'package dependencies' }),
-    pnpmScript('dsh-package-licenses', 'verify-dsh-package-licenses', { label: 'DSH package licenses' }),
+    pnpmScript('astro-one-package-licenses', 'verify-astro-one-package-licenses', { label: 'Astro One package licenses' }),
     pnpmScript('package-invariants', 'verify-package-invariants', { label: 'package invariants' }),
     pnpmScript('package-meta', 'verify-package-meta', { label: 'package metadata' }),
     pnpmScript('cordis-config', 'verify-cordis-config', { label: 'Cordis config' }),
@@ -398,7 +398,7 @@ function ciPrimaryGates(): Gate[] {
 }
 
 function nodeCompatGates(): Gate[] {
-  const typecheck = flagEnabled('DSH_NODE_COMPAT_SKIP_TYPECHECK')
+  const typecheck = flagEnabled('ASTRO_ONE_NODE_COMPAT_SKIP_TYPECHECK')
     ? []
     : [pnpmScript('typecheck', 'typecheck')]
   if (runningNodeMajor() !== 22) {
@@ -429,11 +429,11 @@ function nodeCompatSmokeGates(options: { cliSmoke?: boolean } = {}): Gate[] {
       'run',
       'packages/session/session-persistence-jsonl/tests/zstd.compat.spec.ts',
     ], { label: 'JSONL Zstandard smoke' }),
-    pnpmExec('dsh-source-launch-smoke', [
+    pnpmExec('astro-one-source-launch-smoke', [
       'vitest',
       'run',
       'apps/cli/tests/source-launch.compat.spec.ts',
-    ], { label: 'dsh source-launch smoke' }),
+    ], { label: 'astro-one source-launch smoke' }),
     pnpmExec('vitest-jsdom-smoke', [
       'vitest',
       'run',
@@ -455,7 +455,7 @@ function nodeCompatSmokeGates(options: { cliSmoke?: boolean } = {}): Gate[] {
         'apps/cli/tests/lazy-search-startup.compat.spec.ts',
       ], {
         label: 'CLI lazy-search startup smoke',
-        env: { DSH_REQUIRE_BUILT_CLI_SMOKE: '1' },
+        env: { ASTRO_ONE_REQUIRE_BUILT_CLI_SMOKE: '1' },
         needs: ['build:web'],
       }),
     )
@@ -481,7 +481,7 @@ function ciStaticGates(options: { ownsBuild: boolean }): Gate[] {
       ...options.ownsBuild
         ? {
           docTypecheckNeeds: ['build'],
-          docTypecheckEnv: { DSH_DOC_TYPECHECK_USE_BUILD_OUTPUT: '1' },
+          docTypecheckEnv: { ASTRO_ONE_DOC_TYPECHECK_USE_BUILD_OUTPUT: '1' },
           docTypecheckScript: 'doc-typecheck:contracts-ready',
         }
         : {},
@@ -536,7 +536,7 @@ function ciConsumerGates(): Gate[] {
     webSnapshotGate(validatedBuild, buildArtifactReaders),
     pnpmScript('doc-typecheck', 'doc-typecheck:contracts-ready', {
       needs: validatedBuild,
-      env: { DSH_DOC_TYPECHECK_USE_BUILD_OUTPUT: '1' },
+      env: { ASTRO_ONE_DOC_TYPECHECK_USE_BUILD_OUTPUT: '1' },
     }),
     pnpmScript('node-next-types', 'verify-node-next-types', {
       label: 'node-next types',
@@ -548,24 +548,24 @@ function ciConsumerGates(): Gate[] {
 
 function webSnapshotGate(needs: string[], after?: string[]): Gate {
   const order = after === undefined ? { needs } : { needs, after }
-  const workerRaw = process.env.DSH_WEB_SNAPSHOT_WORKERS
+  const workerRaw = process.env.ASTRO_ONE_WEB_SNAPSHOT_WORKERS
   if (workerRaw !== undefined && workerRaw !== '') {
     const workers = Number.parseInt(workerRaw, 10)
     if (!Number.isSafeInteger(workers) || workers < 1 || String(workers) !== workerRaw) {
-      throw new Error(`run-gates: DSH_WEB_SNAPSHOT_WORKERS must be a positive integer, got ${JSON.stringify(workerRaw)}.`)
+      throw new Error(`run-gates: ASTRO_ONE_WEB_SNAPSHOT_WORKERS must be a positive integer, got ${JSON.stringify(workerRaw)}.`)
     }
     return pnpmScript('web-snapshot', 'test:web:ci', {
       label: 'web browser snapshot',
-      displayCommand: `DSH_SNAPSHOT=replay DSH_WEB_SNAPSHOT_WORKERS=${workers} pnpm run test:web:ci`,
-      env: { DSH_SNAPSHOT: 'replay' },
+      displayCommand: `ASTRO_ONE_SNAPSHOT=replay ASTRO_ONE_WEB_SNAPSHOT_WORKERS=${workers} pnpm run test:web:ci`,
+      env: { ASTRO_ONE_SNAPSHOT: 'replay' },
       ...order,
       streamOutput: true,
     })
   }
   return pnpmScript('web-snapshot', 'test:web:built', {
     label: 'web browser snapshot',
-    displayCommand: 'DSH_SNAPSHOT=replay pnpm run test:web:built',
-    env: { DSH_SNAPSHOT: 'replay' },
+    displayCommand: 'ASTRO_ONE_SNAPSHOT=replay pnpm run test:web:built',
+    env: { ASTRO_ONE_SNAPSHOT: 'replay' },
     ...order,
   })
 }
@@ -631,12 +631,12 @@ function typertContractsGate(): Gate {
 }
 
 function lintGate(options: { needs?: string[] } = {}): Gate {
-  const raw = process.env.DSH_OXLINT_THREADS
+  const raw = process.env.ASTRO_ONE_OXLINT_THREADS
   const script = 'lint:contracts-ready'
   return pnpmScript('lint', script, {
     ...raw === undefined || raw === ''
       ? {}
-      : { displayCommand: `DSH_OXLINT_THREADS=${raw} pnpm run ${script}` },
+      : { displayCommand: `ASTRO_ONE_OXLINT_THREADS=${raw} pnpm run ${script}` },
     ...options.needs === undefined ? {} : { needs: options.needs },
   })
 }
@@ -646,18 +646,18 @@ function lintGate(options: { needs?: string[] } = {}): Gate {
 // under v8 instrumentation while contributing nothing the thresholds need
 // (membership rules in scripts/coverage-exempt.ts).
 //
-// DSH_COVERAGE_MAX_WORKERS is shared between the two parallel gates. CI
+// ASTRO_ONE_COVERAGE_MAX_WORKERS is shared between the two parallel gates. CI
 // defaults its partition count to the instrumented share; an explicit
-// DSH_COVERAGE_PARTITIONS overrides that share independently. The exempt
+// ASTRO_ONE_COVERAGE_PARTITIONS overrides that share independently. The exempt
 // gate's wall clock is dominated by its longest single file, so it takes the
 // small share. A budget of 1 gives each gate 1 worker; lanes that need a strict
-// total of one (the serial reference jobs) also set DSH_GATE_CONCURRENCY=1,
+// total of one (the serial reference jobs) also set ASTRO_ONE_GATE_CONCURRENCY=1,
 // which keeps the gates from overlapping at all.
-// DSH_COVERAGE_TEST_TIMEOUT_MS raises Vitest's per-test, expect.poll, and hook
+// ASTRO_ONE_COVERAGE_TEST_TIMEOUT_MS raises Vitest's per-test, expect.poll, and hook
 // defaults together for instrumented lanes whose scheduling overhead exceeds
 // those defaults. Explicit fixture timeouts remain authoritative.
 function coverageWorkerArgs(): { instrumented: string[]; exempt: string[] } {
-  const [flag] = positiveIntArg('DSH_COVERAGE_MAX_WORKERS', '--maxWorkers')
+  const [flag] = positiveIntArg('ASTRO_ONE_COVERAGE_MAX_WORKERS', '--maxWorkers')
   if (flag === undefined) return { instrumented: [], exempt: [] }
   const total = Number.parseInt(flag.split('=')[1] ?? '', 10)
   const exempt = Math.max(1, Math.floor(total / 3))
@@ -709,7 +709,7 @@ function coverageGates(): Gate[] {
 // either on `build` or on a validation gate that transitively owns that build.
 function snapshotGate(needs: string[] = ['build']): Gate {
   return pnpmScript('snapshot', 'test:snapshot', {
-    env: { DSH_EXAMPLE_MODE: 'lib' },
+    env: { ASTRO_ONE_EXAMPLE_MODE: 'lib' },
     needs,
   })
 }
@@ -718,7 +718,7 @@ function snapshotGate(needs: string[] = ['build']): Gate {
 // the recorded-session corpus or the credentialed provider lane.
 function expectedOutputGate(needs: string[] = ['build']): Gate {
   return pnpmScript('expected-output', 'test:expected', {
-    env: { DSH_EXAMPLE_MODE: 'lib' },
+    env: { ASTRO_ONE_EXAMPLE_MODE: 'lib' },
     needs,
   })
 }
@@ -756,7 +756,7 @@ function hygieneLeafGates(options: { artifactNeeds?: string[] } = {}): Gate[] {
     pnpmScript('default-product-isolation', 'verify-default-product-isolation', { label: 'default product isolation' }),
     pnpmScript('package-dependencies', 'verify-package-dependencies', { label: 'package dependencies' }),
     pnpmScript('application-entrypoints', 'verify-application-entrypoints', { label: 'application entrypoints' }),
-    pnpmScript('dsh-package-licenses', 'verify-dsh-package-licenses', { label: 'DSH package licenses' }),
+    pnpmScript('astro-one-package-licenses', 'verify-astro-one-package-licenses', { label: 'Astro One package licenses' }),
     pnpmScript('package-invariants', 'verify-package-invariants', { label: 'package invariants' }),
     builtPackageInvariantsGate(options.artifactNeeds),
     pnpmScript('node-next-types', 'verify-node-next-types', {
@@ -873,7 +873,7 @@ function builtBinSmokeGate(needs: string[] = ['build']): Gate {
   ], {
     label: 'built-bin smoke',
     needs,
-    env: { DSH_EXAMPLE_MODE: 'lib' },
+    env: { ASTRO_ONE_EXAMPLE_MODE: 'lib' },
   })
 }
 
@@ -1615,7 +1615,7 @@ export function formatGateResultReason(result: GateResult): string {
 }
 
 function printResult(result: GateResult): void {
-  const verbose = process.env.DSH_GATE_VERBOSE === '1'
+  const verbose = process.env.ASTRO_ONE_GATE_VERBOSE === '1'
   const seconds = (result.durationMs / 1000).toFixed(2)
   if (result.status === 'passed' && !verbose) {
     console.log(`run-gates: PASS ${result.gate.label} (${seconds}s)`)

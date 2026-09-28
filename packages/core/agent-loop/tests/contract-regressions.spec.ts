@@ -1,20 +1,20 @@
 import { describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import LlmRuntime, { type RequestMessage, createUserMessage, ToolCallId, LlmError, MessageSource, ProviderRequestId, StreamChunk  } from '@deepseek-ai/dsh-llm'
-import type { ContextFormed } from '@deepseek-ai/dsh-llm'
-import SessionStore, { Session, SessionEvent, SessionId, TurnEndReason, type UserMessage } from '@deepseek-ai/dsh-session'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime, { defineContentToolFixture, type PostToolDecision } from '@deepseek-ai/dsh-tools'
-import AgentRegistry, { type Agent } from '@deepseek-ai/dsh-agent'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import InvariantRegistry from '@deepseek-ai/dsh-invariants'
-import * as SessionInvariant from '@deepseek-ai/dsh-session/invariant'
-import * as AgentInvariant from '@deepseek-ai/dsh-agent/invariant'
-import * as AgentLoopInvariant from '@deepseek-ai/dsh-agent-loop/invariant'
+import { Context } from '@astro-one/cordis'
+import LlmRuntime, { type RequestMessage, createUserMessage, ToolCallId, LlmError, MessageSource, ProviderRequestId, StreamChunk  } from '@astro-one/llm'
+import type { ContextFormed } from '@astro-one/llm'
+import SessionStore, { Session, SessionEvent, SessionId, TurnEndReason, type UserMessage } from '@astro-one/session'
+import SystemPrompt from '@astro-one/system-prompt'
+import ToolRuntime, { defineContentToolFixture, type PostToolDecision } from '@astro-one/tools'
+import AgentRegistry, { type Agent } from '@astro-one/agent'
+import AgentLoop from '@astro-one/agent-loop'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import InvariantRegistry from '@astro-one/invariants'
+import * as SessionInvariant from '@astro-one/session/invariant'
+import * as AgentInvariant from '@astro-one/agent/invariant'
+import * as AgentLoopInvariant from '@astro-one/agent-loop/invariant'
 import { MockAdapter, textResponse, toolCallResponse } from './mock-adapter.ts'
 
-declare module '@deepseek-ai/dsh-llm' {
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'test': { kind: 'test' } & ContextFormed
   }
@@ -1020,7 +1020,7 @@ describe('turn and step boundary recovery', () => {
     expect(adapter.requests).toHaveLength(1)
     expect(errors.map(error => error.message)).toEqual([
       'reject first step-end',
-      'invariant violated by "@deepseek-ai/dsh-session": turn/end 1 while step 1 is still open',
+      'invariant violated by "@astro-one/session": turn/end 1 while step 1 is still open',
     ])
     expect(boundaryCounts(agent)).toMatchObject({
       turnStart: 1,

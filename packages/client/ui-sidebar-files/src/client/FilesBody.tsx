@@ -11,14 +11,14 @@
 import { useEffect, useLayoutEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
 import clsx from 'clsx'
-import type { RemoteFailure } from '@deepseek-ai/dsh-api-remotes/client'
-import type { PropsLocale, PropsRuntime, PropsStore, TranslateNS } from '@deepseek-ai/dsh-client-ui-slots'
+import type { RemoteFailure } from '@astro-one/api-remotes/client'
+import type { PropsLocale, PropsRuntime, PropsStore, TranslateNS } from '@astro-one/client-ui-slots'
 import {
   FileTypeIcon, IconFolderCloseRegular, IconFolderOpenRegular, IconRefreshOutlineRegular, classifyFileType,
   IconPauseOutlineRegular, IconPlayOutlineRegular, PathLabel,
-} from '@deepseek-ai/dsh-client-ui-primitives'
-import { fileAddressFor } from '@deepseek-ai/dsh-util-workspace-path'
-import type { WorkspaceDirectoryEntry } from '@deepseek-ai/dsh-api-workspace-files/types'
+} from '@astro-one/client-ui-primitives'
+import { fileAddressFor } from '@astro-one/util-workspace-path'
+import type { WorkspaceDirectoryEntry } from '@astro-one/api-workspace-files/types'
 import { childPath } from './face.ts'
 import type { FilesInjected } from './face.ts'
 import type {} from './locales.ts'

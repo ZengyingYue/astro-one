@@ -1,22 +1,22 @@
-/** Shared profile package operations used by dsh plugin and the running manager. */
+/** Shared profile package operations used by astro-one plugin and the running manager. */
 import { once } from 'node:events'
 import { existsSync, readFileSync } from 'node:fs'
 import { mkdir, mkdtemp, open, rm } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import { execa } from 'execa'
-import type { EntryOptions } from '@deepseek-ai/cordis-plugin-loader'
-import { withFileLock, writeFileAtomic } from '@deepseek-ai/dsh-atomic-write'
+import type { EntryOptions } from '@astro-one/cordis-plugin-loader'
+import { withFileLock, writeFileAtomic } from '@astro-one/atomic-write'
 import {
   DEFAULT_PROFILE_BUNDLES, bundlePatchPaths, initProfile, PROFILE_TEMPLATES, readProfileManifest,
   resolveBundleDir, resolveProfileDir, loadOverlayPatches, composeEntries, readProfileVersionExemptions,
   evaluatePluginCompatibility, pluginCompatibilityWarning, type ProfileManifest,
-} from '@deepseek-ai/dsh-app-boot'
-import { scrubbedParentEnv } from '@deepseek-ai/dsh-subprocess'
+} from '@astro-one/app-boot'
+import { scrubbedParentEnv } from '@astro-one/subprocess'
 import { parseInstallSpec } from './install-spec.ts'
 import { awaitTreeGone, leadsOwnGroup } from './run-tree.ts'
 import { incompatiblePlugin } from './failure.ts'
 import type { IncompatiblePlugin, PackageResult, Registry } from './types.ts'
-export { setProfileVersionExemption, readProfileVersionExemptions } from '@deepseek-ai/dsh-app-boot'
+export { setProfileVersionExemption, readProfileVersionExemptions } from '@astro-one/app-boot'
 
 /** Profile and invocation locations supplied by the launcher. */
 export interface PackageOperationContext {
@@ -30,7 +30,7 @@ export interface PackageOperationContext {
 
 /** Output and cancellation policy for one pnpm operation. */
 export interface PackageOperationOptions {
-  /** The pnpm executable name or path; resolved through `PATH` like the `dsh plugin` command. Defaults to `pnpm`. */
+  /** The pnpm executable name or path; resolved through `PATH` like the `astro-one plugin` command. Defaults to `pnpm`. */
   command?: string
   /** Prefix arguments for an application-owned executable. */
   args?: readonly string[]
@@ -72,9 +72,9 @@ export function anchorPathSpec(argument: string, cwd: string): string {
  * @returns Resolved metadata, or undefined for packages without bundle metadata.
  */
 export function bundleManifest(name: string, dir: string, anchor: string): ProfileManifest | undefined {
-  const packageDir = resolveBundleDir('dsh', name, anchor, dir)
-  const manifest = readProfileManifest('dsh', packageDir)
-  return manifest.dsh?.bundle?.patch === undefined ? undefined : manifest
+  const packageDir = resolveBundleDir('astro-one', name, anchor, dir)
+  const manifest = readProfileManifest('astro-one', packageDir)
+  return manifest.astroOne?.bundle?.patch === undefined ? undefined : manifest
 }
 
 /** Atomically save a profile manifest while retaining unrelated fields.
@@ -87,10 +87,10 @@ export async function saveManifest(dir: string, manifest: ProfileManifest): Prom
 
 /** Reconcile package removals and newly installed bundles without re-enabling retained dependencies. */
 async function reconcile(before: ProfileManifest, dir: string, anchor: string, options: PackageOperationOptions): Promise<void> {
-  const after = readProfileManifest('dsh', dir)
+  const after = readProfileManifest('astro-one', dir)
   const dependencies = Object.keys(after.dependencies ?? {})
   const beforeDeps = new Set(Object.keys(before.dependencies ?? {}))
-  const previous = after.dsh?.profile?.bundles ?? []
+  const previous = after.astroOne?.profile?.bundles ?? []
   const bundles = previous.filter((name) => {
     if (!beforeDeps.has(name) && !dependencies.includes(name)) return true
     return dependencies.includes(name) && bundleManifest(name, dir, anchor) !== undefined
@@ -98,17 +98,17 @@ async function reconcile(before: ProfileManifest, dir: string, anchor: string, o
   for (const name of dependencies) {
     if (beforeDeps.has(name)) continue
     const metadata = bundleManifest(name, dir, anchor)
-    if (metadata?.dsh?.bundle === undefined) {
-      options.onOutput?.(`dsh: warning: ${name} declares no dsh.bundle — installed as a plain dependency, not a profile layer\n`, 'stderr')
+    if (metadata?.astroOne?.bundle === undefined) {
+      options.onOutput?.(`astro-one: warning: ${name} declares no astroOne.bundle — installed as a plain dependency, not a profile layer\n`, 'stderr')
       continue
     }
-    for (const file of bundlePatchPaths(resolveBundleDir('dsh', name, anchor, dir), metadata.dsh.bundle)) loadOverlayPatches('dsh', file)
+    for (const file of bundlePatchPaths(resolveBundleDir('astro-one', name, anchor, dir), metadata.astroOne.bundle)) loadOverlayPatches('astro-one', file)
     if (!bundles.includes(name)) {
       bundles.push(name)
     }
   }
   if (JSON.stringify(previous) === JSON.stringify(bundles)) return
-  after.dsh = { ...after.dsh, profile: { ...after.dsh?.profile, bundles } }
+  after.astroOne = { ...after.astroOne, profile: { ...after.astroOne?.profile, bundles } }
   await saveManifest(dir, after)
 }
 
@@ -203,9 +203,9 @@ function directDependencies(manifest: ProfileManifest): Record<string, string> {
 
 /** Inspect only plugin rows contributed by the changed bundle, not its dependency closure. */
 function bundleComponentManifests(manifest: ProfileManifest, dir: string, anchor: string): ProfileManifest[] {
-  const bundle = manifest.dsh?.bundle
+  const bundle = manifest.astroOne?.bundle
   if (bundle === undefined) return []
-  const patches = bundlePatchPaths(dir, bundle).flatMap(file => loadOverlayPatches('dsh', file))
+  const patches = bundlePatchPaths(dir, bundle).flatMap(file => loadOverlayPatches('astro-one', file))
   const names = new Set<string>()
   const visit = (rows: EntryOptions[]) => {
     for (const row of rows) {
@@ -218,12 +218,12 @@ function bundleComponentManifests(manifest: ProfileManifest, dir: string, anchor
   visit(composeEntries([patches.filter(patch => patch.insert !== undefined)]))
   return [...names].flatMap((name) => {
     let packageDir: string
-    try { packageDir = resolveBundleDir('dsh', name, anchor, dir) } catch (error) {
+    try { packageDir = resolveBundleDir('astro-one', name, anchor, dir) } catch (error) {
       // Resolution errors for uninstalled or dynamic rows remain subject to the startup loader's checks.
       void error
       return []
     }
-    return [readProfileManifest('dsh', packageDir)]
+    return [readProfileManifest('astro-one', packageDir)]
   })
 }
 
@@ -241,7 +241,7 @@ export async function runProfilePnpm(
   context: PackageOperationContext, args: readonly string[], options: PackageOperationOptions,
 ): Promise<PackageResult> {
   const dir = context.dir ?? resolveProfileDir(context.profile, context.home)
-  const before = readProfileManifest('dsh', dir)
+  const before = readProfileManifest('astro-one', dir)
   const savedFiles = ['package.json', 'pnpm-lock.yaml'].map(name => ({ path: join(dir, name), text: optionalFile(join(dir, name)) }))
   const beforeDependencies = directDependencies(before)
   const installedBefore = new Map(Object.keys(beforeDependencies).map(name => [name, optionalFile(join(dir, 'node_modules', name, 'package.json'))]))
@@ -269,7 +269,7 @@ export async function runProfilePnpm(
   /** Packages a compatibility check refused; callers render them for their own surface. */
   const incompatible: IncompatiblePlugin[] = []
   const rejected = async (warnings: readonly string[], restoration: string): Promise<PackageResult> => {
-    const diagnostic = `\ndsh: installation rejected: ${warnings.join('\n')}\ndsh: ${restoration}.\n`
+    const diagnostic = `\nastro-one: installation rejected: ${warnings.join('\n')}\nastro-one: ${restoration}.\n`
     await log.write(diagnostic)
     options.onOutput?.(diagnostic, 'stderr')
     append(Buffer.from(diagnostic))
@@ -381,7 +381,7 @@ export async function runProfilePnpm(
       cut = true
       child.stdout?.destroy()
       child.stderr?.destroy()
-      const notice = 'dsh: pnpm output was cut short after its process exited\n'
+      const notice = 'astro-one: pnpm output was cut short after its process exited\n'
       await log.write(notice)
       // A failure from before the cut is the run's own and replaces the notice a
       // caller would otherwise read; a rejection the cut itself causes is its end.
@@ -394,7 +394,7 @@ export async function runProfilePnpm(
     const result = completion.value
     exitCode = result.exitCode ?? (result.code === 'ENOENT' ? 127 : 1)
     if (control.stalled) {
-      const notice = `dsh: pnpm printed nothing for ${String(options.idleTimeoutMs)}ms and was terminated\n`
+      const notice = `astro-one: pnpm printed nothing for ${String(options.idleTimeoutMs)}ms and was terminated\n`
       await log.write(notice)
       options.onOutput?.(notice, 'stderr')
       append(Buffer.from(notice))
@@ -407,7 +407,7 @@ export async function runProfilePnpm(
     }
     // A terminated run's exit status says nothing about what it wrote, so it never reconciles the selection.
     if (exitCode === 0 && !control.stalled) {
-      const after = readProfileManifest('dsh', dir)
+      const after = readProfileManifest('astro-one', dir)
       const warnings: string[] = []
       for (const [name, spec] of Object.entries(directDependencies(after))) {
         const packageDir = join(dir, 'node_modules', name)
@@ -418,7 +418,7 @@ export async function runProfilePnpm(
         const found: string[] = []
         const issues: IncompatiblePlugin[] = []
         try {
-          const manifest = readProfileManifest('dsh', packageDir)
+          const manifest = readProfileManifest('astro-one', packageDir)
           for (const candidate of [manifest, ...bundleComponentManifests(manifest, packageDir, context.installAnchor)]) {
             const issue = evaluatePluginCompatibility(candidate, readProfileVersionExemptions(dir))
             if (issue !== undefined && !issue.exempted) {
@@ -435,7 +435,7 @@ export async function runProfilePnpm(
           incompatible.push(...issues)
         }
         else {
-          const notice = `\ndsh: warning: ${found.join('\n')}\ndsh: it stays installed but profile startup denies it until you grant an exemption for those exact versions.\n`
+          const notice = `\nastro-one: warning: ${found.join('\n')}\nastro-one: it stays installed but profile startup denies it until you grant an exemption for those exact versions.\n`
           await log.write(notice)
           options.onOutput?.(notice, 'stderr')
         }
@@ -455,8 +455,8 @@ export async function runProfilePnpm(
         exitCode = 1
         const restoration = repaired.exitCode === 0
           ? 'restored package.json, pnpm-lock.yaml, and node_modules'
-          : "restored package.json and pnpm-lock.yaml, but node_modules could not be reinstalled; run 'dsh plugin install'"
-        const diagnostic = `\ndsh: installation rejected: ${warnings.join('\n')}\ndsh: ${restoration}.\n`
+          : "restored package.json and pnpm-lock.yaml, but node_modules could not be reinstalled; run 'astro-one plugin install'"
+        const diagnostic = `\nastro-one: installation rejected: ${warnings.join('\n')}\nastro-one: ${restoration}.\n`
         await log.write(diagnostic)
         options.onOutput?.(diagnostic, 'stderr')
         append(Buffer.from(diagnostic))
@@ -475,7 +475,7 @@ export async function runProfilePnpm(
   }
 }
 
-/** Initialize and run the dsh plugin command with the same write lock as the service.
+/** Initialize and run the astro-one plugin command with the same write lock as the service.
  * @param context Launcher-owned locations.
  * @param args Pnpm arguments.
  * @param options Output and cancellation policy.
@@ -490,7 +490,7 @@ export async function runPluginCommand(
     if (!existsSync(join(dir, 'package.json'))) {
       const template = PROFILE_TEMPLATES[context.profile]
       initProfile(dir, template?.bundles ?? DEFAULT_PROFILE_BUNDLES)
-      options.onOutput?.(`dsh: initialized profile ${context.profile} at ${dir}\n`, 'stderr')
+      options.onOutput?.(`astro-one: initialized profile ${context.profile} at ${dir}\n`, 'stderr')
     }
     return runProfilePnpm(context, args, options)
   }, options.lockWaitMs === undefined ? undefined : { waitMs: options.lockWaitMs })
@@ -564,7 +564,7 @@ export function registryArguments(registry: Registry): string[] {
  */
 export async function viewProfilePackage(dir: string, spec: string, options: PackageViewOptions): Promise<PackageViewResult> {
   const result = await execa(options.command ?? 'pnpm', [
-    ...options.args ?? [], 'view', spec, 'name', 'version', 'description', 'dsh', '--json',
+    ...options.args ?? [], 'view', spec, 'name', 'version', 'description', 'astro-one', '--json',
     ...registryArguments(options.registry ?? null), '--config.fetch-retries=0',
   ], {
     cwd: dir, env: { ...scrubbedParentEnv(), ...options.env }, extendEnv: false, reject: false, stdin: 'ignore',

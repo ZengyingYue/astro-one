@@ -5,6 +5,9 @@ import { join } from 'node:path'
 import { runtimePath, verifyDesktopRuntime, writeDesktopRuntime } from '../src/runtime-tree.ts'
 import { readInstalledUpdateRun } from './installed-update-qualification.ts'
 
+/** Astro One package names: the `@astro-one` scope minus the vendored Cordis, native addon, and website packages. */
+const ASTRO_ONE_PACKAGE = /^@astro-one\/(?!(?:cordis|cosmokit|schemastery|node-addon-system|website)(?:-|$))/u
+
 interface PackageMetadata {
   name?: string
   version?: string
@@ -17,7 +20,7 @@ interface PackageMetadata {
 /**
  * Clone one verified source tree into two synthetic release versions, retaining source bytes unchanged.
  * @param manifest The existing test run manifest; both version directories must be absent.
- * @param sourceRoot Fresh prepared dsh runtime, never the user's installed application.
+ * @param sourceRoot Fresh prepared astro-one runtime, never the user's installed application.
  * @returns Completion record with descriptor hashes; this is not signed or boot-tested artifact evidence.
  */
 export async function prepareInstalledUpdateRuntime(manifest: string, sourceRoot: string): Promise<object> {
@@ -33,11 +36,11 @@ export async function prepareInstalledUpdateRuntime(manifest: string, sourceRoot
     await writeFile(join(receipt, 'source.json'), `${JSON.stringify({ sourceHash, version: run.source.version })}\n`,
       { flag: 'wx', mode: 0o600, flush: true })
     const releaseNames = new Set(source.sharedPackages.filter(entry => entry.version === run.source.version
-      && (entry.name === '@deepseek-ai/dsh' || entry.name.startsWith('@deepseek-ai/dsh-'))).map(entry => entry.name))
+      && ASTRO_ONE_PACKAGE.test(entry.name)).map(entry => entry.name))
     for (const version of run.versions) {
       const directory = join(run.root, version)
       await mkdir(directory)
-      const runtime = join(directory, 'dsh')
+      const runtime = join(directory, 'astro-one')
       await cp(sourceRoot, runtime, { recursive: true, force: false, errorOnExist: true })
       const paths = [join(runtime, 'package.json'), ...source.sharedPackages.filter(entry => releaseNames.has(entry.name))
         .map(entry => join(runtimePath(runtime, entry.path), 'package.json'))]

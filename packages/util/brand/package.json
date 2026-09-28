@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-brand",
-  "description": "Stateless branded primitive types for the DeepSeek Harness",
+  "name": "@astro-one/brand",
+  "description": "Stateless branded primitive types for the Astro One",
   "version": "0.1.7-rc.1",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/util/brand"
   },
   "type": "module",
@@ -27,9 +27,9 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/cordis": "workspace:~"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/cordis": "workspace:~"
   }
 }

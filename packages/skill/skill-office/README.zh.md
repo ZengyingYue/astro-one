@@ -3,7 +3,7 @@ description: "随包附带的 Word、PowerPoint 和 Excel 指令，供需要 Off
 kind: "package-reference"
 ---
 
-# @deepseek-ai/dsh-skill-office
+# @astro-one/skill-office
 
 [English](README.md) | 中文
 
@@ -25,12 +25,12 @@ Agent（智能体）可以加载 Word、PowerPoint 和 Excel 工作流，默认�
 <a id="use-this-package"></a>
 ## 使用本包
 
-将本提供方与 skill 注册表及 `dsh-tool-skill` 一同挂载，即可在会话目录中提供 `office-docx`、`office-pptx` 和 `office-xlsx`。提供方携带指令和脚本；部署提供解释器、编写库、执行工具与文件交付工具。
+将本提供方与 skill 注册表及 `astro-one-tool-skill` 一同挂载，即可在会话目录中提供 `office-docx`、`office-pptx` 和 `office-xlsx`。提供方携带指令和脚本；部署提供解释器、编写库、执行工具与文件交付工具。
 
 ### 最小配置
 
 ```yaml
-- name: '@deepseek-ai/dsh-skill-office'
+- name: '@astro-one/skill-office'
 ```
 
 | 字段 | 默认值 | 含义 |
@@ -81,7 +81,7 @@ Excel 数据和公式任务跳过视觉检查；涉及格式、排版、图表�
 <a id="model-experience"></a>
 ## 模型体验
 
-通过 `dsh-tool-skill` 间接呈现，由其渲染目录项与选中的指令正文。
+通过 `astro-one-tool-skill` 间接呈现，由其渲染目录项与选中的指令正文。
 
 #### KV 缓存影响
 

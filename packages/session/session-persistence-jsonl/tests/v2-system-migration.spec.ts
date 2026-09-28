@@ -1,10 +1,10 @@
-import { freezeMessage, MessageId } from '@deepseek-ai/dsh-llm'
-import { Context } from '@deepseek-ai/cordis'
-import { SESSION_FORMAT_VERSION, Session, SessionId, SessionLogOffset, SessionSeq } from '@deepseek-ai/dsh-session'
-import type { SessionEvent } from '@deepseek-ai/dsh-session'
-import { SessionFormatUnsupportedError } from '@deepseek-ai/dsh-session-persistence'
-import type { SessionHandle } from '@deepseek-ai/dsh-session-persistence'
-import JsonlSessionPersistence from '@deepseek-ai/dsh-session-persistence-jsonl'
+import { freezeMessage, MessageId } from '@astro-one/llm'
+import { Context } from '@astro-one/cordis'
+import { SESSION_FORMAT_VERSION, Session, SessionId, SessionLogOffset, SessionSeq } from '@astro-one/session'
+import type { SessionEvent } from '@astro-one/session'
+import { SessionFormatUnsupportedError } from '@astro-one/session-persistence'
+import type { SessionHandle } from '@astro-one/session-persistence'
+import JsonlSessionPersistence from '@astro-one/session-persistence-jsonl'
 import { mkdir, mkdtemp, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
@@ -17,7 +17,7 @@ let root: string
 const contexts: Context[] = []
 
 beforeEach(async () => {
-  root = await mkdtemp(join(tmpdir(), 'dsh-v2-system-migration-'))
+  root = await mkdtemp(join(tmpdir(), 'astro-one-v2-system-migration-'))
 })
 
 afterEach(async () => {

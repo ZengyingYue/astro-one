@@ -1,11 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http'
 import { AddressInfo } from 'node:net'
-import { Context } from '@deepseek-ai/cordis'
-import WebRuntime from '@deepseek-ai/dsh-web'
-import { HttpFetchProvider, LOCAL_FETCH_PROVIDER_ID } from '@deepseek-ai/dsh-web-fetch-http'
-import type { HttpFetchLimits, HttpFetchResolver } from '@deepseek-ai/dsh-web-fetch-http'
-import * as fetchPlugin from '@deepseek-ai/dsh-web-fetch-http'
+import { Context } from '@astro-one/cordis'
+import WebRuntime from '@astro-one/web'
+import { HttpFetchProvider, LOCAL_FETCH_PROVIDER_ID } from '@astro-one/web-fetch-http'
+import type { HttpFetchLimits, HttpFetchResolver } from '@astro-one/web-fetch-http'
+import * as fetchPlugin from '@astro-one/web-fetch-http'
 import { createPinnedLookup, isPublicIpAddress, publicHttpNetwork, requestPinned, resolvePublicAddresses } from '../src/network.ts'
 import {
   classifyContentType,

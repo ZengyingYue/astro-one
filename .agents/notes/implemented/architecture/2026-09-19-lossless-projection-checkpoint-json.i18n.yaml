@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-19-lossless-projection-checkpoint-json.md
-2026-09-19-lossless-projection-checkpoint-json.md: 9c7d15dbd2d570eaa544f168d2c2ef882558d5ca
-2026-09-19-lossless-projection-checkpoint-json.zh.md: 8c2b720358351af33a6d07888002c65d0cc30363
+2026-09-19-lossless-projection-checkpoint-json.md: 23be8945c1d64714abc1612c5650fa00d30e4f1e
+2026-09-19-lossless-projection-checkpoint-json.zh.md: 6b9d1b4168a622520f3daaad1b9d5ab7d2f389ca

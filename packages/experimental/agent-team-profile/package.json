@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-experimental-agent-team-profile",
+  "name": "@astro-one/experimental-agent-team-profile",
   "description": "Agent Teams collaboration, tools, and Web UI in one experimental bundle",
   "version": "0.1.7-rc.1",
   "icon": "./icon.svg",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/experimental/agent-team-profile"
   },
   "type": "module",
@@ -32,22 +32,22 @@
     "lib/types/**/*.d.ts"
   ],
   "license": "MIT",
-  "dsh": {
+  "astroOne": {
     "bundle": {
       "patch": "./cordis.patch.yml"
     }
   },
   "dependencies": {
-    "@deepseek-ai/dsh-experimental-agent-team": "workspace:*",
-    "@deepseek-ai/dsh-experimental-client-ui-agent-team": "workspace:*",
-    "@deepseek-ai/dsh-experimental-tool-agent-team": "workspace:*"
+    "@astro-one/experimental-agent-team": "workspace:*",
+    "@astro-one/experimental-client-ui-agent-team": "workspace:*",
+    "@astro-one/experimental-tool-agent-team": "workspace:*"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/cordis": "workspace:~"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis-plugin-include": "workspace:~",
-    "@deepseek-ai/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/cordis": "workspace:~",
     "js-yaml": "^4.2.0"
   }
 }

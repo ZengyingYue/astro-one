@@ -28,7 +28,7 @@
 /* macOS hiddenInset titlebar: the frame's top clearance keeps the head below
    the window's top strip in both sidebar states so it never jumps. */
 :global([data-platform='darwin']) .pageHead {
-  padding-top: var(--dsh-frame-top-clearance, 0px);
+  padding-top: var(--astro-one-frame-top-clearance, 0px);
 }
 
 .pageTitle {
@@ -132,10 +132,10 @@
 
 /* The package an install just enabled: a ring that fades while the list scrolls to it. */
 .card[data-plugin-highlight] {
-  animation: dsh-plugin-highlight 2400ms ease-out;
+  animation: astro-one-plugin-highlight 2400ms ease-out;
 }
 
-@keyframes dsh-plugin-highlight {
+@keyframes astro-one-plugin-highlight {
   0%,
   55% {
     box-shadow: 0 0 0 2px var(--dsw-alias-state-business-primary);
@@ -178,8 +178,8 @@
   border-radius: 12px;
   /* The page itself scrolls on the base surface. Anything that scrolls inside
      a card draws the l2 thumb (ui-theme styles/scrollbar.css rebinding contract). */
-  --dsh-scrollbar-thumb: var(--dsw-alias-scrollbar-bg-l2);
-  --dsh-scrollbar-thumb-hover: var(--dsw-alias-scrollbar-hover-l2);
+  --astro-one-scrollbar-thumb: var(--dsw-alias-scrollbar-bg-l2);
+  --astro-one-scrollbar-thumb-hover: var(--dsw-alias-scrollbar-hover-l2);
 }
 
 .cardHead {
@@ -1050,7 +1050,7 @@ label.registryOption {
 /* Same top clearance as .pageHead: the crumb is the detail views' leading
    content and otherwise lands under the traffic lights. */
 :global([data-platform='darwin']) .detail {
-  padding-top: var(--dsh-frame-top-clearance, 0px);
+  padding-top: var(--astro-one-frame-top-clearance, 0px);
 }
 
 .crumb {

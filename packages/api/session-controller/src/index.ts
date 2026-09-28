@@ -2,17 +2,17 @@
 
 import { hostname } from 'node:os'
 import { resolve } from 'node:path'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import type {} from '@deepseek-ai/dsh-fs'
-import { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import { errorChain } from '@deepseek-ai/dsh-llm'
-import type {} from '@deepseek-ai/dsh-client-file-upload'
-import { canOpenNativePath, nativeFileManager, nativeFileApplications, openNativeFileApplication, openNativeAssociatedPath, revealNativePath } from '@deepseek-ai/dsh-native-command'
-import type { SessionId } from '@deepseek-ai/dsh-session'
-import type { SessionInspection } from '@deepseek-ai/dsh-session-persistence'
-import { SessionQueryError, type SessionObservation } from '@deepseek-ai/dsh-session-query'
-import { Remote, RemoteError, TypertRemoteService } from '@deepseek-ai/dsh-typert-protocol'
+import type { Agent } from '@astro-one/agent'
+import type {} from '@astro-one/fs'
+import { Context } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
+import { errorChain } from '@astro-one/llm'
+import type {} from '@astro-one/client-file-upload'
+import { canOpenNativePath, nativeFileManager, nativeFileApplications, openNativeFileApplication, openNativeAssociatedPath, revealNativePath } from '@astro-one/native-command'
+import type { SessionId } from '@astro-one/session'
+import type { SessionInspection } from '@astro-one/session-persistence'
+import { SessionQueryError, type SessionObservation } from '@astro-one/session-query'
+import { Remote, RemoteError, TypertRemoteService } from '@astro-one/typert-protocol'
 import {
   ApiSessionAgentController,
   inspectApiSession,
@@ -68,7 +68,7 @@ export { ApiSessionNotFound } from './agent.ts'
 export { SessionFileReferences } from './file-references.ts'
 export { SessionSkillCatalog } from './skill-catalog.ts'
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     /** Host Session business API and Remote namespace owner. */
     sessionController: SessionController

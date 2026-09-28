@@ -100,8 +100,8 @@
   padding: 3px;
   overflow: hidden;
   border-radius: 16px;
-  --dsh-scrollbar-thumb: var(--dsw-alias-scrollbar-bg-l2);
-  --dsh-scrollbar-thumb-hover: var(--dsw-alias-scrollbar-hover-l2);
+  --astro-one-scrollbar-thumb: var(--dsw-alias-scrollbar-bg-l2);
+  --astro-one-scrollbar-thumb-hover: var(--dsw-alias-scrollbar-hover-l2);
   --dsw-elevation-stroke-color: var(--dsw-alias-border-l1);
   box-shadow: var(--dsw-elevation-prominent);
 }

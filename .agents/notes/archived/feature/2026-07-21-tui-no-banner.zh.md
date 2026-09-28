@@ -9,12 +9,12 @@ Archived: 2026-07-26
 
 ## Problem
 
-TUI 启动时展示一个带框的产品横幅（"DEEPSEEK HARNESS" + 模型/会话详情），最近一版还带扫入动画（[横幅扫入 Agent Note](2026-07-21-tui-banner-sweep.md)）。用户的裁决：删掉它。每次启动都被重读的产品标题是装饰，盒子在任何内容之前先占掉四行，而它承载的识别信息（模型、会话）有更好的去处。
+TUI 启动时展示一个带框的产品横幅（"ASTRO ONE" + 模型/会话详情），最近一版还带扫入动画（[横幅扫入 Agent Note](2026-07-21-tui-banner-sweep.md)）。用户的裁决：删掉它。每次启动都被重读的产品标题是装饰，盒子在任何内容之前先占掉四行，而它承载的识别信息（模型、会话）有更好的去处。
 
 ## Decision
 
 - 删除 `HeaderComponent`、扫入动画及其生命周期接线。TUI 直接挂载进 transcript；启动时分隔线之上不渲染任何东西。
-- 模型名移入页脚状态行的左段（`<model>  <cwd>  ↑tokens ↓tokens`），会话使用的模型因此始终可见，而不只是启动时。会话 id 不再显示——它存在于会话日志和 `./.sessions` 文件名中，`dsh --resume <id>` 和 `/resume` 选择器会从中获取该 id。
+- 模型名移入页脚状态行的左段（`<model>  <cwd>  ↑tokens ↓tokens`），会话使用的模型因此始终可见，而不只是启动时。会话 id 不再显示——它存在于会话日志和 `./.sessions` 文件名中，`astro-one --resume <id>` 和 `/resume` 选择器会从中获取该 id。
 - 配置了 `welcome` 时，它作为 transcript 的第一行（一条弱化的通知）在 `rebuildTranscript` 内渲染，因此调色板切换会保留它。未设置则什么也不渲染。fixture 保留各自配置的欢迎语；PTY 冒烟测试的启动标记改为页脚的模型名——无论 cwd 多长都保证渲染的唯一挂载后文本。
 
 本 note 完全取代[横幅扫入 Agent Note](2026-07-21-tui-banner-sweep.md)：扫入动画和它所动画的横幅都已移除。
@@ -37,4 +37,4 @@ TUI 启动时展示一个带框的产品横幅（"DEEPSEEK HARNESS" + 模型/会
 
 ## Testing
 
-`packages/ui/tui/tests/tui.spec.ts` 固定：`welcome` 未设置时无盒子角/产品标题、transcript 为空、模型在页脚；配置的欢迎语作为 transcript 第一行且无横幅；欢迎语在调色板切换的 transcript 重建后保留。PTY 冒烟测试以页脚模型名为启动标记并断言 `DEEPSEEK HARNESS` 不出现。快照验证完整帧。
+`packages/ui/tui/tests/tui.spec.ts` 固定：`welcome` 未设置时无盒子角/产品标题、transcript 为空、模型在页脚；配置的欢迎语作为 transcript 第一行且无横幅；欢迎语在调色板切换的 transcript 重建后保留。PTY 冒烟测试以页脚模型名为启动标记并断言 `ASTRO ONE` 不出现。快照验证完整帧。

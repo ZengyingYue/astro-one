@@ -1,29 +1,29 @@
 # Add PTC mode and Cordis tools to the base spawn/workflow stack, exercising
 # all four boundaries in one ACP snapshot.
 - id: agent-default-model
-  name: '@deepseek-ai/dsh-agent-default-model'
+  name: '@astro-one/agent-default-model'
   config:
     provider: deepseek-official
     model: deepseek-v4-pro
 
 - id: session-persistence-jsonl
-  name: '@deepseek-ai/dsh-session-persistence-jsonl'
+  name: '@astro-one/session-persistence-jsonl'
   config:
-    root: !!js dshHomePath('sessions')
-    compression: !!js 'process.env.DSH_SNAPSHOT === undefined ? ''zstd'' : ''none'''
+    root: !!js astroOneHomePath('sessions')
+    compression: !!js 'process.env.ASTRO_ONE_SNAPSHOT === undefined ? ''zstd'' : ''none'''
 
 - id: agent-instructions
-  name: '@deepseek-ai/dsh-agent-instructions'
+  name: '@astro-one/agent-instructions'
   config:
     maxBytes: 65536
 
 - id: tools
-  name: '@deepseek-ai/dsh-tools'
+  name: '@astro-one/tools'
   config:
     mode: both
 
 - id: system-prompt
-  name: '@deepseek-ai/dsh-system-prompt'
+  name: '@astro-one/system-prompt'
   config:
     personaPrefix: |
       You are a coding assistant powered by the {{model}} model. Your working directory is {{cwd}}.
@@ -32,8 +32,8 @@
 
 - insert:
     - id: cordis-host-runner
-      name: '@deepseek-ai/dsh-cordis-host-runner'
+      name: '@astro-one/cordis-host-runner'
     - id: cordis-inspect-providers
-      name: '@deepseek-ai/dsh-tool-cordis/host'
+      name: '@astro-one/tool-cordis/host'
     - id: tool-cordis
-      name: '@deepseek-ai/dsh-tool-cordis'
+      name: '@astro-one/tool-cordis'

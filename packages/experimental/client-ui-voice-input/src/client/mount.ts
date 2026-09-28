@@ -1,15 +1,15 @@
 /** Source-safe lifecycle for the optional speech Remote and browser UI. */
-import type { Context } from '@deepseek-ai/cordis'
-import type {} from '@deepseek-ai/dsh-api-remotes/client'
-import type {} from '@deepseek-ai/dsh-experimental-api-speech-to-text/remote'
-import type {} from '@deepseek-ai/dsh-client-locale/client'
-import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
-import type {} from '@deepseek-ai/dsh-client-ui-conversation/client'
-import type { TypertRemoteContribution } from '@deepseek-ai/dsh-typert-protocol'
+import type { Context } from '@astro-one/cordis'
+import type {} from '@astro-one/api-remotes/client'
+import type {} from '@astro-one/experimental-api-speech-to-text/remote'
+import type {} from '@astro-one/client-locale/client'
+import type {} from '@astro-one/client-ui-renderer/client'
+import type {} from '@astro-one/client-ui-conversation/client'
+import type { TypertRemoteContribution } from '@astro-one/typert-protocol'
 import { VoiceInput, type VoiceInputInjected } from './VoiceInput.tsx'
 import { Recording } from './audio.ts'
 import { en, NS, zh } from './locales.ts'
-import type {} from '@deepseek-ai/dsh-client-ui-plugin-manager/client'
+import type {} from '@astro-one/client-ui-plugin-manager/client'
 import { observeReadiness } from './readiness.ts'
 import { VoicePreparation } from './PreparationCard.tsx'
 import { VoiceSetupPrompt } from './VoiceSetupPrompt.tsx'
@@ -42,10 +42,10 @@ function registerUi(ctx: Context): void {
     name: 'conversation.input.activity', locale: NS, inject: () => actions,
   }, VoiceInput))
   ctx.slots.inject('plugins.bundle.config', () => ctx.slots.register({ name: 'plugins.bundle.config',
-    key: '@deepseek-ai/dsh-experimental-voice-input-bundle', locale: NS, inject: () => actions,
+    key: '@astro-one/experimental-voice-input-bundle', locale: NS, inject: () => actions,
   }, VoicePreparation))
   ctx.slots.inject('plugins.bundle.activation', () => ctx.slots.register({ name: 'plugins.bundle.activation',
-    key: '@deepseek-ai/dsh-experimental-voice-input-bundle', locale: NS, inject: () => actions,
+    key: '@astro-one/experimental-voice-input-bundle', locale: NS, inject: () => actions,
   }, VoiceSetupPrompt))
 
 }

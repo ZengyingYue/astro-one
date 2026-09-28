@@ -1,11 +1,11 @@
 import { memo, useCallback, useMemo, type KeyboardEvent } from 'react'
-import type { Context } from '@deepseek-ai/cordis'
+import type { Context } from '@astro-one/cordis'
 import clsx from 'clsx'
 import {
   IconApiOutlineRegular, IconChevronDownOutlineRegular, IconChevronUpOutlineRegular, IconInspectOutlineRegular,
   TerminalBlock, TextShimmer,
-} from '@deepseek-ai/dsh-client-ui-primitives'
-import type { PropsLocale } from '@deepseek-ai/dsh-client-ui-slots'
+} from '@astro-one/client-ui-primitives'
+import type { PropsLocale } from '@astro-one/client-ui-slots'
 import type { ToolCallViewProps } from '../../contract/slots.ts'
 import {
   isSettledPersistentShellCall,

@@ -1,19 +1,19 @@
 import { describe, expect, it, vi } from 'vitest'
-import { AttachmentId, ImageVariantId } from '@deepseek-ai/dsh-attachment'
+import { AttachmentId, ImageVariantId } from '@astro-one/attachment'
 import type {
   AttachmentStore,
   ImageAttachmentRef,
   ImageRequestTarget,
   RequestImageAttachment,
-} from '@deepseek-ai/dsh-attachment'
-import { createDeveloperMessage, ToolCallId, createAssistantMessage, createMessage, createToolResultMessage, createUserMessage, offloadedImageText } from '@deepseek-ai/dsh-llm'
-import type { ContentBlock, GenerateOptions, Message, RequestUserInput } from '@deepseek-ai/dsh-llm'
-import type { ContextFormed } from '@deepseek-ai/dsh-llm'
+} from '@astro-one/attachment'
+import { createDeveloperMessage, ToolCallId, createAssistantMessage, createMessage, createToolResultMessage, createUserMessage, offloadedImageText } from '@astro-one/llm'
+import type { ContentBlock, GenerateOptions, Message, RequestUserInput } from '@astro-one/llm'
+import type { ContextFormed } from '@astro-one/llm'
 import { toPiContext } from '../src/context.ts'
 import type { PiImageRequestContext } from '../src/context.ts'
 import { toPiAssistant } from '../src/replay.ts'
 
-declare module '@deepseek-ai/dsh-llm' {
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'test': { kind: 'test' } & ContextFormed
   }
@@ -222,7 +222,7 @@ describe('pi-ai request context conversion', () => {
       height: 565,
     }))
     const context = await toPiContext(request([user([{ type: 'image', attachment: named }])]), imageContext(store, {
-      resolveImageAccess: () => ({ readonlyPath: '/tmp/dsh/objects/aa/object' }),
+      resolveImageAccess: () => ({ readonlyPath: '/tmp/astro-one/objects/aa/object' }),
     }))
     expect(context.messages[0]).toMatchObject({
       role: 'user',
@@ -231,7 +231,7 @@ describe('pi-ai request context conversion', () => {
         { type: 'image' },
       ],
     })
-    expect(JSON.stringify(context.messages[0])).toContain('/tmp/dsh/objects/aa/object')
+    expect(JSON.stringify(context.messages[0])).toContain('/tmp/astro-one/objects/aa/object')
     expect(JSON.stringify(context.messages[0])).toContain('request preview 1130x565px')
   })
 
@@ -380,7 +380,7 @@ describe('pi-ai request context conversion', () => {
 
   it('renders an offloaded occurrence with independently resolved access', async () => {
     const sized: ImageAttachmentRef = { ...ref, bytes: 3 }
-    const access = { readonlyPath: '/tmp/dsh-normalized-image' }
+    const access = { readonlyPath: '/tmp/astro-one-normalized-image' }
     const readImageRequest = vi.fn()
 
     const context = await toPiContext(request([

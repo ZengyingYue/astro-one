@@ -1,10 +1,10 @@
 /** Browser availability/choice state and the launch carrier for the split button. */
 
-import { createSnapshotStore, type SnapshotStore } from '@deepseek-ai/dsh-client-store'
+import { createSnapshotStore, type SnapshotStore } from '@astro-one/client-store'
 import {
   OPEN_IN_APP_APPS_ROUTE, OPEN_IN_APP_OPEN_ROUTE,
   type OpenInAppAppsPayload, type OpenInAppOpenPayload,
-} from '@deepseek-ai/dsh-host-open-in-app/shared'
+} from '@astro-one/host-open-in-app/shared'
 
 type Fetch = (input: string | URL, init?: RequestInit) => Promise<Response>
 
@@ -18,7 +18,7 @@ export class OpenInAppController {
   readonly apps: SnapshotStore<readonly string[] | null> = createSnapshotStore<readonly string[] | null>(null)
   /** Last chosen app id, or empty before the first choice, shared across sessions and browser restarts. */
   readonly choice: SnapshotStore<string> = createSnapshotStore<string>('', {
-    persist: { name: 'dsh.open-in-app.choice' },
+    persist: { name: 'astro-one.open-in-app.choice' },
   })
 
   private loading: Promise<void> | undefined

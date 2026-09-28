@@ -36,9 +36,9 @@ describe.skipIf(MODE === 'record')('web e2e: native and Client locale preference
       const bridge = globalThis as typeof globalThis & {
         nativeLocaleRead(): Promise<unknown>
         nativeLocaleChanged(locale: string): Promise<void>
-        __DSH_LOCALE__: { read(): Promise<unknown>; onChange(locale: string): void }
+        __ASTRO_ONE_LOCALE__: { read(): Promise<unknown>; onChange(locale: string): void }
       }
-      bridge.__DSH_LOCALE__ = {
+      bridge.__ASTRO_ONE_LOCALE__ = {
         read: () => bridge.nativeLocaleRead(),
         onChange: (locale) => { void bridge.nativeLocaleChanged(locale) },
       }
@@ -77,7 +77,7 @@ describe.skipIf(MODE === 'record')('web e2e: native and Client locale preference
     await enDialog.getByRole('button', { name: 'English', exact: true }).waitFor()
     await expect.poll(() => reported).toEqual(['en'])
     expect(await page.evaluate(() => document.documentElement.lang)).toBe('en')
-    expect(await page.evaluate(() => localStorage.getItem('dsh.locale'))).toBeNull()
+    expect(await page.evaluate(() => localStorage.getItem('astro-one.locale'))).toBeNull()
     expect(tripwire.warnings).toEqual([])
     expect(tripwire.pageErrors).toEqual([])
     await assertFixtureInventory(SNAPSHOT_DIR, ['automatic.expected.md', 'selected.expected.md'])

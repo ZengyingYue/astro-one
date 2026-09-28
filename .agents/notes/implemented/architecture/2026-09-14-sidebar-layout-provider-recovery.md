@@ -14,7 +14,7 @@ The sidebar persists a validated current-layout snapshot and identity counter pe
 
 The terminal provider reads the adopted Session's tab records and restores terminal models before querying Host terminals that have no view. Its Client controller saves globally unique content-to-terminal identities as independent records before allocation, reuses them after reload, and removes them after recording explicit close intent. Layout-local tab ids identify separate live views but cannot identify persisted processes across windows; per-record writes and deletes avoid overwriting unrelated bindings. A restored identity never authorizes creating a replacement process. The Host owns process liveness, titles and screen contents; the saved association is only a recovery target. A saved association without a restored tab does not suppress Host discovery.
 
-OpenCode's `packages/app/src/context/layout.tsx` saves Session tabs, while `context/terminal.tsx` separately saves terminal identities. DSH uses its existing Session-scoped store and provider services for the same separation, retaining Session ownership for terminals.
+OpenCode's `packages/app/src/context/layout.tsx` saves Session tabs, while `context/terminal.tsx` separately saves terminal identities. Astro One uses its existing Session-scoped store and provider services for the same separation, retaining Session ownership for terminals.
 
 This partially supersedes the persistence exclusion in the [Web terminal decision](../feature/2026-09-09-web-sidebar-terminal.md). That note remains active because process ownership, cleanup, streaming and input-control decisions still apply.
 

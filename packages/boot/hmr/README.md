@@ -3,7 +3,7 @@ description: "Reload plugin code and profile configuration through one coordinat
 kind: "package-reference"
 ---
 
-# @deepseek-ai/dsh-hmr
+# @astro-one/hmr
 
 English | [中文](README.zh.md)
 
@@ -33,7 +33,7 @@ The base bundle enables HMR with `root: []` when the launcher supplies `profileC
     root: ["."]
 ```
 
-Existing configurations replace the module name `@deepseek-ai/cordis-plugin-hmr` with `@deepseek-ai/dsh-hmr`. The `hmr` service key, `baseDir`, `config`, `getLinked()`, `getOuterStack()`, `hmr/change` and `hmr/reload` remain available. The vendored package remains available; DSH profiles use this package.
+Existing configurations replace the module name `@astro-one/cordis-plugin-hmr` with `@astro-one/hmr`. The `hmr` service key, `baseDir`, `config`, `getLinked()`, `getOuterStack()`, `hmr/change` and `hmr/reload` remain available. The vendored package remains available; Astro One profiles use this package.
 
 ### Configuration
 
@@ -54,7 +54,7 @@ Chokidar options, including polling, retain their existing meaning. Exact config
 <details>
 <summary>Implementation internals — click to expand</summary>
 
-`watchConfig()` registers an awaited configuration handler. `runExclusive()` serializes configuration changes and Loader updates with automatic reloads and rejects nested transactions. Package installation and removal run outside this queue. HMR does not acquire the package writer lock; manifest notifications reload only when the ordered `dsh.profile.bundles` list changes. Profile and home patch changes also trigger recomposition. File events received during a configuration transaction are processed afterward. Include refreshes and profile reconciliation reach plugins through ordinary Loader entry updates; Loader commits volatile-only changes in place.
+`watchConfig()` registers an awaited configuration handler. `runExclusive()` serializes configuration changes and Loader updates with automatic reloads and rejects nested transactions. Package installation and removal run outside this queue. HMR does not acquire the package writer lock; manifest notifications reload only when the ordered `astroOne.profile.bundles` list changes. Profile and home patch changes also trigger recomposition. File events received during a configuration transaction are processed afterward. Include refreshes and profile reconciliation reach plugins through ordinary Loader entry updates; Loader commits volatile-only changes in place.
 
 App-boot owns profile parsing and patch precedence. HMR reads the launcher’s data-only `profileContext`, registers the profile manifest and both user patch watches during initialization, and waits for application readiness before processing changes. Its disposal closes the watchers and cancels reloads waiting for startup. HMR also owns module-cache replacement and reload scheduling. Configuration watchers start outside the active transaction context so later notifications can enter the queue. No invariant companion is published because the queue and watcher registrations have no independent persisted projection.
 

@@ -2,28 +2,28 @@
  * Bridge for unmodified Claude Code command hooks on harness interception
  * extension points. It supports SessionStart, prompt/tool pre/post, Stop, and subagent
  * start/stop. It owns Claude payloads, environment, substitution, and decision
- * mapping; shared execution and parsing live in `dsh-hook-protocol`.
+ * mapping; shared execution and parsing live in `astro-one-hook-protocol`.
  * `updatedInput` is logged and warned but not honored. Bespoke behavior should
  * use typed native plugins on the same extension points.
- * @module @deepseek-ai/dsh-hooks-claude-code
+ * @module @astro-one/hooks-claude-code
  */
 
 import { readFileSync } from 'node:fs'
-import type { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import type { Agent, PreStepDecision, TurnBoundaryProjection } from '@deepseek-ai/dsh-agent'
-import type {} from '@deepseek-ai/dsh-session-projection'
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
-import type { ContextFormed } from '@deepseek-ai/dsh-llm'
-declare module '@deepseek-ai/dsh-llm' {
+import type { Context } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
+import type { Agent, PreStepDecision, TurnBoundaryProjection } from '@astro-one/agent'
+import type {} from '@astro-one/session-projection'
+import { createUserMessage } from '@astro-one/llm'
+import type { ContextFormed } from '@astro-one/llm'
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'hooks-claude-code': { kind: 'hooks-claude-code' } & ContextFormed
   }
 }
 
-import type { ContentBlock, MessageSource } from '@deepseek-ai/dsh-llm'
-import type { UserMessage } from '@deepseek-ai/dsh-session'
-import type { PostToolDecision, PreToolDecision, ToolExecution, ToolExecutionResult } from '@deepseek-ai/dsh-tools'
+import type { ContentBlock, MessageSource } from '@astro-one/llm'
+import type { UserMessage } from '@astro-one/session'
+import type { PostToolDecision, PreToolDecision, ToolExecution, ToolExecutionResult } from '@astro-one/tools'
 import {
   appendHookInvoked,
   appendHookResult,
@@ -36,10 +36,10 @@ import {
   type HookOutput,
   type MatcherGroup,
   type MergedHookOutcome,
-} from '@deepseek-ai/dsh-hook-protocol'
+} from '@astro-one/hook-protocol'
 // Pulls in the declaration-merged subagent events and the identity pairing their
 // start/end edges.
-import type { SubagentRunId } from '@deepseek-ai/dsh-subagent'
+import type { SubagentRunId } from '@astro-one/subagent'
 import { parseClaudeCodeConfig, type ClaudeCodeHookConfig } from './config.ts'
 
 export const name = 'hooks-claude-code'

@@ -11,7 +11,7 @@ afterEach(async () => {
 })
 
 async function fixture() {
-  const root = await mkdtemp(join(tmpdir(), 'dsh-python-office-'))
+  const root = await mkdtemp(join(tmpdir(), 'astro-one-python-office-'))
   temporaryDirectories.push(root)
   const staging = join(root, 'staging')
   const destination = join(root, 'runtime-office')
@@ -69,10 +69,10 @@ it('copies installed target optionals and leaves other platforms and absent opti
 
 it('rejects a missing required dependency before producing a sidecar', async () => {
   const { staging, destination, packageAt } = await fixture()
-  await packageAt('@deepseek-ai/libreoffice-kit', { dependencies: { 'dsh-missing-office-fixture': '1' } })
+  await packageAt('@deepseek-ai/libreoffice-kit', { dependencies: { 'astro-one-missing-office-fixture': '1' } })
 
   await expect(copyOfficeSidecar(staging, destination, { platform: 'linux', arch: 'x64' }))
-    .rejects.toThrow('dsh-missing-office-fixture required by @deepseek-ai/libreoffice-kit is missing')
+    .rejects.toThrow('astro-one-missing-office-fixture required by @deepseek-ai/libreoffice-kit is missing')
   await expect(stat(destination)).rejects.toMatchObject({ code: 'ENOENT' })
 })
 

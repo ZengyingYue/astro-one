@@ -1,13 +1,13 @@
 /** Profile package management and explicit, exact-version compatibility approvals. */
-import { runPluginCommand, setProfileVersionExemption } from '@deepseek-ai/dsh-plugin-manager/operations'
+import { runPluginCommand, setProfileVersionExemption } from '@astro-one/plugin-manager/operations'
 import { INSTALL_ANCHOR } from './profile-boot.ts'
-import { DEFAULT_PROFILE_BUNDLES, initProfile, PROFILE_TEMPLATES, readProfileCompatibility, resolveProfileDir } from '@deepseek-ai/dsh-app-boot'
-import { withFileLock } from '@deepseek-ai/dsh-atomic-write'
+import { DEFAULT_PROFILE_BUNDLES, initProfile, PROFILE_TEMPLATES, readProfileCompatibility, resolveProfileDir } from '@astro-one/app-boot'
+import { withFileLock } from '@astro-one/atomic-write'
 import { existsSync } from 'node:fs'
 import { mkdir } from 'node:fs/promises'
 import { join } from 'node:path'
 
-/** Parse only DSH-owned commands; all other arguments remain pnpm's responsibility. */
+/** Parse only Astro One-owned commands; all other arguments remain pnpm's responsibility. */
 async function versionCommand(profile: string, args: readonly string[]): Promise<number | undefined> {
   const [command, ...rest] = args
   if (command !== 'allow-version' && command !== 'revoke-version' && command !== 'version-exemptions') return undefined
@@ -18,21 +18,21 @@ async function versionCommand(profile: string, args: readonly string[]): Promise
     const argumentsIterator = rest.values()
     for (const argument of argumentsIterator) {
       if (argument === '--accept-risk' && command === 'allow-version' && !acceptRisk) acceptRisk = true
-      else if (argument === '--dsh-version' && runtimeVersion === undefined) runtimeVersion = argumentsIterator.next().value
-      else if (argument.startsWith('--dsh-version=') && runtimeVersion === undefined) runtimeVersion = argument.slice('--dsh-version='.length)
+      else if (argument === '--astro-one-version' && runtimeVersion === undefined) runtimeVersion = argumentsIterator.next().value
+      else if (argument.startsWith('--astro-one-version=') && runtimeVersion === undefined) runtimeVersion = argument.slice('--astro-one-version='.length)
       else if (!argument.startsWith('-') && packageVersion === undefined) packageVersion = argument
       else throw new Error(`unexpected argument ${JSON.stringify(argument)}`)
     }
-    if (command === 'version-exemptions' && rest.length > 0) throw new Error('usage: dsh plugin version-exemptions')
+    if (command === 'version-exemptions' && rest.length > 0) throw new Error('usage: astro-one plugin version-exemptions')
     let request: { packageVersion: string; runtimeVersion: string } | undefined
     if (command !== 'version-exemptions') {
       if (packageVersion === undefined || runtimeVersion === undefined) {
-        throw new Error(`usage: dsh plugin ${command} <package@version> --dsh-version <exact>${command === 'allow-version' ? ' --accept-risk' : ''}`)
+        throw new Error(`usage: astro-one plugin ${command} <package@version> --astro-one-version <exact>${command === 'allow-version' ? ' --accept-risk' : ''}`)
       }
       request = { packageVersion, runtimeVersion }
     }
     if (command === 'allow-version') {
-      process.stderr.write('dsh: warning: allowing incompatible plugin versions can break the application or corrupt data. Approval applies only to the exact package and DSH versions.\n')
+      process.stderr.write('astro-one: warning: allowing incompatible plugin versions can break the application or corrupt data. Approval applies only to the exact package and Astro One versions.\n')
     }
     const dir = resolveProfileDir(profile)
     await mkdir(dir, { recursive: true })
@@ -40,23 +40,23 @@ async function versionCommand(profile: string, args: readonly string[]): Promise
       if (!existsSync(join(dir, 'package.json'))) initProfile(dir, PROFILE_TEMPLATES[profile]?.bundles ?? DEFAULT_PROFILE_BUNDLES)
       if (request === undefined) {
         const { exemptions, warnings } = readProfileCompatibility(dir)
-        for (const warning of warnings) process.stderr.write(`dsh: warning: ${warning}\n`)
+        for (const warning of warnings) process.stderr.write(`astro-one: warning: ${warning}\n`)
         process.stdout.write(JSON.stringify(exemptions, undefined, 2) + '\n')
       } else {
         await setProfileVersionExemption(dir, request.packageVersion, request.runtimeVersion, command === 'allow-version', acceptRisk)
-        process.stdout.write(`dsh: ${command === 'allow-version' ? 'allowed' : 'revoked'} ${request.packageVersion} for DSH ${request.runtimeVersion}\n`)
+        process.stdout.write(`astro-one: ${command === 'allow-version' ? 'allowed' : 'revoked'} ${request.packageVersion} for Astro One ${request.runtimeVersion}\n`)
       }
     }, { waitMs: 120000 })
     return 0
   } catch (error) {
-    process.stderr.write(`dsh: ${String(error)}\n`)
+    process.stderr.write(`astro-one: ${String(error)}\n`)
     return 1
   }
 }
 
 /** Run package management for a profile.
  * @param profile Profile name.
- * @param args DSH exemption command or pnpm arguments relative to the invoking directory.
+ * @param args Astro One exemption command or pnpm arguments relative to the invoking directory.
  * @returns Zero on success; nonzero on invalid approval or package-manager failure.
  */
 export async function runPlugin(profile: string, args: readonly string[]): Promise<number> {
@@ -64,7 +64,7 @@ export async function runPlugin(profile: string, args: readonly string[]): Promi
   if (versionResult !== undefined) return versionResult
   const dir = resolveProfileDir(profile)
   if (existsSync(join(dir, 'package.json'))) {
-    for (const warning of readProfileCompatibility(dir).warnings) process.stderr.write(`dsh: warning: ${warning}\n`)
+    for (const warning of readProfileCompatibility(dir).warnings) process.stderr.write(`astro-one: warning: ${warning}\n`)
   }
   const result = await runPluginCommand({ profile, installAnchor: INSTALL_ANCHOR, cwd: process.cwd() }, args, {
     execution: 'cli',
@@ -73,13 +73,13 @@ export async function runPlugin(profile: string, args: readonly string[]): Promi
     lookupTimeoutMs: 120000,
     onOutput: (text, stream) => { process[stream].write(text) },
   })
-  if (result.exitCode === 127) process.stderr.write('dsh: pnpm was not found; install pnpm and make it available on PATH.\n')
+  if (result.exitCode === 127) process.stderr.write('astro-one: pnpm was not found; install pnpm and make it available on PATH.\n')
   for (const { name, version, runtimeVersion } of result.incompatible ?? []) {
-    process.stderr.write(`dsh: to accept the risk, run: dsh plugin --profile ${profile} allow-version ${name}@${version} --dsh-version ${runtimeVersion} --accept-risk\n`)
+    process.stderr.write(`astro-one: to accept the risk, run: astro-one plugin --profile ${profile} allow-version ${name}@${version} --astro-one-version ${runtimeVersion} --accept-risk\n`)
   }
-  if (result.exitCode !== 0) process.stderr.write(`dsh: plugin command failed; diagnostics: ${result.logPath}\n`)
+  if (result.exitCode !== 0) process.stderr.write(`astro-one: plugin command failed; diagnostics: ${result.logPath}\n`)
   if (result.exitCode !== 0 && args.some(argument => /^git\+|^github:|\.git(?:#|$)/.test(argument))) {
-    process.stderr.write(`dsh: git-hosted plugins build on install via their prepare script, which pnpm blocks until allowed — add the exact key pnpm printed above under allowBuilds in ${join(resolveProfileDir(profile), 'pnpm-workspace.yaml')}, then re-run\n`)
+    process.stderr.write(`astro-one: git-hosted plugins build on install via their prepare script, which pnpm blocks until allowed — add the exact key pnpm printed above under allowBuilds in ${join(resolveProfileDir(profile), 'pnpm-workspace.yaml')}, then re-run\n`)
   }
   return result.exitCode
 }

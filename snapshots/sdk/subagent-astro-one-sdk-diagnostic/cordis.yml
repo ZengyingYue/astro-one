@@ -1,0 +1,68 @@
+# TypeScript SDK snapshot patch for foreground and background Astro One SDK failures.
+
+- id: skill-filesystem
+  name: '@astro-one/skill-filesystem'
+  config:
+    includeDefaultRoots: false
+
+- id: llm-deepseek
+  name: '@astro-one/llm-deepseek'
+  config:
+    thinking: enabled
+    reasoningEffort: max
+
+- id: session-persistence-jsonl
+  name: '@astro-one/session-persistence-jsonl'
+  config:
+    root: !!js astroOneHomePath('sessions')
+    compression: !!js "process.env.ASTRO_ONE_SNAPSHOT === undefined ? 'zstd' : 'none'"
+
+- id: session-log-deepseek
+  name: '@astro-one/session-log-deepseek'
+  config:
+    enabled: true
+
+- insert:
+    - id: subagent-astro-one-sdk-diagnostic
+      name: '@astro-one/subagent-astro-one-sdk'
+      config:
+        providerName: astro-one-sdk-diagnostic
+        profile: sdk
+        patches:
+          - !!js process.env.ASTRO_ONE_TEST_CHILD_PATCH
+        astroOneHome: !!js astroOneHomePath('children/foreground')
+        provider: mock
+        model: mock-echo
+        env:
+          ASTRO_ONE_TELEMETRY_DISABLED: '1'
+          ASTRO_ONE_TEST_CHILD_FAILURE: '1'
+    - id: tool-subagent-astro-one-sdk-diagnostic
+      name: '@astro-one/tool-subagent'
+      config:
+        provider: astro-one-sdk-diagnostic
+        toolName: subagent_astro_one_sdk
+        backgroundMode: one-shot
+        maxDepth: provider-managed
+    - id: subagent-astro-one-sdk-diagnostic-background
+      name: '@astro-one/subagent-astro-one-sdk'
+      config:
+        providerName: astro-one-sdk-diagnostic-background
+        profile: sdk
+        patches:
+          - !!js process.env.ASTRO_ONE_TEST_CHILD_PATCH
+        astroOneHome: !!js astroOneHomePath('children/background')
+        provider: mock
+        model: mock-echo
+        env:
+          ASTRO_ONE_TELEMETRY_DISABLED: '1'
+          ASTRO_ONE_TEST_CHILD_FAILURE: '1'
+          FAKE_INIT_GO: .astro-one-sdk-background-release
+    - id: tool-subagent-astro-one-sdk-diagnostic-background
+      name: '@astro-one/tool-subagent'
+      config:
+        provider: astro-one-sdk-diagnostic-background
+        toolName: subagent_astro_one_sdk_background
+        backgroundMode: one-shot
+        maxDepth: provider-managed
+    - id: release-astro-one-sdk-background-on-job-output
+      name: '../../../apps/cli/tests/profiles/sdk/fixtures/subagent-astro-one-sdk-release-on-job-output.ts'

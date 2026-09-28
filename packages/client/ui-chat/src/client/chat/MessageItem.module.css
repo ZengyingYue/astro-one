@@ -18,7 +18,7 @@
      resolves to the original 525px on the default column and widens with a
      dragged or adaptive column. The 748px fallback covers mounts outside the
      conversation column, where the axis variable is absent. */
-  max-width: min(calc(var(--dsh-chat-content-width, 748px) * 0.702), 82%);
+  max-width: min(calc(var(--astro-one-chat-content-width, 748px) * 0.702), 82%);
 }
 .bubble {
   /* Figma's 525px cap held as a share of the width axis (525/748 ≈ 0.702) so
@@ -31,8 +31,8 @@
      padding each side; the Settings font-size preference moves size and line
      height together through the body-published axis. */
   padding: 10px 16px;
-  font-size: var(--dsh-content-font-size, 14px);
-  line-height: calc(22px + var(--dsh-content-font-delta, 0px));
+  font-size: var(--astro-one-content-font-size, 14px);
+  line-height: calc(22px + var(--astro-one-content-font-delta, 0px));
   color: var(--dsw-alias-label-primary);
   /* The projected user text is inline runs; the bubble owns wrapping so a
      decorated single-line message stays one line. */
@@ -42,8 +42,8 @@
 
 .referenceSummary {
   color: var(--dsw-alias-label-tertiary);
-  font-size: var(--dsh-content-font-size-secondary, 13px);
-  line-height: calc(18px + var(--dsh-content-font-delta-secondary, 0px));
+  font-size: var(--astro-one-content-font-size-secondary, 13px);
+  line-height: calc(18px + var(--astro-one-content-font-delta-secondary, 0px));
 }
 .contextRow {
   padding: 2px 0;
@@ -56,7 +56,7 @@
   /* The toggle's line, and the band a pinned toggle occupies. The button's
      height and the offset that holds a summary's code banner below that band
      are the same measurement, so both read it from here. */
-  --dsh-compaction-header-height: calc(24px + var(--dsh-content-font-delta, 0px));
+  --astro-one-compaction-header-height: calc(24px + var(--astro-one-content-font-delta, 0px));
   padding: 2px 0;
 }
 
@@ -64,7 +64,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  height: var(--dsh-compaction-header-height);
+  height: var(--astro-one-compaction-header-height);
   min-width: 0;
   padding: 0;
   border: none;
@@ -100,7 +100,7 @@
    `.bannerWrap { top: 0 }` by specificity (0,2,0 against 0,1,0), not by
    declaration order: the two sheets load in their own packages. */
 .compactionBody :has(> [data-code-block-banner]) {
-  top: var(--dsh-compaction-header-height);
+  top: var(--astro-one-compaction-header-height);
 }
 
 /* Pinned, the toggle needs an opaque hover fill: the default translucent hover
@@ -122,8 +122,8 @@
   flex: none;
   display: inline-grid;
   place-items: center;
-  width: calc(16px + var(--dsh-content-font-delta, 0px));
-  height: calc(16px + var(--dsh-content-font-delta, 0px));
+  width: calc(16px + var(--astro-one-content-font-delta, 0px));
+  height: calc(16px + var(--astro-one-content-font-delta, 0px));
   margin-right: 6px;
   color: var(--dsw-alias-label-secondary);
 }
@@ -131,8 +131,8 @@
 /* Same glyph-scaling rule as DisclosureRow's leading: the CSS edge overrides
    the svg attributes so the 14px glyphs follow the font-size delta. */
 .compactionLeading svg {
-  width: calc(14px + var(--dsh-content-font-delta, 0px));
-  height: calc(14px + var(--dsh-content-font-delta, 0px));
+  width: calc(14px + var(--astro-one-content-font-delta, 0px));
+  height: calc(14px + var(--astro-one-content-font-delta, 0px));
 }
 
 .compactionContextIcon,
@@ -159,8 +159,8 @@
 
 .compactionTitle {
   flex: none;
-  font-size: var(--dsh-content-font-size-secondary, 13px);
-  line-height: calc(24px + var(--dsh-content-font-delta, 0px));
+  font-size: var(--astro-one-content-font-size-secondary, 13px);
+  line-height: calc(24px + var(--astro-one-content-font-delta, 0px));
   color: var(--dsw-alias-label-primary-dimmed);
 }
 
@@ -178,24 +178,24 @@
   min-width: 0;
   overflow: hidden;
   color: var(--dsw-alias-label-tertiary);
-  font-size: var(--dsh-content-font-size-secondary, 13px);
-  line-height: calc(24px + var(--dsh-content-font-delta, 0px));
+  font-size: var(--astro-one-content-font-size-secondary, 13px);
+  line-height: calc(24px + var(--astro-one-content-font-delta, 0px));
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .compactionBody {
   /* Indent under the title, which starts at leading (16 + delta) + gap 6. */
-  padding: 4px 0 4px calc(22px + var(--dsh-content-font-delta, 0px));
+  padding: 4px 0 4px calc(22px + var(--astro-one-content-font-delta, 0px));
   color: var(--dsw-alias-label-tertiary);
-  font-size: var(--dsh-content-font-size-secondary, 13px);
-  line-height: calc(24px + var(--dsh-content-font-delta, 0px));
+  font-size: var(--astro-one-content-font-size-secondary, 13px);
+  line-height: calc(24px + var(--astro-one-content-font-delta, 0px));
 }
 
 .retryRow {
   color: var(--dsw-alias-label-tertiary);
-  font-size: var(--dsh-content-font-size-secondary, 13px);
-  line-height: calc(20px + var(--dsh-content-font-delta-secondary, 0px));
+  font-size: var(--astro-one-content-font-size-secondary, 13px);
+  line-height: calc(20px + var(--astro-one-content-font-delta-secondary, 0px));
 }
 
 .retrySummary {
@@ -266,8 +266,8 @@
   margin-top: 3px;
   padding-left: 14px;
   overflow-wrap: anywhere;
-  font-size: var(--dsh-content-font-size-secondary, 13px);
-  line-height: calc(18px + var(--dsh-content-font-delta-secondary, 0px));
+  font-size: var(--astro-one-content-font-size-secondary, 13px);
+  line-height: calc(18px + var(--astro-one-content-font-delta-secondary, 0px));
 }
 
 .retryDetailLabel {
@@ -280,8 +280,8 @@
   gap: 8px;
   align-items: start;
   padding: 2px 0;
-  font-size: var(--dsh-content-font-size-secondary, 13px);
-  line-height: calc(20px + var(--dsh-content-font-delta-secondary, 0px));
+  font-size: var(--astro-one-content-font-size-secondary, 13px);
+  line-height: calc(20px + var(--astro-one-content-font-delta-secondary, 0px));
 }
 
 .turnErrorDot {

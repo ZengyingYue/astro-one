@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/archived/simplification/2026-08-03-omit-invariants-from-shipped-config.md
-2026-08-03-omit-invariants-from-shipped-config.md: 135b939ff62bddee46eaa7b8144d151560a0e31d
-2026-08-03-omit-invariants-from-shipped-config.zh.md: 968b575c9b799aba225b85a3b9d85f7c6d55d9ef
+2026-08-03-omit-invariants-from-shipped-config.md: be980363ceb3a1efd2bad16fb682138a5067a72a
+2026-08-03-omit-invariants-from-shipped-config.zh.md: 3ee4a8ff8fba550d711c8591409c4c57f9232f7c

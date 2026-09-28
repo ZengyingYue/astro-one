@@ -5,7 +5,7 @@
  * per-project/session directory layout, header-line (de)serialization, and the
  * truncation-repair offset computation.
  *
- * @module dsh-session-persistence-jsonl/format
+ * @module astro-one-session-persistence-jsonl/format
  */
 
 import { isAbsolute, join } from 'node:path'
@@ -13,23 +13,23 @@ import {
   SESSION_FORMAT_VERSION,
   KNOWN_SESSION_EVENT_TYPES,
   SessionLogOffset,
-} from '@deepseek-ai/dsh-session'
+} from '@astro-one/session'
 import type {
   SessionEvent,
   SessionHeader,
   SessionId,
   SessionLogOffset as SessionLogOffsetType,
-} from '@deepseek-ai/dsh-session'
-import { parseSessionFormatLogFilename, sessionFormatLogFilename, SessionFormatUnsupportedMigrationError } from '@deepseek-ai/dsh-session-format'
-import type { SessionFormatEvent } from '@deepseek-ai/dsh-session-format'
-import type { SessionFormatRecovery, SessionFormatRestore } from '@deepseek-ai/dsh-session-format'
-import { sessionFormatCatalog } from '@deepseek-ai/dsh-session-format-catalog'
-import { assertV4RowAdmission, assertReleasedV4Relationships } from '@deepseek-ai/dsh-session-format-v3-to-v4'
+} from '@astro-one/session'
+import { parseSessionFormatLogFilename, sessionFormatLogFilename, SessionFormatUnsupportedMigrationError } from '@astro-one/session-format'
+import type { SessionFormatEvent } from '@astro-one/session-format'
+import type { SessionFormatRecovery, SessionFormatRestore } from '@astro-one/session-format'
+import { sessionFormatCatalog } from '@astro-one/session-format-catalog'
+import { assertV4RowAdmission, assertReleasedV4Relationships } from '@astro-one/session-format-v3-to-v4'
 import {
   SessionFormatUnsupportedError,
   sessionFormatVersionRefusal,
   type SessionStorageMetadata,
-} from '@deepseek-ai/dsh-session-persistence'
+} from '@astro-one/session-persistence'
 
 /** Physical encoding selected for JSONL session artifacts. */
 export type JsonlCompression = 'zstd' | 'none'

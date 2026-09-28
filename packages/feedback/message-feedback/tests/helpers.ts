@@ -1,16 +1,16 @@
 import { mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { Context } from '@deepseek-ai/cordis'
-import { createAssistantMessage, createUserMessage } from '@deepseek-ai/dsh-llm'
-import type { MessageId } from '@deepseek-ai/dsh-llm/brand'
+import { Context } from '@astro-one/cordis'
+import { createAssistantMessage, createUserMessage } from '@astro-one/llm'
+import type { MessageId } from '@astro-one/llm/brand'
 import SessionStore, { SessionLogOffset,
   SESSION_FORMAT_VERSION,
   Session,
   SessionId,
   type SessionEvent,
   type SessionHeader,
-} from '@deepseek-ai/dsh-session'
+} from '@astro-one/session'
 import SessionPersistence, {
   SessionAlreadyExistsError,
   SessionHandleClosedError,
@@ -20,7 +20,7 @@ import SessionPersistence, {
   type SessionAccess,
   type SessionHandle,
   type SessionPersistenceSnapshot,
-} from '@deepseek-ai/dsh-session-persistence'
+} from '@astro-one/session-persistence'
 import MessageFeedbackService from '../src/index.ts'
 
 export interface MessageFixture {
@@ -204,7 +204,7 @@ export interface TestHarness {
 
 /** Compose feedback over a controllable Session persistence backend. */
 export async function setupHarness(maxNoteBytes = 64): Promise<TestHarness> {
-  const root = await mkdtemp(join(tmpdir(), 'dsh-message-feedback-test-'))
+  const root = await mkdtemp(join(tmpdir(), 'astro-one-message-feedback-test-'))
   const ctx = new Context()
   let disposeFeedback: (() => Promise<void>) | undefined
   try {

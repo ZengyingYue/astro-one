@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
-import { Session, SessionId, SessionSeq } from '@deepseek-ai/dsh-session'
-import { renderPrompt } from '@deepseek-ai/dsh-system-prompt'
+import { Context } from '@astro-one/cordis'
+import { createUserMessage } from '@astro-one/llm'
+import { Session, SessionId, SessionSeq } from '@astro-one/session'
+import { renderPrompt } from '@astro-one/system-prompt'
 import {
   createInboxStub,
   mountAgentLoopTestDependencies,
@@ -14,7 +14,7 @@ function message(text: string) {
   return createUserMessage({ content: [{ type: 'text', text }], source: { kind: 'user' } })
 }
 
-describe('dsh-agent-loop-testkit', () => {
+describe('astro-one-agent-loop-testkit', () => {
   it('rejects mutations through an unsupported Agent stub Inbox', () => {
     const inbox = unsupportedInbox()
 

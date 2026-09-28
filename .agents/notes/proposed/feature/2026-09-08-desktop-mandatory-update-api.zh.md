@@ -28,11 +28,11 @@ GET /api/v0/check_client_update
 GET /api/v0/check_client_update?scenario=launch
 x-client-platform: desktop-win
 x-client-version: 0.1.3-rc.2
-x-client-bundle-id: com.deepseek.dsh
+x-client-bundle-id: com.astro.one
 x-client-locale: zh-CN
 x-client-arch: x64
 x-client-update-channel: nightly
-x-client-bundled-dsh-version: 0.1.3-rc.2
+x-client-bundled-astro-one-version: 0.1.3-rc.2
 ```
 
 以上 header 对 Desktop 均为必填。描述已安装软件的值来自应用与发布元数据，不来自可编辑 UI 字段。
@@ -40,12 +40,12 @@ x-client-bundled-dsh-version: 0.1.3-rc.2
 | Header | 含义与取值 |
 |---|---|
 | `x-client-platform` | `desktop-win` 或 `desktop-mac` |
-| `x-client-version` | 完整 Desktop SemVer，保留预发布标识；一期等于内置 dsh |
-| `x-client-bundle-id` | 应用身份，例如 `com.deepseek.dsh`，区分 Harness 与 Chat |
+| `x-client-version` | 完整 Desktop SemVer，保留预发布标识；一期等于内置 astro-one |
+| `x-client-bundle-id` | 应用身份，例如 `com.astro.one`，区分 Harness 与 Chat |
 | `x-client-locale` | UI 语言，例如 `zh-CN`；选择本地化内容，不代表区域 |
 | `x-client-arch` | Windows 为 `x64`；macOS 为 `x64` 或 `arm64` |
 | `x-client-update-channel` | 一期固定 `nightly`，独立于版本后缀 |
-| `x-client-bundled-dsh-version` | 发布元数据中的完整内置 dsh 版本 |
+| `x-client-bundled-astro-one-version` | 发布元数据中的完整内置 astro-one 版本 |
 
 | Query | 客户端行为 | 后端一期行为 |
 |---|---|---|
@@ -78,7 +78,7 @@ x-client-bundled-dsh-version: 0.1.3-rc.2
   "msg": "Client version too low",
   "data": {
     "show_content": {
-      "title": "请更新 DeepSeek Harness",
+      "title": "请更新 Astro One",
       "detail": "当前版本已停止支持，请下载并安装新版本。"
     },
     "desktop_app_link": "https://example.com/harness/download"
@@ -102,7 +102,7 @@ x-client-bundled-dsh-version: 0.1.3-rc.2
 
 缺少必填 header、非法 SemVer 或不支持的平台／架构／通道组合返回明确参数错误，不能伪装为无强制成功或强制策略。优先沿用 `biz_code = 1` 表示缺少版本、`biz_code = 2` 表示版本非法的既有业务含义；最终错误码分配由后端负责。服务异常不得伪装成成功，因为成功可能解除已有阻断。
 
-按应用身份、平台、架构、Desktop 版本、内置 dsh 版本与通道匹配，由服务端维护版本范围和优先级。使用完整 SemVer，不按字符串排序或截断预发布部分。一期两个版本相等、通道固定 Nightly，独立修订与通道切换延后。不得要求降级，也不得仅因客户端曾查询或展示过就停止返回 `40005`。
+按应用身份、平台、架构、Desktop 版本、内置 astro-one 版本与通道匹配，由服务端维护版本范围和优先级。使用完整 SemVer，不按字符串排序或截断预发布部分。一期两个版本相等、通道固定 Nightly，独立修订与通道切换延后。不得要求降级，也不得仅因客户端曾查询或展示过就停止返回 `40005`。
 
 ### 策略发布与当前判定
 
@@ -121,7 +121,7 @@ x-client-bundled-dsh-version: 0.1.3-rc.2
 
 ## 考虑过的替代方案
 
-**依赖远程业务拦截。** 本地 dsh 请求不一定到达远程网关，需要独立的未登录查询。
+**依赖远程业务拦截。** 本地 astro-one 请求不一定到达远程网关，需要独立的未登录查询。
 
 **Desktop 复用移动端嵌套载荷。** 后端约定拍平 Desktop 字段。按平台保留移动端兼容，不让新 Desktop 支持从未分发的嵌套变体。
 
@@ -136,7 +136,7 @@ x-client-bundled-dsh-version: 0.1.3-rc.2
 | 不命中策略 | `code = 0`、`biz_code = 0`、`biz_data = null` |
 | 命中策略 | 顶层 `40005`，文案与页面直接位于 `data` 下 |
 | 改变或省略 query 参数 | 其他条件相同时判定一致 |
-| 相等的 Desktop/dsh 预发布版本、固定 Nightly | 完整 SemVer 匹配，不要求降级或切换通道 |
+| 相等的 Desktop/astro-one 预发布版本、固定 Nightly | 完整 SemVer 匹配，不要求降级或切换通道 |
 | 客户端不再命中，包括升级后 | 返回无强制成功，不作废 updater 产物 |
 | 可解除要求的发布、页面或适用 feed 不可用 | 拒绝启用策略 |
 | 必填字段非法或服务失败 | 明确错误，不伪装为无强制成功 |

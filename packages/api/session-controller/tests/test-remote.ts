@@ -1,15 +1,15 @@
 /** Test-only direct Remote face over the Session Controller's internal controllers. */
 import type { SessionControllerInternals } from '../src/index.ts'
 
-import { SessionLogOffset } from '@deepseek-ai/dsh-session'
-import type { Context } from '@deepseek-ai/cordis'
-import type { ModelSelection as AgentModelSelection } from '@deepseek-ai/dsh-agent'
+import { SessionLogOffset } from '@astro-one/session'
+import type { Context } from '@astro-one/cordis'
+import type { ModelSelection as AgentModelSelection } from '@astro-one/agent'
 import type {
   AdmittedPromptContentPart,
   AttachmentAdmissionPart,
   ImageAttachmentLimits,
-} from '@deepseek-ai/dsh-attachment'
-import type { SessionEvent, SessionHeader, SessionId } from '@deepseek-ai/dsh-session'
+} from '@astro-one/attachment'
+import type { SessionEvent, SessionHeader, SessionId } from '@astro-one/session'
 import type { SessionProjectionsValue } from '../src/types.ts'
 import {
   SessionPersistenceNotFoundError,
@@ -22,15 +22,15 @@ import {
   type SessionPersistenceOpenOptions,
   type SessionPersistenceSnapshot,
   type SessionPersistenceStatOptions,
-} from '@deepseek-ai/dsh-session-persistence'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import SessionQueryEngine from '@deepseek-ai/dsh-session-query'
+} from '@astro-one/session-persistence'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import SessionQueryEngine from '@astro-one/session-query'
 import { vi } from 'vitest'
 import {
   RemoteError,
   remoteErrorOf,
   type RemoteResult,
-} from '@deepseek-ai/dsh-typert-protocol'
+} from '@astro-one/typert-protocol'
 import SessionController from '../src/index.ts'
 import type {
   ModelCatalog,

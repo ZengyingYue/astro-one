@@ -1,14 +1,14 @@
 import { describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import { createSystemMessage, createUserMessage } from '@deepseek-ai/dsh-llm'
-import SessionStore, { SessionId, SessionSeq } from '@deepseek-ai/dsh-session'
-import type { Session, SurfaceIntent } from '@deepseek-ai/dsh-session'
+import { Context } from '@astro-one/cordis'
+import { createSystemMessage, createUserMessage } from '@astro-one/llm'
+import SessionStore, { SessionId, SessionSeq } from '@astro-one/session'
+import type { Session, SurfaceIntent } from '@astro-one/session'
 import { SystemPromptProjection } from '../src/runtime-context.ts'
 import type { SystemPromptCommit, SystemPromptDecisionInput } from '../src/runtime-context.ts'
 
-declare module '@deepseek-ai/dsh-llm' {
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
-    'test-compaction': { kind: 'test-compaction' } & import('@deepseek-ai/dsh-llm').ContextFormed
+    'test-compaction': { kind: 'test-compaction' } & import('@astro-one/llm').ContextFormed
   }
 }
 

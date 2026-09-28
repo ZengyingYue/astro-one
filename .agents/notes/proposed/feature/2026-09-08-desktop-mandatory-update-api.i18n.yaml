@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/feature/2026-09-08-desktop-mandatory-update-api.md
-2026-09-08-desktop-mandatory-update-api.md: f88216065fe09221c7a14805e4d25fb97a259abc
-2026-09-08-desktop-mandatory-update-api.zh.md: cb3e631040d221b87979b7fcd379c8881dba36bd
+2026-09-08-desktop-mandatory-update-api.md: 68115eb20ff51a52e2316389813f23a367f0bc4b
+2026-09-08-desktop-mandatory-update-api.zh.md: 2e6f2c4b59d6f47382304b535d80d9cfe2e28f62

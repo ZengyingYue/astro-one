@@ -6,11 +6,11 @@ Status: implemented
 
 ## 问题
 
-Python 安装的 `dsh.exe` 控制台命令会在初始化 profile 前间歇性地以 Windows 访问冲突 `0xc0000005` 退出。其冒烟断言遗漏进程状态，只报告空标准流。原生 faulthandler 探测 (run 34030851888) 将故障定位在运行时控制台入口调用的 Python 3.10 `os._execvpe`，而非打包的 Node 可执行文件。直接启动可执行文件的对照通过。
+Python 安装的 `astro-one.exe` 控制台命令会在初始化 profile 前间歇性地以 Windows 访问冲突 `0xc0000005` 退出。其冒烟断言遗漏进程状态，只报告空标准流。原生 faulthandler 探测 (run 34030851888) 将故障定位在运行时控制台入口调用的 Python 3.10 `os._execvpe`，而非打包的 Node 可执行文件。直接启动可执行文件的对照通过。
 
 ## 决策
 
-[Python 控制台入口](../../../../python/sdk-runtime/src/deepseek_harness_runtime/__init__.py) 在 Windows 上使用 `subprocess.run`，继承标准流与环境，等待运行时结束，再以运行时状态退出。POSIX 保留 `os.execvpe` 进程替换。Windows CRT exec 并非 POSIX 进程替换；显式启动并等待的路径避开观测到的原生 exec 操作。
+[Python 控制台入口](../../../../python/sdk-runtime/src/astro_one_runtime/__init__.py) 在 Windows 上使用 `subprocess.run`，继承标准流与环境，等待运行时结束，再以运行时状态退出。POSIX 保留 `os.execvpe` 进程替换。Windows CRT exec 并非 POSIX 进程替换；显式启动并等待的路径避开观测到的原生 exec 操作。
 
 [安装后 wheel 冒烟测试](../../../../scripts/smoke-python-runtime.py) 在 profile 安装失败时，同时报告十进制、无符号 32 位十六进制状态与捕获的标准流。这保留普通命令失败和原生进程异常的区别。
 

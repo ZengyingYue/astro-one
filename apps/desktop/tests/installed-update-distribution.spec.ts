@@ -10,13 +10,13 @@ import { planInstalledUpdateDistribution } from '../scripts/installed-update-dis
 const versions = ['0.1.6-nightly.20260914.1', '0.1.6-nightly.20260914.2'] as const
 
 async function fixture<T>(body: (manifest: string) => Promise<T>): Promise<T> {
-  const directory = await mkdtemp(join(tmpdir(), 'dsh-update-distribution-'))
+  const directory = await mkdtemp(join(tmpdir(), 'astro-one-update-distribution-'))
   try {
     const run = await createInstalledUpdateRun(directory, versions, { version: '0.1.5-rc.2', commit: 'a'.repeat(40), dirtyFiles: [] })
     for (const version of versions) {
       const output = join(run.root, version, 'installer')
       await mkdir(output, { recursive: true })
-      const filename = `deepseek-harness-${version}-win-x64.exe`
+      const filename = `astro-one-${version}-win-x64.exe`
       const body = Buffer.from(`inert fixture ${version}`)
       await writeFile(join(output, filename), body)
       await writeFile(join(output, `${filename}.blockmap`), 'inert map')
@@ -35,8 +35,8 @@ describe('qualification distribution file planning', () => {
       expect(old!.feed.sha512).not.toBe(next!.feed.sha512)
       expect(old!.binaries.map(file => file.key)).not.toEqual(next!.binaries.map(file => file.key))
       expect(next!.binaries).toHaveLength(2)
-      expect(next!.binaries.every(file => file.key.startsWith('dsh-desk/bin/qualification/'))).toBe(true)
-      expect(next!.feed.key).toMatch(/^dsh-desk\/feeds\/qualification\/[a-f0-9]{24}\/win-x64\/nightly.yml$/u)
+      expect(next!.binaries.every(file => file.key.startsWith('astro-one-desk/bin/qualification/'))).toBe(true)
+      expect(next!.feed.key).toMatch(/^astro-one-desk\/feeds\/qualification\/[a-f0-9]{24}\/win-x64\/nightly.yml$/u)
       expect(next!.publicationAuthorized).toBe(false)
       expect(next!.verified).toBe('file-integrity-only')
       expect(load(next!.feed.contents)).toMatchObject({ version: versions[1],

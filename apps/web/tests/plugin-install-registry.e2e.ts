@@ -13,7 +13,7 @@ import { ZH_BROWSER_LOCALE } from './support.ts'
 const MIRROR = 'https://registry.npmmirror.com/'
 
 it.each(['https://registry.npmjs.org/', MIRROR])('selects the fastest responding registry %s, remembers it, and falls back after a registry failure', async (winner) => {
-  const scratch = await mkdtemp(join(tmpdir(), 'dsh-install-registry-'))
+  const scratch = await mkdtemp(join(tmpdir(), 'astro-one-install-registry-'))
   onTestFinished(() => rm(scratch, { recursive: true, force: true }))
   const requestLog = join(scratch, 'registry-pings.jsonl')
   await writeFile(requestLog, '')
@@ -40,7 +40,7 @@ it.each(['https://registry.npmjs.org/', MIRROR])('selects the fastest responding
           console.log(JSON.stringify({ error: { code: 'ERR_PNPM_META_FETCH_FAIL', message: 'GET https://registry.npmjs.org/mirrored-package: request timed out (ETIMEDOUT)' } }));
           process.exitCode = 1;
         } else {
-          console.log(JSON.stringify({ name: 'mirrored-package', version: '2.0.0', dsh: { bundle: { patch: './cordis.patch.yml' } } }));
+          console.log(JSON.stringify({ name: 'mirrored-package', version: '2.0.0', astroOne: { bundle: { patch: './cordis.patch.yml' } } }));
         }
       `)
       await writeFile(join(profile, 'add'), `
@@ -53,7 +53,7 @@ it.each(['https://registry.npmjs.org/', MIRROR])('selects the fastest responding
           return;
         }
         fs.mkdirSync('node_modules/mirrored-package', { recursive: true });
-        fs.writeFileSync('node_modules/mirrored-package/package.json', JSON.stringify({ name: 'mirrored-package', version: '2.0.0', dsh: { bundle: { patch: './cordis.patch.yml' } } }));
+        fs.writeFileSync('node_modules/mirrored-package/package.json', JSON.stringify({ name: 'mirrored-package', version: '2.0.0', astroOne: { bundle: { patch: './cordis.patch.yml' } } }));
         fs.writeFileSync('node_modules/mirrored-package/cordis.patch.yml', '[]\\n');
         fs.writeFileSync('package.json', JSON.stringify({ ...JSON.parse(fs.readFileSync('package.json', 'utf8')), dependencies: { 'mirrored-package': '2.0.0' } }));
         console.log('Installed from ' + (process.argv.find(arg => arg.startsWith('--registry=')) ?? 'the registry pnpm names'));
@@ -109,7 +109,7 @@ it.each(['https://registry.npmjs.org/', MIRROR])('selects the fastest responding
       const lookups = (await readFile(join(profile, '.registry-lookups'), 'utf8')).trim().split('\n')
         .map(line => JSON.parse(line) as string[])
       // The inspection asked the mirror first, and each install attempt checked the named package's
-      // DSH peers at the registry that attempt would use: the mirror, then pnpm's own.
+      // Astro One peers at the registry that attempt would use: the mirror, then pnpm's own.
       expect(lookups.map(call => call.filter(argument => argument.startsWith('--registry=')))).toEqual([
         ['--registry=' + MIRROR], ['--registry=' + MIRROR], [],
       ])

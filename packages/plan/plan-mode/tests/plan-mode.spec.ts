@@ -1,18 +1,18 @@
 import { describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import { createUserMessage, ToolCallId } from '@deepseek-ai/dsh-llm'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime, { RUN_CODE_NAME, defineContentToolFixture } from '@deepseek-ai/dsh-tools'
-import { Session, SessionId, type SessionEvent, type UserMessage } from '@deepseek-ai/dsh-session'
-import AgentRegistry, { agentEvents, type Agent } from '@deepseek-ai/dsh-agent'
-import { createScope } from '@deepseek-ai/dsh-scope'
+import { Context } from '@astro-one/cordis'
+import { createUserMessage, ToolCallId } from '@astro-one/llm'
+import SystemPrompt from '@astro-one/system-prompt'
+import ToolRuntime, { RUN_CODE_NAME, defineContentToolFixture } from '@astro-one/tools'
+import { Session, SessionId, type SessionEvent, type UserMessage } from '@astro-one/session'
+import AgentRegistry, { agentEvents, type Agent } from '@astro-one/agent'
+import { createScope } from '@astro-one/scope'
 import UserQuestionService, {
   UserQuestionError, type AskUserQuestionAnswer, type AskUserQuestionRequest,
-} from '@deepseek-ai/dsh-user-questions'
-import CommandRuntime from '@deepseek-ai/dsh-commands'
-import { PtcRuntime, type PtcRunRequest, type PtcRunResult } from '@deepseek-ai/dsh-ptc-runtime'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import { turnBoundaryProjectionDefinition } from '@deepseek-ai/dsh-agent-loop'
+} from '@astro-one/user-questions'
+import CommandRuntime from '@astro-one/commands'
+import { PtcRuntime, type PtcRunRequest, type PtcRunResult } from '@astro-one/ptc-runtime'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import { turnBoundaryProjectionDefinition } from '@astro-one/agent-loop'
 import PlanModeController, { EXIT_PLAN_MODE, planProjectionDefinition, resolveConfig } from '../src/index.ts'
 import type { PlanModeConfig } from '../src/index.ts'
 import type { PlanUnitState } from '../src/types.ts'
@@ -29,7 +29,7 @@ function registerQuestionAnswerer(ctx: Context, answerer: QuestionAnswerer): () 
 }
 
 /**
- * Drives the REAL plugin: mounts `dsh-plan-mode` beside real `SystemPrompt` and
+ * Drives the REAL plugin: mounts `astro-one-plan-mode` beside real `SystemPrompt` and
  * `ToolRuntime` services, with fake Agents carrying real `Session`s and a
  * real scoped `agent.ctx` minted through `createScope`.
  * Request boundaries are simulated by dispatching the real pre-step waterfall
@@ -509,7 +509,7 @@ describe('the soft layer', () => {
     // Minimal scriptable runtime: the SDK section resolves ctx.ptcRuntime at
     // assembly time (the ptc.spec fake's shape).
     class FakeRuntime extends PtcRuntime {
-      resolve(request: import('@deepseek-ai/dsh-ptc-runtime').PtcRunRequest): import('@deepseek-ai/dsh-ptc-runtime').PtcRunSpec { return { ...request, cwd: request.cwd ?? process.cwd(), timeoutMs: request.timeoutMs ?? 120_000 } }
+      resolve(request: import('@astro-one/ptc-runtime').PtcRunRequest): import('@astro-one/ptc-runtime').PtcRunSpec { return { ...request, cwd: request.cwd ?? process.cwd(), timeoutMs: request.timeoutMs ?? 120_000 } }
 
       readonly language = 'typescript'
       readonly isolation = 'fake'
@@ -533,7 +533,7 @@ describe('the soft layer', () => {
 
   it('keeps native wire schemas and the SDK in step under mode both', async () => {
     class FakeRuntime extends PtcRuntime {
-      resolve(request: import('@deepseek-ai/dsh-ptc-runtime').PtcRunRequest): import('@deepseek-ai/dsh-ptc-runtime').PtcRunSpec { return { ...request, cwd: request.cwd ?? process.cwd(), timeoutMs: request.timeoutMs ?? 120_000 } }
+      resolve(request: import('@astro-one/ptc-runtime').PtcRunRequest): import('@astro-one/ptc-runtime').PtcRunSpec { return { ...request, cwd: request.cwd ?? process.cwd(), timeoutMs: request.timeoutMs ?? 120_000 } }
 
       readonly language = 'typescript'
       readonly isolation = 'fake'
@@ -557,7 +557,7 @@ describe('the soft layer', () => {
 
   it('keeps the PTC mode SDK byte-identical across mode switches', async () => {
     class FakeRuntime extends PtcRuntime {
-      resolve(request: import('@deepseek-ai/dsh-ptc-runtime').PtcRunRequest): import('@deepseek-ai/dsh-ptc-runtime').PtcRunSpec { return { ...request, cwd: request.cwd ?? process.cwd(), timeoutMs: request.timeoutMs ?? 120_000 } }
+      resolve(request: import('@astro-one/ptc-runtime').PtcRunRequest): import('@astro-one/ptc-runtime').PtcRunSpec { return { ...request, cwd: request.cwd ?? process.cwd(), timeoutMs: request.timeoutMs ?? 120_000 } }
 
       readonly language = 'typescript'
       readonly isolation = 'fake'
@@ -626,7 +626,7 @@ describe('/plan', () => {
     const plainSteer = vi.fn()
     ;(plainAgent as unknown as { steer: typeof plainSteer }).steer = plainSteer
     expect(ctx.commands.list(plainAgent)).toEqual([
-      { definitionId: '@deepseek-ai/dsh-plan-mode', name: 'plan', description: 'Enter or leave plan mode', input: { hint: '[off|message]', attachments: true } },
+      { definitionId: '@astro-one/plan-mode', name: 'plan', description: 'Enter or leave plan mode', input: { hint: '[off|message]', attachments: true } },
     ])
 
     const signal = new AbortController().signal
@@ -932,7 +932,7 @@ describe('exit_plan_mode', () => {
   it('carries the exact plan through a PTC mode review and logs the nested dispatch', async () => {
     const plan = '# PTC mode plan\n\nUse the existing seam.'
     class ExitRuntime extends PtcRuntime {
-      resolve(request: import('@deepseek-ai/dsh-ptc-runtime').PtcRunRequest): import('@deepseek-ai/dsh-ptc-runtime').PtcRunSpec { return { ...request, cwd: request.cwd ?? process.cwd(), timeoutMs: request.timeoutMs ?? 120_000 } }
+      resolve(request: import('@astro-one/ptc-runtime').PtcRunRequest): import('@astro-one/ptc-runtime').PtcRunSpec { return { ...request, cwd: request.cwd ?? process.cwd(), timeoutMs: request.timeoutMs ?? 120_000 } }
 
       readonly language = 'typescript'
       readonly isolation = 'fake'

@@ -1,5 +1,5 @@
-import { Context } from '@deepseek-ai/cordis'
-import Schema from '@deepseek-ai/schemastery'
+import { Context } from '@astro-one/cordis'
+import Schema from '@astro-one/schemastery'
 import { describe, expect, it } from 'vitest'
 import type { SchemaNode } from '../src/client/schema.ts'
 import { SettingsSchemaService } from '../src/client/schema.ts'

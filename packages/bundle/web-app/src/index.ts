@@ -1,6 +1,6 @@
 /**
- * @deepseek-ai/dsh-web-app — the browser-surface bundle's runtime glue plugin
- * plus the bundle patch (`cordis.patch.yml`, declared by the `dsh.bundle.patch`
+ * @astro-one/web-app — the browser-surface bundle's runtime glue plugin
+ * plus the bundle patch (`cordis.patch.yml`, declared by the `astroOne.bundle.patch`
  * manifest field). The plugin owns the browser-surface glue: it resolves
  * the built frontend dist (workspace knowledge of this bundle, never user
  * config), mounts the `frontend-static` fallback owner over it, registers the
@@ -8,7 +8,7 @@
  * variable, the process-token URL line, and the default-browser handoff. The
  * model and shell retain the clean URL. App command-line values arrive through
  * the `webStartup` service expressions in the bundle patch.
- * @module @deepseek-ai/dsh-web-app
+ * @module @astro-one/web-app
  */
 
 import { spawn, type ChildProcess } from 'node:child_process'
@@ -16,21 +16,21 @@ import { createRequire } from 'node:module'
 import { dirname, join } from 'node:path'
 import { networkInterfaces } from 'node:os'
 import { fileURLToPath } from 'node:url'
-import type { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import { addHarnessSourceSection, auditStartupEntries } from '@deepseek-ai/dsh-app-boot'
-import type {} from '@deepseek-ai/dsh-client-connection'
-import * as FrontendStatic from '@deepseek-ai/dsh-host-frontend-static'
-import { launchedThroughSsh, launchEnvironmentOf } from '@deepseek-ai/dsh-launch-environment'
-import { scrubbedParentEnv } from '@deepseek-ai/dsh-subprocess'
-import type {} from '@deepseek-ai/cordis-plugin-loader'
-import type {} from '@deepseek-ai/dsh-host-webserver'
-import type {} from '@deepseek-ai/dsh-shell-env'
+import type { Context } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
+import { addHarnessSourceSection, auditStartupEntries } from '@astro-one/app-boot'
+import type {} from '@astro-one/client-connection'
+import * as FrontendStatic from '@astro-one/host-frontend-static'
+import { launchedThroughSsh, launchEnvironmentOf } from '@astro-one/launch-environment'
+import { scrubbedParentEnv } from '@astro-one/subprocess'
+import type {} from '@astro-one/cordis-plugin-loader'
+import type {} from '@astro-one/host-webserver'
+import type {} from '@astro-one/shell-env'
 
 /** Stable Cordis plugin name. */
 export const name = 'web-app'
 
-/** This dsh installation's root, from either this package's source or built entry. */
+/** This astro-one installation's root, from either this package's source or built entry. */
 const SOURCE_ROOT = fileURLToPath(new URL('../../../..', import.meta.url))
 const ANNOUNCED_ROOTS = new WeakSet<Context>()
 
@@ -48,7 +48,7 @@ export interface Config {
   printUrl: boolean
   /**
    * Register the model-visible surface context (the `app:web-surface` prompt
-   * section and the `DSH_WEB_URL` bash variable). A one-shot non-interactive
+   * section and the `ASTRO_ONE_WEB_URL` bash variable). A one-shot non-interactive
    * layer can turn it off when its user is not in the GUI, so the
    * orientation text would be false.
    */
@@ -73,7 +73,7 @@ export interface WebRuntimeValues {
 }
 
 /** Environment variable naming the canonical local URL of this Web GUI. */
-const DSH_WEB_URL = 'DSH_WEB_URL' as const
+const ASTRO_ONE_WEB_URL = 'ASTRO_ONE_WEB_URL' as const
 
 // Display-only mirror of the webserver schema's loopback host: the address the
 // local URL always prints. Not a source of truth — the schema is.
@@ -131,17 +131,17 @@ export function resolveLanTrust(bindHost: string, extra: readonly string[]): Web
   return { lanAddresses, trustedHosts: [...lanAddresses, ...extra] }
 }
 
-/** Model-visible orientation and acceptance boundary for sessions created through `dsh web`. */
+/** Model-visible orientation and acceptance boundary for sessions created through `astro-one web`. */
 function webSurfacePrompt(webUrl: string): string {
   const updateContract = 'The client-plugin HMR receiver is active, but client-plugin changes reload without a refresh only while '
     + '`pnpm run dev:web` is also running from this same checkout to rebuild their bundles; verify that watcher before promising automatic updates. '
     + 'Every other change — the apps/web shell and plain packages — requires rebuilding the affected Web artifacts and verifying this existing URL after a page refresh. '
-  return `You are interacting with the user through the DeepSeek Harness Web GUI at ${webUrl}. `
+  return `You are interacting with the user through the Astro One Web GUI at ${webUrl}. `
     + 'When the user refers to "this page", "this GUI", or "this app" without naming another target, they mean this GUI. '
     + 'The browser provides no implicit DOM, route, or screenshot context. '
     + updateContract
     + 'Starting another server does not update this GUI. '
-    + 'The apps/web Vite entry builds the shell but is not a standalone application because only dsh web injects window.__DSH_BOOT__. '
+    + 'The apps/web Vite entry builds the shell but is not a standalone application because only astro-one web injects window.__ASTRO_ONE_BOOT__. '
     + 'Do not start a replacement server unless the user asks; if one is needed, use a managed background job and verify its exact URL.'
 }
 
@@ -162,10 +162,10 @@ function localWebUrl(ctx: Context): string {
 function resolveDistIndex(): string {
   const require = createRequire(import.meta.url)
   try {
-    return join(dirname(require.resolve('@deepseek-ai/dsh-web-frontend/package.json')), 'dist', 'index.html')
+    return join(dirname(require.resolve('@astro-one/web-frontend/package.json')), 'dist', 'index.html')
   } catch {
     /* v8 ignore next 2 -- reachable only when the frontend package is absent from the checkout */
-    throw new Error('web-app: @deepseek-ai/dsh-web-frontend is not resolvable from this composition')
+    throw new Error('web-app: @astro-one/web-frontend is not resolvable from this composition')
   }
 }
 
@@ -243,9 +243,9 @@ export function apply(ctx: Context, config: Config): void {
       runtimeCtx.shellEnv.register({
         name: 'web-runtime',
         variables: {
-          [DSH_WEB_URL]: { description: 'Canonical local URL of the DeepSeek Harness Web GUI serving this session.' },
+          [ASTRO_ONE_WEB_URL]: { description: 'Canonical local URL of the Astro One Web GUI serving this session.' },
         },
-        resolve: () => ({ [DSH_WEB_URL]: localWebUrl(runtimeCtx) }),
+        resolve: () => ({ [ASTRO_ONE_WEB_URL]: localWebUrl(runtimeCtx) }),
       })
     })
   }
@@ -268,13 +268,13 @@ export function apply(ctx: Context, config: Config): void {
           : connectionCtx.connection.authenticatedUrl(`http://${lanCandidate}:${String(port)}`)
         ANNOUNCED_ROOTS.add(connectionCtx.root)
         if (config.printUrl) {
-          console.log(`dsh web: ${authenticatedUrl}${lanUrl === undefined ? '' : ` (LAN: ${lanUrl})`}`)
+          console.log(`astro-one web: ${authenticatedUrl}${lanUrl === undefined ? '' : ` (LAN: ${lanUrl})`}`)
         }
         if (handoffBrowser) {
-          console.log('dsh web: opening the default browser; pass --no-open to disable')
+          console.log('astro-one web: opening the default browser; pass --no-open to disable')
           void internals.openBrowser(authenticatedUrl).catch((error: unknown) => {
             const reason = error instanceof Error ? error.message : String(error)
-            console.error(`web-app: could not open the default browser because ${reason}; use the dsh web URL printed at startup`)
+            console.error(`web-app: could not open the default browser because ${reason}; use the astro-one web URL printed at startup`)
           })
         }
       }
@@ -285,7 +285,7 @@ export function apply(ctx: Context, config: Config): void {
       if (settled === undefined) announceReady()
       else {
         void settled.then(async () => {
-          await auditStartupEntries(connectionCtx.root, 'dsh web', () => {})
+          await auditStartupEntries(connectionCtx.root, 'astro-one web', () => {})
           // The tree can be disposed while the boot was in flight (early
           // SIGTERM); a URL line or browser tab for a dead server would only
           // mislead, and reading torn-down services would turn a clean shutdown

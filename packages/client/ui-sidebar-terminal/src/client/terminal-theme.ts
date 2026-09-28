@@ -1,11 +1,11 @@
-/** DSH defaults and application OSC colors for one xterm screen. */
+/** Astro One defaults and application OSC colors for one xterm screen. */
 import type { IDisposable, ITheme, Terminal } from '@xterm/xterm'
 
-/* oxlint-disable typescript/no-non-null-assertion -- OSC widths/indices are checked; DSH defaults precede cursor reads. */
+/* oxlint-disable typescript/no-non-null-assertion -- OSC widths/indices are checked; Astro One defaults precede cursor reads. */
 const ansiKeys = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white', 'brightBlack', 'brightRed', 'brightGreen', 'brightYellow', 'brightBlue', 'brightMagenta', 'brightCyan', 'brightWhite'] as const
 const specialKeys = ['foreground', 'background', 'cursor'] as const
 
-/** Keep program color overrides separate from the DSH defaults used by OSC resets. */
+/** Keep program color overrides separate from the Astro One defaults used by OSC resets. */
 export class TerminalTheme implements IDisposable {
   private defaults: ITheme = {}
   private readonly indexed = new Map<number, string>()
@@ -50,9 +50,9 @@ export class TerminalTheme implements IDisposable {
   }
 
   /**
-   * Apply changed DSH colors without replacing application-defined palette entries.
-   * @param background - resolved opaque DSH background.
-   * @param foreground - resolved DSH text color.
+   * Apply changed Astro One colors without replacing application-defined palette entries.
+   * @param background - resolved opaque Astro One background.
+   * @param foreground - resolved Astro One text color.
    */
   update(background: string, foreground: string): void {
     if (this.defaults.background === background && this.defaults.foreground === foreground) return
@@ -63,7 +63,7 @@ export class TerminalTheme implements IDisposable {
     this.apply()
   }
 
-  /** Preferred cursor color after the initial DSH update, including OSC 12 overrides. */
+  /** Preferred cursor color after the initial Astro One update, including OSC 12 overrides. */
   get cursor(): string { return this.special.get('cursor') ?? this.defaults.cursor! }
 
   /** Remove parser observers before the emulator is disposed. */

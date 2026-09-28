@@ -3,7 +3,7 @@ description: "从 Web 侧栏管理 profile 的插件组合包、它们的行，�
 kind: "package-reference"
 ---
 
-# @deepseek-ai/dsh-client-ui-plugin-manager
+# @astro-one/client-ui-plugin-manager
 
 [English](README.md) | 中文
 
@@ -35,7 +35,7 @@ kind: "package-reference"
 
 Host 通过普通 fetch 代理向 `https://registry.npmjs.org/-/ping` 和 `https://registry.npmmirror.com/-/ping` 发送 GET 请求，以最先返回 2xx 的源为结果；重定向和失败不参与选择。随后取消另一条请求、丢弃两个响应体，并在清理完成后返回。默认时限为 1500 毫秒，包括不可用结果在内的探测结果均缓存五分钟。在 `ui-plugin-manager` 上配置 `registryProbeTimeoutMs` 和 `registryProbeCacheTtlMs`；`registryProbeEnabled: false` 关闭探测。两条请求都失败或超时时保留现有默认源。不使用 IP 地区服务，也不发送 Session 内容。
 
-**添加插件**接受包名（可带版本）、Git 地址、压缩包或本地绝对路径；对话框说明包名就是 README 里 `dsh plugin add` 后面的那一段。输入框下方的**插件安装引导和示例**展开一段引导，给出三种常见形式各一个示例；**填入示例**把示例填进输入框。旁边的**安装源**写着安装首先询问的注册表，展开后可选：默认安装源，即 pnpm 自身的注册表，标题带上本机 pnpm 配置指向的主机名；Host 配置的每个镜像（`pluginManager.registries`），npmmirror 显示为中国大陆镜像源；以及手动输入的 http(s) 地址。选项从控件上浮在对话框之上，展开不会拉长卡片；引导使卡片高过视口时，卡片内容可以滚动。初始选择遵循上文的响应比较规则；之后选择记在本浏览器（`localStorage`）里，下次打开对话框从它开始，Host 不再提供的已记住地址保留为手动输入的地址；在安装源列表返回前开始安装，也仍请求该地址。**安装**先让 Host 在所选注册表读出 spec 指向什么（`pluginManager.inspect`）：列表中已有的名字、所有注册表都没有的名字、没有包的路径、没有组合包 patch 的包，或 pnpm 会拒绝的 spec，都以一句话回到输入框下方，spec 保留可继续编辑；所有注册表都连不上时，这句话列出问过的每一个。随后安装从作答的那个注册表开始。通过检查的 spec 打开安装中界面，展示 Host 读到的包名、一句话简介和版本，pnpm 的命令与输出折叠在**查看安装详情**之后。安装完成后提供**立即启用**：启用新组合包、关闭对话框并把列表滚动到它；直接关闭则让它保持已安装但关闭。Host 改问另一个注册表时，安装中界面会说明哪个源没能提供这个包、现在改问哪个，详情里每次 pnpm 运行都带一个写明所用源的标记。安装失败时按 Host 的归因用一行话说明原因——所有安装源都连不上，并列出问过的每一个；GitHub 地址或压缩包链接自身的主机连不上，换源无济于事；包不存在、磁盘已满、profile 不可写、pnpm 拦下了构建脚本——pnpm 输出在详情里，**重试**就在手边，Host 把失败归于所问注册表时还在旁边提供**更换安装源**，回到 spec 输入界面并展开安装源选项；Host 已经把 profile 文件放回原样。pnpm 拦下依赖的安装脚本时，失败界面列出等待允许的包，并以**允许这些脚本并重试**取代**重试**；Host 把授权写进 profile 的 `pnpm-workspace.yaml`（失败的运行保留 pnpm 写入的这个文件）再运行 pnpm，安装完成界面会说明允许了哪些脚本。安装成功不代表模块一定能够激活。
+**添加插件**接受包名（可带版本）、Git 地址、压缩包或本地绝对路径；对话框说明包名就是 README 里 `astro-one plugin add` 后面的那一段。输入框下方的**插件安装引导和示例**展开一段引导，给出三种常见形式各一个示例；**填入示例**把示例填进输入框。旁边的**安装源**写着安装首先询问的注册表，展开后可选：默认安装源，即 pnpm 自身的注册表，标题带上本机 pnpm 配置指向的主机名；Host 配置的每个镜像（`pluginManager.registries`），npmmirror 显示为中国大陆镜像源；以及手动输入的 http(s) 地址。选项从控件上浮在对话框之上，展开不会拉长卡片；引导使卡片高过视口时，卡片内容可以滚动。初始选择遵循上文的响应比较规则；之后选择记在本浏览器（`localStorage`）里，下次打开对话框从它开始，Host 不再提供的已记住地址保留为手动输入的地址；在安装源列表返回前开始安装，也仍请求该地址。**安装**先让 Host 在所选注册表读出 spec 指向什么（`pluginManager.inspect`）：列表中已有的名字、所有注册表都没有的名字、没有包的路径、没有组合包 patch 的包，或 pnpm 会拒绝的 spec，都以一句话回到输入框下方，spec 保留可继续编辑；所有注册表都连不上时，这句话列出问过的每一个。随后安装从作答的那个注册表开始。通过检查的 spec 打开安装中界面，展示 Host 读到的包名、一句话简介和版本，pnpm 的命令与输出折叠在**查看安装详情**之后。安装完成后提供**立即启用**：启用新组合包、关闭对话框并把列表滚动到它；直接关闭则让它保持已安装但关闭。Host 改问另一个注册表时，安装中界面会说明哪个源没能提供这个包、现在改问哪个，详情里每次 pnpm 运行都带一个写明所用源的标记。安装失败时按 Host 的归因用一行话说明原因——所有安装源都连不上，并列出问过的每一个；GitHub 地址或压缩包链接自身的主机连不上，换源无济于事；包不存在、磁盘已满、profile 不可写、pnpm 拦下了构建脚本——pnpm 输出在详情里，**重试**就在手边，Host 把失败归于所问注册表时还在旁边提供**更换安装源**，回到 spec 输入界面并展开安装源选项；Host 已经把 profile 文件放回原样。pnpm 拦下依赖的安装脚本时，失败界面列出等待允许的包，并以**允许这些脚本并重试**取代**重试**；Host 把授权写进 profile 的 `pnpm-workspace.yaml`（失败的运行保留 pnpm 写入的这个文件）再运行 pnpm，安装完成界面会说明允许了哪些脚本。安装成功不代表模块一定能够激活。
 
 准备和下载期间，**取消安装**会请求 Host 停止运行并等待确认。加载组合包的阶段不可取消。点击 ×、按 Escape 或点击遮罩会立即隐藏对话框，并在可以取消时请求取消。**查看安装任务**会重新打开同一任务并保留输出；结果待定或尚未确认时不能发起另一项安装。确认取消后回到 spec 输入界面并显示 toast；manifest 与 lockfile 已恢复，已下载文件可能保留。安装响应丢失后会请求恢复结果；**核对安装状态**和重连会重试该请求。Host 已无活动请求时，**未能获取安装结果**允许检查插件列表后返回编辑。早于接收确认的取消请求会等待并自动重试；取消失败可手动重试。隐藏的任务通过 toast 通知结果，不会重新弹出对话框。
 
@@ -56,7 +56,7 @@ Host 将网络失败或超时归因于 GitHub 地址，且提供 npmmirror 时�
 ```tsx ignore-check
 ctx.slots.inject('plugins.row.config', () => ctx.slots.register({
   name: 'plugins.row.config',
-  key: '@acme/dsh-sidebar#sidebar',
+  key: '@acme/astro-one-sidebar#sidebar',
   locale: 'acmeSidebar',
 }, ({ t, view }) => view === 'summary' ? t('summary') : <SidebarForm t={t} />))
 ```
@@ -101,7 +101,7 @@ Host 入口通过生成的 Remote 接口暴露 `pluginRegistryProbe.fastest()`�
 
 自定义条目页以 Host 条目 id 作为注册 id；行页面使用 bundle 包名和行 id。当条目提供可编辑 Config 字段时，页面宿主传入 `form.state` 和 `form.mutate(operations, expectedRevision)`。自定义页面负责草稿和校验提示，并可复用 ui-primitives 的 `ConfigField`。整个 bundle 的页面可以包含多个条目，因此没有单一表单。
 
-页面的 `main` 注册把 `plugins.item`、`plugins.bundle.config` 与 `plugins.row.config` 声明为子 slot，因此它们与页面同生，注册方的 `ctx.slots.inject` 会等到它们出现。`configLedgerSource` 把三份账本投影成一个可观察对象——按账本顺序排列、标签按当前语言解析的官方条目，以及组合包与行的键——在账本或语言变化前保持缓存；页面把它作为 `useConfigLedger` 绑在 store 旁边，自身从不点名任何可配置插件。打开的是哪一页是页面本地状态：卡片、某个组合包、某个官方插件，或组合包的某一行。注册与做出它的浏览器半侧同生共死。`dsh-client-modules` 只把一个包的浏览器半侧挂在说明符恰为包名的那一行 Loader 行上，所以组合包为自己或任一行注册的页面，都会在那一行被关闭时一起消失；需要在其他行关闭时仍保留页面的子插件，应作为独立的包发布。 名称以 `@deepseek-ai/dsh-experimental-` 开头的官方包显示实验性标记。
+页面的 `main` 注册把 `plugins.item`、`plugins.bundle.config` 与 `plugins.row.config` 声明为子 slot，因此它们与页面同生，注册方的 `ctx.slots.inject` 会等到它们出现。`configLedgerSource` 把三份账本投影成一个可观察对象——按账本顺序排列、标签按当前语言解析的官方条目，以及组合包与行的键——在账本或语言变化前保持缓存；页面把它作为 `useConfigLedger` 绑在 store 旁边，自身从不点名任何可配置插件。打开的是哪一页是页面本地状态：卡片、某个组合包、某个官方插件，或组合包的某一行。注册与做出它的浏览器半侧同生共死。`astro-one-client-modules` 只把一个包的浏览器半侧挂在说明符恰为包名的那一行 Loader 行上，所以组合包为自己或任一行注册的页面，都会在那一行被关闭时一起消失；需要在其他行关闭时仍保留页面的子插件，应作为独立的包发布。 名称以 `@astro-one/experimental-` 开头的官方包显示实验性标记。
 
 `plugins.bundle.config` 以 npm 包名为 key，提供 Bundle 详情配置。`plugins.bundle.activation` 在用户从列表显式启用后提供 Bundle 自有引导，并传入关闭引导和打开详情的回调。仅列出已启用的 Bundle 不会触发引导。
 
@@ -144,7 +144,7 @@ Host 入口通过生成的 Remote 接口暴露 `pluginRegistryProbe.fastest()`�
 - **行只显示阶段，不显示原因**——失败的行只显示为失败，没有 Host 的错误文本；Host 日志里有。
 - **一次只能安装一个**——对话框一次运行一个 pnpm 命令；第二个 spec 要等前一个完成。
 - **没有版本选择器**——spec 按 pnpm 接受的写法输入；页面不列出注册表版本，也不提供升级。
-- **安装源选择只属于本浏览器**——它存在 `localStorage` 里，所以另一个浏览器会独立计算初始推荐；`dsh plugin` 命令和 agent 工具使用 Host 配置的注册表。
+- **安装源选择只属于本浏览器**——它存在 `localStorage` 里，所以另一个浏览器会独立计算初始推荐；`astro-one plugin` 命令和 agent 工具使用 Host 配置的注册表。
 - **每次读注册表都要运行 pnpm**——打开对话框、检查、安装各问一次 pnpm 自身配置指向哪里；没有 pnpm 的机器读作未知，不提供备选。
 
 <a id="dev-note"></a>

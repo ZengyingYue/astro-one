@@ -1,6 +1,6 @@
 # AGENTS.md — Documentation website adapter
 
-Follow the [root instructions](../AGENTS.md), the [documentation standard](../docs/AGENTS.md), and the [documentation workflow](../.agents/skills/dsh-doc/SKILL.md).
+Follow the [root instructions](../AGENTS.md), the [documentation standard](../docs/AGENTS.md), and the [documentation workflow](../.agents/skills/astro-one-doc/SKILL.md).
 
 ## Keep documentation content out of this tree
 
@@ -16,7 +16,7 @@ The build also emits each route's raw-Markdown twin (with a parent-level alias p
 
 Run `pnpm docs:check` after changing this subtree; the gate rejects additional non-ignored Markdown under `website/`.
 
-Content-page Markdown actions use the projector's `rawMarkdownPath` and the site base, including full `index.md` routes. Copy fetches carry `?dsh-raw=1`; development script imports still belong to Vite. Keep clipboard work within its initiating gesture and page lifetime; the [Markdown actions decision](../.agents/notes/implemented/feature/2026-09-15-docs-page-markdown-actions.md) owns browser limitations and verification.
+Content-page Markdown actions use the projector's `rawMarkdownPath` and the site base, including full `index.md` routes. Copy fetches carry `?astro-one-raw=1`; development script imports still belong to Vite. Keep clipboard work within its initiating gesture and page lifetime; the [Markdown actions decision](../.agents/notes/implemented/feature/2026-09-15-docs-page-markdown-actions.md) owns browser limitations and verification.
 
 The default-theme extension shares one fullscreen modal and pan/zoom controller between Mermaid diagrams and standalone content images. Keep enhancements separate from Markdown projection and preserve source elements. Images must be loaded, have nonempty alt text, and occupy their own paragraph; linked, inline, decorative, and `data-no-zoom` images keep their existing interaction. Image views expose intrinsic size through the 100% control. Route, language, theme, and source replacement changes close the active view; theme disposal releases every observer, listener, and scroll lock. The [viewer decision](../.agents/notes/implemented/feature/2026-09-14-docs-mermaid-viewer.md) explains SVG isolation and verification.
 

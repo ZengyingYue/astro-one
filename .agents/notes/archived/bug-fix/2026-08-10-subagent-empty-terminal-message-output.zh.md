@@ -11,7 +11,7 @@ Archived: 2026-09-04
 
 ## 决策
 
-`dsh-subagent` 在 `src/assistant-output.ts` 中拥有唯一规范选取规则：选取最后一条非空 Assistant message；没有时，从嵌入式 `assistant/message` 与 `assistant/attempt` stream 或 chunk-only transport 选取累计 `text-delta` content；忽略空 content message。增量 `AssistantOutputFold` 通过 `push(event)`、`pushText(text)` 与 `collect()` 实现该规则。`finalAssistantOutput(events)` 把规则应用于完整 event suffix，供进程内 `readResult` 与 Activation capture 使用。SDK backend 折叠 notification event；ACP backend 不公开完整 Assistant message，并折叠 raw chunk text。`SubagentResult.output` 定义 result contract，`subagent/end.lastAssistantMessage` 使用同一规则。child 不产生任一种输出时，一次性与 continuable run 的 lifecycle field 都缺省，而不是空 array。`max-tokens` 或 `aborted` result 保留实际 stop reason。
+`astro-one-subagent` 在 `src/assistant-output.ts` 中拥有唯一规范选取规则：选取最后一条非空 Assistant message；没有时，从嵌入式 `assistant/message` 与 `assistant/attempt` stream 或 chunk-only transport 选取累计 `text-delta` content；忽略空 content message。增量 `AssistantOutputFold` 通过 `push(event)`、`pushText(text)` 与 `collect()` 实现该规则。`finalAssistantOutput(events)` 把规则应用于完整 event suffix，供进程内 `readResult` 与 Activation capture 使用。SDK backend 折叠 notification event；ACP backend 不公开完整 Assistant message，并折叠 raw chunk text。`SubagentResult.output` 定义 result contract，`subagent/end.lastAssistantMessage` 使用同一规则。child 不产生任一种输出时，一次性与 continuable run 的 lifecycle field 都缺省，而不是空 array。`max-tokens` 或 `aborted` result 保留实际 stop reason。
 
 前台委派工具使用同一选取规则。非 `completed` 的结果仍是 `isError` 工具结果，但其消息会在终止原因标题之后呈现由[非交互权限决策](../feature/2026-08-15-product-subagent-noninteractive-permissions.zh.md)负责的可选安全提供方诊断，再附上子 agent 的部分文本。父模型会同时收到失败、独立的基础设施说明与已有 assistant 输出，而且不会把它们混为一体。
 

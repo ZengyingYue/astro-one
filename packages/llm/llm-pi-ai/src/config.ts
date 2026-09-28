@@ -10,18 +10,18 @@
  * catalog diagnostics beside serviceable models; writes validate every changed
  * provider before persistence. Self-contained profile constraints apply to both.
  *
- * @module dsh-llm-pi-ai/config
+ * @module astro-one-llm-pi-ai/config
  */
-import type { Volatile } from '@deepseek-ai/cordis'
+import type { Volatile } from '@astro-one/cordis'
 
 import type { CacheRetention, ChatTemplateKwargValue, ModelThinkingLevel, Provider, ThinkingBudgets, Transport } from '@earendil-works/pi-ai'
-import z from '@deepseek-ai/schemastery'
-import { credentialRef } from '@deepseek-ai/dsh-credentials'
-import type { CredentialRef } from '@deepseek-ai/dsh-credentials'
-import { MAX_TIMER_DELAY_MS } from '@deepseek-ai/dsh-timeout'
-import { resolveRetryPolicy, RetryPolicySchema } from '@deepseek-ai/dsh-llm'
-import type { ResolvedRetryPolicy, RetryPolicyConfig } from '@deepseek-ai/dsh-llm'
-import { deepEqualJson } from '@deepseek-ai/dsh-util-values'
+import z from '@astro-one/schemastery'
+import { credentialRef } from '@astro-one/credentials'
+import type { CredentialRef } from '@astro-one/credentials'
+import { MAX_TIMER_DELAY_MS } from '@astro-one/timeout'
+import { resolveRetryPolicy, RetryPolicySchema } from '@astro-one/llm'
+import type { ResolvedRetryPolicy, RetryPolicyConfig } from '@astro-one/llm'
+import { deepEqualJson } from '@astro-one/util-values'
 import {
   CACHE_CONTROL_FORMATS,
   CHAT_TEMPLATE_VARS,
@@ -380,7 +380,7 @@ function rejectRemovedFields(provider: string, source: PiAiProviderProfile): voi
   if ('maxRetries' in legacy || 'maxRetryDelayMs' in legacy) {
     throw new Error(
       `llm-pi-ai: provider "${provider}" sets maxRetries or maxRetryDelayMs, which were removed;`
-      + ' compose agent recovery with dsh-llm-retry',
+      + ' compose agent recovery with astro-one-llm-retry',
     )
   }
 }

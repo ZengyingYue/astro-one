@@ -1,20 +1,20 @@
 import { describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import { createUserMessage, ToolCallId, type ContentBlock, type GenerateOptions } from '@deepseek-ai/dsh-llm'
-import { SessionId } from '@deepseek-ai/dsh-session'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import { mountAgentLoopTestDependencies } from '@deepseek-ai/dsh-agent-loop-testkit'
-import InvariantRegistry from '@deepseek-ai/dsh-invariants'
-import type {} from '@deepseek-ai/dsh-system-prompt'
-import * as SessionInvariant from '@deepseek-ai/dsh-session/invariant'
-import * as AgentInvariant from '@deepseek-ai/dsh-agent/invariant'
-import * as AgentLoopInvariant from '@deepseek-ai/dsh-agent-loop/invariant'
+import { Context } from '@astro-one/cordis'
+import { createUserMessage, ToolCallId, type ContentBlock, type GenerateOptions } from '@astro-one/llm'
+import { SessionId } from '@astro-one/session'
+import AgentLoop from '@astro-one/agent-loop'
+import { mountAgentLoopTestDependencies } from '@astro-one/agent-loop-testkit'
+import InvariantRegistry from '@astro-one/invariants'
+import type {} from '@astro-one/system-prompt'
+import * as SessionInvariant from '@astro-one/session/invariant'
+import * as AgentInvariant from '@astro-one/agent/invariant'
+import * as AgentLoopInvariant from '@astro-one/agent-loop/invariant'
 import SubagentRuntime, {
   type ResolvedSubagentStartRequest,
   type SubagentStartRequest,
-} from '@deepseek-ai/dsh-subagent'
-import type { Config as ToolConfig, ObjectJsonSchema } from '@deepseek-ai/dsh-tools'
-import { defineContentToolFixture, RUN_CODE_NAME } from '@deepseek-ai/dsh-tools'
+} from '@astro-one/subagent'
+import type { Config as ToolConfig, ObjectJsonSchema } from '@astro-one/tools'
+import { defineContentToolFixture, RUN_CODE_NAME } from '@astro-one/tools'
 import { MockAdapter, textResponse, toolCallResponse } from '../../../core/agent-loop/tests/mock-adapter.ts'
 import { startInProcessRun } from '../src/index.ts'
 import {
@@ -63,7 +63,7 @@ async function setup(script: Script, options: SetupOptions = {}) {
     ctx.provide('ptcRuntime', {
       language: 'typescript',
       isolation: 'test',
-      resolve: (request: import('@deepseek-ai/dsh-ptc-runtime').PtcRunRequest) => ({ ...request, cwd: request.cwd ?? process.cwd(), timeoutMs: 120_000 }),
+      resolve: (request: import('@astro-one/ptc-runtime').PtcRunRequest) => ({ ...request, cwd: request.cwd ?? process.cwd(), timeoutMs: 120_000 }),
       run: options.codeRun ?? (() => Promise.resolve({ logs: [] })),
     } as never)
   }

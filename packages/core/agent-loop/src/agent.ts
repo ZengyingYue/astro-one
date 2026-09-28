@@ -1,7 +1,7 @@
 /**
  * Default Agent driver over queued turns and step-boundary input. Every request
  * is derived from the session log.
- * @module dsh-agent-loop/agent
+ * @module astro-one-agent-loop/agent
  */
 
 import type {
@@ -14,24 +14,24 @@ import type {
   InboxTarget,
   PreStepDecision,
   RequestErrorAction,
-} from '@deepseek-ai/dsh-agent'
-import { agentEvents, assembleContextFor } from '@deepseek-ai/dsh-agent'
-import type { GenerateOptions, LlmCallConfig, Message, PreparedLlmCall } from '@deepseek-ai/dsh-llm'
+} from '@astro-one/agent'
+import { agentEvents, assembleContextFor } from '@astro-one/agent'
+import type { GenerateOptions, LlmCallConfig, Message, PreparedLlmCall } from '@astro-one/llm'
 import {
   LlmError,
   createAssistantMessage,
   errorChain,
   markAgentLoopRequest,
-} from '@deepseek-ai/dsh-llm'
-import { assertNever, deepFreeze } from '@deepseek-ai/dsh-util-values'
-import type { Scope } from '@deepseek-ai/dsh-scope'
-import { createScope } from '@deepseek-ai/dsh-scope'
-import type { EpochHeader, RequestContext, Session, SessionId, TurnEndReason, UserMessage } from '@deepseek-ai/dsh-session'
-import { canonicalHeader, headerEquals } from '@deepseek-ai/dsh-session'
-import { joinContextSections, renderContextSections, renderPrompt } from '@deepseek-ai/dsh-system-prompt'
-import type { PromptAssembly } from '@deepseek-ai/dsh-system-prompt'
-import type {} from '@deepseek-ai/dsh-session-projection'
-import type { Context } from '@deepseek-ai/cordis'
+} from '@astro-one/llm'
+import { assertNever, deepFreeze } from '@astro-one/util-values'
+import type { Scope } from '@astro-one/scope'
+import { createScope } from '@astro-one/scope'
+import type { EpochHeader, RequestContext, Session, SessionId, TurnEndReason, UserMessage } from '@astro-one/session'
+import { canonicalHeader, headerEquals } from '@astro-one/session'
+import { joinContextSections, renderContextSections, renderPrompt } from '@astro-one/system-prompt'
+import type { PromptAssembly } from '@astro-one/system-prompt'
+import type {} from '@astro-one/session-projection'
+import type { Context } from '@astro-one/cordis'
 import { ReactLoopInbox } from './inbox.ts'
 import { RuntimeContextProjection } from './runtime-context.ts'
 import { AssistantStreamAttempt } from './assistant-stream.ts'

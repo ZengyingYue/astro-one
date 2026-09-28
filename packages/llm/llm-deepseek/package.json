@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-llm-deepseek",
+  "name": "@astro-one/llm-deepseek",
   "description": "DeepSeek Messages adapter",
   "version": "0.1.7-rc.1",
   "publishConfig": {
@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/llm/llm-deepseek"
   },
   "type": "module",
@@ -27,60 +27,60 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-anonymous-user-id": "workspace:*",
-    "@deepseek-ai/dsh-atomic-write": "workspace:*",
-    "@deepseek-ai/dsh-attachment": "workspace:*",
-    "@deepseek-ai/dsh-credentials": "workspace:*",
-    "@deepseek-ai/dsh-deepseek-llm-api-extensions": "workspace:*",
-    "@deepseek-ai/dsh-fs": "workspace:*",
-    "@deepseek-ai/dsh-home-paths": "workspace:*",
-    "@deepseek-ai/dsh-launch-environment": "workspace:*",
-    "@deepseek-ai/dsh-llm": "workspace:*",
-    "@deepseek-ai/dsh-timeout": "workspace:*",
-    "@deepseek-ai/cordis-plugin-loader": "workspace:~",
-    "@deepseek-ai/dsh-deepseek-account": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/anonymous-user-id": "workspace:*",
+    "@astro-one/atomic-write": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/credentials": "workspace:*",
+    "@astro-one/deepseek-llm-api-extensions": "workspace:*",
+    "@astro-one/fs": "workspace:*",
+    "@astro-one/home-paths": "workspace:*",
+    "@astro-one/launch-environment": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/deepseek-account": "workspace:*"
   },
   "dependencies": {
-    "@deepseek-ai/cosmokit": "workspace:~",
-    "@deepseek-ai/dsh-brand": "workspace:*",
-    "@deepseek-ai/dsh-util-values": "workspace:*",
-    "@deepseek-ai/schemastery": "workspace:~",
+    "@astro-one/cosmokit": "workspace:~",
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
     "eventsource-parser": "^3.1.0"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-agent": "workspace:*",
-    "@deepseek-ai/dsh-anonymous-user-id": "workspace:*",
-    "@deepseek-ai/dsh-atomic-write": "workspace:*",
-    "@deepseek-ai/dsh-attachment": "workspace:*",
-    "@deepseek-ai/dsh-attachment-local": "workspace:*",
-    "@deepseek-ai/dsh-credentials": "workspace:*",
-    "@deepseek-ai/dsh-deepseek-llm-api-extensions": "workspace:*",
-    "@deepseek-ai/dsh-fs": "workspace:*",
-    "@deepseek-ai/dsh-home-paths": "workspace:*",
-    "@deepseek-ai/dsh-launch-environment": "workspace:*",
-    "@deepseek-ai/dsh-llm": "workspace:*",
-    "@deepseek-ai/dsh-plugin-package-inventory-deepseek": "workspace:*",
-    "@deepseek-ai/dsh-session": "workspace:*",
-    "@deepseek-ai/dsh-session-log-deepseek": "workspace:*",
-    "@deepseek-ai/dsh-timeout": "workspace:*",
-    "@deepseek-ai/dsh-http-proxy": "workspace:*",
-    "@deepseek-ai/cordis-plugin-loader": "workspace:~",
-    "@deepseek-ai/cordis-plugin-include": "workspace:~",
-    "@deepseek-ai/dsh-agent-loop": "workspace:*",
-    "@deepseek-ai/dsh-session-projection": "workspace:*",
-    "@deepseek-ai/dsh-system-prompt": "workspace:*",
-    "@deepseek-ai/dsh-tools": "workspace:*",
-    "@deepseek-ai/dsh-credentials-local": "workspace:*",
-    "@deepseek-ai/dsh-settings": "workspace:*",
-    "@deepseek-ai/dsh-deepseek-account": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/anonymous-user-id": "workspace:*",
+    "@astro-one/atomic-write": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/attachment-local": "workspace:*",
+    "@astro-one/credentials": "workspace:*",
+    "@astro-one/deepseek-llm-api-extensions": "workspace:*",
+    "@astro-one/fs": "workspace:*",
+    "@astro-one/home-paths": "workspace:*",
+    "@astro-one/launch-environment": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/plugin-package-inventory-deepseek": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-log-deepseek": "workspace:*",
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/http-proxy": "workspace:*",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/agent-loop": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/credentials-local": "workspace:*",
+    "@astro-one/settings": "workspace:*",
+    "@astro-one/deepseek-account": "workspace:*"
   },
   "peerDependenciesMeta": {
-    "@deepseek-ai/cordis-plugin-loader": {
+    "@astro-one/cordis-plugin-loader": {
       "optional": true
     },
-    "@deepseek-ai/dsh-deepseek-account": {
+    "@astro-one/deepseek-account": {
       "optional": true
     }
   }

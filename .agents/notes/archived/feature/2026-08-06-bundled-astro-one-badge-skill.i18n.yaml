@@ -1,0 +1,6 @@
+# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. Both languages carry equal authority;
+# after editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write
+2026-08-06-bundled-astro-one-badge-skill.md: f9a5f0a3066b2ffac99d3c901a316dec02b2b470
+2026-08-06-bundled-astro-one-badge-skill.zh.md: af2a794289a5cbae6fd823b4ad8a9e692f692dd5

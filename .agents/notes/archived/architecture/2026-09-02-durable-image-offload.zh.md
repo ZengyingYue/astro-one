@@ -23,7 +23,7 @@ Archived: 2026-09-10
 
 **adapter 只投影，不决定。** 支持图片的路由按保留的出现位置的精确请求版本字节执行一个 `LlmImageRequestBudget`（`representation`、`maxBytes`、`maxImages` 与两个量子）。当它们仍超过预算，无论是 file 模式、内联回退更紧的预算还是 pi-ai 上限，adapter 都以 `IMAGE_OFFLOAD_REQUIRED` 让本次尝试失败，并在 `LlmFailure.offloadImages` 中用共享的 `requiredImageOffload()` 算出还需省略多少最老的出现位置。发送前没有任何规划。
 
-**恢复归 `dsh-compaction-image-offload`。** 图片省略是 compaction 在另一个容量维度上的实例：provider 拒绝请求，持久历史被缩减，step 重试。执行器是 compaction 组里 `compaction-tool-result-pruner` 的兄弟包，监听 `agent/request-error` waterfall。收到 `IMAGE_OFFLOAD_REQUIRED` 时，它按模型请求顺序遍历表层，给前 `offloadImages` 个保留的出现位置打标记，为每个承载了其中任一位置的节点先追加 seam 的 `compaction/prune` 影子价格，再追加带标记的副本，然后返回 `retry` 动作，不占提供方重试预算，也不记录 `llm/retry`。assistant 节点承载的是模型输出而不是输入图片，直接跳过。没有可省略的出现位置时向下游委托，失败进入普通恢复路径。循环在替换后的表层上重跑该 step，并像每次表层替换后一样记录新的 `request/header`；agent loop 不变。
+**恢复归 `astro-one-compaction-image-offload`。** 图片省略是 compaction 在另一个容量维度上的实例：provider 拒绝请求，持久历史被缩减，step 重试。执行器是 compaction 组里 `compaction-tool-result-pruner` 的兄弟包，监听 `agent/request-error` waterfall。收到 `IMAGE_OFFLOAD_REQUIRED` 时，它按模型请求顺序遍历表层，给前 `offloadImages` 个保留的出现位置打标记，为每个承载了其中任一位置的节点先追加 seam 的 `compaction/prune` 影子价格，再追加带标记的副本，然后返回 `retry` 动作，不占提供方重试预算，也不记录 `llm/retry`。assistant 节点承载的是模型输出而不是输入图片，直接跳过。没有可省略的出现位置时向下游委托，失败进入普通恢复路径。循环在替换后的表层上重跑该 step，并像每次表层替换后一样记录新的 `request/header`；agent loop 不变。
 
 **token 记账。** `priceImages` 接收表层的 `ImageBlock`，把带标记的按占位文本定价；DeepSeek 和 replay 的定价不再复现任何 offload 算术。meter 不需要新状态：`compaction/prune` 事件加替换节点，和工具结果剪枝一样重新为该节点定价。
 

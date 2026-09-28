@@ -1,16 +1,16 @@
 /** Session-owned MCP browser processes and provider catalog activation. @module */
 
-import type { Context } from '@deepseek-ai/cordis'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import Schema from '@deepseek-ai/schemastery'
-import { BrowserUseProviderName } from '@deepseek-ai/dsh-browser-use/brand'
-import * as McpClient from '@deepseek-ai/dsh-mcp-client'
-import { createScope } from '@deepseek-ai/dsh-scope'
-import type { Scope } from '@deepseek-ai/dsh-scope'
+import type { Context } from '@astro-one/cordis'
+import type { Agent } from '@astro-one/agent'
+import Schema from '@astro-one/schemastery'
+import { BrowserUseProviderName } from '@astro-one/browser-use/brand'
+import * as McpClient from '@astro-one/mcp-client'
+import { createScope } from '@astro-one/scope'
+import type { Scope } from '@astro-one/scope'
 import { SessionResources } from './index.ts'
-import type {} from '@deepseek-ai/dsh-browser-use'
-import type {} from '@deepseek-ai/dsh-tools'
-import type {} from '@deepseek-ai/dsh-system-prompt'
+import type {} from '@astro-one/browser-use'
+import type {} from '@astro-one/tools'
+import type {} from '@astro-one/system-prompt'
 
 /** Browser launch settings shared by the MCP integrations. */
 export interface BrowserMcpLaunchConfig {

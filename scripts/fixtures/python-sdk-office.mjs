@@ -1,4 +1,4 @@
-/** Exercise the wheel's external Office package from a shipped dsh profile. */
+/** Exercise the wheel's external Office package from a shipped astro-one profile. */
 import { readFile, writeFile } from 'node:fs/promises'
 import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'

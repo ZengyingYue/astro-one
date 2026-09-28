@@ -7,23 +7,23 @@
  * SlotRegistry.
  */
 import { renderFileActions } from './file-actions.tsx'
-import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
-import { Context } from '@deepseek-ai/cordis'
+import { createSnapshotStore } from '@astro-one/client-store'
+import { Context } from '@astro-one/cordis'
 import { cleanup, fireEvent, render, within } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import type { SessionLiveEventEntry, SessionListState } from '@deepseek-ai/dsh-api-session-controller/client'
+import type { SessionLiveEventEntry, SessionListState } from '@astro-one/api-session-controller/client'
 import {
   ConversationNodeAssembler, UiConversation,
-} from '@deepseek-ai/dsh-client-ui-conversation/client'
+} from '@astro-one/client-ui-conversation/client'
 import type {
   ConversationLocationDataSource, ConversationLocationDataStore, ConversationMatch, ConversationNodeDefinition,
   ConversationStartMatch, ConversationTimelineSnapshot, ConversationTurnDataMap, ConversationViewDefinition,
   ConversationViewNode, TurnLocation,
-} from '@deepseek-ai/dsh-client-ui-conversation/client'
-import { SlotRegistry } from '@deepseek-ai/dsh-client-ui-renderer/client'
-import { apply as applyLocale, inject as localeInject } from '@deepseek-ai/dsh-client-locale/client'
-import type { ChatFileMentions, TurnTailOwnerProps } from '@deepseek-ai/dsh-client-ui-chat/client'
-import { makeTranslate, stubConfigForm } from '@deepseek-ai/dsh-client-test-runtime'
+} from '@astro-one/client-ui-conversation/client'
+import { SlotRegistry } from '@astro-one/client-ui-renderer/client'
+import { apply as applyLocale, inject as localeInject } from '@astro-one/client-locale/client'
+import type { ChatFileMentions, TurnTailOwnerProps } from '@astro-one/client-ui-chat/client'
+import { makeTranslate, stubConfigForm } from '@astro-one/client-test-runtime'
 import { Deliverables, DeliverablesTail, selectDeliverables, type DeliverablesInjected } from '../src/client/Deliverables.tsx'
 import type { ReviewInjected } from '../src/client/ReviewTab.tsx'
 import { ChangesDiffStore } from '../src/client/changes-diff.ts'
@@ -36,8 +36,8 @@ import {
 } from '../src/client/turn-deliverables.ts'
 import { apply, inject } from '../src/client/index.ts'
 import { en, zh } from '../src/client/locales.ts'
-import { SessionId } from '@deepseek-ai/dsh-session/types'
-import type { SessionEvent } from '@deepseek-ai/dsh-session/types'
+import { SessionId } from '@astro-one/session/types'
+import type { SessionEvent } from '@astro-one/session/types'
 
 function openProps(controller = new PresentedOpenController(), summaries = new ChangesSummaryStore()) {
   controller.host.set({ name: 'desktop', available: true, fileManager: 'finder' })
@@ -754,9 +754,9 @@ describe('plugin registration', () => {
     expect(entry).toBeDefined()
     expect(ctx.slots.entries('tool.call.toolview')).toHaveLength(1)
     expect(entry?.inject).toBeDefined()
-    expect(registered).toMatchObject({ kind: 'changes-review', patterns: ['dsh-resource://changes-review/**'] })
+    expect(registered).toMatchObject({ kind: 'changes-review', patterns: ['astro-one-resource://changes-review/**'] })
     const [tabEntry] = ctx.slots.entries('sidebar.right.pane.tab')
-    expect(tabEntry?.options.key).toBe('@deepseek-ai/dsh-client-ui-deliverables')
+    expect(tabEntry?.options.key).toBe('@astro-one/client-ui-deliverables')
 
     // The prose face is live while the plugin is: a produced turn yields a
     // resolver whose matches open through the owner-supplied opener.
@@ -801,8 +801,8 @@ describe('plugin registration', () => {
     await face.openChanged(SessionId('child-session'), 5, 0)
     expect(face.hooks.presentedOpen.getSnapshot()['api/changes.open?sessionId=child-session&seq=5&index=0']).toBe('opened')
     face.openChangesReview({ sessionId: SessionId('child-session'), seq: 5, turn: 3 }, 1)
-    expect(openResource).toHaveBeenCalledWith('dsh-resource://changes-review/session/child-session/5/3', { params: { index: 1 } })
-    expect((registered as { title(address: string): string }).title('dsh-resource://changes-review/session/child-session/5/3')).toBe('Review · turn 3')
+    expect(openResource).toHaveBeenCalledWith('astro-one-resource://changes-review/session/child-session/5/3', { params: { index: 1 } })
+    expect((registered as { title(address: string): string }).title('astro-one-resource://changes-review/session/child-session/5/3')).toBe('Review · turn 3')
     const tabFace = tabEntry!.inject!(SessionId('child-session') as never) as unknown as ReviewInjected
     fetcher.mockResolvedValueOnce(Response.json({ turn: 3, files: [], total: 0, added: 0, deleted: 0 }))
     await tabFace.loadChangesSummary(SessionId('child-session'), 6)

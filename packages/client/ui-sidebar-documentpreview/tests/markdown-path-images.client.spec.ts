@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { markdownImageUrl } from '../src/client/markdown/path-images.ts'
 
-const BASE = 'https://example.test/tools/dsh/'
+const BASE = 'https://example.test/tools/astro-one/'
 
 describe('Markdown preview image URLs', () => {
   it.each([
@@ -37,7 +37,7 @@ describe('Markdown preview image URLs', () => {
     expect(markdownImageUrl(BASE, '/work/notes.md', destination)).toBeUndefined()
   })
 
-  it.each(['about:blank', 'dsh-app://app/', 'file:///app', 'ws://localhost/'])(
+  it.each(['about:blank', 'astro-one-app://app/', 'file:///app', 'ws://localhost/'])(
     'keeps the file route unavailable for %s', (base) => {
       expect(markdownImageUrl(base, '/work/notes.md', 'a.png')).toBeUndefined()
     },

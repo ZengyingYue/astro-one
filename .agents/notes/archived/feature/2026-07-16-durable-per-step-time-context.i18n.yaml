@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/archived/feature/2026-07-16-durable-per-step-time-context.md
-2026-07-16-durable-per-step-time-context.md: 55ff50cd628315d3bd4c98b41d8f495a7881ab61
-2026-07-16-durable-per-step-time-context.zh.md: f599e25c19a40692814bb2e7879fc9e03edbb899
+2026-07-16-durable-per-step-time-context.md: be294b62d382c8e39ae2e1d494103f25d1fa2633
+2026-07-16-durable-per-step-time-context.zh.md: 67b7a3a1e59b61ed388d48fa509ed2975302ac51

@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/context/tmux-context/README.md
-README.md: 1a5255e11f661296d44423e1bed940ec160b80b5
-README.zh.md: 3dab566a4fbe3d3819d81861e6531d5b01c940eb
+README.md: e457236b32cfd1574c0e368ebb1128b67382404b
+README.zh.md: 05482cebcd565e51384bb8601cbe9131bed76843

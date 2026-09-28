@@ -1,13 +1,13 @@
 /** Mandatory-update policy, independent of local business traffic and updater artifacts. */
 
 import { valid } from 'semver'
-import { desktopClientHeaders } from '@deepseek-ai/dsh-deepseek-account'
+import { desktopClientHeaders } from '@astro-one/deepseek-account'
 
 /** Installed release identity; no field is supplied by a renderer. */
 export interface DesktopPolicyIdentity {
   readonly platform: 'win32' | 'darwin'
   readonly version: string
-  readonly bundledDshVersion: string
+  readonly bundledAstroOneVersion: string
   readonly bundleId: string
   readonly locale: string
   readonly arch: 'x64' | 'arm64'
@@ -152,13 +152,13 @@ export class DesktopMandatoryUpdatePolicy {
     private readonly request: typeof fetch = fetch,
     private readonly random: () => number = Math.random,
   ) {
-    if (valid(identity.version) === null || valid(identity.bundledDshVersion) === null || identity.bundleId.trim() === ''
+    if (valid(identity.version) === null || valid(identity.bundledAstroOneVersion) === null || identity.bundleId.trim() === ''
       || (identity.platform === 'win32' && identity.arch !== 'x64')) throw new Error('desktop policy: invalid installed client identity')
     this.headers = Object.freeze({
       ...desktopClientHeaders(identity.platform), 'x-client-version': identity.version,
       'x-client-bundle-id': identity.bundleId, 'x-client-locale': identity.locale,
       'x-client-arch': identity.arch, 'x-client-update-channel': 'nightly',
-      'x-client-bundled-dsh-version': identity.bundledDshVersion,
+      'x-client-bundled-astro-one-version': identity.bundledAstroOneVersion,
     })
   }
 

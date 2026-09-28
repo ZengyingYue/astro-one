@@ -55,7 +55,7 @@ describe('desktop welcome window', () => {
       resizable: false, maximizable: false, fullscreenable: false,
       webPreferences: {
         nodeIntegration: false, contextIsolation: true, sandbox: true, webSecurity: true,
-        additionalArguments: ['--dsh-welcome-locale=zh-CN'],
+        additionalArguments: ['--astro-one-welcome-locale=zh-CN'],
       },
     })
     expect(options.webPreferences?.preload).toMatch(/preload-welcome\.cjs$/u)

@@ -10,7 +10,7 @@ import { launchWebScaffold, captureStableAria, compareOrRefreshGolden, webSnapsh
 import { ZH_BROWSER_LOCALE } from './support.ts'
 
 it('cancels installation through the UI, restores files, and offers the spec again', async () => {
-  const scratch = await mkdtemp(join(tmpdir(), 'dsh-install-cancel-'))
+  const scratch = await mkdtemp(join(tmpdir(), 'astro-one-install-cancel-'))
   const overlay = join(scratch, 'cordis.patch.yml')
   await writeFile(overlay, `- id: plugin-manager\n  config: ${JSON.stringify({ pnpmCommand: process.execPath })}\n`)
   let scaffold: WebScaffold | undefined
@@ -28,7 +28,7 @@ it('cancels installation through the UI, restores files, and offers the spec aga
       await writeFile(lockPath, 'original lockfile\n')
       // Node stands in for the pnpm executable: `view` answers the check that precedes the run,
       // and the same installer owns and stops the real `add` child.
-      await writeFile(join(profile, 'view'), 'console.log(JSON.stringify({ name: process.argv[2], version: "1.0.0", dsh: { bundle: { patch: "./cordis.patch.yml" } } }))\n')
+      await writeFile(join(profile, 'view'), 'console.log(JSON.stringify({ name: process.argv[2], version: "1.0.0", astroOne: { bundle: { patch: "./cordis.patch.yml" } } }))\n')
       await writeFile(join(profile, 'add'), `
         import('node:fs').then(fs => {
         fs.writeFileSync('package.json', JSON.stringify({ ...JSON.parse(fs.readFileSync('package.json', 'utf8')), dependencies: { partial: '1.0.0' } }));
@@ -124,7 +124,7 @@ it('cancels installation through the UI, restores files, and offers the spec aga
         import('node:fs').then(fs => {
         const name = process.argv[2];
         fs.mkdirSync('node_modules/' + name, { recursive: true });
-        fs.writeFileSync('node_modules/' + name + '/package.json', JSON.stringify({ name, version: '1.0.0', dsh: { bundle: { patch: './cordis.patch.yml' } } }));
+        fs.writeFileSync('node_modules/' + name + '/package.json', JSON.stringify({ name, version: '1.0.0', astroOne: { bundle: { patch: './cordis.patch.yml' } } }));
         fs.writeFileSync('node_modules/' + name + '/cordis.patch.yml', '[]\\n');
         fs.writeFileSync('package.json', JSON.stringify({ ...JSON.parse(fs.readFileSync('package.json', 'utf8')), dependencies: { ...JSON.parse(fs.readFileSync('package.json', 'utf8')).dependencies, [name]: '1.0.0' } }));
         console.log('Retry completed');

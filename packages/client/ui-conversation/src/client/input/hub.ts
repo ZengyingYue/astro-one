@@ -7,14 +7,14 @@
  * listeners on each Session context and owns the default-sink choreography: every session is a
  * real host entity, so the sink is one unconditional prompt path.
  */
-import type { Context } from '@deepseek-ai/cordis'
+import type { Context } from '@astro-one/cordis'
 import type {
   ISessions, SessionBinding, SessionFace,
-} from '@deepseek-ai/dsh-api-session-controller/client'
-import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import type { TranslateNS } from '@deepseek-ai/dsh-client-locale/client'
-import type { InboxState } from '@deepseek-ai/dsh-agent/types'
-import type { ObservableSnapshot } from '@deepseek-ai/dsh-client-store'
+} from '@astro-one/api-session-controller/client'
+import type { SessionId } from '@astro-one/session/types'
+import type { TranslateNS } from '@astro-one/client-locale/client'
+import type { InboxState } from '@astro-one/agent/types'
+import type { ObservableSnapshot } from '@astro-one/client-store'
 import type {
   DraftAttachmentId, DraftAttachmentSerializationResult, InputTriggerController,
   SessionInputResolver, SessionInput, SubmitOutcome,

@@ -2,17 +2,17 @@
  * Model-facing foreground Ralph loop over the workflow and subagent seams. A
  * fixed script starts one fresh structured-output child per round, carrying
  * only the immutable objective and the previous bounded handoff between them.
- * @module @deepseek-ai/dsh-tool-ralph
+ * @module @astro-one/tool-ralph
  */
 
-import type { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import type { ContentBlock } from '@deepseek-ai/dsh-llm'
-import type { JsonValue } from '@deepseek-ai/dsh-util-values'
-import type { SubagentProvider } from '@deepseek-ai/dsh-subagent'
-import { defineTool } from '@deepseek-ai/dsh-tools'
-import type { ToolCallView, ToolResultView } from '@deepseek-ai/dsh-tools'
-import type { WorkflowResult, WorkflowRun } from '@deepseek-ai/dsh-workflow'
+import type { Context } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
+import type { ContentBlock } from '@astro-one/llm'
+import type { JsonValue } from '@astro-one/util-values'
+import type { SubagentProvider } from '@astro-one/subagent'
+import { defineTool } from '@astro-one/tools'
+import type { ToolCallView, ToolResultView } from '@astro-one/tools'
+import type { WorkflowResult, WorkflowRun } from '@astro-one/workflow'
 
 export const name = 'tool-ralph'
 export const inject = ['tools', 'workflowEngine', 'subagents', 'systemPrompt']

@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-26-human-job-kill.md
-2026-08-26-human-job-kill.md: efffdbd85bf2fa665565ff584a6938cfee827516
-2026-08-26-human-job-kill.zh.md: 206acca008518dd689351e40a99ff1571f3d1a8f
+2026-08-26-human-job-kill.md: 57062bd8efc185cb8ae4424f338d0ecc3a39291b
+2026-08-26-human-job-kill.zh.md: f9e8a77f53a6e64b637e01b2c5ee5b536fc2cc99

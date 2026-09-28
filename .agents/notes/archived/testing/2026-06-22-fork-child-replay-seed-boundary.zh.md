@@ -11,7 +11,7 @@ Archived: 2026-09-04
 
 subagent 脚本由 [`deriveReplayScript`](../../../../packages/test-support/llm-replay) 从已录制 Session log 推导：它把每个持久 `assistant/message` 或 `assistant/attempt` settlement 展开为每次 `stream()` 调用对应的一条 replay entry。对 **spawn** 子 Session 而言这是正确的，因为其 log 只包含自身模型调用。
 
-**fork** 子 Session 不同。fork backend 用*父 log 的一段平衡已完成 turn 前缀*（[`dsh-subagent-in-process-driver`](../../../../packages/subagent/subagent-in-process-driver)）播种子 Session，该 seed 会成为子 Session 持久化的 `log`（`Session` 构造函数把 seed 复制进 `this.log`）。因此 fork 子 Session 的 `.jsonl` 以**父 Session** event 开头——包括其 Assistant settlement——之后才是子 Session 自己的 turn。
+**fork** 子 Session 不同。fork backend 用*父 log 的一段平衡已完成 turn 前缀*（[`astro-one-subagent-in-process-driver`](../../../../packages/subagent/subagent-in-process-driver)）播种子 Session，该 seed 会成为子 Session 持久化的 `log`（`Session` 构造函数把 seed 复制进 `this.log`）。因此 fork 子 Session 的 `.jsonl` 以**父 Session** event 开头——包括其 Assistant settlement——之后才是子 Session 自己的 turn。
 
 从 fork 子会话的完整日志推导脚本，会把**父会话**的已录制响应当作**子会话**的模型调用来回放：实际运行的 fork 子会话第一次调用 `stream()` 时，会收到父会话的第一段分片序列而非自身的。所有已录制场景都使用 spawn，所以这从未触发——但 fork 快照会静默地错误路由，恰好属于快照层存在的意义所要捕获的那类 bug。
 
@@ -31,7 +31,7 @@ v2 JSONL header 携带 `isSeeded`，而 `session/end-seed { inherited: true }` �
 
 ### 3. 回放从边界之后推导子会话脚本
 
-`dsh-llm-replay` 通过静态格式 catalog 解析选定 generation，并保留解码后的 `inheritedEventCount`。`loadSessionScripts` 从 `fixture.events.slice(inheritedEventCount)` 推导子 Session entry——即 boundary 及之后的 event，也就是子 Session 自己的模型调用。对 spawn 子 Session 而言 cut 为 0，因此此操作为空操作。
+`astro-one-llm-replay` 通过静态格式 catalog 解析选定 generation，并保留解码后的 `inheritedEventCount`。`loadSessionScripts` 从 `fixture.events.slice(inheritedEventCount)` 推导子 Session entry——即 boundary 及之后的 event，也就是子 Session 自己的模型调用。对 spawn 子 Session 而言 cut 为 0，因此此操作为空操作。
 
 这弥补了路由正确性的缺口，两个已录制的 fork 场景对其进行端到端验证——见[记录 fork 与混合 spawn+fork 快照场景](../../archived/testing/2026-06-22-fork-snapshot-scenarios.md)。
 

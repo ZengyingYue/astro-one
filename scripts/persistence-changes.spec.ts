@@ -48,7 +48,7 @@ const roots: string[] = []
 afterEach(() => { for (const root of roots.splice(0)) rmSync(root, { recursive: true, force: true }) })
 
 function fixture(): string {
-  const root = mkdtempSync(join(tmpdir(), 'dsh-persistence-changes-'))
+  const root = mkdtempSync(join(tmpdir(), 'astro-one-persistence-changes-'))
   roots.push(root)
   mkdirSync(join(root, 'docs/persistence-changes'), { recursive: true })
   return root
@@ -805,10 +805,10 @@ describe('persistence changes current-tree commands', () => {
     writeFileSync(join(physical, 'format.ts'), "interface HeaderLine { type: 'session'; version: number; id: string; delegationDepth: number }; export {}\n")
     const session = join(root, 'packages/core/session/src')
     mkdirSync(session, { recursive: true })
-    writeFileSync(join(session, '../package.json'), JSON.stringify({ name: '@deepseek-ai/dsh-session' }))
+    writeFileSync(join(session, '../package.json'), JSON.stringify({ name: '@astro-one/session' }))
     writeFileSync(join(root, 'tsconfig.host.json'), JSON.stringify({ compilerOptions: {
       target: 'ESNext', module: 'ESNext', moduleResolution: 'Bundler', types: [], skipLibCheck: true,
-      paths: { '@deepseek-ai/dsh-session/types': ['./packages/core/session/src/types.ts'] },
+      paths: { '@astro-one/session/types': ['./packages/core/session/src/types.ts'] },
     } }))
     const source = [
       '/** Stored header. */', 'export interface SessionHeader { version: 3; id: string }',

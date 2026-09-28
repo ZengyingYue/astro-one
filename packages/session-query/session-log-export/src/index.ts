@@ -1,12 +1,12 @@
 /** Session-log download command and Host-owned streaming route. */
 
-import type { Context } from '@deepseek-ai/cordis'
-import type { CommandDefinitionId } from '@deepseek-ai/dsh-commands/brand'
-import Schema from '@deepseek-ai/schemastery'
-import { brandString } from '@deepseek-ai/dsh-brand'
-import type {} from '@deepseek-ai/dsh-attachment'
-import type { CommandResult } from '@deepseek-ai/dsh-commands'
-import type { SessionId } from '@deepseek-ai/dsh-session/types'
+import type { Context } from '@astro-one/cordis'
+import type { CommandDefinitionId } from '@astro-one/commands/brand'
+import Schema from '@astro-one/schemastery'
+import { brandString } from '@astro-one/brand'
+import type {} from '@astro-one/attachment'
+import type { CommandResult } from '@astro-one/commands'
+import type { SessionId } from '@astro-one/session/types'
 import {
   DEFAULT_SESSION_LOG_COMPRESSION_LEVEL,
   flushLiveSessionLog,
@@ -77,7 +77,7 @@ const REQUESTED: CommandResult = {
  */
 export function apply(ctx: Context, config: Config = {}): void {
   ctx.effect(() => ctx.commands.register({
-    definitionId: brandString<CommandDefinitionId>('@deepseek-ai/dsh-session-log-export'),
+    definitionId: brandString<CommandDefinitionId>('@astro-one/session-log-export'),
     name: 'export',
     description: 'Download this Session log as a ZIP archive',
     handler: invocation => Promise.resolve(invocation.rawInput.trim() === ''

@@ -5,7 +5,7 @@
  * installs the palette selector and font size that the client presenters adopt.
  */
 
-import type { IndexInjection } from '@deepseek-ai/dsh-host-webserver'
+import type { IndexInjection } from '@astro-one/host-webserver'
 import { DEFAULT_FONT_SIZE, DEFAULT_PREFERENCE, type ThemePreference } from './theme-settings.ts'
 
 const LIGHT_BACKGROUND = '#fff'
@@ -13,8 +13,8 @@ const DARK_BACKGROUND = '#151517'
 
 /** CSS that colors the document canvas before any script executes. */
 function bootThemeStyle(preference: ThemePreference): string {
-  const light = `:root{color-scheme:light}body{background-color:${LIGHT_BACKGROUND};--dsh-boot-bg:${LIGHT_BACKGROUND}}`
-  const dark = `:root{color-scheme:dark}body{background-color:${DARK_BACKGROUND};--dsh-boot-bg:${DARK_BACKGROUND}}`
+  const light = `:root{color-scheme:light}body{background-color:${LIGHT_BACKGROUND};--astro-one-boot-bg:${LIGHT_BACKGROUND}}`
+  const dark = `:root{color-scheme:dark}body{background-color:${DARK_BACKGROUND};--astro-one-boot-bg:${DARK_BACKGROUND}}`
   if (preference === 'light') return light
   if (preference === 'dark') return dark
   return `${light}@media(prefers-color-scheme:dark){${dark}}`
@@ -30,7 +30,7 @@ function bootThemeBodyScript(preference: ThemePreference, fontSize: number): str
   const dark = preference === 'dark' || systemDark
   document.documentElement.dataset.dsThemeSource = preference
   document.body.toggleAttribute('data-ds-dark-theme', dark)
-  document.body.style.setProperty('--dsh-content-font-size', ${JSON.stringify(`${fontSize}px`)})
+  document.body.style.setProperty('--astro-one-content-font-size', ${JSON.stringify(`${fontSize}px`)})
 })()`
 }
 

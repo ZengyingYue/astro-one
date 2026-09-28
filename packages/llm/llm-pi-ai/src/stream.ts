@@ -5,12 +5,12 @@
  * raw JSON representation. pi-ai also reports failures as terminal stream
  * events, which this module maps into Harness finish chunks.
  *
- * @module dsh-llm-pi-ai/stream
+ * @module astro-one-llm-pi-ai/stream
  */
 
-import { brandString } from '@deepseek-ai/dsh-brand'
-import { CONTEXT_WINDOW_EXCEEDED_CODE, EMPTY_RESPONSE_CODE, isContextWindowExceededError, isQuotaExceededError, LlmError, QUOTA_EXCEEDED_CODE } from '@deepseek-ai/dsh-llm'
-import type { FinishReason, StreamChunk, TokenUsage, ToolCallId } from '@deepseek-ai/dsh-llm'
+import { brandString } from '@astro-one/brand'
+import { CONTEXT_WINDOW_EXCEEDED_CODE, EMPTY_RESPONSE_CODE, isContextWindowExceededError, isQuotaExceededError, LlmError, QUOTA_EXCEEDED_CODE } from '@astro-one/llm'
+import type { FinishReason, StreamChunk, TokenUsage, ToolCallId } from '@astro-one/llm'
 import { isContextOverflow } from '@earendil-works/pi-ai/utils/overflow'
 import type { AssistantMessage, AssistantMessageEvent, Usage as PiUsage } from '@earendil-works/pi-ai'
 import { toPiReplayState } from './replay.ts'

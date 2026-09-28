@@ -15,14 +15,14 @@
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act, cleanup, fireEvent, waitFor, within } from '@testing-library/react'
-import type { ISession } from '@deepseek-ai/dsh-api-session-controller/client'
-import type { WorkspaceId } from '@deepseek-ai/dsh-api-workspace-controller/client'
-import { SessionSeq, type SessionId } from '@deepseek-ai/dsh-session/types'
-import type { PropsRenderSlots, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
-import { RemoteError, SlotTestRuntime, usePinnedBrowserLanguages } from '@deepseek-ai/dsh-client-test-runtime'
-import { LocaleRuntime } from '@deepseek-ai/dsh-client-locale/client'
-import { MenuItemButton } from '@deepseek-ai/dsh-client-ui-primitives'
-import { apply, inject } from '@deepseek-ai/dsh-client-ui-workspace/client'
+import type { ISession } from '@astro-one/api-session-controller/client'
+import type { WorkspaceId } from '@astro-one/api-workspace-controller/client'
+import { SessionSeq, type SessionId } from '@astro-one/session/types'
+import type { PropsRenderSlots, PropsRuntime } from '@astro-one/client-ui-slots'
+import { RemoteError, SlotTestRuntime, usePinnedBrowserLanguages } from '@astro-one/client-test-runtime'
+import { LocaleRuntime } from '@astro-one/client-locale/client'
+import { MenuItemButton } from '@astro-one/client-ui-primitives'
+import { apply, inject } from '@astro-one/client-ui-workspace/client'
 
 // The service reads its initial locale from the browser; these specs assert
 // the shipped Chinese copy, so they state the browser they assume.

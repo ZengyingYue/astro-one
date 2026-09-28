@@ -6,7 +6,7 @@
       "kind": "event",
       "event": "agent/inbox/spliced",
       "surface": false,
-      "digest": "646c2f1d243d3a78c5bc9305786fb340f5209c48a97e65f2a186cc5195491f3f",
+      "digest": "97fbaf35a6ad32d2654ba422e83ec6a4d1dcaa5701b62808ed1b218a6021f0bc",
       "schema": {
         "root": 0,
         "nodes": [
@@ -1162,7 +1162,7 @@
       "kind": "event",
       "event": "assistant/attempt",
       "surface": false,
-      "digest": "c80c89da83c46db7a454f034c10f969e03cfb574859c7316e5bff683f5a14b0e",
+      "digest": "e1a42476e3bb6a051b2ba4aba00f52aed6707848abef5814698444374e060233",
       "schema": {
         "root": 0,
         "nodes": [
@@ -2064,7 +2064,7 @@
       "kind": "event",
       "event": "assistant/message",
       "surface": true,
-      "digest": "1169b301aaabcd992657b93ec93750c43175dda81ada5cac086f14f2eaaeed6d",
+      "digest": "6cc3250577ffca04e6307627b06f522a579c5daab8c58a503e15ee98e00a417a",
       "schema": {
         "root": 0,
         "nodes": [
@@ -3082,7 +3082,7 @@
       "kind": "event",
       "event": "compaction/summary",
       "surface": false,
-      "digest": "f6f3f30109e9008fccf7da2a3268a63da8646b59dd7cf7b75bcd9cf08ac08a59",
+      "digest": "d32a71ee0e5c0d4cc049fb401b078ffe9b55aab6a19af848e258a9bde92835e3",
       "schema": {
         "root": 0,
         "nodes": [
@@ -3598,7 +3598,7 @@
       "kind": "event",
       "event": "image/offload",
       "surface": false,
-      "digest": "b222069eea2d768065161c1147b1f2c78c1b54328c84b3586ae5c8f91b8ed35e",
+      "digest": "4dda8bc541b9a07502824890c9fa495be75ac763c52cb277c9a013c16d3e77df",
       "schema": {
         "root": 0,
         "nodes": [
@@ -3688,7 +3688,7 @@
       "kind": "event",
       "event": "llm/retry",
       "surface": false,
-      "digest": "525254db03b1d1e6b74cf55aced52817568331ac1f96c0818728910b6692e336",
+      "digest": "718457e39b43b87a5defdc3ba93fb6026386a59950723e8088e08606e096bed1",
       "schema": {
         "root": 0,
         "nodes": [
@@ -3905,7 +3905,7 @@
       "kind": "event",
       "event": "session/title-llm-request",
       "surface": false,
-      "digest": "e0b5bf44c27bbfc6ab144239e3e4169c4d21146645e0e3121bbb359c3bc8591d",
+      "digest": "53b17cdf7b0b359537e72838e9b405b84bf1da956a1b5bdc4d5a97feb5e84e40",
       "schema": {
         "root": 0,
         "nodes": [
@@ -5083,7 +5083,7 @@
       "kind": "event",
       "event": "system/message",
       "surface": true,
-      "digest": "69becfb6b2d3fd5da91518089454cae8ef33f1835637ec44dde35dd077fd4bae",
+      "digest": "95bce6e1543f69bbfcdad9e045ff9f9d40323f95b7bdbd293e4f8396a1c4080c",
       "schema": {
         "root": 0,
         "nodes": [
@@ -5722,7 +5722,7 @@
       "kind": "event",
       "event": "team/message/queued",
       "surface": false,
-      "digest": "443371ec07a03a82a0e93d93abca3e70b03bca55ba5b01d507030fcb66e8fbb4",
+      "digest": "7d2aeaf275f229b495d958227ad7ce80acb2daa9cddb882031c133b56b72d073",
       "schema": {
         "root": 0,
         "nodes": [
@@ -6104,7 +6104,7 @@
       "kind": "event",
       "event": "tool/ptc-dispatch",
       "surface": false,
-      "digest": "b33142af8176323ffbb20762541be81c1d51b60a60887803836e0b146e5bef0c",
+      "digest": "e6baf8c667108170d1f9bd1a68c63f5877f903125b3775cc9929b3578881c20f",
       "schema": {
         "root": 0,
         "nodes": [
@@ -6501,7 +6501,7 @@
       "kind": "event",
       "event": "tool/result",
       "surface": true,
-      "digest": "29af48b840d0cd9e48b6f50bf3b354f8f6340607c5b99220a48e74f60beac9e2",
+      "digest": "1eabd59c7de4fb4afd3546a01264b877b5cd037f4857bfd863ae916da3ba1174",
       "schema": {
         "root": 0,
         "nodes": [
@@ -7018,7 +7018,7 @@
       "kind": "event",
       "event": "turn/end",
       "surface": false,
-      "digest": "bab768260853e13a7cf2e22e65af572a1e76a5b2c01f3cdc2ce09d39b87fb70b",
+      "digest": "ca8a7512b5c88e1325efdda7e6dd605bdef136e2784c02038c69134a2287fadd",
       "schema": {
         "root": 0,
         "nodes": [
@@ -7330,7 +7330,7 @@
       "kind": "event",
       "event": "user/message",
       "surface": true,
-      "digest": "314765bdff29c7862fb6ce820f1773563ba3094a680d163ea21180a2591b8578",
+      "digest": "82c87985c916d70c574ce53bbe578a58699df4639db8e55ada341db212db67a6",
       "schema": {
         "root": 0,
         "nodes": [

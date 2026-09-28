@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { Session, SessionId } from '@deepseek-ai/dsh-session'
-import { appendHookInvoked, appendHookResult, summarizeStderr, type HookOutput } from '@deepseek-ai/dsh-hook-protocol'
+import { Session, SessionId } from '@astro-one/session'
+import { appendHookInvoked, appendHookResult, summarizeStderr, type HookOutput } from '@astro-one/hook-protocol'
 
 /** A {@link HookOutput} with the required stream fields defaulted. */
 function output(over: Partial<HookOutput> = {}): HookOutput {

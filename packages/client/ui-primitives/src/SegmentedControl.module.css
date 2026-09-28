@@ -23,13 +23,13 @@
   position: absolute;
   top: 3px;
   left: 3px;
-  width: calc((100% - 6px - 2px * (var(--dsh-segment-count) - 1)) / var(--dsh-segment-count));
+  width: calc((100% - 6px - 2px * (var(--astro-one-segment-count) - 1)) / var(--astro-one-segment-count));
   height: calc(100% - 6px);
   border: 0;
   border-radius: 7px;
   background: var(--dsw-alias-bg-layer-1);
   box-shadow: var(--dsw-elevation-soft);
-  transform: translateX(calc(var(--dsh-segment-index) * (100% + 2px)));
+  transform: translateX(calc(var(--astro-one-segment-index) * (100% + 2px)));
   transition: transform 160ms ease;
   pointer-events: none;
 }

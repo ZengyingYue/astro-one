@@ -1,24 +1,24 @@
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
-import type { ContextFormed } from '@deepseek-ai/dsh-llm'
+import { createUserMessage } from '@astro-one/llm'
+import type { ContextFormed } from '@astro-one/llm'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { mkdtempSync, rmSync, writeFileSync, chmodSync, existsSync, readFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { Context } from '@deepseek-ai/cordis'
-import { SessionId, type SessionEvent } from '@deepseek-ai/dsh-session'
-import JsonlSessionPersistence from '@deepseek-ai/dsh-session-persistence-jsonl'
-import { defineContentToolFixture } from '@deepseek-ai/dsh-tools'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import { mountAgentLoopTestDependencies } from '@deepseek-ai/dsh-agent-loop-testkit'
-import { LocalBashExecutor } from '@deepseek-ai/dsh-bash-local'
-import LocalSubprocessRuntime from '@deepseek-ai/dsh-subprocess-local'
-import { scopeTarget } from '@deepseek-ai/dsh-scope'
-import SubagentRuntime, { SubagentRunId } from '@deepseek-ai/dsh-subagent'
-import * as HooksClaude from '@deepseek-ai/dsh-hooks-claude-code'
+import { Context } from '@astro-one/cordis'
+import { SessionId, type SessionEvent } from '@astro-one/session'
+import JsonlSessionPersistence from '@astro-one/session-persistence-jsonl'
+import { defineContentToolFixture } from '@astro-one/tools'
+import type { Agent } from '@astro-one/agent'
+import AgentLoop from '@astro-one/agent-loop'
+import { mountAgentLoopTestDependencies } from '@astro-one/agent-loop-testkit'
+import { LocalBashExecutor } from '@astro-one/bash-local'
+import LocalSubprocessRuntime from '@astro-one/subprocess-local'
+import { scopeTarget } from '@astro-one/scope'
+import SubagentRuntime, { SubagentRunId } from '@astro-one/subagent'
+import * as HooksClaude from '@astro-one/hooks-claude-code'
 import { MockAdapter, textResponse, toolCallResponse } from '../../../core/agent-loop/tests/mock-adapter.ts'
 
-declare module '@deepseek-ai/dsh-llm' {
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'policy': { kind: 'policy' } & ContextFormed
   }
@@ -40,7 +40,7 @@ function subagentCarrier(ctx: Context) {
   return scopeTarget(ctx as unknown as SubagentRuntime, undefined)
 }
 
-function dir(): string { const d = mkdtempSync(join(tmpdir(), 'dsh-hc-cov-')); dirs.push(d); return d }
+function dir(): string { const d = mkdtempSync(join(tmpdir(), 'astro-one-hc-cov-')); dirs.push(d); return d }
 function sh(d: string, name: string, body: string): string {
   const p = join(d, name); writeFileSync(p, body); chmodSync(p, 0o755); return p
 }
@@ -158,7 +158,7 @@ export function defineCoverageCases(group: CoverageGroup): void {
       const ctx = await harness(path, new MockAdapter([]))
       let ran = false
       ctx.tools.register(defineContentToolFixture({ name: 'echo', description: 'e', parameters: {}, async execute() { ran = true; return [{ type: 'text', text: 'x' }] } }))
-      const { ToolCallId } = await import('@deepseek-ai/dsh-llm')
+      const { ToolCallId } = await import('@astro-one/llm')
       const result = await ctx.tools.execute({ signal: testToolSignal, callId: ToolCallId('c1'), name: 'echo', arguments: {} })
       expect(ran).toBe(false)
       expect(result.isError).toBe(true)
@@ -484,7 +484,7 @@ export function defineCoverageCases(group: CoverageGroup): void {
       const adapter = new MockAdapter([textResponse('ran')])
       const ctx = await harness(path, adapter) // NB: no projectDir
       // The factory create() path honors meta.cwd (the plain agentLoop.create() does not).
-      const { SessionId } = await import('@deepseek-ai/dsh-session')
+      const { SessionId } = await import('@astro-one/session')
       const handle = await ctx.agents.create({ sessionId: SessionId('s1'), meta: { cwd: workspace }, agentOptions: { provider: 'mock', model: 'mock' } })
       handle.agent.followup(createUserMessage({ content: [{ type: 'text', text: 'go' }], source: { kind: 'user' } }))
       await waitForIdle(ctx, handle.agent)
@@ -685,7 +685,7 @@ export function defineCoverageCases(group: CoverageGroup): void {
       ctx.llm.registerAdapter(['mock'], adapter)
       ctx.tools.register(defineContentToolFixture({ name: 'echo', description: 'e', parameters: {}, async execute() { return [{ type: 'text', text: 'ok' }] } }))
 
-      const { SessionId } = await import('@deepseek-ai/dsh-session')
+      const { SessionId } = await import('@astro-one/session')
       const handle = await ctx.agents.create({ sessionId: SessionId('s1'), meta: { cwd: sessionDir }, agentOptions: { provider: 'mock', model: 'mock' } })
       handle.agent.followup(createUserMessage({ content: [{ type: 'text', text: 'go' }], source: { kind: 'user' } }))
       await waitForIdle(ctx, handle.agent)
@@ -713,7 +713,7 @@ export function defineCoverageCases(group: CoverageGroup): void {
       await ctx.plugin(HooksClaude, { configPath: join(serverDir, 'hooks.json') })
       ctx.llm.registerAdapter(['mock'], new MockAdapter([]))
 
-      const { SessionId } = await import('@deepseek-ai/dsh-session')
+      const { SessionId } = await import('@astro-one/session')
       const childHandle = await ctx.agents.create({ sessionId: SessionId('child-stop-session'), meta: { cwd: childDir }, agentOptions: { provider: 'mock', model: 'mock' } })
       const runId = SubagentRunId('run-stop')
       const identity = { runId, provider: 'inproc', id: childHandle.agent.id, local: true }

@@ -1,30 +1,30 @@
 /**
  * Single replay-aware token-meter service for request and surface pressure.
  *
- * @module @deepseek-ai/dsh-token-meter
+ * @module @astro-one/token-meter
  */
 
-import { Context, Service } from '@deepseek-ai/cordis'
-import type {} from '@deepseek-ai/dsh-compaction-image-offload/projection'
-import z from '@deepseek-ai/schemastery'
-import { assembleAssistantStream } from '@deepseek-ai/dsh-llm'
-import type { LlmImageRequestPricing, LlmRuntime, Message, TokenUsage } from '@deepseek-ai/dsh-llm'
-import { deepFreeze } from '@deepseek-ai/dsh-util-values'
+import { Context, Service } from '@astro-one/cordis'
+import type {} from '@astro-one/compaction-image-offload/projection'
+import z from '@astro-one/schemastery'
+import { assembleAssistantStream } from '@astro-one/llm'
+import type { LlmImageRequestPricing, LlmRuntime, Message, TokenUsage } from '@astro-one/llm'
+import { deepFreeze } from '@astro-one/util-values'
 import type {
   EpochHeader,
   Session,
   SessionEvent,
   SessionLogOffset as SessionLogOffsetType,
-} from '@deepseek-ai/dsh-session'
+} from '@astro-one/session'
 import {
   canonicalHeader,
   headerEquals,
   isSurfaceEvent,
   SessionLogOffset,
   SessionSeq,
-} from '@deepseek-ai/dsh-session'
+} from '@astro-one/session'
 // Type-only: activates the `ctx.sessionProjections` Context declaration.
-import type {} from '@deepseek-ai/dsh-session-projection'
+import type {} from '@astro-one/session-projection'
 import type {
   TokenMeasurement,
   TokenMeasurementBaseline,
@@ -91,7 +91,7 @@ function validateConfigKeys(config: TokenMeterConfig): void {
   }
 }
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     tokenMeter: TokenMeter
   }

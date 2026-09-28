@@ -1,9 +1,9 @@
 ---
-description: "dsh Web 客户端插件页上的 Subagent 设置页：subagent 命名空间的委派深度与并行容量，以及 subagent-model-selection 里 Agent 可选的模型，同一页一次保存。"
+description: "astro-one Web 客户端插件页上的 Subagent 设置页：subagent 命名空间的委派深度与并行容量，以及 subagent-model-selection 里 Agent 可选的模型，同一页一次保存。"
 kind: "package-reference"
 ---
 
-# @deepseek-ai/dsh-client-ui-settings-subagent
+# @astro-one/client-ui-settings-subagent
 
 [English](README.md) | 中文
 

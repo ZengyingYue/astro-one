@@ -1,19 +1,19 @@
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
+import { createUserMessage } from '@astro-one/llm'
 import { mkdtemp, mkdir, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import { SessionId } from '@deepseek-ai/dsh-session'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import { mountAgentLoopTestDependencies } from '@deepseek-ai/dsh-agent-loop-testkit'
-import * as LlmDeepSeek from '@deepseek-ai/dsh-llm-deepseek'
-import * as AgentInstructions from '@deepseek-ai/dsh-agent-instructions'
+import { Context } from '@astro-one/cordis'
+import { SessionId } from '@astro-one/session'
+import type { Agent } from '@astro-one/agent'
+import AgentLoop from '@astro-one/agent-loop'
+import { mountAgentLoopTestDependencies } from '@astro-one/agent-loop-testkit'
+import * as LlmDeepSeek from '@astro-one/llm-deepseek'
+import * as AgentInstructions from '@astro-one/agent-instructions'
 import { candidateScopeKey } from '../src/render.ts'
-import LocalFileSystem from '@deepseek-ai/dsh-fs-local'
-import * as ToolFs from '@deepseek-ai/dsh-tool-fs'
-import type { SessionEvent } from '@deepseek-ai/dsh-session'
+import LocalFileSystem from '@astro-one/fs-local'
+import * as ToolFs from '@astro-one/tool-fs'
+import type { SessionEvent } from '@astro-one/session'
 
 const PROBE = 'banana-271828'
 const NESTED_PROBE = 'papaya-314159'
@@ -30,7 +30,7 @@ afterEach(async () => {
 })
 
 async function harness(): Promise<{ ctx: Context; agent: Agent }> {
-  workdir = await mkdtemp(join(tmpdir(), 'dsh-workspace-context-e2e-'))
+  workdir = await mkdtemp(join(tmpdir(), 'astro-one-workspace-context-e2e-'))
   await mkdir(join(workdir, '.git'), { recursive: true })
   await writeFile(join(workdir, 'AGENTS.md'), `If the user asks for the workspace context handshake, reply with exactly this string and nothing else: ${PROBE}.\n`)
   ctx = new Context()

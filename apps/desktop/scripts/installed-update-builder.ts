@@ -15,24 +15,24 @@ import { verifyDesktopRuntime } from '../src/runtime-tree.ts'
 export async function createInstalledUpdateBuilderConfig(manifest: string, version: string, environment: NodeJS.ProcessEnv) {
   const run = await readInstalledUpdateRun(manifest)
   if (!run.versions.includes(version)) throw new Error('installed update: package version is outside the qualification run')
-  if (environment.DSH_DESKTOP_AUTO_UPDATE_ENV !== 'test' || environment.DSH_DESKTOP_UNSIGNED === '1'
+  if (environment.ASTRO_ONE_DESKTOP_AUTO_UPDATE_ENV !== 'test' || environment.ASTRO_ONE_DESKTOP_UNSIGNED === '1'
     || environment.DOWNLOAD_TEST_ORIGIN !== run.origin || environment.DOWNLOAD_TEST_COS_BUCKET !== run.bucket) {
     throw new Error('installed update: signed ordinary-update qualification requires matching test deployment settings')
   }
   const application = await verifyInstalledUpdateApplication(run.root)
-  const dsh = join(run.root, version, 'dsh')
-  await verifyDesktopRuntime(dsh, version, { platform: 'win32', arch: 'x64' })
-  const config = createElectronBuilderConfig({ ...environment, DSH_DESKTOP_APP_ID: run.appId,
-    DSH_DESKTOP_TARGET_PLATFORM: 'win32', DSH_DESKTOP_TARGET_ARCH: 'x64', DSH_DESKTOP_UNSIGNED: '0' }, 'win32', 'x64', dsh, version)
+  const astroOne = join(run.root, version, 'astro-one')
+  await verifyDesktopRuntime(astroOne, version, { platform: 'win32', arch: 'x64' })
+  const config = createElectronBuilderConfig({ ...environment, ASTRO_ONE_DESKTOP_APP_ID: run.appId,
+    ASTRO_ONE_DESKTOP_TARGET_PLATFORM: 'win32', ASTRO_ONE_DESKTOP_TARGET_ARCH: 'x64', ASTRO_ONE_DESKTOP_UNSIGNED: '0' }, 'win32', 'x64', astroOne, version)
   return { ...config,
     productName: run.productName,
     directories: { ...config.directories, output: join(run.root, version, 'installer') },
-    extraMetadata: { ...config.extraMetadata, name: `dsh-update-test-${run.id}`, version, main: 'qualification-bootstrap.mjs' },
+    extraMetadata: { ...config.extraMetadata, name: `astro-one-update-test-${run.id}`, version, main: 'qualification-bootstrap.mjs' },
     files: [
       { from: application, to: '.', filter: ['lib/*.js', 'lib/*.cjs', 'renderer/**/*', 'qualification-bootstrap.mjs', 'installed-update-identity.mjs'] },
       'package.json',
-      { from: dsh, to: 'dsh', filter: ['**/*'] },
-      { from: join(dsh, 'node_modules'), to: 'dsh/node_modules', filter: ['**/*'] },
+      { from: astroOne, to: 'astro-one', filter: ['**/*'] },
+      { from: join(astroOne, 'node_modules'), to: 'astro-one/node_modules', filter: ['**/*'] },
     ],
     publish: [{ provider: 'generic' as const, url: `${run.origin}/${run.feedKey.slice(0, -'nightly.yml'.length)}`, channel: 'nightly' }],
   }

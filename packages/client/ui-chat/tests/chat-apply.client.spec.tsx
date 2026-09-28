@@ -1,32 +1,32 @@
 // @vitest-environment jsdom
-import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
+import { createSnapshotStore } from '@astro-one/client-store'
 import { describe, expect, it, vi } from 'vitest'
 import { act, fireEvent, render } from '@testing-library/react'
 import {
   SlotTestRuntime, stubConfigForm, usePinnedBrowserLanguages,
-} from '@deepseek-ai/dsh-client-test-runtime'
-import { LocaleRuntime } from '@deepseek-ai/dsh-client-locale/client'
-import { resolveSlotLabel } from '@deepseek-ai/dsh-client-ui-slots'
-import type { ObservableSnapshot } from '@deepseek-ai/dsh-client-store'
-import type { SessionBinding } from '@deepseek-ai/dsh-api-session-controller/client'
-import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import type { WorkspaceId } from '@deepseek-ai/dsh-workspace/types'
+} from '@astro-one/client-test-runtime'
+import { LocaleRuntime } from '@astro-one/client-locale/client'
+import { resolveSlotLabel } from '@astro-one/client-ui-slots'
+import type { ObservableSnapshot } from '@astro-one/client-store'
+import type { SessionBinding } from '@astro-one/api-session-controller/client'
+import type { SessionId } from '@astro-one/session/types'
+import type { WorkspaceId } from '@astro-one/workspace/types'
 import {
   apply as applyConversation, inject as injectConversation,
-} from '@deepseek-ai/dsh-client-ui-conversation/client'
+} from '@astro-one/client-ui-conversation/client'
 import type {
   ConversationLocationDataSource, ConversationLocationDataStore, ConversationTurnDataMap,
-} from '@deepseek-ai/dsh-client-ui-conversation/client'
+} from '@astro-one/client-ui-conversation/client'
 import {
   apply as applyChat, EMPTY_CHAT_SNAPSHOT, inject as injectChat,
-} from '@deepseek-ai/dsh-client-ui-chat/client'
+} from '@astro-one/client-ui-chat/client'
 import type {
   ChatNodeInjected, ChatSnapshot, TranscriptViewRowInjected, UseChatNodeTurnData, UseDisclosure,
-} from '@deepseek-ai/dsh-client-ui-chat/client'
+} from '@astro-one/client-ui-chat/client'
 import type { PerformanceUsageRowInjected } from '../src/client/settings/PerformanceUsageRow.tsx'
 import { CHAT_SETTINGS_NAMESPACE, type ChatSettings } from '../src/chat-settings.ts'
 
-declare module '@deepseek-ai/dsh-client-ui-conversation/client' {
+declare module '@astro-one/client-ui-conversation/client' {
   interface ConversationTurnDataMap {
     metric: number
   }

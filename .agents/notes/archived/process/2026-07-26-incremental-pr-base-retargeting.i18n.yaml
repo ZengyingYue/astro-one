@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/archived/process/2026-07-26-incremental-pr-base-retargeting.md
-2026-07-26-incremental-pr-base-retargeting.md: dadea45fe9e5c76870c7d963cd7a46262b9b03ee
-2026-07-26-incremental-pr-base-retargeting.zh.md: 2bcc9c172e7c813e7e6700fd7ebb3cbe08c54fa5
+2026-07-26-incremental-pr-base-retargeting.md: bf43774aa8eaf6553eaec07348817cb57a077d40
+2026-07-26-incremental-pr-base-retargeting.zh.md: e549dd2640b1cae5e6355fb0cdb5acc3d31c0b42

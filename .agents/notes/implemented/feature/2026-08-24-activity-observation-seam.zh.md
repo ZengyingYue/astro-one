@@ -16,15 +16,15 @@ bash 之下的底座其实早有正确形态：`SubprocessOutputReader.readFrom(
 
 新建能力 seam `packages/activity/`，作为非消费观察面。**activity** 是一个可观察的长时工作单元：一条 append-only 的有界输出流加实时状态。该 seam 是纯观察——不启动、不取消任何工作，对模型不可见。模型可见事实原地不动（工具结果、`ctx.jobs` 游标），"模型可见 ⟺ 已记录"不变量不受影响；不装该 seam 的组合只失去实时观察。
 
-- **`@deepseek-ai/dsh-activity`（Service Definition）**——`ctx.activities` 上的抽象 `ActivityRegistry`：`open(spec) → ActivityHandle { append, updateDetail, end }`、有栅栏的 `get`/`list`、按绝对 UTF-8 字节 offset 的非消费 `read(id, from)`、owner 相对投递的 `onActivitiesChanged`（roster）与 `onOutput`（推进信号，只带 id）。`ActivityCorrelation { callId?, jobId? }` 把行关联到工具调用与 job。`pumpActivityOutput` 是 pull 型底座的共享泵。
-- **`@deepseek-ai/dsh-activity-local`（Service Provider）**——每个 activity 一个内存 chunk 环。offset 跨淘汰稳定（`outputEarliest` 指明最老保留字节；低于它的读取是 `lossy` 而非错误）；单个超上限 chunk 保留 UTF-8 安全尾部并带 `gapBefore`。配置 `retainBytes`（256 KiB）存活，结算时裁到 `settledRetainBytes`（16 KiB）。记录存续期长于生产者 fiber；owner 销毁强制终结并移除；`end` first-wins，end 后写入记日志后丢弃，生产者的收尾 flush 砸不掉自己的 teardown。
-- **`@deepseek-ai/dsh-api-activity-controller`**——wire 层，取 workspace-controller 的形态：`activity.control` 流出一份 roster baseline 加按 owner 会话的整桶替换帧（jobs 帧的自愈语义）；`activity.observe({ activityId, from? })` 流出一帧 `opened` 锚点、合并的 `output` 帧（`flushMs` 窗口、`maxFrameBytes` 软预算）、再在同一条流上发终态 `status` 后关闭——结算永远不会与仍开着的输出通道竞态。重连以上一帧的 `next` 续传。客户端半区安装 `ctx.activityFeed`（roster 镜像 + 按引用计数的观察流与有界渲染尾巴）。
-- **`@deepseek-ai/dsh-client-ui-activity`**——会话头部任务列表（[与 job 行合并](../../archived/feature/2026-08-25-unified-task-list.md)）；展开某行即把其观察流打开进 `TerminalBlock` 面板，收起即关——只有有人在看时输出才流动。`TerminalBlock` 本身获得实时渲染能力：running 且提供了 `output` 的块在 running 状态下显示文本，而非历史上的仅提示行画面。
+- **`@astro-one/activity`（Service Definition）**——`ctx.activities` 上的抽象 `ActivityRegistry`：`open(spec) → ActivityHandle { append, updateDetail, end }`、有栅栏的 `get`/`list`、按绝对 UTF-8 字节 offset 的非消费 `read(id, from)`、owner 相对投递的 `onActivitiesChanged`（roster）与 `onOutput`（推进信号，只带 id）。`ActivityCorrelation { callId?, jobId? }` 把行关联到工具调用与 job。`pumpActivityOutput` 是 pull 型底座的共享泵。
+- **`@astro-one/activity-local`（Service Provider）**——每个 activity 一个内存 chunk 环。offset 跨淘汰稳定（`outputEarliest` 指明最老保留字节；低于它的读取是 `lossy` 而非错误）；单个超上限 chunk 保留 UTF-8 安全尾部并带 `gapBefore`。配置 `retainBytes`（256 KiB）存活，结算时裁到 `settledRetainBytes`（16 KiB）。记录存续期长于生产者 fiber；owner 销毁强制终结并移除；`end` first-wins，end 后写入记日志后丢弃，生产者的收尾 flush 砸不掉自己的 teardown。
+- **`@astro-one/api-activity-controller`**——wire 层，取 workspace-controller 的形态：`activity.control` 流出一份 roster baseline 加按 owner 会话的整桶替换帧（jobs 帧的自愈语义）；`activity.observe({ activityId, from? })` 流出一帧 `opened` 锚点、合并的 `output` 帧（`flushMs` 窗口、`maxFrameBytes` 软预算）、再在同一条流上发终态 `status` 后关闭——结算永远不会与仍开着的输出通道竞态。重连以上一帧的 `next` 续传。客户端半区安装 `ctx.activityFeed`（roster 镜像 + 按引用计数的观察流与有界渲染尾巴）。
+- **`@astro-one/client-ui-activity`**——会话头部任务列表（[与 job 行合并](../../archived/feature/2026-08-25-unified-task-list.md)）；展开某行即把其观察流打开进 `TerminalBlock` 面板，收起即关——只有有人在看时输出才流动。`TerminalBlock` 本身获得实时渲染能力：running 且提供了 `output` 的块在 running 状态下显示文本，而非历史上的仅提示行画面。
 
 生产者一律经 `ctx.get('activities')` 尽力镜像，绝不声明 inject，一切观察失败只记日志并吞掉——该 seam 严格可选，永远不能破坏它所观察的工作：
 
-- `ShellProcess` 新增可选 `observed`——底座的非消费 offset 读取器复出（bash-local 与 pwsh-local 返回 `handle.collected`；e2b subprocess provider 满足同一契约）。`dsh-tool-bash` / `dsh-tool-pwsh` 在 `jobs.start()` 提交后打开带关联的 activity，并以 `activityPollMs`（默认 150 ms）泵取 `observed`。
-- `dsh-tool-workflow` 把每个被记录的顶层运行镜像为 push 形态的 `workflow` activity，让此前无人消费的 `workflow/phase` / `workflow/log` 事件有了消费者。
+- `ShellProcess` 新增可选 `observed`——底座的非消费 offset 读取器复出（bash-local 与 pwsh-local 返回 `handle.collected`；e2b subprocess provider 满足同一契约）。`astro-one-tool-bash` / `astro-one-tool-pwsh` 在 `jobs.start()` 提交后打开带关联的 activity，并以 `activityPollMs`（默认 150 ms）泵取 `observed`。
+- `astro-one-tool-workflow` 把每个被记录的顶层运行镜像为 push 形态的 `workflow` activity，让此前无人消费的 `workflow/phase` / `workflow/log` 事件有了消费者。
 
 ### 为何不用持久会话事件、control 流或 jobs seam
 

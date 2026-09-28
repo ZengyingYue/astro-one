@@ -8,11 +8,11 @@
  * Package-private; the hub alone constructs it and wires the scoped event
  * listeners onto it.
  */
-import type { Context } from '@deepseek-ai/cordis'
-import type { InboxState } from '@deepseek-ai/dsh-agent/types'
+import type { Context } from '@astro-one/cordis'
+import type { InboxState } from '@astro-one/agent/types'
 import {
   createSnapshotStore, type ObservableSnapshot, type SnapshotStore,
-} from '@deepseek-ai/dsh-client-store'
+} from '@astro-one/client-store'
 import type { LexicalEditor } from 'lexical'
 import type {
   CommandClaim, ConsumeTokenRequest, DraftAttachmentId,

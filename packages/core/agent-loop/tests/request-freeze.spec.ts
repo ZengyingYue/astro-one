@@ -1,14 +1,14 @@
 /** Request immutability through the real loop, including adopted restore graphs. */
 
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import { mountAgentLoopTestDependencies } from '@deepseek-ai/dsh-agent-loop-testkit'
-import { createAssistantMessage, createUserMessage, isAgentLoopRequest } from '@deepseek-ai/dsh-llm'
-import type { GenerateOptions, ToolSchema } from '@deepseek-ai/dsh-llm'
-import { Session, SessionId, SessionLogOffset, SESSION_FORMAT_VERSION } from '@deepseek-ai/dsh-session'
-import * as values from '@deepseek-ai/dsh-util-values'
+import { Context } from '@astro-one/cordis'
+import AgentLoop from '@astro-one/agent-loop'
+import type { Agent } from '@astro-one/agent'
+import { mountAgentLoopTestDependencies } from '@astro-one/agent-loop-testkit'
+import { createAssistantMessage, createUserMessage, isAgentLoopRequest } from '@astro-one/llm'
+import type { GenerateOptions, ToolSchema } from '@astro-one/llm'
+import { Session, SessionId, SessionLogOffset, SESSION_FORMAT_VERSION } from '@astro-one/session'
+import * as values from '@astro-one/util-values'
 import { ReactLoopAgent } from '../src/agent.ts'
 import { MockAdapter, textResponse } from './mock-adapter.ts'
 

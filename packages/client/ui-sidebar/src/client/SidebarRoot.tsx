@@ -20,8 +20,8 @@ import { useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
 import {
   FishLogo, IconNewChatOutlineMedium, IconNewChatOutlineRegular, IconPanelLeftOutlineRegular, isDarwinDesktop, Tooltip,
-} from '@deepseek-ai/dsh-client-ui-primitives'
-import type { InjectFace, PropsRenderSlots, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
+} from '@astro-one/client-ui-primitives'
+import type { InjectFace, PropsRenderSlots, PropsRuntime } from '@astro-one/client-ui-slots'
 import type {
   SidebarPanelMetadata, SidebarRootComponentProps, SidebarRootInjected, SidebarSectionOwnerProps,
 } from './contract/slots.ts'
@@ -40,12 +40,12 @@ const SCROLLBAR_LINGER_MS = 2000
 
 /** Format complete-build metadata for the local brand badge. */
 function localBuildVersion(): string | undefined {
-  const version = process.env.DSH_CLIENT_VERSION
+  const version = process.env.ASTRO_ONE_CLIENT_VERSION
   if (version === undefined) return undefined
-  const commit = process.env.DSH_CLIENT_COMMIT_HASH
+  const commit = process.env.ASTRO_ONE_CLIENT_COMMIT_HASH
   return version
     + (commit === undefined ? '' : `-${commit}`)
-    + (process.env.DSH_CLIENT_GIT_DIRTY === 'true' ? '-dirty' : '')
+    + (process.env.ASTRO_ONE_CLIENT_GIT_DIRTY === 'true' ? '-dirty' : '')
 }
 
 type PanelRowProps =
@@ -108,7 +108,7 @@ export function SidebarRoot({
   const windowsTitlebar = document.documentElement.hasAttribute('data-windows-titlebar')
   const wide = windowsTitlebar ? !collapsed : !collapsed || !settled
   // The Windows caption menus occupy the strip to the right of these controls
-  // (that is what --dsh-windows-menu-start reserves), so a right-side bubble
+  // (that is what --astro-one-windows-menu-start reserves), so a right-side bubble
   // lands under their text. Below the caption is the only clear side.
   const captionTooltipSide = windowsTitlebar ? 'bottom' : 'right'
 

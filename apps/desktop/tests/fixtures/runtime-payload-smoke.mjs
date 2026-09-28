@@ -10,7 +10,7 @@ import { delimiter, dirname, join, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 
 const runtime = process.argv[2]
-assert.ok(runtime, 'Pass the filtered resources/dsh directory')
+assert.ok(runtime, 'Pass the filtered resources/astro-one directory')
 const root = resolve(runtime)
 const descriptor = JSON.parse(readFileSync(join(root, 'desktop-runtime.json'), 'utf8'))
 assert.equal(process.versions.node, descriptor.release.nodeVersion, 'Run with the Electron Node runtime version')
@@ -18,7 +18,7 @@ assert.equal(process.platform, descriptor.platform)
 assert.equal(process.arch, descriptor.arch)
 const resourcesRuntime = process.argv[3] ?? join(dirname(root), 'runtime')
 const requireRuntime = createRequire(join(root, 'package.json'))
-const scratch = mkdtempSync(join(tmpdir(), 'dsh-runtime-payload-'))
+const scratch = mkdtempSync(join(tmpdir(), 'astro-one-runtime-payload-'))
 
 /** Run a package script with only the shipped node launcher available on PATH. */
 function checkPnpm() {
@@ -41,7 +41,7 @@ console.log('desktop-node-script-ok')
   const output = execFileSync(process.execPath, ['--expose-internals', pnpm, 'run', 'check'], {
     cwd: scratch, encoding: 'utf8', timeout: 45_000,
     env: { ...environment, pnpm_config_verify_deps_before_run: 'false',
-      ELECTRON_RUN_AS_NODE: '1', DSH_DESKTOP_NODE_EXECUTABLE: process.execPath,
+      ELECTRON_RUN_AS_NODE: '1', ASTRO_ONE_DESKTOP_NODE_EXECUTABLE: process.execPath,
       PATH: `${bin}${delimiter}${systemBin}`, HOME: scratch, USERPROFILE: scratch, TMP: scratch, TEMP: scratch, TMPDIR: scratch },
   })
   assert.match(output, /desktop-node-script-ok/u)
@@ -56,7 +56,7 @@ async function checkPty() {
     /^(?:path|systemroot|windir|comspec|ELECTRON_RUN_AS_NODE)$/iu.test(name)
   )))
   Object.assign(env, { HOME: scratch, USERPROFILE: scratch, TMP: scratch, TEMP: scratch, TMPDIR: scratch })
-  env.DSH_DESKTOP_NODE_EXECUTABLE = process.execPath
+  env.ASTRO_ONE_DESKTOP_NODE_EXECUTABLE = process.execPath
   env.PATH = `${join(resourcesRuntime, 'bin')}${delimiter}${env.PATH ?? env.Path ?? ''}`
   // A Windows GUI executable needs a console-owning shell when launched inside ConPTY.
   const executable = process.platform === 'win32' ? process.env.ComSpec : process.execPath
@@ -101,7 +101,7 @@ async function checkPty() {
 
 /** Exercise grep and glob operations with the search tool's resolved native executable. */
 async function checkSearch() {
-  const { resolveRgPath } = await import(pathToFileURL(requireRuntime.resolve('@deepseek-ai/dsh-tool-fs-search')).href)
+  const { resolveRgPath } = await import(pathToFileURL(requireRuntime.resolve('@astro-one/tool-fs-search')).href)
   const executable = await resolveRgPath()
   const name = 'ripgrep-smoke.txt'
   const marker = 'desktop-ripgrep-smoke'

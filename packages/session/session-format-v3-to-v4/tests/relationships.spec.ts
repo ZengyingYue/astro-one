@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { Session, SessionId, SessionLogOffset, type SessionEvent, type SessionHeader } from '@deepseek-ai/dsh-session'
-import { sessionFormatCatalog } from '@deepseek-ai/dsh-session-format-catalog'
-import type { SessionFormatEvent } from '@deepseek-ai/dsh-session-format'
+import { Session, SessionId, SessionLogOffset, type SessionEvent, type SessionHeader } from '@astro-one/session'
+import { sessionFormatCatalog } from '@astro-one/session-format-catalog'
+import type { SessionFormatEvent } from '@astro-one/session-format'
 
 type Row = { type: string; data: Record<string, unknown>; surfaceOp?: unknown; sourceEventSeqs?: number[]; ignorable?: true }
 const row = (type: string, data: Record<string, unknown>): Row => ({ type, data })
@@ -177,7 +177,7 @@ describe('mandatory V4 dependent event restoration', () => {
 
   it('requires titles and durable title requests to cite earlier human messages', () => {
     const title = row('session/title', { title: 'Example', source: { kind: 'generated' }, messageSeqs: [0] })
-    const requestTitle = row('session/title-llm-request', { messageSeqs: [0], messages: [{ ...user('dsh-session-title-llm'), content: [{ type: 'text', text: 'historical frame with original coordinates' }] }] })
+    const requestTitle = row('session/title-llm-request', { messageSeqs: [0], messages: [{ ...user('astro-one-session-title-llm'), content: [{ type: 'text', text: 'historical frame with original coordinates' }] }] })
     expect(() => reopen([input(), title, requestTitle, row('session/title', { title: 'Manual', source: { kind: 'user' }, messageSeqs: [] })])).not.toThrow()
     for (const rows of [[input('external'), title], [input(), { ...title, data: { ...title.data, source: { kind: 'user' } } }], [input(), { ...title, data: { ...title.data, messageSeqs: [0, 0] } }], [input(), { ...title, data: { ...title.data, messageSeqs: [1] } }], [input(), { ...requestTitle, data: { ...requestTitle.data, messages: [user()] } }], [input(), { ...requestTitle, data: { ...requestTitle.data, messageSeqs: [] } }]]) {
       expect(() => reopen(rows)).toThrow()

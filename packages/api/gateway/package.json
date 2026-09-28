@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-api-gateway",
+  "name": "@astro-one/api-gateway",
   "description": "Typert Remote Host dispatcher and Client API endpoint",
   "version": "0.1.7-rc.1",
   "publishConfig": {
@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/api/gateway"
   },
   "type": "module",
@@ -33,11 +33,11 @@
       "default": "./lib/types/stream-protocol.js"
     }
   },
-  "dsh": {
+  "astroOne": {
     "client": {
       "inject": [
-        "@deepseek-ai/dsh-typert-registry",
-        "@deepseek-ai/dsh-client-connection"
+        "@astro-one/typert-registry",
+        "@astro-one/client-connection"
       ],
       "platform": "web",
       "immediately": true
@@ -55,26 +55,26 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@deepseek-ai/dsh-deque": "workspace:*",
-    "@deepseek-ai/dsh-timeout": "workspace:*",
-    "@deepseek-ai/schemastery": "workspace:~",
+    "@astro-one/deque": "workspace:*",
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
     "ws": "^8.21.0",
-    "@deepseek-ai/dsh-typert-protocol": "workspace:*"
+    "@astro-one/typert-protocol": "workspace:*"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-client-connection": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/client-connection": "workspace:*"
   },
   "devDependencies": {
-    "@deepseek-ai/dsh-brand": "workspace:*",
-    "@deepseek-ai/dsh-cmdline": "workspace:*",
-    "@deepseek-ai/dsh-client-connection": "workspace:*",
-    "@deepseek-ai/dsh-host-webserver": "workspace:*",
-    "@deepseek-ai/dsh-remote-mock": "workspace:*",
-    "@deepseek-ai/dsh-typert-registry": "workspace:*",
-    "@deepseek-ai/dsh-util-crypto": "workspace:*",
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/cmdline": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/host-webserver": "workspace:*",
+    "@astro-one/remote-mock": "workspace:*",
+    "@astro-one/typert-registry": "workspace:*",
+    "@astro-one/util-crypto": "workspace:*",
     "@types/ws": "^8.18.1",
-    "@deepseek-ai/cordis": "workspace:~",
+    "@astro-one/cordis": "workspace:~",
     "zod": "^4.4.3"
   }
 }

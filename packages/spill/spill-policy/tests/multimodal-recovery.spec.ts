@@ -2,32 +2,32 @@
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { Context } from '@deepseek-ai/cordis'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import type { ImageAttachmentRef } from '@deepseek-ai/dsh-attachment'
-import LocalAttachments from '@deepseek-ai/dsh-attachment-local'
-import FileSystem from '@deepseek-ai/dsh-fs-local'
-import * as ToolFs from '@deepseek-ai/dsh-tool-fs'
+import { Context } from '@astro-one/cordis'
+import type { Agent } from '@astro-one/agent'
+import type { ImageAttachmentRef } from '@astro-one/attachment'
+import LocalAttachments from '@astro-one/attachment-local'
+import FileSystem from '@astro-one/fs-local'
+import * as ToolFs from '@astro-one/tool-fs'
 import {
   createAssistantMessage, createToolResultMessage, createUserMessage, LlmAdapter, LlmRuntime,
   resolveImageAttachmentAccess, ToolCallId,
-} from '@deepseek-ai/dsh-llm'
-import type { ContentBlock, GenerateOptions, ImageBlock, StreamChunk, UserMessage } from '@deepseek-ai/dsh-llm'
-import { deepSeekImageRequestPricing, resolveAdapterOptions } from '@deepseek-ai/dsh-llm-deepseek'
-import { prepareImages } from '@deepseek-ai/dsh-llm-deepseek/src/images.ts'
-import { serialize } from '@deepseek-ai/dsh-llm-deepseek/src/serialize.ts'
-import { createMcpToolDefinition } from '@deepseek-ai/dsh-mcp-client'
-import NodeRuntime from '@deepseek-ai/dsh-ptc-runtime-node'
-import Sandbox from '@deepseek-ai/dsh-sandbox-local'
-import SandboxPolicy from '@deepseek-ai/dsh-sandbox-policy'
-import SessionStore, { SessionId } from '@deepseek-ai/dsh-session'
-import SessionProjections from '@deepseek-ai/dsh-session-projection'
-import LocalSpillStore from '@deepseek-ai/dsh-spill-local'
-import Subprocess from '@deepseek-ai/dsh-subprocess-local'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import { estimateContent } from '@deepseek-ai/dsh-token-meter/estimate'
-import ToolRuntime from '@deepseek-ai/dsh-tools'
-import type { JsonValue } from '@deepseek-ai/dsh-util-values'
+} from '@astro-one/llm'
+import type { ContentBlock, GenerateOptions, ImageBlock, StreamChunk, UserMessage } from '@astro-one/llm'
+import { deepSeekImageRequestPricing, resolveAdapterOptions } from '@astro-one/llm-deepseek'
+import { prepareImages } from '@astro-one/llm-deepseek/src/images.ts'
+import { serialize } from '@astro-one/llm-deepseek/src/serialize.ts'
+import { createMcpToolDefinition } from '@astro-one/mcp-client'
+import NodeRuntime from '@astro-one/ptc-runtime-node'
+import Sandbox from '@astro-one/sandbox-local'
+import SandboxPolicy from '@astro-one/sandbox-policy'
+import SessionStore, { SessionId } from '@astro-one/session'
+import SessionProjections from '@astro-one/session-projection'
+import LocalSpillStore from '@astro-one/spill-local'
+import Subprocess from '@astro-one/subprocess-local'
+import SystemPrompt from '@astro-one/system-prompt'
+import { estimateContent } from '@astro-one/token-meter/estimate'
+import ToolRuntime from '@astro-one/tools'
+import type { JsonValue } from '@astro-one/util-values'
 import sharp from 'sharp'
 import { describe, expect, it, onTestFinished, vi } from 'vitest'
 import * as SpillPolicy from '../src/index.ts'
@@ -42,7 +42,7 @@ const textOf = (content: readonly ContentBlock[]): string => content.filter(bloc
 const imagesOf = (content: readonly ContentBlock[]): ImageBlock[] => content.filter((block): block is ImageBlock => block.type === 'image')
 
 async function setup() {
-  const root = await mkdtemp(join(tmpdir(), 'dsh-image-recovery-'))
+  const root = await mkdtemp(join(tmpdir(), 'astro-one-image-recovery-'))
   const ctx = new Context()
   onTestFinished(async () => {
     try { await ctx.fiber.dispose() } finally { await rm(root, { recursive: true, force: true }) }
@@ -50,7 +50,7 @@ async function setup() {
   await ctx.plugin(SystemPrompt)
   await ctx.plugin(ToolRuntime, { mode: 'both' })
   await ctx.plugin(FileSystem, { cwd: root })
-  await ctx.plugin(LocalAttachments, { dshHome: join(root, 'home') })
+  await ctx.plugin(LocalAttachments, { astroOneHome: join(root, 'home') })
   await ctx.plugin(ToolFs)
   await ctx.plugin(LocalSpillStore, { root: join(root, 'spill'), cleanupPeriodDays: 0 })
   await ctx.plugin(SessionProjections)

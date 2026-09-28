@@ -1,17 +1,17 @@
 import { describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import { ToolCallId } from '@deepseek-ai/dsh-llm'
-import { SessionId } from '@deepseek-ai/dsh-session'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import SubagentRuntime from '@deepseek-ai/dsh-subagent'
-import type { SubagentCapabilities, SubagentProvider, SubagentRun, SubagentStartRequest } from '@deepseek-ai/dsh-subagent'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime, { TOOL_ABORTED_BEFORE_DISPATCH } from '@deepseek-ai/dsh-tools'
-import type { ToolExecutionResult } from '@deepseek-ai/dsh-tools'
-import { WorkflowRunId, WorkflowEngine } from '@deepseek-ai/dsh-workflow'
-import type { WorkflowResult, WorkflowRun, WorkflowStartRequest } from '@deepseek-ai/dsh-workflow'
+import { Context } from '@astro-one/cordis'
+import Loader from '@astro-one/cordis-plugin-loader'
+import type { Agent } from '@astro-one/agent'
+import { ToolCallId } from '@astro-one/llm'
+import { SessionId } from '@astro-one/session'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import SubagentRuntime from '@astro-one/subagent'
+import type { SubagentCapabilities, SubagentProvider, SubagentRun, SubagentStartRequest } from '@astro-one/subagent'
+import SystemPrompt from '@astro-one/system-prompt'
+import ToolRuntime, { TOOL_ABORTED_BEFORE_DISPATCH } from '@astro-one/tools'
+import type { ToolExecutionResult } from '@astro-one/tools'
+import { WorkflowRunId, WorkflowEngine } from '@astro-one/workflow'
+import type { WorkflowResult, WorkflowRun, WorkflowStartRequest } from '@astro-one/workflow'
 import * as toolRalph from '../src/index.ts'
 
 const testToolSignal = new AbortController().signal
@@ -144,7 +144,7 @@ async function settleCompleted(
   return pending
 }
 
-describe('dsh-tool-ralph', () => {
+describe('astro-one-tool-ralph', () => {
   it('starts the fixed workflow through the configured fresh provider and renders completion', async () => {
     const { ctx, engine, parent } = await setup({ config: { maxRounds: 9, maxHandoffChars: 9000 } })
     const pending = execute(ctx, { objective: '  Finish the migration.  ', maxRounds: 4 }, { agent: parent })

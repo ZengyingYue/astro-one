@@ -1,6 +1,6 @@
-import { Context } from '@deepseek-ai/cordis'
-import { SessionId, type SessionEvent } from '@deepseek-ai/dsh-session'
-import JsonlSessionPersistence from '@deepseek-ai/dsh-session-persistence-jsonl'
+import { Context } from '@astro-one/cordis'
+import { SessionId, type SessionEvent } from '@astro-one/session'
+import JsonlSessionPersistence from '@astro-one/session-persistence-jsonl'
 import { afterEach, describe, expect, it } from 'vitest'
 import { mkdir, mkdtemp, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
@@ -22,7 +22,7 @@ async function identity(path: string) {
 
 describe.each(['none', 'zstd'] as const)('V3 interrupted-turn publication (%s)', (compression) => {
   async function fixture(openStep = false) {
-    const root = await mkdtemp(join(tmpdir(), 'dsh-v3-restart-'))
+    const root = await mkdtemp(join(tmpdir(), 'astro-one-v3-restart-'))
     roots.push(root)
     const id = SessionId('restart')
     const path = generationLogPath(root, undefined, id, 3, compression)

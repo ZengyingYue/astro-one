@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/archived/feature/2026-08-21-headless-reasoning-progress.md
-2026-08-21-headless-reasoning-progress.md: 499a6c4f583a7ed16eac52a1539bebcd5c6938f4
-2026-08-21-headless-reasoning-progress.zh.md: a679f2d68db900e704b9b757a386accf85429ef7
+2026-08-21-headless-reasoning-progress.md: 456408cbba05c9c1e14a6866e227d3a51e7f1e03
+2026-08-21-headless-reasoning-progress.zh.md: 4c50f6c46524e70d11a958b41e2ab6c6ed40dd9f

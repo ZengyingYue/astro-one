@@ -1,14 +1,14 @@
 /** Opt-in native SDK compatibility check without screenshots, input, or permission prompts. */
 
 import { expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import ComputerUseRegistry from '@deepseek-ai/dsh-computer-use'
-import { ToolCallId } from '@deepseek-ai/dsh-llm'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime from '@deepseek-ai/dsh-tools'
+import { Context } from '@astro-one/cordis'
+import ComputerUseRegistry from '@astro-one/computer-use'
+import { ToolCallId } from '@astro-one/llm'
+import SystemPrompt from '@astro-one/system-prompt'
+import ToolRuntime from '@astro-one/tools'
 import * as NativeProvider from '../src/index.ts'
 
-it.skipIf(process.env.DSH_COMPUTER_USE_NATIVE_E2E !== '1')(
+it.skipIf(process.env.ASTRO_ONE_COMPUTER_USE_NATIVE_E2E !== '1')(
   'loads the installed native SDK, reads permission status without prompting, and shuts down',
   { retry: 0 },
   async ({ signal }) => {

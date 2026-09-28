@@ -1,9 +1,9 @@
 /** Real JSONL publication and provider-neutral message preservation across the V2 PTC rename. */
 
-import { Context } from '@deepseek-ai/cordis'
-import { SESSION_FORMAT_VERSION, Session, SessionId } from '@deepseek-ai/dsh-session'
-import type { SessionFormatEvent } from '@deepseek-ai/dsh-session-format'
-import JsonlSessionPersistence from '@deepseek-ai/dsh-session-persistence-jsonl'
+import { Context } from '@astro-one/cordis'
+import { SESSION_FORMAT_VERSION, Session, SessionId } from '@astro-one/session'
+import type { SessionFormatEvent } from '@astro-one/session-format'
+import JsonlSessionPersistence from '@astro-one/session-persistence-jsonl'
 import { createHash } from 'node:crypto'
 import { mkdir, mkdtemp, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
@@ -17,7 +17,7 @@ const userMessage = {
 }
 const titleMessage = {
   id: 'tools-code-mode:title-input', role: 'user',
-  source: { kind: 'plugin', plugin: 'dsh-session-title-llm' },
+  source: { kind: 'plugin', plugin: 'astro-one-session-title-llm' },
   content: [{ type: 'text', text: 'Generate the session title from this JSON array of human messages:\n[{"seq":2,"text":"Keep tools-code-mode and tool/code-dispatch in this text. 图片"}]' }],
 }
 const toolCall = {
@@ -109,7 +109,7 @@ describe('JSONL V2 PTC publication and restore', () => {
   let ctx: Context | undefined
 
   beforeEach(async () => {
-    root = await mkdtemp(join(tmpdir(), 'dsh-jsonl-v2-ptc-'))
+    root = await mkdtemp(join(tmpdir(), 'astro-one-jsonl-v2-ptc-'))
     ctx = new Context()
     await ctx.plugin(JsonlSessionPersistence, { root, compression: 'none' })
   })
@@ -171,7 +171,7 @@ describe('JSONL V2 PTC publication and restore', () => {
     expectedEvents[10] = { ...expectedEvents[10], data: {
       ...(events[10]?.data as Record<string, unknown>), messageSeqs: [3],
       messages: titleRequestData.messages.map(message => ({
-        ...message, source: { kind: 'dsh-session-title-llm' },
+        ...message, source: { kind: 'astro-one-session-title-llm' },
       })),
     } } as SessionFormatEvent
     const systemMessage = {

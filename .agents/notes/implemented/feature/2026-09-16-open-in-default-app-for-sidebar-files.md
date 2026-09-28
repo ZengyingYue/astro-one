@@ -18,7 +18,7 @@ ui-open-in-app fills both slots: an "Open ▾" split button whose main button op
 
 **A new `ui-open-locally` package with its own Host routes** (PR #4120) is where the slot pair, the failure classification, the split-button design, and the toast rule come from. It was set aside because the repository already has an open-in-app feature and a second package for opening things locally duplicates it; the shared Session Remote owns verification of the Host path through the composed filesystem.
 
-**Host routes in `dsh-host-open-in-app`** serving desktop facts and a path open would let the Host name the file manager and distinguish a missing file from a failed launch. They would make the Host half depend on `sessionController`, `workspaceFiles`, and `fs` for two calls the Session Remote already publishes, so the Remote is used directly and the reveal label stays generic.
+**Host routes in `astro-one-host-open-in-app`** serving desktop facts and a path open would let the Host name the file manager and distinguish a missing file from a failed launch. They would make the Host half depend on `sessionController`, `workspaceFiles`, and `fs` for two calls the Session Remote already publishes, so the Remote is used directly and the reveal label stays generic.
 
 **Moving the delivery cards onto these controls now** would repeat the largest part of PR #4120, including the cross-plugin runtime import its review rejected and the recorded delivery scenarios it had to migrate. The cards keep their own routes this iteration.
 

@@ -1,16 +1,16 @@
 /**
  * Registry for ordered system sections, dynamic context, tool schemas, and prompt variables.
  *
- * @module @deepseek-ai/dsh-system-prompt
+ * @module @astro-one/system-prompt
  */
 
-import { Context, Service } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import { AnonymousEntries, NamedEntries, ScopedLayers, scopeTarget } from '@deepseek-ai/dsh-scope'
-import type { ScopeKey, ScopeLayer, Scoped } from '@deepseek-ai/dsh-scope'
-import type { ContextSnapshotSection, ToolSchema } from '@deepseek-ai/dsh-llm'
+import { Context, Service } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
+import { AnonymousEntries, NamedEntries, ScopedLayers, scopeTarget } from '@astro-one/scope'
+import type { ScopeKey, ScopeLayer, Scoped } from '@astro-one/scope'
+import type { ContextSnapshotSection, ToolSchema } from '@astro-one/llm'
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     systemPrompt: SystemPrompt
   }
@@ -18,7 +18,7 @@ declare module '@deepseek-ai/cordis' {
   interface Events {
     /**
      * Expert waterfall over the assembled sections, contexts, tools, and variables.
-     * Scope-filtered dispatch (`@deepseek-ai/dsh-scope`): scoped listeners
+     * Scope-filtered dispatch (`@astro-one/scope`): scoped listeners
      * receive only that scope's assemblies. The returned value is authoritative.
      * A supplied signal controls only this explicit assembly request and must not
      * be retained to control later turns. A registered complete section is
@@ -245,7 +245,7 @@ function compareToolNames(a: ToolSchema, b: ToolSchema): number {
 
 /** Plugin config: the deployment-authored fragment of the system prompt (see {@link Config.personaPrefix} for its contract). */
 export interface Config {
-  /** Include the fixed DeepSeek Harness identity before the deployment persona (default true). */
+  /** Include the fixed Astro One identity before the deployment persona (default true). */
   includeHarnessIdentity?: boolean
   /** Include dynamic runtime-context snapshots in model history (default true). */
   includeRuntimeContext?: boolean
@@ -426,7 +426,7 @@ export class SystemPrompt extends Service {
       this.section({
         name: 'harness:identity',
         order: this.getSectionOrder('HARNESS_IDENTITY'),
-        text: 'You are an AI agent powered by DeepSeek Harness.',
+        text: 'You are an AI agent powered by Astro One.',
       })
     }
     this.section({

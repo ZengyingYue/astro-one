@@ -6,28 +6,28 @@ Status: implemented
 
 ## 问题
 
-`dsh --profile headless` 面向的是人类终端：任务只能通过 argv 传入，stdout 只输出最终一条助手消息，provider 的推理过程流式写到 stderr，而且每次运行都新建一个随机会话。[Headless is a direct core entry point](../../archived/architecture/2026-08-09-headless-direct-core-entry-point.md) 拥有那套传输与完成契约；[headless reasoning progress](../../archived/feature/2026-08-21-headless-reasoning-progress.md) 拥有 stderr 投影。
+`astro-one --profile headless` 面向的是人类终端：任务只能通过 argv 传入，stdout 只输出最终一条助手消息，provider 的推理过程流式写到 stderr，而且每次运行都新建一个随机会话。[Headless is a direct core entry point](../../archived/architecture/2026-08-09-headless-direct-core-entry-point.md) 拥有那套传输与完成契约；[headless reasoning progress](../../archived/feature/2026-08-21-headless-reasoning-progress.md) 拥有 stderr 投影。
 
 一个"每次唤醒起一个 headless 进程"的监督进程（例如外部 agent 运行时）需要三样该契约没有提供的东西。它需要通过私有管道而不是 argv 传入任务，因为长提示词会超出参数上限，而 argv 对其他进程可见。它需要一条机器可读的流，把助手文本、推理、工具调用与结果、轮次边界和用量区分开，因为抓取 stderr 只能拿到推理，而 stdout 最后一行拿不到任何工具活动。它需要一个精确的会话身份，以便在下一次唤醒时传回去，因为每次进程都新建随机会话意味着无法连续。
 
 ## 决策
 
-`dsh-headless` bundle 拥有一个可选的机器可读运行接口。默认调用保持原有契约不变：stdout 输出一条最终助手消息，推理走 stderr，当且仅当终端 `turn/end` 原因为 `completed` 时退出码为 0。
+`astro-one-headless` bundle 拥有一个可选的机器可读运行接口。默认调用保持原有契约不变：stdout 输出一条最终助手消息，推理走 stderr，当且仅当终端 `turn/end` 原因为 `completed` 时退出码为 0。
 
 三项新增扩展 [Apps own their command lines](../../archived/architecture/2026-08-06-app-owned-command-line.md) 确立的 app 自有命令行：
 
-- `--json` 把 stdout 负载换成逐行 JSON 运行事件。推理变成一条事件而不再写 stderr，因此该模式下 stderr 只承载 `dsh:` 诊断。
+- `--json` 把 stdout 负载换成逐行 JSON 运行事件。推理变成一条事件而不再写 stderr，因此该模式下 stderr 只承载 `astro-one:` 诊断。
 - `--session-id <id>` 选定精确的会话身份：采用具有该 id 的持久化会话，不存在时就失败。不带该 flag 时，运行仍像以前一样生成 `session-<uuid>`。
 - 没有位置参数、或者位置参数为 `-` 时，任务文本改从 stdin 读取。
 
 每次运行的 `--model` 覆盖被明确排除在范围之外；组合默认模型仍然权威。
 
-产品改动限于 `packages/bundle/headless`：`src/startup.ts`、`src/index.ts`、新增的 `src/json-stream.ts`、包清单与 `tsconfig.json`，以及测试。围绕它，产品 profile 的期望测试位于 `apps/cli/tests/profiles/headless/tests/headless.expected.e2e.ts`，端到端覆盖两种输出模式，并给 `packages/test-support/loader-smoke` harness 增加了一个可选的调用方自有 `cwd`，让两次唤醒共享同一个世界；`scripts/check-workspace-constraints.ts` 与包清单负责发布两个入口共同引用的共享 chunk `lib/json-stream-*.js`，`pnpm-lock.yaml` 则记录新增的 `@deepseek-ai/dsh-session-query` workspace 链接。不修改任何 core session、持久化、session-controller、base 组合或 launcher 文件。
+产品改动限于 `packages/bundle/headless`：`src/startup.ts`、`src/index.ts`、新增的 `src/json-stream.ts`、包清单与 `tsconfig.json`，以及测试。围绕它，产品 profile 的期望测试位于 `apps/cli/tests/profiles/headless/tests/headless.expected.e2e.ts`，端到端覆盖两种输出模式，并给 `packages/test-support/loader-smoke` harness 增加了一个可选的调用方自有 `cwd`，让两次唤醒共享同一个世界；`scripts/check-workspace-constraints.ts` 与包清单负责发布两个入口共同引用的共享 chunk `lib/json-stream-*.js`，`pnpm-lock.yaml` 则记录新增的 `@astro-one/session-query` workspace 链接。不修改任何 core session、持久化、session-controller、base 组合或 launcher 文件。
 
 ### 命令行契约
 
 ```text
-dsh --profile headless [--json] [--session-id <id>] [<task>... | -]
+astro-one --profile headless [--json] [--session-id <id>] [<task>... | -]
 ```
 
 任务解析顺序：拼接后的位置参数，其次是 `-`，其次是管道 stdin。只有空白的位置参数本身就属于用法错误，即使 stdin 不是终端也一样，因此误传的空白参数绝不会消费管道内容；完全缺失任务时，仅在 stdin 是终端时属于用法错误。单独的 `-` 是唯一的 stdin 标记：把它与其他任务词混用属于用法错误，而不是以连字符开头的任务。管道任务会原样发送，包括结尾换行。在 `--json` 模式下，所有用法错误——包括 commander 自身的语法拒绝，例如未知选项或选项缺少取值——都会在进程退出前写出 `error` 事件，因为 runner 从未挂载来写它；事件 message 省略 commander 的 `error: ` 前缀，使同一事件类型只承载一种消息形态。
@@ -65,7 +65,7 @@ dsh --profile headless [--json] [--session-id <id>] [<task>... | -]
 
 `--session-id <id>` 是只采用：先观察持久化会话并 resume，日志不存在时失败。首轮不传该 flag，由运行时生成身份并在 `session` 事件里报告；后续每一轮都用该值指名并续接历史。请求的 id 没有持久化日志时报错，而不是开一段新会话，因此写错或过期的 id 不会静默开出一段调用方自以为在续接的空历史，JSONL 存储拒绝已存在日志 id 的问题（见 [session persistence](../../implemented/architecture/2026-06-14-session-persistence.zh.md)）也不会出现在这条路径上。标识是不透明的，因此 runner 只在 trim 后的值上校验非空，并把调用方的原始字符串（含空白字符）原样传下去。
 
-采用时会比较持久化会话记录的 cwd 与进程 cwd，因为会话按项目目录组织（见 [project session directories](../../implemented/architecture/2026-07-24-project-session-directories.zh.md)）。不一致时以 `dsh:` 诊断退出 1，而不是静默续接一个根目录在别处的会话；未记录 cwd 的会话出于同样理由被拒绝。运行在 agent preset 下的会话被拒绝，因为本 bundle 不组合任何 preset roster：在这里 resume 它，会用 headless 的工具与提示词运行它，而不是它日志当前记录的组合。该检查读取日志当前记录的 preset——创建 header 再叠加任何 `agent-preset/selected` 事件——因为空白会话可能在创建后切换 preset，而 header 始终只是创建事实；畸形的选择记录会失败关闭，而不会读成「无 preset」。带父会话或子 agent 关联的会话——包括用户 fork 出的会话——被拒绝。本进程已存在持有请求 id 的存活 Agent 时直接拒绝：它的 owner 可能仍在驱动它，而 `whenIdle` 不是单条消息的完成信号，runner 无法对它取得独占区间。resume 后的日志会在 runner 等待 idle 后再次检查，因此该窗口内选中的 preset 仍会被拒绝。纯空白的 `sessionId` 在 CLI 与直接配置两条路径上都会被拒绝。两个存活进程不能写同一个 id；存储的写租约已经会拒绝第二个写入者。runner 通过已组合的 `sessionQuery` 服务读取观察结果，并在请求 `--session-id` 却没有该服务时显式失败——观察结果正是它找到待 resume id 的途径；若所请求的身份缺少让它持久化的 `sessionPersistence` 服务，同样显式失败。
+采用时会比较持久化会话记录的 cwd 与进程 cwd，因为会话按项目目录组织（见 [project session directories](../../implemented/architecture/2026-07-24-project-session-directories.zh.md)）。不一致时以 `astro-one:` 诊断退出 1，而不是静默续接一个根目录在别处的会话；未记录 cwd 的会话出于同样理由被拒绝。运行在 agent preset 下的会话被拒绝，因为本 bundle 不组合任何 preset roster：在这里 resume 它，会用 headless 的工具与提示词运行它，而不是它日志当前记录的组合。该检查读取日志当前记录的 preset——创建 header 再叠加任何 `agent-preset/selected` 事件——因为空白会话可能在创建后切换 preset，而 header 始终只是创建事实；畸形的选择记录会失败关闭，而不会读成「无 preset」。带父会话或子 agent 关联的会话——包括用户 fork 出的会话——被拒绝。本进程已存在持有请求 id 的存活 Agent 时直接拒绝：它的 owner 可能仍在驱动它，而 `whenIdle` 不是单条消息的完成信号，runner 无法对它取得独占区间。resume 后的日志会在 runner 等待 idle 后再次检查，因此该窗口内选中的 preset 仍会被拒绝。纯空白的 `sessionId` 在 CLI 与直接配置两条路径上都会被拒绝。两个存活进程不能写同一个 id；存储的写租约已经会拒绝第二个写入者。runner 通过已组合的 `sessionQuery` 服务读取观察结果，并在请求 `--session-id` 却没有该服务时显式失败——观察结果正是它找到待 resume id 的途径；若所请求的身份缺少让它持久化的 `sessionPersistence` 服务，同样显式失败。
 
 ## 后果
 

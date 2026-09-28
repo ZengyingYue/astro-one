@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-experimental-voice-input-bundle",
+  "name": "@astro-one/experimental-voice-input-bundle",
   "description": "Experimental voice input with local SenseVoice; downloads its runtime on first use",
   "version": "0.1.7-rc.1",
   "icon": "./icon.svg",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/experimental/voice-input-bundle"
   },
   "type": "module",
@@ -33,20 +33,20 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@deepseek-ai/dsh-experimental-speech-to-text": "workspace:*",
-    "@deepseek-ai/dsh-experimental-speech-to-text-sensevoice": "workspace:*",
-    "@deepseek-ai/dsh-experimental-api-speech-to-text": "workspace:*",
-    "@deepseek-ai/dsh-experimental-client-ui-voice-input": "workspace:*"
+    "@astro-one/experimental-speech-to-text": "workspace:*",
+    "@astro-one/experimental-speech-to-text-sensevoice": "workspace:*",
+    "@astro-one/experimental-api-speech-to-text": "workspace:*",
+    "@astro-one/experimental-client-ui-voice-input": "workspace:*"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/cordis": "workspace:~"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/cordis-plugin-include": "workspace:~",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-include": "workspace:~",
     "js-yaml": "^4.2.0"
   },
-  "dsh": {
+  "astroOne": {
     "bundle": {
       "patch": "./cordis.patch.yml"
     }

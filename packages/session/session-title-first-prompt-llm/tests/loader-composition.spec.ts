@@ -1,17 +1,17 @@
 import { afterEach, describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import Include from '@deepseek-ai/cordis-plugin-include'
+import { Context } from '@astro-one/cordis'
+import Loader from '@astro-one/cordis-plugin-loader'
+import Include from '@astro-one/cordis-plugin-include'
 import { mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import LlmRuntime, { createUserMessage, LlmAdapter  } from '@deepseek-ai/dsh-llm'
-import type { GenerateOptions, StreamChunk } from '@deepseek-ai/dsh-llm'
-import SessionStore, { SessionId } from '@deepseek-ai/dsh-session'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import SessionTitleService from '@deepseek-ai/dsh-session-title'
-import * as providerPlugin from '@deepseek-ai/dsh-session-title-first-prompt-llm'
+import LlmRuntime, { createUserMessage, LlmAdapter  } from '@astro-one/llm'
+import type { GenerateOptions, StreamChunk } from '@astro-one/llm'
+import SessionStore, { SessionId } from '@astro-one/session'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import SessionTitleService from '@astro-one/session-title'
+import * as providerPlugin from '@astro-one/session-title-first-prompt-llm'
 
 let root: string | undefined
 let context: Context | undefined
@@ -34,18 +34,18 @@ afterEach(async () => {
 })
 
 async function loadComposition(): Promise<Context> {
-  root = await mkdtemp(join(tmpdir(), 'dsh-title-loader-'))
+  root = await mkdtemp(join(tmpdir(), 'astro-one-title-loader-'))
   const configPath = join(root, 'cordis.yml')
   await writeFile(configPath, [
-    "- name: '@deepseek-ai/dsh-llm'",
-    "- name: '@deepseek-ai/dsh-session'",
-    "- name: '@deepseek-ai/dsh-session-projection'",
-    "- name: '@deepseek-ai/dsh-session-title'",
+    "- name: '@astro-one/llm'",
+    "- name: '@astro-one/session'",
+    "- name: '@astro-one/session-projection'",
+    "- name: '@astro-one/session-title'",
     '  config:',
     '    fallbackMaxWords: 5',
     '    fallbackMaxBytes: 40',
     '    maxTitleBytes: 80',
-    "- name: '@deepseek-ai/dsh-session-title-first-prompt-llm'",
+    "- name: '@astro-one/session-title-first-prompt-llm'",
     '  config:',
     '    targetWords: 5',
     '    targetCjkCharacters: 10',
@@ -62,11 +62,11 @@ async function loadComposition(): Promise<Context> {
   await context.plugin(Loader)
   context.loader.builtins.include = Include
   const modules = new Map<string, unknown>([
-    ['@deepseek-ai/dsh-llm', LlmRuntime],
-    ['@deepseek-ai/dsh-session', SessionStore],
-    ['@deepseek-ai/dsh-session-projection', SessionProjectionRegistry],
-    ['@deepseek-ai/dsh-session-title', SessionTitleService],
-    ['@deepseek-ai/dsh-session-title-first-prompt-llm', providerPlugin],
+    ['@astro-one/llm', LlmRuntime],
+    ['@astro-one/session', SessionStore],
+    ['@astro-one/session-projection', SessionProjectionRegistry],
+    ['@astro-one/session-title', SessionTitleService],
+    ['@astro-one/session-title-first-prompt-llm', providerPlugin],
   ])
   context.loader.internal = {
     version: 'v2',

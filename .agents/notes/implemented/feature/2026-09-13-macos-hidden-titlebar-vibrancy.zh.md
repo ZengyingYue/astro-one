@@ -16,15 +16,15 @@ Electron 主进程在 darwin 上以 `titleBarStyle: 'hiddenInset'`、`trafficLig
 
 **透明链。** 毛玻璃只透过透明像素显现：darwin 上 `html`/`body`（ui-web base.css）与 AppFrame 透明，中间列铺不透明的 `--dsw-alias-bg-base`，侧边栏列铺侧边栏底色的半透明 `color-mix`，让材质透出。SidebarRoot 自身的不透明底色出于同一原因移到框架列。
 
-**原生主题同步。** 毛玻璃材质跟随 `nativeTheme.themeSource`，后者默认跟踪系统外观，会与应用自身的主题偏好背离。ui-theme 引导脚本与 ui-layout 的 `ThemePresenter` 发布 `html[data-ds-theme-source]`（`light`、`dark` 或 `system`；固定偏好——包括注册主题 id——发布其解析后的配色）。应用 preload 观察该属性并经 `dsh-desktop:native-theme-set` 转发；主进程校验取值与发送者（主窗口的 WebContents，包括其本地静态 Web 文档）后赋给 `nativeTheme.themeSource`。发布偏好而非解析值，可在偏好为 `system` 时保留跟随系统。
+**原生主题同步。** 毛玻璃材质跟随 `nativeTheme.themeSource`，后者默认跟踪系统外观，会与应用自身的主题偏好背离。ui-theme 引导脚本与 ui-layout 的 `ThemePresenter` 发布 `html[data-ds-theme-source]`（`light`、`dark` 或 `system`；固定偏好——包括注册主题 id——发布其解析后的配色）。应用 preload 观察该属性并经 `astro-one-desktop:native-theme-set` 转发；主进程校验取值与发送者（主窗口的 WebContents，包括其本地静态 Web 文档）后赋给 `nativeTheme.themeSource`。发布偏好而非解析值，可在偏好为 `system` 时保留跟随系统。
 
-**侧边栏顶部条与完全隐藏。** darwin 上侧边栏展开时有一条 52px 的顶部条，避开红绿灯并承载收起按钮；框架的 `.leadingBand` 拖拽带覆盖同一 52px 几何，顶部条自身不声明 app-region，按钮经 base.css 交互规则自行减除。收起侧边栏时整列隐藏——`computeColumns` 接受显式 `collapsedWidth`，AppFrame 在 darwin 桌面传 0——而非其他平台保留的 56px rail。重新打开的入口位于框架 root 作用域的 `shell.leading` 窗口 chrome 座，由 AppFrame 仅在整列隐藏时挂载；ui-sidebar 向其注册 `HeaderLeadingControls`（打开侧边栏 + 新会话，复用 shell 的 inject face 与 locale）。座的位置、面板用于避让的 `--dsh-frame-leading-clearance` 变量，以及早先会话头部座的移除，归 [shell.leading Agent Note](../architecture/2026-09-17-frame-shell-leading-window-chrome-seat.zh.md) 所有。
+**侧边栏顶部条与完全隐藏。** darwin 上侧边栏展开时有一条 52px 的顶部条，避开红绿灯并承载收起按钮；框架的 `.leadingBand` 拖拽带覆盖同一 52px 几何，顶部条自身不声明 app-region，按钮经 base.css 交互规则自行减除。收起侧边栏时整列隐藏——`computeColumns` 接受显式 `collapsedWidth`，AppFrame 在 darwin 桌面传 0——而非其他平台保留的 56px rail。重新打开的入口位于框架 root 作用域的 `shell.leading` 窗口 chrome 座，由 AppFrame 仅在整列隐藏时挂载；ui-sidebar 向其注册 `HeaderLeadingControls`（打开侧边栏 + 新会话，复用 shell 的 inject face 与 locale）。座的位置、面板用于避让的 `--astro-one-frame-leading-clearance` 变量，以及早先会话头部座的移除，归 [shell.leading Agent Note](../architecture/2026-09-17-frame-shell-leading-window-chrome-seat.zh.md) 所有。
 
-**窗口全屏标记。** macOS 全屏隐藏红绿灯，围绕它们构建的布局必须放松。主进程在 `enter-full-screen`、`leave-full-screen` 与每次 `did-finish-load` 时经 `dsh-desktop:window-fullscreen` 转发 `isFullScreen()`；应用 preload 的 `syncWindowFullscreen()` 把它镜像到 `html[data-fullscreen]`。消费者：AppFrame 把 `--dsh-frame-leading-clearance` 降到 84px 并把座移到 `left: 12px`，侧边栏 `.topStrip` 把收起按钮移到条带左端，右侧边栏全屏面板把首格 pane 的 dockkit strip 内边距重置回常规 10px。
+**窗口全屏标记。** macOS 全屏隐藏红绿灯，围绕它们构建的布局必须放松。主进程在 `enter-full-screen`、`leave-full-screen` 与每次 `did-finish-load` 时经 `astro-one-desktop:window-fullscreen` 转发 `isFullScreen()`；应用 preload 的 `syncWindowFullscreen()` 把它镜像到 `html[data-fullscreen]`。消费者：AppFrame 把 `--astro-one-frame-leading-clearance` 降到 84px 并把座移到 `left: 12px`，侧边栏 `.topStrip` 把收起按钮移到条带左端，右侧边栏全屏面板把首格 pane 的 dockkit strip 内边距重置回常规 10px。
 
 **拖拽区。** Electron 按 DOM 顺序以窗口几何计算拖拽区，不看层叠，因此 `-webkit-app-region: drag` 只在两个允许清单样式表内声明：ui-layout `AppFrame.module.css`（darwin 的 `.leadingBand`——52px 全宽、`pointer-events: none`、作为框架第一个子元素渲染的条带——与 Windows 顶栏 `.frame::before`）和 ui-sidebar `SidebarRoot.module.css`（`.logoRow`，把拖拽带向 52px 以下延伸）。所有可交互内容通过 ui-web base.css 的两条全局规则自行减除：一条 `:is(...)` 选择器让每个交互元素（按钮、链接、输入框、role、`[tabindex]`）退出拖拽，一条 `body > :not(#root)` 规则覆盖所有 portal 到 `#root` 之外的浮层。拖拽带先于全部内容挂载，任何靠后的 no-drag 盒子必然生效；内容容器永不声明 drag——那会覆盖更早挂载的浮层。
 
-**全屏避开红绿灯。** ui-dockkit 把 tab 条起始内边距发布为 `--dsh-dockkit-strip-inline-start`（回退为设计自身的 10px）。右侧边栏全屏形态在 darwin 上对面板主体设 88px，并对每个非首格 split 单元的子树重置为 10px，使得任意分屏深度下恰好只有触及窗口左上角的 pane 避开红绿灯。
+**全屏避开红绿灯。** ui-dockkit 把 tab 条起始内边距发布为 `--astro-one-dockkit-strip-inline-start`（回退为设计自身的 10px）。右侧边栏全屏形态在 darwin 上对面板主体设 88px，并对每个非首格 split 单元的子树重置为 10px，使得任意分屏深度下恰好只有触及窗口左上角的 pane 避开红绿灯。
 
 ## Alternatives considered
 

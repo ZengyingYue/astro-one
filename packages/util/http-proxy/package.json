@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-http-proxy",
-  "description": "Process-wide outbound HTTP proxy policy for DeepSeek Harness: resolve it from the launch environment and install it as undici's global dispatcher",
+  "name": "@astro-one/http-proxy",
+  "description": "Process-wide outbound HTTP proxy policy for Astro One: resolve it from the launch environment and install it as undici's global dispatcher",
   "version": "0.1.7-rc.1",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/util/http-proxy"
   },
   "type": "module",
@@ -27,13 +27,13 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/cordis": "workspace:~"
   },
   "dependencies": {
     "undici": "^8.10.0"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-invariants": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/invariants": "workspace:*"
   }
 }

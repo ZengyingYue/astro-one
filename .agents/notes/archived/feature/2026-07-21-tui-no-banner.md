@@ -9,12 +9,12 @@ English | [中文](2026-07-21-tui-no-banner.zh.md)
 
 ## Problem
 
-The TUI opened with a boxed product banner ("DEEPSEEK HARNESS" + model/session detail), most recently with a sweep-in animation ([banner sweep Agent Note](2026-07-21-tui-banner-sweep.md)). The user's verdict: remove it. A product title re-read on every boot is chrome, the box spends four rows before any content, and the identifying facts it carried (model, session) have better homes.
+The TUI opened with a boxed product banner ("ASTRO ONE" + model/session detail), most recently with a sweep-in animation ([banner sweep Agent Note](2026-07-21-tui-banner-sweep.md)). The user's verdict: remove it. A product title re-read on every boot is chrome, the box spends four rows before any content, and the identifying facts it carried (model, session) have better homes.
 
 ## Decision
 
 - `HeaderComponent`, the sweep animation, and its lifecycle wiring are deleted. The TUI mounts straight into the transcript; startup renders nothing above the separator.
-- The model name moves into the footer status line's left segment (`<model>  <cwd>  ↑tokens ↓tokens`), so the session's driving model stays visible at all times, not just at boot. The session id is no longer displayed — it lives in the session log and `./.sessions` filenames, where `dsh --resume <id>` and the `/resume` selector retrieve it.
+- The model name moves into the footer status line's left segment (`<model>  <cwd>  ↑tokens ↓tokens`), so the session's driving model stays visible at all times, not just at boot. The session id is no longer displayed — it lives in the session log and `./.sessions` filenames, where `astro-one --resume <id>` and the `/resume` selector retrieve it.
 - `welcome`, when configured, renders as the transcript's first line (a muted notice) inside `rebuildTranscript`, so palette swaps preserve it. Unset renders nothing. Fixtures keep their configured welcomes; the PTY smoke's boot marker becomes the footer's model name, the only mounted-TUI text guaranteed to render regardless of cwd length.
 
 This supersedes the [banner sweep Agent Note](2026-07-21-tui-banner-sweep.md) entirely: both the sweep and the banner it animated are gone.
@@ -37,4 +37,4 @@ This supersedes the [banner sweep Agent Note](2026-07-21-tui-banner-sweep.md) en
 
 ## Testing
 
-`packages/ui/tui/tests/tui.spec.ts` pins: no box corners/product title and an empty transcript when `welcome` is unset, with the model in the footer; a configured welcome as the first transcript line without a banner; and the welcome surviving a palette-swap transcript rebuild. The PTY smoke boots on the footer model name and asserts `DEEPSEEK HARNESS` is absent. Snapshots verify the full frames.
+`packages/ui/tui/tests/tui.spec.ts` pins: no box corners/product title and an empty transcript when `welcome` is unset, with the model in the footer; a configured welcome as the first transcript line without a banner; and the welcome surviving a palette-swap transcript rebuild. The PTY smoke boots on the footer model name and asserts `ASTRO ONE` is absent. Snapshots verify the full frames.

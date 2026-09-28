@@ -1,12 +1,12 @@
-/** Package-owned durable goal-stream invariants. @module @deepseek-ai/dsh-goal/invariant */
+/** Package-owned durable goal-stream invariants. @module @astro-one/goal/invariant */
 
-import type { Context } from '@deepseek-ai/cordis'
-import type { InvariantFailure, InvariantInstaller } from '@deepseek-ai/dsh-invariants'
-import type { Session, SessionEvent } from '@deepseek-ai/dsh-session'
+import type { Context } from '@astro-one/cordis'
+import type { InvariantFailure, InvariantInstaller } from '@astro-one/invariants'
+import type { Session, SessionEvent } from '@astro-one/session'
 import { applyGoalEvent, emptyGoalFoldState } from './fold.ts'
 import type { GoalFoldState } from './fold.ts'
 
-const PACKAGE_NAME = '@deepseek-ai/dsh-goal'
+const PACKAGE_NAME = '@astro-one/goal'
 
 /** Cordis companion plugin name. */
 export const name = 'goal-invariant'

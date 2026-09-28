@@ -4,8 +4,8 @@ import { fileMediaUrl } from '../src/index.ts'
 describe('fileMediaUrl', () => {
   it.each(['/work/测试 文件#100%.png', 'C:\\work\\测试 文件.png'])(
     'preserves the decoded native path %s under a mounted application', (path) => {
-      const url = new URL(fileMediaUrl('https://host/tools/dsh/', path)!)
-      expect(url.pathname).toBe('/tools/dsh/api/file')
+      const url = new URL(fileMediaUrl('https://host/tools/astro-one/', path)!)
+      expect(url.pathname).toBe('/tools/astro-one/api/file')
       expect(url.searchParams.get('path')).toBe(path)
     },
   )

@@ -1,20 +1,20 @@
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
+import { createUserMessage } from '@astro-one/llm'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@astro-one/cordis'
 import { mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { SessionId, type SessionEvent } from '@deepseek-ai/dsh-session'
-import JsonlSessionPersistence from '@deepseek-ai/dsh-session-persistence-jsonl'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import { mountAgentLoopTestDependencies } from '@deepseek-ai/dsh-agent-loop-testkit'
-import LocalJobRegistry from '@deepseek-ai/dsh-jobs-local'
-import * as ToolJobs from '@deepseek-ai/dsh-tool-jobs'
-import { LocalBashExecutor } from '@deepseek-ai/dsh-bash-local'
-import LocalSubprocessRuntime from '@deepseek-ai/dsh-subprocess-local'
-import * as ToolBash from '@deepseek-ai/dsh-tool-bash'
-import * as BashEnvPlugin from '@deepseek-ai/dsh-shell-env'
+import { SessionId, type SessionEvent } from '@astro-one/session'
+import JsonlSessionPersistence from '@astro-one/session-persistence-jsonl'
+import type { Agent } from '@astro-one/agent'
+import AgentLoop from '@astro-one/agent-loop'
+import { mountAgentLoopTestDependencies } from '@astro-one/agent-loop-testkit'
+import LocalJobRegistry from '@astro-one/jobs-local'
+import * as ToolJobs from '@astro-one/tool-jobs'
+import { LocalBashExecutor } from '@astro-one/bash-local'
+import LocalSubprocessRuntime from '@astro-one/subprocess-local'
+import * as ToolBash from '@astro-one/tool-bash'
+import * as BashEnvPlugin from '@astro-one/shell-env'
 import { MockAdapter, textResponse, toolCallResponse } from '../../../core/agent-loop/tests/mock-adapter.ts'
 
 /**
@@ -23,7 +23,7 @@ import { MockAdapter, textResponse, toolCallResponse } from '../../../core/agent
  * (tool/call + tool/result session events, the generic `ctx.jobs` runtime,
  * agent.inject completion notices).
  */
-async function harness(adapter: MockAdapter, sessionRoot?: string, dshHome?: string) {
+async function harness(adapter: MockAdapter, sessionRoot?: string, astroOneHome?: string) {
   const ctx = new Context()
   await mountAgentLoopTestDependencies(ctx)
   if (sessionRoot !== undefined) {
@@ -33,7 +33,7 @@ async function harness(adapter: MockAdapter, sessionRoot?: string, dshHome?: str
   await ctx.plugin(LocalJobRegistry)
   await ctx.plugin(ToolJobs)
   await ctx.plugin(LocalSubprocessRuntime)
-  await ctx.plugin(BashEnvPlugin, dshHome === undefined ? {} : { dshHome })
+  await ctx.plugin(BashEnvPlugin, astroOneHome === undefined ? {} : { astroOneHome })
   await ctx.plugin(LocalBashExecutor, { timeoutMs: 10_000 })
   await ctx.plugin(ToolBash)
   ctx.llm.registerAdapter(['mock'], adapter)
@@ -93,19 +93,19 @@ async function pollUntil(predicate: () => boolean, timeoutMs = 5_000): Promise<v
 }
 
 describe('bash tool through the agent loop', () => {
-  it('first-turn bash receives session identity in a scrubbed DSH_* namespace', async () => {
-    const root = mkdtempSync(join(tmpdir(), 'dsh-bash-session-env-'))
+  it('first-turn bash receives session identity in a scrubbed ASTRO_ONE_* namespace', async () => {
+    const root = mkdtempSync(join(tmpdir(), 'astro-one-bash-session-env-'))
     dirs.push(root)
-    const dshHome = join(root, 'dsh-home')
-    vi.stubEnv('DSH_STALE_PARENT', 'stale')
+    const astroOneHome = join(root, 'astro-one-home')
+    vi.stubEnv('ASTRO_ONE_STALE_PARENT', 'stale')
     const adapter = new MockAdapter([
       toolCallResponse('call-1', 'bash', {
-        command: 'printf \'%s\\n%s\\n%s\\n%s\\n\' "$DSH_HOME" "$DSH_SHELL" "$DSH_SESSION_ID" "${DSH_STALE_PARENT-unset}"',
+        command: 'printf \'%s\\n%s\\n%s\\n%s\\n\' "$ASTRO_ONE_HOME" "$ASTRO_ONE_SHELL" "$ASTRO_ONE_SESSION_ID" "${ASTRO_ONE_STALE_PARENT-unset}"',
         description: 'inspect session environment',
       }),
       textResponse('Session environment inspected.'),
     ])
-    const ctx = await harness(adapter, root, dshHome)
+    const ctx = await harness(adapter, root, astroOneHome)
     const handle = await ctx.agents.create({
       sessionId: SessionId('session-env-id'),
       agentOptions: { provider: 'mock', model: 'mock' },
@@ -116,7 +116,7 @@ describe('bash tool through the agent loop', () => {
     await waitForIdle(ctx, agent)
 
     const result = findEvent(events(agent), 'tool/result')
-    expect(resultText(result)).toBe(`${dshHome}\n1\nsession-env-id\nunset\n`)
+    expect(resultText(result)).toBe(`${astroOneHome}\n1\nsession-env-id\nunset\n`)
     await handle.dispose()
   })
 
@@ -173,7 +173,7 @@ describe('bash tool through the agent loop', () => {
     // claim, which folds the notice into a turn whose scripted reply is final:
     // the turn then closes with an empty next-step inbox and the collection
     // entries are never reached.
-    const dir = mkdtempSync(join(tmpdir(), 'dsh-bg-'))
+    const dir = mkdtempSync(join(tmpdir(), 'astro-one-bg-'))
     dirs.push(dir)
     const sentinel = join(dir, 'release')
     // The job id is deterministic (a fresh LocalJobRegistry counts per kind from 1),

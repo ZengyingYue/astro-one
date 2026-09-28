@@ -1,17 +1,17 @@
-- name: '@deepseek-ai/dsh-session'
-- name: '@deepseek-ai/dsh-system-prompt'
-- name: '@deepseek-ai/dsh-tools'
-- name: '@deepseek-ai/dsh-fs-local'
-- name: '@deepseek-ai/dsh-tool-fs'
-- name: '@deepseek-ai/dsh-session-query-sqlite'
+- name: '@astro-one/session'
+- name: '@astro-one/system-prompt'
+- name: '@astro-one/tools'
+- name: '@astro-one/fs-local'
+- name: '@astro-one/tool-fs'
+- name: '@astro-one/session-query-sqlite'
   config:
     path: ':memory:'
     openAt: never
-- name: '@deepseek-ai/dsh-session-reference'
+- name: '@astro-one/session-reference'
   config:
     maxReferenceBytes: 360
 - name: './source-session.ts'
-- name: '@deepseek-ai/dsh-spill-local'
+- name: '@astro-one/spill-local'
   config:
     root: '{{spillRoot}}'
     cleanupPeriodDays: 0

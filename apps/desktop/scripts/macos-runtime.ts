@@ -31,7 +31,7 @@ export async function signMacOSRuntime(
   root: string, appId: string, expected: MacOSSigningEnvironment, cacheDirectory?: string,
 ): Promise<number> {
   const files = inventoryDesktopRuntime(root).map(file => file.path).filter(path => MACH_O_MAGICS.has(magic(join(root, path))))
-  const policy = cacheDirectory === undefined ? undefined : macOSCachePolicy(process.env.DSH_DESKTOP_MACOS_SIGNING_PROBE ?? '')
+  const policy = cacheDirectory === undefined ? undefined : macOSCachePolicy(process.env.ASTRO_ONE_DESKTOP_MACOS_SIGNING_PROBE ?? '')
   let hits = 0
   let misses = 0
   let next = 0

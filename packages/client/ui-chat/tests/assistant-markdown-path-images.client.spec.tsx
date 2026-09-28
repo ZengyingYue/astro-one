@@ -17,7 +17,7 @@ function textBlock(text: string): AssistantBlock {
 }
 
 const BASE = 'http://127.0.0.1:3080/'
-const MOUNTED_BASE = 'http://127.0.0.1:3080/tools/dsh/'
+const MOUNTED_BASE = 'http://127.0.0.1:3080/tools/astro-one/'
 
 describe('localPathMediaUrl', () => {
   it('maps an absolute POSIX path to the file route of the document, root or mount', () => {
@@ -26,7 +26,7 @@ describe('localPathMediaUrl', () => {
       [BASE, BASE],
       ['https://127.0.0.1:3080/', 'https://127.0.0.1:3080/'],
       [MOUNTED_BASE, MOUNTED_BASE],
-      ['http://127.0.0.1:3080/tools/dsh/index.html', MOUNTED_BASE],
+      ['http://127.0.0.1:3080/tools/astro-one/index.html', MOUNTED_BASE],
     ]) {
       expect(localPathMediaUrl(base!, '/tmp/graph.png')).toBe(`${root!}api/file?path=${path}`)
     }
@@ -34,7 +34,7 @@ describe('localPathMediaUrl', () => {
 
   it('keeps non-HTTP transports inert', () => {
     expect(localPathMediaUrl('about:blank', '/tmp/graph.png')).toBeUndefined()
-    expect(localPathMediaUrl('dsh-app://app/', '/tmp/graph.png')).toBeUndefined()
+    expect(localPathMediaUrl('astro-one-app://app/', '/tmp/graph.png')).toBeUndefined()
     expect(localPathMediaUrl('file:///app', '/tmp/graph.png')).toBeUndefined()
     expect(localPathMediaUrl('ws://127.0.0.1:3080/', '/tmp/graph.png')).toBeUndefined()
   })

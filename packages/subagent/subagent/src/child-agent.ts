@@ -5,28 +5,28 @@
  * provider driver and the continuation manager compose children this way, so
  * depth accounting, lineage stamping, and delegation policy have one home.
  *
- * @module @deepseek-ai/dsh-subagent/child-agent
+ * @module @astro-one/subagent/child-agent
  */
 
-import type { Context } from '@deepseek-ai/cordis'
-import type { Agent, AgentOptions, CreateAgentOptions } from '@deepseek-ai/dsh-agent'
-import type { SandboxMode } from '@deepseek-ai/dsh-sandbox'
-import type { Session, SessionId } from '@deepseek-ai/dsh-session'
-import type {} from '@deepseek-ai/dsh-system-prompt'
-import type { ToolRestriction } from '@deepseek-ai/dsh-tools'
+import type { Context } from '@astro-one/cordis'
+import type { Agent, AgentOptions, CreateAgentOptions } from '@astro-one/agent'
+import type { SandboxMode } from '@astro-one/sandbox'
+import type { Session, SessionId } from '@astro-one/session'
+import type {} from '@astro-one/system-prompt'
+import type { ToolRestriction } from '@astro-one/tools'
 // Type-only: make `ctx.get('sandboxPolicy')`, `ctx.get('approval')`, and
 // `ctx.get('permissionPresets')` resolve to their services when composed — delegation consumes them
 // opportunistically (the documented `ctx.get` pattern), never as a hard dep —
 // and merge the inherited permission session-event payloads.
-import type {} from '@deepseek-ai/dsh-sandbox-policy'
-import type {} from '@deepseek-ai/dsh-user-approval'
-import type {} from '@deepseek-ai/dsh-permission-presets'
+import type {} from '@astro-one/sandbox-policy'
+import type {} from '@astro-one/user-approval'
+import type {} from '@astro-one/permission-presets'
 // Type-only: make `ctx.get('agentPresets')` resolve to the preset roster when
 // composed — a child inherits its parent's composition opportunistically (the
 // documented `ctx.get` pattern), never as a hard dep. A rosterless deployment
 // keeps its model-facing rows on the host plane, where the child already sees
 // them through the tool registry's global layer.
-import type {} from '@deepseek-ai/dsh-agent-preset-registry'
+import type {} from '@astro-one/agent-preset-registry'
 import { delegationDepthOf } from './depth.ts'
 
 /** Thrown when starting a child would exceed the requested depth cap. */
@@ -236,7 +236,7 @@ export interface DelegatedPolicyOverrides {
  * Capture the permission state to seed into one delegation. Call synchronously before
  * the child start's first await: a later parent switch belongs to the
  * parent's future, not to this child. Auto and Full access identities are
- * inherited only through the in-process DSH path so either can replace a stale
+ * inherited only through the in-process Astro One path so either can replace a stale
  * same-bundle fork value. Only the parent session's explicit sandbox override
  * is captured — never deployment defaults or one-shot grants — and the approval
  * policy is pinned to `'never'` regardless of the parent's own policy.

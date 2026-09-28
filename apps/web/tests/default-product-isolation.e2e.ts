@@ -1,8 +1,8 @@
 /** Chromium acceptance of the shipped Web profile's actual Client plugin and module registries. */
 
-import { FiberState } from '@deepseek-ai/cordis'
-import type { Context, Plugin, RegistryService } from '@deepseek-ai/cordis'
-import type { ClientModuleLoader, ClientModuleLoaderTarget } from '@deepseek-ai/dsh-client-modules/client'
+import { FiberState } from '@astro-one/cordis'
+import type { Context, Plugin, RegistryService } from '@astro-one/cordis'
+import type { ClientModuleLoader, ClientModuleLoaderTarget } from '@astro-one/client-modules/client'
 import { chromium } from 'playwright'
 import { expect, it } from 'vitest'
 import { withDefaultWeb } from '../../cli/tests/profiles/web/tests/default-web-process.ts'
@@ -14,7 +14,7 @@ interface ClientObservation {
 }
 
 async function readClientRoster() {
-  const observation = Reflect.get(globalThis, '__dshIsolationObservation') as ClientObservation
+  const observation = Reflect.get(globalThis, '__astroOneIsolationObservation') as ClientObservation
   const { ctx, modules } = observation
   if (ctx === undefined || modules === undefined) throw new Error('Real Client registry was not observed')
   await ctx.loader.await()
@@ -44,7 +44,7 @@ function experimentalClientReferences(roster: Awaited<ReturnType<typeof readClie
     ...roster.entries.map(entry => entry.name),
     ...roster.plugins.flatMap(plugin => [plugin.owner ?? '', ...plugin.modules]),
     ...roster.modules,
-  ].filter(name => name.startsWith('@deepseek-ai/dsh-experimental-'))
+  ].filter(name => name.startsWith('@astro-one/experimental-'))
 }
 
 it('activates the actual default Client registry without experimental packages', async (test) => {
@@ -58,14 +58,14 @@ it('activates the actual default Client registry without experimental packages',
       page.on('pageerror', error => errors.push(error.message))
       await page.addInitScript(() => {
         const observation: ClientObservation = {}
-        Reflect.set(globalThis, '__dshIsolationObservation', observation)
+        Reflect.set(globalThis, '__astroOneIsolationObservation', observation)
         Object.defineProperty(globalThis, '__ModuleLoader__', {
           configurable: true,
           set(target: ClientModuleLoaderTarget) {
             Object.defineProperty(globalThis, '__ModuleLoader__', { configurable: true, writable: true, value: target })
             const create = target.create.bind(target)
             target.create = function (options) {
-              const cordis = options.staticModules['@deepseek-ai/cordis'] as { RegistryService: typeof RegistryService }
+              const cordis = options.staticModules['@astro-one/cordis'] as { RegistryService: typeof RegistryService }
               const prototype = cordis.RegistryService.prototype
               // eslint-disable-next-line @typescript-eslint/unbound-method -- apply() preserves the runtime registry receiver.
               const plugin = prototype.plugin
@@ -90,10 +90,10 @@ it('activates the actual default Client registry without experimental packages',
       expect(roster.entries.map(entry => entry.name).sort()).toEqual(host.client.entries.map(entry => entry.id).sort())
       expect(roster.entries.every(entry => entry.state === FiberState.ACTIVE)).toBe(true)
       expect(roster.plugins.length).toBeGreaterThan(roster.entries.length)
-      expect(roster.plugins.some(plugin => plugin.modules.includes('@deepseek-ai/dsh-client-ui-layout'))).toBe(true)
+      expect(roster.plugins.some(plugin => plugin.modules.includes('@astro-one/client-ui-layout'))).toBe(true)
       expect(experimentalClientReferences(roster)).toEqual([])
       const contaminatedHost = await request('mount-experimental-entry')
-      const experimentalName = '@deepseek-ai/dsh-experimental-client-ui-agent-team'
+      const experimentalName = '@astro-one/experimental-client-ui-agent-team'
       expect(contaminatedHost.client.entries.map(entry => entry.id)).toContain(experimentalName)
       await page.reload()
       await expect.poll(async () => {

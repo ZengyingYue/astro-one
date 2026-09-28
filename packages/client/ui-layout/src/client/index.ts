@@ -7,12 +7,12 @@
  * selection belongs to the Session Controller. A second effect seats the theme
  * presenter, which projects ctx.theme snapshots onto document.body.
  */
-import type { Context as ClientContext } from '@deepseek-ai/cordis'
-import type {} from '@deepseek-ai/dsh-client-locale/client'
-import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
-import type {} from '@deepseek-ai/dsh-client-ui-session/client'
-import type {} from '@deepseek-ai/dsh-client-ui-theme/client'
-import type { HostObservable, SnapshotSelectorHook } from '@deepseek-ai/dsh-client-ui-slots'
+import type { Context as ClientContext } from '@astro-one/cordis'
+import type {} from '@astro-one/client-locale/client'
+import type {} from '@astro-one/client-ui-renderer/client'
+import type {} from '@astro-one/client-ui-session/client'
+import type {} from '@astro-one/client-ui-theme/client'
+import type { HostObservable, SnapshotSelectorHook } from '@astro-one/client-ui-slots'
 import type { PanelInfo } from './service.ts'
 import { AppFrame } from './AppFrame.tsx'
 import { createLayoutStore } from './stores.ts'
@@ -30,14 +30,14 @@ export type { ILayout, MainPanelId, PanelInfo } from './service.ts'
 /** Selector hook over root-scoped panel selection. */
 export type UsePanelInfo = SnapshotSelectorHook<PanelInfo>
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     /** The outward face only; the concrete service stays inside this plugin. */
     layout: import('./service.ts').ILayout
   }
 }
 
-declare module '@deepseek-ai/dsh-client-ui-slots' {
+declare module '@astro-one/client-ui-slots' {
   interface GlobalStandardProps {
     /** Subscribe to the selected main panel independently of parent renders. */
     usePanelInfo: UsePanelInfo
@@ -97,7 +97,7 @@ declare module '@deepseek-ai/dsh-client-ui-slots' {
      * OCCUPIED by ui-sidebar's reopen/New Session controls.
      *
      * While the seat is mounted the frame publishes
-     * `--dsh-frame-leading-clearance` (the inline inset the seat's band
+     * `--astro-one-frame-leading-clearance` (the inline inset the seat's band
      * occupies, measured from the frame's left edge); a main panel whose
      * content reaches the top-left corner pads by it so nothing lands under
      * the lights or the controls.

@@ -4,13 +4,13 @@
  * product methods, current thread/turn association, unattended approval
  * responses, and terminal-answer selection.
  *
- * @module @deepseek-ai/dsh-subagent-codex/wire
+ * @module @astro-one/subagent-codex/wire
  */
 
 import type { Readable, Writable } from 'node:stream'
-import type { ContentBlock } from '@deepseek-ai/dsh-llm'
-import type { SubagentResult } from '@deepseek-ai/dsh-subagent'
-import { JsonRpcLineTransport } from '@deepseek-ai/dsh-sdk-protocol'
+import type { ContentBlock } from '@astro-one/llm'
+import type { SubagentResult } from '@astro-one/subagent'
+import { JsonRpcLineTransport } from '@astro-one/sdk-protocol'
 import type { CodexPermissionMode } from './run.ts'
 
 type JsonObject = Record<string, unknown>
@@ -267,8 +267,8 @@ export class CodexAppServerWire {
   async initialize(signal: AbortSignal): Promise<void> {
     object(await this.guarded(this.transport.request('initialize', {
       clientInfo: {
-        name: 'deepseek-harness',
-        title: 'DeepSeek Harness',
+        name: 'astro-one',
+        title: 'Astro One',
         version: '0.0.1',
       },
       capabilities: {

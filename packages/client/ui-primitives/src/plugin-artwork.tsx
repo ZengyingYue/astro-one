@@ -10,7 +10,7 @@ import type { IconProps } from './icons/props.ts'
  * A per-instance SVG def id prefix: the artwork repeats across cards and rows,
  * and duplicate document ids would make every `url(#…)` resolve to the first instance.
  */
-const useArtworkId = (): string => `dsh_plugin_art_${useId().replaceAll(':', '')}`
+const useArtworkId = (): string => `astro_one_plugin_art_${useId().replaceAll(':', '')}`
 
 /** Terminal plugin artwork (prompt chevron and cursor bar). */
 export const PluginArtworkTerminal = ({ size = 36, className }: IconProps) => (

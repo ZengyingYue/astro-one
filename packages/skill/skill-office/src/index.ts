@@ -5,9 +5,9 @@ import { readFile } from 'node:fs/promises'
 import { dirname, isAbsolute, join } from 'node:path'
 import { isSea } from 'node:sea'
 import { fileURLToPath } from 'node:url'
-import type { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import { BUNDLED_SKILL_RANK, type SkillCandidate, type SkillProvider } from '@deepseek-ai/dsh-skill'
+import type { Context } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
+import { BUNDLED_SKILL_RANK, type SkillCandidate, type SkillProvider } from '@astro-one/skill'
 import { parse as parseYaml } from 'yaml'
 
 const SKILL_NAMES = ['office-docx', 'office-pptx', 'office-xlsx'] as const
@@ -80,12 +80,12 @@ export function apply(ctx: Context, config: Config = {}): void {
     return {
       name: skillName, description,
       invocation: { modelInvocable: true, userInvocable: true },
-      provider: 'dsh-office', source: 'bundled', rank: BUNDLED_SKILL_RANK,
+      provider: 'astro-one-office', source: 'bundled', rank: BUNDLED_SKILL_RANK,
       resourceBase: { kind: 'directory', path: directory }, locator: path,
     }
   })
   const provider: SkillProvider = {
-    name: 'dsh-office',
+    name: 'astro-one-office',
     list: () => Promise.resolve(candidates),
     async get(candidate, options) {
       const { rank: _rank, locator, ...summary } = candidate

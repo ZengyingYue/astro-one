@@ -1,26 +1,26 @@
 /** Typed preload operations exposed only by the Electron shell. */
 
 import type { IpcMainInvokeEvent } from 'electron'
-import type { DesktopBrowserBridge } from '@deepseek-ai/dsh-client-ui-sidebar-browser/types'
+import type { DesktopBrowserBridge } from '@astro-one/client-ui-sidebar-browser/types'
 
 /** IPC channel names kept private to the desktop application bundle. */
 export const DESKTOP_IPC = {
-  boot: 'dsh-desktop:boot',
-  enterWorkspace: 'dsh-desktop:enter-workspace',
-  bootFailed: 'dsh-desktop:boot-failed',
-  browserAcquire: 'dsh-desktop:browser-acquire',
-  browserRelease: 'dsh-desktop:browser-release',
-  browserOpenRequested: 'dsh-desktop:browser-open-requested',
-  directoryPick: 'dsh-desktop:directory-pick',
-  localeBootstrap: 'dsh-desktop:locale-bootstrap',
-  localeChanged: 'dsh-desktop:locale-changed',
-  updatesStatus: 'dsh-desktop:updates-status',
-  updatesOpen: 'dsh-desktop:updates-open',
-  updatesPresentation: 'dsh-desktop:updates-presentation',
-  nativeThemeSet: 'dsh-desktop:native-theme-set',
-  windowFullscreen: 'dsh-desktop:window-fullscreen',
-  windowsAppearance: 'dsh-desktop:windows-appearance',
-  windowsMenu: 'dsh-desktop:windows-menu',
+  boot: 'astro-one-desktop:boot',
+  enterWorkspace: 'astro-one-desktop:enter-workspace',
+  bootFailed: 'astro-one-desktop:boot-failed',
+  browserAcquire: 'astro-one-desktop:browser-acquire',
+  browserRelease: 'astro-one-desktop:browser-release',
+  browserOpenRequested: 'astro-one-desktop:browser-open-requested',
+  directoryPick: 'astro-one-desktop:directory-pick',
+  localeBootstrap: 'astro-one-desktop:locale-bootstrap',
+  localeChanged: 'astro-one-desktop:locale-changed',
+  updatesStatus: 'astro-one-desktop:updates-status',
+  updatesOpen: 'astro-one-desktop:updates-open',
+  updatesPresentation: 'astro-one-desktop:updates-presentation',
+  nativeThemeSet: 'astro-one-desktop:native-theme-set',
+  windowFullscreen: 'astro-one-desktop:window-fullscreen',
+  windowsAppearance: 'astro-one-desktop:windows-appearance',
+  windowsMenu: 'astro-one-desktop:windows-menu',
 } as const
 
 /** Desktop release update state rendered by desktop-owned UI. */
@@ -59,7 +59,7 @@ export interface DesktopUpdatePresentation {
 }
 
 /** Product documents cannot supply update versions, package URLs, or installation authorization. */
-export interface DshDesktopProductApi {
+export interface AstroOneDesktopProductApi {
   readonly protocolVersion: 1
   readonly browser: DesktopBrowserBridge
   readonly updates: {
@@ -70,7 +70,7 @@ export interface DshDesktopProductApi {
 }
 
 /** Scheme of Desktop-owned application documents. */
-export const SCHEME = 'dsh-app'
+export const SCHEME = 'astro-one-app'
 
 /**
  * Reject IPC outside the allowed Desktop document origins.
@@ -79,9 +79,9 @@ export const SCHEME = 'dsh-app'
  */
 export function assertDesktopSender(event: IpcMainInvokeEvent, hostnames: readonly string[]): void {
   const senderFrame = event.senderFrame
-  if (senderFrame === null) throw new Error('dsh desktop: rejected IPC without a sender frame')
+  if (senderFrame === null) throw new Error('astro-one desktop: rejected IPC without a sender frame')
   const url = new URL(senderFrame.url)
   if (url.protocol !== `${SCHEME}:` || !hostnames.includes(url.hostname)) {
-    throw new Error('dsh desktop: rejected IPC from an unowned renderer')
+    throw new Error('astro-one desktop: rejected IPC from an unowned renderer')
   }
 }

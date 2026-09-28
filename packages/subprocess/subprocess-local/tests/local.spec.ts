@@ -5,25 +5,25 @@ import { describe, expect, it, vi } from 'vitest'
 import { basename, dirname, join, relative, resolve } from 'node:path'
 import { mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
-import { Context } from '@deepseek-ai/cordis'
-import LocalSubprocessRuntime from '@deepseek-ai/dsh-subprocess-local'
-import type { SubprocessSpawnSpec, SubprocessTerminalHandle, SubprocessTerminalSpawnSpec } from '@deepseek-ai/dsh-subprocess'
+import { Context } from '@astro-one/cordis'
+import LocalSubprocessRuntime from '@astro-one/subprocess-local'
+import type { SubprocessSpawnSpec, SubprocessTerminalHandle, SubprocessTerminalSpawnSpec } from '@astro-one/subprocess'
 import { childEnv } from '../src/spawn.ts'
 import { signalLinuxDirectProcess } from '../src/linux-scope.ts'
 
 function mockWin32ForIsolatedRuntime(): void {
-  vi.doMock('@deepseek-ai/dsh-win32-process', () => ({
+  vi.doMock('@astro-one/win32-process', () => ({
     loadWin32ProcessBindings: vi.fn(),
     probeCurrentTokenJobSupport: vi.fn(),
   }))
 }
 
 function unmockWin32ForIsolatedRuntime(): void {
-  vi.doUnmock('@deepseek-ai/dsh-win32-process')
+  vi.doUnmock('@astro-one/win32-process')
 }
 
 function mockNodePtyForIsolatedRuntime(spawn: unknown): void {
-  vi.doMock('@deepseek-ai/dsh-lazy-require', () => ({
+  vi.doMock('@astro-one/lazy-require', () => ({
     createLazyRequire: (specifier: string) => () => {
       if (specifier === 'node-pty') return { spawn }
       throw new Error(`unexpected lazy dependency ${specifier}`)
@@ -32,7 +32,7 @@ function mockNodePtyForIsolatedRuntime(spawn: unknown): void {
 }
 
 function unmockLazyRequireForIsolatedRuntime(): void {
-  vi.doUnmock('@deepseek-ai/dsh-lazy-require')
+  vi.doUnmock('@astro-one/lazy-require')
 }
 
 function spec(command: string, overrides: Partial<SubprocessSpawnSpec> = {}): SubprocessSpawnSpec {
@@ -251,9 +251,9 @@ describe('LocalSubprocessRuntime', () => {
       .rejects.toThrow('is a relative path')
     await expect(ctx.subprocess.resolveExecutable('node_modules/.bin/server'))
       .rejects.toThrow('is a relative path')
-    await expect(ctx.subprocess.resolveExecutable('dsh-command-that-does-not-exist', { PATH: '' }))
+    await expect(ctx.subprocess.resolveExecutable('astro-one-command-that-does-not-exist', { PATH: '' }))
       .rejects.toThrow('was not found on PATH')
-    await expect(ctx.subprocess.resolveExecutable('/dsh-absolute-command-that-does-not-exist'))
+    await expect(ctx.subprocess.resolveExecutable('/astro-one-absolute-command-that-does-not-exist'))
       .rejects.toThrow('is not an executable file')
     await expect(ctx.subprocess.resolveExecutable(process.cwd()))
       .rejects.toThrow('is not an executable file')
@@ -747,7 +747,7 @@ describe('LocalSubprocessRuntime', () => {
   })
 
   it('logs one error through the plugin logger when a spill cannot be written and keeps the tail', async () => {
-    const removedDir = mkdtempSync(join(tmpdir(), 'dsh-subprocess-removed-'))
+    const removedDir = mkdtempSync(join(tmpdir(), 'astro-one-subprocess-removed-'))
     rmSync(removedDir, { recursive: true, force: true })
     const ctx = new Context()
     const logged = vi.spyOn(ctx.logger, 'error').mockImplementation(() => {})
@@ -829,7 +829,7 @@ describe('LocalSubprocessRuntime', () => {
     const probeLinuxNative = vi.fn(() => true)
     const probeLinuxManager = vi.fn(() => true)
     const probeWindowsJob = vi.fn(() => true)
-    const prepareManagedProcessBinding = vi.fn(() => ({ spillDir: '/tmp/dsh-test-spill' }))
+    const prepareManagedProcessBinding = vi.fn(() => ({ spillDir: '/tmp/astro-one-test-spill' }))
     const handles = [true, false, false].map((failFirstWait) => {
       let waits = 0
       return {
@@ -1067,7 +1067,7 @@ describe('LocalSubprocessRuntime', () => {
   it('disposal tolerates a handle whose spawn already failed', async () => {
     const ctx = new Context()
     const fiber = await ctx.plugin(LocalSubprocessRuntime)
-    const handle = ctx.subprocess.spawn(spec('true', { cwd: '/nonexistent-dir-dsh-subprocess-test' }))
+    const handle = ctx.subprocess.spawn(spec('true', { cwd: '/nonexistent-dir-astro-one-subprocess-test' }))
     await expect(handle.done).rejects.toThrow()
     await fiber.dispose()
   })
@@ -1082,7 +1082,7 @@ describe('LocalSubprocessRuntime', () => {
     // that stops the bootstrap first settles as the requested termination —
     // the recorded failure only outranks the stop when it was published before
     // the stop landed.
-    const handle = ctx.subprocess.spawn(spec('true', { cwd: '/nonexistent-dir-dsh-subprocess-test' }))
+    const handle = ctx.subprocess.spawn(spec('true', { cwd: '/nonexistent-dir-astro-one-subprocess-test' }))
     await fiber.dispose()
     const settlement = await handle.done.then(
       outcome => ({ kind: 'stopped' as const, outcome }),

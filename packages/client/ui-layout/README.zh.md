@@ -3,7 +3,7 @@ description: "Web GUI 的外壳布局：三栏 AppFrame（右栏作为贴边面�
 kind: "package-reference"
 ---
 
-# @deepseek-ai/dsh-client-ui-layout
+# @astro-one/client-ui-layout
 
 [English](README.md) | 中文
 
@@ -31,13 +31,13 @@ kind: "package-reference"
 
 ### 窗口 chrome 座
 
-在 macOS 桌面（`html[data-platform='darwin']`，仅由桌面 preload 设置）下，收起的侧边栏整列隐藏而非保留控制栏，框架在左上角挂载 root 作用域的单一 `shell.leading` 座——位于 hiddenInset 红绿灯旁，覆盖所有主面板；ui-sidebar 以重新打开与 New Session 控件占据该座。座挂载期间框架发布 `--dsh-frame-leading-clearance`：窗口 chrome 占据的行内带宽，自框架左边缘起量；内容抵达左上角的主面板以它做内边距，避免落在红绿灯或控件之下。框架还始终在根元素上发布 `--dsh-frame-top-clearance`（48px）：窗口顶带之下的固定下沉量；主面板中的入口型页面（插件管理器等类似页面，非对话）以它做顶部内边距，浮层原语（portal 菜单、底部锚定浮层、设置面板）以它做视口顶部安全边距——放在根元素上让 portal 到 document.body 的浮层也能读到。全宽窗口拖拽带为 52px；选中会话界面且其 header 显示视图 tab 条时，加深至 76px 的 header 块（标题行加 tab 条），header 空白处可拖拽，控件保持可点。
+在 macOS 桌面（`html[data-platform='darwin']`，仅由桌面 preload 设置）下，收起的侧边栏整列隐藏而非保留控制栏，框架在左上角挂载 root 作用域的单一 `shell.leading` 座——位于 hiddenInset 红绿灯旁，覆盖所有主面板；ui-sidebar 以重新打开与 New Session 控件占据该座。座挂载期间框架发布 `--astro-one-frame-leading-clearance`：窗口 chrome 占据的行内带宽，自框架左边缘起量；内容抵达左上角的主面板以它做内边距，避免落在红绿灯或控件之下。框架还始终在根元素上发布 `--astro-one-frame-top-clearance`（48px）：窗口顶带之下的固定下沉量；主面板中的入口型页面（插件管理器等类似页面，非对话）以它做顶部内边距，浮层原语（portal 菜单、底部锚定浮层、设置面板）以它做视口顶部安全边距——放在根元素上让 portal 到 document.body 的浮层也能读到。全宽窗口拖拽带为 52px；选中会话界面且其 header 显示视图 tab 条时，加深至 76px 的 header 块（标题行加 tab 条），header 空白处可拖拽，控件保持可点。
 
-Windows Electron 的 `data-windows-titlebar` 标记在所有列上方预留顶栏高度，并移除收起后的侧栏轨道。内容区仅左上角保留 16px 圆角，其余角和内部交界处保持直角。框架发布 `--dsh-windows-content-radius` 和 `--dsh-windows-sidebar-width`，供 ui-sidebar-right 的全屏圆角及侧栏避让使用。普通 Web 文档不会获得该标记；macOS 保留其独立布局。
+Windows Electron 的 `data-windows-titlebar` 标记在所有列上方预留顶栏高度，并移除收起后的侧栏轨道。内容区仅左上角保留 16px 圆角，其余角和内部交界处保持直角。框架发布 `--astro-one-windows-content-radius` 和 `--astro-one-windows-sidebar-width`，供 ui-sidebar-right 的全屏圆角及侧栏避让使用。普通 Web 文档不会获得该标记；macOS 保留其独立布局。
 
 ### 主题呈现
 
-呈现器消费解析后的主题快照，并投影到 document：`html { color-scheme }` 驱动原生 UA 控件，依据当前配色方案设置 `body[data-ds-dark-theme]`，把主题的别名 token 与 `--dsh-content-font-size` 设为 body 上的内联变量，并持有一个 `<meta name="theme-color">`，其内容随计算后的 body 背景色更新。对呈现器执行 dispose（资源释放）时，它会连同其他全局写入一起移除自己的元数据节点。
+呈现器消费解析后的主题快照，并投影到 document：`html { color-scheme }` 驱动原生 UA 控件，依据当前配色方案设置 `body[data-ds-dark-theme]`，把主题的别名 token 与 `--astro-one-content-font-size` 设为 body 上的内联变量，并持有一个 `<meta name="theme-color">`，其内容随计算后的 body 背景色更新。对呈现器执行 dispose（资源释放）时，它会连同其他全局写入一起移除自己的元数据节点。
 
 -----
 

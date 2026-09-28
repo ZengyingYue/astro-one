@@ -1,12 +1,12 @@
 import { Duplex, PassThrough } from 'node:stream'
 import { setImmediate } from 'node:timers/promises'
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@astro-one/cordis'
 import { describe, expect, it, onTestFinished, vi } from 'vitest'
-import type { PtcBindingFunction, PtcRunRequest } from '@deepseek-ai/dsh-ptc-runtime'
-import type { SubprocessHandle, SubprocessOutcome } from '@deepseek-ai/dsh-subprocess'
-import { SandboxUnavailableError } from '@deepseek-ai/dsh-sandbox'
-import type { ConfinedArgv } from '@deepseek-ai/dsh-sandbox'
-import { MAX_TIMER_DELAY_MS } from '@deepseek-ai/dsh-timeout'
+import type { PtcBindingFunction, PtcRunRequest } from '@astro-one/ptc-runtime'
+import type { SubprocessHandle, SubprocessOutcome } from '@astro-one/subprocess'
+import { SandboxUnavailableError } from '@astro-one/sandbox'
+import type { ConfinedArgv } from '@astro-one/sandbox'
+import { MAX_TIMER_DELAY_MS } from '@astro-one/timeout'
 import type { Config } from '../src/index.ts'
 import { JsonChannel } from '../src/channel.ts'
 import { encodePtcJsonWire } from '../src/json-wire.ts'
@@ -485,15 +485,15 @@ describe('Node runtime host failures', () => {
     vi.stubEnv('TEMP', 'fixture-temp-first')
     vi.stubEnv('TMP', 'fixture-tmp-second')
     vi.stubEnv('ELECTRON_RUN_AS_NODE', '1')
-    vi.stubEnv('DSH_TEST_RUNTIME_SECRET', 'must-not-inherit')
+    vi.stubEnv('ASTRO_ONE_TEST_RUNTIME_SECRET', 'must-not-inherit')
     h.onBoot(() => { h.emit({ type: 'done' }) })
     expect((await h.start()).error).toBeUndefined()
     const env = h.spawn.mock.calls[0]?.[0].env ?? {}
     expect(Object.hasOwn(env, 'TEMP')).toBe(false)
     expect(Object.hasOwn(env, 'TMP')).toBe(false)
     expect(Object.hasOwn(env, 'ELECTRON_RUN_AS_NODE')).toBe(false)
-    expect(Object.hasOwn(env, 'DSH_TEST_RUNTIME_SECRET')).toBe(true)
-    expect(env.DSH_TEST_RUNTIME_SECRET).toBeUndefined()
+    expect(Object.hasOwn(env, 'ASTRO_ONE_TEST_RUNTIME_SECRET')).toBe(true)
+    expect(env.ASTRO_ONE_TEST_RUNTIME_SECRET).toBeUndefined()
   })
 
   it('selects the private packaged bootstrap without leaking ambient environment', async () => {
@@ -504,11 +504,11 @@ describe('Node runtime host failures', () => {
       Object.defineProperty(process, 'pkg', { configurable: true, value: {} })
       expect((await h.start()).error).toBeUndefined()
       const spec = h.spawn.mock.calls[0]?.[0]
-      expect(spec?.env?.DSH_PTC_RUNTIME_NODE).toBe('1')
+      expect(spec?.env?.ASTRO_ONE_PTC_RUNTIME_NODE).toBe('1')
       expect(Object.hasOwn(spec?.env ?? {}, 'PATH')).toBe(false)
       expect(spec?.argv).toEqual([process.execPath, '134217728'])
       expect(Object.fromEntries(Object.entries(spec?.env ?? {}).filter(([, value]) => value !== undefined)))
-        .toEqual({ DSH_PTC_RUNTIME_NODE: '1', NODE_OPTIONS: '--max-old-space-size=512' })
+        .toEqual({ ASTRO_ONE_PTC_RUNTIME_NODE: '1', NODE_OPTIONS: '--max-old-space-size=512' })
     } finally {
       if (prior === undefined) Reflect.deleteProperty(process, 'pkg')
       else Object.defineProperty(process, 'pkg', prior)

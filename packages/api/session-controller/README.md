@@ -8,7 +8,7 @@ English | [中文](README.zh.md)
 
 ## Summary
 
-`@deepseek-ai/dsh-api-session-controller` owns the Host `ctx.sessionController` service and the generated Client `session`, `skills`, and `fileReferences` Remote namespaces. It serves Session lifecycle and history, the Host-generation model catalog, human background-job kill, workspace-path opening, user-invocable skill discovery, and Agent-scoped file references. Use it through API Gateway when a Client needs operations addressed by a Session.
+`@astro-one/api-session-controller` owns the Host `ctx.sessionController` service and the generated Client `session`, `skills`, and `fileReferences` Remote namespaces. It serves Session lifecycle and history, the Host-generation model catalog, human background-job kill, workspace-path opening, user-invocable skill discovery, and Agent-scoped file references. Use it through API Gateway when a Client needs operations addressed by a Session.
 
 ## Table of Contents
 
@@ -37,7 +37,7 @@ Explicit-id `session.create` adopts a live Session or resumes a persisted Sessio
 
 Client list refreshes retain unchanged row objects and reuse the items array when order and values match. Each row's `retainedBy` contains positive local reference-source counts; Host metadata refreshes cannot overwrite them. Cache membership checks use a per-refresh ID set, so reconciliation grows linearly with the current list and retained cache sizes. Host summary updates replace running and Agent availability; local create/fork responses only fill missing metadata on existing rows. Removed ordinary Sessions retain projection stores only when their catalogs contain children.
 
-Background-job rows and observation streams belong to [`dsh-api-job-controller`](../job-controller/README.md); the control stream carries projections only.
+Background-job rows and observation streams belong to [`astro-one-api-job-controller`](../job-controller/README.md); the control stream carries projections only.
 
 Projection reads retain loading and failure state independently of their values. Reconnect cancels reads from the previous connection and reloads previously requested projections; live membership updates arrive through the control stream. Parent availability comes from Host summaries and remains unknown until a summary or a successful list baseline establishes it. Address lookup resolves projected children without selecting them or creating scopes.
 
@@ -89,7 +89,7 @@ References keep local Session data, scoped Contexts, and history streams alive, 
 |---|---:|---|
 | `nativeOpen` | platform-detected | Whether Session workspace paths can be handed to a native desktop opener |
 
-The generated [configuration catalog](../../../docs/config-catalog.md#deepseek-aidsh-api-session-controller) is the exhaustive source for accepted fields and their JSDoc.
+The generated [configuration catalog](../../../docs/config-catalog.md#astro-oneapi-session-controller) is the exhaustive source for accepted fields and their JSDoc.
 
 -----
 

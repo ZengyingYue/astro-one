@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/experimental/speech-to-text-sensevoice/README.md
-README.md: 3d553d2a235346e8d51bf9c8c137bc824b0f3d48
-README.zh.md: e4ab23cc48df0d93431eb22f6c17afcebfd78916
+README.md: 4e9c669cdf7c1b23bfbddf0052fd1cc8b75f6d85
+README.zh.md: c6e106e61344c39476c3da58b82cc03ecf3c2491

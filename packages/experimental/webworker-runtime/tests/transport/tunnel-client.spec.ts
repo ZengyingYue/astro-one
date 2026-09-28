@@ -13,7 +13,7 @@
  * expectations to make a change pass — agree the new text with the worker host first.
  */
 import { expect, test } from 'vitest'
-import { WorkerTunnel } from '@deepseek-ai/dsh-experimental-webworker-runtime/src/client/client.ts'
+import { WorkerTunnel } from '@astro-one/experimental-webworker-runtime/src/client/client.ts'
 
 // Both sides are serialized here, at call time, rather than inside the case: the
 // blocks below reuse and clear the `warnings` array, so a captured reference
@@ -228,14 +228,14 @@ function stubWorker(): {
   })
   const failure = await pending.then(() => undefined, (error: unknown) => error as {
     message: string
-    dshRemoteStreamFailure: unknown
+    astroOneRemoteStreamFailure: unknown
   })
   check('a logical Host failure retains its structural marker', {
     message: failure?.message,
-    dshRemoteStreamFailure: failure?.dshRemoteStreamFailure,
+    astroOneRemoteStreamFailure: failure?.astroOneRemoteStreamFailure,
   }, {
     message: 'fixture Session is absent',
-    dshRemoteStreamFailure: {
+    astroOneRemoteStreamFailure: {
       kind: 'remote', code: 'session/not-found', details: { sessionId: 'session-1' },
     },
   })
@@ -266,14 +266,14 @@ function stubWorker(): {
   fail('worker crashed')
   const failure = await pending.then(() => undefined, (error: unknown) => error as {
     message: string
-    dshRemoteStreamFailure: unknown
+    astroOneRemoteStreamFailure: unknown
   })
   check('worker failure carries the carrier marker', {
     message: failure?.message,
-    dshRemoteStreamFailure: failure?.dshRemoteStreamFailure,
+    astroOneRemoteStreamFailure: failure?.astroOneRemoteStreamFailure,
   }, {
     message: 'web-preview tunnel: worker failed: worker crashed',
-    dshRemoteStreamFailure: { kind: 'carrier' },
+    astroOneRemoteStreamFailure: { kind: 'carrier' },
   })
 }
 

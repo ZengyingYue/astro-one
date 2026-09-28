@@ -25,7 +25,7 @@ Trajectory 视图没有任何方式把调试工件交到人手里：原始会话
 
 ## 后果
 
-- 导出保真度：读取每个实时根会话或后代前，导出器会通过权威的 `SessionStore.flush` 持久性屏障；每个导出文件都以相同的当前 JSONL 形式表示该经过校验的持久 logical log，不受后端 framing 影响。实时会话可能在自身读取后再次追加，因此归档是按会话读取边界形成的快照，而不是整棵树的原子快照。压缩包名为 `dsh-session-<sanitized-id>.zip`，归档路径在塑造条目前会先净化会话 id。
+- 导出保真度：读取每个实时根会话或后代前，导出器会通过权威的 `SessionStore.flush` 持久性屏障；每个导出文件都以相同的当前 JSONL 形式表示该经过校验的持久 logical log，不受后端 framing 影响。实时会话可能在自身读取后再次追加，因此归档是按会话读取边界形成的快照，而不是整棵树的原子快照。压缩包名为 `astro-one-session-<sanitized-id>.zip`，归档路径在塑造条目前会先净化会话 id。
 - 导出不需要 seam 能力：每份日志经由持久化读句柄读取，并在此处序列化为规范 JSONL，因此任何挂载的后端导出完全一致（早先逐字工件表面的移除由[导出与预发布裁剪](../simplification/2026-08-27-persistence-export-and-pre-release-trims.zh.md)记录）。缺失由一次 `stat` 预检判定（会话缺失 → 404）。`session-log-export` 向 Connection 注册一个精确的 Host-only Fetch 路由；流式响应不使用 Remote descriptor 或 JSON envelope 表示。
 - fixture 模式（无宿主）对导出应答 404，浏览器会将其报告为下载失败；navigation-panes golden 快照包含「导出」按钮。
 - 暂缓：transcript.md 以及 report/feedback 打包留待后续；稳定的逐会话 JSONL 与无 manifest 布局让该扩展保持廉价。

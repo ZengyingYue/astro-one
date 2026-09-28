@@ -6,19 +6,19 @@ import { createServer } from 'node:http'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { Context } from '@deepseek-ai/cordis'
-import type { Plugin } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import Include from '@deepseek-ai/cordis-plugin-include'
-import BrowserUse from '@deepseek-ai/dsh-browser-use'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import Tools from '@deepseek-ai/dsh-tools'
-import Llm from '@deepseek-ai/dsh-llm'
-import { ToolCallId } from '@deepseek-ai/dsh-llm'
-import Sessions, { SessionId } from '@deepseek-ai/dsh-session'
-import Agents from '@deepseek-ai/dsh-agent'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import Projections from '@deepseek-ai/dsh-session-projection'
+import { Context } from '@astro-one/cordis'
+import type { Plugin } from '@astro-one/cordis'
+import Loader from '@astro-one/cordis-plugin-loader'
+import Include from '@astro-one/cordis-plugin-include'
+import BrowserUse from '@astro-one/browser-use'
+import SystemPrompt from '@astro-one/system-prompt'
+import Tools from '@astro-one/tools'
+import Llm from '@astro-one/llm'
+import { ToolCallId } from '@astro-one/llm'
+import Sessions, { SessionId } from '@astro-one/session'
+import Agents from '@astro-one/agent'
+import AgentLoop from '@astro-one/agent-loop'
+import Projections from '@astro-one/session-projection'
 import { expect, vi } from 'vitest'
 import type { BrowserMcpConfig } from '../src/mcp.ts'
 
@@ -28,13 +28,13 @@ export async function verifyMcpBrowser(
   navigate: { name: string; arguments(url: string): Record<string, unknown> },
   mode: 'launch' | 'attach',
 ): Promise<void> {
-  const executable = process.env.DSH_BROWSER_EXECUTABLE!
-  const root = await mkdtemp(join(tmpdir(), 'dsh-browser-upstream-'))
+  const executable = process.env.ASTRO_ONE_BROWSER_EXECUTABLE!
+  const root = await mkdtemp(join(tmpdir(), 'astro-one-browser-upstream-'))
   const observed = new Set<string>()
   const server = createServer((request, response) => {
     observed.add(request.url!)
     response.writeHead(200, { 'Content-Type': 'text/html' })
-    response.end('<!doctype html><title>DSH browser fixture</title><h1>Browser integration works</h1>')
+    response.end('<!doctype html><title>Astro One browser fixture</title><h1>Browser integration works</h1>')
   })
   const ctx = new Context()
   let external: ReturnType<typeof spawn> | undefined

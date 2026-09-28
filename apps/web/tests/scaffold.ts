@@ -1,17 +1,17 @@
 // Shared scaffold for the keyless browser e2e lane (Agent Note:
 // .agents/notes/implemented/testing/2026-07-24-web-gui-browser-e2e-lane.md).
-// Boots the REAL web composition — the dsh-base and dsh-web-app bundle
+// Boots the REAL web composition — the astro-one-base and astro-one-web-app bundle
 // patches over the empty profile root through the vendored Loader (the same
 // layer stack the profile boot composes), patched the
 // snapshot way — so a real chromium exercises the real HTTP uplink/WebSocket
-// downlink, api-gateway, agent loop, tools, and persistence. Modes ride $DSH_SNAPSHOT:
+// downlink, api-gateway, agent loop, tools, and persistence. Modes ride $ASTRO_ONE_SNAPSHOT:
 // replay (default, keyless: normally disables the direct DeepSeek rows and
-// inserts dsh-llm-replay in providers mode), record (real adapter + key,
+// inserts astro-one-llm-replay in providers mode), record (real adapter + key,
 // harvests fixtures from live session memory), refresh (keyless replay that
 // rewrites goldens). A first-run option keeps the real adapter mounted while
 // masking its credential, without making a model call.
 //
-// Composition divergences from `dsh web`, all deliberate, all via include
+// Composition divergences from `astro-one web`, all deliberate, all via include
 // patches after the shipped bundle layers, over the SAME tree (never a
 // second yml): temp persistenceRoot; host-level skill roots confined to the
 // temp workspace while project skill discovery remains real; agent-instructions
@@ -30,10 +30,10 @@ import { basename, dirname, join, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import type { Page } from 'playwright'
 import { expect } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import { DSH_LAUNCH_ENVIRONMENT_KEY, type LaunchEnvironmentSnapshot } from '@deepseek-ai/dsh-launch-environment'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import { entryListSchema, type PatchOptions } from '@deepseek-ai/cordis-plugin-include'
+import { Context } from '@astro-one/cordis'
+import { ASTRO_ONE_LAUNCH_ENVIRONMENT_KEY, type LaunchEnvironmentSnapshot } from '@astro-one/launch-environment'
+import Loader from '@astro-one/cordis-plugin-loader'
+import { entryListSchema, type PatchOptions } from '@astro-one/cordis-plugin-include'
 import yaml from 'js-yaml'
 import {
   captureExpectedWorkspaceSnapshot,
@@ -56,37 +56,37 @@ import {
   stabilizeRefreshLog,
   writesCurrentSessionFixtures,
   type NormalizeContext,
-} from '@deepseek-ai/dsh-session-snapshot'
-import type { Profile, ProfileContext } from '@deepseek-ai/dsh-app-boot'
-import { dshHomePath } from '@deepseek-ai/dsh-home-paths'
-import { LlmAdapter } from '@deepseek-ai/dsh-llm'
+} from '@astro-one/session-snapshot'
+import type { Profile, ProfileContext } from '@astro-one/app-boot'
+import { astroOneHomePath } from '@astro-one/home-paths'
+import { LlmAdapter } from '@astro-one/llm'
 import type {
   LlmModelInfo, LlmProviderInfo, LlmResolvedModelInfo, RetryPolicyConfig, StreamChunk,
-} from '@deepseek-ai/dsh-llm'
-import type { ReplayHandle, ReplayProviderConfig } from '@deepseek-ai/dsh-llm-replay'
+} from '@astro-one/llm'
+import type { ReplayHandle, ReplayProviderConfig } from '@astro-one/llm-replay'
 import {
   installLlmReplay,
   parseSessionLog,
   prepareSessionSnapshotFixtureForComparison,
-} from '@deepseek-ai/dsh-llm-replay'
-import type { SessionFormatEvent } from '@deepseek-ai/dsh-session-format'
-import { sessionFormatCatalog } from '@deepseek-ai/dsh-session-format-catalog'
+} from '@astro-one/llm-replay'
+import type { SessionFormatEvent } from '@astro-one/session-format'
+import { sessionFormatCatalog } from '@astro-one/session-format-catalog'
 import {
   SESSION_FORMAT_VERSION,
   SessionId,
   type Session,
   type SessionEvent,
   type SessionHeader,
-} from '@deepseek-ai/dsh-session'
-import JsonlSessionPersistence from '@deepseek-ai/dsh-session-persistence-jsonl'
+} from '@astro-one/session'
+import JsonlSessionPersistence from '@astro-one/session-persistence-jsonl'
 // Empty type imports carry the webServer/agents/sessionPersistence Context merges.
-import type {} from '@deepseek-ai/dsh-host-webserver'
-import type {} from '@deepseek-ai/dsh-agent'
-import { provideCmdline } from '@deepseek-ai/dsh-cmdline'
+import type {} from '@astro-one/host-webserver'
+import type {} from '@astro-one/agent'
+import { provideCmdline } from '@astro-one/cmdline'
 import { startPrefixProxy, type PrefixProxy } from './prefix-proxy.ts'
 import { REPO_ROOT, requireBuilt, requireDist } from './support.ts'
 
-type AppBoot = typeof import('@deepseek-ai/dsh-app-boot')
+type AppBoot = typeof import('@astro-one/app-boot')
 let builtAppBoot: AppBoot | undefined
 
 /**
@@ -97,7 +97,7 @@ let builtAppBoot: AppBoot | undefined
  * helpers this module also exports load without one.
  */
 function appBoot(): AppBoot {
-  builtAppBoot ??= requireBuilt('@deepseek-ai/dsh-app-boot') as AppBoot
+  builtAppBoot ??= requireBuilt('@astro-one/app-boot') as AppBoot
   return builtAppBoot
 }
 
@@ -108,21 +108,21 @@ function appBoot(): AppBoot {
 // import {
 //   WELCOME_NOTICE_ACK_FIELD, WELCOME_NOTICE_SETTINGS_NAMESPACE,
 //   WELCOME_NOTICE_VERSION, WELCOME_NOTICE_COPY,
-// } from '@deepseek-ai/dsh-client-ui-settings-models'
+// } from '@astro-one/client-ui-settings-models'
 export const WELCOME_NOTICE_SETTINGS_NAMESPACE = 'ui-settings-general'
 /** The installed bundle carrying the scaffold's deployment defaults; the plugin manager lists it beside fixture bundles. */
-export const SCAFFOLD_DEFAULTS_BUNDLE = 'dsh-web-scaffold-defaults'
+export const SCAFFOLD_DEFAULTS_BUNDLE = 'astro-one-web-scaffold-defaults'
 export const WELCOME_NOTICE_ACK_FIELD = 'welcomeNoticeVersion'
 export const WELCOME_NOTICE_VERSION = '2026-08-13.1'
 export const WELCOME_NOTICE_COPY = {
   zh: {
     title: '内测声明',
-    body: 'DeepSeek Harness 目前的 0.1 版本仍处在面向 Harness 开发者进行测试的阶段，还有许多地方需要持续改进和打磨，希望听取广大开发者的反馈建议。预计 DeepSeek Harness 的核心插件以及基础 API 都会在接下来的一段时间内快速迭代、持续演化。\n\n我们期待与全球开发者一起，在开源、开放、可复用、可组合的基础设施之上，共同探索智能上限。欢迎全球 Harness 开发者加入 DSH 插件生态。',
+    body: 'Astro One 目前的 0.1 版本仍处在面向 Harness 开发者进行测试的阶段，还有许多地方需要持续改进和打磨，希望听取广大开发者的反馈建议。预计 Astro One 的核心插件以及基础 API 都会在接下来的一段时间内快速迭代、持续演化。\n\n我们期待与全球开发者一起，在开源、开放、可复用、可组合的基础设施之上，共同探索智能上限。欢迎全球 Harness 开发者加入 Astro One 插件生态。',
     continueLabel: '继续',
   },
 } as const
 
-/** Snapshot mode for the lane, from $DSH_SNAPSHOT (same vocabulary as the other snapshot suites). */
+/** Snapshot mode for the lane, from $ASTRO_ONE_SNAPSHOT (same vocabulary as the other snapshot suites). */
 export type WebSnapshotMode = 'replay' | 'record' | 'refresh'
 
 /**
@@ -130,10 +130,10 @@ export type WebSnapshotMode = 'replay' | 'record' | 'refresh'
  * @returns the active mode; unset/empty selects replay.
  */
 export function webSnapshotMode(): WebSnapshotMode {
-  const value = process.env.DSH_SNAPSHOT
+  const value = process.env.ASTRO_ONE_SNAPSHOT
   if (value === undefined || value === '' || value === 'replay') return 'replay'
   if (value === 'record' || value === 'refresh') return value
-  throw new Error(`DSH_SNAPSHOT must be replay, record, or refresh; got ${JSON.stringify(value)}`)
+  throw new Error(`ASTRO_ONE_SNAPSHOT must be replay, record, or refresh; got ${JSON.stringify(value)}`)
 }
 
 /**
@@ -195,10 +195,10 @@ export function recordedSessionFixturePath(path: string, version: number): strin
   return join(dirname(path), sessionFixtureName(fixture.index, version))
 }
 
-/** The shipped composition under test: the dsh-base and dsh-web-app bundle patches over the empty profile root. */
+/** The shipped composition under test: the astro-one-base and astro-one-web-app bundle patches over the empty profile root. */
 const BASE_PATCH_PATH = join(REPO_ROOT, 'packages/bundle/base/cordis.patch.yml')
 const WEB_BUNDLE_DIR = join(REPO_ROOT, 'packages/bundle/web-app')
-const WEB_BUNDLE_PATCH = (JSON.parse(readFileSync(join(WEB_BUNDLE_DIR, 'package.json'), 'utf8')) as { dsh: { bundle: { patch: string[] } } }).dsh.bundle
+const WEB_BUNDLE_PATCH = (JSON.parse(readFileSync(join(WEB_BUNDLE_DIR, 'package.json'), 'utf8')) as { astroOne: { bundle: { patch: string[] } } }).astroOne.bundle
 /** The installation anchor whose dependency surface the runtime resolution mirrors. */
 const INSTALL_ANCHOR = join(REPO_ROOT, 'apps/cli/package.json')
 
@@ -288,7 +288,7 @@ export interface WebScaffold {
   workspaceCwd: string
   /** Temp persistence root (seeded sessions land here through the real API). */
   persistenceRoot: string
-  /** Isolated harness home the settings/credentials rows write ($DSH_HOME double). */
+  /** Isolated harness home the settings/credentials rows write ($ASTRO_ONE_HOME double). */
   harnessHome: string
   /** Send a browser-equivalent Host request with this scaffold's authenticated cookie. */
   hostFetch(path: string, init?: RequestInit): Promise<Response>
@@ -326,7 +326,7 @@ export interface LaunchOptions {
    * over the profile directory, whose manifest lists the shipped web bundles
    * and each package directory here as an installed dependency (`file:` in the
    * manifest, a symlink under the profile's `node_modules`); `enabled` also
-   * lists a bundle in `dsh.profile.bundles`. The plugin manager mounts on such
+   * lists a bundle in `astroOne.profile.bundles`. The plugin manager mounts on such
    * a profile, and the root Include is mounted from the profile's own layers.
    * The base bundle's `hmr` row turns on with the profile context, so
    * configuration changes apply live; `hmr: false` disables that row through
@@ -341,7 +341,7 @@ export interface LaunchOptions {
     bundles?: readonly string[]
   }
   /**
-   * Replay fixture (session.jsonl) served by the inserted dsh-llm-replay row
+   * Replay fixture (session.jsonl) served by the inserted astro-one-llm-replay row
    * in replay/refresh modes; ignored in record mode (the real adapter
    * answers). Omit for scenarios issuing no model calls — a stray stream then
    * fails loud with NO_ADAPTER (both direct adapters are disabled and no replay row
@@ -413,7 +413,7 @@ export interface LaunchOptions {
   /** Preset selection default and additional declarative definitions for this scenario. */
   agentPresets?: {
     default: string
-    definitions?: import('@deepseek-ai/dsh-agent-preset-registry').PresetDefinition[]
+    definitions?: import('@astro-one/agent-preset-registry').PresetDefinition[]
   }
   /**
    * Patch the telemetry exporter URL while preserving the shipped enabled
@@ -437,7 +437,7 @@ export interface LaunchOptions {
    * composition grants no trust. The listen socket is unaffected.
    */
   publicMount?: {
-    /** Canonical mount prefix (default `tools/dsh/`, normalized to lead and end in `/`). */
+    /** Canonical mount prefix (default `tools/astro-one/`, normalized to lead and end in `/`). */
     prefix?: string
   }
   /** Reuse an existing harness home so a second Host can verify user settings across origins. */
@@ -478,7 +478,7 @@ export async function launchWebScaffold(options: LaunchOptions = {}): Promise<We
   const publicHost = publicMount === undefined ? undefined : 'public.localhost'
   const publicPrefix = publicMount === undefined
     ? undefined
-    : `/${(publicMount.prefix ?? 'tools/dsh/').replace(/^\/+|\/+$/gu, '')}/`
+    : `/${(publicMount.prefix ?? 'tools/astro-one/').replace(/^\/+|\/+$/gu, '')}/`
   const browserHost = options.remoteAuthority ?? '127.0.0.1'
   if (mode === 'record') {
     // Both owning vitest configs (web unconditionally, snapshot in record
@@ -502,25 +502,25 @@ export async function launchWebScaffold(options: LaunchOptions = {}): Promise<We
       process.env.DEEPSEEK_API_KEY = originalDeepSeekCredential
     }
   }
-  const workspaceCwd = await realpath(await mkdtemp(join(tmpdir(), 'dsh-web-e2e-ws-')))
-  // Isolated harness home: the settings/credentials rows resolve $DSH_HOME
+  const workspaceCwd = await realpath(await mkdtemp(join(tmpdir(), 'astro-one-web-e2e-ws-')))
+  // Isolated harness home: the settings/credentials rows resolve $ASTRO_ONE_HOME
   // paths at load, and an in-process boot must NEVER touch the developer's
-  // real ~/.dsh document or credential file.
-  const harnessHome = options.harnessHome ?? join(workspaceCwd, '.dsh-home')
+  // real ~/.astro-one document or credential file.
+  const harnessHome = options.harnessHome ?? join(workspaceCwd, '.astro-one-home')
   // Skill discovery is model-visible input, and its roots now resolve inside a
   // PRESET — a subtree this lane's include patches cannot reach, because the
   // roster mounts it directly per session rather than as a row of the booted
   // tree. The row's documented fallback is the environment, so pin that: the
   // whole scaffold lifetime, not just the boot, since presets mount when a
-  // session is created. Without this a developer's real ~/.dsh/skills silently
-  // enters replay requests and goldens while CI sees none. `DSH_HOME` follows
+  // session is created. Without this a developer's real ~/.astro-one/skills silently
+  // enters replay requests and goldens while CI sees none. `ASTRO_ONE_HOME` follows
   // the resolved harness home so a scaffold sharing another's home — the
   // cross-port persistence scenario — pins the same roots the settings and
   // credentials rows were configured with.
   const skillRootEnvironment = {
-    DSH_HOME: harnessHome,
-    DSH_AGENTS_HOME: join(workspaceCwd, '.agents-home'),
-    DSH_BUNDLED_SKILL_DIR: join(workspaceCwd, '.bundled-skills'),
+    ASTRO_ONE_HOME: harnessHome,
+    ASTRO_ONE_AGENTS_HOME: join(workspaceCwd, '.agents-home'),
+    ASTRO_ONE_BUNDLED_SKILL_DIR: join(workspaceCwd, '.bundled-skills'),
   }
   const originalSkillRootEnvironment = Object.fromEntries(
     Object.keys(skillRootEnvironment).map(key => [key, process.env[key]]),
@@ -537,7 +537,7 @@ export async function launchWebScaffold(options: LaunchOptions = {}): Promise<We
   Object.assign(process.env, skillRootEnvironment)
   let persistenceRoot: string
   try {
-    persistenceRoot = await mkdtemp(join(tmpdir(), 'dsh-web-e2e-sessions-'))
+    persistenceRoot = await mkdtemp(join(tmpdir(), 'astro-one-web-e2e-sessions-'))
   } catch (error) {
     const failures: unknown[] = [error]
     await rm(workspaceCwd, { recursive: true, force: true }).catch((cleanupError: unknown) => failures.push(cleanupError))
@@ -548,7 +548,7 @@ export async function launchWebScaffold(options: LaunchOptions = {}): Promise<We
   if (maskDeepSeekCredential) Reflect.deleteProperty(process.env, 'DEEPSEEK_API_KEY')
 
   // The include patch set — the same layer stack the profile boot composes
-  // (bundle patches in dsh.profile.bundles order), applied over the SAME empty root (a
+  // (bundle patches in astroOne.profile.bundles order), applied over the SAME empty root (a
   // patch id that stops matching a row fails the boot sweep loudly instead of
   // drifting).
   const basePatches = loadOverlayPatches('web e2e scaffold', BASE_PATCH_PATH)
@@ -579,20 +579,20 @@ export async function launchWebScaffold(options: LaunchOptions = {}): Promise<We
     // the seeded-session scenarios navigate by content search, and these e2e
     // runs are the assembled coverage for the opt-in search path.
     { id: 'session-query-sqlite', config: { path: ':memory:', openAt: 'first-search' } },
-    // storage-json's yml root is anchored to the real $DSH_HOME; pin the row
+    // storage-json's yml root is anchored to the real $ASTRO_ONE_HOME; pin the row
     // to an absolute temp root (removed with the workspace at close) so tests
     // never write the user's harness home.
-    { id: 'storage-json', config: { root: join(workspaceCwd, '.dsh-storages') } },
+    { id: 'storage-json', config: { root: join(workspaceCwd, '.astro-one-storages') } },
     // First-use initialization must create directories only inside this scaffold's temporary world.
     { id: 'workspace-controller', config: { documentsDirectory: join(workspaceCwd, 'Documents') } },
     // Skill discovery is model-visible input. Pin every host-level root inside
-    // the owned temp world so ~/.dsh, ~/.agents, and a bundled-root env setting
+    // the owned temp world so ~/.astro-one, ~/.agents, and a bundled-root env setting
     // cannot change replay requests or conversation goldens. Project roots stay
     // enabled against the same empty temp workspace, preserving the real seam.
     {
       id: 'skill-filesystem',
       config: {
-        dshHome: join(workspaceCwd, '.dsh-home'),
+        astroOneHome: join(workspaceCwd, '.astro-one-home'),
         agentsHome: join(workspaceCwd, '.agents-home'),
         bundledSkillDir: join(workspaceCwd, '.bundled-skills'),
         watch: false,
@@ -604,7 +604,7 @@ export async function launchWebScaffold(options: LaunchOptions = {}): Promise<We
     { id: 'agent-instructions', disabled: true },
     { id: 'session-title-llm', disabled: true },
     // Fixture sessions must never leave the process: the shipped row defaults
-    // to the production OTLP endpoint (or whatever DSH_TELEMETRY_OTLP_URL
+    // to the production OTLP endpoint (or whatever ASTRO_ONE_TELEMETRY_OTLP_URL
     // names in the ambient environment). A scenario with a local collector
     // preserves the shipped disabled setting instead of overriding it.
     options.telemetryUrl === undefined
@@ -630,7 +630,7 @@ export async function launchWebScaffold(options: LaunchOptions = {}): Promise<We
       },
     },
     // The bundle's web-runtime row resolves the same built dist under test
-    // (apps/web IS @deepseek-ai/dsh-web-frontend); native browser opening and the
+    // (apps/web IS @astro-one/web-frontend); native browser opening and the
     // URL line are disabled because this scaffold owns its Playwright browser.
     // Preserve the composed surface-context choice because a patch replaces
     // the row's complete config.
@@ -646,7 +646,7 @@ export async function launchWebScaffold(options: LaunchOptions = {}): Promise<We
           ],
         },
       }],
-    { id: 'credentials', config: { dshHome: harnessHome } },
+    { id: 'credentials', config: { astroOneHome: harnessHome } },
     // The shipped directory-picker row is the -auto chooser, which resolves
     // the interaction from the RUNNING host (display, SSH launch, bind). The
     // lane's goldens are interaction-specific (workspace-management drives
@@ -655,8 +655,8 @@ export async function launchWebScaffold(options: LaunchOptions = {}): Promise<We
     // disable+insert pair.
     { id: 'directory-picker', disabled: true },
     { insert: [
-      { id: 'directory-picker-browse', name: '@deepseek-ai/dsh-host-directory-picker-browse' },
-      { id: 'ui-directory-picker-browse', name: '@deepseek-ai/dsh-client-ui-directory-picker-browse' },
+      { id: 'directory-picker-browse', name: '@astro-one/host-directory-picker-browse' },
+      { id: 'ui-directory-picker-browse', name: '@astro-one/client-ui-directory-picker-browse' },
     ] },
     // Ordinary scenarios exclude host-dependent application discovery. The
     // Open In scenario supplies launch facts that suppress every native probe.
@@ -664,7 +664,7 @@ export async function launchWebScaffold(options: LaunchOptions = {}): Promise<We
     { id: 'ui-open-in-app', disabled: options.openInAppEnvironment === undefined },
     ...options.agentPresets === undefined ? [] : [
       { id: 'agent-preset-registry', config: { default: options.agentPresets.default } },
-      { insert: (options.agentPresets.definitions ?? []).map(config => ({ id: `preset-${config.id}`, name: '@deepseek-ai/dsh-agent-preset', config })) },
+      { insert: (options.agentPresets.definitions ?? []).map(config => ({ id: `preset-${config.id}`, name: '@astro-one/agent-preset', config })) },
     ],
     ...options.toolsMode === undefined ? [] : [{ id: 'tools', config: { mode: options.toolsMode } }],
     ...options.deepSeekSearch === undefined
@@ -697,7 +697,7 @@ export async function launchWebScaffold(options: LaunchOptions = {}): Promise<We
   // the temp workspace so tool cwd, session cwd, and fixtures agree.
   const originalCwd = process.cwd()
   const ctx = new Context()
-  if (options.openInAppEnvironment !== undefined) ctx.provide(DSH_LAUNCH_ENVIRONMENT_KEY, options.openInAppEnvironment)
+  if (options.openInAppEnvironment !== undefined) ctx.provide(ASTRO_ONE_LAUNCH_ENVIRONMENT_KEY, options.openInAppEnvironment)
   const observedSessions = new Map<SessionId, Session>()
   const stopObservingSessions = ctx.on('session/created', (session) => {
     observedSessions.set(session.id, session)
@@ -722,7 +722,7 @@ export async function launchWebScaffold(options: LaunchOptions = {}): Promise<We
         throw new Error(`web scaffold extra install anchor has no package name: ${anchor}`)
       }
       const packageDir = dirname(anchor)
-      // A real profile already has each bundle installed by `dsh plugin add`.
+      // A real profile already has each bundle installed by `astro-one plugin add`.
       // Reproduce that link so a private bundle can import its own plugin.
       const installedLink = join(profileDir, 'node_modules', manifest.name)
       await mkdir(dirname(installedLink), { recursive: true })
@@ -750,9 +750,9 @@ export async function launchWebScaffold(options: LaunchOptions = {}): Promise<We
     let profileContext: ProfileContext
     {
       // A real profile: the shipped web bundles plus each fixture package,
-      // installed the way `dsh plugin add` leaves them.
+      // installed the way `astro-one plugin add` leaves them.
       const dependencies: Record<string, string> = {}
-      const bundles = ['@deepseek-ai/dsh-base', '@deepseek-ai/dsh-web-app', ...options.profile?.bundles ?? []]
+      const bundles = ['@astro-one/base', '@astro-one/web-app', ...options.profile?.bundles ?? []]
       for (const entry of options.profile?.packages ?? []) {
         const manifest = JSON.parse(await readFile(join(entry.dir, 'package.json'), 'utf8')) as { name: string }
         dependencies[manifest.name] = `file:${entry.dir}`
@@ -764,19 +764,19 @@ export async function launchWebScaffold(options: LaunchOptions = {}): Promise<We
       // Fixture deployment defaults remain below editable profile values.
       const fixtureDir = join(profileDir, 'node_modules', SCAFFOLD_DEFAULTS_BUNDLE)
       await mkdir(fixtureDir, { recursive: true })
-      await writeFile(join(fixtureDir, 'package.json'), JSON.stringify({ name: SCAFFOLD_DEFAULTS_BUNDLE, version: '1.0.0', dsh: { bundle: { patch: 'cordis.patch.yml' } } }))
+      await writeFile(join(fixtureDir, 'package.json'), JSON.stringify({ name: SCAFFOLD_DEFAULTS_BUNDLE, version: '1.0.0', astroOne: { bundle: { patch: 'cordis.patch.yml' } } }))
       await writeFile(join(fixtureDir, 'cordis.patch.yml'), yaml.dump(formDefaults, { schema: entryListSchema }))
       bundles.push(SCAFFOLD_DEFAULTS_BUNDLE)
       dependencies[SCAFFOLD_DEFAULTS_BUNDLE] = `file:${fixtureDir}`
       initProfile(profileDir, bundles)
-      const manifest = readProfileManifest('dsh', profileDir)
+      const manifest = readProfileManifest('astro-one', profileDir)
       manifest.dependencies = dependencies
       await writeFile(join(profileDir, 'package.json'), JSON.stringify(manifest, null, 2) + '\n')
       profileContext = {
         name: 'scaffold', dir: profileDir, patchPath: profile.patchPath, installAnchor: INSTALL_ANCHOR,
         ...options.profile?.packageManager === undefined ? {} : { packageManager: options.profile.packageManager },
         cwd: workspaceCwd, home: harnessHome,
-        startedBundles: loadProfileDirectory('dsh', profileDir, INSTALL_ANCHOR).layers.map(layer => layer.packageName),
+        startedBundles: loadProfileDirectory('astro-one', profileDir, INSTALL_ANCHOR).layers.map(layer => layer.packageName),
         overlays: processOverlays, telemetryDisabledEnv: undefined,
       }
       // HMR gates file-driven reloads on application readiness, which the
@@ -785,7 +785,7 @@ export async function launchWebScaffold(options: LaunchOptions = {}): Promise<We
       ctx.provide('profileContext', profileContext)
     }
     // This direct Loader harness supplies the same root-path capability as app-boot.
-    ctx.provide('dshHomePath', dshHomePath)
+    ctx.provide('astroOneHomePath', astroOneHomePath)
     // A host with no command line still provides one: the web bundle's startup
     // row releases the rows waiting on it, and with no arguments each starts on
     // the values this scaffold composed above. An exit request can only come
@@ -800,7 +800,7 @@ export async function launchWebScaffold(options: LaunchOptions = {}): Promise<We
       resolution,
     })
     await ctx.plugin(Loader)
-    await mountRootInclude(ctx, rootConfig, readProfilePatches('dsh', profileContext))
+    await mountRootInclude(ctx, rootConfig, readProfilePatches('astro-one', profileContext))
     await ctx.loader.await()
     await auditStartupEntries(ctx, 'web e2e scaffold')
     if (options.developerTools !== undefined) {
@@ -1655,7 +1655,7 @@ export async function compareOrRefreshGolden(goldenPath: string, actual: string,
     return
   }
   if (!existsSync(goldenPath)) {
-    throw new Error(`missing golden ${goldenPath} — run DSH_SNAPSHOT=refresh pnpm run test:web to generate it`)
+    throw new Error(`missing golden ${goldenPath} — run ASTRO_ONE_SNAPSHOT=refresh pnpm run test:web to generate it`)
   }
   expect(payload).toBe(await readFile(goldenPath, 'utf8'))
 }

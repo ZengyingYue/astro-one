@@ -1,7 +1,7 @@
-/** DeepSeek Files API transport. @module dsh-llm-deepseek/files-api */
+/** DeepSeek Files API transport. @module astro-one-llm-deepseek/files-api */
 
-import { attributionHeaders, LlmError } from '@deepseek-ai/dsh-llm'
-import type { ImageMediaType } from '@deepseek-ai/dsh-attachment'
+import { attributionHeaders, LlmError } from '@astro-one/llm'
+import type { ImageMediaType } from '@astro-one/attachment'
 import { DeepSeekFileId } from './file-id.ts'
 import type { DeepSeekFileId as DeepSeekFileIdType } from './file-id.ts'
 import { messagesApiRoot, MESSAGES_FILES_BETA } from './messages-api.ts'
@@ -71,7 +71,7 @@ export function isFilesQuotaError(error: unknown): error is DeepSeekFilesError {
 interface FilesApiOptions {
   baseURL: string
   apiKey: string
-  /** Use the DSH account header; omitted for ordinary API keys. */
+  /** Use the Astro One account header; omitted for ordinary API keys. */
   accountCredential?: boolean
   fetch?: typeof fetch
 }
@@ -149,7 +149,7 @@ export class DeepSeekFilesClient {
     let response: Response
     try {
       const headers = new Headers(attributionHeaders())
-      headers.set(this.accountCredential ? 'x-dsh-auth-token' : 'x-api-key', this.apiKey)
+      headers.set(this.accountCredential ? 'x-astro-one-auth-token' : 'x-api-key', this.apiKey)
       headers.set('anthropic-version', '2023-06-01')
       headers.set('anthropic-beta', MESSAGES_FILES_BETA)
       response = await this.fetchImpl(`${this.baseURL}${path}`, {

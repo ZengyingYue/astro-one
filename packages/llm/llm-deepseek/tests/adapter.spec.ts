@@ -1,28 +1,28 @@
 /** HTTP lifecycle, routing and optional Cordis services under real composition. */
-import type { DeepSeekAccount } from '@deepseek-ai/dsh-deepseek-account'
-import type { AnonymousUserId } from '@deepseek-ai/dsh-anonymous-user-id'
+import type { DeepSeekAccount } from '@astro-one/deepseek-account'
+import type { AnonymousUserId } from '@astro-one/anonymous-user-id'
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { Context, LoggerLevel, Service } from '@deepseek-ai/cordis'
-import LocalAttachments from '@deepseek-ai/dsh-attachment-local'
-import AgentRegistry, { installModelSelection } from '@deepseek-ai/dsh-agent'
-import type { Agent, ModelSelectionRef } from '@deepseek-ai/dsh-agent'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime from '@deepseek-ai/dsh-tools'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import { AttachmentId } from '@deepseek-ai/dsh-attachment'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import Include from '@deepseek-ai/cordis-plugin-include'
-import LlmRuntime, { createAssistantMessage, createSystemMessage, createToolResultMessage, createUserMessage, ToolCallId } from '@deepseek-ai/dsh-llm'
-import type { Message } from '@deepseek-ai/dsh-llm'
-import { credentialRef } from '@deepseek-ai/dsh-credentials'
-import LocalCredentials from '@deepseek-ai/dsh-credentials-local'
+import { Context, LoggerLevel, Service } from '@astro-one/cordis'
+import LocalAttachments from '@astro-one/attachment-local'
+import AgentRegistry, { installModelSelection } from '@astro-one/agent'
+import type { Agent, ModelSelectionRef } from '@astro-one/agent'
+import AgentLoop from '@astro-one/agent-loop'
+import SystemPrompt from '@astro-one/system-prompt'
+import ToolRuntime from '@astro-one/tools'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import { AttachmentId } from '@astro-one/attachment'
+import Loader from '@astro-one/cordis-plugin-loader'
+import Include from '@astro-one/cordis-plugin-include'
+import LlmRuntime, { createAssistantMessage, createSystemMessage, createToolResultMessage, createUserMessage, ToolCallId } from '@astro-one/llm'
+import type { Message } from '@astro-one/llm'
+import { credentialRef } from '@astro-one/credentials'
+import LocalCredentials from '@astro-one/credentials-local'
 import { profileComposition } from '../../../settings/settings/tests/profile-composition.ts'
-import SessionStore, { SessionId } from '@deepseek-ai/dsh-session'
+import SessionStore, { SessionId } from '@astro-one/session'
 import { DeepSeekAdapter } from '../src/adapter.ts'
 import { object } from '../src/replay.ts'
 import { DeepSeekFileStore } from '../src/file-store.ts'
@@ -42,9 +42,9 @@ async function endpoint(...args: Parameters<typeof server>) {
   return instance
 }
 async function context() {
-  const home = await mkdtemp(join(tmpdir(), 'dsh-messages-test-'))
+  const home = await mkdtemp(join(tmpdir(), 'astro-one-messages-test-'))
   cleanup.push(() => rm(home, { recursive: true, force: true }))
-  vi.stubEnv('DSH_HOME', home)
+  vi.stubEnv('ASTRO_ONE_HOME', home)
   const ctx = new Context()
   cleanup.push(() => ctx.fiber.dispose())
   return { ctx, home }
@@ -56,7 +56,7 @@ async function send(agent: Agent, text: string) {
   expect(agent.session.snapshotEvents().at(-1)).toMatchObject({ type: 'turn/end', data: { reason: { kind: 'completed' } } })
 }
 
-declare module '@deepseek-ai/dsh-llm' {
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'saved-notice': { kind: 'saved-notice' }
   }
@@ -118,8 +118,8 @@ describe('direct Messages HTTP', () => {
     })
     expect(http.requests[0]).toMatchObject({ path: '/anthropic/v1/messages', headers: {
       'x-api-key': 'test-key', 'anthropic-version': '2023-06-01',
-      'user-agent': expect.stringContaining('deepseek-harness/') as string, 'x-deepseek-harness-user-id': 'test-user',
-      'x-deepseek-harness-session-id': 'session-test', 'x-deepseek-harness-compact': '1',
+      'user-agent': expect.stringContaining('astro-one/') as string, 'x-astro-one-user-id': 'test-user',
+      'x-astro-one-session-id': 'session-test', 'x-astro-one-compact': '1',
     }, body: { thinking: { type: 'enabled' }, output_config: { effort: 'high' } } })
     expect(llm.providerInfo('deepseek-official')).toEqual({ id: 'deepseek-official', name: 'DeepSeek' })
     expect((await llm.listModels('deepseek-official')).map(model => model.id)).toEqual([
@@ -257,7 +257,7 @@ describe('Cordis provider composition', () => {
     const price = () => ctx.llm.imageRequestPricing('deepseek-official', model)!
     const dummy = { attachmentId: AttachmentId(`sha256:${'a'.repeat(64)}`), width: 1, height: 1, bytes: 3, mediaType: 'image/png' as const }
     expect(price().priceImages([{ type: 'image', attachment: dummy }])[0]?.text).toBeDefined()
-    await ctx.plugin(LocalAttachments, { dshHome: home })
+    await ctx.plugin(LocalAttachments, { astroOneHome: home })
     const attachment = await ctx.attachments.saveImage({ data: await readFile(new URL('fixtures/red.png', import.meta.url)), mediaType: 'image/png' })
     expect(price().priceImages([{ type: 'image', attachment }])[0]?.text).not.toContain('/mounted/image.png')
     class MappedFiles extends Service {
@@ -282,11 +282,11 @@ describe('Cordis provider composition', () => {
     await ctx.plugin(Loader)
     ctx.loader.builtins.include = Include
     const modules = new Map<string, unknown>([
-      ['@deepseek-ai/dsh-llm', LlmRuntime], ['@deepseek-ai/dsh-llm-deepseek', Messages],
-      ['@deepseek-ai/dsh-credentials-local', LocalCredentials],
-      ['@deepseek-ai/dsh-agent', AgentRegistry], ['@deepseek-ai/dsh-agent-loop', AgentLoop],
-      ['@deepseek-ai/dsh-session', SessionStore], ['@deepseek-ai/dsh-session-projection', SessionProjectionRegistry],
-      ['@deepseek-ai/dsh-system-prompt', SystemPrompt], ['@deepseek-ai/dsh-tools', ToolRuntime],
+      ['@astro-one/llm', LlmRuntime], ['@astro-one/llm-deepseek', Messages],
+      ['@astro-one/credentials-local', LocalCredentials],
+      ['@astro-one/agent', AgentRegistry], ['@astro-one/agent-loop', AgentLoop],
+      ['@astro-one/session', SessionStore], ['@astro-one/session-projection', SessionProjectionRegistry],
+      ['@astro-one/system-prompt', SystemPrompt], ['@astro-one/tools', ToolRuntime],
     ])
     // The importer supplies source modules while Loader still owns configuration and effects.
     for (const name of modules.keys()) {
@@ -493,7 +493,7 @@ it.each([
     const headers = new Headers(init?.headers)
     expect(headers.has('authorization')).toBe(false)
     expect(headers.get('x-api-key')).toBe(expected === 'account-token' ? null : expected)
-    expect(headers.get('x-dsh-auth-token')).toBe(expected === 'account-token' ? expected : null)
+    expect(headers.get('x-astro-one-auth-token')).toBe(expected === 'account-token' ? expected : null)
     expect(init?.redirect).toBe('error')
     return Promise.resolve(new Response(sse(textEvents), { status: 200 }))
   })

@@ -43,10 +43,10 @@ Before the first V4 publication, every integration of a newer V3-writing master 
 
 ```yaml session-format-release
 latestReleasedVersion: 3
-evidenceTag: dsh-v0.1.5-alpha.1
+evidenceTag: astro-one-v0.1.5-alpha.1
 ```
 
-Evidence: published product tag `dsh-v0.1.5-alpha.1`; tagged writer: `packages/core/session/src/types.ts`.
+Evidence: published product tag `astro-one-v0.1.5-alpha.1`; tagged writer: `packages/core/session/src/types.ts`.
 
 <a id="updating-the-record"></a>
 ## Updating the record

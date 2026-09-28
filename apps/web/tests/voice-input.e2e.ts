@@ -5,8 +5,8 @@ import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { chromium, type Browser } from 'playwright'
 import { expect, it, onTestFinished, vi } from 'vitest'
-import type { SpeechInput, SpeechProviderId } from '@deepseek-ai/dsh-experimental-speech-to-text/types'
-import type {} from '@deepseek-ai/dsh-experimental-speech-to-text'
+import type { SpeechInput, SpeechProviderId } from '@astro-one/experimental-speech-to-text/types'
+import type {} from '@astro-one/experimental-speech-to-text'
 import {
   captureStableAria, compareOrRefreshGolden, fixtureUserPrompts, launchWebScaffold, webSnapshotMode, watchConsole,
   type WebScaffold,
@@ -20,7 +20,7 @@ const recordingExpected = fileURLToPath(new URL('../../../snapshots/web/voice-in
 const bundle = fileURLToPath(new URL('../../../packages/experimental/voice-input-bundle', import.meta.url))
 
 it.skipIf(webSnapshotMode() === 'record')('records from cached standby and submits only the reviewed transcript through Session replay', async () => {
-  const scratch = await mkdtemp(join(tmpdir(), 'dsh-voice-browser-'))
+  const scratch = await mkdtemp(join(tmpdir(), 'astro-one-voice-browser-'))
   const resources: { scaffold?: WebScaffold; browser?: Browser } = {}
   onTestFinished(async () => {
     try { await resources.browser?.close() } finally {

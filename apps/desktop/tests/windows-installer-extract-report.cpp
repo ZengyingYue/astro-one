@@ -103,7 +103,7 @@ int wmain() {
     WCHAR temp[MAX_PATH];
     const DWORD tempLength = GetTempPathW(MAX_PATH, temp);
     assert(tempLength);
-    const std::wstring root = std::wstring(temp) + L"dsh-extract-report-" + std::to_wstring(GetCurrentProcessId());
+    const std::wstring root = std::wstring(temp) + L"astro-one-extract-report-" + std::to_wstring(GetCurrentProcessId());
     const BOOL created = CreateDirectoryW(root.c_str(), nullptr);
     assert(created);
     const std::wstring log = root + L"\\extract.log";

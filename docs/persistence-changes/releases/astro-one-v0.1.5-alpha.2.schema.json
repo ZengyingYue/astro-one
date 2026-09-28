@@ -1,0 +1,2132 @@
+{
+  "formatVersion": 1,
+  "roots": [
+    {
+      "key": "event:deliverables/presented",
+      "kind": "event",
+      "event": "deliverables/presented",
+      "surface": false,
+      "digest": "bc86457a4376925f38a23f1c143d64d820d3a1208be562a45f79ef2e421f77ee",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 6,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 5,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 5,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 7,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "callId",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "files",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "turn",
+                "type": 5,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "array",
+            "element": 4
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "description",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "path",
+                "type": 2,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "literal",
+            "value": "deliverables/presented"
+          }
+        ]
+      }
+    },
+    {
+      "key": "event:feedback/message-put",
+      "kind": "event",
+      "event": "feedback/message-put",
+      "surface": false,
+      "digest": "ba4cd1161e811ac8a5e578b5f918bf37b87bd3be68f597d77e88109160a52dad",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 16,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 11,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 11,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 17,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "item",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "sessionId",
+                "type": 12,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "category",
+                "type": 3,
+                "optional": true
+              },
+              {
+                "name": "createdAt",
+                "type": 11,
+                "optional": false
+              },
+              {
+                "name": "messageId",
+                "type": 12,
+                "optional": false
+              },
+              {
+                "name": "note",
+                "type": 12,
+                "optional": true
+              },
+              {
+                "name": "rating",
+                "type": 13,
+                "optional": false
+              },
+              {
+                "name": "updatedAt",
+                "type": 11,
+                "optional": false
+              },
+              {
+                "name": "version",
+                "type": 12,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "union",
+            "types": [
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "instruction-following"
+          },
+          {
+            "kind": "literal",
+            "value": "other"
+          },
+          {
+            "kind": "literal",
+            "value": "product-interaction"
+          },
+          {
+            "kind": "literal",
+            "value": "resource-cost"
+          },
+          {
+            "kind": "literal",
+            "value": "security-privacy-permission"
+          },
+          {
+            "kind": "literal",
+            "value": "service-stability"
+          },
+          {
+            "kind": "literal",
+            "value": "task-result"
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "union",
+            "types": [
+              14,
+              15
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "negative"
+          },
+          {
+            "kind": "literal",
+            "value": "positive"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "literal",
+            "value": "feedback/message-put"
+          }
+        ]
+      }
+    },
+    {
+      "key": "event:feedback/record",
+      "kind": "event",
+      "event": "feedback/record",
+      "surface": false,
+      "digest": "653a08a616f740052ceff3a81f95eeb42a8df685e582eab71db2d1249f2b74c2",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 11,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 12,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 12,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 13,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "category",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "text",
+                "type": 10,
+                "optional": true
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "union",
+            "types": [
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "instruction-following"
+          },
+          {
+            "kind": "literal",
+            "value": "other"
+          },
+          {
+            "kind": "literal",
+            "value": "product-interaction"
+          },
+          {
+            "kind": "literal",
+            "value": "resource-cost"
+          },
+          {
+            "kind": "literal",
+            "value": "security-privacy-permission"
+          },
+          {
+            "kind": "literal",
+            "value": "service-stability"
+          },
+          {
+            "kind": "literal",
+            "value": "task-result"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "feedback/record"
+          }
+        ]
+      }
+    },
+    {
+      "key": "event:subagent/catalog",
+      "kind": "event",
+      "event": "subagent/catalog",
+      "surface": false,
+      "digest": "1f1587d927839e83d3af00eed5f2dc63c4cda9496ed6c9d382b19933b5135788",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 9,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 10,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "union",
+            "types": [
+              2,
+              7
+            ]
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "childCreatedAt",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "childId",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "label",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "mode",
+                "type": 5,
+                "optional": false
+              },
+              {
+                "name": "version",
+                "type": 6,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": "continuable"
+          },
+          {
+            "kind": "literal",
+            "value": 0
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "childCreatedAt",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "childId",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "label",
+                "type": 4,
+                "optional": true
+              },
+              {
+                "name": "mode",
+                "type": 8,
+                "optional": false
+              },
+              {
+                "name": "version",
+                "type": 6,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "literal",
+            "value": "one-shot"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "literal",
+            "value": "subagent/catalog"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "digest": "ec6e703f08e1e98b9e73af026cbd4b065e8e1d674a0c1db280d94f4c7fe97e8d",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "product-interaction"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "546c2b19cfc9b771e888b6af913f7761c0d2d63c408fdc3e0eac11f9cefe65ef",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "primitive",
+            "type": "number"
+          }
+        ]
+      },
+      "names": [
+        "packages/core/session/src/types.ts#SessionSeq"
+      ],
+      "sources": [
+        "packages/core/session/src/types.ts"
+      ]
+    },
+    {
+      "digest": "641934e0dae35e3eb5f507b109633d88cd57a160217b3e173604d66765e4b4a9",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "security-privacy-permission"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "2634cdc8d7e196d7c8d9fe233144cf37718e0300b19370c51d29e09eb00b96c2",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "childCreatedAt",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "childId",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "label",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "mode",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "version",
+                "type": 4,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": "continuable"
+          },
+          {
+            "kind": "literal",
+            "value": 0
+          }
+        ]
+      },
+      "names": [
+        "event:subagent/catalog.data[1]"
+      ],
+      "sources": []
+    },
+    {
+      "digest": "bc86457a4376925f38a23f1c143d64d820d3a1208be562a45f79ef2e421f77ee",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 6,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 5,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 5,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 7,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "callId",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "files",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "turn",
+                "type": 5,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "array",
+            "element": 4
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "description",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "path",
+                "type": 2,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "literal",
+            "value": "deliverables/presented"
+          }
+        ]
+      },
+      "names": [
+        "event:deliverables/presented"
+      ],
+      "sources": []
+    },
+    {
+      "digest": "ca689511f13259b915b0f4dcdeaecca3dee9949a606b43b7ef28883f7c08f6cf",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "callId",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "files",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "turn",
+                "type": 4,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "array",
+            "element": 3
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "description",
+                "type": 1,
+                "optional": true
+              },
+              {
+                "name": "path",
+                "type": 1,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          }
+        ]
+      },
+      "names": [
+        "event:deliverables/presented.data"
+      ],
+      "sources": [
+        "packages/fs/tool-present/src/types.ts"
+      ]
+    },
+    {
+      "digest": "81c5e0d1309cc650222a6f2e1c9da830b160d795b9574148e268f6ae8e148f90",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "deliverables/presented"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "865f475a9a56a874983ad1294ea0638850f5b315bf14c093b9b87001dac74ced",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "array",
+            "element": 1
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "description",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "path",
+                "type": 2,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          }
+        ]
+      },
+      "names": [
+        "event:deliverables/presented.data.files"
+      ],
+      "sources": []
+    },
+    {
+      "digest": "b088496bc9dd9361db2ac09b510c32217f3d3d64bec6fc747af06ae3c866256c",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "union",
+            "types": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "instruction-following"
+          },
+          {
+            "kind": "literal",
+            "value": "other"
+          },
+          {
+            "kind": "literal",
+            "value": "product-interaction"
+          },
+          {
+            "kind": "literal",
+            "value": "resource-cost"
+          },
+          {
+            "kind": "literal",
+            "value": "security-privacy-permission"
+          },
+          {
+            "kind": "literal",
+            "value": "service-stability"
+          },
+          {
+            "kind": "literal",
+            "value": "task-result"
+          }
+        ]
+      },
+      "names": [
+        "event:feedback/message-put.data.item.category",
+        "event:feedback/record.data.category"
+      ],
+      "sources": []
+    },
+    {
+      "digest": "bf8dfc51f070734fa59ea6b106e02a6310f16bc5630a1b89001a714bffc2f81b",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "union",
+            "types": [
+              1,
+              2
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "negative"
+          },
+          {
+            "kind": "literal",
+            "value": "positive"
+          }
+        ]
+      },
+      "names": [
+        "packages/feedback/message-feedback/src/types.ts#MessageFeedbackRating"
+      ],
+      "sources": [
+        "packages/feedback/message-feedback/src/types.ts"
+      ]
+    },
+    {
+      "digest": "06bb6fc43f9d94449571db54849b6b435580004bbf4f8679b92eafa7c30c20f5",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "union",
+            "types": [
+              1,
+              6
+            ]
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "childCreatedAt",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "childId",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "label",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "mode",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "version",
+                "type": 5,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": "continuable"
+          },
+          {
+            "kind": "literal",
+            "value": 0
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "childCreatedAt",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "childId",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "label",
+                "type": 3,
+                "optional": true
+              },
+              {
+                "name": "mode",
+                "type": 7,
+                "optional": false
+              },
+              {
+                "name": "version",
+                "type": 5,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "literal",
+            "value": "one-shot"
+          }
+        ]
+      },
+      "names": [
+        "packages/subagent/subagent/src/catalog.ts#SubagentCatalogEvent"
+      ],
+      "sources": [
+        "packages/subagent/subagent/src/catalog.ts"
+      ]
+    },
+    {
+      "digest": "ae30ef166a402e2b911b18e01f9c3ff9f5a388734c565ecb012a4269c208b31f",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "category",
+                "type": 1,
+                "optional": true
+              },
+              {
+                "name": "createdAt",
+                "type": 9,
+                "optional": false
+              },
+              {
+                "name": "messageId",
+                "type": 10,
+                "optional": false
+              },
+              {
+                "name": "note",
+                "type": 10,
+                "optional": true
+              },
+              {
+                "name": "rating",
+                "type": 11,
+                "optional": false
+              },
+              {
+                "name": "updatedAt",
+                "type": 9,
+                "optional": false
+              },
+              {
+                "name": "version",
+                "type": 10,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "union",
+            "types": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "instruction-following"
+          },
+          {
+            "kind": "literal",
+            "value": "security-privacy-permission"
+          },
+          {
+            "kind": "literal",
+            "value": "service-stability"
+          },
+          {
+            "kind": "literal",
+            "value": "task-result"
+          },
+          {
+            "kind": "literal",
+            "value": "other"
+          },
+          {
+            "kind": "literal",
+            "value": "product-interaction"
+          },
+          {
+            "kind": "literal",
+            "value": "resource-cost"
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "union",
+            "types": [
+              12,
+              13
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "negative"
+          },
+          {
+            "kind": "literal",
+            "value": "positive"
+          }
+        ]
+      },
+      "names": [
+        "packages/feedback/message-feedback/src/types.ts#MessageFeedbackItem"
+      ],
+      "sources": [
+        "packages/feedback/message-feedback/src/types.ts"
+      ]
+    },
+    {
+      "digest": "2e5299b2e746f901db0b53b4e76c96086e3af1e74fc06013c74753dcd62978e9",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "subagent/catalog"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "fcf6898d4d89ad11a2caf3fc657f6fc693dd921d0c48fa6fbbb78dcfa30ba917",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "primitive",
+            "type": "string"
+          }
+        ]
+      },
+      "names": [
+        "packages/api/session-controller/src/types.ts#SessionRequestId",
+        "packages/attachment/attachment/src/brand.ts#AttachmentId",
+        "packages/compaction/compaction/src/brand.ts#CompactionId",
+        "packages/core/session/src/types.ts#SessionId",
+        "packages/experimental/agent-team/src/types.ts#TeamId",
+        "packages/experimental/agent-team/src/types.ts#TeamMessageId",
+        "packages/experimental/agent-team/src/types.ts#TeamTaskId",
+        "packages/feedback/message-feedback/src/types.ts#MessageFeedbackVersion",
+        "packages/goal/goal/src/types.ts#GoalId",
+        "packages/interaction/commands/src/brand.ts#CommandId",
+        "packages/interaction/user-approval/src/types.ts#ApprovalRequestId",
+        "packages/llm/llm-retry/src/brand.ts#RetryId",
+        "packages/llm/llm/src/brand.ts#MessageId",
+        "packages/llm/llm/src/brand.ts#ProviderRequestId",
+        "packages/llm/llm/src/brand.ts#ReasoningEffortId",
+        "packages/llm/llm/src/brand.ts#ToolCallId",
+        "packages/schedule/schedule/src/types.ts#ScheduleId",
+        "packages/session/session-title/src/index.ts#SessionTitleProviderId",
+        "packages/session/session-title/src/types.ts#SessionTitleProviderId",
+        "packages/webhook/webhook/src/brand.ts#WebhookDeliveryId",
+        "packages/webhook/webhook/src/brand.ts#WebhookRuleId",
+        "packages/webhook/webhook/src/brand.ts#WebhookSourceId",
+        "packages/workflow/workflow/src/types.ts#WorkflowRunId"
+      ],
+      "sources": [
+        "packages/api/session-controller/src/types.ts",
+        "packages/attachment/attachment/src/brand.ts",
+        "packages/compaction/compaction/src/brand.ts",
+        "packages/core/session/src/types.ts",
+        "packages/experimental/agent-team/src/types.ts",
+        "packages/feedback/message-feedback/src/types.ts",
+        "packages/goal/goal/src/types.ts",
+        "packages/interaction/commands/src/brand.ts",
+        "packages/interaction/user-approval/src/types.ts",
+        "packages/llm/llm-retry/src/brand.ts",
+        "packages/llm/llm/src/brand.ts",
+        "packages/schedule/schedule/src/types.ts",
+        "packages/session/session-title/src/index.ts",
+        "packages/session/session-title/src/types.ts",
+        "packages/webhook/webhook/src/brand.ts",
+        "packages/workflow/workflow/src/types.ts"
+      ]
+    },
+    {
+      "digest": "6d73ad7bde5d86442686a729ca9b3a1eacbc7f0b0b3fa918d2a39a410710b347",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "resource-cost"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "3733a195fbc36692c27fec1861a7d69cd5962aa1b7bd1bcf549f36bc3bdec27e",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "childCreatedAt",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "childId",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "label",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "mode",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "version",
+                "type": 4,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": "one-shot"
+          },
+          {
+            "kind": "literal",
+            "value": 0
+          }
+        ]
+      },
+      "names": [
+        "event:subagent/catalog.data[0]"
+      ],
+      "sources": []
+    },
+    {
+      "digest": "309bbb2b6266db57784204d2bad5c3cd44476db6fe3f9e700a2c0f379d565757",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "feedback/message-put"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "689c558afe3b4788de0b544400ca99562c218aea74394e3bde05fe34ded1dc4e",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "service-stability"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "b4cdd85cca2567901101f51f070d7a1b1817c455ddbfd6f9d24e22b5a821d6d4",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "category",
+                "type": 1,
+                "optional": true
+              },
+              {
+                "name": "text",
+                "type": 9,
+                "optional": true
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "union",
+            "types": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "instruction-following"
+          },
+          {
+            "kind": "literal",
+            "value": "other"
+          },
+          {
+            "kind": "literal",
+            "value": "product-interaction"
+          },
+          {
+            "kind": "literal",
+            "value": "resource-cost"
+          },
+          {
+            "kind": "literal",
+            "value": "security-privacy-permission"
+          },
+          {
+            "kind": "literal",
+            "value": "service-stability"
+          },
+          {
+            "kind": "literal",
+            "value": "task-result"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          }
+        ]
+      },
+      "names": [
+        "packages/feedback/command-feedback/src/types.ts#FeedbackRecord"
+      ],
+      "sources": [
+        "packages/feedback/command-feedback/src/types.ts"
+      ]
+    },
+    {
+      "digest": "afb0e7620ed52c9109c4387e8fd06017797a3bb0255ee41c58cc17a5df8f9a3a",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": 0
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "39e7ee0621d4ff180536ba8d06d49ed3e4dd3b3cd3835092602aadea45818279",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "other"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "3f4c734ceac9084bbf111f6b207af31eccd6e85b559168e2d07baebc4a716752",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "item",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "sessionId",
+                "type": 11,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "category",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "createdAt",
+                "type": 10,
+                "optional": false
+              },
+              {
+                "name": "messageId",
+                "type": 11,
+                "optional": false
+              },
+              {
+                "name": "note",
+                "type": 11,
+                "optional": true
+              },
+              {
+                "name": "rating",
+                "type": 12,
+                "optional": false
+              },
+              {
+                "name": "updatedAt",
+                "type": 10,
+                "optional": false
+              },
+              {
+                "name": "version",
+                "type": 11,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "union",
+            "types": [
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "instruction-following"
+          },
+          {
+            "kind": "literal",
+            "value": "resource-cost"
+          },
+          {
+            "kind": "literal",
+            "value": "security-privacy-permission"
+          },
+          {
+            "kind": "literal",
+            "value": "service-stability"
+          },
+          {
+            "kind": "literal",
+            "value": "task-result"
+          },
+          {
+            "kind": "literal",
+            "value": "other"
+          },
+          {
+            "kind": "literal",
+            "value": "product-interaction"
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "union",
+            "types": [
+              13,
+              14
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "negative"
+          },
+          {
+            "kind": "literal",
+            "value": "positive"
+          }
+        ]
+      },
+      "names": [
+        "packages/feedback/message-feedback/src/types.ts#MessageFeedbackPut"
+      ],
+      "sources": [
+        "packages/feedback/message-feedback/src/types.ts"
+      ]
+    },
+    {
+      "digest": "1f1587d927839e83d3af00eed5f2dc63c4cda9496ed6c9d382b19933b5135788",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 9,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 10,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "union",
+            "types": [
+              2,
+              7
+            ]
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "childCreatedAt",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "childId",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "label",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "mode",
+                "type": 5,
+                "optional": false
+              },
+              {
+                "name": "version",
+                "type": 6,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": "continuable"
+          },
+          {
+            "kind": "literal",
+            "value": 0
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "childCreatedAt",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "childId",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "label",
+                "type": 4,
+                "optional": true
+              },
+              {
+                "name": "mode",
+                "type": 8,
+                "optional": false
+              },
+              {
+                "name": "version",
+                "type": 6,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "literal",
+            "value": "one-shot"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "literal",
+            "value": "subagent/catalog"
+          }
+        ]
+      },
+      "names": [
+        "event:subagent/catalog"
+      ],
+      "sources": []
+    },
+    {
+      "digest": "089dc7173089f5de2ba00b91c996f3ab4e3b1a17b7c56347e91c214090f4400d",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "negative"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "ba4cd1161e811ac8a5e578b5f918bf37b87bd3be68f597d77e88109160a52dad",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 16,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 11,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 11,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 17,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "item",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "sessionId",
+                "type": 12,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "category",
+                "type": 3,
+                "optional": true
+              },
+              {
+                "name": "createdAt",
+                "type": 11,
+                "optional": false
+              },
+              {
+                "name": "messageId",
+                "type": 12,
+                "optional": false
+              },
+              {
+                "name": "note",
+                "type": 12,
+                "optional": true
+              },
+              {
+                "name": "rating",
+                "type": 13,
+                "optional": false
+              },
+              {
+                "name": "updatedAt",
+                "type": 11,
+                "optional": false
+              },
+              {
+                "name": "version",
+                "type": 12,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "union",
+            "types": [
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "instruction-following"
+          },
+          {
+            "kind": "literal",
+            "value": "other"
+          },
+          {
+            "kind": "literal",
+            "value": "product-interaction"
+          },
+          {
+            "kind": "literal",
+            "value": "resource-cost"
+          },
+          {
+            "kind": "literal",
+            "value": "security-privacy-permission"
+          },
+          {
+            "kind": "literal",
+            "value": "service-stability"
+          },
+          {
+            "kind": "literal",
+            "value": "task-result"
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "union",
+            "types": [
+              14,
+              15
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "negative"
+          },
+          {
+            "kind": "literal",
+            "value": "positive"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "literal",
+            "value": "feedback/message-put"
+          }
+        ]
+      },
+      "names": [
+        "event:feedback/message-put"
+      ],
+      "sources": []
+    },
+    {
+      "digest": "653a08a616f740052ceff3a81f95eeb42a8df685e582eab71db2d1249f2b74c2",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 11,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 12,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 12,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 13,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "category",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "text",
+                "type": 10,
+                "optional": true
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "union",
+            "types": [
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "instruction-following"
+          },
+          {
+            "kind": "literal",
+            "value": "other"
+          },
+          {
+            "kind": "literal",
+            "value": "product-interaction"
+          },
+          {
+            "kind": "literal",
+            "value": "resource-cost"
+          },
+          {
+            "kind": "literal",
+            "value": "security-privacy-permission"
+          },
+          {
+            "kind": "literal",
+            "value": "service-stability"
+          },
+          {
+            "kind": "literal",
+            "value": "task-result"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "feedback/record"
+          }
+        ]
+      },
+      "names": [
+        "event:feedback/record"
+      ],
+      "sources": []
+    },
+    {
+      "digest": "df593ab004fb438c647e1bcbb7bdaeecd5c02da2ea9c3dfdc275c79c3cfc7d4c",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "description",
+                "type": 1,
+                "optional": true
+              },
+              {
+                "name": "path",
+                "type": 1,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          }
+        ]
+      },
+      "names": [
+        "packages/fs/tool-present/src/types.ts#PresentedFile"
+      ],
+      "sources": [
+        "packages/fs/tool-present/src/types.ts"
+      ]
+    },
+    {
+      "digest": "64c7f5099127c288c57c370fca05b44459d5d9b7d516f2f3089c7eda423ea2e4",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "feedback/record"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "eb3af438a53952d6a736f3e42b8e7e4136c80f77224ce55fc619643ab6a53404",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "one-shot"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "e5f31a1a5321feeebb6d6cb6fe92065d0361482f24624b57ad766881874b8aed",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": true
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "dbc5bd1ce17a86e58dda84e466dab4a3bf2d23d3cbddbd8b7477e2c7b3db5def",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "positive"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "1c7bfdad1071cbdb26c7876a066ed2ed633c30cbb90257033eaa883e649635b9",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "instruction-following"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "2ac0868ed43323d3ba362bde30a77f35c51abdc47b1d0b39a95a676b8beffd8e",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "continuable"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "b723d33c6b20d5342c3bb01e34d11a05e49baa6e894919795f579ad531a0bb87",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "task-result"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    }
+  ]
+}

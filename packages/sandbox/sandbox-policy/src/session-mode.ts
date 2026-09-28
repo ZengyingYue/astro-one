@@ -15,13 +15,13 @@
  * filesystem alike), so it lives here in the policy package rather than in any
  * one capability's seam.
  *
- * @module dsh-sandbox-policy/session-mode
+ * @module astro-one-sandbox-policy/session-mode
  */
 
-import type { Session } from '@deepseek-ai/dsh-session'
-import type { SandboxMode } from '@deepseek-ai/dsh-sandbox'
+import type { Session } from '@astro-one/session'
+import type { SandboxMode } from '@astro-one/sandbox'
 
-declare module '@deepseek-ai/dsh-session/types' {
+declare module '@astro-one/session/types' {
   interface SessionEventMap {
     /**
      * The session's sandbox mode was switched — log-only (like `approval/*`;

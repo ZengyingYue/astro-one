@@ -5,23 +5,23 @@
  * collected to the owning agent: injected into a busy owner's next step, or
  * opening a turn on an idle one under the default `wakeup` delivery, unbounded
  * unless `maxConsecutiveWakes` caps it per owner.
- * @module @deepseek-ai/dsh-tool-jobs
+ * @module @astro-one/tool-jobs
  */
 
-import type { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import { boundContextSummary, createUserMessage, type ContentBlock } from '@deepseek-ai/dsh-llm'
-import type { ContextFormed } from '@deepseek-ai/dsh-llm'
-import { TextRetainer } from '@deepseek-ai/dsh-output-retention'
-import { defineTool } from '@deepseek-ai/dsh-tools'
-import type { GenericCallView, ToolDefinition, ToolExecution } from '@deepseek-ai/dsh-tools'
-import { JobId } from '@deepseek-ai/dsh-jobs'
-import type { JobView, JobRead } from '@deepseek-ai/dsh-jobs'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import type {} from '@deepseek-ai/dsh-agent'
+import type { Context } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
+import { boundContextSummary, createUserMessage, type ContentBlock } from '@astro-one/llm'
+import type { ContextFormed } from '@astro-one/llm'
+import { TextRetainer } from '@astro-one/output-retention'
+import { defineTool } from '@astro-one/tools'
+import type { GenericCallView, ToolDefinition, ToolExecution } from '@astro-one/tools'
+import { JobId } from '@astro-one/jobs'
+import type { JobView, JobRead } from '@astro-one/jobs'
+import type { Agent } from '@astro-one/agent'
+import type {} from '@astro-one/agent'
 import { publicJob, renderModelDelta, statusLine } from './render.ts'
 import type { PublicJobSnapshot } from './render.ts'
-declare module '@deepseek-ai/dsh-llm' {
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'tool-jobs': { kind: 'tool-jobs' } & ContextFormed
   }

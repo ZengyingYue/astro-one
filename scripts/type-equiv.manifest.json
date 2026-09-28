@@ -1703,12 +1703,12 @@
     },
     {
       "doc": "docs/subsystems/subprocess.md",
-      "symbol": "DshEnvironmentKey",
+      "symbol": "AstroOneEnvironmentKey",
       "source": "packages/subprocess/subprocess/src/types.ts"
     },
     {
       "doc": "docs/subsystems/subprocess.md",
-      "symbol": "DshEnvironment",
+      "symbol": "AstroOneEnvironment",
       "source": "packages/subprocess/subprocess/src/types.ts"
     },
     {

@@ -1,20 +1,20 @@
 /** Target-neutral Conversation slot declarations and composed component props. */
 import type { ReactNode, RefObject } from 'react'
-import type { FileAttachmentRef, ImageAttachmentRef } from '@deepseek-ai/dsh-attachment'
-import type { SessionSnapshot } from '@deepseek-ai/dsh-api-session-controller/client'
-import type { FileUploadReceiptId } from '@deepseek-ai/dsh-client-file-upload/client'
-import type { WorkspaceSnapshot } from '@deepseek-ai/dsh-api-workspace-controller/client'
+import type { FileAttachmentRef, ImageAttachmentRef } from '@astro-one/attachment'
+import type { SessionSnapshot } from '@astro-one/api-session-controller/client'
+import type { FileUploadReceiptId } from '@astro-one/client-file-upload/client'
+import type { WorkspaceSnapshot } from '@astro-one/api-workspace-controller/client'
 import type {
   MaybeSnapshotSelectorHook, ObservableSnapshot, SnapshotSelectorHook,
-} from '@deepseek-ai/dsh-client-store'
+} from '@astro-one/client-store'
 import type {
   FactoryComponentPropsOf, FactoryLocalComponentPropsOf,
   InjectFace, PropsLocale, PropsRenderFactories, PropsRenderSlots, PropsRuntime, PropsStore,
-} from '@deepseek-ai/dsh-client-ui-slots'
-import type { SessionPendingInteraction } from '@deepseek-ai/dsh-client-ui-session/client'
-import type {} from '@deepseek-ai/dsh-client-ui-layout/client'
-import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import type { WorkspaceId } from '@deepseek-ai/dsh-workspace/types'
+} from '@astro-one/client-ui-slots'
+import type { SessionPendingInteraction } from '@astro-one/client-ui-session/client'
+import type {} from '@astro-one/client-ui-layout/client'
+import type { SessionId } from '@astro-one/session/types'
+import type { WorkspaceId } from '@astro-one/workspace/types'
 import type { ComposerBlock } from './composer-blocks.ts'
 import type { DraftAttachmentId, InputActions, InputNotice, InputState } from './input.ts'
 import type { ComposerKeyboard, EditSelection } from './draft-editor.ts'
@@ -125,7 +125,7 @@ export type UseConversation = SnapshotSelectorHook<ConversationSnapshot>
 /** Selector hook over the registered Conversation View roster. */
 export type UseConversationViews = SnapshotSelectorHook<readonly ViewTab[]>
 
-declare module '@deepseek-ai/dsh-client-ui-slots' {
+declare module '@astro-one/client-ui-slots' {
   interface SlotMap {
     /** Conversation shell beneath its root-scoped main-panel entry. */
     'main.conversation': { kind: 'single'; scope: 'session-maybe' }
@@ -217,8 +217,8 @@ declare module '@deepseek-ai/dsh-client-ui-slots' {
     'conversation.input.permission': { kind: 'single'; scope: 'session'; owner: InputControlOwnerProps }
     /**
      * Model selector inside the composer tool row. When expanded controls cannot
-     * share a line, the row sets --dsh-composer-model-text-display to none and
-     * --dsh-composer-model-icon-display to block for an occupant's compact display.
+     * share a line, the row sets --astro-one-composer-model-text-display to none and
+     * --astro-one-composer-model-icon-display to block for an occupant's compact display.
      */
     'conversation.input.model': { kind: 'single'; scope: 'session'; owner: InputControlOwnerProps }
   }

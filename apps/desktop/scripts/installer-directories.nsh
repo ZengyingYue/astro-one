@@ -1,22 +1,22 @@
 !include "LogicLib.nsh"
 
-Var dshFinalDirectory
-Var dshNewDirectory
-Var dshOldDirectory
-Var dshOldMoved
-Var dshNewMoved
+Var astroOneFinalDirectory
+Var astroOneNewDirectory
+Var astroOneOldDirectory
+Var astroOneOldMoved
+Var astroOneNewMoved
 
-!macro dshExtractPayload FILE
+!macro astroOneExtractPayload FILE
   !ifmacrodef customInstallerExtract
     !insertmacro customInstallerExtract "${FILE}"
   !else
-    nsExec::ExecToStack '"$PLUGINSDIR\dsh-7za.exe" x -y -bd -bb0 "-o$INSTDIR" "${FILE}"'
+    nsExec::ExecToStack '"$PLUGINSDIR\astro-one-7za.exe" x -y -bd -bb0 "-o$INSTDIR" "${FILE}"'
     Pop $R0
     Pop $R1
   !endif
   ${If} $R0 != 0
     DetailPrint $R1
-    Call dshRollbackDirectories
+    Call astroOneRollbackDirectories
     !ifmacrodef customInstallerExtractFailed
       !insertmacro customInstallerExtractFailed "${FILE}"
     !else
@@ -27,109 +27,109 @@ Var dshNewMoved
   ${EndIf}
 !macroend
 
-!macro dshStageApplication
-  StrCpy $dshFinalDirectory $INSTDIR
+!macro astroOneStageApplication
+  StrCpy $astroOneFinalDirectory $INSTDIR
   System::Call 'ole32::CoCreateGuid(g .r0) i .r1'
   ${If} $1 != 0
     SetErrorLevel 2
     Quit
   ${EndIf}
-  StrCpy $dshNewDirectory "$INSTDIR.new-$0"
-  StrCpy $dshOldDirectory "$INSTDIR.old-$0"
-  StrCpy $dshOldMoved ""
-  StrCpy $dshNewMoved ""
+  StrCpy $astroOneNewDirectory "$INSTDIR.new-$0"
+  StrCpy $astroOneOldDirectory "$INSTDIR.old-$0"
+  StrCpy $astroOneOldMoved ""
+  StrCpy $astroOneNewMoved ""
   ClearErrors
-  CreateDirectory $dshNewDirectory
+  CreateDirectory $astroOneNewDirectory
   ${If} ${Errors}
     SetErrorLevel 2
     Quit
   ${EndIf}
-  File /oname=$PLUGINSDIR\dsh-7za.exe "${DSH_SEVENZIP_PATH}"
-  StrCpy $INSTDIR $dshNewDirectory
+  File /oname=$PLUGINSDIR\astro-one-7za.exe "${ASTRO_ONE_SEVENZIP_PATH}"
+  StrCpy $INSTDIR $astroOneNewDirectory
   SetOutPath $INSTDIR
   !insertmacro installApplicationFiles
-  !ifdef DSH_SEVENZIP_LICENSE_DIR
-    File /oname=7zip-installer-LICENSE.txt "${DSH_SEVENZIP_LICENSE_DIR}\LICENSE.txt"
-    File /oname=7zip-installer-COPYING.txt "${DSH_SEVENZIP_LICENSE_DIR}\COPYING"
+  !ifdef ASTRO_ONE_SEVENZIP_LICENSE_DIR
+    File /oname=7zip-installer-LICENSE.txt "${ASTRO_ONE_SEVENZIP_LICENSE_DIR}\LICENSE.txt"
+    File /oname=7zip-installer-COPYING.txt "${ASTRO_ONE_SEVENZIP_LICENSE_DIR}\COPYING"
   !endif
   !ifdef UNINSTALLER_ICON
     File /oname=uninstallerIcon.ico "${UNINSTALLER_ICON}"
   !endif
-  StrCpy $INSTDIR $dshFinalDirectory
+  StrCpy $INSTDIR $astroOneFinalDirectory
   SetOutPath $PLUGINSDIR
 !macroend
 
 Function .onGUIEnd
-  Call dshCleanupDirectories
+  Call astroOneCleanupDirectories
 FunctionEnd
 
-Function dshCleanupDirectories
-  ${If} $dshFinalDirectory != ""
-    Call dshRollbackDirectories
+Function astroOneCleanupDirectories
+  ${If} $astroOneFinalDirectory != ""
+    Call astroOneRollbackDirectories
   ${EndIf}
 FunctionEnd
 
 ; Only directories created or renamed by this installer are removed during rollback.
-Function dshRollbackDirectories
+Function astroOneRollbackDirectories
   SetOutPath $PLUGINSDIR
-  ${If} $dshNewMoved == "1"
-    RMDir /r "\\?\$dshFinalDirectory"
-    StrCpy $dshNewMoved ""
+  ${If} $astroOneNewMoved == "1"
+    RMDir /r "\\?\$astroOneFinalDirectory"
+    StrCpy $astroOneNewMoved ""
   ${EndIf}
-  ${If} $dshOldMoved == "1"
+  ${If} $astroOneOldMoved == "1"
     ClearErrors
-    Rename $dshOldDirectory $dshFinalDirectory
+    Rename $astroOneOldDirectory $astroOneFinalDirectory
     ${If} ${Errors}
       ; Leave the complete backup in place if another process prevents restoration.
-      DetailPrint $dshOldDirectory
+      DetailPrint $astroOneOldDirectory
       Return
     ${EndIf}
-    StrCpy $dshOldMoved ""
+    StrCpy $astroOneOldMoved ""
   ${EndIf}
-  ${If} $dshNewDirectory != ""
-    RMDir /r "\\?\$dshNewDirectory"
+  ${If} $astroOneNewDirectory != ""
+    RMDir /r "\\?\$astroOneNewDirectory"
   ${EndIf}
-  StrCpy $INSTDIR $dshFinalDirectory
+  StrCpy $INSTDIR $astroOneFinalDirectory
 FunctionEnd
 
-Function dshPromoteDirectories
+Function astroOnePromoteDirectories
   !ifmacrodef InstallerPublishStage
     !insertmacro InstallerPublishStage 2
   !endif
   ; SetOutPath opens a directory handle; release it before either rename.
   SetOutPath $PLUGINSDIR
   ClearErrors
-  ${If} ${FileExists} "$dshFinalDirectory\*.*"
-    Rename $dshFinalDirectory $dshOldDirectory
+  ${If} ${FileExists} "$astroOneFinalDirectory\*.*"
+    Rename $astroOneFinalDirectory $astroOneOldDirectory
     ${If} ${Errors}
-      Call dshRollbackDirectories
+      Call astroOneRollbackDirectories
       SetErrors
       Return
     ${EndIf}
-    StrCpy $dshOldMoved "1"
+    StrCpy $astroOneOldMoved "1"
   ${Else}
     ; NSIS can create the destination before the install section starts.
-    RMDir $dshFinalDirectory
+    RMDir $astroOneFinalDirectory
   ${EndIf}
   ClearErrors
-  Rename $dshNewDirectory $dshFinalDirectory
+  Rename $astroOneNewDirectory $astroOneFinalDirectory
   ${If} ${Errors}
-    Call dshRollbackDirectories
+    Call astroOneRollbackDirectories
     SetErrors
     Return
   ${EndIf}
-  StrCpy $dshNewMoved "1"
-  SetOutPath $dshFinalDirectory
+  StrCpy $astroOneNewMoved "1"
+  SetOutPath $astroOneFinalDirectory
   !ifmacrodef InstallerPublishStage
     !insertmacro InstallerPublishStage 3
   !endif
   ClearErrors
 FunctionEnd
 
-!macro dshFinishDirectories
-  StrCpy $dshNewMoved ""
-  ${If} $dshOldMoved == "1"
-    RMDir /r "\\?\$dshOldDirectory"
-    StrCpy $dshOldMoved ""
+!macro astroOneFinishDirectories
+  StrCpy $astroOneNewMoved ""
+  ${If} $astroOneOldMoved == "1"
+    RMDir /r "\\?\$astroOneOldDirectory"
+    StrCpy $astroOneOldMoved ""
   ${EndIf}
 !macroend

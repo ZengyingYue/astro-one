@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/archived/simplification/2026-06-20-remove-agent-boundary-mirror-events.md
-2026-06-20-remove-agent-boundary-mirror-events.md: 3d59cef0d6a2473adc170f15c480ed345c5db08c
-2026-06-20-remove-agent-boundary-mirror-events.zh.md: fe9fbda591053ea792d502d3a5403eecf9c5ae51
+2026-06-20-remove-agent-boundary-mirror-events.md: c3d6be80bf724e6406906d0959f990cb3c7a97a1
+2026-06-20-remove-agent-boundary-mirror-events.zh.md: ec254a3f3a15a4c34b7b71cb9229e2378b47c576

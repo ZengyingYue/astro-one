@@ -2,7 +2,7 @@
 
 Status: implemented
 
-Update: the `reported` bit and `onJobDone` this note relies on left the registry with the [jobs seam consolidation](../architecture/2026-09-03-jobs-seam-consolidation.md): `dsh-tool-jobs` now keeps the delivery ledger (a wait or an accepted `job_kill` claims the task) and skips teardown settlements by their `settled` cause, so the wake-or-inject decision below stands while the mechanism it names is the tool's ledger, not a registry flag.
+Update: the `reported` bit and `onJobDone` this note relies on left the registry with the [jobs seam consolidation](../architecture/2026-09-03-jobs-seam-consolidation.md): `astro-one-tool-jobs` now keeps the delivery ledger (a wait or an accepted `job_kill` claims the task) and skips teardown settlements by their `settled` cause, so the wake-or-inject decision below stands while the mechanism it names is the tool's ledger, not a registry flag.
 
 English | [中文](2026-08-11-background-job-completion-wakes-an-idle-owner.zh.md)
 
@@ -32,7 +32,7 @@ Injection is correct there. A cancelled turn is a user pressing stop, and reopen
 
 Waking is unbounded unless `maxConsecutiveWakes` is set. With it set, the value caps the turns one owner may open this way; beyond it a notice degrades to injection and waits for the next turn. Claiming any user-authored message restores the budget — claiming, not arrival, because that is the point human input actually enters a step. Notices this plugin queued never refill it.
 
-The cap exists because this chain is self-exciting in a way subagent settlement is not. Settlement is bounded by how many children the model spawned; a woken turn can start the background job whose completion wakes it again, with nobody watching. It has no default because a notice past the cap stalls the session invisibly; the [unbounded-by-default decision](2026-09-22-unbounded-completion-wakes-by-default.md) records that trade-off. `dsh run` needs no separate policy either way: headless exits once the task turn goes idle, so a completion after that point has no owner to wake.
+The cap exists because this chain is self-exciting in a way subagent settlement is not. Settlement is bounded by how many children the model spawned; a woken turn can start the background job whose completion wakes it again, with nobody watching. It has no default because a notice past the cap stalls the session invisibly; the [unbounded-by-default decision](2026-09-22-unbounded-completion-wakes-by-default.md) records that trade-off. `astro-one run` needs no separate policy either way: headless exits once the task turn goes idle, so a completion after that point has no owner to wake.
 
 `completionDelivery: quiet` restores the old lane for idle owners. It exists for deterministic transcripts; job completion independently retains `quiet | wakeup` because its bounded owner-turn policy differs from next-step subagent reports.
 
@@ -50,11 +50,11 @@ The cap exists because this chain is self-exciting in a way subagent settlement 
 
 **A producer-declared wake bit on `JobStart`,** matching Codex's `trigger_turn` and Kimi's `admission` enum. It is the better long-run shape — a `tail -f` stream and a two-hour build want different answers — but no current producer distinguishes them, and the repository requires a current owner and need for public surface. The natural trigger to add it is the first producer that wants one task to wake and another not to.
 
-**A general unsolicited-input queue** with priority lanes, as Claude Code uses to merge background jobs, cron, MCP push, and hooks into one drain. DSH's inbox already is that queue — durable `agent/inbox/spliced` splices over `next-turn`/`next-step` — so this would add a layer above an existing one to decide a single bit.
+**A general unsolicited-input queue** with priority lanes, as Claude Code uses to merge background jobs, cron, MCP push, and hooks into one drain. Astro One's inbox already is that queue — durable `agent/inbox/spliced` splices over `next-turn`/`next-step` — so this would add a layer above an existing one to decide a single bit.
 
 **Refusing to reopen a turn that already produced a visible answer,** Codex's `MailboxDeliveryPhase` latch. That latch is the default this decision deliberately inverts: waking after the model has spoken is the entire point, and the optional wake budget is the bound instead.
 
-**A wall-clock window** on top of the counter. For an interactive agent the slow case is the wanted one — an hour-long build finishing and the agent resuming is the feature — and `dsh run` exits once its task turn goes idle regardless. Worth revisiting only if an unattended long-lived deployment appears.
+**A wall-clock window** on top of the counter. For an interactive agent the slow case is the wanted one — an hour-long build finishing and the agent resuming is the feature — and `astro-one run` exits once its task turn goes idle regardless. Worth revisiting only if an unattended long-lived deployment appears.
 
 **Suppressing `onJobDone` entirely during owner drain,** symmetric with the service-wide `listenersClosed`. It reads cleaner and removes a signal that is not only for notices: the force-fail record and the runtime invariant both observe teardown settlements. The `reported` bit denies exactly the reporters and nothing else.
 

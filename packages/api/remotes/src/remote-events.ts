@@ -6,10 +6,10 @@
  * type-only.
  */
 
-import type {} from '@deepseek-ai/dsh-api-session-controller/remote-events'
-import type {} from '@deepseek-ai/dsh-permission-presets/types'
-import type {} from '@deepseek-ai/dsh-plugin-manager/types'
-import type { TypertForwardableEventEntry } from '@deepseek-ai/dsh-typert-protocol'
+import type {} from '@astro-one/api-session-controller/remote-events'
+import type {} from '@astro-one/permission-presets/types'
+import type {} from '@astro-one/plugin-manager/types'
+import type { TypertForwardableEventEntry } from '@astro-one/typert-protocol'
 
 /**
  * Host events this application forwards without renaming. The explicit mode is

@@ -3,13 +3,13 @@ description: "面向用户与维护者的提供方无关模型调用服务说明
 kind: "package-reference"
 ---
 
-# @deepseek-ai/dsh-llm
+# @astro-one/llm
 
 [English](README.md) | 中文
 
 ## 概述
 
-使用 `@deepseek-ai/dsh-llm` 可通过已配置的提供方适配器流式调用模型、发现模型，并解析模型能力与调用默认值。调用方必须确保所有模型可见输入都可以从会话日志重建。Loop 构建的请求以深度冻结状态到达，因此扩展与适配器不能改写。每个流只尝试调用提供方一次：提供方特定的转换由对应适配器完成，可选包 `@deepseek-ai/dsh-llm-retry` 负责重跑失败的请求。流始终以终止结果结束，因此调用方可以一致地处理成功、失败与取消。
+使用 `@astro-one/llm` 可通过已配置的提供方适配器流式调用模型、发现模型，并解析模型能力与调用默认值。调用方必须确保所有模型可见输入都可以从会话日志重建。Loop 构建的请求以深度冻结状态到达，因此扩展与适配器不能改写。每个流只尝试调用提供方一次：提供方特定的转换由对应适配器完成，可选包 `@astro-one/llm-retry` 负责重跑失败的请求。流始终以终止结果结束，因此调用方可以一致地处理成功、失败与取消。
 
 ## 目录
 
@@ -29,15 +29,15 @@ kind: "package-reference"
 
 ### 何时选择
 
-当插件或组合需要调用模型时选择本包：它是进入提供方适配器的唯一受支持路径，并在 loop、会话日志与每个消费方之间保持同一套词汇。当需要提供方特定的协议行为（那属于 `dsh-llm-deepseek` 或 `dsh-llm-pi-ai` 之类的适配器）或重试执行（那属于 `dsh-llm-retry`）时，不要选择它。
+当插件或组合需要调用模型时选择本包：它是进入提供方适配器的唯一受支持路径，并在 loop、会话日志与每个消费方之间保持同一套词汇。当需要提供方特定的协议行为（那属于 `astro-one-llm-deepseek` 或 `astro-one-llm-pi-ai` 之类的适配器）或重试执行（那属于 `astro-one-llm-retry`）时，不要选择它。
 
 ### 最小组合
 
 挂载服务与至少一个适配器，然后在每个请求中按名称选择提供方：
 
 ```yaml
-- name: '@deepseek-ai/dsh-llm'
-- name: '@deepseek-ai/dsh-llm-deepseek'
+- name: '@astro-one/llm'
+- name: '@astro-one/llm-deepseek'
   config:
     apiKeyEnv: DEEPSEEK_API_KEY
 ```
@@ -69,7 +69,7 @@ for await (const chunk of ctx.llm.stream({
 
 ### 失败与恢复
 
-每个流都恰好以一个终止 `finish` 分片结束：失败为 `{ kind: 'error', failure }`，取消为 `{ kind: 'aborted', failure }`。失败携带稳定 code，如 `NO_ADAPTER`、`MISSING_CREDENTIAL`、`AUTH`、`RATE_LIMIT` 与 `CONTEXT_WINDOW_EXCEEDED`；消费方依据 code 路由，绝不解析消息文本。点名未注册提供方的请求会以 `NO_ADAPTER` 失败，格式错误的凭据会以 `INVALID_CREDENTIAL` 失败，而不是表现为不透明的 fetch 错误。本服务从不自行重跑请求：重试是 `dsh-llm-retry` 在 agent 失败步骤扩展点上的职责。
+每个流都恰好以一个终止 `finish` 分片结束：失败为 `{ kind: 'error', failure }`，取消为 `{ kind: 'aborted', failure }`。失败携带稳定 code，如 `NO_ADAPTER`、`MISSING_CREDENTIAL`、`AUTH`、`RATE_LIMIT` 与 `CONTEXT_WINDOW_EXCEEDED`；消费方依据 code 路由，绝不解析消息文本。点名未注册提供方的请求会以 `NO_ADAPTER` 失败，格式错误的凭据会以 `INVALID_CREDENTIAL` 失败，而不是表现为不透明的 fetch 错误。本服务从不自行重跑请求：重试是 `astro-one-llm-retry` 在 agent 失败步骤扩展点上的职责。
 
 -----
 
@@ -103,7 +103,7 @@ for await (const chunk of ctx.llm.stream({
 
 ### 主流程
 
-请求会对照其精确模型的能力校验，包括上下文窗口、输出默认值、推理强度、输入模态与 `systemPromptUpdate` 模式，并填入任何适配器配置的默认值。运行时保留已冻结输入的冻结状态；手动构建请求的调用方负责保证输入不可变。`prepareCall()` 把这些事实、分离的上下文与重试策略绑定到执行最终分发的精确适配器代次，因此 HMR（热模块替换）或动态设置无法把一个代次的图片能力与另一代次的端点混用。支持图片的适配器把持久引用投影为路由专用请求版本；`resolveImageAttachmentAccess()` 会单独把附件提供方的可选宿主对象映射进当前工具执行世界，而不改变请求图片或其 `variantId`。纯文本路由接收确定性的逐图片占位符，包括 tool-role 结果图片，而不会改写仅追加会话历史。持久 `FileBlock` 引用永远不会到达任何适配器：请求组装把每个引用（包括 tool-role 结果中的出现）替换为确定性句柄文本，指出文件与其只读保存路径，路径经由挂载的附件与文件系统提供方解析。`ctx.llm.fileRequestText(ref)` 向请求计量公开相同的同步投影。派生后带有 `offloaded: true` 的图片出现位置，经 `projectOffloadedImages()` 以占位文本到达每条路由。支持图片的路由在保留的出现位置按精确字节超过其 `LlmImageRequestBudget` 时，以 `IMAGE_OFFLOAD_REQUIRED` 失败并说明还需省略多少最老的出现位置（`requiredImageOffload()`），绝不发送未记录的投影；`dsh-compaction-image-offload` 用一条 `image/offload` 事件记录所选位置并重试。对视觉 token 收费的适配器声明按路由的 `imageRequestPricing`，`ctx.llm.imageRequestPricing(provider, model)` 为 token meter 同步解析它。分发经过 `llm/stream` waterfall（瀑布式事件），随后分片以 token 级增量返回，每个适配器结果都以唯一一个终止 `finish` 分片到达消费方。
+请求会对照其精确模型的能力校验，包括上下文窗口、输出默认值、推理强度、输入模态与 `systemPromptUpdate` 模式，并填入任何适配器配置的默认值。运行时保留已冻结输入的冻结状态；手动构建请求的调用方负责保证输入不可变。`prepareCall()` 把这些事实、分离的上下文与重试策略绑定到执行最终分发的精确适配器代次，因此 HMR（热模块替换）或动态设置无法把一个代次的图片能力与另一代次的端点混用。支持图片的适配器把持久引用投影为路由专用请求版本；`resolveImageAttachmentAccess()` 会单独把附件提供方的可选宿主对象映射进当前工具执行世界，而不改变请求图片或其 `variantId`。纯文本路由接收确定性的逐图片占位符，包括 tool-role 结果图片，而不会改写仅追加会话历史。持久 `FileBlock` 引用永远不会到达任何适配器：请求组装把每个引用（包括 tool-role 结果中的出现）替换为确定性句柄文本，指出文件与其只读保存路径，路径经由挂载的附件与文件系统提供方解析。`ctx.llm.fileRequestText(ref)` 向请求计量公开相同的同步投影。派生后带有 `offloaded: true` 的图片出现位置，经 `projectOffloadedImages()` 以占位文本到达每条路由。支持图片的路由在保留的出现位置按精确字节超过其 `LlmImageRequestBudget` 时，以 `IMAGE_OFFLOAD_REQUIRED` 失败并说明还需省略多少最老的出现位置（`requiredImageOffload()`），绝不发送未记录的投影；`astro-one-compaction-image-offload` 用一条 `image/offload` 事件记录所选位置并重试。对视觉 token 收费的适配器声明按路由的 `imageRequestPricing`，`ctx.llm.imageRequestPricing(provider, model)` 为 token meter 同步解析它。分发经过 `llm/stream` waterfall（瀑布式事件），随后分片以 token 级增量返回，每个适配器结果都以唯一一个终止 `finish` 分片到达消费方。
 
 文件检测在每次请求时读取当前内容，包括 tool-role 结果内容，不缓存消息身份或冻结状态。[文件扫描决策](../../../.agents/notes/implemented/simplification/2026-09-07-file-content-scan.zh.md)记录了实测遍历成本。
 
@@ -152,11 +152,11 @@ for await (const chunk of ctx.llm.stream({
 
 这些限制说明本服务在哪里停止、由其他包或未来工作接续。它们是当前包约束，不是任务积压。
 
-- **本服务不提供重试执行、缓存或速率限制**——提供方注册会存储重试策略，但一次流仍是一次提供方尝试；`@deepseek-ai/dsh-llm-retry` 在持久 agent 步骤边界上执行该策略。
+- **本服务不提供重试执行、缓存或速率限制**——提供方注册会存储重试策略，但一次流仍是一次提供方尝试；`@astro-one/llm-retry` 在持久 agent 步骤边界上执行该策略。
 - **`GenerateOptions` 采样只包含 `temperature`／`maxTokens`／`stop`**——没有 `tool_choice`、`top_p` 或 penalty 字段；有产生方落地时词汇才会增长（见[已删除惰性旋钮](../../../.agents/notes/archived/simplification/2026-07-04-drop-inert-request-knobs.md)）。
 - **变体通常要求实际产生方**——`prefill`、逐工具 `strict`、内容块 `cache` 提示和 `agent` 消息来源变体都没有产生方（见 [Agent Note](../../../.agents/notes/archived/simplification/2026-07-04-prune-producerless-vocabulary-variants.md)）。
 - **`BlockAssembler` 只处理核心块类型**——插件添加块类型的流若从未由 `block-end` 关闭，`blocks()` 会抛出异常。
-- **`GenerateOptions.sessionId` 是本地声明的品牌类型**——导入 dsh-session 的 `SessionId` 会产生依赖循环。
+- **`GenerateOptions.sessionId` 是本地声明的品牌类型**——导入 astro-one-session 的 `SessionId` 会产生依赖循环。
 - **Session 变更类型是 V4 持久化的例外** — `DeveloperMessage` 承载增量 Session 变更。添加与移除块记录工具名称；所在的 Session 事件将添加绑定到拥有其定义的历史请求头。接纳和恢复规则见 [Session 引用](../../core/session/README.zh.md)。提供方序列化、延迟加载与 UI 展示仍留待后续实现。DeepSeek 两种协议与 pi-ai 均拒绝 developer 历史及 `deferLoading` 请求；Chat 与 Trajectory 拒绝 developer 事件。普通请求的行为不变。
 
 <a id="dev-note"></a>
@@ -169,7 +169,7 @@ for await (const chunk of ctx.llm.stream({
 
 #### 开放事项
 
-- `GenerateOptions.sessionId` 是本地声明的品牌类型，因为导入 dsh-session 的 `SessionId` 会造成依赖循环；未来拥有 id 的包可以消除该权宜之计。
+- `GenerateOptions.sessionId` 是本地声明的品牌类型，因为导入 astro-one-session 的 `SessionId` 会造成依赖循环；未来拥有 id 的包可以消除该权宜之计。
 - 推理强度标识符是由适配器定义的不透明字符串，只对照各适配器公布集合解析；跨适配器共享强度词汇尚未决定。
 - `llm/adapters-updated` 事件按设计不携带载荷；消费方重新读取注册表，而不是在事件中接收新拓扑。
 

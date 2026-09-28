@@ -1,16 +1,16 @@
 /** Operations available to the isolated native welcome renderer. */
 
-import type { AccountView, SignInAttemptId } from '@deepseek-ai/dsh-deepseek-account/types'
+import type { AccountView, SignInAttemptId } from '@astro-one/deepseek-account/types'
 import type { DesktopLocale } from './locale.ts'
 
 /** Private native welcome channels, installed only while its window exists. */
 export const WELCOME_IPC = {
-  saveApiKey: 'dsh-welcome:save-api-key',
-  skip: 'dsh-welcome:skip',
-  start: 'dsh-welcome:start',
-  cancel: 'dsh-welcome:cancel',
-  copyLink: 'dsh-welcome:copy-link',
-  state: 'dsh-welcome:state',
+  saveApiKey: 'astro-one-welcome:save-api-key',
+  skip: 'astro-one-welcome:skip',
+  start: 'astro-one-welcome:start',
+  cancel: 'astro-one-welcome:cancel',
+  copyLink: 'astro-one-welcome:copy-link',
+  state: 'astro-one-welcome:state',
 } as const
 
 /** Credential writes return a safe outcome without exposing Host diagnostics. */

@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-office-to-pdf",
+  "name": "@astro-one/office-to-pdf",
   "description": "Shared Office-to-PDF conversion with bounded queues and caching",
   "version": "0.1.7-rc.1",
   "publishConfig": {
@@ -11,7 +11,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/document/office-to-pdf"
   },
   "exports": {
@@ -44,21 +44,21 @@
     "lib/typert.remote-client.d.ts"
   ],
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/cordis": "workspace:~"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/cordis-plugin-loader": "workspace:~",
-    "@deepseek-ai/cordis-plugin-include": "workspace:~",
-    "@deepseek-ai/dsh-api-workspace-files": "workspace:*",
-    "@deepseek-ai/dsh-fs": "workspace:*",
-    "@deepseek-ai/dsh-session": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/api-workspace-files": "workspace:*",
+    "@astro-one/fs": "workspace:*",
+    "@astro-one/session": "workspace:*"
   },
   "dependencies": {
     "@deepseek-ai/libreoffice-kit": "^0.1.0",
-    "@deepseek-ai/schemastery": "workspace:~",
-    "@deepseek-ai/dsh-brand": "workspace:*",
-    "@deepseek-ai/dsh-typert-protocol": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
     "zod": "^4.4.3"
   }
 }

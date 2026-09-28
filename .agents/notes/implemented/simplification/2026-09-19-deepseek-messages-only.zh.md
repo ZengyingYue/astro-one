@@ -10,7 +10,7 @@ Status: implemented
 
 ## 决策
 
-`dsh-llm-deepseek` 仅使用 Messages。一个适配器解析请求局部的配置快照并执行请求。配置暴露一个端点，不提供协议选择器。Files 客户端直接使用 Messages 认证、元数据与分页；配额清理扫描全部页面后再选择最旧的自有文件。
+`astro-one-llm-deepseek` 仅使用 Messages。一个适配器解析请求局部的配置快照并执行请求。配置暴露一个端点，不提供协议选择器。Files 客户端直接使用 Messages 认证、元数据与分页；配额清理扫描全部页面后再选择最旧的自有文件。
 
 [Messages 适配器决策](../feature/2026-09-07-deepseek-messages-adapter.zh.md)继续拥有原生思考回放、系统消息位置、图片恢复与请求扩展接受规则。回放判别值和上传索引命名空间标识持久数据，并保留现有值。独立的 pi-ai 适配器保留各提供方协议。
 

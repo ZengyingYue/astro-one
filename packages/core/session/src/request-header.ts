@@ -4,11 +4,11 @@
  * any request was built under by taking the latest canonical snapshot; the
  * loop uses the same equality helper to avoid logging unchanged headers.
  *
- * @module dsh-session/request-header
+ * @module astro-one-session/request-header
  */
 
-import { callConfigEquals } from '@deepseek-ai/dsh-llm'
-import type { ToolSchema } from '@deepseek-ai/dsh-llm'
+import { callConfigEquals } from '@astro-one/llm'
+import type { ToolSchema } from '@astro-one/llm'
 import type { EpochHeader, SessionEvent } from './types.ts'
 
 /**

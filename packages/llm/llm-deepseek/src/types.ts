@@ -1,9 +1,9 @@
 /** Model catalog and request-local dependencies for DeepSeek Messages. */
-import type { ModelModality, SystemPromptUpdate, ResolvedRetryPolicy, ImageAttachmentAccess } from '@deepseek-ai/dsh-llm'
-import type { AttachmentStore, ImageAttachmentRef } from '@deepseek-ai/dsh-attachment'
-import type { CredentialRef } from '@deepseek-ai/dsh-credentials'
-import type { AnonymousUserId } from '@deepseek-ai/dsh-anonymous-user-id'
-import type { DeepSeekLlmApiExtensionRequest, PreparedDeepSeekLlmApiExtensions } from '@deepseek-ai/dsh-deepseek-llm-api-extensions'
+import type { ModelModality, SystemPromptUpdate, ResolvedRetryPolicy, ImageAttachmentAccess } from '@astro-one/llm'
+import type { AttachmentStore, ImageAttachmentRef } from '@astro-one/attachment'
+import type { CredentialRef } from '@astro-one/credentials'
+import type { AnonymousUserId } from '@astro-one/anonymous-user-id'
+import type { DeepSeekLlmApiExtensionRequest, PreparedDeepSeekLlmApiExtensions } from '@astro-one/deepseek-llm-api-extensions'
 import type { DeepSeekFileStore, DeepSeekFilePolicy } from './file-store.ts'
 
 /** One optional model entry advertised by the direct-fetch adapter. */
@@ -95,7 +95,7 @@ export interface DeepSeekAdapterOptions {
    * `MISSING_CREDENTIAL` when no key is available anywhere.
    */
   resolveApiKey: (connection: DeepSeekConnectionOptions) => Promise<string>
-  /** Resolve a DSH account token only for an eligible official endpoint. */
+  /** Resolve a Astro One account token only for an eligible official endpoint. */
   resolveAccountToken?: (connection: DeepSeekConnectionOptions) => Promise<string | undefined>
   /** Resolve the harness-home anonymous id shared with telemetry and feedback. */
   resolveUserId: () => AnonymousUserId

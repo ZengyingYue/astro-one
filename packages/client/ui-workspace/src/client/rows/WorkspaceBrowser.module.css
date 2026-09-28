@@ -1,13 +1,13 @@
 .root {
-  --dsh-session-list-edge-inset: var(--dsh-sidebar-inline-padding);
-  --dsh-session-list-scrollbar-width: 5px;
-  --dsh-session-list-scrollbar-offset: 2px;
+  --astro-one-session-list-edge-inset: var(--astro-one-sidebar-inline-padding);
+  --astro-one-session-list-scrollbar-width: 5px;
+  --astro-one-session-list-scrollbar-offset: 2px;
   flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  padding-right: var(--dsh-session-list-edge-inset);
+  padding-right: var(--astro-one-session-list-edge-inset);
 }
 
 .root.rail {
@@ -297,7 +297,7 @@
   display: flex;
   flex-direction: column;
   margin-left: -4px;
-  margin-right: calc(-1 * var(--dsh-session-list-edge-inset));
+  margin-right: calc(-1 * var(--astro-one-session-list-edge-inset));
   padding-left: 4px;
   /* The list remains the scroll clip. This seat stays visible so the
      absolutely positioned first-boundary marker can occupy the header gap. */
@@ -324,7 +324,7 @@
 .fade {
   position: absolute;
   left: 0;
-  right: var(--dsh-session-list-edge-inset);
+  right: var(--astro-one-session-list-edge-inset);
   bottom: 0;
   height: 24px;
   background: linear-gradient(to bottom, transparent, var(--dsw-specific-sidebar-fill));
@@ -355,12 +355,12 @@
   min-height: 0;
   overflow-y: auto;
   margin-left: -4px;
-  margin-right: var(--dsh-session-list-scrollbar-offset);
+  margin-right: var(--astro-one-session-list-scrollbar-offset);
   padding-left: 4px;
   padding-right: calc(
-    var(--dsh-session-list-edge-inset)
-    - var(--dsh-session-list-scrollbar-width)
-    - var(--dsh-session-list-scrollbar-offset)
+    var(--astro-one-session-list-edge-inset)
+    - var(--astro-one-session-list-scrollbar-width)
+    - var(--astro-one-session-list-scrollbar-offset)
   );
   /* Clears the compact bottom fade overlay: at scroll end the last row sits
      above the gradient instead of under it. */
@@ -476,7 +476,7 @@
 .listTopDropIndicator {
   top: -8px;
   left: 0;
-  right: var(--dsh-session-list-edge-inset);
+  right: var(--astro-one-session-list-edge-inset);
 }
 
 .listTopDropActive > .workspaceDropBefore:first-child::before {
@@ -496,7 +496,7 @@
   height: 28px;
   border: none;
   border-radius: 8px;
-  padding: 0 12px 0 calc(28px + var(--dsh-workspace-indent, 0px));
+  padding: 0 12px 0 calc(28px + var(--astro-one-workspace-indent, 0px));
   background: transparent;
   cursor: pointer;
   text-align: left;

@@ -6,13 +6,13 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Schema from '@deepseek-ai/schemastery'
+import Schema from '@astro-one/schemastery'
 import { Ajv2020 } from 'ajv/dist/2020.js'
 import { buildConfigSchemaDocument } from '../src/config-schema/document.ts'
 import type { CollectedConfigEntry, ConfigJsonSchemaObject, ConfigSchemaDump } from '../src/config-schema/types.ts'
-import { EntryGroup, ModuleLoader, type EntryOptions } from '@deepseek-ai/cordis-plugin-loader'
-import Group from '@deepseek-ai/cordis-plugin-group'
-import Include, { type PatchOptions } from '@deepseek-ai/cordis-plugin-include'
+import { EntryGroup, ModuleLoader, type EntryOptions } from '@astro-one/cordis-plugin-loader'
+import Group from '@astro-one/cordis-plugin-group'
+import Include, { type PatchOptions } from '@astro-one/cordis-plugin-include'
 import { collectConfigSchemas } from '../src/config-schema/collect.ts'
 import { generateConfigSchema } from '../src/config-schema/index.ts'
 import * as profileOperations from '../src/profile.ts'
@@ -35,7 +35,7 @@ const importModule = vi.fn(async (name: string): Promise<unknown> => {
 })
 
 beforeEach(() => {
-  dir = mkdtempSync(join(tmpdir(), 'dsh-config-schema-'))
+  dir = mkdtempSync(join(tmpdir(), 'astro-one-config-schema-'))
   profile = { name: 'test', dir, patchPath: join(dir, 'cordis.patch.yml'), patches: [], layers: [] }
   resolution = { profilesDir: dir, profileDir: dir, localPackageNames: [], entries: [], linkedRoots: [] }
   const loader = ModuleLoader.fromInternal()
@@ -70,7 +70,7 @@ function validates(dump: ConfigSchemaDump, value: unknown, definition = 'entryLi
 describe('generateConfigSchema', () => {
   it('owns ordered composition, skipped-bundle diagnostics, and runtime resolution without mutating layers', async () => {
     profile.layers = [{ packageName: 'loaded', packageDir: dir, patchPaths: [join(dir, 'bundle.yml')], patches: [] }]
-    writeFileSync(join(dir, 'package.json'), JSON.stringify({ dsh: { profile: { bundles: ['loaded', 'missing'] } } }))
+    writeFileSync(join(dir, 'package.json'), JSON.stringify({ astroOne: { profile: { bundles: ['loaded', 'missing'] } } }))
     modules.set('server', { Config: Schema.string() })
     const layers: PatchOptions[][] = [
       [{ insert: [{ ...row('cordis:group', []), id: 'group', group: true }] }],
@@ -80,7 +80,7 @@ describe('generateConfigSchema', () => {
     const original = structuredClone(layers)
     const installAnchor = join(dir, 'installation.json')
     const resolve = vi.spyOn(profileOperations, 'createRuntimeResolution').mockResolvedValue(resolution)
-    const result = await generateConfigSchema('dsh', profile, layers, installAnchor)
+    const result = await generateConfigSchema('astro-one', profile, layers, installAnchor)
     expect(resolve).toHaveBeenCalledExactlyOnceWith({ installAnchor, profile })
     expect(result['x-cordis'].entries.map(entry => [entry.path, entry.name])).toEqual([
       ['/0', 'cordis:group'], ['/0/config/0', 'server'],
@@ -96,7 +96,7 @@ describe('generateConfigSchema', () => {
 
   it('requires prepared profile metadata before creating an interception', async () => {
     const resolve = vi.spyOn(profileOperations, 'createRuntimeResolution').mockResolvedValue(resolution)
-    await expect(generateConfigSchema('dsh', profile, [], join(dir, 'installation.json'))).rejects.toThrow()
+    await expect(generateConfigSchema('astro-one', profile, [], join(dir, 'installation.json'))).rejects.toThrow()
     expect(resolve).not.toHaveBeenCalled()
     expect(installRuntimeInterception).not.toHaveBeenCalled()
   })
@@ -104,7 +104,7 @@ describe('generateConfigSchema', () => {
   it('propagates resolution setup failure without starting collection', async () => {
     writeFileSync(join(dir, 'package.json'), '{}')
     vi.spyOn(profileOperations, 'createRuntimeResolution').mockRejectedValue(new Error('resolution setup failed'))
-    await expect(generateConfigSchema('dsh', profile, [], join(dir, 'installation.json'))).rejects.toThrow('resolution setup failed')
+    await expect(generateConfigSchema('astro-one', profile, [], join(dir, 'installation.json'))).rejects.toThrow('resolution setup failed')
     expect(installRuntimeInterception).not.toHaveBeenCalled()
   })
 })
@@ -242,7 +242,7 @@ describe('collectConfigSchemas', () => {
       static [EntryGroup.key] = true
       constructor() { throw new Error('must not activate Include') }
     }
-    modules.set('@deepseek-ai/cordis-plugin-include', { default: ExternalInclude })
+    modules.set('@astro-one/cordis-plugin-include', { default: ExternalInclude })
     modules.set('include-alias', { default: ExternalInclude })
     const result = await collectConfigSchemas(profile, [
       row('include-alias', { path: './missing.yml', initial: [row('noop')] }),
@@ -250,8 +250,8 @@ describe('collectConfigSchemas', () => {
     ], resolution)
     expect(result['x-cordis'].complete).toBe(true)
     expect(result['x-cordis'].entries.filter(entry => entry.tree === 'include')).toHaveLength(2)
-    expect(importModule.mock.calls.filter(([name]) => name === '@deepseek-ai/cordis-plugin-include')).toHaveLength(1)
-    expect(importModule.mock.calls.filter(([name]) => name === '@deepseek-ai/cordis-plugin-group')).toHaveLength(1)
+    expect(importModule.mock.calls.filter(([name]) => name === '@astro-one/cordis-plugin-include')).toHaveLength(1)
+    expect(importModule.mock.calls.filter(([name]) => name === '@astro-one/cordis-plugin-group')).toHaveLength(1)
   })
 
   it('recognizes an external canonical Group even when Include cannot resolve', async () => {
@@ -259,17 +259,17 @@ describe('collectConfigSchemas', () => {
       static [EntryGroup.key] = true
       constructor() { throw new Error('must not activate Group') }
     }
-    modules.set('@deepseek-ai/cordis-plugin-group', { default: ExternalGroup })
+    modules.set('@astro-one/cordis-plugin-group', { default: ExternalGroup })
     modules.set('group-alias', { default: ExternalGroup })
     const result = await collectConfigSchemas(profile, [row('group-alias', [row('group-alias', [row('noop')])])], resolution)
     expect(result['x-cordis'].complete).toBe(true)
     expect(result['x-cordis'].entries.map(entry => entry.path)).toEqual(['/0', '/0/config/0', '/0/config/0/config/0'])
-    expect(importModule.mock.calls.filter(([name]) => name === '@deepseek-ai/cordis-plugin-group')).toHaveLength(1)
+    expect(importModule.mock.calls.filter(([name]) => name === '@astro-one/cordis-plugin-group')).toHaveLength(1)
   })
 
   it('reports unknown tree-carrier identities instead of silently omitting their children', async () => {
-    modules.set('@deepseek-ai/cordis-plugin-group', { default: Group })
-    modules.set('@deepseek-ai/cordis-plugin-include', { default: Include })
+    modules.set('@astro-one/cordis-plugin-group', { default: Group })
+    modules.set('@astro-one/cordis-plugin-include', { default: Include })
     modules.set('other-include', { default: class OtherInclude {
       static [EntryGroup.key] = true
       constructor() { throw new Error('must not activate a tree carrier') }

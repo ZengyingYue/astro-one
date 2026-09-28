@@ -1,9 +1,9 @@
 // @vitest-environment jsdom
 /** Activation guidance waits for cache inspection and leaves installation to the detail page. */
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
-import { bindSnapshotSelector, makeTranslate } from '@deepseek-ai/dsh-client-test-runtime'
-import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
-import type { SpeechPreparationState, SpeechProviderId } from '@deepseek-ai/dsh-experimental-speech-to-text/types'
+import { bindSnapshotSelector, makeTranslate } from '@astro-one/client-test-runtime'
+import { createSnapshotStore } from '@astro-one/client-store'
+import type { SpeechPreparationState, SpeechProviderId } from '@astro-one/experimental-speech-to-text/types'
 import { afterEach, expect, it, vi } from 'vitest'
 import { VoiceSetupPrompt, type VoiceSetupPromptProps } from '../src/client/VoiceSetupPrompt.tsx'
 import type { SpeechReadiness } from '../src/client/readiness.ts'

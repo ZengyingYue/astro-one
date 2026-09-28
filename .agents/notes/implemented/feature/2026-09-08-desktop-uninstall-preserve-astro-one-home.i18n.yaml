@@ -1,0 +1,6 @@
+# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. Both languages carry equal authority;
+# after editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-09-08-desktop-uninstall-preserve-astro-one-home.md
+2026-09-08-desktop-uninstall-preserve-astro-one-home.md: 3409aa87ae8eec1f2ec8dc66a8eeba4856c33208
+2026-09-08-desktop-uninstall-preserve-astro-one-home.zh.md: 3fda4e241b0ce7938734a437e6e12ad1ca2ac96e

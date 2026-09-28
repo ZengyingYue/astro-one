@@ -1,10 +1,10 @@
-import { Context } from '@deepseek-ai/cordis'
-import { LocalSpillStore } from '@deepseek-ai/dsh-spill-local'
-import { LocalFileSystem } from '@deepseek-ai/dsh-fs-local'
-import LocalSubprocessRuntime from '@deepseek-ai/dsh-subprocess-local'
-import { LocalBashExecutor } from '@deepseek-ai/dsh-bash-local'
-import { SessionId } from '@deepseek-ai/dsh-session'
-import { ToolCallId } from '@deepseek-ai/dsh-llm'
+import { Context } from '@astro-one/cordis'
+import { LocalSpillStore } from '@astro-one/spill-local'
+import { LocalFileSystem } from '@astro-one/fs-local'
+import LocalSubprocessRuntime from '@astro-one/subprocess-local'
+import { LocalBashExecutor } from '@astro-one/bash-local'
+import { SessionId } from '@astro-one/session'
+import { ToolCallId } from '@astro-one/llm'
 import { mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
@@ -26,7 +26,7 @@ it.skipIf(process.platform === 'win32')('resolves the exact spill verifier, reta
       disposers.push(() => fiber.dispose())
       await fiber
     }
-    const logical = resolve('/tmp/dsh-acp-snap-query-verifier')
+    const logical = resolve('/tmp/astro-one-acp-snap-query-verifier')
     const mapping = ctx.plugin(locators, { root, locatorRoot: logical })
     disposers.push(() => mapping.dispose())
     await mapping

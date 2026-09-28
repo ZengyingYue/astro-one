@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/archived/feature/2026-08-20-web-streaming-fence-highlight.md
-2026-08-20-web-streaming-fence-highlight.md: 096e319c1573ec6f382a08772a181c74b37d14f5
-2026-08-20-web-streaming-fence-highlight.zh.md: fd113afbb8e73778e42286b097d0861afd33649e
+2026-08-20-web-streaming-fence-highlight.md: 9ceaca0a0b49507e616dc1fdc60cc83398348791
+2026-08-20-web-streaming-fence-highlight.zh.md: f041a6843df40f50b3aa38f73481333ac46f4727

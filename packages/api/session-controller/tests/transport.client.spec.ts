@@ -3,12 +3,12 @@ import {
   RemoteStream,
   RemoteStreamCarrierError,
   type RemoteStreamOptions,
-} from '@deepseek-ai/dsh-api-gateway/client'
-import { RemoteError } from '@deepseek-ai/dsh-typert-protocol'
-import { streamHandle } from '@deepseek-ai/dsh-remote-mock'
-import { LlmAttemptId } from '@deepseek-ai/dsh-llm'
-import { SESSION_FORMAT_VERSION } from '@deepseek-ai/dsh-session/types'
-import type { RemoteResult, RemoteStreamHandle } from '@deepseek-ai/dsh-typert-protocol'
+} from '@astro-one/api-gateway/client'
+import { RemoteError } from '@astro-one/typert-protocol'
+import { streamHandle } from '@astro-one/remote-mock'
+import { LlmAttemptId } from '@astro-one/llm'
+import { SESSION_FORMAT_VERSION } from '@astro-one/session/types'
+import type { RemoteResult, RemoteStreamHandle } from '@astro-one/typert-protocol'
 import {
   createSessionControlStream,
   SessionEventStream,

@@ -4,6 +4,6 @@
 - text: 异常
 - paragraph:
   - code: "@fixture/missing-bundle"
-- status: "原因: dsh: cannot resolve profile bundle \"@fixture/missing-bundle\" from the dsh installation or {{home}}/profiles/scaffold; run 'dsh plugin --profile scaffold install' if its dependency is not installed"
+- status: "原因: astro-one: cannot resolve profile bundle \"@fixture/missing-bundle\" from the astro-one installation or {{home}}/profiles/scaffold; run 'astro-one plugin --profile scaffold install' if its dependency is not installed"
 - heading "包含的组件" [level=4]
 - paragraph: 这个插件包不包含任何组件。

@@ -7,7 +7,7 @@ const shared = {
   fixedExtension: false,
   dts: false,
   deps: {
-    neverBundle: [/^@deepseek-ai\//],
+    neverBundle: [/^@astro-one\//],
     onlyBundle: false as const,
   },
 }
@@ -17,14 +17,14 @@ export default defineConfig([
   {
     ...shared,
     entry: { 'terminal-io.worker': 'terminal-io/terminal-io.worker.ts' },
-    outDir: '.dsh-build/terminal-io',
+    outDir: '.astro-one-build/terminal-io',
     clean: true,
     tsconfig: 'tsconfig.host.json',
   },
   {
     ...shared,
     entry: { 'reconnect.worker': 'active-stream-reconnect/reconnect.worker.client.ts' },
-    outDir: '.dsh-build/active-stream-reconnect',
+    outDir: '.astro-one-build/active-stream-reconnect',
     clean: true,
     tsconfig: 'tsconfig.client.json',
   },
@@ -36,14 +36,14 @@ export default defineConfig([
       'profile-continuation.worker': 'agent-continuation/profile-continuation.worker.ts',
       'profile-adapter': 'agent-continuation/profile-adapter.ts',
     },
-    outDir: '.dsh-build/agent-continuation',
+    outDir: '.astro-one-build/agent-continuation',
     clean: true,
     tsconfig: 'tsconfig.host.json',
   },
   {
     ...shared,
     entry: { 'session-open.worker': 'session-open/session-open.worker.ts' },
-    outDir: '.dsh-build/session-open',
+    outDir: '.astro-one-build/session-open',
     clean: true,
     tsconfig: 'tsconfig.host.json',
   },
@@ -52,7 +52,7 @@ export default defineConfig([
     entry: {
       'conversation-fold.worker': 'conversation-fold/conversation-fold.worker.client.ts',
     },
-    outDir: '.dsh-build/conversation-fold',
+    outDir: '.astro-one-build/conversation-fold',
     clean: true,
     tsconfig: 'tsconfig.client.json',
   },

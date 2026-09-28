@@ -44,7 +44,7 @@ Host 读取已安装 bundle 及其声明的插件行，不 import 或激活它�
 
 包字段回退遵守资源 exports，并且仍属于同一插件地址，子路径不继承所属包的介绍。字段有其他语言译文但没有英文值时，Host 将包字段或最终值放入英文回退位，保持现有 Client locale API 不变。资源不存在、未导出或缺少字段时使用上述回退；locale 字段无效或文件格式损坏时明确诊断，不静默回退，同时保留管理操作。
 
-插件管理页在已安装 bundle 的卡片和详情、组件列表、组件配置详情中使用这些元信息，保留完整技术名回退。设置中的插件清单也使用它，包括预设内插件，但会移除字面包名和模块名回退值的 npm scope 与 Cordis/DSH 前缀。两个页面都原样展示翻译标题；完整模块名、条目 id、搜索身份与操作目标保持不变。具体前缀规则由[设置插件清单 README](../../../../packages/client/ui-settings-plugin-inventory/README.zh.md#use-this-package)维护。
+插件管理页在已安装 bundle 的卡片和详情、组件列表、组件配置详情中使用这些元信息，保留完整技术名回退。设置中的插件清单也使用它，包括预设内插件，但会移除字面包名和模块名回退值的 npm scope 与 Cordis/Astro One 前缀。两个页面都原样展示翻译标题；完整模块名、条目 id、搜索身份与操作目标保持不变。具体前缀规则由[设置插件清单 README](../../../../packages/client/ui-settings-plugin-inventory/README.zh.md#use-this-package)维护。
 
 行配置页仅在插件没有展示描述时使用注册组件的 `summary` 视图。组合包原始的 `description` 字段仍供 Host 与模型消费方使用，不作为绕过资源 exports 的额外 UI 回退。这些规则只展示一份描述，同时保留无描述插件的配置摘要。
 

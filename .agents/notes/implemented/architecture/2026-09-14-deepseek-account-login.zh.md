@@ -40,15 +40,15 @@ Platform 内嵌通过私有 Node IPC 将授权从 Host 传给 Electron，再经�
 
 私有代理开发可通过 rewriteBrowserOrigin 显式将授权页和完成页映射到 platformOrigin。两者保留固定路径和完整查询字符串；仅放宽来源而不做映射会让浏览器离开配置的环境。发布配置要求浏览器地址同源。
 
-DSH 授权通过 x-dsh-auth-token 请求头鉴权 Platform、推理和 Files 请求，不加 Bearer 前缀。API Key 继续使用各协议的认证方式。
+Astro One 授权通过 x-astro-one-auth-token 请求头鉴权 Platform、推理和 Files 请求，不加 Bearer 前缀。API Key 继续使用各协议的认证方式。
 
 资料和充值钱包余额分别通过 getProfile 与 getBalance 查询。客户端在各自返回时立即更新，余额请求慢或失败不会延迟侧边栏用户名显示。账号变化使两种进行中的查询结果失效。
 
 开发环境认证通过配置的平台来源上的显式 Host 请求头 requestHeaders 完成。提供者拒绝重定向和保留请求头覆盖，防止开发环境 Cookie 替换账号授权或跟随浏览器跳转地址。特定环境的认证协议不属于账号提供者。
 
-内置账号界面仅用于 Desktop：preload 桥接启用账号入口、设置和登录引导。普通 Web 保留 API Key 引导及标准设置入口，不订阅账号状态或显示登录。Host 协议在 auth_init 中接受 login_source（desktop 或 web）；内置界面发送 desktop。后端接受 localhost 回调。DSH 保留浏览器提供的 localhost 主机名和端口，不做 DNS 解析或 IP 字面量转换。
+内置账号界面仅用于 Desktop：preload 桥接启用账号入口、设置和登录引导。普通 Web 保留 API Key 引导及标准设置入口，不订阅账号状态或显示登录。Host 协议在 auth_init 中接受 login_source（desktop 或 web）；内置界面发送 desktop。后端接受 localhost 回调。Astro One 保留浏览器提供的 localhost 主机名和端口，不做 DNS 解析或 IP 字面量转换。
 
-macOS 开发启动器为 `dsh://open` 注册独立、经临时签名的应用包。该应用包保留工作区入口和开发路径，使 Launch Services 能够冷启动；凭证不会被复制，也不修改包管理器安装的 Electron 应用。协议注册指向最近启动的开发版或打包版应用。
+macOS 开发启动器为 `astro-one://open` 注册独立、经临时签名的应用包。该应用包保留工作区入口和开发路径，使 Launch Services 能够冷启动；凭证不会被复制，也不修改包管理器安装的 Electron 应用。协议注册指向最近启动的开发版或打包版应用。
 
 exchange 的 user 数据在凭证提交后供首次资料读取使用，展示用户名无需再等待一次请求。Host 仅在当前尝试中保留筛选后的 UI 字段，与 token 匹配并读取一次后移除；后续读取使用 current。缺失或格式无效的 user 不会使已成功的授权失效。
 

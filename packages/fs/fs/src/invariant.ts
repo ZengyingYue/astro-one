@@ -1,10 +1,10 @@
-/** Package-owned filesystem event-data invariants. @module @deepseek-ai/dsh-fs/invariant */
+/** Package-owned filesystem event-data invariants. @module @astro-one/fs/invariant */
 
-import type { Context } from '@deepseek-ai/cordis'
-import type { InvariantInstaller } from '@deepseek-ai/dsh-invariants'
+import type { Context } from '@astro-one/cordis'
+import type { InvariantInstaller } from '@astro-one/invariants'
 import type { FsObservation, FsTarget } from './types.ts'
 
-const PACKAGE_NAME = '@deepseek-ai/dsh-fs'
+const PACKAGE_NAME = '@astro-one/fs'
 
 /** Cordis companion plugin name. */
 export const name = 'fs-invariant'

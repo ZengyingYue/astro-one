@@ -55,7 +55,7 @@ permissions:
 env:
   # CI runs must never report to the production telemetry endpoint baked
   # into apps/cli/cordis.yml (AppCLIEntry disables the row when set).
-  DSH_TELEMETRY_DISABLED: '1'
+  ASTRO_ONE_TELEMETRY_DISABLED: '1'
 
 jobs:
   # Job-level conditions cannot inspect `matrix`, so validate target names and
@@ -64,7 +64,7 @@ jobs:
     name: plan targets
     if: inputs.ci || inputs.release || github.event_name == 'workflow_dispatch'
     runs-on: >-
-      ${{ inputs.ci && !inputs.release && vars.DSH_CI_FAILOVER_LINUX == 'blacksmith'
+      ${{ inputs.ci && !inputs.release && vars.ASTRO_ONE_CI_FAILOVER_LINUX == 'blacksmith'
           && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     timeout-minutes: 5
     outputs:
@@ -124,9 +124,9 @@ jobs:
 
   sdk-wheel:
     needs: plan
-    name: deepseek_harness_sdk-${{ needs.plan.outputs.version }}-py3-none-any.whl
+    name: astro_one_sdk-${{ needs.plan.outputs.version }}-py3-none-any.whl
     runs-on: >-
-      ${{ inputs.ci && !inputs.release && vars.DSH_CI_FAILOVER_LINUX == 'blacksmith'
+      ${{ inputs.ci && !inputs.release && vars.ASTRO_ONE_CI_FAILOVER_LINUX == 'blacksmith'
           && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     timeout-minutes: 5
     steps:
@@ -147,8 +147,8 @@ jobs:
 
       - uses: actions/upload-artifact@v7
         with:
-          name: deepseek_harness_sdk-${{ needs.plan.outputs.version }}-py3-none-any.whl
-          path: dist-python/deepseek_harness_sdk-${{ needs.plan.outputs.version }}-py3-none-any.whl
+          name: astro_one_sdk-${{ needs.plan.outputs.version }}-py3-none-any.whl
+          path: dist-python/astro_one_sdk-${{ needs.plan.outputs.version }}-py3-none-any.whl
           if-no-files-found: error
           retention-days: 7
 
@@ -158,9 +158,9 @@ jobs:
     name: ${{ matrix.target }}
     runs-on: >-
       ${{ inputs.ci && !inputs.release && matrix.target == 'node24-linux-x64'
-          && vars.DSH_CI_FAILOVER_LINUX == 'blacksmith' && 'blacksmith-2vcpu-ubuntu-2404'
+          && vars.ASTRO_ONE_CI_FAILOVER_LINUX == 'blacksmith' && 'blacksmith-2vcpu-ubuntu-2404'
           || inputs.ci && !inputs.release && matrix.target == 'node24-win-x64'
-          && vars.DSH_CI_FAILOVER_WINDOWS == 'blacksmith' && 'blacksmith-2vcpu-windows-2025'
+          && vars.ASTRO_ONE_CI_FAILOVER_WINDOWS == 'blacksmith' && 'blacksmith-2vcpu-windows-2025'
           || matrix.runner }}
     timeout-minutes: 45
     strategy:
@@ -258,7 +258,7 @@ jobs:
 
       - name: Build single-exe
         env:
-          DSH_BUILD_CLIENT_PROFILE: official
+          ASTRO_ONE_BUILD_CLIENT_PROFILE: official
         run: pnpm exec tsx scripts/build-exe-for-python-sdk.ts --targets=${{ matrix.target }}
 
       - name: Resolve platform outputs (POSIX)
@@ -270,12 +270,12 @@ jobs:
         run: |
           set -euo pipefail
           platform="${TARGET#node24-}"
-          exe="$PWD/dist-exe/deepseek-harness-sdk-runtime-$platform"
+          exe="$PWD/dist-exe/astro-one-sdk-runtime-$platform"
           case "$platform" in
-            linux-x64) wheel=deepseek_harness_runtime_bin-$VERSION-py3-none-manylinux_2_28_x86_64.whl ;;
-            linux-arm64) wheel=deepseek_harness_runtime_bin-$VERSION-py3-none-manylinux_2_28_aarch64.whl ;;
-            macos-arm64) wheel=deepseek_harness_runtime_bin-$VERSION-py3-none-macosx_14_0_arm64.whl ;;
-            macos-x64) wheel=deepseek_harness_runtime_bin-$VERSION-py3-none-macosx_14_0_x86_64.whl ;;
+            linux-x64) wheel=astro_one_runtime_bin-$VERSION-py3-none-manylinux_2_28_x86_64.whl ;;
+            linux-arm64) wheel=astro_one_runtime_bin-$VERSION-py3-none-manylinux_2_28_aarch64.whl ;;
+            macos-arm64) wheel=astro_one_runtime_bin-$VERSION-py3-none-macosx_14_0_arm64.whl ;;
+            macos-x64) wheel=astro_one_runtime_bin-$VERSION-py3-none-macosx_14_0_x86_64.whl ;;
             *) echo "::error::Unsupported runtime platform $platform"; exit 1 ;;
           esac
           [ -x "$exe" ] || { echo "::error::$exe missing or not executable"; exit 1; }
@@ -293,8 +293,8 @@ jobs:
         run: |
           if ($env:TARGET -ne 'node24-win-x64') { throw "Unsupported runtime target $env:TARGET" }
           $platform = 'win-x64'
-          $exe = Join-Path $PWD 'dist-exe\deepseek-harness-sdk-runtime-win-x64.exe'
-          $wheel = "deepseek_harness_runtime_bin-$env:VERSION-py3-none-win_amd64.whl"
+          $exe = Join-Path $PWD 'dist-exe\astro-one-sdk-runtime-win-x64.exe'
+          $wheel = "astro_one_runtime_bin-$env:VERSION-py3-none-win_amd64.whl"
           if (-not (Test-Path -LiteralPath $exe -PathType Leaf)) { throw "Runtime executable is missing at $exe" }
           "platform=$platform" >> $env:GITHUB_OUTPUT
           "exe=$exe" >> $env:GITHUB_OUTPUT
@@ -310,7 +310,7 @@ jobs:
 
       - uses: actions/download-artifact@v8
         with:
-          name: deepseek_harness_sdk-${{ needs.plan.outputs.version }}-py3-none-any.whl
+          name: astro_one_sdk-${{ needs.plan.outputs.version }}-py3-none-any.whl
           path: dist-python
 
       - name: Install local SDK and runtime wheels into a clean venv (POSIX)
@@ -318,10 +318,10 @@ jobs:
         if: runner.os != 'Windows'
         env:
           RUNTIME_WHEEL: ${{ steps.runtime-posix.outputs.wheel }}
-          SDK_WHEEL: deepseek_harness_sdk-${{ needs.plan.outputs.version }}-py3-none-any.whl
+          SDK_WHEEL: astro_one_sdk-${{ needs.plan.outputs.version }}-py3-none-any.whl
         run: |
           set -euo pipefail
-          venv="$(python -c 'import tempfile; print(tempfile.mkdtemp(prefix="dsh-sdk-smoke-"))')"
+          venv="$(python -c 'import tempfile; print(tempfile.mkdtemp(prefix="astro-one-sdk-smoke-"))')"
           python -m venv "$venv"
           smoke_python="$venv/bin/python"
           "$smoke_python" -m pip install \
@@ -335,9 +335,9 @@ jobs:
         shell: pwsh
         env:
           RUNTIME_WHEEL: ${{ steps.runtime-windows.outputs.wheel }}
-          SDK_WHEEL: deepseek_harness_sdk-${{ needs.plan.outputs.version }}-py3-none-any.whl
+          SDK_WHEEL: astro_one_sdk-${{ needs.plan.outputs.version }}-py3-none-any.whl
         run: |
-          $venv = (& python -c 'import tempfile; print(tempfile.mkdtemp(prefix="dsh-sdk-smoke-"))').Trim()
+          $venv = (& python -c 'import tempfile; print(tempfile.mkdtemp(prefix="astro-one-sdk-smoke-"))').Trim()
           python -m venv $venv
           $smokePython = Join-Path $venv 'Scripts\python.exe'
           & $smokePython -m pip install "dist-python/$env:SDK_WHEEL" "dist-python/$env:RUNTIME_WHEEL"
@@ -348,9 +348,9 @@ jobs:
         if: runner.os != 'Windows'
         run: |
           set -euo pipefail
-          blackbox_root="$(python -c 'import tempfile; print(tempfile.mkdtemp(prefix="dsh-sdk-blackbox-"))')"
+          blackbox_root="$(python -c 'import tempfile; print(tempfile.mkdtemp(prefix="astro-one-sdk-blackbox-"))')"
           cd "$blackbox_root"
-          env -u PYTHONPATH -u DSH_RUNTIME_MODE \
+          env -u PYTHONPATH -u ASTRO_ONE_RUNTIME_MODE \
             "${{ steps.smoke-venv-posix.outputs.python }}" \
             "$GITHUB_WORKSPACE/scripts/smoke-python-runtime.py" \
             --scenario all \
@@ -360,9 +360,9 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          $blackboxRoot = (& python -c 'import tempfile; print(tempfile.mkdtemp(prefix="dsh-sdk-blackbox-"))').Trim()
+          $blackboxRoot = (& python -c 'import tempfile; print(tempfile.mkdtemp(prefix="astro-one-sdk-blackbox-"))').Trim()
           Remove-Item Env:PYTHONPATH -ErrorAction SilentlyContinue
-          Remove-Item Env:DSH_RUNTIME_MODE -ErrorAction SilentlyContinue
+          Remove-Item Env:ASTRO_ONE_RUNTIME_MODE -ErrorAction SilentlyContinue
           Push-Location $blackboxRoot
           try {
             & "${{ steps.smoke-venv-windows.outputs.python }}" "$env:GITHUB_WORKSPACE\scripts\smoke-python-runtime.py" --scenario all --installed-wheel
@@ -414,9 +414,9 @@ jobs:
           DEEPSEEK_BASE_URL: https://api.deepseek.com/anthropic
         run: |
           set -euo pipefail
-          blackbox_root="$(python -c 'import tempfile; print(tempfile.mkdtemp(prefix="dsh-sdk-blackbox-live-"))')"
+          blackbox_root="$(python -c 'import tempfile; print(tempfile.mkdtemp(prefix="astro-one-sdk-blackbox-live-"))')"
           cd "$blackbox_root"
-          env -u PYTHONPATH -u DSH_RUNTIME_MODE \
+          env -u PYTHONPATH -u ASTRO_ONE_RUNTIME_MODE \
             "${{ steps.smoke-venv-posix.outputs.python }}" \
             "$GITHUB_WORKSPACE/scripts/smoke-python-runtime.py" \
             --scenario sdk-live \
@@ -434,9 +434,9 @@ jobs:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY_EXTERNAL }}
           DEEPSEEK_BASE_URL: https://api.deepseek.com/anthropic
         run: |
-          $blackboxRoot = (& python -c 'import tempfile; print(tempfile.mkdtemp(prefix="dsh-sdk-blackbox-live-"))').Trim()
+          $blackboxRoot = (& python -c 'import tempfile; print(tempfile.mkdtemp(prefix="astro-one-sdk-blackbox-live-"))').Trim()
           Remove-Item Env:PYTHONPATH -ErrorAction SilentlyContinue
-          Remove-Item Env:DSH_RUNTIME_MODE -ErrorAction SilentlyContinue
+          Remove-Item Env:ASTRO_ONE_RUNTIME_MODE -ErrorAction SilentlyContinue
           Push-Location $blackboxRoot
           try {
             & "${{ steps.smoke-venv-windows.outputs.python }}" "$env:GITHUB_WORKSPACE\scripts\smoke-python-runtime.py" --scenario sdk-live --installed-wheel
@@ -480,7 +480,7 @@ jobs:
         env:
           RUNNER_ARCH: ${{ runner.arch }}
           RUNTIME_WHEEL: ${{ steps.runtime-posix.outputs.wheel }}
-          SDK_WHEEL: deepseek_harness_sdk-${{ needs.plan.outputs.version }}-py3-none-any.whl
+          SDK_WHEEL: astro_one_sdk-${{ needs.plan.outputs.version }}-py3-none-any.whl
         run: |
           set -euo pipefail
           case "$RUNNER_ARCH" in
@@ -488,13 +488,13 @@ jobs:
             ARM64) image=quay.io/pypa/manylinux_2_28_aarch64 ;;
             *) echo "::error::Unsupported Linux runner architecture $RUNNER_ARCH"; exit 1 ;;
           esac
-          docker run --rm -e RUNTIME_WHEEL -e SDK_WHEEL -e DSH_TELEMETRY_DISABLED -v "$PWD:/work" -w /work "$image" bash -euxo pipefail -c '
-            /opt/python/cp310-cp310/bin/python -m venv /tmp/dsh-sdk
-            /tmp/dsh-sdk/bin/python -m pip install "/work/dist-python/$SDK_WHEEL" "/work/dist-python/$RUNTIME_WHEEL"
-            mkdir -p /tmp/dsh-sdk-manylinux-smoke
-            cd /tmp/dsh-sdk-manylinux-smoke
-            env -u PYTHONPATH -u DSH_RUNTIME_MODE /tmp/dsh-sdk/bin/python /work/scripts/smoke-python-runtime.py --scenario sdk-default --installed-wheel
-            env -u PYTHONPATH -u DSH_RUNTIME_MODE /tmp/dsh-sdk/bin/python /work/scripts/smoke-python-runtime.py --scenario sdk-mcp --installed-wheel
+          docker run --rm -e RUNTIME_WHEEL -e SDK_WHEEL -e ASTRO_ONE_TELEMETRY_DISABLED -v "$PWD:/work" -w /work "$image" bash -euxo pipefail -c '
+            /opt/python/cp310-cp310/bin/python -m venv /tmp/astro-one-sdk
+            /tmp/astro-one-sdk/bin/python -m pip install "/work/dist-python/$SDK_WHEEL" "/work/dist-python/$RUNTIME_WHEEL"
+            mkdir -p /tmp/astro-one-sdk-manylinux-smoke
+            cd /tmp/astro-one-sdk-manylinux-smoke
+            env -u PYTHONPATH -u ASTRO_ONE_RUNTIME_MODE /tmp/astro-one-sdk/bin/python /work/scripts/smoke-python-runtime.py --scenario sdk-default --installed-wheel
+            env -u PYTHONPATH -u ASTRO_ONE_RUNTIME_MODE /tmp/astro-one-sdk/bin/python /work/scripts/smoke-python-runtime.py --scenario sdk-mcp --installed-wheel
           '
 
       - uses: actions/upload-artifact@v7

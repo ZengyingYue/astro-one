@@ -1,8 +1,8 @@
 /** Map system snapshots and conversation turns to Messages using the configured route capability. */
 
-import { LlmError, requestImageHandleText } from '@deepseek-ai/dsh-llm'
-import type { ContentBlock, GenerateOptions, ImageAttachmentAccessResolver, Message, RequestMessage } from '@deepseek-ai/dsh-llm'
-import type { ImageAttachmentRef, RequestImageAttachment } from '@deepseek-ai/dsh-attachment'
+import { LlmError, requestImageHandleText } from '@astro-one/llm'
+import type { ContentBlock, GenerateOptions, ImageAttachmentAccessResolver, Message, RequestMessage } from '@astro-one/llm'
+import type { ImageAttachmentRef, RequestImageAttachment } from '@astro-one/attachment'
 import type { DeepSeekConnectionOptions as Connection } from './types.ts'
 import type { DeepSeekFileId } from './file-id.ts'
 import { readReplay } from './replay.ts'

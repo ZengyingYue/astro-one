@@ -2,13 +2,13 @@
 /** HTML iframe ownership follows file identity and bytes, not locale or wrapping changes. */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act, cleanup, render, screen, waitFor } from '@testing-library/react'
-import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
-import { bindSnapshotSelector, stubConfigForm } from '@deepseek-ai/dsh-client-test-runtime'
-import { DeveloperToolsPreference } from '@deepseek-ai/dsh-client-ui-settings/src/client/developer-tools.ts'
-import type { DeveloperToolsSettings } from '@deepseek-ai/dsh-client-ui-settings/src/developer-tools-settings.ts'
-import type { Resources, ResourceSnapshot } from '@deepseek-ai/dsh-client-resources/client'
-import type { WorkspaceFileStat } from '@deepseek-ai/dsh-api-workspace-files/types'
-import type { SessionId } from '@deepseek-ai/dsh-session/types'
+import { createSnapshotStore } from '@astro-one/client-store'
+import { bindSnapshotSelector, stubConfigForm } from '@astro-one/client-test-runtime'
+import { DeveloperToolsPreference } from '@astro-one/client-ui-settings/src/client/developer-tools.ts'
+import type { DeveloperToolsSettings } from '@astro-one/client-ui-settings/src/developer-tools-settings.ts'
+import type { Resources, ResourceSnapshot } from '@astro-one/client-resources/client'
+import type { WorkspaceFileStat } from '@astro-one/api-workspace-files/types'
+import type { SessionId } from '@astro-one/session/types'
 import { TextPreview } from '../src/client/TextPreview.tsx'
 import type { DocumentBodyOwner } from '../src/client/document/contract.ts'
 import { textFace } from '../src/client/face.ts'
@@ -46,7 +46,7 @@ function props(text = '<p>hello</p>'): HtmlBodyProps {
   const signal = new AbortController().signal
   return {
     useInteractivePreview: select => select(true),
-    resourceAddress: 'dsh-resource://file/session/html/index.html',
+    resourceAddress: 'astro-one-resource://file/session/html/index.html',
     content: { kind: 'bytes', data: utf8(text) },
     wrap: false,
     sessionId: 'html' as SessionId,
@@ -204,7 +204,7 @@ describe('HtmlBody', () => {
     expect(await screen.findByTitle(en.frame)).not.toBe(first)
     expect(first.isConnected).toBe(false)
     expect(revoke).toHaveBeenCalledWith('blob:https://preview.invalid/1')
-    view.rerender(<HtmlBody {...changed} resourceAddress="dsh-resource://file/session/html/other.html" />)
+    view.rerender(<HtmlBody {...changed} resourceAddress="astro-one-resource://file/session/html/other.html" />)
     await screen.findByTitle(en.frame)
     expect(revoke).toHaveBeenCalledWith('blob:https://preview.invalid/2')
     view.unmount()

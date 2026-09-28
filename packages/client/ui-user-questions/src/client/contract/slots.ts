@@ -1,21 +1,21 @@
 /** Question composer props and one pending Remote waterfall response. */
-import type { PropsLocale, PropsRenderSlots, PropsRuntime, PropsStore } from '@deepseek-ai/dsh-client-ui-slots'
+import type { PropsLocale, PropsRenderSlots, PropsRuntime, PropsStore } from '@astro-one/client-ui-slots'
 // The client module declares the conversation.composer SlotMap entry required by PropsRuntime.
-import type { ToolCallId } from '@deepseek-ai/dsh-llm/brand'
-import type { SessionId } from '@deepseek-ai/dsh-session/types'
+import type { ToolCallId } from '@astro-one/llm/brand'
+import type { SessionId } from '@astro-one/session/types'
 import type {
   AskUserQuestionAnswer, AskUserQuestionItem,
-} from '@deepseek-ai/dsh-user-questions'
+} from '@astro-one/user-questions'
 import type { createQuestionDraftStore } from '../draft-store.ts'
 
-declare module '@deepseek-ai/dsh-client-ui-session/client' {
+declare module '@astro-one/client-ui-session/client' {
   interface SessionPendingInteractionMap {
     /** Pending question or plan-review request. */
     question: PendingQuestion
   }
 }
 
-declare module '@deepseek-ai/dsh-client-ui-slots' {
+declare module '@astro-one/client-ui-slots' {
   interface SlotMap {
     /** Actions for the exact plan under review; approval remains with the question composer. */
     'conversation.plan-review.actions': { kind: 'list'; scope: 'session'; owner: { review: PlanReview; requestKey: PendingQuestion['key'] } }

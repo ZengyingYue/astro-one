@@ -1,22 +1,22 @@
 /** Workspace archive and directory UI capability. */
 
-import { Service, type Context } from '@deepseek-ai/cordis'
-import type { ClientRemote, DirectoryListing, RemoteFailure } from '@deepseek-ai/dsh-api-remotes/client'
+import { Service, type Context } from '@astro-one/cordis'
+import type { ClientRemote, DirectoryListing, RemoteFailure } from '@astro-one/api-remotes/client'
 import type {
   ISessions,
   SessionCreateError,
   SessionReference,
   SessionTarget,
   SessionListState,
-} from '@deepseek-ai/dsh-api-session-controller/client'
-import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
-import type { SubagentAddress } from '@deepseek-ai/dsh-subagent/client'
+} from '@astro-one/api-session-controller/client'
+import { createSnapshotStore } from '@astro-one/client-store'
+import type { SubagentAddress } from '@astro-one/subagent/client'
 import type {
   IWorkspaces, WorkspaceId, WorkspaceSnapshot, WorkspaceView,
-} from '@deepseek-ai/dsh-api-workspace-controller/client'
-import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import type {} from '@deepseek-ai/dsh-client-ui-layout/client'
-import type {} from '@deepseek-ai/dsh-client-locale/client'
+} from '@astro-one/api-workspace-controller/client'
+import type { SessionId } from '@astro-one/session/types'
+import type {} from '@astro-one/client-ui-layout/client'
+import type {} from '@astro-one/client-locale/client'
 import type { RowToast } from './contract/slots.ts'
 import { en, zh } from './locales.ts'
 import { pinOrderAccounts, pinOrderSource } from './pin-order.ts'
@@ -106,7 +106,7 @@ export interface UiWorkspace {
   createDirectory(path: string, name: string): Promise<string>
 }
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     /** Cross-Controller Workspace navigation and directory UI capability. */
     uiWorkspace: UiWorkspace
@@ -128,7 +128,7 @@ class UiWorkspaceService extends Service implements UiWorkspace {
   private readonly connecting = new Map<WorkspaceId, Promise<SessionId>>()
   private readonly lifetime = new AbortController()
   private readonly selection = createSnapshotStore<MainSelection>(
-    {}, { persist: { name: 'dsh.sessions.current' } },
+    {}, { persist: { name: 'astro-one.sessions.current' } },
   )
   private mainReference: SessionReference | undefined
 

@@ -1,9 +1,9 @@
 /** Native directory flow using the local desktop bridge or the Host's OS chooser. */
-import type { Context as ClientContext } from '@deepseek-ai/cordis'
+import type { Context as ClientContext } from '@astro-one/cordis'
 // Type-only: pulls the SlotMap merge declaring the directory-flow holes.
-import type {} from '@deepseek-ai/dsh-client-ui-workspace/client'
+import type {} from '@astro-one/client-ui-workspace/client'
 // Type-only: pulls the SlotRegistry service merge (ctx.slots).
-import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
+import type {} from '@astro-one/client-ui-renderer/client'
 import type { NativeFlowInjected } from './flow.ts'
 import { NativeDirectoryFlow } from './flow.ts'
 
@@ -19,8 +19,8 @@ export const inject = ['slots', 'uiWorkspace']
  */
 export function apply(ctx: ClientContext): void {
   const desktop = (globalThis as typeof globalThis & {
-    __DSH_DIRECTORY_PICKER__?: NativeFlowInjected
-  }).__DSH_DIRECTORY_PICKER__
+    __ASTRO_ONE_DIRECTORY_PICKER__?: NativeFlowInjected
+  }).__ASTRO_ONE_DIRECTORY_PICKER__
   const pick = desktop === undefined ? () => ctx.uiWorkspace.pickDirectory() : () => desktop.pick()
   const injected = (): NativeFlowInjected => ({ pick })
   // Both declaration lifetimes must be live before the pair installs; the

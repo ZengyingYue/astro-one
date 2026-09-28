@@ -4,7 +4,7 @@ vi.mock('../src/web-document.ts', () => ({ authenticateWebHost: async () => 'tes
 import { afterEach, expect, it, vi } from 'vitest'
 import type { BrowserWindowConstructorOptions } from 'electron'
 import type { DesktopLocale } from '../src/locale.ts'
-import type { AccountView } from '@deepseek-ai/dsh-deepseek-account/types'
+import type { AccountView } from '@astro-one/deepseek-account/types'
 import type { WelcomeOperations } from '../src/welcome-api.ts'
 import { DESKTOP_IPC } from '../src/ipc.ts'
 
@@ -62,7 +62,7 @@ vi.mock('electron', () => ({
   BrowserWindow: class {
     constructor(options: BrowserWindowConstructorOptions) { state.windowOptions = options }
     private ready: (() => void) | undefined
-    webContents = { mainFrame: { url: 'dsh-app://app/' }, setWindowOpenHandler: vi.fn(), on: vi.fn(), once: vi.fn(), send: vi.fn(), openDevTools: vi.fn() }
+    webContents = { mainFrame: { url: 'astro-one-app://app/' }, setWindowOpenHandler: vi.fn(), on: vi.fn(), once: vi.fn(), send: vi.fn(), openDevTools: vi.fn() }
     static getAllWindows() { return [] }
     once(name: string, callback: () => void) { if (name === 'ready-to-show') this.ready = callback; return this }
     on() { return this }
@@ -144,22 +144,22 @@ afterEach(() => {
 
 it('starts the Host for welcome onboarding and opens the workspace on skip without quitting', async () => {
   vi.useFakeTimers()
-  vi.stubEnv('DSH_DESKTOP_DEV_PROJECT_DIR', '/development-profile')
-  vi.stubEnv('DSH_DESKTOP_NODE_BINARY', '/runtime/node')
-  vi.stubEnv('DSH_DESKTOP_PNPM_ENTRY', '/runtime/pnpm')
-  vi.stubEnv('DSH_DESKTOP_DSH_DIR', '/runtime/dsh')
-  vi.stubEnv('DSH_DESKTOP_PRIMARY_RUNTIME_DIR', '/runtime/primary-runtime')
-  vi.stubEnv('DSH_DESKTOP_HOST_INSPECT_PORT', undefined)
-  vi.stubEnv('DSH_DESKTOP_OPEN_DEVTOOLS', '0')
-  vi.stubEnv('DSH_DESKTOP_MANDATORY_UPDATE_CONFIG', undefined)
-  vi.stubEnv('DSH_DESKTOP_UPDATE_JOURNAL_DIR', undefined)
+  vi.stubEnv('ASTRO_ONE_DESKTOP_DEV_PROJECT_DIR', '/development-profile')
+  vi.stubEnv('ASTRO_ONE_DESKTOP_NODE_BINARY', '/runtime/node')
+  vi.stubEnv('ASTRO_ONE_DESKTOP_PNPM_ENTRY', '/runtime/pnpm')
+  vi.stubEnv('ASTRO_ONE_DESKTOP_ASTRO_ONE_DIR', '/runtime/astro-one')
+  vi.stubEnv('ASTRO_ONE_DESKTOP_PRIMARY_RUNTIME_DIR', '/runtime/primary-runtime')
+  vi.stubEnv('ASTRO_ONE_DESKTOP_HOST_INSPECT_PORT', undefined)
+  vi.stubEnv('ASTRO_ONE_DESKTOP_OPEN_DEVTOOLS', '0')
+  vi.stubEnv('ASTRO_ONE_DESKTOP_MANDATORY_UPDATE_CONFIG', undefined)
+  vi.stubEnv('ASTRO_ONE_DESKTOP_UPDATE_JOURNAL_DIR', undefined)
   const reading = Promise.withResolvers<undefined>()
   const loading = Promise.withResolvers<undefined>()
   state.beforeRead.mockReturnValueOnce(reading.promise)
   state.beforeWelcome.mockReturnValueOnce(loading.promise)
   const activate = () => {
     state.appListeners.get('second-instance')!()
-    state.appListeners.get('open-url')!({ preventDefault: vi.fn() }, 'dsh://open')
+    state.appListeners.get('open-url')!({ preventDefault: vi.fn() }, 'astro-one://open')
   }
   await import('../src/main.ts')
   await vi.waitFor(() => { expect(state.beforeRead).toHaveBeenCalledOnce() })
@@ -176,7 +176,7 @@ it('starts the Host for welcome onboarding and opens the workspace on skip witho
   }
   await vi.waitFor(() => { expect(state.operations).toBeDefined() })
   expect(state.startHost).toHaveBeenCalledOnce()
-  expect(state.loadWorkspace).toHaveBeenCalledExactlyOnceWith('dsh-app://app/')
+  expect(state.loadWorkspace).toHaveBeenCalledExactlyOnceWith('astro-one-app://app/')
   expect(state.showWorkspace).not.toHaveBeenCalled()
   state.loadWorkspace.mockClear()
   expect(state.welcomeLocale).toMatchObject({ id: 'zh-CN' })

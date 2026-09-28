@@ -1,17 +1,17 @@
 /**
  * Computer use through the in-process Cua Driver native SDK and its own tools.
- * @module @deepseek-ai/dsh-experimental-computer-use-cua-driver-native
+ * @module @astro-one/experimental-computer-use-cua-driver-native
  */
 
-import type { Context } from '@deepseek-ai/cordis'
-import Schema from '@deepseek-ai/schemastery'
-import { ComputerUseProviderName } from '@deepseek-ai/dsh-computer-use/brand'
-import { createMcpToolDefinition } from '@deepseek-ai/dsh-mcp-client'
+import type { Context } from '@astro-one/cordis'
+import Schema from '@astro-one/schemastery'
+import { ComputerUseProviderName } from '@astro-one/computer-use/brand'
+import { createMcpToolDefinition } from '@astro-one/mcp-client'
 import { z } from 'zod'
 import type { CuaDriver as NativeDriver } from '@trycua/cua-driver'
-import type {} from '@deepseek-ai/dsh-computer-use'
-import type {} from '@deepseek-ai/dsh-system-prompt'
-import type {} from '@deepseek-ai/dsh-tools'
+import type {} from '@astro-one/computer-use'
+import type {} from '@astro-one/system-prompt'
+import type {} from '@astro-one/tools'
 
 /** Cordis plugin identity for the native Cua Driver provider. */
 export const name = 'experimental-computer-use-cua-driver-native'

@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-host-product-telemetry-otel",
+  "name": "@astro-one/host-product-telemetry-otel",
   "description": "Explicit product usage events exported through OpenTelemetry HTTP logs",
   "version": "0.1.7-rc.1",
   "publishConfig": {
@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/host/product-telemetry-otel"
   },
   "type": "module",
@@ -27,7 +27,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@deepseek-ai/schemastery": "workspace:~",
+    "@astro-one/schemastery": "workspace:~",
     "@opentelemetry/api": "^1.9.1",
     "@opentelemetry/api-logs": "^0.220.0",
     "@opentelemetry/core": "2.9.0",
@@ -37,12 +37,12 @@
     "@opentelemetry/sdk-logs": "^0.220.0"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/cordis": "workspace:~"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/cordis-plugin-loader": "workspace:~",
-    "@deepseek-ai/dsh-app-boot": "workspace:*",
-    "@deepseek-ai/dsh-loader-smoke": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/app-boot": "workspace:*",
+    "@astro-one/loader-smoke": "workspace:*"
   }
 }

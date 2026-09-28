@@ -2,24 +2,24 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { Context } from '@deepseek-ai/cordis'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import { mountAgentLoopTestDependencies } from '@deepseek-ai/dsh-agent-loop-testkit'
-import { ToolCallId, createUserMessage } from '@deepseek-ai/dsh-llm'
-import { scopeOf } from '@deepseek-ai/dsh-scope'
-import { SessionId, SessionLogOffset } from '@deepseek-ai/dsh-session'
-import JsonlSessionPersistence from '@deepseek-ai/dsh-session-persistence-jsonl'
-import SessionQueryEngine from '@deepseek-ai/dsh-session-query'
-import SubagentService from '@deepseek-ai/dsh-subagent'
-import * as SubagentFork from '@deepseek-ai/dsh-subagent-fork-in-process'
-import * as SubagentSpawn from '@deepseek-ai/dsh-subagent-spawn-in-process'
-import { renderPrompt, renderContextSnapshot } from '@deepseek-ai/dsh-system-prompt'
-import * as ToolSubagentControl from '@deepseek-ai/dsh-tool-subagent-control'
-import { defineContentToolFixture } from '@deepseek-ai/dsh-tools'
-import { resolveAdapterOptions } from '@deepseek-ai/dsh-llm-deepseek'
-import { serialize } from '@deepseek-ai/dsh-llm-deepseek/src/serialize.ts'
-import type { GenerateOptions } from '@deepseek-ai/dsh-llm'
+import { Context } from '@astro-one/cordis'
+import type { Agent } from '@astro-one/agent'
+import AgentLoop from '@astro-one/agent-loop'
+import { mountAgentLoopTestDependencies } from '@astro-one/agent-loop-testkit'
+import { ToolCallId, createUserMessage } from '@astro-one/llm'
+import { scopeOf } from '@astro-one/scope'
+import { SessionId, SessionLogOffset } from '@astro-one/session'
+import JsonlSessionPersistence from '@astro-one/session-persistence-jsonl'
+import SessionQueryEngine from '@astro-one/session-query'
+import SubagentService from '@astro-one/subagent'
+import * as SubagentFork from '@astro-one/subagent-fork-in-process'
+import * as SubagentSpawn from '@astro-one/subagent-spawn-in-process'
+import { renderPrompt, renderContextSnapshot } from '@astro-one/system-prompt'
+import * as ToolSubagentControl from '@astro-one/tool-subagent-control'
+import { defineContentToolFixture } from '@astro-one/tools'
+import { resolveAdapterOptions } from '@astro-one/llm-deepseek'
+import { serialize } from '@astro-one/llm-deepseek/src/serialize.ts'
+import type { GenerateOptions } from '@astro-one/llm'
 import { MockAdapter, textResponse, toolCallResponse } from '../../../core/agent-loop/tests/mock-adapter.ts'
 import TeamService from '../../agent-team/src/index.ts'
 import * as toolTeam from '../src/index.ts'
@@ -67,7 +67,7 @@ async function setup(script: ConstructorParameters<typeof MockAdapter>[0], legac
   const ctx = new Context()
   contexts.add(ctx)
   await mountAgentLoopTestDependencies(ctx)
-  const storageRoot = mkdtempSync(join(tmpdir(), 'dsh-tool-team-'))
+  const storageRoot = mkdtempSync(join(tmpdir(), 'astro-one-tool-team-'))
   roots.push(storageRoot)
   await ctx.plugin(JsonlSessionPersistence, { root: storageRoot })
   await ctx.plugin(TestSessionQuery)
@@ -134,7 +134,7 @@ async function waitNoAgent(ctx: Context, id: SessionId): Promise<void> {
   await vi.waitFor(() => { expect(ctx.agents.get(id)).toBeUndefined() }, { timeout: 5_000 })
 }
 
-describe('dsh-tool-team', () => {
+describe('astro-one-tool-team', () => {
   it.each(['running', 'inactive', 'provisioning', 'failed'] as const)(
     'projects %s members consistently in creation, listing, and schemas', async (status) => {
       const { ctx, lead } = await setup([])

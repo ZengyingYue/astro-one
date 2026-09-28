@@ -57,8 +57,8 @@ describe('ToolRow.module.css summary line', () => {
     // tier (one step under the body), matching think text.
     for (const selector of ['.summary', '.summarySuffix', '.fileLink']) {
       expect(declarations(selector)).toEqual(expect.arrayContaining([
-        'font-size: var(--dsh-content-font-size-secondary, 13px)',
-        'line-height: calc(24px + var(--dsh-content-font-delta, 0px))',
+        'font-size: var(--astro-one-content-font-size-secondary, 13px)',
+        'line-height: calc(24px + var(--astro-one-content-font-delta, 0px))',
       ]))
     }
   })

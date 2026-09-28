@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-shell-env",
-  "description": "Tool-independent managed DSH_* shell environment registry",
+  "name": "@astro-one/shell-env",
+  "description": "Tool-independent managed ASTRO_ONE_* shell environment registry",
   "version": "0.1.7-rc.1",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/shell/shell-env"
   },
   "type": "module",
@@ -27,22 +27,22 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-app-boot": "workspace:*",
-    "@deepseek-ai/dsh-home-paths": "workspace:*",
-    "@deepseek-ai/dsh-shell": "workspace:*",
-    "@deepseek-ai/dsh-tools": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/app-boot": "workspace:*",
+    "@astro-one/home-paths": "workspace:*",
+    "@astro-one/shell": "workspace:*",
+    "@astro-one/tools": "workspace:*"
   },
   "dependencies": {
-    "@deepseek-ai/schemastery": "workspace:~"
+    "@astro-one/schemastery": "workspace:~"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-agent": "workspace:*",
-    "@deepseek-ai/dsh-app-boot": "workspace:*",
-    "@deepseek-ai/dsh-home-paths": "workspace:*",
-    "@deepseek-ai/dsh-llm": "workspace:*",
-    "@deepseek-ai/dsh-shell": "workspace:*",
-    "@deepseek-ai/dsh-tools": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/app-boot": "workspace:*",
+    "@astro-one/home-paths": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/shell": "workspace:*",
+    "@astro-one/tools": "workspace:*"
   }
 }

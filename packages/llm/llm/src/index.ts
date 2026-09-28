@@ -3,12 +3,12 @@
  * API. Exports the `LlmRuntime` default, the abstract `LlmAdapter` for
  * provider backends, and `BlockAssembler` for chunk assembly.
  *
- * @module @deepseek-ai/dsh-llm
+ * @module @astro-one/llm
  */
 
-import { Context } from '@deepseek-ai/cordis'
-import { Remote, RemoteError, TypertRemoteService } from '@deepseek-ai/dsh-typert-protocol'
-import { deepFreeze } from '@deepseek-ai/dsh-util-values'
+import { Context } from '@astro-one/cordis'
+import { Remote, RemoteError, TypertRemoteService } from '@astro-one/typert-protocol'
+import { deepFreeze } from '@astro-one/util-values'
 import type {
   GenerateOptions,
   RequestMessage,
@@ -37,7 +37,7 @@ import { normalizeApiKey } from './api-key.ts'
 import {
   contentHasFile, contentHasImage, fileHandleText, projectFilesToText, projectImagesForTextModel,
 } from './content.ts'
-import type { FileAttachmentRef } from '@deepseek-ai/dsh-attachment'
+import type { FileAttachmentRef } from '@astro-one/attachment'
 
 export * from './attribution.ts'
 export * from './brand.ts'
@@ -52,7 +52,7 @@ export { BlockAssembler } from './assembler.ts'
 export { callConfigEquals, isAgentLoopRequest, markAgentLoopRequest } from './call-config.ts'
 export type { LlmCallConfig, LlmCallConfigAdapterDefaults } from './call-config.ts'
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     llm: LlmRuntime
   }
@@ -1003,7 +1003,7 @@ export class LlmRuntime extends TypertRemoteService {
       return undefined
     }
     if (hostPath === undefined) return undefined
-    // Structural face: dsh-llm cannot depend on the filesystem package, and
+    // Structural face: astro-one-llm cannot depend on the filesystem package, and
     // only this one mapping method is consumed.
     const fs = this.ctx.get('fs') as { processPathFromHostPath(hostPath: string): string | undefined } | undefined
     return fs?.processPathFromHostPath(hostPath)

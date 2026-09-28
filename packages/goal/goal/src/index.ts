@@ -1,21 +1,21 @@
 /**
  * Same-session goal domain: event-sourced state, compare-and-set mutations,
  * and process-local continuation activation.
- * @module @deepseek-ai/dsh-goal
+ * @module @astro-one/goal
  */
 
 import { randomUUID } from 'node:crypto'
-import { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
+import { Context } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
 import { z as zod } from 'zod'
 import type { ZodType } from 'zod'
-import { agentEvents } from '@deepseek-ai/dsh-agent'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import { SessionSeq } from '@deepseek-ai/dsh-session'
-import type { Session, SessionEvent, SessionLogOffset } from '@deepseek-ai/dsh-session'
-import { TypertRemoteService, Remote } from '@deepseek-ai/dsh-typert-protocol'
-import type {} from '@deepseek-ai/dsh-session-projection'
-import type { ProjectionDefinition } from '@deepseek-ai/dsh-session-projection'
+import { agentEvents } from '@astro-one/agent'
+import type { Agent } from '@astro-one/agent'
+import { SessionSeq } from '@astro-one/session'
+import type { Session, SessionEvent, SessionLogOffset } from '@astro-one/session'
+import { TypertRemoteService, Remote } from '@astro-one/typert-protocol'
+import type {} from '@astro-one/session-projection'
+import type { ProjectionDefinition } from '@astro-one/session-projection'
 import {
   applyGoalEvent,
   goalChangeRef,
@@ -56,7 +56,7 @@ export type * from './domain.ts'
 export { GOAL_CHANGE_VERSION, GoalError, GoalId } from './runtime.ts'
 export { decodeGoalChange, foldGoal, goalChangeRef } from './fold.ts'
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     goals: GoalService
   }

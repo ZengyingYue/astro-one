@@ -48,7 +48,7 @@ describe.skipIf(MODE === 'record')('web e2e: default Workspace', () => {
         const sessionId = await settled
         const workspace = scaffold.ctx.workspaceRegistry.list()[0]!
         expect(workspace.title).toBe('Default workspace')
-        expect(workspace.path).toBe(join(scaffold.workspaceCwd, 'Documents', 'deepseek-harness', 'Default workspace'))
+        expect(workspace.path).toBe(join(scaffold.workspaceCwd, 'Documents', 'astro-one', 'Default workspace'))
         expect((await stat(workspace.path)).isDirectory()).toBe(true)
         expect(workspace.sessionIds).toContain(sessionId)
         expect(scaffold.ctx.sessions.get(sessionId)?.header.cwd).toBe(workspace.path)
@@ -69,7 +69,7 @@ describe.skipIf(MODE === 'record')('web e2e: default Workspace', () => {
   it('reports a startup directory conflict and opens the composed folder picker for recovery', async () => {
     const scaffold = await launchWebScaffold({ firstUse: true })
     onTestFinished(() => scaffold.close())
-    const parent = join(scaffold.workspaceCwd, 'Documents', 'deepseek-harness')
+    const parent = join(scaffold.workspaceCwd, 'Documents', 'astro-one')
     await mkdir(parent, { recursive: true })
     await writeFile(join(parent, '默认工作区'), 'occupied')
     const chosen = join(scaffold.workspaceCwd, 'chosen')

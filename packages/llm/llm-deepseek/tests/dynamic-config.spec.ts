@@ -1,10 +1,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { Context, Service } from '@deepseek-ai/cordis'
+import { Context, Service } from '@astro-one/cordis'
 import { access, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import LlmRuntime, { createUserMessage, INVALID_CREDENTIAL_CODE } from '@deepseek-ai/dsh-llm'
-import AttachmentStore, { AttachmentId, ImageVariantId } from '@deepseek-ai/dsh-attachment'
+import LlmRuntime, { createUserMessage, INVALID_CREDENTIAL_CODE } from '@astro-one/llm'
+import AttachmentStore, { AttachmentId, ImageVariantId } from '@astro-one/attachment'
 import type {
   ImageAttachmentLimits,
   ImageAttachmentRef,
@@ -12,16 +12,16 @@ import type {
   RequestImageAttachment,
   SaveImageAttachment,
   StoredImageAttachment,
-} from '@deepseek-ai/dsh-attachment'
-import { credentialRef } from '@deepseek-ai/dsh-credentials'
-import { LocalCredentialProvider } from '@deepseek-ai/dsh-credentials-local'
+} from '@astro-one/attachment'
+import { credentialRef } from '@astro-one/credentials'
+import { LocalCredentialProvider } from '@astro-one/credentials-local'
 import { liveConfig } from '../../../settings/settings/tests/live-config.ts'
-import * as LlmDeepSeek from '@deepseek-ai/dsh-llm-deepseek'
-import type { ContextFormed } from '@deepseek-ai/dsh-llm'
+import * as LlmDeepSeek from '@astro-one/llm-deepseek'
+import type { ContextFormed } from '@astro-one/llm'
 import { assemble } from './assemble.ts'
 import { closeMockServers, mockServer, textEvents } from './mock-server.ts'
 
-declare module '@deepseek-ai/dsh-llm' {
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
     'test': { kind: 'test' } & ContextFormed
   }
@@ -36,8 +36,8 @@ const IMAGE_REF: ImageAttachmentRef = {
   width: 1,
   height: 1,
 }
-const HOST_IMAGE_PATH = '/host/.dsh/attachments/objects/aa/object'
-const MODEL_IMAGE_PATH = '/model/.dsh/attachments/objects/aa/object'
+const HOST_IMAGE_PATH = '/host/.astro-one/attachments/objects/aa/object'
+const MODEL_IMAGE_PATH = '/model/.astro-one/attachments/objects/aa/object'
 
 class MappedFileSystem extends Service {
   constructor(ctx: Context) {
@@ -104,7 +104,7 @@ afterEach(async () => {
 })
 
 async function home(): Promise<string> {
-  const dir = await mkdtemp(join(tmpdir(), 'dsh-llm-dynamic-'))
+  const dir = await mkdtemp(join(tmpdir(), 'astro-one-llm-dynamic-'))
   cleanups.push(() => rm(dir, { recursive: true, force: true }))
   return dir
 }
@@ -120,7 +120,7 @@ interface Harness {
  * file watching is the providers' own covered concern.
  */
 async function boot(dir: string, config: object): Promise<Harness> {
-  vi.stubEnv('DSH_HOME', dir)
+  vi.stubEnv('ASTRO_ONE_HOME', dir)
   const ctx = new Context()
   cleanups.push(async () => {
     await ctx.fiber.dispose()

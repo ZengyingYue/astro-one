@@ -1,18 +1,18 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import AgentRegistry, { installModelSelection, type Agent, type ModelSelectionRef } from '@deepseek-ai/dsh-agent'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import LlmRuntime, { createUserMessage, LlmError, type GenerateOptions } from '@deepseek-ai/dsh-llm'
-import { toPiContext } from '@deepseek-ai/dsh-llm-pi-ai/src/context.ts'
-import SessionStore, { Session, SessionId } from '@deepseek-ai/dsh-session'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime, { defineContentToolFixture } from '@deepseek-ai/dsh-tools'
+import { Context } from '@astro-one/cordis'
+import AgentRegistry, { installModelSelection, type Agent, type ModelSelectionRef } from '@astro-one/agent'
+import AgentLoop from '@astro-one/agent-loop'
+import LlmRuntime, { createUserMessage, LlmError, type GenerateOptions } from '@astro-one/llm'
+import { toPiContext } from '@astro-one/llm-pi-ai/src/context.ts'
+import SessionStore, { Session, SessionId } from '@astro-one/session'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import SystemPrompt from '@astro-one/system-prompt'
+import ToolRuntime, { defineContentToolFixture } from '@astro-one/tools'
 import { MockAdapter, textResponse } from './mock-adapter.ts'
 
-declare module '@deepseek-ai/dsh-llm' {
+declare module '@astro-one/llm' {
   interface MessageSourceMap {
-    'test-compaction': { kind: 'test-compaction' } & import('@deepseek-ai/dsh-llm').ContextFormed
+    'test-compaction': { kind: 'test-compaction' } & import('@astro-one/llm').ContextFormed
   }
 }
 

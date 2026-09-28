@@ -2,37 +2,37 @@ import { randomUUID } from 'node:crypto'
 import { chmod, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { Context } from '@deepseek-ai/cordis'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import { mountAgentLoopTestDependencies } from '@deepseek-ai/dsh-agent-loop-testkit'
-import { SandboxBashExecutor } from '@deepseek-ai/dsh-bash-sandbox'
-import { NodePtcRuntime } from '@deepseek-ai/dsh-ptc-runtime-node'
-import * as FsObservationPolicy from '@deepseek-ai/dsh-fs-observation-policy'
-import { SandboxedFileSystem } from '@deepseek-ai/dsh-fs-sandbox'
+import { Context } from '@astro-one/cordis'
+import type { Agent } from '@astro-one/agent'
+import AgentLoop from '@astro-one/agent-loop'
+import { mountAgentLoopTestDependencies } from '@astro-one/agent-loop-testkit'
+import { SandboxBashExecutor } from '@astro-one/bash-sandbox'
+import { NodePtcRuntime } from '@astro-one/ptc-runtime-node'
+import * as FsObservationPolicy from '@astro-one/fs-observation-policy'
+import { SandboxedFileSystem } from '@astro-one/fs-sandbox'
 import {
   createUserMessage, isAgentLoopRequest, ToolCallId,
   type StreamChunk,
-} from '@deepseek-ai/dsh-llm'
-import * as LlmDeepSeek from '@deepseek-ai/dsh-llm-deepseek'
-import PermissionPresetService, { AUTO_PRESET } from '@deepseek-ai/dsh-permission-presets'
-import SandboxProvider, { type ConfinedArgv, type SandboxPolicy } from '@deepseek-ai/dsh-sandbox'
-import SandboxPolicyService from '@deepseek-ai/dsh-sandbox-policy'
-import { SessionId, type SessionEvent } from '@deepseek-ai/dsh-session'
-import * as ShellEnv from '@deepseek-ai/dsh-shell-env'
-import LocalSubprocessRuntime from '@deepseek-ai/dsh-subprocess-local'
-import * as ToolBash from '@deepseek-ai/dsh-tool-bash'
-import * as ToolFs from '@deepseek-ai/dsh-tool-fs'
-import { RUN_CODE_NAME } from '@deepseek-ai/dsh-tools'
-import ApprovalService from '@deepseek-ai/dsh-user-approval'
+} from '@astro-one/llm'
+import * as LlmDeepSeek from '@astro-one/llm-deepseek'
+import PermissionPresetService, { AUTO_PRESET } from '@astro-one/permission-presets'
+import SandboxProvider, { type ConfinedArgv, type SandboxPolicy } from '@astro-one/sandbox'
+import SandboxPolicyService from '@astro-one/sandbox-policy'
+import { SessionId, type SessionEvent } from '@astro-one/session'
+import * as ShellEnv from '@astro-one/shell-env'
+import LocalSubprocessRuntime from '@astro-one/subprocess-local'
+import * as ToolBash from '@astro-one/tool-bash'
+import * as ToolFs from '@astro-one/tool-fs'
+import { RUN_CODE_NAME } from '@astro-one/tools'
+import ApprovalService from '@astro-one/user-approval'
 import { expect, it, vi } from 'vitest'
-import * as AutoReview from '@deepseek-ai/dsh-experimental-auto-review'
+import * as AutoReview from '@astro-one/experimental-auto-review'
 
 const PROVIDER = 'deepseek-official'
 const FLASH = 'deepseek-v4-flash'
 const PRO = 'deepseek-v4-pro'
 const VISION = 'deepseek-v4-flash-vision-exp'
-const REAL = process.env.DSH_AUTO_REVIEW_CERTIFICATION === '1'
+const REAL = process.env.ASTRO_ONE_AUTO_REVIEW_CERTIFICATION === '1'
 const DENIED = 'AUTO_REVIEW_DENIED'
 type Risk = 'low' | 'medium' | 'high'
 type Decision = 'allow' | 'deny'
@@ -128,7 +128,7 @@ async function* observe(
   observations.push(observation)
 }
 
-async function mount(ctx: Context, workspace: string, dshHome: string): Promise<void> {
+async function mount(ctx: Context, workspace: string, astroOneHome: string): Promise<void> {
   await mountAgentLoopTestDependencies(ctx, {
     systemPrompt: {}, tools: { mode: 'both' },
   })
@@ -139,7 +139,7 @@ async function mount(ctx: Context, workspace: string, dshHome: string): Promise<
   await ctx.plugin(SandboxedFileSystem, { cwd: workspace })
   await ctx.plugin(FsObservationPolicy)
   await ctx.plugin(LocalSubprocessRuntime)
-  await ctx.plugin(ShellEnv, { dshHome })
+  await ctx.plugin(ShellEnv, { astroOneHome })
   await ctx.plugin(SandboxBashExecutor, { cwd: workspace, timeoutMs: 30_000 })
   await ctx.plugin(ApprovalService, { policy: 'ask' })
   await ctx.plugin(PermissionPresetService, {
@@ -245,16 +245,16 @@ it('certifies eight Auto risk/authorization cases with zero retries and zero ski
   retry: 0, timeout: 1_800_000,
 }, async () => {
   if (REAL && !process.env.DEEPSEEK_API_KEY) throw new Error('Real Auto certification requires DEEPSEEK_API_KEY')
-  const root = await mkdtemp(join(tmpdir(), 'dsh-auto-review-'))
+  const root = await mkdtemp(join(tmpdir(), 'astro-one-auto-review-'))
   const ctx = new Context()
   try {
     await chmod(root, 0o700)
     const workspace = join(root, 'workspace')
-    const dshHome = join(root, 'dsh-home')
+    const astroOneHome = join(root, 'astro-one-home')
     await mkdir(workspace)
-    await mkdir(dshHome, { mode: 0o700 })
-    vi.stubEnv('DSH_HOME', dshHome)
-    await mount(ctx, workspace, dshHome)
+    await mkdir(astroOneHome, { mode: 0o700 })
+    vi.stubEnv('ASTRO_ONE_HOME', astroOneHome)
+    await mount(ctx, workspace, astroOneHome)
     const runner = orchestrate(ctx, REAL)
     const cases: CaseResult[] = []
     const runCase = async (
@@ -352,13 +352,13 @@ it('certifies eight Auto risk/authorization cases with zero retries and zero ski
 it.each(['native', 'ptc-inner'] as const)('feeds denial back, re-reviews a new call and accepts narrowed work through %s', {
   retry: 0,
 }, async (path) => {
-  const root = await mkdtemp(join(tmpdir(), 'dsh-auto-review-recovery-'))
+  const root = await mkdtemp(join(tmpdir(), 'astro-one-auto-review-recovery-'))
   const ctx = new Context()
   try {
-    const dshHome = join(root, 'home')
-    await mkdir(dshHome)
-    vi.stubEnv('DSH_HOME', dshHome)
-    await mount(ctx, root, dshHome)
+    const astroOneHome = join(root, 'home')
+    await mkdir(astroOneHome)
+    vi.stubEnv('ASTRO_ONE_HOME', astroOneHome)
+    await mount(ctx, root, astroOneHome)
     const runner = orchestrate(ctx, false)
     const target = join(root, 'existing.txt')
     await writeFile(target, 'keep\n')

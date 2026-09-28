@@ -1,11 +1,11 @@
 /**
  * Keyless snapshot coverage for the TypeScript SDK path: each scenario spawns
- * the real `dsh --profile sdk` runtime through
- * `@deepseek-ai/dsh-sdk-client`, drives one turn over stdio JSON-RPC,
+ * the real `astro-one --profile sdk` runtime through
+ * `@astro-one/sdk-client`, drives one turn over stdio JSON-RPC,
  * and pins the SDK `RunResult`, the complete notification stream, and the
  * persisted session logs. Replay serves recorded model
- * responses via `llm-replay` (`cordis.snapshot.yml`); `DSH_SNAPSHOT=record`
- * re-records against the live API; `DSH_SNAPSHOT=refresh` replays committed
+ * responses via `llm-replay` (`cordis.snapshot.yml`); `ASTRO_ONE_SNAPSHOT=record`
+ * re-records against the live API; `ASTRO_ONE_SNAPSHOT=refresh` replays committed
  * fixtures and rewrites expected outputs.
  */
 
@@ -53,15 +53,15 @@ import {
   type NormalizeContext,
   type SnapshotManifest,
   type WorkspaceSnapshotEntry,
-} from '@deepseek-ai/dsh-session-snapshot'
+} from '@astro-one/session-snapshot'
 import {
-  DeepSeekHarness,
+  AstroOne,
   type HarnessNotification,
   type NotificationSubscription,
   type RunResult,
   type SdkPromptContentBlock,
-} from '@deepseek-ai/dsh-sdk-client'
-import { SESSION_FORMAT_VERSION } from '@deepseek-ai/dsh-session'
+} from '@astro-one/sdk-client'
+import { SESSION_FORMAT_VERSION } from '@astro-one/session'
 
 const corpusRoot = fileURLToPath(new URL('../', import.meta.url))
 
@@ -75,24 +75,24 @@ const MINIMAL_BASH_DESCRIPTION = `Run commands in a bash shell
 * Please avoid commands that may produce a very large amount of output.
 * Please run long lived commands in the background, e.g. 'sleep 10 &' or start a server in the background.`
 
-const mode = process.env.DSH_SNAPSHOT ?? 'replay'
+const mode = process.env.ASTRO_ONE_SNAPSHOT ?? 'replay'
 const recording = mode === 'record'
 const refreshing = mode === 'refresh'
 const sessionWriteMode = recording ? 'record' : refreshing ? 'refresh' : 'replay'
 const RUNTIME_WORKSPACE_ENTRIES = [
   '.agents',
-  '.child-dsh',
-  '.dsh',
-  '.dsh-sdk-background-release',
+  '.child-astro-one',
+  '.astro-one',
+  '.astro-one-sdk-background-release',
   '.replay-fixtures',
   '.snapshot-patches',
 ] as const
-const dshSdkDiagnosticChildPatch = fileURLToPath(new URL(
-  './subagent-dsh-sdk-diagnostic/child.cordis.yml',
+const astroOneSdkDiagnosticChildPatch = fileURLToPath(new URL(
+  './subagent-astro-one-sdk-diagnostic/child.cordis.yml',
   import.meta.url,
 ))
-const dshSdkChildConfig = fileURLToPath(new URL(
-  '../../packages/subagent/subagent-dsh-sdk/tests/fixtures/loader/child.patch.yml',
+const astroOneSdkChildConfig = fileURLToPath(new URL(
+  '../../packages/subagent/subagent-astro-one-sdk/tests/fixtures/loader/child.patch.yml',
   import.meta.url,
 ))
 
@@ -107,8 +107,8 @@ interface SdkAssertions {
   expectedFinalResponse?: string
   /** Environment overrides passed to the runtime subprocess. */
   environment?: Readonly<Record<string, string>>
-  /** A separate DSH SDK child whose persisted session joins the evidence. */
-  dshSdkChild?: {
+  /** A separate Astro One SDK child whose persisted session joins the evidence. */
+  astroOneSdkChild?: {
     /** Profile patch materialized for the child runtime. */
     config: string
     /** Exact request configuration committed by the child runtime. */
@@ -135,25 +135,25 @@ const SDK_ASSERTIONS: Readonly<Record<string, SdkAssertions>> = {
     expectedTools: { run_code: ['code', 'description'] },
   },
   'subagent-continuable': {
-    environment: { DSH_SNAPSHOT_HUMAN_STEER: '1' },
+    environment: { ASTRO_ONE_SNAPSHOT_HUMAN_STEER: '1' },
   },
-  'subagent-dsh-sdk-diagnostic': {
-    environment: { DSH_TEST_CHILD_PATCH: dshSdkDiagnosticChildPatch },
+  'subagent-astro-one-sdk-diagnostic': {
+    environment: { ASTRO_ONE_TEST_CHILD_PATCH: astroOneSdkDiagnosticChildPatch },
   },
   'persistent-tools': {
-    environment: { DSH_SYSTEM_PROMPT: MINIMAL_SYSTEM_PROMPT },
+    environment: { ASTRO_ONE_SYSTEM_PROMPT: MINIMAL_SYSTEM_PROMPT },
     expectedTools: { bash: ['command'], str_replace_editor: ['command', 'path'] },
     expectedSystem: MINIMAL_SYSTEM_PROMPT,
     expectedToolDescriptions: { bash: MINIMAL_BASH_DESCRIPTION },
     runtimeContext: {
-      includes: ['Current DSH file policy: danger-full-access', 'Approval prompts are disabled in this session'],
+      includes: ['Current Astro One file policy: danger-full-access', 'Approval prompts are disabled in this session'],
       excludes: ['workspace-write'],
     },
   },
-  'subagent-dsh-sdk-dynamic-route': {
-    environment: { DSH_TEST_PARENT_PROVIDER: 'deepseek-official' },
-    dshSdkChild: {
-      config: dshSdkChildConfig,
+  'subagent-astro-one-sdk-dynamic-route': {
+    environment: { ASTRO_ONE_TEST_PARENT_PROVIDER: 'deepseek-official' },
+    astroOneSdkChild: {
+      config: astroOneSdkChildConfig,
       agentConfig: {
         provider: 'mock',
         model: 'mock-routed',
@@ -532,7 +532,7 @@ function authoredPatches(scenario: CorpusScenario, replaying: boolean): string[]
   ]
 }
 
-/** One SDK-controlled recorded scenario against a fresh `dsh --profile sdk` subprocess. */
+/** One SDK-controlled recorded scenario against a fresh `astro-one --profile sdk` subprocess. */
 async function runScenario(scenario: CorpusScenario): Promise<{
   results: RunResult[]
   notifications: HarnessNotification[]
@@ -543,8 +543,8 @@ async function runScenario(scenario: CorpusScenario): Promise<{
   cwd: string
 }> {
   const cwd = await mkdtemp(join(tmpdir(), `sdk-snapshot-${scenario.name}-`))
-  const dshHome = join(cwd, '.dsh')
-  const sessionsRoot = join(dshHome, 'sessions')
+  const astroOneHome = join(cwd, '.astro-one')
+  const sessionsRoot = join(astroOneHome, 'sessions')
   const replayFixtures = recording ? [] : await hydrateReplayFixtures(scenario, cwd)
   const fixtureContents = await Promise.all((await fixtureFiles(scenario)).map(file => readFile(file, 'utf8')))
   const primaryFixture = fixtureContents[0]
@@ -557,14 +557,14 @@ async function runScenario(scenario: CorpusScenario): Promise<{
     .map((patch, index) => materializeProfilePatch(patch, cwd, 'sdk', patchRoot, index))
   let childSessionsRoot: string | undefined
   let childEnvironment: Record<string, string> = {}
-  if (assertions.dshSdkChild !== undefined) {
-    const childHome = join(cwd, '.child-dsh')
-    const childPatch = materializeProfilePatch(assertions.dshSdkChild.config, cwd, 'sdk', patchRoot, patches.length)
+  if (assertions.astroOneSdkChild !== undefined) {
+    const childHome = join(cwd, '.child-astro-one')
+    const childPatch = materializeProfilePatch(assertions.astroOneSdkChild.config, cwd, 'sdk', patchRoot, patches.length)
     await mkdir(childHome, { recursive: true })
     childSessionsRoot = join(childHome, 'sessions')
     childEnvironment = {
-      DSH_TEST_CHILD_PATCHES: JSON.stringify([childPatch]),
-      DSH_TEST_CHILD_HOME: childHome,
+      ASTRO_ONE_TEST_CHILD_PATCHES: JSON.stringify([childPatch]),
+      ASTRO_ONE_TEST_CHILD_HOME: childHome,
     }
   }
   const workspaceDir = join(scenario.dir, 'workspace')
@@ -579,28 +579,28 @@ async function runScenario(scenario: CorpusScenario): Promise<{
   const [parentFixture, ...childFixtures] = replayFixtures
   const env: Record<string, string> = {
     ...Object.fromEntries(Object.entries(process.env).filter(([, value]) => value !== undefined)) as Record<string, string>,
-    DSH_SNAPSHOT: mode,
-    DSH_SNAPSHOT_PROVIDER: route.provider,
-    DSH_SNAPSHOT_MODEL: route.model,
-    DSH_TELEMETRY_DISABLED: '1',
-    DSH_AGENTS_HOME: join(cwd, '.agents'),
+    ASTRO_ONE_SNAPSHOT: mode,
+    ASTRO_ONE_SNAPSHOT_PROVIDER: route.provider,
+    ASTRO_ONE_SNAPSHOT_MODEL: route.model,
+    ASTRO_ONE_TELEMETRY_DISABLED: '1',
+    ASTRO_ONE_AGENTS_HOME: join(cwd, '.agents'),
     NODE_OPTIONS: [process.env.NODE_OPTIONS, '--disable-warning=ExperimentalWarning'].filter(Boolean).join(' '),
     ...parentFixture === undefined ? {} : {
-      DSH_SNAPSHOT_FILE: parentFixture,
-      ...childFixtures.length > 0 ? { DSH_SNAPSHOT_CHILD_FILES: childFixtures.join(delimiter) } : {},
+      ASTRO_ONE_SNAPSHOT_FILE: parentFixture,
+      ...childFixtures.length > 0 ? { ASTRO_ONE_SNAPSHOT_CHILD_FILES: childFixtures.join(delimiter) } : {},
     },
     ...!recording && scenario.manifest.replay?.override === true
-      ? { DSH_SNAPSHOT_OVERRIDE: join(scenario.dir, 'replay.override.json') }
+      ? { ASTRO_ONE_SNAPSHOT_OVERRIDE: join(scenario.dir, 'replay.override.json') }
       : {},
     ...scenario.manifest.environment,
     ...assertions.environment,
     ...childEnvironment,
   }
 
-  const harness = new DeepSeekHarness({
+  const harness = new AstroOne({
     profile: 'sdk',
     patches,
-    dshHome,
+    astroOneHome,
     processCwd: cwd,
     env,
     requestTimeoutMs: 110_000,
@@ -642,7 +642,7 @@ async function runScenario(scenario: CorpusScenario): Promise<{
           },
         })
         results.push(result)
-        if (scenario.manifest.environment?.DSH_SNAPSHOT_FEEDBACK === '1') {
+        if (scenario.manifest.environment?.ASTRO_ONE_SNAPSHOT_FEEDBACK === '1') {
           const feedback = result.events.filter(event => event.type.startsWith('feedback/'))
           expect(feedback.map(event => event.type)).toEqual([
             'feedback/record', 'feedback/record', 'feedback/message-put', 'feedback/message-put', 'feedback/message-delete',
@@ -677,8 +677,8 @@ async function runScenario(scenario: CorpusScenario): Promise<{
 }
 
 /** Order logs parent-first, children by creation time (fixture layout order). */
-function orderLogs(logs: PersistedLog[], expectedCount: number, separateDshSdkChild: boolean): PersistedLog[] {
-  if (separateDshSdkChild) {
+function orderLogs(logs: PersistedLog[], expectedCount: number, separateAstroOneSdkChild: boolean): PersistedLog[] {
+  if (separateAstroOneSdkChild) {
     expect(logs).toHaveLength(expectedCount)
     return logs
   }
@@ -737,7 +737,7 @@ async function verifyHeaders(
   scenario: CorpusScenario,
   ordered: readonly PersistedLog[],
   ctx: NormalizeContext,
-  dshSdkChildConfig?: Readonly<Record<string, unknown>>,
+  astroOneSdkChildConfig?: Readonly<Record<string, unknown>>,
 ): Promise<void> {
   const pin = headerPin(scenario)
   const [pinFixturePath] = await fixtureFiles(pin)
@@ -779,8 +779,8 @@ async function verifyHeaders(
     for (const [index, header] of headers.entries()) {
       const selectedSchemas = childSchemas.get(logIndex)?.[index]
       const base = reconstructed[index] ?? reconstructed[0]
-      const configured = logIndex === 1 && dshSdkChildConfig !== undefined
-        ? { ...base as JsonObject, config: dshSdkChildConfig }
+      const configured = logIndex === 1 && astroOneSdkChildConfig !== undefined
+        ? { ...base as JsonObject, config: astroOneSdkChildConfig }
         : base
       const expected = selectedSchemas === undefined
         ? configured
@@ -818,7 +818,7 @@ describe('TypeScript SDK snapshots over the jsonrpc runtime', () => {
       && (scenario.manifest.recording === 'authored' || scenario.manifest.sessionFormat !== undefined)
       ? it.skip
       : it
-    scenarioTest(`${mode}s ${scenario.name} through dsh --profile sdk`, async () => {
+    scenarioTest(`${mode}s ${scenario.name} through astro-one --profile sdk`, async () => {
       const scenarioDir = scenario.dir
       const retained = scenario.manifest.sessionFormat !== undefined
       const notificationsExpectedPath = join(scenarioDir, retained ? 'notifications.current.expected.jsonl' : 'notifications.expected.jsonl')
@@ -838,7 +838,7 @@ describe('TypeScript SDK snapshots over the jsonrpc runtime', () => {
       const ordered = orderLogs(
         logs,
         recording ? logs.length : files.length,
-        assertions.dshSdkChild !== undefined,
+        assertions.astroOneSdkChild !== undefined,
       )
       reconcileCatalogCreationTimes(ordered.map(log => log.content), 'validate')
       const actualContext = contextOf(ordered, cwd)
@@ -932,7 +932,7 @@ describe('TypeScript SDK snapshots over the jsonrpc runtime', () => {
       const actualSnapshots = normalizeSessionSnapshots(ordered.map(log => log.content), actualContext, { nativeWriterOutput: true })
       const expectedSnapshots = normalizeSessionSnapshots(expectedContents, expectedContext, { nativeWriterOutput: true })
       expect(actualSnapshots.map(records), `${scenario.name}: sessions`).toEqual(expectedSnapshots.map(records))
-      await verifyHeaders(scenario, ordered, actualContext, assertions.dshSdkChild?.agentConfig)
+      await verifyHeaders(scenario, ordered, actualContext, assertions.astroOneSdkChild?.agentConfig)
 
       // Genuine SDK protocol cases retain their secondary wire projections.
       const finalResult = results.at(-1)
@@ -1012,7 +1012,7 @@ describe('TypeScript SDK snapshots over the jsonrpc runtime', () => {
           for (const clause of assertions.runtimeContext.includes) expect(system).not.toContain(clause)
         }
       }
-      if (ordered.length > 1 && assertions.dshSdkChild === undefined) {
+      if (ordered.length > 1 && assertions.astroOneSdkChild === undefined) {
         expect(observedMethods.has('subagent.started')).toBe(true)
         expect(observedMethods.has('subagent.finished')).toBe(true)
       }

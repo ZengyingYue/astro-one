@@ -12,7 +12,7 @@ Status: implemented
 
 ## Decision
 
-`dsh-workspace` registry 将全局置顶与归档集合存为会话 id 数组（`pinnedSessionIds` 和 `archivedSessionIds`），并提供持久化的 `pinSession`/`unpinSession` 操作。置顶数组把最近置顶的 id 放在前面。置顶与归档互斥：归档会在同一次持久化写入中移除该会话的置顶，置顶已归档会话则以 `WorkspaceArchivedSessionPinError` 失败。
+`astro-one-workspace` registry 将全局置顶与归档集合存为会话 id 数组（`pinnedSessionIds` 和 `archivedSessionIds`），并提供持久化的 `pinSession`/`unpinSession` 操作。置顶数组把最近置顶的 id 放在前面。置顶与归档互斥：归档会在同一次持久化写入中移除该会话的置顶，置顶已归档会话则以 `WorkspaceArchivedSessionPinError` 失败。
 
 ### 完整会话顺序
 

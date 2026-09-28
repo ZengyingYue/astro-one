@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/archived/bug-fix/2026-08-12-unlink-stale-profile-fallback-links.md
-2026-08-12-unlink-stale-profile-fallback-links.md: 862030eb7019a31aa89681962254621ffe4d2c5a
-2026-08-12-unlink-stale-profile-fallback-links.zh.md: 59f0f1827a7c1c3425f9bc7937b4942890e77e75
+2026-08-12-unlink-stale-profile-fallback-links.md: 7ad61b4834b0bd42abf2c4c1afcb7a74a5f1b255
+2026-08-12-unlink-stale-profile-fallback-links.zh.md: dd014d5811f794974e167b76c5fe4c4e9f290833

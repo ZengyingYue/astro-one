@@ -5,11 +5,11 @@ import * as fsPromises from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join, parse } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@astro-one/cordis'
 import { watchConfig } from '../src/watch-config.ts'
 import Hmr from '../src/index.ts'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import Timer from '@deepseek-ai/cordis-plugin-timer'
+import Loader from '@astro-one/cordis-plugin-loader'
+import Timer from '@astro-one/cordis-plugin-timer'
 import { afterEach, describe, expect, it, onTestFinished, vi } from 'vitest'
 import { FSWatcher, type ChokidarOptions } from 'chokidar'
 
@@ -59,7 +59,7 @@ describe('HMR exact config paths', () => {
   })
 
   it.each(['relative', 'absolute'])('observes %s module roots through a filesystem alias', { timeout: 30_000 }, async (rootKind) => {
-    const target = mkdtempSync(join(tmpdir(), 'dsh-hmr-module-canonical-'))
+    const target = mkdtempSync(join(tmpdir(), 'astro-one-hmr-module-canonical-'))
     const alias = `${target}-alias`
     const aliasFilename = join(alias, 'module.ts')
     symlinkSync(target, alias, process.platform === 'win32' ? 'junction' : 'dir')
@@ -94,7 +94,7 @@ describe('HMR exact config paths', () => {
   })
 
   it('collapses filesystem aliases before registering an exact watch', async () => {
-    const target = mkdtempSync(join(tmpdir(), 'dsh-hmr-canonical-'))
+    const target = mkdtempSync(join(tmpdir(), 'astro-one-hmr-canonical-'))
     const alias = `${target}-alias`
     symlinkSync(target, alias, process.platform === 'win32' ? 'junction' : 'dir')
     const ctx = await bootHmr(alias)
@@ -110,7 +110,7 @@ describe('HMR exact config paths', () => {
   })
 
   it('observes add, change, and unlink outside its module roots', { timeout: 20_000 }, async () => {
-    const dir = mkdtempSync(join(tmpdir(), 'dsh-hmr-config-'))
+    const dir = mkdtempSync(join(tmpdir(), 'astro-one-hmr-config-'))
     hmrRoots.push(dir)
     const filename = join(dir, 'plugins.yml')
     const ctx = await bootHmr(dir)
@@ -137,7 +137,7 @@ describe('HMR exact config paths', () => {
   })
 
   it('observes creation when the config parent did not exist at registration', { timeout: 20_000 }, async () => {
-    const root = mkdtempSync(join(tmpdir(), 'dsh-hmr-config-'))
+    const root = mkdtempSync(join(tmpdir(), 'astro-one-hmr-config-'))
     hmrRoots.push(root)
     const dir = join(root, 'later')
     const filename = join(dir, 'plugins.yml')
@@ -156,7 +156,7 @@ describe('HMR exact config paths', () => {
   })
 
   it('processes native events for a watcher registered during a transaction', async () => {
-    const dir = mkdtempSync(join(tmpdir(), 'dsh-hmr-transaction-watch-'))
+    const dir = mkdtempSync(join(tmpdir(), 'astro-one-hmr-transaction-watch-'))
     const filename = join(dir, 'plugins.yml')
     onTestFinished(() => { rmSync(dir, { recursive: true, force: true }) })
     const ctx = await bootHmr(dir)
@@ -173,7 +173,7 @@ describe('HMR exact config paths', () => {
   })
 
   it('serializes refreshes and waits for them during disposal', async () => {
-    const dir = mkdtempSync(join(tmpdir(), 'dsh-hmr-config-'))
+    const dir = mkdtempSync(join(tmpdir(), 'astro-one-hmr-config-'))
     hmrRoots.push(dir)
     const filename = join(dir, 'plugins.yml')
     const ctx = await bootHmr(dir)
@@ -214,7 +214,7 @@ describe('HMR exact config paths', () => {
   })
 
   it('observes consecutive writes after the previous configuration was applied', async () => {
-    const dir = mkdtempSync(join(tmpdir(), 'dsh-hmr-consecutive-'))
+    const dir = mkdtempSync(join(tmpdir(), 'astro-one-hmr-consecutive-'))
     hmrRoots.push(dir)
     const filename = join(dir, 'package.json')
     writeFileSync(filename, 'initial')
@@ -245,7 +245,7 @@ describe('HMR exact config paths', () => {
   }, 10_000)
 
   it('rejects a patch path whose parent is a regular file', async () => {
-    const dir = mkdtempSync(join(tmpdir(), 'dsh-patch-parent-'))
+    const dir = mkdtempSync(join(tmpdir(), 'astro-one-patch-parent-'))
     hmrRoots.push(dir)
     const parent = join(dir, 'file')
     writeFileSync(parent, '')
@@ -266,7 +266,7 @@ describe('HMR exact config paths', () => {
   })
 
   it.each(['creation', 'ready'] as const)('releases registration after watcher %s fails', async (phase) => {
-    const dir = mkdtempSync(join(tmpdir(), 'dsh-patch-watch-failure-'))
+    const dir = mkdtempSync(join(tmpdir(), 'astro-one-patch-watch-failure-'))
     hmrRoots.push(dir)
     const ctx = await bootHmr(dir)
     onTestFinished(() => ctx.fiber.dispose())
@@ -293,7 +293,7 @@ describe('HMR exact config paths', () => {
   })
 
   it('closes a ready watcher when its context has already been disposed', async () => {
-    const dir = mkdtempSync(join(tmpdir(), 'dsh-patch-disposed-'))
+    const dir = mkdtempSync(join(tmpdir(), 'astro-one-patch-disposed-'))
     hmrRoots.push(dir)
     const root = new Context()
     const fiber = root.plugin(() => {})
@@ -311,7 +311,7 @@ describe('HMR exact config paths', () => {
   })
 
   it.each([42, new Error('42')])('logs refresh failure %s and continues processing later events', async (failure) => {
-    const dir = mkdtempSync(join(tmpdir(), 'dsh-patch-failure-'))
+    const dir = mkdtempSync(join(tmpdir(), 'astro-one-patch-failure-'))
     hmrRoots.push(dir)
     const filename = join(dir, 'plugins.yml')
     const ctx = await bootHmr(dir)
@@ -340,7 +340,7 @@ describe('HMR exact config paths', () => {
 
 
 it('reports inaccessible configuration paths and missing filesystem roots', async () => {
-  const dir = mkdtempSync(join(tmpdir(), 'dsh-hmr-path-error-'))
+  const dir = mkdtempSync(join(tmpdir(), 'astro-one-hmr-path-error-'))
   const ctx = await bootHmr(dir)
   onTestFinished(async () => { await ctx.fiber.dispose(); rmSync(dir, { recursive: true, force: true }) })
   const native = await vi.importActual<typeof import('node:fs')>('node:fs')

@@ -1,0 +1,65 @@
+# SDK-profile patch for a deterministic parent model that selects a route for
+# a separate SDK child runtime. Both runtimes persist their request headers.
+
+- id: llm-deepseek
+  name: '@astro-one/llm-deepseek'
+  disabled: true
+
+- id: tool-subagent
+  name: '@astro-one/tool-subagent'
+  disabled: true
+
+- id: sdk-jsonrpc-server
+  name: '@astro-one/sdk-jsonrpc-server'
+  disabled: true
+
+- id: session-persistence-jsonl
+  name: '@astro-one/session-persistence-jsonl'
+  config:
+    root: !!js astroOneHomePath('sessions')
+    compression: none
+
+- insert:
+    - id: mock-llm
+      name: '../../../packages/subagent/subagent-astro-one-sdk/tests/fixtures/loader/mock-delegating-llm.ts'
+      disabled: !!js process.env.ASTRO_ONE_SNAPSHOT !== 'record'
+
+    - id: subagent-astro-one-sdk
+      name: '@astro-one/subagent-astro-one-sdk'
+      config:
+        profile: sdk
+        patches: !!js JSON.parse(process.env.ASTRO_ONE_TEST_CHILD_PATCHES ?? '[]')
+        astroOneHome: !!js process.env.ASTRO_ONE_TEST_CHILD_HOME
+        provider: mock
+        model: mock-routed
+        env:
+          ASTRO_ONE_TELEMETRY_DISABLED: '1'
+
+    - id: subagent-model-selection-settings
+      name: '@astro-one/tool-subagent/model-selection-settings'
+      config:
+        enabled: true
+        allowedModels:
+          - provider: mock
+            model: mock-routed
+
+    - id: tool-subagent-astro-one-sdk
+      name: '../../../packages/subagent/subagent-astro-one-sdk/tests/fixtures/loader/scoped-tool-subagent.ts'
+      config:
+        provider: astro-one-sdk
+        toolName: subagent
+        enableRunInBackground: false
+        agentOptions:
+          maxTokens: 777
+        maxDepth: 'provider-managed'
+
+    - id: sdk-jsonrpc-server-dynamic-live
+      name: '@astro-one/sdk-jsonrpc-server'
+      inject: [sdkAppStartup, loader]
+      disabled: !!js process.env.ASTRO_ONE_SNAPSHOT !== 'record'
+      config:
+        maxTokensAsSuccess: true
+
+- id: session-log-deepseek
+  config:
+    enabled: false

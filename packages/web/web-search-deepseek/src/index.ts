@@ -2,17 +2,17 @@
  * Register a DeepSeek-backed provider in `ctx.web`. It calls the Anthropic-compatible Messages API
  * with native `web_search_20250305`. The provider reuses `DEEPSEEK_API_KEY` but not
  * `DEEPSEEK_BASE_URL`; auxiliary search has its own endpoint configuration.
- * @module @deepseek-ai/dsh-web-search-deepseek
+ * @module @astro-one/web-search-deepseek
  */
-import type { Volatile } from '@deepseek-ai/cordis'
+import type { Volatile } from '@astro-one/cordis'
 
-import type { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import type {} from '@deepseek-ai/dsh-agent'
-import { credentialRef } from '@deepseek-ai/dsh-credentials'
-import { launchEnvironmentOf } from '@deepseek-ai/dsh-launch-environment'
-import type {} from '@deepseek-ai/dsh-session'
-import type {} from '@deepseek-ai/dsh-web'
+import type { Context } from '@astro-one/cordis'
+import z from '@astro-one/schemastery'
+import type {} from '@astro-one/agent'
+import { credentialRef } from '@astro-one/credentials'
+import { launchEnvironmentOf } from '@astro-one/launch-environment'
+import type {} from '@astro-one/session'
+import type {} from '@astro-one/web'
 import {
   DeepSeekSearchProvider,
   DEEPSEEK_DEFAULT_API_VERSION,

@@ -2,12 +2,12 @@
 import type { ConfigPageForm } from '../src/client/slot-contract.ts'
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, describe, expect, it, onTestFinished, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import { LocaleRuntime } from '@deepseek-ai/dsh-client-locale/client'
-import type { PluginEntryId, PluginInstallRequestId } from '@deepseek-ai/dsh-api-remotes/client'
-import { bindSnapshotSelector, stubConfigForm } from '@deepseek-ai/dsh-client-test-runtime'
-import type { ConfigForm, ConfigFormSnapshot, SettingsMirrorSnapshot } from '@deepseek-ai/dsh-client-ui-settings/client'
-import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
+import { Context } from '@astro-one/cordis'
+import { LocaleRuntime } from '@astro-one/client-locale/client'
+import type { PluginEntryId, PluginInstallRequestId } from '@astro-one/api-remotes/client'
+import { bindSnapshotSelector, stubConfigForm } from '@astro-one/client-test-runtime'
+import type { ConfigForm, ConfigFormSnapshot, SettingsMirrorSnapshot } from '@astro-one/client-ui-settings/client'
+import { createSnapshotStore } from '@astro-one/client-store'
 import type { ReactNode } from 'react'
 import { PluginManagerPage } from '../src/client/PluginManagerPage.tsx'
 import type { PluginManagerPageProps } from '../src/client/index.ts'
@@ -28,7 +28,7 @@ const t = translate(en)
 
 function pkg(overrides: Partial<PackageView> = {}): PackageView {
   return {
-    name: 'dsh-better-sidebar',
+    name: 'astro-one-better-sidebar',
     version: '0.16.0',
     installed: true,
     optional: false,
@@ -39,13 +39,13 @@ function pkg(overrides: Partial<PackageView> = {}): PackageView {
 }
 
 function row(overrides: Partial<PackageRow> = {}): PackageRow {
-  return { entryId: 'include:sidebar' as PluginEntryId, rowId: 'sidebar', moduleName: 'dsh-better-sidebar', enabled: true, phase: 'active', ...overrides }
+  return { entryId: 'include:sidebar' as PluginEntryId, rowId: 'sidebar', moduleName: 'astro-one-better-sidebar', enabled: true, phase: 'active', ...overrides }
 }
 
-const INCOMPATIBLE = { name: 'dsh-late', version: '2.0.0', runtimeVersion: '0.1.0', peers: { '@deepseek-ai/dsh': '^0.2.0', '@deepseek-ai/dsh-core': '^0.2.0' } }
+const INCOMPATIBLE = { name: 'astro-one-late', version: '2.0.0', runtimeVersion: '0.1.0', peers: { '@astro-one/cli': '^0.2.0', '@astro-one/core': '^0.2.0' } }
 /** The English sentence an incompatibility of {@link INCOMPATIBLE}, optionally renamed, reads as. */
 const incompatibleText = (name = INCOMPATIBLE.name): string => en.reasonIncompatibleVersion
-  .replace('{plugin}', `${name}@2.0.0`).replace('{runtime}', '0.1.0').replace('{peers}', '@deepseek-ai/dsh ^0.2.0, @deepseek-ai/dsh-core ^0.2.0')
+  .replace('{plugin}', `${name}@2.0.0`).replace('{runtime}', '0.1.0').replace('{peers}', '@astro-one/cli ^0.2.0, @astro-one/core ^0.2.0')
 const MIRROR = 'https://registry.npmmirror.com/'
 const OFFICIAL = 'https://registry.npmjs.org/'
 
@@ -193,7 +193,7 @@ describe('PluginManagerPage', () => {
 
   it('keeps the read failure and its retry visible while a detail page is open', () => {
     const { actions, set } = renderTab({ packages: [pkg()] })
-    fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'dsh-better-sidebar') }))
+    fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'astro-one-better-sidebar') }))
     expect(screen.queryByRole('alert')).toBeNull()
     set({ status: 'error' })
     expect(screen.getByRole('alert').querySelector('[data-state="error"]')).not.toBeNull()
@@ -207,20 +207,20 @@ describe('PluginManagerPage', () => {
     const { actions } = renderTab({
       packages: [
         pkg({ meta: { description: { en: 'A sidebar.' } } }),
-        pkg({ name: 'dsh-broken', enabled: false, error: { code: 'not-bundle' } }),
-        pkg({ name: '@deepseek-ai/dsh-web-app', installed: false }),
-        pkg({ name: 'dsh-protected', readOnlyReason: 'management-required' }),
-        pkg({ name: '@acme/dsh-tool', enabled: false }),
+        pkg({ name: 'astro-one-broken', enabled: false, error: { code: 'not-bundle' } }),
+        pkg({ name: '@astro-one/web-app', installed: false }),
+        pkg({ name: 'astro-one-protected', readOnlyReason: 'management-required' }),
+        pkg({ name: '@acme/astro-one-tool', enabled: false }),
         // Selected by the profile but not a bundle: a problem the person can switch off, in the profile's own group.
-        pkg({ name: 'dsh-selected', installed: false, error: { code: 'not-bundle' } }),
-        pkg({ name: '@deepseek-ai/dsh-experimental-agent-team-profile', installed: false, optional: true, enabled: false }),
+        pkg({ name: 'astro-one-selected', installed: false, error: { code: 'not-bundle' } }),
+        pkg({ name: '@astro-one/experimental-agent-team-profile', installed: false, optional: true, enabled: false }),
       ],
-      busy: ['dsh-protected'],
+      busy: ['astro-one-protected'],
     })
     const cards = screen.getAllByRole('listitem')
     // The Official group comes first.
     expect(cards.map(card => card.getAttribute('data-plugin-package'))).toEqual([
-      '@deepseek-ai/dsh-experimental-agent-team-profile', 'dsh-better-sidebar', 'dsh-broken', 'dsh-protected', '@acme/dsh-tool', 'dsh-selected',
+      '@astro-one/experimental-agent-team-profile', 'astro-one-better-sidebar', 'astro-one-broken', 'astro-one-protected', '@acme/astro-one-tool', 'astro-one-selected',
     ])
     expect(cards.map(card => card.getAttribute('data-plugin-status'))).toEqual(['disabled', 'running', 'problem', 'running', 'disabled', 'problem'])
     // Each group heads with its title and its bare count; the official bundle carries its beta tag, no official tag.
@@ -228,14 +228,14 @@ describe('PluginManagerPage', () => {
     expect(screen.getByRole('heading', { name: en.officialTitle })).toBeTruthy()
     expect([...document.querySelectorAll('[data-plugin-count]')].map(count => count.textContent)).toEqual(['1', '5'])
     expect(screen.getAllByText(en.statusBeta)).toHaveLength(1)
-    expect(screen.getByRole('switch', { name: en.enableToggle.replace('{name}', '@acme/dsh-tool') })).toHaveProperty('disabled', false)
+    expect(screen.getByRole('switch', { name: en.enableToggle.replace('{name}', '@acme/astro-one-tool') })).toHaveProperty('disabled', false)
     expect(screen.getByText('A sidebar.')).toBeTruthy()
     expect(screen.getAllByText(en.statusProblem)).toHaveLength(2)
     // The switch acts on the bundle; a bundle the Host cannot read stays off, a protected one stays as it is.
-    fireEvent.click(screen.getByRole('switch', { name: en.enableToggle.replace('{name}', 'dsh-better-sidebar') }))
-    expect(actions.setEnabled).toHaveBeenCalledWith('dsh-better-sidebar', false)
-    expect(screen.getByRole('switch', { name: en.enableToggle.replace('{name}', 'dsh-broken') })).toHaveProperty('disabled', true)
-    const locked = screen.getByRole('switch', { name: en.enableToggle.replace('{name}', 'dsh-protected') })
+    fireEvent.click(screen.getByRole('switch', { name: en.enableToggle.replace('{name}', 'astro-one-better-sidebar') }))
+    expect(actions.setEnabled).toHaveBeenCalledWith('astro-one-better-sidebar', false)
+    expect(screen.getByRole('switch', { name: en.enableToggle.replace('{name}', 'astro-one-broken') })).toHaveProperty('disabled', true)
+    const locked = screen.getByRole('switch', { name: en.enableToggle.replace('{name}', 'astro-one-protected') })
     expect(locked).toHaveProperty('disabled', true)
     expect(locked.getAttribute('title')).toBe(en.reasonManagementRequired)
   })
@@ -244,27 +244,27 @@ describe('PluginManagerPage', () => {
     renderTab({
       packages: [
         ...[
-          '@deepseek-ai/dsh-base',
-          '@deepseek-ai/dsh-web-app',
-          '@deepseek-ai/dsh-headless',
-          '@deepseek-ai/dsh-sdk-app',
-          '@deepseek-ai/dsh-acp-app',
-          '@deepseek-ai/dsh-sdk-minimal',
+          '@astro-one/base',
+          '@astro-one/web-app',
+          '@astro-one/headless',
+          '@astro-one/sdk-app',
+          '@astro-one/acp-app',
+          '@astro-one/sdk-minimal',
         ].map(name => pkg({ name })),
-        pkg({ name: '@acme/dsh-base', readOnlyReason: 'management-required' }),
-        pkg({ name: 'dsh-better-sidebar' }),
-        pkg({ name: '@deepseek-ai/dsh-experimental-agent-team-profile', installed: false, optional: true }),
+        pkg({ name: '@acme/astro-one-base', readOnlyReason: 'management-required' }),
+        pkg({ name: 'astro-one-better-sidebar' }),
+        pkg({ name: '@astro-one/experimental-agent-team-profile', installed: false, optional: true }),
       ],
     })
     expect(screen.getAllByRole('listitem').map(card => card.getAttribute('data-plugin-package'))).toEqual([
-      '@deepseek-ai/dsh-experimental-agent-team-profile', '@acme/dsh-base', 'dsh-better-sidebar',
+      '@astro-one/experimental-agent-team-profile', '@acme/astro-one-base', 'astro-one-better-sidebar',
     ])
     expect([...document.querySelectorAll('[data-plugin-count]')].map(count => count.textContent)).toEqual(['1', '2'])
   })
 
   it.each([false, true])('shows an empty list for built-in bundles with errors and installed=%s', (installed) => {
     renderTab({
-      packages: ['@deepseek-ai/dsh-base', '@deepseek-ai/dsh-web-app'].map(name => pkg({
+      packages: ['@astro-one/base', '@astro-one/web-app'].map(name => pkg({
         name, installed, error: { code: 'operation-error', diagnostic: 'Unreadable bundle' },
       })),
     })
@@ -276,21 +276,21 @@ describe('PluginManagerPage', () => {
   it('opens an official bundle\'s page with its beta tag and no uninstall, and switches it on', () => {
     const title = 'Agent Teams'
     const { actions } = renderTab({
-      packages: [pkg({ name: '@deepseek-ai/dsh-experimental-agent-team-profile', meta: { title }, installed: false, optional: true, enabled: false })],
+      packages: [pkg({ name: '@astro-one/experimental-agent-team-profile', meta: { title }, installed: false, optional: true, enabled: false })],
     })
     fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', title) }))
     const detail = document.querySelector('[data-plugin-detail]') as HTMLElement
     expect(within(detail).getByText(en.statusBeta)).toBeTruthy()
     expect(within(detail).queryByRole('button', { name: en.uninstallLabel.replace('{name}', title) })).toBeNull()
     fireEvent.click(within(detail).getByRole('switch', { name: en.enableToggle.replace('{name}', title) }))
-    expect(actions.setEnabled).toHaveBeenCalledExactlyOnceWith('@deepseek-ai/dsh-experimental-agent-team-profile', true)
+    expect(actions.setEnabled).toHaveBeenCalledExactlyOnceWith('@astro-one/experimental-agent-team-profile', true)
   })
 
   it.each([
-    '@deepseek-ai/dsh-experimental-agent-team-profile',
-    '@deepseek-ai/dsh-experimental-auto-review',
-    '@deepseek-ai/dsh-experimental-fixture-input',
-    '@acme/dsh-local-tools',
+    '@astro-one/experimental-agent-team-profile',
+    '@astro-one/experimental-auto-review',
+    '@astro-one/experimental-fixture-input',
+    '@acme/astro-one-local-tools',
   ])('localizes Host metadata for %s across cards, details, switches, and uninstall confirmation', (name) => {
     const meta = {
       title: { en: 'Installed tools', zh: '已安装工具' },
@@ -306,7 +306,7 @@ describe('PluginManagerPage', () => {
       expect(document.getElementById(card.getAttribute('aria-describedby')!)?.textContent).toBe(description(dict))
       expect(screen.getByRole('switch', { name: dict.enableToggle.replace('{name}', title(dict)) })).toBeTruthy()
       expect(screen.queryByText('Original metadata.')).toBeNull()
-      expect(screen.queryByText(dict.statusBeta) !== null).toBe(name.startsWith('@deepseek-ai/dsh-experimental-'))
+      expect(screen.queryByText(dict.statusBeta) !== null).toBe(name.startsWith('@astro-one/experimental-'))
     }
     assertCard(en)
     setLanguage(zh)
@@ -335,7 +335,7 @@ describe('PluginManagerPage', () => {
     const icon = 'data:image/svg+xml;base64,PHN2Zy8+'
     const updatedIcon = 'data:image/png;base64,cG5n'
     const bundle = pkg({ meta: { icon }, rows: [row({ meta: { icon } }), row({ entryId: 'plain' as PluginEntryId, rowId: 'plain', moduleName: 'plain' })] })
-    const { set } = renderTab({ packages: [bundle] }, { rows: new Set(['dsh-better-sidebar#sidebar']) })
+    const { set } = renderTab({ packages: [bundle] }, { rows: new Set(['astro-one-better-sidebar#sidebar']) })
     const image = () => document.querySelector<HTMLImageElement>('[data-plugin-package] img, [data-plugin-detail] img')!
     expect(image().getAttribute('src')).toBe(icon)
     expect(image().getAttribute('alt')).toBe('')
@@ -347,7 +347,7 @@ describe('PluginManagerPage', () => {
     expect(image().getAttribute('src')).toBe(updatedIcon)
     set({ packages: [bundle] })
     expect(image().getAttribute('src')).toBe(icon)
-    fireEvent.click(screen.getByRole('button', { name: 'View dsh-better-sidebar' }))
+    fireEvent.click(screen.getByRole('button', { name: 'View astro-one-better-sidebar' }))
     expect(image().getAttribute('src')).toBe(icon)
     const rowImage = document.querySelector<HTMLImageElement>('[data-plugin-row] img')!
     expect(rowImage.getAttribute('src')).toBe(icon)
@@ -357,7 +357,7 @@ describe('PluginManagerPage', () => {
     fireEvent.error(rowImage)
     expect(document.querySelector('[data-plugin-row] img')).toBeNull()
     expect(document.querySelector('[data-plugin-row] svg')).not.toBeNull()
-    fireEvent.click(screen.getByRole('button', { name: 'Configure dsh-better-sidebar' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Configure astro-one-better-sidebar' }))
     const detailImage = document.querySelector<HTMLImageElement>('[data-plugin-row-detail] img')!
     expect(detailImage.getAttribute('src')).toBe(icon)
     expect(detailImage.width).toBe(36)
@@ -370,16 +370,16 @@ describe('PluginManagerPage', () => {
     })
     expect(screen.getByText(en.metadataError.replace('{error}', error))).toBeTruthy()
     expect(screen.queryByText('Legacy description.')).toBeNull()
-    const enable = screen.getByRole('switch', { name: en.enableToggle.replace('{name}', 'dsh-better-sidebar') })
+    const enable = screen.getByRole('switch', { name: en.enableToggle.replace('{name}', 'astro-one-better-sidebar') })
     expect(enable).toHaveProperty('disabled', false)
     fireEvent.click(enable)
-    expect(actions.setEnabled).toHaveBeenCalledExactlyOnceWith('dsh-better-sidebar', true)
-    fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'dsh-better-sidebar') }))
+    expect(actions.setEnabled).toHaveBeenCalledExactlyOnceWith('astro-one-better-sidebar', true)
+    fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'astro-one-better-sidebar') }))
     expect(screen.getByText(en.metadataError.replace('{error}', error))).toBeTruthy()
-    const uninstall = screen.getByRole('button', { name: en.uninstallLabel.replace('{name}', 'dsh-better-sidebar') })
+    const uninstall = screen.getByRole('button', { name: en.uninstallLabel.replace('{name}', 'astro-one-better-sidebar') })
     expect(uninstall).toHaveProperty('disabled', false)
     fireEvent.click(uninstall)
-    expect(actions.uninstall).toHaveBeenCalledExactlyOnceWith('dsh-better-sidebar')
+    expect(actions.uninstall).toHaveBeenCalledExactlyOnceWith('astro-one-better-sidebar')
 
     setLanguage(zh)
     expect(screen.getByText(zh.metadataError.replace('{error}', error))).toBeTruthy()
@@ -399,8 +399,8 @@ describe('PluginManagerPage', () => {
   }>([
     {
       field: 'title',
-      meta: { title: { en: '@acme/dsh-sidebar', zh: '侧栏套件' }, description: 'Package description.' },
-      englishTitle: '@acme/dsh-sidebar', chineseTitle: '侧栏套件',
+      meta: { title: { en: '@acme/astro-one-sidebar', zh: '侧栏套件' }, description: 'Package description.' },
+      englishTitle: '@acme/astro-one-sidebar', chineseTitle: '侧栏套件',
       englishDescription: 'Package description.', chineseDescription: 'Package description.',
     },
     {
@@ -409,7 +409,7 @@ describe('PluginManagerPage', () => {
       englishTitle: 'English title', chineseTitle: 'English title', chineseDescription: '中文套件说明。',
     },
   ])('resolves bundle $field independently and hides empty descriptions on cards and details', ({ meta, englishTitle, chineseTitle, englishDescription, chineseDescription }) => {
-    const { setLanguage } = renderTab({ packages: [pkg({ name: '@acme/dsh-sidebar', meta })] })
+    const { setLanguage } = renderTab({ packages: [pkg({ name: '@acme/astro-one-sidebar', meta })] })
     const languages = [
       { dict: en, title: englishTitle, description: englishDescription },
       { dict: zh, title: chineseTitle, description: chineseDescription },
@@ -442,49 +442,49 @@ describe('PluginManagerPage', () => {
 
   it('resolves row fields independently from bundle metadata and preserves subpath specifiers', () => {
     const rows = [
-      row({ moduleName: '@acme/dsh-sidebar/navigation', meta: { description: { en: 'Navigation description.' } } }),
+      row({ moduleName: '@acme/astro-one-sidebar/navigation', meta: { description: { en: 'Navigation description.' } } }),
       row({
-        rowId: 'theme', entryId: 'include:theme' as PluginEntryId, moduleName: '@acme/dsh-theme/client',
-        meta: { title: { en: '@acme/dsh-theme', zh: '主题插件' }, description: { en: '', zh: '中文主题说明。' } },
+        rowId: 'theme', entryId: 'include:theme' as PluginEntryId, moduleName: '@acme/astro-one-theme/client',
+        meta: { title: { en: '@acme/astro-one-theme', zh: '主题插件' }, description: { en: '', zh: '中文主题说明。' } },
       }),
     ]
     const { actions, setLanguage } = renderTab(
       { packages: [pkg({ meta: { title: 'Bundle title', description: 'Bundle description.' }, rows })] },
-      { rows: new Set(['dsh-better-sidebar#theme']) },
-      { 'plugins.row.config:dsh-better-sidebar#theme': view => view === 'page' ? <form aria-label="theme settings" /> : null },
+      { rows: new Set(['astro-one-better-sidebar#theme']) },
+      { 'plugins.row.config:astro-one-better-sidebar#theme': view => view === 'page' ? <form aria-label="theme settings" /> : null },
     )
     fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'Bundle title') }))
-    expect(screen.getByRole('switch', { name: en.partToggle.replace('{name}', '@acme/dsh-sidebar/navigation') })).toBeTruthy()
-    expect(screen.getByRole('switch', { name: en.partToggle.replace('{name}', '@acme/dsh-theme') })).toBeTruthy()
+    expect(screen.getByRole('switch', { name: en.partToggle.replace('{name}', '@acme/astro-one-sidebar/navigation') })).toBeTruthy()
+    expect(screen.getByRole('switch', { name: en.partToggle.replace('{name}', '@acme/astro-one-theme') })).toBeTruthy()
     expect(screen.queryByText('中文主题说明。')).toBeNull()
     setLanguage(zh)
     const navigation = document.querySelector('[data-plugin-row="include:sidebar"]') as HTMLElement
     expect(within(navigation).getByText('Navigation description.')).toBeTruthy()
     expect(within(navigation).queryByText('Bundle title')).toBeNull()
     expect(within(navigation).queryByText('Bundle description.')).toBeNull()
-    fireEvent.click(within(navigation).getByRole('switch', { name: zh.partToggle.replace('{name}', '@acme/dsh-sidebar/navigation') }))
+    fireEvent.click(within(navigation).getByRole('switch', { name: zh.partToggle.replace('{name}', '@acme/astro-one-sidebar/navigation') }))
     expect(actions.setRowEnabled).toHaveBeenCalledExactlyOnceWith('include:sidebar', false)
     expect(screen.getByText('中文主题说明。')).toBeTruthy()
     fireEvent.click(screen.getByRole('button', { name: zh.configureRow.replace('{name}', '主题插件') }))
-    expect(document.querySelector('[data-plugin-row-detail]')?.getAttribute('data-plugin-row-detail')).toBe('dsh-better-sidebar#theme')
+    expect(document.querySelector('[data-plugin-row-detail]')?.getAttribute('data-plugin-row-detail')).toBe('astro-one-better-sidebar#theme')
     expect(screen.getByRole('heading', { level: 3 }).textContent).toBe('主题插件')
     expect(screen.getByText('中文主题说明。')).toBeTruthy()
     setLanguage(en)
-    expect(screen.getByRole('heading', { level: 3 }).textContent).toBe('@acme/dsh-theme')
-    expect(screen.getByText('@acme/dsh-theme/client')).toBeTruthy()
+    expect(screen.getByRole('heading', { level: 3 }).textContent).toBe('@acme/astro-one-theme')
+    expect(screen.getByText('@acme/astro-one-theme/client')).toBeTruthy()
     expect(screen.getByText('theme')).toBeTruthy()
     expect(screen.queryByText('中文主题说明。')).toBeNull()
     expect(screen.getByRole('form', { name: 'theme settings' })).toBeTruthy()
   })
 
   it('shows a row id only once when it is the localized title in lists and configuration pages', () => {
-    const moduleName = '@acme/dsh-sidebar/navigation'
+    const moduleName = '@acme/astro-one-sidebar/navigation'
     const { setLanguage } = renderTab(
       { packages: [pkg({ rows: [row({ moduleName, meta: { title: { en: 'Sidebar component', zh: 'sidebar' } } })] })] },
-      { rows: new Set(['dsh-better-sidebar#sidebar']) },
-      { 'plugins.row.config:dsh-better-sidebar#sidebar': view => view === 'page' ? <form aria-label="sidebar settings" /> : null },
+      { rows: new Set(['astro-one-better-sidebar#sidebar']) },
+      { 'plugins.row.config:astro-one-better-sidebar#sidebar': view => view === 'page' ? <form aria-label="sidebar settings" /> : null },
     )
-    fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'dsh-better-sidebar') }))
+    fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'astro-one-better-sidebar') }))
     const listed = document.querySelector('[data-plugin-row="include:sidebar"]') as HTMLElement
     expect(within(listed).getByText('Sidebar component')).toBeTruthy()
     expect(within(listed).getByText('sidebar', { selector: 'code' })).toBeTruthy()
@@ -494,7 +494,7 @@ describe('PluginManagerPage', () => {
     expect(within(listed).getByText(moduleName, { selector: 'code' })).toBeTruthy()
 
     fireEvent.click(within(listed).getByRole('button', { name: zh.configureRow.replace('{name}', 'sidebar') }))
-    const detail = document.querySelector('[data-plugin-row-detail="dsh-better-sidebar#sidebar"]') as HTMLElement
+    const detail = document.querySelector('[data-plugin-row-detail="astro-one-better-sidebar#sidebar"]') as HTMLElement
     expect(within(detail).getByRole('heading', { level: 3 }).textContent).toBe('sidebar')
     expect(within(detail).getAllByText('sidebar')).toHaveLength(1)
     expect(within(detail).queryByText('sidebar', { selector: 'code' })).toBeNull()
@@ -508,7 +508,7 @@ describe('PluginManagerPage', () => {
   it('translates row text, searches current copy and technical identities, and keeps configuration keys unchanged', () => {
     const error = 'locale/zh.json: invalid description'
     const localized = row({
-      moduleName: '@acme/dsh-sidebar-widget',
+      moduleName: '@acme/astro-one-sidebar-widget',
       meta: {
         title: { en: 'Sidebar component', zh: '导航组件' },
         description: { en: 'Sidebar navigation', zh: '侧边导航' },
@@ -520,19 +520,19 @@ describe('PluginManagerPage', () => {
     }))]
     const { actions, setLanguage } = renderTab(
       { packages: [pkg({ meta: { title: { en: 'Personal tools', zh: '个人工具' } }, rows })] },
-      { rows: new Set(['dsh-better-sidebar#sidebar']) },
-      { 'plugins.row.config:dsh-better-sidebar#sidebar': view => view === 'summary' ? 'Config summary' : <form aria-label="row settings" /> },
+      { rows: new Set(['astro-one-better-sidebar#sidebar']) },
+      { 'plugins.row.config:astro-one-better-sidebar#sidebar': view => view === 'summary' ? 'Config summary' : <form aria-label="row settings" /> },
     )
     fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'Personal tools') }))
     setLanguage(zh)
     const search = screen.getByRole('searchbox', { name: zh.partsFilter })
-    for (const query of ['导航组件', '侧边导航', 'sidebar', '@acme/dsh-sidebar-widget']) {
+    for (const query of ['导航组件', '侧边导航', 'sidebar', '@acme/astro-one-sidebar-widget']) {
       fireEvent.change(search, { target: { value: query } })
       expect(document.querySelectorAll('[data-plugin-row]')).toHaveLength(1)
       expect(screen.getByRole('button', { name: zh.configureRow.replace('{name}', '导航组件') })).toBeTruthy()
     }
     expect(screen.getByText('sidebar')).toBeTruthy()
-    expect(screen.getByText('@acme/dsh-sidebar-widget')).toBeTruthy()
+    expect(screen.getByText('@acme/astro-one-sidebar-widget')).toBeTruthy()
     expect(screen.getByText('侧边导航')).toBeTruthy()
     expect(screen.getByText(zh.metadataError.replace('{error}', error))).toBeTruthy()
     const toggle = screen.getByRole('switch', { name: zh.partToggle.replace('{name}', '导航组件') })
@@ -545,7 +545,7 @@ describe('PluginManagerPage', () => {
     setLanguage(en)
     expect(screen.getByRole('button', { name: en.configureRow.replace('{name}', 'Sidebar component') })).toBeTruthy()
     fireEvent.click(screen.getByRole('button', { name: en.configureRow.replace('{name}', 'Sidebar component') }))
-    expect(document.querySelector('[data-plugin-row-detail]')?.getAttribute('data-plugin-row-detail')).toBe('dsh-better-sidebar#sidebar')
+    expect(document.querySelector('[data-plugin-row-detail]')?.getAttribute('data-plugin-row-detail')).toBe('astro-one-better-sidebar#sidebar')
     expect(screen.getByRole('form', { name: 'row settings' })).toBeTruthy()
     expect(screen.getByRole('heading', { level: 3 }).textContent).toBe('Sidebar component')
     expect(screen.getByText('Sidebar navigation')).toBeTruthy()
@@ -554,7 +554,7 @@ describe('PluginManagerPage', () => {
     expect(screen.getByRole('heading', { level: 3 }).textContent).toBe('导航组件')
     expect(screen.getByText('侧边导航')).toBeTruthy()
     expect(screen.getByText('sidebar')).toBeTruthy()
-    expect(screen.getByText('@acme/dsh-sidebar-widget')).toBeTruthy()
+    expect(screen.getByText('@acme/astro-one-sidebar-widget')).toBeTruthy()
     expect(screen.getByText(zh.metadataError.replace('{error}', error))).toBeTruthy()
     fireEvent.click(screen.getByRole('button', { name: zh.backToPackage.replace('{name}', '个人工具') }))
     expect(screen.getByRole('heading', { level: 3 }).textContent).toBe('个人工具')
@@ -563,19 +563,19 @@ describe('PluginManagerPage', () => {
   describe('configuration pages', () => {
     const bodies: SlotBodies = {
       'plugins.item:bash': view => view === 'summary' ? 'Limits every command.' : <form aria-label="bash form" />,
-      'plugins.bundle.config:dsh-better-sidebar': view => view === 'page' ? <form aria-label="sidebar form" /> : null,
-      'plugins.row.config:dsh-better-sidebar#sidebar': view => view === 'summary' ? 'The sidebar row.' : <form aria-label="row form" />,
+      'plugins.bundle.config:astro-one-better-sidebar': view => view === 'page' ? <form aria-label="sidebar form" /> : null,
+      'plugins.row.config:astro-one-better-sidebar#sidebar': view => view === 'summary' ? 'The sidebar row.' : <form aria-label="row form" />,
     }
 
     it('lists an official plugin after the official bundles with its summary, and opens its page', () => {
       renderTab(
-        { packages: [pkg({ name: '@deepseek-ai/dsh-experimental-agent-team-profile', installed: false, optional: true, enabled: false })] },
+        { packages: [pkg({ name: '@astro-one/experimental-agent-team-profile', installed: false, optional: true, enabled: false })] },
         { items: [{ id: 'bash', label: 'Shell' }] },
         bodies,
       )
       const official = document.querySelector('[data-plugin-group="official"]') as HTMLElement
       expect(within(official).getAllByRole('listitem').map(card => card.getAttribute('data-plugin-item') ?? card.getAttribute('data-plugin-package')))
-        .toEqual(['@deepseek-ai/dsh-experimental-agent-team-profile', 'bash'])
+        .toEqual(['@astro-one/experimental-agent-team-profile', 'bash'])
       expect(document.querySelector('[data-plugin-count]')?.textContent).toBe('2')
       expect(within(official).getByText('Limits every command.')).toBeTruthy()
       // An official plugin has no switch of its own: the Host composes it.
@@ -604,28 +604,28 @@ describe('PluginManagerPage', () => {
     })
 
     it('renders a bundle\'s own configuration on its page, and no configure control on a row without one', () => {
-      renderTab({ packages: [pkg({ rows: [row()] })] }, { bundles: new Set(['dsh-better-sidebar']) }, bodies)
-      fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'dsh-better-sidebar') }))
+      renderTab({ packages: [pkg({ rows: [row()] })] }, { bundles: new Set(['astro-one-better-sidebar']) }, bodies)
+      fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'astro-one-better-sidebar') }))
       const detail = document.querySelector('[data-plugin-detail]') as HTMLElement
       expect(within(detail).getByRole('form', { name: 'sidebar form' })).toBeTruthy()
-      expect(within(detail).queryByRole('button', { name: en.configureRow.replace('{name}', 'dsh-better-sidebar') })).toBeNull()
+      expect(within(detail).queryByRole('button', { name: en.configureRow.replace('{name}', 'astro-one-better-sidebar') })).toBeNull()
     })
 
     it('opens a row\'s configuration page from its configure control and leads back to the bundle', () => {
-      const theme = row({ rowId: 'theme', moduleName: 'dsh-better-sidebar/theme', entryId: 'include:theme' as PluginEntryId })
-      renderTab({ packages: [pkg({ rows: [row(), theme] })] }, { rows: new Set(['dsh-better-sidebar#sidebar']) }, bodies)
-      fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'dsh-better-sidebar') }))
-      expect(screen.queryByRole('button', { name: en.configureRow.replace('{name}', 'dsh-better-sidebar/theme') })).toBeNull()
-      fireEvent.click(screen.getByRole('button', { name: en.configureRow.replace('{name}', 'dsh-better-sidebar') }))
-      const page = document.querySelector('[data-plugin-row-detail="dsh-better-sidebar#sidebar"]') as HTMLElement
-      expect(within(page).getByRole('heading', { level: 3 }).textContent).toBe('dsh-better-sidebar')
-      expect(within(page).getByText('dsh-better-sidebar', { selector: 'code' })).toBeTruthy()
+      const theme = row({ rowId: 'theme', moduleName: 'astro-one-better-sidebar/theme', entryId: 'include:theme' as PluginEntryId })
+      renderTab({ packages: [pkg({ rows: [row(), theme] })] }, { rows: new Set(['astro-one-better-sidebar#sidebar']) }, bodies)
+      fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'astro-one-better-sidebar') }))
+      expect(screen.queryByRole('button', { name: en.configureRow.replace('{name}', 'astro-one-better-sidebar/theme') })).toBeNull()
+      fireEvent.click(screen.getByRole('button', { name: en.configureRow.replace('{name}', 'astro-one-better-sidebar') }))
+      const page = document.querySelector('[data-plugin-row-detail="astro-one-better-sidebar#sidebar"]') as HTMLElement
+      expect(within(page).getByRole('heading', { level: 3 }).textContent).toBe('astro-one-better-sidebar')
+      expect(within(page).getByText('astro-one-better-sidebar', { selector: 'code' })).toBeTruthy()
       expect(within(page).getByText('sidebar', { selector: 'code' })).toBeTruthy()
       expect(within(page).getByText('The sidebar row.')).toBeTruthy()
       expect(within(page).getByRole('form', { name: 'row form' })).toBeTruthy()
-      fireEvent.click(within(page).getByRole('button', { name: en.backToPackage.replace('{name}', 'dsh-better-sidebar') }))
+      fireEvent.click(within(page).getByRole('button', { name: en.backToPackage.replace('{name}', 'astro-one-better-sidebar') }))
       expect(document.querySelector('[data-plugin-row-detail]')).toBeNull()
-      expect(document.querySelector('[data-plugin-detail="dsh-better-sidebar"]')).toBeTruthy()
+      expect(document.querySelector('[data-plugin-detail="astro-one-better-sidebar"]')).toBeTruthy()
     })
   })
 
@@ -641,7 +641,7 @@ describe('PluginManagerPage', () => {
     }
     const bodies: SlotBodies = {
       'plugins.item:bash': view => view === 'summary' ? 'Limits every command.' : <form aria-label="bash form" />,
-      'plugins.row.config:dsh-better-sidebar#sidebar': view => view === 'summary' ? 'The sidebar row.' : <form aria-label="row form" />,
+      'plugins.row.config:astro-one-better-sidebar#sidebar': view => view === 'summary' ? 'The sidebar row.' : <form aria-label="row form" />,
       'plugins.detail.actions:': (_view, owner) => <button type="button">{`act ${label(owner)}`}</button>,
       'plugins.detail.badge:': (_view, owner) => <span>{`badge ${label(owner)}`}</span>,
       'plugins.detail.section:': (_view, owner) => <section aria-label={`section ${label(owner)}`} />,
@@ -650,35 +650,35 @@ describe('PluginManagerPage', () => {
     it('renders the contributed actions, badges, and sections on each page, told what the page is about', () => {
       renderTab(
         { packages: [pkg({ rows: [row()] })] },
-        { items: [{ id: 'bash', label: 'Shell' }], rows: new Set(['dsh-better-sidebar#sidebar']) },
+        { items: [{ id: 'bash', label: 'Shell' }], rows: new Set(['astro-one-better-sidebar#sidebar']) },
         bodies,
       )
       // The cards carry none of it.
       expect(screen.queryByRole('button', { name: /^act / })).toBeNull()
 
-      fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'dsh-better-sidebar') }))
+      fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'astro-one-better-sidebar') }))
       const detail = document.querySelector('[data-plugin-detail]') as HTMLElement
-      const act = within(detail).getByRole('button', { name: 'act bundle dsh-better-sidebar' })
-      expect(within(detail).getByText('badge bundle dsh-better-sidebar')).toBeTruthy()
-      const section = within(detail).getByRole('region', { name: 'section bundle dsh-better-sidebar' })
+      const act = within(detail).getByRole('button', { name: 'act bundle astro-one-better-sidebar' })
+      expect(within(detail).getByText('badge bundle astro-one-better-sidebar')).toBeTruthy()
+      const section = within(detail).getByRole('region', { name: 'section bundle astro-one-better-sidebar' })
       // The contributed actions come before the page's own switch; the sections after the rows.
-      const toggle = within(detail).getByRole('switch', { name: en.enableToggle.replace('{name}', 'dsh-better-sidebar') })
+      const toggle = within(detail).getByRole('switch', { name: en.enableToggle.replace('{name}', 'astro-one-better-sidebar') })
       expect(act.compareDocumentPosition(toggle) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
       const rows = detail.querySelector('[data-plugin-rows]') as HTMLElement
       expect(rows.compareDocumentPosition(section) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
       // A contribution sees the bundle's facts, not the page's own state.
       expect(subjects.at(-1)).toEqual({
         kind: 'bundle',
-        pkg: { name: 'dsh-better-sidebar', version: '0.16.0', installed: true, enabled: true, rows: [{ rowId: 'sidebar', moduleName: 'dsh-better-sidebar', enabled: true }] },
+        pkg: { name: 'astro-one-better-sidebar', version: '0.16.0', installed: true, enabled: true, rows: [{ rowId: 'sidebar', moduleName: 'astro-one-better-sidebar', enabled: true }] },
       })
 
-      fireEvent.click(screen.getByRole('button', { name: en.configureRow.replace('{name}', 'dsh-better-sidebar') }))
+      fireEvent.click(screen.getByRole('button', { name: en.configureRow.replace('{name}', 'astro-one-better-sidebar') }))
       const page = document.querySelector('[data-plugin-row-detail]') as HTMLElement
-      expect(within(page).getByRole('button', { name: 'act row dsh-better-sidebar#sidebar' })).toBeTruthy()
-      expect(within(page).getByText('badge row dsh-better-sidebar#sidebar')).toBeTruthy()
-      expect(within(page).getByRole('region', { name: 'section row dsh-better-sidebar#sidebar' })).toBeTruthy()
-      expect(subjects.at(-1)).toMatchObject({ kind: 'row', row: { rowId: 'sidebar', moduleName: 'dsh-better-sidebar', enabled: true } })
-      fireEvent.click(within(page).getByRole('button', { name: en.backToPackage.replace('{name}', 'dsh-better-sidebar') }))
+      expect(within(page).getByRole('button', { name: 'act row astro-one-better-sidebar#sidebar' })).toBeTruthy()
+      expect(within(page).getByText('badge row astro-one-better-sidebar#sidebar')).toBeTruthy()
+      expect(within(page).getByRole('region', { name: 'section row astro-one-better-sidebar#sidebar' })).toBeTruthy()
+      expect(subjects.at(-1)).toMatchObject({ kind: 'row', row: { rowId: 'sidebar', moduleName: 'astro-one-better-sidebar', enabled: true } })
+      fireEvent.click(within(page).getByRole('button', { name: en.backToPackage.replace('{name}', 'astro-one-better-sidebar') }))
       fireEvent.click(screen.getByRole('button', { name: en.backToList }))
 
       fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'Shell') }))
@@ -690,15 +690,15 @@ describe('PluginManagerPage', () => {
     })
 
     it('leaves the version out of a bundle the Host reports none for', () => {
-      const unversioned: PackageView = { name: 'dsh-better-sidebar', installed: true, optional: false, enabled: true, rows: [] }
+      const unversioned: PackageView = { name: 'astro-one-better-sidebar', installed: true, optional: false, enabled: true, rows: [] }
       renderTab({ packages: [unversioned] }, {}, bodies)
-      fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'dsh-better-sidebar') }))
-      expect(subjects.at(-1)).toEqual({ kind: 'bundle', pkg: { name: 'dsh-better-sidebar', installed: true, enabled: true, rows: [] } })
+      fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'astro-one-better-sidebar') }))
+      expect(subjects.at(-1)).toEqual({ kind: 'bundle', pkg: { name: 'astro-one-better-sidebar', installed: true, enabled: true, rows: [] } })
     })
   })
 
   it('preserves the full package name and description for a third-party scope', () => {
-    const name = '@acme/dsh-experimental-agent-team-profile'
+    const name = '@acme/astro-one-experimental-agent-team-profile'
     const { setLanguage } = renderTab({ packages: [pkg({ name, meta: { description: { en: 'Third-party description.' } } })] })
     setLanguage(zh)
     fireEvent.click(screen.getByRole('button', { name: zh.openDetail.replace('{name}', name) }))
@@ -726,15 +726,15 @@ describe('PluginManagerPage', () => {
     const { actions, set } = renderTab({
       packages: [pkg({
         meta: { description: { en: 'A sidebar.' } },
-        rows: [row(), row({ rowId: 'theme', moduleName: 'dsh-better-sidebar/theme', entryId: 'include:theme' as PluginEntryId, enabled: false, phase: null })],
+        rows: [row(), row({ rowId: 'theme', moduleName: 'astro-one-better-sidebar/theme', entryId: 'include:theme' as PluginEntryId, enabled: false, phase: null })],
       })],
     })
-    fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'dsh-better-sidebar') }))
-    const detail = document.querySelector('[data-plugin-detail="dsh-better-sidebar"]') as HTMLElement
-    expect(within(detail).getByRole('heading', { level: 3 }).textContent).toBe('dsh-better-sidebar')
+    fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'astro-one-better-sidebar') }))
+    const detail = document.querySelector('[data-plugin-detail="astro-one-better-sidebar"]') as HTMLElement
+    expect(within(detail).getByRole('heading', { level: 3 }).textContent).toBe('astro-one-better-sidebar')
     // The version sits beside the name as a tag; the crumb only leads back.
     expect(within(detail).getByText('v0.16.0')).toBeTruthy()
-    expect(document.querySelector('[data-plugin-name]')?.textContent).toBe('dsh-better-sidebar')
+    expect(document.querySelector('[data-plugin-name]')?.textContent).toBe('astro-one-better-sidebar')
     expect(within(detail).getByRole('button', { name: en.backToList }).textContent).toBe(en.crumbRoot)
     expect(within(detail).getByText('A sidebar.')).toBeTruthy()
     // The rows, in order, with their state and their module.
@@ -742,18 +742,18 @@ describe('PluginManagerPage', () => {
     expect(rows.map(item => item.getAttribute('data-plugin-row'))).toEqual(['include:sidebar', 'include:theme'])
     expect(rows[1]?.getAttribute('data-state')).toBe('off')
     expect(within(detail).getByText(en.partsCountTotal.replace('{count}', '2'), { exact: false })).toBeTruthy()
-    expect(within(detail).getByRole('switch', { name: en.partToggle.replace('{name}', 'dsh-better-sidebar/theme') })).toBeTruthy()
+    expect(within(detail).getByRole('switch', { name: en.partToggle.replace('{name}', 'astro-one-better-sidebar/theme') })).toBeTruthy()
     expect(within(detail).getByText(en.rowPhaseActive)).toBeTruthy()
     expect(within(detail).getByText(en.partOff)).toBeTruthy()
-    fireEvent.click(within(detail).getByRole('button', { name: en.uninstallLabel.replace('{name}', 'dsh-better-sidebar') }))
-    expect(actions.uninstall).toHaveBeenCalledWith('dsh-better-sidebar')
-    fireEvent.click(within(detail).getByRole('switch', { name: en.enableToggle.replace('{name}', 'dsh-better-sidebar') }))
-    expect(actions.setEnabled).toHaveBeenCalledWith('dsh-better-sidebar', false)
+    fireEvent.click(within(detail).getByRole('button', { name: en.uninstallLabel.replace('{name}', 'astro-one-better-sidebar') }))
+    expect(actions.uninstall).toHaveBeenCalledWith('astro-one-better-sidebar')
+    fireEvent.click(within(detail).getByRole('switch', { name: en.enableToggle.replace('{name}', 'astro-one-better-sidebar') }))
+    expect(actions.setEnabled).toHaveBeenCalledWith('astro-one-better-sidebar', false)
     // A problem and a protection the Host reports read on the page in the dictionary's words; the page leaves with the crumb.
     set({ packages: [pkg({ error: { code: 'operation-error', diagnostic: 'unreadable' }, readOnlyReason: 'management-required' })] })
     expect(within(detail).getByText(`${en.reasonLabel}: unreadable`)).toBeTruthy()
     expect(within(detail).getByText(en.reasonManagementRequired)).toBeTruthy()
-    expect(within(detail).getByRole('button', { name: en.uninstallLabel.replace('{name}', 'dsh-better-sidebar') })).toHaveProperty('disabled', true)
+    expect(within(detail).getByRole('button', { name: en.uninstallLabel.replace('{name}', 'astro-one-better-sidebar') })).toHaveProperty('disabled', true)
     expect(within(detail).getByText(en.partsEmpty)).toBeTruthy()
     set({ packages: [pkg({ error: { code: 'not-bundle' } })] })
     expect(within(detail).getByText(`${en.reasonLabel}: ${en.reasonNotBundle}`)).toBeTruthy()
@@ -769,7 +769,7 @@ describe('PluginManagerPage', () => {
     // A bundle that leaves the list drops back to the cards.
     const { version: _version, ...unversioned } = pkg()
     set({ packages: [unversioned] })
-    fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'dsh-better-sidebar') }))
+    fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'astro-one-better-sidebar') }))
     expect(screen.queryByText('No description.')).toBeNull()
     expect(screen.queryByText(en.versionTag.replace('{version}', '0.16.0'))).toBeNull()
     set({ packages: [] })
@@ -792,10 +792,10 @@ describe('PluginManagerPage', () => {
       return { ...unmounted, enabled: false, phase: null }
     })
     const { actions, set } = renderTab({ packages: [pkg({ rows })], busy: [rowKey('include:row-5')] })
-    fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'dsh-better-sidebar') }))
+    fireEvent.click(screen.getByRole('button', { name: en.openDetail.replace('{name}', 'astro-one-better-sidebar') }))
     const detail = document.querySelector('[data-plugin-detail]') as HTMLElement
     const toggle = (id: string): HTMLElement => within(detail.querySelector<HTMLElement>(`[data-plugin-row="${id}"]`)!)
-      .getByRole('switch', { name: en.partToggle.replace('{name}', 'dsh-better-sidebar') })
+      .getByRole('switch', { name: en.partToggle.replace('{name}', 'astro-one-better-sidebar') })
     expect(within(detail).getByText(`${en.partsCountTotal.replace('{count}', '12')} · ${en.partsCountRunning.replace('{count}', '8')} · ${en.partsCountOff.replace('{count}', '1')} · ${en.partsCountFailed.replace('{count}', '1')}`)).toBeTruthy()
     fireEvent.click(toggle('include:row-0'))
     expect(actions.setRowEnabled).toHaveBeenCalledWith('include:row-0', false)
@@ -822,7 +822,7 @@ describe('PluginManagerPage', () => {
     fireEvent.change(filter, { target: { value: '' } })
     // A bundle that is off shows its rows without switches.
     set({ packages: [pkg({ enabled: false, rows: rows.slice(0, 2).map(item => ({ ...item, enabled: false, phase: null })) })] })
-    expect(within(detail).queryByRole('switch', { name: en.partToggle.replace('{name}', 'dsh-better-sidebar') })).toBeNull()
+    expect(within(detail).queryByRole('switch', { name: en.partToggle.replace('{name}', 'astro-one-better-sidebar') })).toBeNull()
     expect(within(detail).getAllByText(en.partOff)).toHaveLength(2)
     // A row without a fiber, on a bundle that is on, reads idle.
     set({ packages: [pkg({ rows: [row({ phase: null })] })] })
@@ -835,17 +835,17 @@ describe('PluginManagerPage', () => {
     const install = () => screen.getByRole('button', { name: en.installRun })
     expect(install()).toHaveProperty('disabled', true)
     const field = screen.getByRole('textbox', { name: en.installSpecLabel })
-    fireEvent.change(field, { target: { value: 'dsh-x' } })
-    expect(actions.editInstallSpec).toHaveBeenCalledWith('dsh-x')
+    fireEvent.change(field, { target: { value: 'astro-one-x' } })
+    expect(actions.editInstallSpec).toHaveBeenCalledWith('astro-one-x')
     expect(document.querySelector('[data-terminal]')).toBeNull()
     expect(screen.queryByRole('checkbox')).toBeNull()
 
-    set({ install: { ...IDLE_INSTALL, open: true, spec: ' dsh-x ' } })
+    set({ install: { ...IDLE_INSTALL, open: true, spec: ' astro-one-x ' } })
     fireEvent.keyDown(screen.getByRole('textbox', { name: en.installSpecLabel }), { key: 'Enter' })
     fireEvent.click(install())
     expect(actions.runInstall).toHaveBeenCalledTimes(2)
     // The check keeps the field and the button inert.
-    set({ install: { ...IDLE_INSTALL, open: true, spec: 'dsh-x', phase: 'checking' } })
+    set({ install: { ...IDLE_INSTALL, open: true, spec: 'astro-one-x', phase: 'checking' } })
     expect(screen.getByRole('textbox', { name: en.installSpecLabel })).toHaveProperty('disabled', true)
     const checking = screen.getByRole('button', { name: en.installChecking })
     expect(checking).toHaveProperty('disabled', true)
@@ -864,24 +864,24 @@ describe('PluginManagerPage', () => {
       ['unknown', en.installProblemUnknown.replace('{reason}', 'r')],
     ]
     for (const [problem, sentence] of problems) {
-      set({ install: { ...IDLE_INSTALL, open: true, spec: 'dsh-x', inputError: { problem: problem as never, reason: 'r' } } })
+      set({ install: { ...IDLE_INSTALL, open: true, spec: 'astro-one-x', inputError: { problem: problem as never, reason: 'r' } } })
       expect(screen.getByRole('alert').textContent).toBe(sentence)
       expect(screen.getByRole('textbox', { name: en.installSpecLabel }).getAttribute('aria-invalid')).toBe('true')
     }
     // A check no registry answered names them all.
-    set({ install: { ...IDLE_INSTALL, open: true, spec: 'dsh-x', inputError: { problem: 'network', reason: 'r', registries: [null, MIRROR] } } })
+    set({ install: { ...IDLE_INSTALL, open: true, spec: 'astro-one-x', inputError: { problem: 'network', reason: 'r', registries: [null, MIRROR] } } })
     expect(screen.getByRole('alert').textContent).toBe(en.installProblemNetworkAll.replace('{registries}', `${en.registryDefault}, ${en.registryNpmmirror}`))
     fireEvent.click(screen.getByRole('button', { name: en.close }))
     expect(actions.closeInstall).toHaveBeenCalledTimes(1)
   })
 
   it('shows the subject while installing, folds the pnpm output behind the details, and stops through the Host', () => {
-    const subject = { spec: 'dsh-x', status: 'accepted', kind: 'registry', name: 'dsh-x', version: '1.4.2', description: 'A sidebar.', bundle: true, registry: null } as const
-    const run = { jobId: 'j1', command: 'pnpm add dsh-x', cwd: '/home/u/.dsh/profiles/web', output: 'Progress: resolved \x1b[96m1\x1b[39m\n' }
-    const { actions, set } = renderTab({ install: { ...IDLE_INSTALL, open: true, spec: 'dsh-x', phase: 'running', subject, runs: [run] } })
+    const subject = { spec: 'astro-one-x', status: 'accepted', kind: 'registry', name: 'astro-one-x', version: '1.4.2', description: 'A sidebar.', bundle: true, registry: null } as const
+    const run = { jobId: 'j1', command: 'pnpm add astro-one-x', cwd: '/home/u/.astro-one/profiles/web', output: 'Progress: resolved \x1b[96m1\x1b[39m\n' }
+    const { actions, set } = renderTab({ install: { ...IDLE_INSTALL, open: true, spec: 'astro-one-x', phase: 'running', subject, runs: [run] } })
     expect(screen.getByRole('status').textContent).toBe(en.installingTitle)
     expect(screen.getByRole('status').parentElement?.querySelector('[data-state="ongoing"]')).not.toBeNull()
-    expect(screen.getByText('dsh-x')).toBeTruthy()
+    expect(screen.getByText('astro-one-x')).toBeTruthy()
     expect(screen.getByText('A sidebar.')).toBeTruthy()
     expect(screen.getByText(en.installVersion.replace('{version}', '1.4.2'))).toBeTruthy()
     expect(screen.queryByRole('textbox')).toBeNull()
@@ -891,23 +891,23 @@ describe('PluginManagerPage', () => {
     expect(details.getAttribute('aria-expanded')).toBe('false')
     fireEvent.click(details)
     expect(actions.toggleInstallDetails).toHaveBeenCalledTimes(1)
-    set({ install: { ...IDLE_INSTALL, open: true, spec: 'dsh-x', phase: 'running', subject, runs: [run], detailsOpen: true } })
+    set({ install: { ...IDLE_INSTALL, open: true, spec: 'astro-one-x', phase: 'running', subject, runs: [run], detailsOpen: true } })
     expect(screen.getByRole('button', { name: en.installDetailsHide }).getAttribute('aria-expanded')).toBe('true')
-    expect(screen.getByText(en.installLocation.replace('{dir}', '/home/u/.dsh/profiles/web'))).toBeTruthy()
+    expect(screen.getByText(en.installLocation.replace('{dir}', '/home/u/.astro-one/profiles/web'))).toBeTruthy()
     // The run streams as a terminal: its command line, its coloured output so far, the running label.
-    expect(screen.getByText('pnpm add dsh-x')).toBeTruthy()
+    expect(screen.getByText('pnpm add astro-one-x')).toBeTruthy()
     const terminal = document.querySelector('[data-terminal]') as HTMLElement
     expect(terminal.hasAttribute('data-running')).toBe(true)
     expect(within(terminal).getByText('1').getAttribute('style')).toContain('--dsw-static-blue-500')
     expect(within(terminal).getByText(en.terminalRunning)).toBeTruthy()
     // A long log folds its middle behind an expand control, so the dialog keeps its height while pnpm talks.
     const lines = Array.from({ length: 15 }, (_line, index) => `line ${String(index + 1)}`).join('\n')
-    set({ install: { ...IDLE_INSTALL, open: true, spec: 'dsh-x', phase: 'running', subject, detailsOpen: true, runs: [{ ...run, output: `${lines}\n` }] } })
+    set({ install: { ...IDLE_INSTALL, open: true, spec: 'astro-one-x', phase: 'running', subject, detailsOpen: true, runs: [{ ...run, output: `${lines}\n` }] } })
     expect(screen.queryByText('line 8')).toBeNull()
     fireEvent.click(screen.getByRole('button', { name: en.terminalExpandAria.replace('{n}', '3') }))
     expect(screen.getByText('line 8')).toBeTruthy()
     // Before the first chunk there is no location to name.
-    set({ install: { ...IDLE_INSTALL, open: true, spec: 'dsh-x', phase: 'running', subject, detailsOpen: true } })
+    set({ install: { ...IDLE_INSTALL, open: true, spec: 'astro-one-x', phase: 'running', subject, detailsOpen: true } })
     expect(screen.getByText(en.terminalNoOutput)).toBeTruthy()
     // Cancel and the back control each ask the Host to stop the run; the close control asks too, and closes once the Host confirms.
     fireEvent.click(screen.getByRole('button', { name: en.installCancel }))
@@ -952,34 +952,34 @@ describe('PluginManagerPage', () => {
   })
 
   it('offers to enable what a finished install added, and says when it waits for a restart', () => {
-    const subject = { spec: '/plugins/dsh-x', status: 'accepted', kind: 'path', name: 'dsh-x', bundle: true, registry: null } as const
+    const subject = { spec: '/plugins/astro-one-x', status: 'accepted', kind: 'path', name: 'astro-one-x', bundle: true, registry: null } as const
     const { actions, set } = renderTab({
       install: {
         ...IDLE_INSTALL,
         open: true,
-        spec: '/plugins/dsh-x',
+        spec: '/plugins/astro-one-x',
         phase: 'done',
         subject,
-        runs: [{ jobId: 'j1', command: 'pnpm add /plugins/dsh-x', cwd: '/p', output: 'Done in 1s\n', exitCode: 0 }],
-        installed: 'dsh-x',
+        runs: [{ jobId: 'j1', command: 'pnpm add /plugins/astro-one-x', cwd: '/p', output: 'Done in 1s\n', exitCode: 0 }],
+        installed: 'astro-one-x',
       },
     })
     expect(screen.getByText(en.installedTitle)).toBeTruthy()
     expect(screen.getByText(en.installedTitle).parentElement?.querySelector('[data-state="done"]')).not.toBeNull()
     // A path without a description reads by its kind.
-    expect(screen.getByText('dsh-x')).toBeTruthy()
+    expect(screen.getByText('astro-one-x')).toBeTruthy()
     expect(screen.getByText(en.installSubjectPath)).toBeTruthy()
     expect(screen.queryByText(en.installDoneRestart)).toBeNull()
     // No way back to the spec from here; enabling is the one action.
     expect(screen.queryByRole('button', { name: en.installEditAria })).toBeNull()
     fireEvent.click(screen.getByRole('button', { name: en.installEnableNow }))
     expect(actions.enableInstalled).toHaveBeenCalledTimes(1)
-    set({ install: { ...IDLE_INSTALL, open: true, spec: '/plugins/dsh-x', phase: 'done', subject, installed: 'dsh-x', restartRequired: true, enabling: true } })
+    set({ install: { ...IDLE_INSTALL, open: true, spec: '/plugins/astro-one-x', phase: 'done', subject, installed: 'astro-one-x', restartRequired: true, enabling: true } })
     expect(screen.getByRole('button', { name: en.installEnableNow })).toHaveProperty('disabled', true)
     expect(screen.getByText(en.installDoneRestart)).toBeTruthy()
 
     // A run that named no bundle leaves only Done.
-    set({ install: { ...IDLE_INSTALL, open: true, spec: 'dsh-x', phase: 'done', subject: { spec: 'dsh-x', status: 'accepted', kind: 'registry', name: 'dsh-x', bundle: true, registry: null } } })
+    set({ install: { ...IDLE_INSTALL, open: true, spec: 'astro-one-x', phase: 'done', subject: { spec: 'astro-one-x', status: 'accepted', kind: 'registry', name: 'astro-one-x', bundle: true, registry: null } } })
     expect(screen.getByText(en.installDoneNothing)).toBeTruthy()
     expect(screen.queryByRole('button', { name: en.installEnableNow })).toBeNull()
     fireEvent.click(screen.getByRole('button', { name: en.installClose }))
@@ -987,10 +987,10 @@ describe('PluginManagerPage', () => {
   })
 
   it('asks to allow the scripts a blocked install left pending, retries with them, and says what was allowed', () => {
-    const subject = { spec: 'dsh-x', status: 'accepted', kind: 'registry', name: 'dsh-x', bundle: true, registry: null } as const
+    const subject = { spec: 'astro-one-x', status: 'accepted', kind: 'registry', name: 'astro-one-x', bundle: true, registry: null } as const
     const { actions, set } = renderTab({
       install: {
-        ...IDLE_INSTALL, open: true, spec: 'dsh-x', phase: 'failed', subject,
+        ...IDLE_INSTALL, open: true, spec: 'astro-one-x', phase: 'failed', subject,
         failure: { reason: 'ERR', kind: 'build-blocked', pendingBuilds: ['native', '@scope/other'] },
       },
     })
@@ -1004,12 +1004,12 @@ describe('PluginManagerPage', () => {
     fireEvent.click(within(group).getByRole('button', { name: en.installApproveAndRetry }))
     expect(actions.approveBuildsAndRetry).toHaveBeenCalledTimes(1)
     // Without the pending names the failure reads as the manual instruction, and plain retry is back.
-    set({ install: { ...IDLE_INSTALL, open: true, spec: 'dsh-x', phase: 'failed', subject, failure: { reason: 'ERR', kind: 'build-blocked' } } })
+    set({ install: { ...IDLE_INSTALL, open: true, spec: 'astro-one-x', phase: 'failed', subject, failure: { reason: 'ERR', kind: 'build-blocked' } } })
     expect(screen.getByText(en.installFailureBuildBlockedManual)).toBeTruthy()
     expect(screen.queryByRole('group', { name: en.installApprovalTitle })).toBeNull()
     expect(screen.getByRole('button', { name: en.installRetry })).toBeTruthy()
     // The installed screen says which scripts were allowed.
-    set({ install: { ...IDLE_INSTALL, open: true, spec: 'dsh-x', phase: 'done', subject, installed: 'dsh-x', approvedBuilds: ['native'] } })
+    set({ install: { ...IDLE_INSTALL, open: true, spec: 'astro-one-x', phase: 'done', subject, installed: 'astro-one-x', approvedBuilds: ['native'] } })
     expect(screen.getByText(en.installDoneApproved.replace('{names}', 'native'))).toBeTruthy()
   })
 
@@ -1173,7 +1173,7 @@ describe('PluginManagerPage', () => {
     // Enter in the field installs, once there is a spec.
     fireEvent.keyDown(field, { key: 'Enter' })
     expect(actions.runInstall).not.toHaveBeenCalled()
-    set({ install: { ...open, spec: 'dsh-x', registryOpen: true, registry: { kind: 'custom', url: 'https://npm.corp/' } } })
+    set({ install: { ...open, spec: 'astro-one-x', registryOpen: true, registry: { kind: 'custom', url: 'https://npm.corp/' } } })
     fireEvent.keyDown(screen.getByRole('textbox', { name: en.registryCustom }), { key: 'Enter' })
     expect(actions.runInstall).toHaveBeenCalledTimes(1)
     // A remembered registry that does not parse as a URL reads as written.
@@ -1193,14 +1193,14 @@ describe('PluginManagerPage', () => {
   })
 
   it('names the registry each attempt asks while installing, badges each run, and says when every registry failed', () => {
-    const subject = { spec: 'dsh-x', status: 'accepted', kind: 'registry', name: 'dsh-x', bundle: true, registry: null } as const
+    const subject = { spec: 'astro-one-x', status: 'accepted', kind: 'registry', name: 'astro-one-x', bundle: true, registry: null } as const
     const runs = [
-      { jobId: 'j1', command: 'pnpm add dsh-x', cwd: '/p', output: 'ERR\n', exitCode: 1 },
-      { jobId: 'j2', command: `pnpm add dsh-x --registry=${MIRROR}`, cwd: '/p', output: 'Progress\n' },
+      { jobId: 'j1', command: 'pnpm add astro-one-x', cwd: '/p', output: 'ERR\n', exitCode: 1 },
+      { jobId: 'j2', command: `pnpm add astro-one-x --registry=${MIRROR}`, cwd: '/p', output: 'Progress\n' },
     ]
     const { actions, set } = renderTab({
       install: {
-        ...IDLE_INSTALL, open: true, spec: 'dsh-x', phase: 'running', subject, runs, detailsOpen: true, attempts: { registries: [null, MIRROR], total: 2 },
+        ...IDLE_INSTALL, open: true, spec: 'astro-one-x', phase: 'running', subject, runs, detailsOpen: true, attempts: { registries: [null, MIRROR], total: 2 },
       },
     })
     expect(screen.getByRole('status').textContent).toBe(en.installingTitle)
@@ -1209,13 +1209,13 @@ describe('PluginManagerPage', () => {
     expect(screen.getByText(en.installAttemptBadge.replace('{index}', '1').replace('{registry}', en.registryDefault))).toBeTruthy()
     expect(screen.getByText(en.installAttemptBadge.replace('{index}', '2').replace('{registry}', en.registryNpmmirror))).toBeTruthy()
     // The first attempt says nothing about a registry before it; a single run carries no badge.
-    set({ install: { ...IDLE_INSTALL, open: true, spec: 'dsh-x', phase: 'running', subject, runs: [runs[0] as never], detailsOpen: true, attempts: { registries: [null], total: 2 } } })
+    set({ install: { ...IDLE_INSTALL, open: true, spec: 'astro-one-x', phase: 'running', subject, runs: [runs[0] as never], detailsOpen: true, attempts: { registries: [null], total: 2 } } })
     expect(screen.queryByText(en.installAttemptBadge.replace('{index}', '1').replace('{registry}', en.registryDefault))).toBeNull()
     expect(screen.getByRole('status').parentElement?.textContent).toBe(en.installingTitle)
     // Every registry failed: the failure names them all, and the registries can be changed from here.
     set({
       install: {
-        ...IDLE_INSTALL, open: true, spec: 'dsh-x', phase: 'failed', subject, runs,
+        ...IDLE_INSTALL, open: true, spec: 'astro-one-x', phase: 'failed', subject, runs,
         attempts: { registries: [null, MIRROR], total: 2 }, failure: { reason: 'ERR', kind: 'network', failedAt: 'registry' },
       },
     })
@@ -1223,13 +1223,13 @@ describe('PluginManagerPage', () => {
     fireEvent.click(screen.getByRole('button', { name: en.installChangeRegistry }))
     expect(actions.changeRegistry).toHaveBeenCalledTimes(1)
     // One registry that failed reads as the plain network failure; a stale copy on it still offers another registry.
-    set({ install: { ...IDLE_INSTALL, open: true, spec: 'dsh-x', phase: 'failed', subject, attempts: { registries: [null], total: 1 }, failure: { reason: 'ERR', kind: 'network', failedAt: 'registry' } } })
+    set({ install: { ...IDLE_INSTALL, open: true, spec: 'astro-one-x', phase: 'failed', subject, attempts: { registries: [null], total: 1 }, failure: { reason: 'ERR', kind: 'network', failedAt: 'registry' } } })
     expect(screen.getByText(en.installFailureNetwork)).toBeTruthy()
     expect(screen.getByRole('button', { name: en.installChangeRegistry })).toBeTruthy()
-    set({ install: { ...IDLE_INSTALL, open: true, spec: 'dsh-x', phase: 'failed', subject, attempts: { registries: [null], total: 1 }, failure: { reason: 'ERR', kind: 'not-found', failedAt: 'registry' } } })
+    set({ install: { ...IDLE_INSTALL, open: true, spec: 'astro-one-x', phase: 'failed', subject, attempts: { registries: [null], total: 1 }, failure: { reason: 'ERR', kind: 'not-found', failedAt: 'registry' } } })
     expect(screen.getByRole('button', { name: en.installChangeRegistry })).toBeTruthy()
     // A failure the Host laid at neither offers no other registry.
-    set({ install: { ...IDLE_INSTALL, open: true, spec: 'dsh-x', phase: 'failed', subject, attempts: { registries: [null], total: 1 }, failure: { reason: 'ERR', kind: 'disk-full' } } })
+    set({ install: { ...IDLE_INSTALL, open: true, spec: 'astro-one-x', phase: 'failed', subject, attempts: { registries: [null], total: 1 }, failure: { reason: 'ERR', kind: 'disk-full' } } })
     expect(screen.queryByRole('button', { name: en.installChangeRegistry })).toBeNull()
   })
 
@@ -1245,13 +1245,13 @@ describe('PluginManagerPage', () => {
       expect(scrollIntoView).not.toHaveBeenCalled()
       act(() => { vi.advanceTimersByTime(2_400) })
       expect(actions.clearHighlight).toHaveBeenCalledTimes(1)
-      set({ highlight: 'dsh-better-sidebar' })
-      expect(document.querySelector('[data-plugin-package="dsh-better-sidebar"]')?.hasAttribute('data-plugin-highlight')).toBe(true)
+      set({ highlight: 'astro-one-better-sidebar' })
+      expect(document.querySelector('[data-plugin-package="astro-one-better-sidebar"]')?.hasAttribute('data-plugin-highlight')).toBe(true)
       expect(scrollIntoView).toHaveBeenCalledWith({ block: 'center', behavior: 'smooth' })
       act(() => { vi.advanceTimersByTime(2_400) })
       expect(actions.clearHighlight).toHaveBeenCalledTimes(2)
       set({ highlight: null })
-      expect(document.querySelector('[data-plugin-package="dsh-better-sidebar"]')?.hasAttribute('data-plugin-highlight')).toBe(false)
+      expect(document.querySelector('[data-plugin-package="astro-one-better-sidebar"]')?.hasAttribute('data-plugin-highlight')).toBe(false)
     } finally {
       if (descriptor === undefined) delete (Element.prototype as { scrollIntoView?: unknown }).scrollIntoView
       else Object.defineProperty(Element.prototype, 'scrollIntoView', descriptor)
@@ -1265,8 +1265,8 @@ describe('PluginManagerPage', () => {
     delete (Element.prototype as { scrollIntoView?: unknown }).scrollIntoView
     try {
       const { set } = renderTab({ packages: [pkg()] })
-      set({ highlight: 'dsh-better-sidebar' })
-      expect(document.querySelector('[data-plugin-package="dsh-better-sidebar"]')?.hasAttribute('data-plugin-highlight')).toBe(true)
+      set({ highlight: 'astro-one-better-sidebar' })
+      expect(document.querySelector('[data-plugin-package="astro-one-better-sidebar"]')?.hasAttribute('data-plugin-highlight')).toBe(true)
     } finally {
       if (descriptor !== undefined) Object.defineProperty(Element.prototype, 'scrollIntoView', descriptor)
       vi.useRealTimers()
@@ -1275,17 +1275,17 @@ describe('PluginManagerPage', () => {
 
   it('confirms an uninstall by the package\'s title and runs the action through it', () => {
     const { actions, set } = renderTab({
-      packages: [pkg(), pkg({ name: 'dsh-other' })],
-      confirm: { action: 'uninstall', packageName: 'dsh-better-sidebar' },
+      packages: [pkg(), pkg({ name: 'astro-one-other' })],
+      confirm: { action: 'uninstall', packageName: 'astro-one-better-sidebar' },
     })
-    expect(screen.getByRole('dialog', { name: en.confirmUninstallTitle.replace('{name}', 'dsh-better-sidebar') })).toBeTruthy()
+    expect(screen.getByRole('dialog', { name: en.confirmUninstallTitle.replace('{name}', 'astro-one-better-sidebar') })).toBeTruthy()
     expect(screen.getByText(en.confirmUninstallDescription)).toBeTruthy()
     fireEvent.click(screen.getByRole('button', { name: en.cancel }))
     expect(actions.cancelConfirm).toHaveBeenCalledTimes(1)
-    set({ confirm: { action: 'uninstall', packageName: 'dsh-other' } })
-    expect(screen.getByRole('dialog', { name: en.confirmUninstallTitle.replace('{name}', 'dsh-other') })).toBeTruthy()
+    set({ confirm: { action: 'uninstall', packageName: 'astro-one-other' } })
+    expect(screen.getByRole('dialog', { name: en.confirmUninstallTitle.replace('{name}', 'astro-one-other') })).toBeTruthy()
     set({ packages: [] })
-    expect(screen.getByRole('dialog', { name: en.confirmUninstallTitle.replace('{name}', 'dsh-other') })).toBeTruthy()
+    expect(screen.getByRole('dialog', { name: en.confirmUninstallTitle.replace('{name}', 'astro-one-other') })).toBeTruthy()
     fireEvent.click(screen.getByRole('button', { name: en.confirmUninstall }))
     expect(actions.confirm).toHaveBeenCalledTimes(1)
   })
@@ -1368,7 +1368,7 @@ describe('PluginManagerPage', () => {
 })
 
 it('offers bundle-owned guidance only after explicit enablement and navigates to its detail page', () => {
-  const name = 'dsh-better-sidebar'
+  const name = 'astro-one-better-sidebar'
   const { set, actions } = renderTab({ packages: [pkg({ enabled: false })] }, { bundles: new Set([name]) }, {
     [`plugins.bundle.activation:${name}`]: (_view, owner) => <button onClick={(owner as PluginActivationOwnerProps).onOpenDetails}>Go to setup</button>,
     [`plugins.bundle.config:${name}`]: () => <div>Bundle setup</div>,
@@ -1389,7 +1389,7 @@ it('offers bundle-owned guidance only after explicit enablement and navigates to
 })
 
 it('dismisses activation guidance until the user enables the bundle again', () => {
-  const name = 'dsh-better-sidebar'
+  const name = 'astro-one-better-sidebar'
   const { set } = renderTab({ packages: [pkg({ enabled: false })] }, {}, {
     [`plugins.bundle.activation:${name}`]: (_view, owner) => <button onClick={(owner as PluginActivationOwnerProps).onDismiss}>Later</button>,
   })

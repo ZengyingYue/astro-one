@@ -1,15 +1,15 @@
 import { createHash } from 'node:crypto'
 import { afterEach, expect, it, vi } from 'vitest'
-import { Context, Service } from '@deepseek-ai/cordis'
+import { Context, Service } from '@astro-one/cordis'
 import { mkdtemp, rm, readFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { createServer as createTcpServer, connect, Socket } from 'node:net'
 import { join } from 'node:path'
 import { createServer, IncomingMessage, ServerResponse } from 'node:http'
-import WebServer from '@deepseek-ai/dsh-host-webserver'
-import AuthorizationService from '@deepseek-ai/dsh-authorization'
-import { LocalCredentialProvider } from '@deepseek-ai/dsh-credentials-local'
-import { credentialKey, credentialRef } from '@deepseek-ai/dsh-credentials'
+import WebServer from '@astro-one/host-webserver'
+import AuthorizationService from '@astro-one/authorization'
+import { LocalCredentialProvider } from '@astro-one/credentials-local'
+import { credentialKey, credentialRef } from '@astro-one/credentials'
 import { Config, PlatformAccount } from '../src/index.ts'
 import { browserUrl, platformHeaders, platformOrigin, loginOrigin } from '../src/protocol.ts'
 
@@ -31,7 +31,7 @@ async function fixture(
   embeddedPageDist = '',
   desktopPlatform: 'darwin' | 'win32' | null = null,
 ) {
-  const home = await mkdtemp(join(tmpdir(), 'dsh-account-'))
+  const home = await mkdtemp(join(tmpdir(), 'astro-one-account-'))
   cleanups.push(() => rm(home, { recursive: true, force: true }))
   let init: Record<string, string> = {}
   const cancellations: Array<Record<string, string>> = []
@@ -67,18 +67,18 @@ async function fixture(
   }> = []
   const handle = async (req: IncomingMessage, res: ServerResponse) => {
     expect(req.headers.authorization).toBeUndefined()
-    receivedHeaders.push({ clientPlatform: req.headers['x-client-platform'] as string | undefined, path: req.url, cookie: req.headers.cookie, authorization: req.headers['x-dsh-auth-token'] as string | undefined })
+    receivedHeaders.push({ clientPlatform: req.headers['x-client-platform'] as string | undefined, path: req.url, cookie: req.headers.cookie, authorization: req.headers['x-astro-one-auth-token'] as string | undefined })
     if (redirect) { res.writeHead(302, { location: `${origin}/redirect-target` }).end(); return }
     if (req.url === '/auth-api/v0/users/logout') {
       logoutCount++
-      logoutHeaders.push(req.headers['x-dsh-auth-token'] as string | undefined)
+      logoutHeaders.push(req.headers['x-astro-one-auth-token'] as string | undefined)
       if (logoutHold) await release.promise
       res.setHeader('content-type', 'application/json')
       res.end(JSON.stringify({ code: logoutFailed ? 50000 : 0, data: { biz_code: 0, biz_data: null } }))
       return
     }
     if (req.method === 'GET') {
-      detailRequests.push({ path: req.url!, authorization: req.headers['x-dsh-auth-token'] as string | undefined })
+      detailRequests.push({ path: req.url!, authorization: req.headers['x-astro-one-auth-token'] as string | undefined })
       detailsStarted.resolve(undefined)
       if (detailsHold || (balanceHold && req.url === '/api/v0/users/get_user_summary')) await release.promise
       const value = req.url === '/auth-api/v0/users/current'
@@ -110,12 +110,12 @@ async function fixture(
     } else if (req.url?.endsWith('auth_init')) {
       init = body
       onInit()
-      value = { authorize_url: `${rewriteBrowserOrigin ? 'https://platform.deepseek.com' : origin}/dsh/authorize?authorize_id=test`, expires_in: 600, authorize_id: 'test', ...initOverride }
+      value = { authorize_url: `${rewriteBrowserOrigin ? 'https://platform.deepseek.com' : origin}/astro-one/authorize?authorize_id=test`, expires_in: 600, authorize_id: 'test', ...initOverride }
     } else {
       count++
       exchanged.resolve(undefined)
       if (hold) await release.promise
-      value = { user: null, token: 'dsh_mock_test', authorized_url: `${origin}/dsh/authorized?result=test&locale=zh_CN`, ...exchangeOverride }
+      value = { user: null, token: 'astro_one_mock_test', authorized_url: `${origin}/astro-one/authorized?result=test&locale=zh_CN`, ...exchangeOverride }
     }
     res.setHeader('content-type', 'application/json')
     res.end(JSON.stringify({ code: 0, data: { biz_code: businessCode, biz_msg: 'sensitive diagnostic', biz_data: value } }))
@@ -236,10 +236,10 @@ it('stores a grant before redirecting, restores account presence, and signs out 
   expect(response.status).toBe(302)
   expect(f.init().login_source).toBe('desktop')
   expect(f.init()).not.toHaveProperty('client_type')
-  expect(response.headers.get('location')).toBe(`${f.origin}/dsh/authorized?result=test&locale=zh_CN&login_source=desktop`)
+  expect(response.headers.get('location')).toBe(`${f.origin}/astro-one/authorized?result=test&locale=zh_CN&login_source=desktop`)
   expect((await f.account.getState()).status).toBe('credential-stored')
-  expect(await readFile(join(f.home, 'credentials.yaml'), 'utf8')).toContain('dsh_mock_test')
-  expect(await f.account.getPlatformSession()).toEqual({ origin: f.origin, token: 'dsh_mock_test',
+  expect(await readFile(join(f.home, 'credentials.yaml'), 'utf8')).toContain('astro_one_mock_test')
+  expect(await f.account.getPlatformSession()).toEqual({ origin: f.origin, token: 'astro_one_mock_test',
     requestHeaders: { 'x-client-platform': 'web' } })
   expect(await f.account.resolveToken('https://api.deepseek.com')).toBeUndefined()
   await f.account.signOut()
@@ -284,18 +284,18 @@ it('restricts platform destinations to the configured origin and route', () => {
   expect(() => platformOrigin('http://localhost:8081', false)).toThrow()
   expect(platformOrigin('http://localhost:8081', true)).toBe('http://localhost:8081')
   expect(() => platformOrigin('http://example.com', true)).toThrow()
-  expect(() => browserUrl('https://evil.test/dsh/authorized', 'https://platform.deepseek.com', '/dsh/authorized')).toThrow()
-  expect(() => browserUrl('https://platform.deepseek.com/other', 'https://platform.deepseek.com', '/dsh/authorized')).toThrow()
+  expect(() => browserUrl('https://evil.test/astro-one/authorized', 'https://platform.deepseek.com', '/astro-one/authorized')).toThrow()
+  expect(() => browserUrl('https://platform.deepseek.com/other', 'https://platform.deepseek.com', '/astro-one/authorized')).toThrow()
 })
 
 it('maps both returned browser pages to the development origin across the login flow', async () => {
   const f = await fixture(undefined, {}, true)
-  f.exchangeResponse({ authorized_url: 'https://platform.deepseek.com/dsh/authorized?result=a%2Fb&locale=zh_CN' })
+  f.exchangeResponse({ authorized_url: 'https://platform.deepseek.com/astro-one/authorized?result=a%2Fb&locale=zh_CN' })
   await f.account.startSignIn('en', f.callbackOrigin, 'desktop')
-  expect((await f.wait('waiting-browser')).attempt?.authorizeUrl).toBe(`${f.origin}/dsh/authorize?authorize_id=test`)
+  expect((await f.wait('waiting-browser')).attempt?.authorizeUrl).toBe(`${f.origin}/astro-one/authorize?authorize_id=test`)
   const response = await fetch(f.callback(), { redirect: 'manual' })
   expect(response.status).toBe(302)
-  expect(response.headers.get('location')).toBe(`${f.origin}/dsh/authorized?result=a%2Fb&locale=zh_CN&login_source=desktop`)
+  expect(response.headers.get('location')).toBe(`${f.origin}/astro-one/authorized?result=a%2Fb&locale=zh_CN&login_source=desktop`)
   expect((await f.account.getState()).status).toBe('credential-stored')
 })
 
@@ -306,24 +306,24 @@ it.each([
   ['desktop', '&login_source=web&login_source=web'],
 ] as const)('redirects the %s login completion with its login source when Platform returns %s', async (client, query) => {
   const f = await fixture()
-  f.exchangeResponse({ authorized_url: `${f.origin}/dsh/authorized?result=a%2Fb&locale=zh_CN${query}` })
+  f.exchangeResponse({ authorized_url: `${f.origin}/astro-one/authorized?result=a%2Fb&locale=zh_CN${query}` })
   await f.account.startSignIn('en', f.callbackOrigin, client)
   await f.wait('waiting-browser')
   const response = await fetch(f.callback(), { redirect: 'manual' })
   expect(response.status).toBe(302)
-  expect(response.headers.get('location')).toBe(`${f.origin}/dsh/authorized?result=a%2Fb&locale=zh_CN&login_source=${client}`)
+  expect(response.headers.get('location')).toBe(`${f.origin}/astro-one/authorized?result=a%2Fb&locale=zh_CN&login_source=${client}`)
 })
 
 it('preserves Platform business client_type in the completion URL', async () => {
   const f = await fixture()
-  f.exchangeResponse({ authorized_url: `${f.origin}/dsh/authorized?client_type=DSH` })
+  f.exchangeResponse({ authorized_url: `${f.origin}/astro-one/authorized?client_type=AstroOne` })
   await f.account.startSignIn('en', f.callbackOrigin, 'web')
   await f.wait('waiting-browser')
   const response = await fetch(f.callback(), { redirect: 'manual' })
-  expect(response.headers.get('location')).toBe(`${f.origin}/dsh/authorized?client_type=DSH&login_source=web`)
+  expect(response.headers.get('location')).toBe(`${f.origin}/astro-one/authorized?client_type=AstroOne&login_source=web`)
 })
 
-it.each([undefined, 'https://other.example/dsh/authorized', '/dsh/authorized'])('rejects an invalid exchange completion URL %s before storing a token', async (authorizedUrl) => {
+it.each([undefined, 'https://other.example/astro-one/authorized', '/astro-one/authorized'])('rejects an invalid exchange completion URL %s before storing a token', async (authorizedUrl) => {
   const f = await fixture()
   f.exchangeResponse({ authorized_url: authorizedUrl })
   await f.account.startSignIn('en', f.callbackOrigin, 'desktop')
@@ -360,7 +360,7 @@ it('derives every portal link from the private platform origin', async () => {
   const f = await fixture()
   expect((await f.account.getState()).links).toEqual({ usageUrl: `${f.origin}/usage`, topUpUrl: `${f.origin}/top_up` })
   await f.account.startSignIn('en', f.callbackOrigin, 'desktop')
-  expect((await f.wait('waiting-browser')).attempt?.authorizeUrl).toBe(`${f.origin}/dsh/authorize?authorize_id=test`)
+  expect((await f.wait('waiting-browser')).attempt?.authorizeUrl).toBe(`${f.origin}/astro-one/authorize?authorize_id=test`)
 })
 
 async function storeAccount(f: Awaited<ReturnType<typeof fixture>>) {
@@ -487,18 +487,18 @@ it('adds private deployment cookies to every Platform request without exposing t
   const headers = f.receivedHeaders
   const paths = headers.map(item => item.path)
   // The profile and wallet queries are independent requests, so their arrival order is scheduler-dependent.
-  expect(paths.slice(0, 2)).toEqual(['/auth-api/v0/dsh/auth_init', '/auth-api/v0/dsh/auth_exchange'])
+  expect(paths.slice(0, 2)).toEqual(['/auth-api/v0/astro-one/auth_init', '/auth-api/v0/astro-one/auth_exchange'])
   expect(paths.slice(2, -1).sort()).toEqual(['/api/v0/users/get_user_summary', '/auth-api/v0/users/current'])
   expect(paths.at(-1)).toBe('/auth-api/v0/users/logout')
   expect(headers.every(item => item.cookie === 'test_gate=synthetic')).toBe(true)
   const grantedPaths = new Set(['/auth-api/v0/users/current', '/api/v0/users/get_user_summary', '/auth-api/v0/users/logout'])
-  expect(headers.filter(item => grantedPaths.has(item.path ?? '')).every(item => item.authorization === 'dsh_mock_test')).toBe(true)
+  expect(headers.filter(item => grantedPaths.has(item.path ?? '')).every(item => item.authorization === 'astro_one_mock_test')).toBe(true)
   expect(headers.filter(item => !grantedPaths.has(item.path ?? '')).every(item => item.authorization === undefined)).toBe(true)
 })
 
 it('rejects reserved, duplicate and malformed deployment headers without disclosing values', () => {
   for (const headers of [
-    { Authorization: 'secret-value' }, { 'X-DSH-Auth-Token': 'secret-value' }, { HOST: 'secret-value' }, { 'Content-Length': '5' },
+    { Authorization: 'secret-value' }, { 'X-Astro-One-Auth-Token': 'secret-value' }, { HOST: 'secret-value' }, { 'Content-Length': '5' },
     { Cookie: 'secret-value', cookie: 'other' }, { 'bad name': 'secret-value' },
     { Cookie: 'secret-value\r\ninjected: x' },
   ]) {
@@ -512,7 +512,7 @@ it('does not forward deployment cookies through a Platform redirect', async () =
   f.redirect()
   await f.account.startSignIn('en', f.callbackOrigin, 'desktop')
   await f.wait('failed')
-  expect(f.receivedHeaders.map(item => item.path)).toEqual(['/auth-api/v0/dsh/auth_init'])
+  expect(f.receivedHeaders.map(item => item.path)).toEqual(['/auth-api/v0/astro-one/auth_init'])
 })
 
 it('closes the failed Web authorization tab without redirecting and keeps the shared HTTP server alive', async () => {
@@ -540,7 +540,7 @@ it('closes the failed Web authorization tab without redirecting and keeps the sh
   await f.account.startSignIn('en', f.callbackOrigin, 'web')
   await f.wait('waiting-browser')
   const success = await fetch(f.callback(), { redirect: 'manual' })
-  expect(success.headers.get('location')).toBe(`${f.origin}/dsh/authorized?result=test&locale=zh_CN&login_source=web`)
+  expect(success.headers.get('location')).toBe(`${f.origin}/astro-one/authorized?result=test&locale=zh_CN&login_source=web`)
   expect(f.count()).toBe(2)
 })
 
@@ -569,7 +569,7 @@ it('completes login through a local TCP forward using the browser port rather th
   await f.wait('waiting-browser')
   expect(f.init().redirect_uri).toBe(`${forwardedOrigin}/oauth/callback`)
   const response = await fetch(f.callback(), { redirect: 'manual' })
-  expect(response.headers.get('location')).toBe(`${f.origin}/dsh/authorized?result=test&locale=zh_CN&login_source=web`)
+  expect(response.headers.get('location')).toBe(`${f.origin}/astro-one/authorized?result=test&locale=zh_CN&login_source=web`)
   expect((await f.account.getState()).status).toBe('credential-stored')
 })
 
@@ -695,7 +695,7 @@ it.each([undefined, null, { email: 123 }])('fetches current when exchange user i
 
 it('uses the initialization payload ID for cancellation without extracting it from the browser URL', async () => {
   const f = await fixture()
-  f.initResponse({ authorize_id: 'payload-id', authorize_url: `${f.origin}/dsh/authorize?opaque=value` })
+  f.initResponse({ authorize_id: 'payload-id', authorize_url: `${f.origin}/astro-one/authorize?opaque=value` })
   await f.account.startSignIn('en', f.callbackOrigin, 'desktop')
   const state = await f.wait('waiting-browser')
   await f.account.cancelSignIn(state.attempt!.id)
@@ -784,7 +784,7 @@ it('carries the configured embedded frontend selector in the private Platform se
   await f.account.startSignIn('en', f.callbackOrigin, 'desktop')
   await f.wait('waiting-browser')
   await fetch(f.callback(), { redirect: 'manual' })
-  expect(await f.account.getPlatformSession()).toEqual({ origin: f.origin, token: 'dsh_mock_test', embeddedPageDist: 'feat/test',
+  expect(await f.account.getPlatformSession()).toEqual({ origin: f.origin, token: 'astro_one_mock_test', embeddedPageDist: 'feat/test',
     requestHeaders: { 'x-client-platform': 'web' } })
 })
 
@@ -802,14 +802,14 @@ it.each([
   await f.wait('waiting-browser')
   await fetch(f.callback(), { redirect: 'manual' })
   await readDetails(f.account)
-  expect(await f.account.getPlatformSession()).toEqual({ origin: f.origin, token: 'dsh_mock_test',
+  expect(await f.account.getPlatformSession()).toEqual({ origin: f.origin, token: 'astro_one_mock_test',
     requestHeaders: { cookie: 'test_gate=synthetic', 'x-client-platform': expected } })
   await f.account.signOut()
   await expect.poll(f.logoutCount).toBe(1)
   const paths = f.receivedHeaders.map(item => item.path)
   expect(paths.slice(0, 4)).toEqual([
-    '/auth-api/v0/dsh/auth_init', '/auth-api/v0/dsh/auth_cancel',
-    '/auth-api/v0/dsh/auth_init', '/auth-api/v0/dsh/auth_exchange',
+    '/auth-api/v0/astro-one/auth_init', '/auth-api/v0/astro-one/auth_cancel',
+    '/auth-api/v0/astro-one/auth_init', '/auth-api/v0/astro-one/auth_exchange',
   ])
   // Profile and balance requests run concurrently.
   expect(paths.slice(4, -1).sort()).toEqual(['/api/v0/users/get_user_summary', '/auth-api/v0/users/current'])
@@ -879,7 +879,7 @@ it('returns no credentials when signed out or disposed', async () => {
   const f = await fixture()
   expect(await f.account.resolveToken('https://api.deepseek.com')).toBeUndefined()
   expect(await f.account.getPlatformSession()).toBeNull()
-  await f.account.cancelSignIn('missing' as import('@deepseek-ai/dsh-deepseek-account').SignInAttemptId)
+  await f.account.cancelSignIn('missing' as import('@astro-one/deepseek-account').SignInAttemptId)
   await f.dispose()
   expect(await f.account.getProfile()).toBeNull()
   expect(await f.account.getPlatformSession()).toBeNull()

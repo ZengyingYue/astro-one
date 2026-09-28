@@ -1,20 +1,20 @@
 /**
  * Driver-owned durable agent inbox projection and command facade.
  *
- * @module @deepseek-ai/dsh-agent-loop/inbox
+ * @module @astro-one/agent-loop/inbox
  */
 
-import type { MessageId } from '@deepseek-ai/dsh-llm'
-import type { ProjectionDefinition } from '@deepseek-ai/dsh-session-projection'
-import type SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import type { Session, SessionEventMap, UserMessage } from '@deepseek-ai/dsh-session'
+import type { MessageId } from '@astro-one/llm'
+import type { ProjectionDefinition } from '@astro-one/session-projection'
+import type SessionProjectionRegistry from '@astro-one/session-projection'
+import type { Session, SessionEventMap, UserMessage } from '@astro-one/session'
 import type {
   AgentEventDispatch,
   Inbox as InboxContract,
   InboxState,
   InboxTarget,
   InboxWireState,
-} from '@deepseek-ai/dsh-agent'
+} from '@astro-one/agent'
 import { z } from 'zod'
 
 /** Wire validation for pending agent input reconstructed from durable inbox splices. */

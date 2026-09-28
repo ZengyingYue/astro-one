@@ -10,13 +10,13 @@ Status: implemented
 
 还有两个读取点仍站在这条线的错误一侧。
 
-`dsh-token-meter` 在宿主侧被禁用，改挂进每个 preset 的 `compaction` realm。它不接受任何配置，每次折叠都以 `Session` 建键，也不注册工具或提示段——但它拥有 `tokenUsage`、`contextPressure` 与 `contextBreakdown` 三个投影单元，而 `sessionProjections` 是一张进程级、没有作用域分层的表。因此从某个 preset 内部注册的单元会替所有会话作答：一个 `minimal` 会话是否显示 context meter，取决于本次启动以来有没有**别的**会话挂过 `standard`；而只跑过 `minimal` 的进程根本不显示。
+`astro-one-token-meter` 在宿主侧被禁用，改挂进每个 preset 的 `compaction` realm。它不接受任何配置，每次折叠都以 `Session` 建键，也不注册工具或提示段——但它拥有 `tokenUsage`、`contextPressure` 与 `contextBreakdown` 三个投影单元，而 `sessionProjections` 是一张进程级、没有作用域分层的表。因此从某个 preset 内部注册的单元会替所有会话作答：一个 `minimal` 会话是否显示 context meter，取决于本次启动以来有没有**别的**会话挂过 `standard`；而只跑过 `minimal` 的进程根本不显示。
 
 没有加入任何 preset 的 agent 也无人指出。加入是一条 scope 父链链接；缺了它，`tools`、`system-prompt` 与 `skill` 的视图都解析到空的全局层，模型什么也收不到——不报错，也没有空目录可看，只是一个无法行动的 agent。被委派的子 agent 在 preset 存在的整段时间里都是这样运行的，而同一个洞在每一个早于 preset 的入口点上都开着。
 
 ## 决策
 
-**meter 属于宿主平面。** `dsh-token-meter` 回到宿主组装，并离开各 preset 的 `isolate` 映射，于是 `compaction-basic` 与 `tool-result-pruner` 在自己的 realm 内部解析到那一份宿主实例。preset 保留 realm 与压缩后端——preset 选择的是它的 agent 是否压缩，而不是它的 token 是否被计。这正是 `tasks` 与 `goals` 已经采用的判据，只是这次适用于一个因**投影**触达面而不该归 preset 所有的 Service：当一个单元的空值与真实值无法区分时，只要它注册进的那张表是进程级的，它就不能是逐组装的。
+**meter 属于宿主平面。** `astro-one-token-meter` 回到宿主组装，并离开各 preset 的 `isolate` 映射，于是 `compaction-basic` 与 `tool-result-pruner` 在自己的 realm 内部解析到那一份宿主实例。preset 保留 realm 与压缩后端——preset 选择的是它的 agent 是否压缩，而不是它的 token 是否被计。这正是 `tasks` 与 `goals` 已经采用的判据，只是这次适用于一个因**投影**触达面而不该归 preset 所有的 Service：当一个单元的空值与真实值无法区分时，只要它注册进的那张表是进程级的，它就不能是逐组装的。
 
 **未加入的 Agent 在使用模型时失败。** 不变量 companion 检查 `system-prompt/assemble`，因为未绑定的 Agent 可以合法地稍后通过 `recompose` 绑定。纯 Host 和历史 scope 提示词读取没有 Agent，不属于此检查范围。
 
@@ -42,4 +42,4 @@ Status: implemented
 
 context meter 成为逐会话的事实，而不再是挂载历史的函数。代价是 preset 不能再选择不做 token 记账；随附的 preset 没有一个这么做，`minimal` 现在也写明它放弃的是自动压缩而非记账。
 
-不变量覆盖加载了 `dsh-invariants` 的组装。生产入口必须显式组装 Agent；仅安装注册表不会自动绑定。
+不变量覆盖加载了 `astro-one-invariants` 的组装。生产入口必须显式组装 Agent；仅安装注册表不会自动绑定。

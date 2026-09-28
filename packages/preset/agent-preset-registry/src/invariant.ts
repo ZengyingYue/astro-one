@@ -1,20 +1,20 @@
 /**
- * Package-owned invariant companion for `@deepseek-ai/dsh-agent-preset-registry`.
- * @module @deepseek-ai/dsh-agent-preset-registry/invariant
+ * Package-owned invariant companion for `@astro-one/agent-preset-registry`.
+ * @module @astro-one/agent-preset-registry/invariant
  */
 
-import type { Context } from '@deepseek-ai/cordis'
-import type { InvariantInstaller } from '@deepseek-ai/dsh-invariants'
+import type { Context } from '@astro-one/cordis'
+import type { InvariantInstaller } from '@astro-one/invariants'
 // Type-only: resolves the `system-prompt/assemble` waterfall this companion
-// joins, and the `agent` field `dsh-agent` merges into its context.
-import type {} from '@deepseek-ai/dsh-system-prompt'
-import type {} from '@deepseek-ai/dsh-agent'
+// joins, and the `agent` field `astro-one-agent` merges into its context.
+import type {} from '@astro-one/system-prompt'
+import type {} from '@astro-one/agent'
 // Imported through the package name, not `./mount.ts`: a module shared between
 // the two build entry points becomes a third chunk that the published `files`
 // list does not carry, which `verify-built-package-invariants` rejects.
-import { leakedServices, livePresetMounts } from '@deepseek-ai/dsh-agent-preset-registry'
+import { leakedServices, livePresetMounts } from '@astro-one/agent-preset-registry'
 
-const PACKAGE_NAME = '@deepseek-ai/dsh-agent-preset-registry'
+const PACKAGE_NAME = '@astro-one/agent-preset-registry'
 
 /** Cordis companion plugin name. */
 export const name = 'agent-presets-invariant'

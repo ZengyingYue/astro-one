@@ -23,12 +23,12 @@
  * })
  * ```
  *
- * @module @deepseek-ai/dsh-authorization
+ * @module @astro-one/authorization
  */
 
-import { Context, Service } from '@deepseek-ai/cordis'
-import type { CredentialKey, CredentialRecord } from '@deepseek-ai/dsh-credentials'
-import { HarnessError } from '@deepseek-ai/dsh-llm'
+import { Context, Service } from '@astro-one/cordis'
+import type { CredentialKey, CredentialRecord } from '@astro-one/credentials'
+import { HarnessError } from '@astro-one/llm'
 
 import type {
   AuthorizationEntry, AuthorizationMethod, AuthorizationNotice, AuthorizationOutcome, AuthorizationPrompt,
@@ -40,7 +40,7 @@ export type {
   AuthorizationPromptOption, AuthorizationSettlement, AuthorizationStatus,
 } from './types.ts'
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     authorization: AuthorizationService
   }

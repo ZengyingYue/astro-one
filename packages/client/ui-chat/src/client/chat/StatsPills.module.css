@@ -9,8 +9,8 @@
   min-width: 0;
   max-width: 100%;
   box-sizing: border-box;
-  font-size: calc(var(--dsh-content-font-size-secondary, 13px) - 1px);
-  line-height: calc(20px + var(--dsh-content-font-delta-secondary, 0px));
+  font-size: calc(var(--astro-one-content-font-size-secondary, 13px) - 1px);
+  line-height: calc(20px + var(--astro-one-content-font-delta-secondary, 0px));
 }
 
 /* Dialog anchor: shrink-wraps its pill so the panel clamp measures the pill. */

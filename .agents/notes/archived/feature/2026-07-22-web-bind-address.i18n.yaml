@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/archived/feature/2026-07-22-web-bind-address.md
-2026-07-22-web-bind-address.md: be1cdfb8ca510eab6e7deb7517e427a880cca663
-2026-07-22-web-bind-address.zh.md: 80a68a0d0c09cc40be02ce6f408cb04e74625284
+2026-07-22-web-bind-address.md: d66f8f83a5dc17efd51edc3e34f70f8ae7656fc8
+2026-07-22-web-bind-address.zh.md: b260dcc48212ffb40eebe6b9a9ac172dbedc4676

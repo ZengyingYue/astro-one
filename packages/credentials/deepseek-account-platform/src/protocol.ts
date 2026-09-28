@@ -58,7 +58,7 @@ export function platformHeaders(values: Record<string, string>): Record<string, 
   const names = new Set<string>()
   for (const [name, value] of Object.entries(values)) {
     const key = name.toLowerCase()
-    if (['authorization', 'x-dsh-auth-token', 'host', 'content-length', 'transfer-encoding', 'connection', 'content-type'].includes(key)
+    if (['authorization', 'x-astro-one-auth-token', 'host', 'content-length', 'transfer-encoding', 'connection', 'content-type'].includes(key)
       || names.has(key)) throw new Error('account: requestHeaders contains a reserved or duplicate header')
     names.add(key)
     try { headers.set(name, value) }
@@ -86,7 +86,7 @@ export const exchange = z.object({ token: z.string().regex(/^[\x21-\x7e]+$/), au
  */
 export async function requestPlatform(origin: string, method: string, body: unknown,
   signal: AbortSignal, headers: Record<string, string>): Promise<unknown> {
-  return platformRequest(`${origin}/auth-api/v0/dsh/${method}`, {
+  return platformRequest(`${origin}/auth-api/v0/astro-one/${method}`, {
     method: 'POST', headers: { ...headers, 'content-type': 'application/json' }, body: JSON.stringify(body),
   }, signal)
 }
@@ -103,7 +103,7 @@ export async function requestPlatform(origin: string, method: string, body: unkn
 export function requestAccount(origin: string, path: '/auth-api/v0/users/current' | '/api/v0/users/get_user_summary',
   token: string,
   signal: AbortSignal, headers: Record<string, string>): Promise<unknown> {
-  return platformRequest(`${origin}${path}`, { method: 'GET', headers: { ...headers, 'x-dsh-auth-token': token } }, signal)
+  return platformRequest(`${origin}${path}`, { method: 'GET', headers: { ...headers, 'x-astro-one-auth-token': token } }, signal)
 }
 
 /**
@@ -117,7 +117,7 @@ export function requestAccount(origin: string, path: '/auth-api/v0/users/current
 export async function logoutAccount(origin: string, token: string,
   signal: AbortSignal, headers: Record<string, string>): Promise<void> {
   await platformRequest(`${origin}/auth-api/v0/users/logout`, {
-    method: 'POST', headers: { ...headers, 'x-dsh-auth-token': token },
+    method: 'POST', headers: { ...headers, 'x-astro-one-auth-token': token },
   }, signal)
 }
 

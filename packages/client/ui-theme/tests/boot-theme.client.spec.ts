@@ -22,7 +22,7 @@ afterEach(() => {
   vi.unstubAllGlobals()
   delete document.documentElement.dataset.dsThemeSource
   document.body.removeAttribute(DARK_ATTRIBUTE)
-  document.body.style.removeProperty('--dsh-content-font-size')
+  document.body.style.removeProperty('--astro-one-content-font-size')
 })
 
 describe('theme bootstrap row', () => {
@@ -32,7 +32,7 @@ describe('theme bootstrap row', () => {
     expect(head).toMatchObject({ kind: 'style' })
     expect(body).toMatchObject({ kind: 'script', placement: 'body' })
     if (head?.kind !== 'style') throw new Error('theme head bootstrap row is not a style')
-    expect(head.text).toBe(':root{color-scheme:dark}body{background-color:#151517;--dsh-boot-bg:#151517}')
+    expect(head.text).toBe(':root{color-scheme:dark}body{background-color:#151517;--astro-one-boot-bg:#151517}')
     expect(document.body.hasAttribute(DARK_ATTRIBUTE)).toBe(false)
     if (body?.kind !== 'script') throw new Error('theme body bootstrap row is not a script')
     runInNewContext(body.text, { document, matchMedia: globalThis.matchMedia })
@@ -45,7 +45,7 @@ describe('theme bootstrap row', () => {
     mockSystemDark(true)
     const [head] = bootThemeInjections('light')
     if (head?.kind !== 'style') throw new Error('theme head bootstrap row is not a style')
-    expect(head.text).toBe(':root{color-scheme:light}body{background-color:#fff;--dsh-boot-bg:#fff}')
+    expect(head.text).toBe(':root{color-scheme:light}body{background-color:#fff;--astro-one-boot-bg:#fff}')
     executeBootstrap('light')
     expect(document.body.hasAttribute(DARK_ATTRIBUTE)).toBe(false)
   })
@@ -64,8 +64,8 @@ describe('theme bootstrap row', () => {
     const [head] = bootThemeInjections('system')
     if (head?.kind !== 'style') throw new Error('theme head bootstrap row is not a style')
     expect(head.text).toBe(
-      ':root{color-scheme:light}body{background-color:#fff;--dsh-boot-bg:#fff}'
-      + '@media(prefers-color-scheme:dark){:root{color-scheme:dark}body{background-color:#151517;--dsh-boot-bg:#151517}}',
+      ':root{color-scheme:light}body{background-color:#fff;--astro-one-boot-bg:#fff}'
+      + '@media(prefers-color-scheme:dark){:root{color-scheme:dark}body{background-color:#151517;--astro-one-boot-bg:#151517}}',
     )
   })
 
@@ -78,8 +78,8 @@ describe('theme bootstrap row', () => {
   it('writes the durable content font size and defaults it to 14px', () => {
     mockSystemDark(false)
     executeBootstrap('light', 17)
-    expect(document.body.style.getPropertyValue('--dsh-content-font-size')).toBe('17px')
+    expect(document.body.style.getPropertyValue('--astro-one-content-font-size')).toBe('17px')
     executeBootstrap('light')
-    expect(document.body.style.getPropertyValue('--dsh-content-font-size')).toBe('14px')
+    expect(document.body.style.getPropertyValue('--astro-one-content-font-size')).toBe('14px')
   })
 })

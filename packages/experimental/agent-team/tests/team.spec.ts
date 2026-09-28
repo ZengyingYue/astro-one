@@ -2,17 +2,17 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { Context } from '@deepseek-ai/cordis'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import { mountAgentLoopTestDependencies } from '@deepseek-ai/dsh-agent-loop-testkit'
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
-import { SessionLogOffset, SessionId, type Session, type SessionEvent } from '@deepseek-ai/dsh-session'
-import JsonlSessionPersistence from '@deepseek-ai/dsh-session-persistence-jsonl'
-import SubagentService from '@deepseek-ai/dsh-subagent'
-import { deliverSubagentPrompt, type HostPromptDeliverer } from '@deepseek-ai/dsh-subagent/internal'
-import * as SubagentFork from '@deepseek-ai/dsh-subagent-fork-in-process'
-import * as SubagentSpawn from '@deepseek-ai/dsh-subagent-spawn-in-process'
+import { Context } from '@astro-one/cordis'
+import type { Agent } from '@astro-one/agent'
+import AgentLoop from '@astro-one/agent-loop'
+import { mountAgentLoopTestDependencies } from '@astro-one/agent-loop-testkit'
+import { createUserMessage } from '@astro-one/llm'
+import { SessionLogOffset, SessionId, type Session, type SessionEvent } from '@astro-one/session'
+import JsonlSessionPersistence from '@astro-one/session-persistence-jsonl'
+import SubagentService from '@astro-one/subagent'
+import { deliverSubagentPrompt, type HostPromptDeliverer } from '@astro-one/subagent/internal'
+import * as SubagentFork from '@astro-one/subagent-fork-in-process'
+import * as SubagentSpawn from '@astro-one/subagent-spawn-in-process'
 import { MockAdapter, textResponse } from '../../../core/agent-loop/tests/mock-adapter.ts'
 import TeamService, { TeamError, TeamId, TeamMessageId, TeamTaskId } from '../src/index.ts'
 import { TeamRuntimeLifecycle } from '../src/lifecycle.ts'
@@ -64,7 +64,7 @@ async function setup(
   const ctx = new Context()
   contexts.push(ctx)
   await mountAgentLoopTestDependencies(ctx)
-  const storageRoot = mkdtempSync(join(tmpdir(), 'dsh-team-'))
+  const storageRoot = mkdtempSync(join(tmpdir(), 'astro-one-team-'))
   roots.push(storageRoot)
   await ctx.plugin(JsonlSessionPersistence, { root: storageRoot })
   await ctx.plugin(TestSessionQuery)
@@ -172,7 +172,7 @@ describe('Team identity and provisioning', () => {
     const ctx = new Context()
     contexts.push(ctx)
     await mountAgentLoopTestDependencies(ctx)
-    const storageRoot = mkdtempSync(join(tmpdir(), 'dsh-team-direct-'))
+    const storageRoot = mkdtempSync(join(tmpdir(), 'astro-one-team-direct-'))
     roots.push(storageRoot)
     await ctx.plugin(JsonlSessionPersistence, { root: storageRoot })
     await ctx.plugin(AgentLoop, { agents: [] })
@@ -1352,7 +1352,7 @@ describe('Team mailbox and waiting', () => {
     const ctx = new Context()
     contexts.push(ctx)
     await mountAgentLoopTestDependencies(ctx)
-    const storageRoot = mkdtempSync(join(tmpdir(), 'dsh-team-wait-'))
+    const storageRoot = mkdtempSync(join(tmpdir(), 'astro-one-team-wait-'))
     roots.push(storageRoot)
     await ctx.plugin(JsonlSessionPersistence, { root: storageRoot })
     await ctx.plugin(AgentLoop, { agents: [] })

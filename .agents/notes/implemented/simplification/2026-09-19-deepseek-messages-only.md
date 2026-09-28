@@ -10,7 +10,7 @@ The official DeepSeek route needs Messages thinking replay, image uploads, and i
 
 ## Decision
 
-`dsh-llm-deepseek` uses Messages exclusively. One adapter resolves a request-local configuration snapshot and performs the request. Configuration exposes one endpoint and no protocol selector. The Files client uses Messages authentication, metadata, and pagination directly; quota cleanup scans every page before selecting the oldest owned files.
+`astro-one-llm-deepseek` uses Messages exclusively. One adapter resolves a request-local configuration snapshot and performs the request. Configuration exposes one endpoint and no protocol selector. The Files client uses Messages authentication, metadata, and pagination directly; quota cleanup scans every page before selecting the oldest owned files.
 
 The [Messages adapter decision](../feature/2026-09-07-deepseek-messages-adapter.md) continues to own native thinking replay, system-message placement, image recovery, and request-extension acceptance. Replay discriminators and upload-index namespaces identify durable data and retain their existing values. The separate pi-ai adapter retains its provider-specific protocols.
 

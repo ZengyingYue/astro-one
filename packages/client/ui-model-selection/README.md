@@ -3,7 +3,7 @@ description: "Model selection for the Web GUI: the /model popup and the composer
 kind: "package-reference"
 ---
 
-# @deepseek-ai/dsh-client-ui-model-selection
+# @astro-one/client-ui-model-selection
 
 English | [中文](README.zh.md)
 
@@ -43,7 +43,7 @@ Only the current Client binding's directory can publish its composer block. Clea
 
 ### Selection failures
 
-When another writer owns the Session, model-selection failures tell the user to quit other running DSH instances and retry.
+When another writer owns the Session, model-selection failures tell the user to quit other running Astro One instances and retry.
 
 -----
 
@@ -66,7 +66,7 @@ Read these pages when the model surface is not enough. They move from the browse
 
 - [ui-commands](../ui-commands/README.md) — the popupSelect shell the `/model` contribution registers into.
 - [ui-conversation](../ui-conversation/README.md) — declares the composer's `conversation.input.model` seat and the composer block.
-- [dsh-agent-default-model](../../core/agent-default-model/README.md) — the default-model service for sessions that never choose.
+- [astro-one-agent-default-model](../../core/agent-default-model/README.md) — the default-model service for sessions that never choose.
 - [Client package map](../README.md) — adjacent browser UI packages.
 
 -----

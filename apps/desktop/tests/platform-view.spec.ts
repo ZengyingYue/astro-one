@@ -195,7 +195,7 @@ it('removes the native view when its application document reloads, without rende
   const { manager, owner, removeChildView } = setup()
   await manager.open(owner, 'usage', bounds)
   const child = view()
-  owner.webContents.emit('did-start-navigation', {}, 'dsh-app://app/', false, true)
+  owner.webContents.emit('did-start-navigation', {}, 'astro-one-app://app/', false, true)
   expect(removeChildView).toHaveBeenCalledWith(child)
   expect(child.webContents.close).toHaveBeenCalledOnce()
   expect(owner.webContents.listenerCount('did-start-navigation')).toBe(0)
@@ -205,7 +205,7 @@ it('removes the native view when its application document reloads, without rende
 it('retains the view on same-document and subframe navigation', async () => {
   const { manager, owner } = setup()
   await manager.open(owner, 'usage', bounds)
-  owner.webContents.emit('did-start-navigation', {}, 'dsh-app://app/#account', true, true)
+  owner.webContents.emit('did-start-navigation', {}, 'astro-one-app://app/#account', true, true)
   owner.webContents.emit('did-start-navigation', {}, 'about:blank', false, false)
   expect(view().webContents.close).not.toHaveBeenCalled()
   manager.close()
@@ -226,7 +226,7 @@ it('does not reveal a pending view after the owner reloads or remove a replaceme
   const { manager, owner } = setup()
   const loading = manager.open(owner, 'usage', bounds)
   const previous = view()
-  owner.webContents.emit('did-start-navigation', {}, 'dsh-app://app/', false, true)
+  owner.webContents.emit('did-start-navigation', {}, 'astro-one-app://app/', false, true)
   await manager.open(owner, 'top-up', bounds)
   const current = view()
   await loading
@@ -250,7 +250,7 @@ it('bootstraps the current language and updates an open view without reloading',
   expect(manager.bootstrap({ sender, senderFrame: sender.mainFrame }).locale).toBe('zh_CN')
   locale = 'en_US'
   manager.notifyLocaleChanged()
-  expect(sender.send).toHaveBeenCalledWith('dsh-platform:locale-changed', 'en_US')
+  expect(sender.send).toHaveBeenCalledWith('astro-one-platform:locale-changed', 'en_US')
   expect(sender.loadURL).toHaveBeenCalledOnce()
   manager.close()
   sender.send.mockClear()

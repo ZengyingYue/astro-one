@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-08-19-remove-knip.md
-2026-08-19-remove-knip.md: 5e7e898e05a7e6a6e087b8784f7f49e71cf8fc37
-2026-08-19-remove-knip.zh.md: f6bca8661648efd565dc0bbec86ca2c76738ea85
+2026-08-19-remove-knip.md: 3c48f9e4d93a1cf6791d6c9fb3bab455073aa6d0
+2026-08-19-remove-knip.zh.md: 70386c0c76c7113a9942c1dd1b60e02150613cbe

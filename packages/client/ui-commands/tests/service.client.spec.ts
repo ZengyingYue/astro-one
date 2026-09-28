@@ -7,16 +7,16 @@
  * payload, the scoped consume-token dispatch, per-session popupFor
  * lifecycle, and the directory invalidation event subscriptions.
  */
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@astro-one/cordis'
 import { describe, expect, it, onTestFinished, vi } from 'vitest'
-import type { CommandResult } from '@deepseek-ai/dsh-commands/types'
-import { CommandDefinitionId } from '@deepseek-ai/dsh-commands/brand'
-import { scopeOf } from '@deepseek-ai/dsh-api-session-controller/client'
-import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import { RemoteError, TestRemote, TestSessions } from '@deepseek-ai/dsh-client-test-runtime'
-import type { SessionFixture } from '@deepseek-ai/dsh-client-test-runtime'
-import { IconGoalOutlineRegular } from '@deepseek-ai/dsh-client-ui-primitives'
-import type { ClientSessionContext, ConsumeTokenRequest, InputTriggerPick, InputTriggerSource, SubmitAttachment } from '@deepseek-ai/dsh-client-ui-input-trigger/client'
+import type { CommandResult } from '@astro-one/commands/types'
+import { CommandDefinitionId } from '@astro-one/commands/brand'
+import { scopeOf } from '@astro-one/api-session-controller/client'
+import type { SessionId } from '@astro-one/session/types'
+import { RemoteError, TestRemote, TestSessions } from '@astro-one/client-test-runtime'
+import type { SessionFixture } from '@astro-one/client-test-runtime'
+import { IconGoalOutlineRegular } from '@astro-one/client-ui-primitives'
+import type { ClientSessionContext, ConsumeTokenRequest, InputTriggerPick, InputTriggerSource, SubmitAttachment } from '@astro-one/client-ui-input-trigger/client'
 import type { CommandContribution, CommandDecoration, PopupSelectSpec, SelectOption } from '../src/client/contract.ts'
 import type { CommandDescriptor } from '../src/client/directory.ts'
 import { CommandUiRuntime } from '../src/client/service.ts'
@@ -322,7 +322,7 @@ describe('candidates', () => {
   it('localizes canonical built-in and contribution descriptions on every candidate request', async () => {
     let locale = 'zh'
     const commands: CommandDescriptor[] = [
-      { definitionId: CommandDefinitionId('@deepseek-ai/dsh-command-compact'), name: 'compact', description: 'Compact older conversation history' },
+      { definitionId: CommandDefinitionId('@astro-one/command-compact'), name: 'compact', description: 'Compact older conversation history' },
       { name: 'goal', description: 'scoped goal override' },
       { name: 'custom', description: 'plugin-authored copy' },
     ]
@@ -359,12 +359,12 @@ describe('candidates', () => {
   describe('menu presentation (design doc for #3567)', () => {
     /** First-party definitions plus an unrelated command, in Host registration order. */
     const SHIPPED: CommandDescriptor[] = [
-      { definitionId: CommandDefinitionId('@deepseek-ai/dsh-command-compact'), name: 'compact', description: 'Compact older conversation history' },
-      { definitionId: CommandDefinitionId('@deepseek-ai/dsh-session-log-export'), name: 'export', description: 'Download this Session log as a ZIP archive' },
-      { definitionId: CommandDefinitionId('@deepseek-ai/dsh-command-feedback'), name: 'feedback', description: 'Record feedback about this session', input: { hint: '<text>' } },
-      { definitionId: CommandDefinitionId('@deepseek-ai/dsh-command-goal'), name: 'goal', description: 'Set or view the goal for a long-running task', input: { hint: '<objective>', attachments: true } },
-      { definitionId: CommandDefinitionId('@deepseek-ai/dsh-permission-presets'), name: 'permission', description: 'Switch the permission preset (sandbox mode + approval policy)', input: { hint: '<preset>' } },
-      { definitionId: CommandDefinitionId('@deepseek-ai/dsh-plan-mode'), name: 'plan', description: 'Enter or leave plan mode', input: { hint: '[off|message]', attachments: true } },
+      { definitionId: CommandDefinitionId('@astro-one/command-compact'), name: 'compact', description: 'Compact older conversation history' },
+      { definitionId: CommandDefinitionId('@astro-one/session-log-export'), name: 'export', description: 'Download this Session log as a ZIP archive' },
+      { definitionId: CommandDefinitionId('@astro-one/command-feedback'), name: 'feedback', description: 'Record feedback about this session', input: { hint: '<text>' } },
+      { definitionId: CommandDefinitionId('@astro-one/command-goal'), name: 'goal', description: 'Set or view the goal for a long-running task', input: { hint: '<objective>', attachments: true } },
+      { definitionId: CommandDefinitionId('@astro-one/permission-presets'), name: 'permission', description: 'Switch the permission preset (sandbox mode + approval policy)', input: { hint: '<preset>' } },
+      { definitionId: CommandDefinitionId('@astro-one/plan-mode'), name: 'plan', description: 'Enter or leave plan mode', input: { hint: '[off|message]', attachments: true } },
       { name: 'deploy', description: 'third-party command' },
     ]
     const Glyph = () => null

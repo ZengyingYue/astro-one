@@ -10,17 +10,17 @@ Status: implemented
 
 ## 决策
 
-[文档渲染能力](../../../../packages/document/README.zh.md)将转换委托给独立发布的 `@deepseek-ai/libreoffice-kit` Node API。[kit 归属决策](2026-09-14-independent-libreoffice-kit.zh.md)负责源码维护、兼容版本和 npm 分发。DSH 负责 Session 文件授权、转换并发、私有临时文件、输出限制和 Remote 传输。[Web bundle](../../../../packages/bundle/web-app/README.zh.md)使用稳定 ID 声明转换服务与共享文档预览入口。服务负责带授权的转换 Remote 方法，其描述符由 `api/remotes` 挂载；Office UI 共享文档预览的 Loader 生命周期。
+[文档渲染能力](../../../../packages/document/README.zh.md)将转换委托给独立发布的 `@deepseek-ai/libreoffice-kit` Node API。[kit 归属决策](2026-09-14-independent-libreoffice-kit.zh.md)负责源码维护、兼容版本和 npm 分发。Astro One 负责 Session 文件授权、转换并发、私有临时文件、输出限制和 Remote 传输。[Web bundle](../../../../packages/bundle/web-app/README.zh.md)使用稳定 ID 声明转换服务与共享文档预览入口。服务负责带授权的转换 Remote 方法，其描述符由 `api/remotes` 挂载；Office UI 共享文档预览的 Loader 生命周期。
 
 [平台引擎决策](2026-09-15-platform-office-engines.zh.md)要求使用 kit 已声明的原生目标引擎，未声明原生目标时使用 WASM。缺失或无效的必需引擎会拒绝转换。共享的[有界提供方](2026-09-15-bounded-office-conversion.zh.md)负责准入、转换复用以及持续到临时文件清理完成的取消。预览消费该提供方，不注册另一个转换器，也不依赖 Office 创作 skills。
 
-服务和 Remote 方法接受 DOC、DOCX、XLS、XLSX、PPT 和 PPTX。Client PDF 预览通过此路径显示 Word 和 PowerPoint；[浏览器表格预览](../feature/2026-09-16-browser-excel-preview.zh.md)独立读取 XLSX、XLS、CSV 和 TSV。LibreOffice 导入前，kit 校验 OOXML 输入的有界 ZIP 成员和内容类型，以及二进制 Office 输入的 OLE 复合文件头。将文本改为 Office 后缀不能通过校验。kit 不提取二进制格式的字体表，因此这些格式不返回缺失字体诊断。kit 在调用方拥有的私有目录中独占创建新的 PDF。DSH 读取并校验完整输出后才删除临时文件。[服务的 Remote 方法](../../../../packages/document/office-to-pdf/README.zh.md)通过 [Workspace Files](2026-09-09-workspace-file-read-authority.zh.md)授权源文件访问，保留源路径和版本，并返回 PDF 字节。源文件读取上限与生成 PDF 上限相互独立。读取权限探测和延迟读取（包括超限失败后的复查）采用同一个源路径／版本快照，防止转换将字节发布到另一个源身份下。预览字节不会进入 Session 存储或持久缓存。
+服务和 Remote 方法接受 DOC、DOCX、XLS、XLSX、PPT 和 PPTX。Client PDF 预览通过此路径显示 Word 和 PowerPoint；[浏览器表格预览](../feature/2026-09-16-browser-excel-preview.zh.md)独立读取 XLSX、XLS、CSV 和 TSV。LibreOffice 导入前，kit 校验 OOXML 输入的有界 ZIP 成员和内容类型，以及二进制 Office 输入的 OLE 复合文件头。将文本改为 Office 后缀不能通过校验。kit 不提取二进制格式的字体表，因此这些格式不返回缺失字体诊断。kit 在调用方拥有的私有目录中独占创建新的 PDF。Astro One 读取并校验完整输出后才删除临时文件。[服务的 Remote 方法](../../../../packages/document/office-to-pdf/README.zh.md)通过 [Workspace Files](2026-09-09-workspace-file-read-authority.zh.md)授权源文件访问，保留源路径和版本，并返回 PDF 字节。源文件读取上限与生成 PDF 上限相互独立。读取权限探测和延迟读取（包括超限失败后的复查）采用同一个源路径／版本快照，防止转换将字节发布到另一个源身份下。预览字节不会进入 Session 存储或持久缓存。
 
 converter 复用首个转换 Worker 返回的字体元数据；原始字体缓冲区和解码后的字符覆盖范围仍只属于单次转换。Worker 读取字体时校验索引中的文件。已安装字体族的精确匹配优先于配置的替代字体，完整的字体族、样式、字重、斜体、宽度、字距、语言与码点请求保留各自的匹配结果。WASM 回调将包含完整字体集合的原始字体文件导入 MEMFS。原生引擎还保留各平台的字体发现能力。两条路径均不下载或安装字体；原生操作系统管理的字体内存不受显式导入预算约束。字体变化后，重新创建 converter 会刷新元数据。
 
 kit 维护 serif、sans-serif 和 monospace 的默认优先组，其中包含中文正文字体。西文文本缺少中文字形时，先尝试同类的常用正文字体，再搜索其余字体目录，避免仅因文件排序靠前而选用手写体。provider 的可选 `fontFallbacks` 替换这些有序组，不重复维护默认值。优先规则保留已安装原字体的精确匹配，并以其他覆盖字体作为最后兜底；它们不是字体白名单。原生适配器将缺失字体的选择写入私有 VCL profile。已安装的度量兼容字体可能在查询该表前被选中，平台的字形回退仍然可用。原生平台的选择及完整字体集合的导入要求检查导出 PDF 实际使用的字体。
 
-DSH 按可配置分辨率导出栅格图片，默认 192 DPI，对应共享 PDF 画布在设备像素比 2 时的 96 CSS DPI。文本与矢量仍可缩放；JSON 过滤选项替代隐式选项时，显式书签导出保留引擎默认行为。Node WASM 使用 LibreOffice 的 CPU 过滤器降采样图片。原生转换使用独立的平台引擎。
+Astro One 按可配置分辨率导出栅格图片，默认 192 DPI，对应共享 PDF 画布在设备像素比 2 时的 96 CSS DPI。文本与矢量仍可缩放；JSON 过滤选项替代隐式选项时，显式书签导出保留引擎默认行为。Node WASM 使用 LibreOffice 的 CPU 过滤器降采样图片。原生转换使用独立的平台引擎。
 
 [Office 查看器](../../../../packages/client/ui-sidebar-documentpreview/README.zh.md#office-preview)位于文档预览的 `client/office/` 目录，与其使用的加载生命周期、PDF 正文和读取器类型同属一个包。这些组件放在同一包中，既减少一个独立 UI 启动入口，也无需跨插件运行时导入。其有界缓存校验已授权的源元数据，在读取方之间共享待完成转换，仅在最后一个读取方离开时取消，不缓存失败，并在连接重置时清空。用户打开预览时才开始转换。缺失的已声明字体族随 PDF 返回，可通过文档工具栏的警告图标查看；字体表清单与无关的引擎默认字体不构成警告。共享预览入口的 `office` 缓存设置复用页面全局注入通道，因为模块启动图携带包标识而不传递 Loader 配置。重新加载页面后采用更新的 YAML 值。
 
@@ -62,4 +62,4 @@ Desktop 通过现有的目标 Node pnpm 依赖安装流程安装 kit，并保留
 
 原生与 WASM 的保真度仍取决于构建、源文件格式、已安装字体及平台字体发现。没有覆盖字体就无法恢复缺失字形。图片分辨率限额不限制图片解码或总进程内存。WASM 为大型字体集合和 CFF 字体保留有界内存增长与受检查的栈空间；致命运行时中止会阻止后续 C++ 清理调用。宏与文档链接更新由实际支持的 LOKit 选项和固定源码补丁禁用；这不构成操作系统沙箱。
 
-[提供方测试](../../../../packages/document/office-to-pdf/tests/provider.spec.ts)、[Loader 组合](../../../../packages/bundle/web-app/tests/document-preview.spec.ts)和[浏览器场景](../../../../apps/web/tests/document-preview.e2e.ts)负责 DSH 生命周期、授权与展示证据。引擎验收还需要真实 DOC/DOCX/XLS/XLSX/PPT/PPTX 转换、外部 PDF 文本、字体、页数与图片检查、迁移安装和损坏包拒绝，以及同输入的原生/WASM 性能样本。模拟辅助进程和微基准不能证明这些结果。各目标的真实构建机与 Desktop 安装包需要独立验收；一个本地架构成功不能证明整个矩阵。
+[提供方测试](../../../../packages/document/office-to-pdf/tests/provider.spec.ts)、[Loader 组合](../../../../packages/bundle/web-app/tests/document-preview.spec.ts)和[浏览器场景](../../../../apps/web/tests/document-preview.e2e.ts)负责 Astro One 生命周期、授权与展示证据。引擎验收还需要真实 DOC/DOCX/XLS/XLSX/PPT/PPTX 转换、外部 PDF 文本、字体、页数与图片检查、迁移安装和损坏包拒绝，以及同输入的原生/WASM 性能样本。模拟辅助进程和微基准不能证明这些结果。各目标的真实构建机与 Desktop 安装包需要独立验收；一个本地架构成功不能证明整个矩阵。

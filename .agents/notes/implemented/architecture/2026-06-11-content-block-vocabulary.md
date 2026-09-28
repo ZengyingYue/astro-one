@@ -1,4 +1,4 @@
-# Agent Note: Provider-neutral content-block vocabulary owned by dsh-llm
+# Agent Note: Provider-neutral content-block vocabulary owned by astro-one-llm
 
 Status: implemented
 

@@ -1,11 +1,11 @@
 /** Current-surface projection and byte-bounded rendering. */
 
-import { isCompactCheckpointSource } from '@deepseek-ai/dsh-compaction'
-import type { SessionSurfaceSnapshot } from '@deepseek-ai/dsh-session-query'
-import { TextRetainer } from '@deepseek-ai/dsh-output-retention'
-import { assertNever } from '@deepseek-ai/dsh-util-values'
-import { SessionSeq } from '@deepseek-ai/dsh-session'
-import type { OptionalSessionSeq, SessionId } from '@deepseek-ai/dsh-session'
+import { isCompactCheckpointSource } from '@astro-one/compaction'
+import type { SessionSurfaceSnapshot } from '@astro-one/session-query'
+import { TextRetainer } from '@astro-one/output-retention'
+import { assertNever } from '@astro-one/util-values'
+import { SessionSeq } from '@astro-one/session'
+import type { OptionalSessionSeq, SessionId } from '@astro-one/session'
 import { stringifyTagSafeJson } from './serialization.ts'
 import type { ReferencedConversationItem } from './types.ts'
 

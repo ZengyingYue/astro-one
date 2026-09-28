@@ -2,7 +2,7 @@
 import type { EventEmitter } from 'node:events'
 import { randomUUID } from 'node:crypto'
 import { WebContentsView, session, shell, type View, type WebFrameMain } from 'electron'
-import { mergePlatformCookies, type PlatformSession } from '@deepseek-ai/dsh-deepseek-account'
+import { mergePlatformCookies, type PlatformSession } from '@astro-one/deepseek-account'
 
 import { PLATFORM_IPC, type PlatformLocale } from './platform-ipc.ts'
 
@@ -71,7 +71,7 @@ export class DesktopPlatformView {
     const account = this.account
     if (account === null) throw new Error('Platform account unavailable')
     const generation = this.generation
-    const browserSession = session.fromPartition(`dsh-platform-${randomUUID()}`)
+    const browserSession = session.fromPartition(`astro-one-platform-${randomUUID()}`)
     browserSession.setPermissionRequestHandler((_contents, _permission, callback) => { callback(false) })
     browserSession.setPermissionCheckHandler(() => false)
     const deploymentHeaders = account.requestHeaders ?? {}
@@ -93,7 +93,7 @@ export class DesktopPlatformView {
     })
     const view = new WebContentsView({ webPreferences: {
       session: browserSession, preload: this.preload, sandbox: true, contextIsolation: true,
-      additionalArguments: [`--dsh-platform-origin=${account.origin}`],
+      additionalArguments: [`--astro-one-platform-origin=${account.origin}`],
       nodeIntegration: false, webSecurity: true,
     } })
     this.view = view

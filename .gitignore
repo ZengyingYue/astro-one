@@ -32,13 +32,13 @@ mise.toml
 dist-exe/
 /dist/
 apps/desktop/.desktop-build/
-python/sdk-runtime/src/deepseek_harness_runtime/runtime/
+python/sdk-runtime/src/astro_one_runtime/runtime/
 python/**/__pycache__/
 python/**/.pytest_cache/
 packages/**/__pycache__/
 apps/web/dist/
 .artifacts/
-.dsh-build/
+.astro-one-build/
 .playwright-mcp/
 .orig
 .worktrees/

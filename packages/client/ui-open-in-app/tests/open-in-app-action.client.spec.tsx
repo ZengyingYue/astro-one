@@ -1,10 +1,10 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { cleanup, fireEvent, render, screen, act } from '@testing-library/react'
-import { makeTranslate } from '@deepseek-ai/dsh-client-test-runtime'
-import { createSnapshotStore } from '@deepseek-ai/dsh-client-store'
-import type { SessionListState } from '@deepseek-ai/dsh-api-session-controller/client'
-import type { SessionId } from '@deepseek-ai/dsh-session/types'
+import { makeTranslate } from '@astro-one/client-test-runtime'
+import { createSnapshotStore } from '@astro-one/client-store'
+import type { SessionListState } from '@astro-one/api-session-controller/client'
+import type { SessionId } from '@astro-one/session/types'
 import { OpenInAppAction, type OpenInAppActionProps } from '../src/client/OpenInAppAction.tsx'
 import { zh } from '../src/client/locales.ts'
 

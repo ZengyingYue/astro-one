@@ -116,7 +116,7 @@ export async function preparePrimaryRuntime(options: PreparePrimaryRuntimeOption
   const artifact = lock.targets[target]
   mkdirSync(paths.runtime, { recursive: true })
   mkdirSync(paths.downloads, { recursive: true })
-  const staging = mkdtempSync(join(tmpdir(), 'dsh-primary-'))
+  const staging = mkdtempSync(join(tmpdir(), 'astro-one-primary-'))
   try {
     const output = join(staging, 'payload')
     const dependencies = join(output, 'dependencies')
@@ -163,7 +163,7 @@ export async function preparePrimaryRuntime(options: PreparePrimaryRuntimeOption
     rmSync(staging, { recursive: true, force: true })
   }
   const require = createRequire(import.meta.url)
-  await prepareOfficeSkillAssets(join(dirname(require.resolve('@deepseek-ai/dsh-skill-office/package.json')), 'assets'),
+  await prepareOfficeSkillAssets(join(dirname(require.resolve('@astro-one/skill-office/package.json')), 'assets'),
     join(paths.runtime, 'office-skills'))
 }
 
@@ -200,7 +200,7 @@ if (import.meta.main) {
   const output = resolve(values.output)
   await preparePrimaryRuntime({
     target: values.target as PrimaryRuntimeTarget, output,
-    cache: values.cache ?? join(tmpdir(), 'dsh-primary-runtime-downloads'), version,
+    cache: values.cache ?? join(tmpdir(), 'astro-one-primary-runtime-downloads'), version,
     pythonOnly: values['python-only'],
   })
   smokePrimaryRuntime(join(output, 'primary-runtime'))

@@ -3,16 +3,16 @@ import { mkdtemp, mkdir, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import Include from '@deepseek-ai/cordis-plugin-include'
-import AgentRegistry, { type Agent } from '@deepseek-ai/dsh-agent'
-import { SessionId } from '@deepseek-ai/dsh-session'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import { createScope } from '@deepseek-ai/dsh-scope'
-import AgentPresets from '@deepseek-ai/dsh-agent-preset-registry'
-import { PluginPackages } from '@deepseek-ai/dsh-app-boot'
-import DeepSeekLlmApiExtensionRegistry from '@deepseek-ai/dsh-deepseek-llm-api-extensions'
+import { Context } from '@astro-one/cordis'
+import Loader from '@astro-one/cordis-plugin-loader'
+import Include from '@astro-one/cordis-plugin-include'
+import AgentRegistry, { type Agent } from '@astro-one/agent'
+import { SessionId } from '@astro-one/session'
+import SessionProjectionRegistry from '@astro-one/session-projection'
+import { createScope } from '@astro-one/scope'
+import AgentPresets from '@astro-one/agent-preset-registry'
+import { PluginPackages } from '@astro-one/app-boot'
+import DeepSeekLlmApiExtensionRegistry from '@astro-one/deepseek-llm-api-extensions'
 import * as PluginInventory from '../src/index.ts'
 
 const contexts: Context[] = []
@@ -40,7 +40,7 @@ async function packagePlugin(
 async function harness(
   enabled?: boolean, packageService = false,
 ): Promise<{ ctx: Context; root: string; disposeInventory: () => Promise<void> }> {
-  const root = await mkdtemp(join(tmpdir(), 'dsh-plugin-packages-'))
+  const root = await mkdtemp(join(tmpdir(), 'astro-one-plugin-packages-'))
   roots.push(root)
   const ctx = new Context()
   contexts.push(ctx)
@@ -65,13 +65,13 @@ describe('DeepSeek plugin package inventory', () => {
     const defaultFields = await defaultHarness.ctx.deepseekLlmApiExtensions.prepare({
       body: { messages: [] }, signal: SIGNAL,
     })
-    expect(defaultFields.fields).toHaveProperty('dsh_plugin_packages')
+    expect(defaultFields.fields).toHaveProperty('astro_one_plugin_packages')
 
     const disabledHarness = await harness(false)
     const disabledFields = await disabledHarness.ctx.deepseekLlmApiExtensions.prepare({
       body: { messages: [] }, signal: SIGNAL,
     })
-    expect(disabledFields.fields).not.toHaveProperty('dsh_plugin_packages')
+    expect(disabledFields.fields).not.toHaveProperty('astro_one_plugin_packages')
   })
 
   it('reports active package versions once, retains parallel versions, and excludes inactive or loose entries', async () => {
@@ -89,7 +89,7 @@ describe('DeepSeek plugin package inventory', () => {
     await ctx.loader.create({ name: './loose/plugin.mjs' })
 
     const prepared = await ctx.deepseekLlmApiExtensions.prepare({ body: { messages: [] }, signal: SIGNAL })
-    expect(prepared.fields.dsh_plugin_packages).toEqual({
+    expect(prepared.fields.astro_one_plugin_packages).toEqual({
       version: 1,
       packages: [
         { name: 'one', version: '1.0.0' },
@@ -111,7 +111,7 @@ describe('DeepSeek plugin package inventory', () => {
     const marker = await packagePlugin(root, 'marker-only', {})
     await ctx.loader.create({ name: marker })
     await expect(ctx.deepseekLlmApiExtensions.prepare({ body: { messages: [] }, signal: SIGNAL }))
-      .resolves.toMatchObject({ fields: { dsh_plugin_packages: { version: 1, packages: [] } } })
+      .resolves.toMatchObject({ fields: { astro_one_plugin_packages: { version: 1, packages: [] } } })
   })
 
   it('uses the host inventory when a request has no matching or joined live agent', async () => {
@@ -119,13 +119,13 @@ describe('DeepSeek plugin package inventory', () => {
     const plugin = await packagePlugin(root, 'host-only', { name: 'host-only', version: '3.0.0' })
     await ctx.loader.create({ name: plugin })
     const missing = await ctx.deepseekLlmApiExtensions.prepare({ body: { messages: [] }, signal: SIGNAL, sessionId: 'missing' })
-    expect(missing.fields.dsh_plugin_packages?.packages).toEqual([{ name: 'host-only', version: '3.0.0' }])
+    expect(missing.fields.astro_one_plugin_packages?.packages).toEqual([{ name: 'host-only', version: '3.0.0' }])
 
     const id = SessionId('bare-agent')
     const agentScope = createScope(ctx, {})
     await ctx.agents.register({ id, ctx: agentScope.ctx, session: { id } } as unknown as Agent)
     const bare = await ctx.deepseekLlmApiExtensions.prepare({ body: { messages: [] }, signal: SIGNAL, sessionId: id })
-    expect(bare.fields.dsh_plugin_packages?.packages).toEqual([{ name: 'host-only', version: '3.0.0' }])
+    expect(bare.fields.astro_one_plugin_packages?.packages).toEqual([{ name: 'host-only', version: '3.0.0' }])
   })
 
   it('resolves scoped and unscoped bare subpaths, absolute/file modules, and skips URL or Cordis modules', async () => {
@@ -155,7 +155,7 @@ describe('DeepSeek plugin package inventory', () => {
     await ctx.loader.create({ name: 'https://plugins.example/test.mjs' })
 
     const prepared = await ctx.deepseekLlmApiExtensions.prepare({ body: { messages: [] }, signal: SIGNAL })
-    expect(prepared.fields.dsh_plugin_packages?.packages).toEqual([
+    expect(prepared.fields.astro_one_plugin_packages?.packages).toEqual([
       { name: '@scope/scoped-package', version: '2.0.0' },
       { name: 'absolute-package', version: '3.0.0' },
       { name: 'plain-package', version: '1.0.0' },
@@ -193,7 +193,7 @@ describe('DeepSeek plugin package inventory', () => {
     await ctx.plugin(DeepSeekLlmApiExtensionRegistry)
     await ctx.plugin(PluginInventory)
     const prepared = await ctx.deepseekLlmApiExtensions.prepare({ body: { messages: [] }, signal: SIGNAL })
-    expect(prepared.fields.dsh_plugin_packages).toEqual({ version: 1, packages: [] })
+    expect(prepared.fields.astro_one_plugin_packages).toEqual({ version: 1, packages: [] })
   })
 
   it('uses each ordinary Loader tree base for conflicting bare package versions', async () => {
@@ -213,7 +213,7 @@ describe('DeepSeek plugin package inventory', () => {
     await ctx.loader.await()
 
     const prepared = await ctx.deepseekLlmApiExtensions.prepare({ body: { messages: [] }, signal: SIGNAL })
-    expect(prepared.fields.dsh_plugin_packages?.packages).toEqual([
+    expect(prepared.fields.astro_one_plugin_packages?.packages).toEqual([
       { name: 'versioned-plugin', version: '1.0.0' },
       { name: 'versioned-plugin', version: '2.0.0' },
     ])
@@ -230,15 +230,15 @@ describe('DeepSeek plugin package inventory', () => {
     await ctx.agents.register(agent)
 
     const prepared = await ctx.deepseekLlmApiExtensions.prepare({ body: { messages: [] }, signal: SIGNAL, sessionId: id })
-    expect(prepared.fields.dsh_plugin_packages?.packages).toEqual([{ name: 'preset-only', version: '4.0.0' }])
+    expect(prepared.fields.astro_one_plugin_packages?.packages).toEqual([{ name: 'preset-only', version: '4.0.0' }])
   })
 
   it('withdraws the inventory field when the contributing plugin reloads', async () => {
     const { ctx, disposeInventory } = await harness()
     expect((await ctx.deepseekLlmApiExtensions.prepare({ body: { messages: [] }, signal: SIGNAL })).fields)
-      .toHaveProperty('dsh_plugin_packages')
+      .toHaveProperty('astro_one_plugin_packages')
     await disposeInventory()
     expect((await ctx.deepseekLlmApiExtensions.prepare({ body: { messages: [] }, signal: SIGNAL })).fields)
-      .not.toHaveProperty('dsh_plugin_packages')
+      .not.toHaveProperty('astro_one_plugin_packages')
   })
 })

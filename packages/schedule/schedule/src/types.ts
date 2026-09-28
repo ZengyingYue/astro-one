@@ -1,12 +1,12 @@
 /**
  * Durable and model-facing Schedule value types.
- * @module @deepseek-ai/dsh-schedule
+ * @module @astro-one/schedule
  */
 
-import type { Branded } from '@deepseek-ai/dsh-brand'
-import type {} from '@deepseek-ai/dsh-session/types'
+import type { Branded } from '@astro-one/brand'
+import type {} from '@astro-one/session/types'
 // Type-only: the Workspace registry's archive-admission family map this plugin merges `schedule` into.
-import type {} from '@deepseek-ai/dsh-workspace/types'
+import type {} from '@astro-one/workspace/types'
 
 /** Stable reminder identity that is unique and never reused within one session. */
 export type ScheduleId = Branded<'ScheduleId'>
@@ -212,14 +212,14 @@ export type ScheduleDeleteResult =
 /** Canonical `schedule_delete` value. */
 export type ScheduleDeleteValue = ScheduleDeleteResult | ScheduleToolError
 
-declare module '@deepseek-ai/dsh-workspace/types' {
+declare module '@astro-one/workspace/types' {
   interface SessionActivityKindMap {
     /** A scheduled follow-up for this session is still active. */
     schedule: true
   }
 }
 
-declare module '@deepseek-ai/dsh-session/types' {
+declare module '@astro-one/session/types' {
   interface SessionEventMap {
     /**
      * Versioned Schedule mutation. The owning package validates the complete
@@ -229,7 +229,7 @@ declare module '@deepseek-ai/dsh-session/types' {
   }
 }
 
-declare module '@deepseek-ai/dsh-session-projection/types' {
+declare module '@astro-one/session-projection/types' {
   interface SessionProjectionMap {
     /** Complete active reminders owned by this Session's post-fork suffix. */
     schedule: readonly ScheduleRecord[]

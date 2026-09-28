@@ -10,16 +10,16 @@
  * business, read through its face. Every import from another
  * client plugin is a type.
  */
-import type { Context as ClientContext } from '@deepseek-ai/cordis'
-import type {} from '@deepseek-ai/dsh-api-remotes/client'
-import type {} from '@deepseek-ai/dsh-client-locale/client'
-import type {} from '@deepseek-ai/dsh-client-resources/client'
-import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
-import type {} from '@deepseek-ai/dsh-client-ui-session/client'
-import type {} from '@deepseek-ai/dsh-client-ui-sidebar-right/client'
-import type {} from '@deepseek-ai/dsh-api-gateway/client'
-import type {} from '@deepseek-ai/dsh-api-workspace-files/remote'
-import type { WorkspaceFileParams } from '@deepseek-ai/dsh-api-workspace-files/client'
+import type { Context as ClientContext } from '@astro-one/cordis'
+import type {} from '@astro-one/api-remotes/client'
+import type {} from '@astro-one/client-locale/client'
+import type {} from '@astro-one/client-resources/client'
+import type {} from '@astro-one/client-ui-renderer/client'
+import type {} from '@astro-one/client-ui-session/client'
+import type {} from '@astro-one/client-ui-sidebar-right/client'
+import type {} from '@astro-one/api-gateway/client'
+import type {} from '@astro-one/api-workspace-files/remote'
+import type { WorkspaceFileParams } from '@astro-one/api-workspace-files/client'
 import { TextPreview } from './TextPreview.tsx'
 import type { TextPreviewInjected } from './TextPreview.tsx'
 import { TextTitle } from './TextTitle.tsx'
@@ -51,7 +51,7 @@ export type { TextPage, TextState, TextStore, TextTabState } from './store.ts'
 export type { DocumentContent, DocumentPreviewProps, DocumentTextPage } from './document/contract.ts'
 export type { DocumentLoadMode, DocumentPreviewDefinition } from './document/registry.ts'
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     /** File-extension renderer registrations, independent from their keyed document bodies. */
     documentPreviews: DocumentPreviewRegistry
@@ -61,14 +61,14 @@ declare module '@deepseek-ai/cordis' {
 /** This package's copy namespace. */
 const NS = 'sidebarDocumentPreview'
 
-declare module '@deepseek-ai/dsh-client-ui-sidebar-right/client' {
+declare module '@astro-one/client-ui-sidebar-right/client' {
   interface SidebarRightResourceParamsMap {
     /** File line navigation supported by the text preview. */
     file: WorkspaceFileParams
   }
 }
 
-declare module '@deepseek-ai/dsh-client-ui-slots' {
+declare module '@astro-one/client-ui-slots' {
   interface LocaleNamespaceMap {
     /** Text-preview progress, paging, change, control, and failure lines. */
     sidebarDocumentPreview: import('./locales.ts').SidebarDocumentPreviewKey
@@ -86,7 +86,7 @@ export const inject = ['slots', 'locale', 'sidebarRightTabs', 'remote', 'remote.
  * @param ctx - client root context carrying the registry, slots, copy, and file readers.
  */
 export function apply(ctx: ClientContext): void {
-  const config = Config((globalThis as { __DSH_DOCUMENT_PREVIEW_CONFIG__?: unknown }).__DSH_DOCUMENT_PREVIEW_CONFIG__ ?? {})
+  const config = Config((globalThis as { __ASTRO_ONE_DOCUMENT_PREVIEW_CONFIG__?: unknown }).__ASTRO_ONE_DOCUMENT_PREVIEW_CONFIG__ ?? {})
   const previews = new DocumentPreviewRegistry()
   const disposePreviews = ctx.reflect.provide('documentPreviews', previews)
   ctx.effect(() => disposePreviews)

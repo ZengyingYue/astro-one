@@ -30,7 +30,7 @@ async function mockPlatform() {
     if (req.headers['x-client-platform'] !== (process.platform === 'win32' ? 'desktop-win' : 'desktop-mac')) { res.writeHead(400).end(); return }
     if (req.headers.cookie !== 'test_gate=synthetic') { res.writeHead(403).end(); return }
     if (req.url === '/auth-api/v0/users/logout' && req.method === 'POST') {
-      if (req.headers['x-dsh-auth-token'] !== 'dsh_mock_composition_test') { res.writeHead(401).end(); return }
+      if (req.headers['x-astro-one-auth-token'] !== 'astro_one_mock_composition_test') { res.writeHead(401).end(); return }
       res.writeHead(503).end()
       return
     }
@@ -43,7 +43,7 @@ async function mockPlatform() {
       if (req.url?.endsWith('auth_init')) {
         init = input
         if (input.locale !== 'en_US') { res.writeHead(400).end(); return }
-        value = { authorize_url: `${origin}/dsh/authorize?authorize_id=test`, expires_in: 600, authorize_id: 'test' }
+        value = { authorize_url: `${origin}/astro-one/authorize?authorize_id=test`, expires_in: 600, authorize_id: 'test' }
       } else if (req.url?.endsWith('auth_cancel')) {
         const challenge = createHash('sha256').update(input.code_verifier ?? '').digest('base64url')
         if (input.authorize_id !== 'test' || challenge !== init.code_challenge) { res.writeHead(400).end(); return }
@@ -55,7 +55,7 @@ async function mockPlatform() {
           res.writeHead(400).end()
           return
         }
-        value = { user: null, token: 'dsh_mock_composition_test', authorized_url: `${origin}/dsh/authorized?result=test&locale=zh_CN` }
+        value = { user: null, token: 'astro_one_mock_composition_test', authorized_url: `${origin}/astro-one/authorized?result=test&locale=zh_CN` }
       }
       res.setHeader('content-type', 'application/json')
       res.end(JSON.stringify({ code: 0, data: { biz_code: 0, biz_data: value } }))
@@ -75,7 +75,7 @@ async function mockPlatform() {
 
 describe.skipIf(!existsSync(builtHost))('built Desktop welcome flow', () => {
   it('persists explicit API keys and browser account login independently across Host restarts', async () => {
-    const root = mkdtempSync(join(tmpdir(), 'dsh-desktop-welcome-'))
+    const root = mkdtempSync(join(tmpdir(), 'astro-one-desktop-welcome-'))
     let host: DesktopHostProcess | undefined
     const platform = await mockPlatform()
     try {
@@ -84,8 +84,8 @@ describe.skipIf(!existsSync(builtHost))('built Desktop welcome flow', () => {
       }
       const home = join(root, 'home')
       mkdirSync(home)
-      vi.stubEnv('DSH_HOME', home)
-      vi.stubEnv('DSH_TELEMETRY_MODE', 'DISABLED')
+      vi.stubEnv('ASTRO_ONE_HOME', home)
+      vi.stubEnv('ASTRO_ONE_TELEMETRY_MODE', 'DISABLED')
       const project = prepareDevelopmentProject({
         projectDir: join(root, 'project'),
         cliDir: join(repository, 'apps/cli'),
@@ -108,7 +108,7 @@ describe.skipIf(!existsSync(builtHost))('built Desktop welcome flow', () => {
       cpSync(process.execPath, join(nodeBin, process.platform === 'win32' ? 'node.exe' : 'node'))
       const paths = resolveDesktopPaths(home)
       const manager = new DesktopProjectManager(paths, {
-        dsh: project,
+        astroOne: project,
       })
       await manager.applyRelease()
       writeFileSync(join(paths.profile, 'cordis.patch.yml'), `- id: webserver\n  config:\n    host: 127.0.0.1\n    port: 0\n- id: deepseek-account\n  config:\n${process.platform === 'linux' ? '    desktopPlatform: darwin\n' : ''}    platformOrigin: ${platform.origin}\n    allowLoopbackHttp: true\n    requestHeaders:\n      Cookie: test_gate=synthetic\n`)
@@ -160,7 +160,7 @@ describe.skipIf(!existsSync(builtHost))('built Desktop welcome flow', () => {
       await expect.poll(async () => (await backend!.account.state()).attempt?.phase).toBe('waiting-browser')
       const response = await fetch(platform.callback(), { redirect: 'manual' })
       expect(response.status).toBe(302)
-      expect(response.headers.get('location')).toBe(`${platform.origin}/dsh/authorized?result=test&locale=zh_CN&login_source=desktop`)
+      expect(response.headers.get('location')).toBe(`${platform.origin}/astro-one/authorized?result=test&locale=zh_CN&login_source=desktop`)
       expect(await status()).toMatchObject({ hasApiKey: true, loggedIn: true })
       await restart()
       expect(await status()).toMatchObject({ hasApiKey: true, loggedIn: true })

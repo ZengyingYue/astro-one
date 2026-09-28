@@ -1,7 +1,7 @@
 import { once } from 'node:events'
 import { createServer } from 'node:http'
 import { describe, expect, it, vi } from 'vitest'
-import { LlmError, userAgent } from '@deepseek-ai/dsh-llm'
+import { LlmError, userAgent } from '@astro-one/llm'
 import { DeepSeekFileId } from '../src/file-id.ts'
 import {
   DeepSeekFilesClient,
@@ -385,12 +385,12 @@ describe('DeepSeekFilesClient', () => {
   })
 })
 
-it('authenticates Files with the raw DSH token', async () => {
+it('authenticates Files with the raw Astro One token', async () => {
   const client = new DeepSeekFilesClient({
     baseURL: 'https://api.deepseek.com', apiKey: 'account-token', accountCredential: true,
     fetch: (_url, init) => {
       const headers = new Headers(init?.headers)
-      expect(headers.get('x-dsh-auth-token')).toBe('account-token')
+      expect(headers.get('x-astro-one-auth-token')).toBe('account-token')
       expect(headers.has('authorization')).toBe(false)
       expect(headers.has('x-api-key')).toBe(false)
       return Promise.resolve(new Response(JSON.stringify({ object: 'list', data: [], has_more: false }), { status: 200 }))

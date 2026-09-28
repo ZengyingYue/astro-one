@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import * as yaml from 'js-yaml'
-import { entryListSchema } from '@deepseek-ai/cordis-plugin-include'
+import { entryListSchema } from '@astro-one/cordis-plugin-include'
 
 describe('Agent Teams profile bundle', () => {
   it('declares a public parseable layer with Team-owned controls', () => {
@@ -14,19 +14,19 @@ describe('Agent Teams profile bundle', () => {
       private?: boolean
       publishConfig?: { access?: string }
       dependencies?: Record<string, string>
-      dsh?: { bundle?: { patch?: string } }
+      astroOne?: { bundle?: { patch?: string } }
     }
     expect(manifest.private).toBeUndefined()
     expect(manifest.publishConfig?.access).toBe('public')
-    expect(manifest.dsh?.bundle?.patch).toBe('./cordis.patch.yml')
+    expect(manifest.astroOne?.bundle?.patch).toBe('./cordis.patch.yml')
     expect(manifest.dependencies).toMatchObject({
-      '@deepseek-ai/dsh-experimental-agent-team': 'workspace:*',
-      '@deepseek-ai/dsh-experimental-client-ui-agent-team': 'workspace:*',
-      '@deepseek-ai/dsh-experimental-tool-agent-team': 'workspace:*',
+      '@astro-one/experimental-agent-team': 'workspace:*',
+      '@astro-one/experimental-client-ui-agent-team': 'workspace:*',
+      '@astro-one/experimental-tool-agent-team': 'workspace:*',
     })
 
     const parsed = yaml.load(
-      readFileSync(resolve(root, manifest.dsh!.bundle!.patch!), 'utf8'),
+      readFileSync(resolve(root, manifest.astroOne!.bundle!.patch!), 'utf8'),
       { schema: entryListSchema },
     )
     expect(Array.isArray(parsed)).toBe(true)
@@ -42,15 +42,15 @@ describe('Agent Teams profile bundle', () => {
     expect(patches.find(patch => patch.id === 'tool-subagent-fork')).toMatchObject({ disabled: true })
     const inserted = patches.flatMap(patch => patch.insert ?? [])
     expect(inserted.find(entry => entry.id === 'agent-team')).toMatchObject({
-      name: '@deepseek-ai/dsh-experimental-agent-team',
+      name: '@astro-one/experimental-agent-team',
       config: { maxMembers: 8 },
     })
     expect(inserted.find(entry => entry.id === 'tool-agent-team')).toMatchObject({
-      name: '@deepseek-ai/dsh-experimental-tool-agent-team',
+      name: '@astro-one/experimental-tool-agent-team',
       config: { freshProvider: 'spawn', forkProvider: 'fork' },
     })
     expect(inserted.find(entry => entry.id === 'ui-agent-team')).toMatchObject({
-      name: '@deepseek-ai/dsh-experimental-client-ui-agent-team',
+      name: '@astro-one/experimental-client-ui-agent-team',
     })
   })
 })

@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-api-account-controller",
+  "name": "@astro-one/api-account-controller",
   "description": "Expose safe account operations over authenticated Remote",
   "version": "0.1.7-rc.1",
   "publishConfig": {
@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/api/account-controller"
   },
   "type": "module",
@@ -47,13 +47,13 @@
     "zod": "^4.4.3"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-deepseek-account": "workspace:*",
-    "@deepseek-ai/dsh-typert-protocol": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/deepseek-account": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-deepseek-account": "workspace:*",
-    "@deepseek-ai/dsh-typert-protocol": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/deepseek-account": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*"
   }
 }

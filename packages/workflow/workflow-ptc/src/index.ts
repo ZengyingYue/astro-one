@@ -1,18 +1,18 @@
 /**
  * Workflow orchestration through the shared sandboxed Node PTC executor.
  * The VM supplies script helpers; the process applies the calling Session's file policy.
- * @module @deepseek-ai/dsh-workflow-ptc
+ * @module @astro-one/workflow-ptc
  */
 
 import { randomUUID } from 'node:crypto'
 import { availableParallelism } from 'node:os'
 import * as vm from 'node:vm'
-import type { Context } from '@deepseek-ai/cordis'
-import type {} from '@deepseek-ai/dsh-ptc-runtime'
-import type {} from '@deepseek-ai/dsh-sandbox-policy'
-import z from '@deepseek-ai/schemastery'
-import WorkflowEngine, { WorkflowError, WorkflowRunId } from '@deepseek-ai/dsh-workflow'
-import type { WorkflowRun, WorkflowRunInfo, WorkflowStartRequest } from '@deepseek-ai/dsh-workflow'
+import type { Context } from '@astro-one/cordis'
+import type {} from '@astro-one/ptc-runtime'
+import type {} from '@astro-one/sandbox-policy'
+import z from '@astro-one/schemastery'
+import WorkflowEngine, { WorkflowError, WorkflowRunId } from '@astro-one/workflow'
+import type { WorkflowRun, WorkflowRunInfo, WorkflowStartRequest } from '@astro-one/workflow'
 import { PtcWorkflowRun } from './host.ts'
 import { validateMeta } from './meta.ts'
 import type { WorkerInit, WorkerLimits } from './types.ts'

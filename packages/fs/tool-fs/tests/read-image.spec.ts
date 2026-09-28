@@ -10,20 +10,20 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { Context } from '@deepseek-ai/cordis'
-import { PtcRuntime } from '@deepseek-ai/dsh-ptc-runtime'
-import type { PtcRunRequest, PtcRunResult } from '@deepseek-ai/dsh-ptc-runtime'
-import { ToolCallId, LlmAdapter, LlmRuntime } from '@deepseek-ai/dsh-llm'
-import type { GenerateOptions, LlmModelInfo, LlmResolvedModelInfo, Message, StreamChunk } from '@deepseek-ai/dsh-llm'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime, { RUN_CODE_NAME } from '@deepseek-ai/dsh-tools'
-import type { Config as ToolConfig } from '@deepseek-ai/dsh-tools'
-import LocalFileSystem from '@deepseek-ai/dsh-fs-local'
-import * as FsPolicy from '@deepseek-ai/dsh-fs-observation-policy'
-import LocalAttachmentStore from '@deepseek-ai/dsh-attachment-local'
-import { AttachmentError, AttachmentId, AttachmentStore } from '@deepseek-ai/dsh-attachment'
-import type { ImageAttachmentLimits, ImageAttachmentRef, SaveImageAttachment, StoredImageAttachment } from '@deepseek-ai/dsh-attachment'
-import * as ToolFs from '@deepseek-ai/dsh-tool-fs'
+import { Context } from '@astro-one/cordis'
+import { PtcRuntime } from '@astro-one/ptc-runtime'
+import type { PtcRunRequest, PtcRunResult } from '@astro-one/ptc-runtime'
+import { ToolCallId, LlmAdapter, LlmRuntime } from '@astro-one/llm'
+import type { GenerateOptions, LlmModelInfo, LlmResolvedModelInfo, Message, StreamChunk } from '@astro-one/llm'
+import SystemPrompt from '@astro-one/system-prompt'
+import ToolRuntime, { RUN_CODE_NAME } from '@astro-one/tools'
+import type { Config as ToolConfig } from '@astro-one/tools'
+import LocalFileSystem from '@astro-one/fs-local'
+import * as FsPolicy from '@astro-one/fs-observation-policy'
+import LocalAttachmentStore from '@astro-one/attachment-local'
+import { AttachmentError, AttachmentId, AttachmentStore } from '@astro-one/attachment'
+import type { ImageAttachmentLimits, ImageAttachmentRef, SaveImageAttachment, StoredImageAttachment } from '@astro-one/attachment'
+import * as ToolFs from '@astro-one/tool-fs'
 import {
   applyReadImageTool,
   formatImageReadOutput,
@@ -71,7 +71,7 @@ class CatalogAdapter extends LlmAdapter {
 
 /** In-process PTC mode seam fake that invokes the real registry bindings. */
 class FakeRuntime extends PtcRuntime {
-  resolve(request: import('@deepseek-ai/dsh-ptc-runtime').PtcRunRequest): import('@deepseek-ai/dsh-ptc-runtime').PtcRunSpec { return { ...request, cwd: request.cwd ?? process.cwd(), timeoutMs: request.timeoutMs ?? 120_000 } }
+  resolve(request: import('@astro-one/ptc-runtime').PtcRunRequest): import('@astro-one/ptc-runtime').PtcRunSpec { return { ...request, cwd: request.cwd ?? process.cwd(), timeoutMs: request.timeoutMs ?? 120_000 } }
 
   readonly language = 'typescript'
   readonly isolation = 'fake'
@@ -86,8 +86,8 @@ let dir: string
 let home: string
 
 beforeEach(async () => {
-  dir = await mkdtemp(join(tmpdir(), 'dsh-read-image-'))
-  home = await mkdtemp(join(tmpdir(), 'dsh-read-image-home-'))
+  dir = await mkdtemp(join(tmpdir(), 'astro-one-read-image-'))
+  home = await mkdtemp(join(tmpdir(), 'astro-one-read-image-home-'))
 })
 afterEach(async () => {
   await rm(dir, { recursive: true, force: true })
@@ -113,7 +113,7 @@ async function setup(options: SetupOptions = {}) {
   await ctx.plugin(LocalFileSystem, { cwd: dir })
   await ctx.plugin(FsPolicy)
   if (options.attachments !== false) {
-    await ctx.plugin(LocalAttachmentStore, { dshHome: home, ...options.storeConfig })
+    await ctx.plugin(LocalAttachmentStore, { astroOneHome: home, ...options.storeConfig })
   }
   if (options.llm !== false) {
     await ctx.plugin(LlmRuntime)
@@ -762,7 +762,7 @@ describe('registration surface', () => {
     await ctx.plugin(ToolRuntime, { mode: 'native' })
     await ctx.plugin(LocalFileSystem, { cwd: dir })
     await ctx.plugin(FsPolicy)
-    const attachmentsFiber = await ctx.plugin(LocalAttachmentStore, { dshHome: home })
+    const attachmentsFiber = await ctx.plugin(LocalAttachmentStore, { astroOneHome: home })
     const toolFsFiber = await ctx.plugin(ToolFs)
     const names = () => ctx.tools.schemas().map(schema => schema.name).sort()
     expect(names()).toEqual(['edit', 'read', 'read_image', 'write'])
@@ -773,7 +773,7 @@ describe('registration surface', () => {
     expect(names()).toEqual(['edit', 'read', 'write'])
 
     // Remounting the store restores the conditional registration.
-    const remounted = await ctx.plugin(LocalAttachmentStore, { dshHome: home })
+    const remounted = await ctx.plugin(LocalAttachmentStore, { astroOneHome: home })
     expect(names()).toEqual(['edit', 'read', 'read_image', 'write'])
 
     // Disposing the whole plugin withdraws every tool, read_image included.

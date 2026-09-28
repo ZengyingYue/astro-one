@@ -32,5 +32,5 @@
     - button "查看 @fixture/live-client": "@fixture/live-client"
     - switch "启用 @fixture/live-client"
   - listitem:
-    - button "查看 dsh-web-scaffold-defaults": dsh-web-scaffold-defaults
-    - switch "启用 dsh-web-scaffold-defaults" [checked]
+    - button "查看 astro-one-web-scaffold-defaults": astro-one-web-scaffold-defaults
+    - switch "启用 astro-one-web-scaffold-defaults" [checked]

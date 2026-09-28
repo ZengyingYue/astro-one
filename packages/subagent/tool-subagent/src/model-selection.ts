@@ -1,9 +1,9 @@
 /** Child LLM route selection for the subagent tool. */
 
-import { ReasoningEffortId } from '@deepseek-ai/dsh-llm'
-import type { LlmRuntime } from '@deepseek-ai/dsh-llm'
-import type { AgentOptions } from '@deepseek-ai/dsh-agent'
-import z from '@deepseek-ai/schemastery'
+import { ReasoningEffortId } from '@astro-one/llm'
+import type { LlmRuntime } from '@astro-one/llm'
+import type { AgentOptions } from '@astro-one/agent'
+import z from '@astro-one/schemastery'
 
 /** One exact child LLM route authorized by a user setting. */
 export interface AllowedModelRoute {

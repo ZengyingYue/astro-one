@@ -1,19 +1,19 @@
 /**
  * Persistent shell PTY backend over the subprocess terminal primitive, shared
  * sandbox policy, bounded output, and provider-owned session cleanup.
- * @module @deepseek-ai/dsh-terminal-bash
+ * @module @astro-one/terminal-bash
  */
 
-import { Context } from '@deepseek-ai/cordis'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import type { Session, SessionEvent } from '@deepseek-ai/dsh-session'
-import { TerminalBackendCleanupError } from '@deepseek-ai/dsh-terminal'
-import type { TerminalBackend, TerminalBackendSpawnSpec, TerminalSendOperation } from '@deepseek-ai/dsh-terminal'
-import type { SubprocessTerminalHandle, SubprocessTerminalSpawnSpec } from '@deepseek-ai/dsh-subprocess'
-import type { SandboxExecutionPolicy } from '@deepseek-ai/dsh-sandbox'
-import type {} from '@deepseek-ai/dsh-sandbox-policy'
-import type {} from '@deepseek-ai/dsh-session-projection'
-import { ENCODING_PREAMBLE } from '@deepseek-ai/dsh-pwsh-local'
+import { Context } from '@astro-one/cordis'
+import type { Agent } from '@astro-one/agent'
+import type { Session, SessionEvent } from '@astro-one/session'
+import { TerminalBackendCleanupError } from '@astro-one/terminal'
+import type { TerminalBackend, TerminalBackendSpawnSpec, TerminalSendOperation } from '@astro-one/terminal'
+import type { SubprocessTerminalHandle, SubprocessTerminalSpawnSpec } from '@astro-one/subprocess'
+import type { SandboxExecutionPolicy } from '@astro-one/sandbox'
+import type {} from '@astro-one/sandbox-policy'
+import type {} from '@astro-one/session-projection'
+import { ENCODING_PREAMBLE } from '@astro-one/pwsh-local'
 import { type Config, type ResolvedConfig, resolveConfig, type ShellDialect, validateConfig } from './config.ts'
 import { LocalPtySession } from './session.ts'
 import { CONTROLLED_PROMPT } from './sanitize.ts'
@@ -68,9 +68,9 @@ function childEnvironment(spec: TerminalBackendSpawnSpec, dialect: ShellDialect)
     TERM: 'dumb',
     PAGER: 'cat',
     GIT_PAGER: 'cat',
-    DSH_SHELL: '1',
-    DSH_SESSION_ID: spec.owner.id,
-    DSH_PTY_SESSION_ID: spec.sessionId,
+    ASTRO_ONE_SHELL: '1',
+    ASTRO_ONE_SESSION_ID: spec.owner.id,
+    ASTRO_ONE_PTY_SESSION_ID: spec.sessionId,
   }
   if (dialect === 'pwsh') {
     // pwsh ignores PS1/PROMPT_COMMAND; its prompt is installed by the startup

@@ -4,21 +4,21 @@
  * collected stdio, and one terminal-process primitive. Command defaulting,
  * shell semantics, deadlines, protocol framing, terminal readiness, and
  * presentation belong to consumers. The local implementation lives in
- * `@deepseek-ai/dsh-subprocess-local`.
- * @module @deepseek-ai/dsh-subprocess
+ * `@astro-one/subprocess-local`.
+ * @module @astro-one/subprocess
  */
 
-import { Context, Service } from '@deepseek-ai/cordis'
-import { proxyEnvironmentForChild } from '@deepseek-ai/dsh-http-proxy'
-import { DSH_ENV_PREFIX } from './types.ts'
+import { Context, Service } from '@astro-one/cordis'
+import { proxyEnvironmentForChild } from '@astro-one/http-proxy'
+import { ASTRO_ONE_ENV_PREFIX } from './types.ts'
 import type { SubprocessHandle, SubprocessSpawnSpec } from './types.ts'
 import type { SubprocessTerminalEnvironment, SubprocessTerminalHandle, SubprocessTerminalSpawnSpec } from './types.ts'
 
-export { DSH_ENV_PREFIX } from './types.ts'
+export { ASTRO_ONE_ENV_PREFIX } from './types.ts'
 export type {
   CollectedOutput,
-  DshEnvironment,
-  DshEnvironmentKey,
+  AstroOneEnvironment,
+  AstroOneEnvironmentKey,
   SubprocessCollect,
   SubprocessCollectedOutputs,
   SubprocessHandle,
@@ -48,14 +48,14 @@ export const SENSITIVE_ENV_PATTERN = /KEY|PASSWORD|SECRET|TOKEN/i
 
 /**
  * The ambient parent environment minus credential-shaped names and minus all
- * `DSH_*` names — the canonical base every harness child starts from. `PATH`,
+ * `ASTRO_ONE_*` names — the canonical base every harness child starts from. `PATH`,
  * `HOME`, locale, and proxy variables survive, so child CLIs run normally;
  * harness identity never leaks implicitly (a deliberately forwarded
- * credential or current `DSH_*` fact goes through the spec's explicit `env`,
+ * credential or current `ASTRO_ONE_*` fact goes through the spec's explicit `env`,
  * which merges after this scrub). Both scrubs match case-insensitively:
- * Windows environment names are case-insensitive, so a parent `dsh_*` entry
- * would otherwise survive and read back as `$env:DSH_*` in the child;
- * deliberate lowercase `dsh_*` names on POSIX are implausible. Exported as a plain function so spawners
+ * Windows environment names are case-insensitive, so a parent `astro_one_*` entry
+ * would otherwise survive and read back as `$env:ASTRO_ONE_*` in the child;
+ * deliberate lowercase `astro_one_*` names on POSIX are implausible. Exported as a plain function so spawners
  * that cannot route through the service (node-pty backends, SDK-managed
  * transports) share the one scrub definition.
  *
@@ -66,7 +66,7 @@ export const SENSITIVE_ENV_PATTERN = /KEY|PASSWORD|SECRET|TOKEN/i
 export function scrubbedParentEnv(): Record<string, string> {
   const env: Record<string, string> = {}
   for (const [key, value] of Object.entries(process.env)) {
-    if (value !== undefined && !SENSITIVE_ENV_PATTERN.test(key) && !key.toUpperCase().startsWith(DSH_ENV_PREFIX)) env[key] = value
+    if (value !== undefined && !SENSITIVE_ENV_PATTERN.test(key) && !key.toUpperCase().startsWith(ASTRO_ONE_ENV_PREFIX)) env[key] = value
   }
   // A child Node ignores the inherited proxy variables unless the flag this adds is set, so an MCP
   // stdio server or subagent CLI would connect directly while its parent proxies. The same overlay
@@ -79,7 +79,7 @@ export function scrubbedParentEnv(): Record<string, string> {
   return env
 }
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     subprocess: SubprocessRuntime
   }

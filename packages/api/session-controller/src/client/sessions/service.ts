@@ -1,15 +1,15 @@
 /** Client catalog and source-labelled ownership of exact Session generations. */
-import type { Context, Fiber } from '@deepseek-ai/cordis'
-import type { SubagentAddress } from '@deepseek-ai/dsh-subagent/client'
-import { SessionSeq, type SessionId } from '@deepseek-ai/dsh-session/types'
-import { workspaceTitleOf } from '@deepseek-ai/dsh-util-workspace-path'
-import type { WorkspaceId } from '@deepseek-ai/dsh-workspace/types'
+import type { Context, Fiber } from '@astro-one/cordis'
+import type { SubagentAddress } from '@astro-one/subagent/client'
+import { SessionSeq, type SessionId } from '@astro-one/session/types'
+import { workspaceTitleOf } from '@astro-one/util-workspace-path'
+import type { WorkspaceId } from '@astro-one/workspace/types'
 import { SESSION_SEARCH_RESULT_LIMIT } from '../../types.ts'
-import type { SessionProjectionMap } from '@deepseek-ai/dsh-session-projection/types'
+import type { SessionProjectionMap } from '@astro-one/session-projection/types'
 import {
   createSnapshotStore, notifySubscribers, type ObservableSnapshot, type SnapshotStore,
-} from '@deepseek-ai/dsh-client-store'
-import type { RemoteFailure, RemoteResult } from '@deepseek-ai/dsh-typert-protocol'
+} from '@astro-one/client-store'
+import type { RemoteFailure, RemoteResult } from '@astro-one/typert-protocol'
 import type { SessionEventSource } from '../contract/events.ts'
 import type { SessionFace } from '../contract/session.ts'
 import type {
@@ -105,7 +105,7 @@ export interface SessionBinding {
 }
 
 // Scope primitives live in ../scope.ts (the client mirror of host
-// dsh-scope, keyed by Agent identity); re-exported here so existing
+// astro-one-scope, keyed by Agent identity); re-exported here so existing
 // consumers keep their import site.
 export { scopeOf } from '../scope.ts'
 

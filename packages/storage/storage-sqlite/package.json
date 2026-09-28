@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-storage-sqlite",
-  "description": "SQLite storage backend (kv facet) for the DeepSeek Harness storage hub",
+  "name": "@astro-one/storage-sqlite",
+  "description": "SQLite storage backend (kv facet) for the Astro One storage hub",
   "version": "0.1.7-rc.1",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/storage/storage-sqlite"
   },
   "type": "module",
@@ -27,14 +27,14 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/dsh-storage": "workspace:*",
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/storage": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
   },
   "dependencies": {
-    "@deepseek-ai/schemastery": "workspace:~"
+    "@astro-one/schemastery": "workspace:~"
   },
   "devDependencies": {
-    "@deepseek-ai/dsh-storage": "workspace:*",
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/storage": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
   }
 }

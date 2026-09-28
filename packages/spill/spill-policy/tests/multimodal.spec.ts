@@ -3,23 +3,23 @@ import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { describe, expect, it, onTestFinished, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import AttachmentStore, { AttachmentId } from '@deepseek-ai/dsh-attachment'
-import type { ImageAttachmentRef, SaveImageAttachment, StoredImageAttachment } from '@deepseek-ai/dsh-attachment'
-import FileSystem from '@deepseek-ai/dsh-fs-local'
-import { LlmAdapter, LlmRuntime, ToolCallId } from '@deepseek-ai/dsh-llm'
-import type { GenerateOptions, StreamChunk, ImageBlock, LlmImageRequestPricing, LlmResolvedModelInfo } from '@deepseek-ai/dsh-llm'
-import { deepSeekImageTokens } from '@deepseek-ai/dsh-llm-deepseek'
-import { estimateContent } from '@deepseek-ai/dsh-token-meter/estimate'
-import { createMcpToolDefinition } from '@deepseek-ai/dsh-mcp-client'
-import { Session, SessionId } from '@deepseek-ai/dsh-session'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime, { defineContentToolFixture } from '@deepseek-ai/dsh-tools'
-import LocalSpillStore from '@deepseek-ai/dsh-spill-local'
-import { PtcRuntime } from '@deepseek-ai/dsh-ptc-runtime'
-import type { PtcRunRequest, PtcRunSpec, PtcRunResult } from '@deepseek-ai/dsh-ptc-runtime'
-import type { JsonValue } from '@deepseek-ai/dsh-util-values'
+import { Context } from '@astro-one/cordis'
+import type { Agent } from '@astro-one/agent'
+import AttachmentStore, { AttachmentId } from '@astro-one/attachment'
+import type { ImageAttachmentRef, SaveImageAttachment, StoredImageAttachment } from '@astro-one/attachment'
+import FileSystem from '@astro-one/fs-local'
+import { LlmAdapter, LlmRuntime, ToolCallId } from '@astro-one/llm'
+import type { GenerateOptions, StreamChunk, ImageBlock, LlmImageRequestPricing, LlmResolvedModelInfo } from '@astro-one/llm'
+import { deepSeekImageTokens } from '@astro-one/llm-deepseek'
+import { estimateContent } from '@astro-one/token-meter/estimate'
+import { createMcpToolDefinition } from '@astro-one/mcp-client'
+import { Session, SessionId } from '@astro-one/session'
+import SystemPrompt from '@astro-one/system-prompt'
+import ToolRuntime, { defineContentToolFixture } from '@astro-one/tools'
+import LocalSpillStore from '@astro-one/spill-local'
+import { PtcRuntime } from '@astro-one/ptc-runtime'
+import type { PtcRunRequest, PtcRunSpec, PtcRunResult } from '@astro-one/ptc-runtime'
+import type { JsonValue } from '@astro-one/util-values'
 import * as SpillPolicy from '../src/index.ts'
 
 const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAADElEQVQImWNgZGIGAAAOAAeCcsnOAAAAAElFTkSuQmCC', 'base64')
@@ -62,7 +62,7 @@ class VisionAdapter extends LlmAdapter {
 }
 
 async function setup(content: JsonValue[], maxInlineTokens: number) {
-  const root = await mkdtemp(join(tmpdir(), 'dsh-multimodal-spill-'))
+  const root = await mkdtemp(join(tmpdir(), 'astro-one-multimodal-spill-'))
   const ctx = new Context()
   onTestFinished(async () => {
     try { await ctx.fiber.dispose() } finally { await rm(root, { recursive: true, force: true }) }

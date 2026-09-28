@@ -4,153 +4,153 @@
 
 - insert:
     - id: tool-str-replace-editor
-      name: '@deepseek-ai/dsh-tool-str-replace-editor'
+      name: '@astro-one/tool-str-replace-editor'
       config:
         maxOutputChars: 16000
 
 - id: llm-deepseek
-  name: '@deepseek-ai/dsh-llm-deepseek'
+  name: '@astro-one/llm-deepseek'
   config:
     apiKeyEnv: DEEPSEEK_API_KEY
     streamIdleTimeoutMs: 172800000
     models:
-      - id: !!js process.env.DSH_MODEL ?? 'deepseek-v4-flash'
-        contextWindow: !!js Number(process.env.DSH_CONTEXT_WINDOW ?? 1000000)
+      - id: !!js process.env.ASTRO_ONE_MODEL ?? 'deepseek-v4-flash'
+        contextWindow: !!js Number(process.env.ASTRO_ONE_CONTEXT_WINDOW ?? 1000000)
 
 - id: sandbox-policy
-  name: '@deepseek-ai/dsh-sandbox-policy'
+  name: '@astro-one/sandbox-policy'
   config:
     mode: danger-full-access
     workspaceRoot: !!js process.cwd()
 
 - id: approval
-  name: '@deepseek-ai/dsh-user-approval'
+  name: '@astro-one/user-approval'
   config:
     policy: never
 
 - id: permission
-  name: '@deepseek-ai/dsh-permission-presets'
+  name: '@astro-one/permission-presets'
   disabled: true
 
 - id: bash-sandbox
-  name: '@deepseek-ai/dsh-bash-sandbox'
+  name: '@astro-one/bash-sandbox'
   disabled: true
 
 - id: pwsh-sandbox
-  name: '@deepseek-ai/dsh-pwsh-sandbox'
+  name: '@astro-one/pwsh-sandbox'
   disabled: true
 
 - id: fs-sandbox
-  name: '@deepseek-ai/dsh-fs-sandbox'
+  name: '@astro-one/fs-sandbox'
   disabled: true
 
 - id: tool-bash
-  name: '@deepseek-ai/dsh-tool-bash'
+  name: '@astro-one/tool-bash'
   disabled: true
 
 - id: tool-pwsh
-  name: '@deepseek-ai/dsh-tool-pwsh'
+  name: '@astro-one/tool-pwsh'
   disabled: true
 
 - id: agent-instructions
-  name: '@deepseek-ai/dsh-agent-instructions'
+  name: '@astro-one/agent-instructions'
   disabled: true
 
 - id: skill
-  name: '@deepseek-ai/dsh-skill'
+  name: '@astro-one/skill'
   disabled: true
 
 - id: skill-filesystem
-  name: '@deepseek-ai/dsh-skill-filesystem'
+  name: '@astro-one/skill-filesystem'
   disabled: true
 
 - id: tool-skill
-  name: '@deepseek-ai/dsh-tool-skill'
+  name: '@astro-one/tool-skill'
   disabled: true
 
 - id: tool-jobs
-  name: '@deepseek-ai/dsh-tool-jobs'
+  name: '@astro-one/tool-jobs'
   disabled: true
 
 - id: tool-fs
-  name: '@deepseek-ai/dsh-tool-fs'
+  name: '@astro-one/tool-fs'
   disabled: true
 
 - id: tool-fs-search
-  name: '@deepseek-ai/dsh-tool-fs-search'
+  name: '@astro-one/tool-fs-search'
   disabled: true
 
 - id: tool-subagent-control
-  name: '@deepseek-ai/dsh-tool-subagent-control'
+  name: '@astro-one/tool-subagent-control'
   disabled: true
 
 - id: tool-subagent-list-agents
-  name: '@deepseek-ai/dsh-tool-subagent-control/list-agents'
+  name: '@astro-one/tool-subagent-control/list-agents'
   disabled: true
 
 - id: tool-subagent
-  name: '@deepseek-ai/dsh-tool-subagent'
+  name: '@astro-one/tool-subagent'
   disabled: true
 
 - id: tool-subagent-fork
-  name: '@deepseek-ai/dsh-tool-subagent'
+  name: '@astro-one/tool-subagent'
   disabled: true
 
 - id: tool-workflow
-  name: '@deepseek-ai/dsh-tool-workflow'
+  name: '@astro-one/tool-workflow'
   disabled: true
 
 - id: tool-todo
-  name: '@deepseek-ai/dsh-tool-todo'
+  name: '@astro-one/tool-todo'
   disabled: true
 
 - id: tool-goal
-  name: '@deepseek-ai/dsh-tool-goal'
+  name: '@astro-one/tool-goal'
   disabled: true
 
 - id: tool-ralph
-  name: '@deepseek-ai/dsh-tool-ralph'
+  name: '@astro-one/tool-ralph'
   disabled: true
 
 - id: tool-web
-  name: '@deepseek-ai/dsh-tool-web'
+  name: '@astro-one/tool-web'
   disabled: true
 
 - id: plan-mode
-  name: '@deepseek-ai/dsh-plan-mode'
+  name: '@astro-one/plan-mode'
   disabled: true
 
 - id: system-prompt
-  name: '@deepseek-ai/dsh-system-prompt'
+  name: '@astro-one/system-prompt'
   config:
     includeHarnessIdentity: false
-    personaPrefix: !!js process.env.DSH_SYSTEM_PROMPT ?? 'You are a helpful software engineer assistant.'
+    personaPrefix: !!js process.env.ASTRO_ONE_SYSTEM_PROMPT ?? 'You are a helpful software engineer assistant.'
 
 - id: session-persistence-jsonl
-  name: '@deepseek-ai/dsh-session-persistence-jsonl'
+  name: '@astro-one/session-persistence-jsonl'
   config:
-    root: !!js dshHomePath('sessions')
+    root: !!js astroOneHomePath('sessions')
     compression: none
 
 - insert:
     - id: bash-local
-      name: '@deepseek-ai/dsh-bash-local'
+      name: '@astro-one/bash-local'
 
     - id: fs-local
-      name: '@deepseek-ai/dsh-fs-local'
+      name: '@astro-one/fs-local'
       config:
         cwd: !!js process.cwd()
 
     - id: terminal
-      name: '@deepseek-ai/dsh-terminal'
+      name: '@astro-one/terminal'
 
     - id: terminal-bash
-      name: '@deepseek-ai/dsh-terminal-bash'
+      name: '@astro-one/terminal-bash'
       config:
         timeoutMs: 300000
 
     - id: persistent-bash
-      name: '@deepseek-ai/dsh-tool-bash-persistent'
+      name: '@astro-one/tool-bash-persistent'
       config:
         timeoutMs: 300000
         description: |-

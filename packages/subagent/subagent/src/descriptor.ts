@@ -18,15 +18,15 @@
  * durable descriptor, so it neither restores the prior budget nor inherits
  * the parent's current one; the resumed route's defaults apply instead.
  *
- * @module @deepseek-ai/dsh-subagent/descriptor
+ * @module @astro-one/subagent/descriptor
  */
 
-import { snapshotJsonValue } from '@deepseek-ai/dsh-util-values'
-import type { SessionEvent } from '@deepseek-ai/dsh-session'
-import type { ReasoningEffortId } from '@deepseek-ai/dsh-llm'
-import type { ToolRestriction } from '@deepseek-ai/dsh-tools'
+import { snapshotJsonValue } from '@astro-one/util-values'
+import type { SessionEvent } from '@astro-one/session'
+import type { ReasoningEffortId } from '@astro-one/llm'
+import type { ToolRestriction } from '@astro-one/tools'
 
-declare module '@deepseek-ai/dsh-session/types' {
+declare module '@astro-one/session/types' {
   interface SessionEventMap {
     /**
      * Durable identity and lifecycle mode of a session-backed subagent child,

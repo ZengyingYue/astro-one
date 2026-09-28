@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-api-job-controller",
+  "name": "@astro-one/api-job-controller",
   "description": "Job Remote observation stream and the reference-counted client job-output service",
   "version": "0.1.7-rc.1",
   "publishConfig": {
@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/api/job-controller"
   },
   "type": "module",
@@ -37,14 +37,14 @@
     "./src/*": "./src/*",
     "./package.json": "./package.json"
   },
-  "dsh": {
+  "astroOne": {
     "client": {
       "external": [
-        "@deepseek-ai/dsh-api-gateway/client"
+        "@astro-one/api-gateway/client"
       ],
       "inject": [
-        "@deepseek-ai/dsh-api-gateway",
-        "@deepseek-ai/dsh-client-connection"
+        "@astro-one/api-gateway",
+        "@astro-one/client-connection"
       ],
       "platform": "web"
     }
@@ -65,22 +65,22 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@deepseek-ai/dsh-typert-protocol": "workspace:*",
-    "@deepseek-ai/schemastery": "workspace:~",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
     "zod": "^4.4.3"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/cordis": "workspace:~"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-agent": "workspace:*",
-    "@deepseek-ai/dsh-api-gateway": "workspace:*",
-    "@deepseek-ai/dsh-client-connection": "workspace:*",
-    "@deepseek-ai/dsh-client-store": "workspace:*",
-    "@deepseek-ai/dsh-jobs": "workspace:*",
-    "@deepseek-ai/dsh-jobs-local": "workspace:*",
-    "@deepseek-ai/dsh-session": "workspace:*",
-    "@deepseek-ai/dsh-typert-registry": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/api-gateway": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/client-store": "workspace:*",
+    "@astro-one/jobs": "workspace:*",
+    "@astro-one/jobs-local": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/typert-registry": "workspace:*"
   }
 }

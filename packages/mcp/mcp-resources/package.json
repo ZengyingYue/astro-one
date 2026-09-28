@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-mcp-resources",
+  "name": "@astro-one/mcp-resources",
   "description": "Scoped MCP resource discovery and reading through shared model tools",
   "version": "0.1.7-rc.1",
   "publishConfig": {
@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/mcp/mcp-resources"
   },
   "type": "module",
@@ -27,26 +27,26 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-llm": "workspace:*",
-    "@deepseek-ai/dsh-scope": "workspace:*",
-    "@deepseek-ai/dsh-system-prompt": "workspace:*",
-    "@deepseek-ai/dsh-tools": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/tools": "workspace:*"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:~",
-    "@deepseek-ai/dsh-llm": "workspace:*",
-    "@deepseek-ai/dsh-ptc-runtime": "workspace:*",
-    "@deepseek-ai/dsh-scope": "workspace:*",
-    "@deepseek-ai/dsh-tools": "workspace:*",
-    "@deepseek-ai/dsh-system-prompt": "workspace:*",
-    "@deepseek-ai/dsh-agent": "workspace:*"
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/ptc-runtime": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/agent": "workspace:*"
   },
   "dependencies": {
-    "@deepseek-ai/dsh-util-values": "workspace:*"
+    "@astro-one/util-values": "workspace:*"
   },
   "peerDependenciesMeta": {
-    "@deepseek-ai/dsh-system-prompt": {
+    "@astro-one/system-prompt": {
       "optional": true
     }
   }

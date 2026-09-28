@@ -3,13 +3,13 @@ description: "面向用户与维护者的 subagent 委派 seam，用于选择提
 kind: "package-reference"
 ---
 
-# @deepseek-ai/dsh-subagent
+# @astro-one/subagent
 
 [English](README.md) | 中文
 
 ## 概述
 
-使用 `dsh-subagent` 把工作委派给具名子 agent、收集结果，并跨轮次继续受支持的子级对话。一个组合可以并排提供进程内、ACP（Agent Client Protocol）、SDK、Codex 或 Claude Code 子级。需要单个结果时选择一次性子级；需要后续消息与中断能力时选择可继续子级。你还可以检查可用子级及其模式、在线活动状态、最近已结束轮次的完成状态与谱系，而无需加载或恢复它们。启用时需要至少一个受支持的子级后端和一个委派工具。
+使用 `astro-one-subagent` 把工作委派给具名子 agent、收集结果，并跨轮次继续受支持的子级对话。一个组合可以并排提供进程内、ACP（Agent Client Protocol）、SDK、Codex 或 Claude Code 子级。需要单个结果时选择一次性子级；需要后续消息与中断能力时选择可继续子级。你还可以检查可用子级及其模式、在线活动状态、最近已结束轮次的完成状态与谱系，而无需加载或恢复它们。启用时需要至少一个受支持的子级后端和一个委派工具。
 
 ## 目录
 
@@ -32,9 +32,9 @@ kind: "package-reference"
 把服务与一个提供方和委派工具一起挂载。提供方以你配置的名称注册（进程内 spawn 后端默认为 `spawn`）；工具行指名该提供方，让模型看到一个静态工具。一个最小的一次性配置：
 
 ```yaml
-- name: '@deepseek-ai/dsh-subagent'
-- name: '@deepseek-ai/dsh-subagent-spawn-in-process'
-- name: '@deepseek-ai/dsh-tool-subagent'
+- name: '@astro-one/subagent'
+- name: '@astro-one/subagent-spawn-in-process'
+- name: '@astro-one/tool-subagent'
   config:
     provider: spawn
     toolName: subagent
@@ -48,7 +48,7 @@ kind: "package-reference"
 
 ### 可续接子代理容量
 
-在 Host 的 `dsh-subagent` 插件上设置 `maxActiveSubagents`，限制通过连续可续接父子关系共享名额的存活子代理数。默认值为 `8`，接受正安全整数。非可续接父代理建立独立的池，自身不占名额；可续接后代继承该池。新建和冷恢复在重建 Agent 前预占名额，清理在 handle 释放后归还名额。等待后代的父代理、有待处理收件箱内容的代理以及正在停止的 Activation 仍占名额。向驻留子代理发送消息复用其名额。一次性和外部提供方运行不受此限制。池的继承不会跨越一次性父代理；其可续接子代理共享独立的池。深度仍由委派工具的独立策略决定。
+在 Host 的 `astro-one-subagent` 插件上设置 `maxActiveSubagents`，限制通过连续可续接父子关系共享名额的存活子代理数。默认值为 `8`，接受正安全整数。非可续接父代理建立独立的池，自身不占名额；可续接后代继承该池。新建和冷恢复在重建 Agent 前预占名额，清理在 handle 释放后归还名额。等待后代的父代理、有待处理收件箱内容的代理以及正在停止的 Activation 仍占名额。向驻留子代理发送消息复用其名额。一次性和外部提供方运行不受此限制。池的继承不会跨越一次性父代理；其可续接子代理共享独立的池。深度仍由委派工具的独立策略决定。
 
 每次新建或冷恢复 Activation 前都会读取当前 `maxActiveSubagents`。调高后已有树可接纳更多子代理；调低后驻留子代理继续运行，使用量降至上限以下前拒绝新接纳。
 
@@ -104,13 +104,13 @@ kind: "package-reference"
 
 ### 一次性流程
 
-请求先对照提供方声明的能力进行校验，随后对持久化描述符做快照，再由提供方构建子 agent。两个进程内提供方都声明 `agentOptions`：创建子级时把请求字段叠加到父级最新已记录请求的提供方、模型与推理强度之上；父级还没有请求时回退到创建选项，并保留配置的 token 上限。它们还会在第一次 await 前快照委派权限状态：Auto 或 Full access 父级让子级获得相同的 `permission/preset` 身份，而既有沙箱覆盖与审批策略固定仍然生效；同时记录这两个身份可防止 fork 中更早的同旋钮组合身份胜出。Auto 随后会独立审查 child 的每个受支持调用：普通项目内工作为低风险并直接允许；中风险工作必须在既有创建 prompt 或已核验的 human／直接父级消息中获得动作、准确目标和范围的明确授权，且不与 human 限制冲突；高风险工作始终拒绝。reviewer 从 `parentSession` 与既有消息派生这份上下文；委派不会新增父 call metadata、委派记录、review receipt 或 Session format。更改路由而不显式指定推理强度时，会清除继承的路由自有强度，使所选模型解析自己的默认值。DSH SDK 也声明 `agentOptions`，但会运行独立子运行时，因此不继承 Auto；ACP、Codex 与 Claude Code 同样在父级委派调用通过审查后保留各自的权限系统。成功时运行被发布、所有权转移给调用方；失败时提供方回滚每个尚未发布的资源。结果携带子 agent 的最终输出、可选的结构化值、停止原因与可选的安全诊断。
+请求先对照提供方声明的能力进行校验，随后对持久化描述符做快照，再由提供方构建子 agent。两个进程内提供方都声明 `agentOptions`：创建子级时把请求字段叠加到父级最新已记录请求的提供方、模型与推理强度之上；父级还没有请求时回退到创建选项，并保留配置的 token 上限。它们还会在第一次 await 前快照委派权限状态：Auto 或 Full access 父级让子级获得相同的 `permission/preset` 身份，而既有沙箱覆盖与审批策略固定仍然生效；同时记录这两个身份可防止 fork 中更早的同旋钮组合身份胜出。Auto 随后会独立审查 child 的每个受支持调用：普通项目内工作为低风险并直接允许；中风险工作必须在既有创建 prompt 或已核验的 human／直接父级消息中获得动作、准确目标和范围的明确授权，且不与 human 限制冲突；高风险工作始终拒绝。reviewer 从 `parentSession` 与既有消息派生这份上下文；委派不会新增父 call metadata、委派记录、review receipt 或 Session format。更改路由而不显式指定推理强度时，会清除继承的路由自有强度，使所选模型解析自己的默认值。Astro One SDK 也声明 `agentOptions`，但会运行独立子运行时，因此不继承 Auto；ACP、Codex 与 Claude Code 同样在父级委派调用通过审查后保留各自的权限系统。成功时运行被发布、所有权转移给调用方；失败时提供方回滚每个尚未发布的资源。结果携带子 agent 的最终输出、可选的结构化值、停止原因与可选的安全诊断。
 
 ### 可继续流程
 
 管理器预留 child 身份、解析持久化描述符、创建（或冷恢复）child、把它安装进 Activation 并提交提示词。模型编写的消息通过固定 Steer 调度跨一条 parent/child 边；浏览器人类 prompt 通过内部适配器选择 Queue 或 best-effort Steer，其他 host 协议仍可保留 Queue 以创建独立轮次。Session queue command 仅根据 child 自身的 continuable descriptor 准入在线 subagent-owned Agent。Settlement 会等待 Agent 活动结束、Inbox 为空且没有所拥有子级，再在准入开放时 flush 最终 Session 状态。管理器随后在 child lock 内重新验证 wake generation、Session 序号、Inbox 与所拥有子级；`Agent.runMaintenance()` 的同步 task 入口会占用 idle 阶段，并在同一个 JavaScript turn 内关闭私有 subagent Inbox，然后才释放句柄。直接 child 不存在 Activation 时会从持久化会话冷恢复。当驻留 Activation 结算时，管理器会在 parent 自身的轮次流中告知该 child 的直接 parent。
 
-本地子级创建成功时，父 Session 追加一条 `subagent/catalog` 事实。一次性创建在提供方返回后记录；可继续创建在初始 inbox 准入后、返回子级 id 前记录。失败会释放子级，不发布补偿性目录事件。一次性目录追加失败时会处理 run 的结果拒绝，并保留目录错误；资源释放失败会单独记录。`subagentCatalog` projection 排除 fork 继承的事实，通过 Session 观察和客户端快照中的 `projections.values.subagentCatalog` 暴露直接子级列表。每个 child 的 `subagentTiming` projection 会累加 descriptor 之后的耗时，并记录最近一个已结束轮次是否以 `completed` 结束；新轮次打开时会清除该完成状态。无效的自身 catalog payload（包括不支持的版本）会使 projection 恢复失败。projection 状态版本变更会从持久日志重新折叠缓存行。目录视图对 D 条事实以 O(D) 时间保留父目录事件顺序，其不可变存储和检查点校验使用 [`dsh-chunked-list`](../../util/chunked-list/README.zh.md)。[父目录决策](../../../.agents/notes/implemented/architecture/2026-09-01-parent-owned-subagent-catalog.zh.md) 说明排序、持久化成本和替代方案。Catalog 载荷 v0 记录已知模式，v1 还接受未知模式，读取器支持两版。历史迁移在 descriptor 不可用时根据可读子 header 追加 v1 `subagent/catalog`；正常创建保留 v0。其 `mode: 'unknown'` 投影让子会话保持可见，但不表示支持继续执行；已有完整条目仍具有权威性。
+本地子级创建成功时，父 Session 追加一条 `subagent/catalog` 事实。一次性创建在提供方返回后记录；可继续创建在初始 inbox 准入后、返回子级 id 前记录。失败会释放子级，不发布补偿性目录事件。一次性目录追加失败时会处理 run 的结果拒绝，并保留目录错误；资源释放失败会单独记录。`subagentCatalog` projection 排除 fork 继承的事实，通过 Session 观察和客户端快照中的 `projections.values.subagentCatalog` 暴露直接子级列表。每个 child 的 `subagentTiming` projection 会累加 descriptor 之后的耗时，并记录最近一个已结束轮次是否以 `completed` 结束；新轮次打开时会清除该完成状态。无效的自身 catalog payload（包括不支持的版本）会使 projection 恢复失败。projection 状态版本变更会从持久日志重新折叠缓存行。目录视图对 D 条事实以 O(D) 时间保留父目录事件顺序，其不可变存储和检查点校验使用 [`astro-one-chunked-list`](../../util/chunked-list/README.zh.md)。[父目录决策](../../../.agents/notes/implemented/architecture/2026-09-01-parent-owned-subagent-catalog.zh.md) 说明排序、持久化成本和替代方案。Catalog 载荷 v0 记录已知模式，v1 还接受未知模式，读取器支持两版。历史迁移在 descriptor 不可用时根据可读子 header 追加 v1 `subagent/catalog`；正常创建保留 v0。其 `mode: 'unknown'` 投影让子会话保持可见，但不表示支持继续执行；已有完整条目仍具有权威性。
 
 ### 所有权与不变式
 
@@ -133,7 +133,7 @@ kind: "package-reference"
 - [Subagent 能力 seam](../../../.agents/notes/implemented/feature/2026-06-21-subagent-capability-seam.zh.md)——委派能力家族的设计记录。
 - [可继续的 subagent](../../../.agents/notes/implemented/feature/2026-07-28-continuable-subagent-conversations.zh.md)——接受后续轮次的持久子级。
 - [进程内 spawn 后端](../subagent-spawn-in-process/README.zh.md)——最容易组合的提供方。
-- [Auto review](../../experimental/auto-review/README.zh.md)——只有进程内 DSH 子级继承的当前会话授权模式。
+- [Auto review](../../experimental/auto-review/README.zh.md)——只有进程内 Astro One 子级继承的当前会话授权模式。
 - [进程外 ACP 后端](../subagent-acp/README.zh.md)——经 Agent Client Protocol 拥有自有运行时的子级。
 - [DeepSeek 输入转换](../../llm/llm-deepseek/README.zh.md#model-experience)——已保存结算通知的提供方回放规则。
 - [tool-subagent-control README](../tool-subagent-control/README.zh.md)——后续消息、中断与列举面。

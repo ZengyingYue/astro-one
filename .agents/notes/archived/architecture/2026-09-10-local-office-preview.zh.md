@@ -17,7 +17,7 @@ Office Open XML 文件是 ZIP 归档，因此文本回退无法提供有用的�
 
 VCL 回调在替换前请求字体族，或在字形回退时请求缺失的 Unicode 字符。Host 代码索引已安装字体元数据，将选中的文件复制到引擎内存，包括完整字体集合。精确匹配的已安装字体优先于配置的替代项；原字体优先的 fontconfig 别名在 LibreOffice 内保留此顺序。可选的初始字体族使用同一解析器。引擎不挂载 Host 文件系统，渲染不安装或下载字体。[构建配方](../../../../native/libreoffice-wasm/README.zh.md)记录源码与工具链版本、补丁及产物哈希。提供方使用期间，引擎包保持不可变；不同构建使用新目录。
 
-[独立引擎发布](../process/2026-09-11-independent-libreoffice-package.zh.md)负责预编译 npm 打包，并将引擎编译与普通 DSH 构建隔离。
+[独立引擎发布](../process/2026-09-11-independent-libreoffice-package.zh.md)负责预编译 npm 打包，并将引擎编译与普通 Astro One 构建隔离。
 
 提供方返回调用方拥有的 PDF 字节，以及独立的 `succeeded`、`timedOut` 和 `cancelled` 事实。PDF 字节在清理前从引擎内存复制出来。API 消费方通过 [Workspace Files](2026-09-09-workspace-file-read-authority.zh.md)授权源文件，要求转换成功且未被中断，并直接编码 PDF。源路径和新鲜度版本保留在 PDF 传输中。Workspace Files 限制源文件读取；生成 PDF 仅受提供方的 `maxOutputBytes` 限制。无需临时 PDF 或文件租约。
 

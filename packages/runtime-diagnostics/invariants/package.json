@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-invariants",
-  "description": "Registry service for package-owned DeepSeek Harness runtime invariants",
+  "name": "@astro-one/invariants",
+  "description": "Registry service for package-owned Astro One runtime invariants",
   "version": "0.1.7-rc.1",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
     "directory": "packages/runtime-diagnostics/invariants"
   },
   "type": "module",
@@ -27,12 +27,12 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/cordis": "workspace:~"
   },
   "dependencies": {
-    "@deepseek-ai/schemastery": "workspace:~"
+    "@astro-one/schemastery": "workspace:~"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:~"
+    "@astro-one/cordis": "workspace:~"
   }
 }

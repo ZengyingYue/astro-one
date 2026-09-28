@@ -1,10 +1,10 @@
-import { Context } from '@deepseek-ai/cordis'
-import AgentRegistry from '@deepseek-ai/dsh-agent'
-import { unsupportedInbox } from '@deepseek-ai/dsh-agent-loop-testkit'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import type { JobAppendOptions, JobHandle, JobOutcome } from '@deepseek-ai/dsh-jobs'
-import LocalJobRegistry from '@deepseek-ai/dsh-jobs-local'
-import { Session, SessionId } from '@deepseek-ai/dsh-session'
+import { Context } from '@astro-one/cordis'
+import AgentRegistry from '@astro-one/agent'
+import { unsupportedInbox } from '@astro-one/agent-loop-testkit'
+import type { Agent } from '@astro-one/agent'
+import type { JobAppendOptions, JobHandle, JobOutcome } from '@astro-one/jobs'
+import LocalJobRegistry from '@astro-one/jobs-local'
+import { Session, SessionId } from '@astro-one/session'
 
 /** A registry with a tiny ring so eviction is cheap to reach. */
 export async function harness(): Promise<Context> {

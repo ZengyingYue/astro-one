@@ -9,46 +9,46 @@
  * side exposes a process catalog plus the current-value-only `permissions`
  * Session projection; the write side ships as the `/permission` command.
  *
- * @module dsh-permission-presets
+ * @module astro-one-permission-presets
  */
-import type {} from '@deepseek-ai/dsh-settings'
+import type {} from '@astro-one/settings'
 
-import type { Volatile } from '@deepseek-ai/cordis'
+import type { Volatile } from '@astro-one/cordis'
 
-import { Context } from '@deepseek-ai/cordis'
-import { CommandDefinitionId } from '@deepseek-ai/dsh-commands/brand'
-import z from '@deepseek-ai/schemastery'
+import { Context } from '@astro-one/cordis'
+import { CommandDefinitionId } from '@astro-one/commands/brand'
+import z from '@astro-one/schemastery'
 import { z as zod } from 'zod'
-import { Remote, TypertRemoteService } from '@deepseek-ai/dsh-typert-protocol'
-import type { Session, SessionEvent } from '@deepseek-ai/dsh-session'
-import type { SandboxMode } from '@deepseek-ai/dsh-sandbox'
-import { SANDBOX_MODES, setSandboxMode } from '@deepseek-ai/dsh-sandbox-policy'
+import { Remote, TypertRemoteService } from '@astro-one/typert-protocol'
+import type { Session, SessionEvent } from '@astro-one/session'
+import type { SandboxMode } from '@astro-one/sandbox'
+import { SANDBOX_MODES, setSandboxMode } from '@astro-one/sandbox-policy'
 // Side-effect type import: declaration-merges `ctx.shell` (the capability fact
 // `sandboxMode` this service reads), without a value dependency on the seam.
-import type {} from '@deepseek-ai/dsh-shell'
-import type { ApprovalPolicy } from '@deepseek-ai/dsh-user-approval'
-import { APPROVAL_POLICIES, setApprovalPolicy } from '@deepseek-ai/dsh-user-approval'
+import type {} from '@astro-one/shell'
+import type { ApprovalPolicy } from '@astro-one/user-approval'
+import { APPROVAL_POLICIES, setApprovalPolicy } from '@astro-one/user-approval'
 // Type-only: resolves the required projection service and optional settings/command children.
-import type {} from '@deepseek-ai/dsh-session-projection'
-import type {} from '@deepseek-ai/dsh-commands'
+import type {} from '@astro-one/session-projection'
+import type {} from '@astro-one/commands'
 import type { PermissionCatalog, PermissionSelection, PresetOption } from './types.ts'
 
 export type * from './types.ts'
 
-declare module '@deepseek-ai/cordis' {
+declare module '@astro-one/cordis' {
   interface Context {
     permissionPresets: PermissionPresetService
   }
 }
 
-declare module '@deepseek-ai/dsh-session-projection/types' {
+declare module '@astro-one/session-projection/types' {
   interface SessionProjectionStateMap {
     /** Latest logged permission overrides and constructor-seed status. */
     permissions: PermissionProjectionState
   }
 }
 
-declare module '@deepseek-ai/dsh-session/types' {
+declare module '@astro-one/session/types' {
   interface SessionEventMap {
     /**
      * Records the selected preset as durable, log-only user intent. The knob
@@ -250,7 +250,7 @@ export class PermissionPresetService extends TypertRemoteService {
     // activates only when a command registry is composed.
     ctx.inject(['commands'], (commandCtx) => {
       commandCtx.commands.register({
-        definitionId: CommandDefinitionId('@deepseek-ai/dsh-permission-presets'),
+        definitionId: CommandDefinitionId('@astro-one/permission-presets'),
         name: 'permission',
         description: 'Switch the permission preset (sandbox mode + approval policy)',
         input: { hint: '<preset>' },
