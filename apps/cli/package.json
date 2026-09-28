@@ -99,7 +99,8 @@
     "@astro-one/plugin-manager": "workspace:*",
     "@astro-one/atomic-write": "workspace:*",
     "@astro-one/agent-preset": "workspace:*",
-    "@astro-one/experimental-voice-input-bundle": "workspace:*"
+    "@astro-one/experimental-voice-input-bundle": "workspace:*",
+    "@astro-one/aerospace": "workspace:*"
   },
   "devDependencies": {
     "@agentclientprotocol/sdk": "1.4.0",

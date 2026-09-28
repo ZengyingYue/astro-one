@@ -328,6 +328,7 @@
       // BEGIN generated package aliases — pnpm run gen-tsconfig-paths
       "@astro-one/acp": ["./packages/acp/acp/src"],
       "@astro-one/acp-app": ["./packages/bundle/acp-app/src"],
+      "@astro-one/aerospace": ["./packages/bundle/aerospace/src"],
       "@astro-one/agent": ["./packages/core/agent/src"],
       "@astro-one/agent-default-model": ["./packages/core/agent-default-model/src"],
       "@astro-one/agent-instructions": ["./packages/context/agent-instructions/src"],

@@ -112,6 +112,12 @@ flowchart TD
   subgraph group_acp["packages/acp"]
     pkg_acp["acp"]
   end
+  subgraph group_aerospace["packages/aerospace"]
+    pkg_astrodynamics["astrodynamics"]
+    pkg_tool_astrodynamics["tool-astrodynamics"]
+    pkg_tool_gnss["tool-gnss"]
+    pkg_tool_remote_sensing["tool-remote-sensing"]
+  end
   subgraph group_api["packages/api"]
     pkg_api_account_controller["api-account-controller"]
     pkg_api_gateway["api-gateway"]
@@ -139,6 +145,7 @@ flowchart TD
   end
   subgraph group_bundle["packages/bundle"]
     pkg_acp_app["acp-app"]
+    pkg_aerospace["aerospace"]
     pkg_base["base"]
     pkg_headless["headless"]
     pkg_sdk_app["sdk-app"]
@@ -826,6 +833,14 @@ flowchart TD
   pkg_hooks_codex --> pkg_session
   pkg_hooks_codex --> pkg_session_projection
   pkg_hooks_codex --> pkg_tools
+  pkg_tool_astrodynamics --> pkg_llm
+  pkg_tool_astrodynamics --> pkg_tools
+  pkg_tool_gnss --> pkg_fs
+  pkg_tool_gnss --> pkg_llm
+  pkg_tool_gnss --> pkg_tools
+  pkg_tool_remote_sensing --> pkg_fs
+  pkg_tool_remote_sensing --> pkg_llm
+  pkg_tool_remote_sensing --> pkg_tools
   pkg_command_compact --> pkg_commands
   pkg_command_compact --> pkg_compaction
   pkg_compaction_image_offload --> pkg_agent
@@ -1361,10 +1376,12 @@ flowchart TD
 | [`util-workspace-path`](../packages/util/workspace-path) | `util` | — |
 | [`deepseek-llm-api-extensions`](../packages/llm/deepseek-llm-api-extensions) | `llm` | — |
 | [`llm`](../packages/llm/llm) | `llm` | — |
+| [`astrodynamics`](../packages/aerospace/astrodynamics) | `aerospace` | — |
 | [`api-job-controller`](../packages/api/job-controller) | `api` | — |
 | [`api-workspace-files`](../packages/api/workspace-files) | `api` | — |
 | [`cmdline`](../packages/boot/cmdline) | `boot` | — |
 | [`acp-app`](../packages/bundle/acp-app) | `bundle` | — |
+| [`aerospace`](../packages/bundle/aerospace) | `bundle` | — |
 | [`base`](../packages/bundle/base) | `bundle` | — |
 | [`sdk-app`](../packages/bundle/sdk-app) | `bundle` | — |
 | [`sdk-minimal`](../packages/bundle/sdk-minimal) | `bundle` | — |
@@ -1569,6 +1586,9 @@ flowchart TD
 | [`tool-todo`](../packages/todo/tool-todo) | `todo` | [`agent`](../packages/core/agent), [`invariants`](../packages/runtime-diagnostics/invariants), [`session`](../packages/core/session), [`session-projection`](../packages/session/session-projection), [`tools`](../packages/core/tools) |
 | [`plan-mode`](../packages/plan/plan-mode) | `plan` | [`agent`](../packages/core/agent), [`commands`](../packages/interaction/commands), [`invariants`](../packages/runtime-diagnostics/invariants), [`llm`](../packages/llm/llm), [`session`](../packages/core/session), [`session-projection`](../packages/session/session-projection), [`system-prompt`](../packages/core/system-prompt), [`tools`](../packages/core/tools), [`user-questions`](../packages/interaction/user-questions) |
 | [`hooks-codex`](../packages/hooks/hooks-codex) | `hooks` | [`agent`](../packages/core/agent), [`hook-protocol`](../packages/hooks/hook-protocol), [`llm`](../packages/llm/llm), [`session`](../packages/core/session), [`session-projection`](../packages/session/session-projection), [`tools`](../packages/core/tools) |
+| [`tool-astrodynamics`](../packages/aerospace/tool-astrodynamics) | `aerospace` | [`llm`](../packages/llm/llm), [`tools`](../packages/core/tools) |
+| [`tool-gnss`](../packages/aerospace/tool-gnss) | `aerospace` | [`fs`](../packages/fs/fs), [`llm`](../packages/llm/llm), [`tools`](../packages/core/tools) |
+| [`tool-remote-sensing`](../packages/aerospace/tool-remote-sensing) | `aerospace` | [`fs`](../packages/fs/fs), [`llm`](../packages/llm/llm), [`tools`](../packages/core/tools) |
 | [`command-compact`](../packages/compaction/command-compact) | `compaction` | [`commands`](../packages/interaction/commands), [`compaction`](../packages/compaction/compaction) |
 | [`compaction-image-offload`](../packages/compaction/compaction-image-offload) | `compaction` | [`agent`](../packages/core/agent), [`compaction`](../packages/compaction/compaction), [`llm`](../packages/llm/llm), [`session`](../packages/core/session) |
 | [`agent-instructions`](../packages/context/agent-instructions) | `context` | [`agent`](../packages/core/agent), [`fs`](../packages/fs/fs), [`home-paths`](../packages/util/home-paths), [`llm`](../packages/llm/llm), [`session`](../packages/core/session), [`session-projection`](../packages/session/session-projection), [`tools`](../packages/core/tools) |

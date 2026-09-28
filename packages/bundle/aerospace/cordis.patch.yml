@@ -1,0 +1,27 @@
+# Aerospace layer: astrodynamics, GNSS positioning, and remote-sensing tools. Apply after
+# astro-one-base, which provides the tool registry and the workspace filesystem. The ONNX
+# detector stays off until a profile patch sets tool-remote-sensing.config.detector.
+
+- insert:
+    - id: tool-astrodynamics
+      name: '@astro-one/tool-astrodynamics'
+      config:
+        maxSamples: 20000
+        maxObservations: 5000
+        relativeTolerance: 1.0e-11
+        absoluteTolerance: 1.0e-9
+        maxIntegratorSteps: 2000000
+
+    - id: tool-gnss
+      name: '@astro-one/tool-gnss'
+      config:
+        maxFileBytes: 268435456
+        maxEpochs: 86400
+        maxReportedEpochs: 50
+
+    - id: tool-remote-sensing
+      name: '@astro-one/tool-remote-sensing'
+      config:
+        maxFileBytes: 268435456
+        maxPixels: 25000000
+        maxResults: 100

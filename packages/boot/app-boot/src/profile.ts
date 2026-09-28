@@ -188,6 +188,7 @@ export const DEFAULT_PROFILE_BUNDLES: readonly string[] = ['@astro-one/base']
  * manager ([rationale](../../../../.agents/notes/implemented/process/2026-09-15-shipped-optional-bundles.md)).
  */
 export const OPTIONAL_BUNDLES: readonly string[] = [
+  '@astro-one/aerospace',
   '@astro-one/experimental-voice-input-bundle',
   '@astro-one/experimental-agent-team-profile',
 ]
