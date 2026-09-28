@@ -11,7 +11,7 @@ import { dirname, resolve, sep } from 'node:path'
 const SCOPE = '@astro-one/'
 
 /** Scope members that are vendored Cordis, native addon, or website packages rather than harness packages. */
-const NON_HARNESS = /^@astro-one\/(?:cordis|cosmokit|schemastery|node-addon-system|website)(?:-|$)/u
+const NON_HARNESS = /^@astro-one\/(?:cordis(?:-plugin-[a-z-]+)?|cosmokit|schemastery|node-addon-system[a-z0-9-]*|website)$/u
 
 /** One harness package and its in-repo peer-dependency edges. */
 export interface PackageGraphNode {

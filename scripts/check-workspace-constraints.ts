@@ -19,7 +19,7 @@ import { OPTIONAL_BUNDLES, bundlePatchFiles } from '../packages/boot/app-boot/sr
 import { collectProjectReferenceFaceViolations } from './project-reference-faces.ts'
 
 /** Astro One package names: the `@astro-one` scope minus the vendored Cordis, native addon, and website packages. */
-const ASTRO_ONE_PACKAGE = /^@astro-one\/(?!(?:cordis|cosmokit|schemastery|node-addon-system|website)(?:-|$))/u
+const ASTRO_ONE_PACKAGE = /^@astro-one\/(?!(?:cordis(?:-plugin-[a-z-]+)?|cosmokit|schemastery|node-addon-system[a-z0-9-]*|website)$)/u
 
 const root = resolve(import.meta.dirname, '..')
 // Publication rules cover these package trees; dependency rules read all pnpm members.

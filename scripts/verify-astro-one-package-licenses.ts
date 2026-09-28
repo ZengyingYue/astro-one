@@ -7,7 +7,7 @@ import { globSync, readFileSync } from 'node:fs'
 import { resolve, sep } from 'node:path'
 
 const ROOT = resolve(import.meta.dirname, '..')
-const ASTRO_ONE_PACKAGE_NAME = /^@astro-one\/(?!(?:cordis|cosmokit|schemastery|node-addon-system|website)(?:-|$))/u
+const ASTRO_ONE_PACKAGE_NAME = /^@astro-one\/(?!(?:cordis(?:-plugin-[a-z-]+)?|cosmokit|schemastery|node-addon-system[a-z0-9-]*|website)$)/u
 
 /** Result of checking every Astro One package reachable through the root workspace list. */
 export interface AstroOnePackageLicenseReport {

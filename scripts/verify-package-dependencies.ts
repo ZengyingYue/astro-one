@@ -19,7 +19,7 @@ import {
 } from './verify-client-packages.ts'
 
 /** Astro One package names: the `@astro-one` scope minus the vendored Cordis, native addon, and website packages. */
-const ASTRO_ONE_PACKAGE = /^@astro-one\/(?!(?:cordis|cosmokit|schemastery|node-addon-system|website)(?:-|$))/u
+const ASTRO_ONE_PACKAGE = /^@astro-one\/(?!(?:cordis(?:-plugin-[a-z-]+)?|cosmokit|schemastery|node-addon-system[a-z0-9-]*|website)$)/u
 
 const GATE = 'verify-package-dependencies'
 const CORDIS = '@astro-one/cordis'

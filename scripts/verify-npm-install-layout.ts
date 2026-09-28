@@ -36,7 +36,7 @@ export interface AstroOneInstallLayoutSummary {
 }
 
 function isAstroOnePackage(name: string): boolean {
-  return /^@astro-one\/(?!(?:cordis|cosmokit|schemastery|node-addon-system|website)(?:-|$))/u.test(name)
+  return /^@astro-one\/(?!(?:cordis(?:-plugin-[a-z-]+)?|cosmokit|schemastery|node-addon-system[a-z0-9-]*|website)$)/u.test(name)
 }
 
 function cloneForVersion(manifest: object, version: string): MutableRegistryManifest {
