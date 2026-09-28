@@ -1035,6 +1035,52 @@ importers:
         specifier: workspace:*
         version: link:../../core/tools
 
+  packages/aerospace/tool-gnss:
+    dependencies:
+      '@astro-one/astrodynamics':
+        specifier: workspace:*
+        version: link:../astrodynamics
+      '@astro-one/schemastery':
+        specifier: link:../../../vendor/schemastery
+        version: link:../../../vendor/schemastery
+      '@astro-one/util-values':
+        specifier: workspace:*
+        version: link:../../util/values
+    devDependencies:
+      '@astro-one/agent':
+        specifier: workspace:*
+        version: link:../../core/agent
+      '@astro-one/agent-loop-testkit':
+        specifier: workspace:*
+        version: link:../../test-support/agent-loop-testkit
+      '@astro-one/cordis':
+        specifier: workspace:~
+        version: link:../../../vendor/cordis
+      '@astro-one/cordis-plugin-include':
+        specifier: workspace:~
+        version: link:../../../vendor/include
+      '@astro-one/cordis-plugin-loader':
+        specifier: workspace:~
+        version: link:../../../vendor/loader
+      '@astro-one/fs':
+        specifier: workspace:*
+        version: link:../../fs/fs
+      '@astro-one/fs-local':
+        specifier: workspace:*
+        version: link:../../fs/fs-local
+      '@astro-one/llm':
+        specifier: workspace:*
+        version: link:../../llm/llm
+      '@astro-one/session':
+        specifier: workspace:*
+        version: link:../../core/session
+      '@astro-one/system-prompt':
+        specifier: workspace:*
+        version: link:../../core/system-prompt
+      '@astro-one/tools':
+        specifier: workspace:*
+        version: link:../../core/tools
+
   packages/api/account-controller:
     dependencies:
       zod:

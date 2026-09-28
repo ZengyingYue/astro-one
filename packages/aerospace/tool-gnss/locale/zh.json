@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "GNSS 定位工具",
+    "description": "基于 RINEX 的单点定位（含 RAIM）、LAMBDA 模糊度固定的 RTK，以及卫星可见性与 DOP 规划。"
+  }
+}

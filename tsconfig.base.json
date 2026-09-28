@@ -502,6 +502,7 @@
       "@astro-one/tool-cordis": ["./packages/extensions/tool-cordis/src"],
       "@astro-one/tool-fs": ["./packages/fs/tool-fs/src"],
       "@astro-one/tool-fs-search": ["./packages/fs/tool-fs-search/src"],
+      "@astro-one/tool-gnss": ["./packages/aerospace/tool-gnss/src"],
       "@astro-one/tool-goal": ["./packages/goal/tool-goal/src"],
       "@astro-one/tool-jobs": ["./packages/jobs/tool-jobs/src"],
       "@astro-one/tool-lsp": ["./packages/lsp/tool-lsp/src"],
