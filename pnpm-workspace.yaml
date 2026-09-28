@@ -39,6 +39,9 @@ allowBuilds:
   '@google/genai': false
   protobufjs: false
   node-addon-require-builtin: false
+  # The postinstall only downloads optional CUDA providers; the CPU runtime used by
+  # tool-remote-sensing ships prebuilt inside the package.
+  onnxruntime-node: false
   # JSONL durability calls MoveFileExW with write-through publication on Windows.
   koffi: true
   # The Python runtime deploy includes the reviewed workspace postinstall that

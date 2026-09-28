@@ -509,6 +509,7 @@
       "@astro-one/tool-present": ["./packages/deliverables/tool-present/src"],
       "@astro-one/tool-pwsh-persistent": ["./packages/shell/tool-pwsh-persistent/src"],
       "@astro-one/tool-ralph": ["./packages/workflow/tool-ralph/src"],
+      "@astro-one/tool-remote-sensing": ["./packages/aerospace/tool-remote-sensing/src"],
       "@astro-one/tool-session-query": ["./packages/session-query/tool-session-query/src"],
       "@astro-one/tool-skill": ["./packages/skill/tool-skill/src"],
       "@astro-one/tool-str-replace-editor": ["./packages/fs/tool-str-replace-editor/src"],

@@ -426,6 +426,7 @@
     { "path": "./packages/aerospace/astrodynamics" },
     { "path": "./packages/aerospace/tool-astrodynamics" },
     { "path": "./packages/aerospace/tool-gnss" },
+    { "path": "./packages/aerospace/tool-remote-sensing" },
     { "path": "./packages/plan/plan-mode" },
     { "path": "./packages/preset/agent-preset-registry" },
     { "path": "./packages/preset/agent-preset" },

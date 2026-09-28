@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { norm, sub } from '../src/linalg.ts'
-import { elementEpoch, parseOmm, parseTle, propagateSgp4, tleChecksum } from '../src/sgp4.ts'
+import { elementEpoch, ommFromRecord, parseOmm, parseTle, propagateSgp4, tleChecksum } from '../src/sgp4.ts'
 import type { Vec3 } from '../src/types.ts'
 
 // Vallado SGP4 verification case 00005 (tcppver.out, tsince = 0 and 360 min).
@@ -72,5 +72,22 @@ describe('SGP4', () => {
   it('maps two-digit TLE years across the 1957 pivot', () => {
     expect(elementEpoch(58, 1.5)).toBe(Date.UTC(1958, 0, 1, 12))
     expect(elementEpoch(0, 1)).toBe(Date.UTC(2000, 0, 1))
+  })
+
+  it('validates untyped OMM keyword records', () => {
+    const record = {
+      OBJECT_NAME: 'SAT', OBJECT_ID: '2024-001A', EPOCH: '2024-01-01T00:00:00', MEAN_MOTION: '15.5', ECCENTRICITY: 0.001,
+      INCLINATION: 51.6, RA_OF_ASC_NODE: 10, ARG_OF_PERICENTER: 20, MEAN_ANOMALY: 30, NORAD_CAT_ID: 12345,
+      BSTAR: 0.0001, MEAN_MOTION_DOT: 0, MEAN_MOTION_DDOT: 0,
+    }
+    const omm = ommFromRecord(record)
+    expect(omm.MEAN_MOTION).toBe(15.5)
+    expect(omm.ELEMENT_SET_NO).toBe(999)
+    expect(omm.CLASSIFICATION_TYPE).toBe('U')
+    expect(ommFromRecord({ ...record, CLASSIFICATION_TYPE: 'C', ELEMENT_SET_NO: 7 }).CLASSIFICATION_TYPE).toBe('C')
+    expect(() => ommFromRecord({ ...record, OBJECT_NAME: '' })).toThrow('OBJECT_NAME must be a non-empty string')
+    expect(() => ommFromRecord({ ...record, INCLINATION: 'steep' })).toThrow('INCLINATION must be a number')
+    expect(() => ommFromRecord({ ...record, BSTAR: '' })).toThrow('BSTAR must be a number')
+    expect(parseOmm(omm).catalogNumber).toBe('12345')
   })
 })
