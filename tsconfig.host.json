@@ -423,6 +423,8 @@
     { "path": "./packages/webhook/webhook" },
     { "path": "./packages/webhook/webhook-github" },
     { "path": "./packages/todo/tool-todo" },
+    { "path": "./packages/aerospace/astrodynamics" },
+    { "path": "./packages/aerospace/tool-astrodynamics" },
     { "path": "./packages/plan/plan-mode" },
     { "path": "./packages/preset/agent-preset-registry" },
     { "path": "./packages/preset/agent-preset" },
