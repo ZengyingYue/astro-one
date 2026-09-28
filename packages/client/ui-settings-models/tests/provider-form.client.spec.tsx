@@ -858,6 +858,24 @@ describe('hand-declared providers', () => {
     return { ...scripted, onClose }
   }
 
+  it.each([
+    ['Ollama', 'ollama', 'http://127.0.0.1:11434/v1'],
+    ['LM Studio', 'lmstudio', 'http://127.0.0.1:1234/v1'],
+  ])('creates a keyless %s connection through its preset', async (name, route, endpoint) => {
+    const { mutate, set, onClose } = mountCard()
+    fireEvent.click(screen.getByRole('button', { name: `${name} ${en.localOnDevice}` }))
+    expect(screen.getByLabelText(en.baseUrl)).toHaveProperty('value', endpoint)
+    fireEvent.click(screen.getByRole('button', { name: en.addModel }))
+    fireEvent.change(screen.getByLabelText(`${en.modelId} 1`), { target: { value: 'local-model' } })
+    fireEvent.click(screen.getByText(en.create))
+    await waitFor(() => { expect(onClose).toHaveBeenCalledWith(true) })
+    expect(firstMutate(mutate).ops).toEqual([{ op: 'set', path: ['providers', route], value: {
+      displayName: name, authentication: 'none', api: 'openai-completions', baseURL: endpoint,
+      defaultContextWindow: 32768, defaultMaxTokens: 4096, models: [{ id: 'local-model' }],
+    } }])
+    expect(set).not.toHaveBeenCalled()
+  })
+
   it('writes the whole profile and the key under the derived reference', async () => {
     const { mutate, set, onClose } = mountCard()
 

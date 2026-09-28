@@ -101,6 +101,8 @@ export function CustomProviderCard(props: CustomProviderCardProps): ReactNode {
   const [baseURL, setBaseURL] = useState('')
   const [protocol, setProtocol] = useState(protocols[0] ?? '')
   const [keyDraft, setKeyDraft] = useState('')
+  const [preset, setPreset] = useState('custom')
+  const [keyless, setKeyless] = useState(false)
   const [models, setModels] = useState<readonly ModelDraft[]>([])
   const [busy, setBusy] = useState(false)
   const [listBusy, setListBusy] = useState(false)
@@ -162,6 +164,8 @@ export function CustomProviderCard(props: CustomProviderCardProps): ReactNode {
         // key left blank keeps its provider-native auth path (a credential
         // chain, ADC) instead of resolving a reference nothing ever sets.
         ...storesKey ? { apiKeyEnv: keyRef } : {},
+        ...keyless && !storesKey ? { authentication: 'none' } : {},
+        ...preset === 'custom' ? {} : { defaultContextWindow: 32768, defaultMaxTokens: 4096 },
         api: protocol,
         baseURL: normalizedBaseURL,
         models: models.map(model => ({ ...model })),
@@ -209,6 +213,27 @@ export function CustomProviderCard(props: CustomProviderCardProps): ReactNode {
 
   return (
     <div className={styles['editor']}>
+      <div className={styles['localPresets']} role="group" aria-label={t('localPreset')}>
+        {(['ollama', 'lmstudio', 'custom'] as const).map(choice => (
+          <button type="button" key={choice} className={styles['localPreset']}
+            aria-pressed={preset === choice} disabled={profileDisabled || listBusy}
+            onClick={() => {
+              setPreset(choice)
+              setKeyless(choice !== 'custom')
+              setRoute(choice === 'custom' ? '' : choice)
+              setDisplayName(choice === 'ollama' ? 'Ollama' : choice === 'lmstudio' ? 'LM Studio' : '')
+              setBaseURL(choice === 'ollama' ? 'http://127.0.0.1:11434/v1' : choice === 'lmstudio' ? 'http://127.0.0.1:1234/v1' : '')
+              setProtocol('openai-completions')
+              setKeyDraft('')
+              setModels([])
+              setFailure(undefined)
+            }}>
+            <span>{t(choice === 'ollama' ? 'localOllama' : choice === 'lmstudio' ? 'localLmStudio' : 'localCustom')}</span>{' '}
+            <small>{t(choice === 'custom' ? 'localCustomHint' : 'localOnDevice')}</small>
+          </button>
+        ))}
+      </div>
+      {preset === 'custom' ? null : <p className={styles['advancedHint']}>{t('localSetupHint')}</p>}
       <div className={styles['field']}>
         <span className={styles['fieldLabel']}>{t('customRoute')}</span>
         <input
@@ -285,6 +310,11 @@ export function CustomProviderCard(props: CustomProviderCardProps): ReactNode {
           ? null
           : <p className={styles['error']}>{t(keyFailure === 'keyBlank' ? 'keyBlankNew' : keyFailure)}</p>}
       </div>
+      <label className={styles['localAuth']}>
+        <input type="checkbox" checked={keyless} disabled={profileDisabled}
+          onChange={(event) => { setKeyless(event.target.checked) }} />
+        <span>{t('localNoAuth')}</span>
+      </label>
       <ModelListEditor
         models={models}
         onChange={setModels}

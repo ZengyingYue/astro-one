@@ -92,6 +92,8 @@ export type {
 export interface PiAiProviderProfile {
   /** Credential reference (environment-variable name) resolved per request through `ctx.credentials`. */
   apiKeyEnv?: string
+  /** Explicit keyless OpenAI-compatible service; sends a non-secret protocol placeholder. */
+  authentication?: 'none'
   /** Name shown by configuration surfaces; defaults to the route key. */
   displayName?: string
   /**
@@ -325,6 +327,7 @@ const modelOverride: z<PiAiModelOverride> = z.object(modelFields)
 
 const profile = z.object({
   apiKeyEnv: z.string().role('credential-ref'),
+  authentication: z.union(['none']),
   displayName: z.string(),
   api: z.union(supportedProtocols()),
   baseURL: z.string(),
@@ -482,6 +485,7 @@ export function resolveProfiles(
         ...source.baseURL === undefined ? {} : { baseURL: source.baseURL },
         models: catalog.models,
         namesCredential: source.apiKeyEnv !== undefined,
+        ...source.authentication === undefined ? {} : { authentication: source.authentication },
       })
     } catch (error) {
       if (validation === 'strict' || !(error instanceof PiAiCatalogError)) throw error

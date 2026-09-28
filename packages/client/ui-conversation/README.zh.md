@@ -40,6 +40,8 @@ target package 通过 declaration merge 扩展 snapshot 与 Location data map，
 <a id="shell-and-standard-props"></a>
 ## Shell 与标准 props
 
+空白会话展示 Astro One 轨道站介绍与卫星标识。分层镜头漂移、指针视差、星光和轨道信号仅在主界面空白会话中播放。窗口隐藏时场景暂停；系统的减少动态效果偏好会关闭动画和视差。持续挂载的输入框、工作区选择器、权限控制和模型选择器保留原有会话操作。
+
 共享图片插槽属性将展示选择与持久化引用分开：`thumbnail` 请求完整缩放的附件列表缩略图，`compact` 请求裁剪的图片方块。每张图片可通过可选的 `label` 提供无障碍展示名称；加载和缓存标识仍使用原始附件引用。[ui-attachment](../ui-attachment/README.zh.md) 负责渲染与灯箱。
 
 控件组的尺寸、内容、可见性或字体加载状态变化后，composer 测量展开状态下的控件组。若无法排在同一行，控制栏为模型位设置 `--astro-one-composer-model-text-display: none` 和 `--astro-one-composer-model-icon-display: block`；两者默认值分别为 `block` 和 `none`。若连图标也放不下，仍允许换行。

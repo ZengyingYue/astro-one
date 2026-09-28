@@ -1,12 +1,13 @@
 import type { ConversationSlotProps } from '../contract/slots.ts'
 import { conversationPhase } from '../contract/snapshot.ts'
 import { ConversationWidthControls } from './ConversationWidthControls.tsx'
+import { OrbitalScene } from './OrbitalScene.tsx'
 import css from './ConversationRoot.module.css'
 
 /**
  * Render the existing main Conversation frame around the extracted content.
  * @param props - the original `main.conversation` Slot props.
- * @returns the unchanged root, Header, content, and width-control subtree.
+ * @returns the conversation frame with a decorative scene in its blank phase.
  */
 export function ConversationMainPanel(props: ConversationSlotProps) {
   const { sessionId, useSession, useSessions, useConversation, renderSlot, renderFactorySlot } = props
@@ -42,6 +43,7 @@ export function ConversationMainPanel(props: ConversationSlotProps) {
 
   return (
     <div className={css.root} data-phase={phase}>
+      {phase === 'hero' && <OrbitalScene />}
       {renderSlot('conversation.header', {})}
       {renderFactorySlot('conversation.content', {
         variant: 'main',

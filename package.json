@@ -201,7 +201,8 @@
     "mock:llm": "node --import tsx packages/test-support/llm-mock-server/src/bin.ts",
     "start:web": "node --import tsx/esm apps/cli/src/bin.ts web",
     "dev:web": "tsx scripts/dev-web.ts --poll",
-    "postinstall": "node scripts/install-lefthook.mjs"
+    "postinstall": "node scripts/install-lefthook.mjs",
+    "package:desktop:local": "pnpm --filter @astro-one/desktop run package:local"
   },
   "devDependencies": {
     "@astro-one/agent": "workspace:*",

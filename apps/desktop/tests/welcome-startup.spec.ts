@@ -1,5 +1,5 @@
 vi.mock('../src/web-document.ts', () => ({ authenticateWebHost: async () => 'test-cookie', serveWebDocument: vi.fn(), forwardWebRequest: vi.fn() }))
-/** Welcome startup uses the Host before transitioning to the workspace. */
+/** Desktop startup reads the locale before showing the workspace without account onboarding. */
 
 import { afterEach, expect, it, vi } from 'vitest'
 import type { BrowserWindowConstructorOptions } from 'electron'
@@ -104,7 +104,7 @@ vi.mock('../src/host-process.ts', () => ({
 }))
 vi.mock('../src/welcome-backend.ts', () => ({
   connectDesktopWelcome: async () => ({
-    readLocalePreference: async () => state.preference,
+    readLocalePreference: async () => { await state.beforeRead(); return state.preference },
     read: async () => {
       await state.beforeRead()
       return { loggedIn: false, hasApiKey: false, writable: true, localePreference: state.preference }
@@ -142,7 +142,7 @@ afterEach(() => {
   vi.restoreAllMocks()
 })
 
-it('starts the Host for welcome onboarding and opens the workspace on skip without quitting', async () => {
+it('opens the workspace without account onboarding or an API key', async () => {
   vi.useFakeTimers()
   vi.stubEnv('ASTRO_ONE_DESKTOP_DEV_PROJECT_DIR', '/development-profile')
   vi.stubEnv('ASTRO_ONE_DESKTOP_NODE_BINARY', '/runtime/node')
@@ -154,9 +154,7 @@ it('starts the Host for welcome onboarding and opens the workspace on skip witho
   vi.stubEnv('ASTRO_ONE_DESKTOP_MANDATORY_UPDATE_CONFIG', undefined)
   vi.stubEnv('ASTRO_ONE_DESKTOP_UPDATE_JOURNAL_DIR', undefined)
   const reading = Promise.withResolvers<undefined>()
-  const loading = Promise.withResolvers<undefined>()
   state.beforeRead.mockReturnValueOnce(reading.promise)
-  state.beforeWelcome.mockReturnValueOnce(loading.promise)
   const activate = () => {
     state.appListeners.get('second-instance')!()
     state.appListeners.get('open-url')!({ preventDefault: vi.fn() }, 'astro-one://open')
@@ -167,48 +165,26 @@ it('starts the Host for welcome onboarding and opens the workspace on skip witho
     activate()
     expect(state.showWorkspace).not.toHaveBeenCalled()
     reading.resolve(undefined)
-    await vi.waitFor(() => { expect(state.beforeWelcome).toHaveBeenCalledOnce() })
-    activate()
-    expect(state.showWorkspace).not.toHaveBeenCalled()
+    await vi.waitFor(() => { expect(state.showWorkspace).toHaveBeenCalledOnce() })
   } finally {
     reading.resolve(undefined)
-    loading.resolve(undefined)
   }
-  await vi.waitFor(() => { expect(state.operations).toBeDefined() })
   expect(state.startHost).toHaveBeenCalledOnce()
   expect(state.loadWorkspace).toHaveBeenCalledExactlyOnceWith('astro-one-app://app/')
-  expect(state.showWorkspace).not.toHaveBeenCalled()
-  state.loadWorkspace.mockClear()
-  expect(state.welcomeLocale).toMatchObject({ id: 'zh-CN' })
+  expect(state.beforeWelcome).not.toHaveBeenCalled()
+  expect(state.operations).toBeUndefined()
+  expect(state.accountState).not.toHaveBeenCalled()
   expect(state.dialogLocale!().id).toBe('zh-CN')
-  const attemptId = 'login' as NonNullable<AccountView['attempt']>['id']
-  const account: AccountView = { status: 'signed-out', links: { usageUrl: '', topUpUrl: '' },
-    attempt: { id: attemptId, phase: 'waiting-browser', authorizeUrl: 'https://example.test/login' } }
-  state.accountState.mockResolvedValue(account)
-  await state.operations!.copySignInLink(attemptId)
-  expect(state.copy).toHaveBeenCalledExactlyOnceWith('https://example.test/login?theme=light')
-  state.nativeTheme.shouldUseDarkColors = true
-  await state.operations!.copySignInLink(attemptId)
-  expect(state.copy).toHaveBeenLastCalledWith('https://example.test/login?theme=dark')
-  state.nativeTheme.shouldUseDarkColors = false
-  await expect(state.operations!.copySignInLink('stale' as typeof attemptId)).rejects.toThrow('login link is unavailable')
-  state.accountState.mockResolvedValue({ ...account, attempt: { id: attemptId, phase: 'expired' } })
-  await expect(state.operations!.copySignInLink(attemptId)).rejects.toThrow('login link is unavailable')
-  expect(state.copy).toHaveBeenCalledTimes(2)
-  await state.operations!.skip()
-  expect(state.loadWorkspace).not.toHaveBeenCalled()
-  expect(state.showWorkspace).toHaveBeenCalledOnce()
   expect(state.windowOptions).toMatchObject({
     ...(process.platform === 'darwin' ? { titleBarStyle: 'hiddenInset', trafficLightPosition: { x: 16, y: 18 }, vibrancy: 'sidebar' } : {}),
     webPreferences: { contextIsolation: true, sandbox: true },
   })
-  expect(state.closeWelcome).toHaveBeenCalledOnce()
+  expect(state.closeWelcome).not.toHaveBeenCalled()
   activate()
   expect(state.showWorkspace).toHaveBeenCalledTimes(3)
   expect(state.quit).not.toHaveBeenCalled()
   expect(state.stopHost).not.toHaveBeenCalled()
   const contents = state.contents as { mainFrame: { url: string }; send: ReturnType<typeof vi.fn> }
-  expect(contents.send).toHaveBeenCalledWith(DESKTOP_IPC.enterWorkspace)
   const event = { sender: contents, senderFrame: contents.mainFrame }
   const bootstrap = state.handlers.get(DESKTOP_IPC.localeBootstrap)!
   expect(await bootstrap(event)).toEqual({ languages: ['en-US'], preference: 'zh' })

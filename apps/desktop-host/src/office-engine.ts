@@ -15,7 +15,7 @@ export function runtimeArchivePath(runtimeDir: string): string | undefined {
 }
 
 /**
- * Keep engine executable and resource paths usable by native child processes outside Electron.
+ * Resolve the Office API and all engines outside ASAR so package probes and worker paths use real files.
  * Hooks apply only to this thread; worker threads must install their own resolver.
  * @param runtimeDir - Prepared or ASAR-contained astro-one runtime directory.
  * @returns Installed resolver for the Host lifetime, or undefined for a non-ASAR runtime.
@@ -24,12 +24,12 @@ export function installOfficeEngineResolution(runtimeDir: string): ModuleHooks |
   if (runtimeArchivePath(runtimeDir) === undefined) return undefined
   const root = realpathSync(runtimeDir)
   const archive = dirname(root)
-  const source = pathToFileURL(join(root, 'node_modules', '@deepseek-ai', 'libreoffice-kit-')).href
-  const destination = pathToFileURL(join(`${archive}.unpacked`, relative(archive, root), 'node_modules', '@deepseek-ai', 'libreoffice-kit-')).href
+  const source = pathToFileURL(join(root, 'node_modules', '@deepseek-ai', 'libreoffice-kit')).href
+  const destination = pathToFileURL(join(`${archive}.unpacked`, relative(archive, root), 'node_modules', '@deepseek-ai', 'libreoffice-kit')).href
   return registerHooks({
     resolve(specifier, context, nextResolve) {
       const resolved = nextResolve(specifier, context)
-      if (!/^@deepseek-ai\/libreoffice-kit-(?:darwin|win32|linux)-/u.test(specifier)) return resolved
+      if (!/^@deepseek-ai\/libreoffice-kit(?:-|\/|$)/u.test(specifier)) return resolved
       const canonical = pathToFileURL(realpathSync(fileURLToPath(resolved.url))).href
       if (!canonical.startsWith(source)) {
         if (canonical.startsWith(pathToFileURL(archive + '/').href)) {

@@ -117,9 +117,11 @@
     # reports an actionable error when its settings-domain provider is absent.
     - id: ui-settings-account
       name: '@astro-one/client-ui-settings-account'
+      disabled: true
 
     - id: account-controller
       name: '@astro-one/api-account-controller'
+      disabled: true
 
     - id: settings-controller
       name: '@astro-one/api-settings-controller'
@@ -268,6 +270,8 @@
 
     - id: ui-settings-models
       name: '@astro-one/client-ui-settings-models'
+      config:
+        credentialOnboarding: false
 
     # Plugin management: the sidebar Plugins page installs, enables, disables,
     # and removes the profile's bundles through the `pluginManager` Remote.
@@ -292,6 +296,7 @@
     # Official occupants for the generic sidebar and conversation brand slots.
     - id: ui-brand-official
       name: '@astro-one/client-ui-brand-official'
+      disabled: true
 
     - id: ui-attachment
       name: '@astro-one/client-ui-attachment'

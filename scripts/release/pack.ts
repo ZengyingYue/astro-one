@@ -7,6 +7,7 @@
  * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
  */
 
+import { readClientBuildRecord } from '../client-build-environment.ts'
 import { existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import { parseArgs } from 'node:util'
@@ -49,10 +50,10 @@ function parseConcurrency(raw: string | undefined): number {
   return parsed
 }
 
-/** Pack the family named by `--family` into `--out`. */
+/** Pack the family into `--out`; `--local` accepts any complete client build for a private installer. */
 async function main(): Promise<void> {
   const { values } = parseArgs({
-    options: { family: { type: 'string' }, out: { type: 'string' }, concurrency: { type: 'string' } },
+    options: { family: { type: 'string' }, out: { type: 'string' }, concurrency: { type: 'string' }, local: { type: 'boolean', default: false } },
     allowPositionals: false,
   })
   if (values.family === undefined) throw new Error('usage: pack.ts --family <astro-one|vendor> [--out dist/npm] [--concurrency 1]')
@@ -62,7 +63,8 @@ async function main(): Promise<void> {
   const root = process.cwd()
   const destination = resolve(root, values.out ?? DEFAULT_OUTPUT)
   const members = family.publishOrder(family.members(root)).order
-  family.verifyBuildArtifacts(root)
+  if (values.local && values.family === 'astro-one') readClientBuildRecord(root)
+  else family.verifyBuildArtifacts(root)
   family.verifyVersions(members)
 
   rmSync(destination, { recursive: true, force: true })

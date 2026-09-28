@@ -5,6 +5,7 @@ import designPlatform from '../styles/design-platform.css?inline'
 import scrollbar from '../styles/scrollbar.css?inline'
 import gradientShadowText from '../styles/gradient-shadow-text.css?inline'
 import shiki from '../styles/shiki.css?inline'
+import aerospace from '../styles/aerospace.css?inline'
 
 const PLUGIN_ID = '@astro-one/client-ui-theme'
 
@@ -12,6 +13,7 @@ const STYLES = [
   ['base.css', base],
   ['corner-shape.css', cornerShape],
   ['design-platform.css', designPlatform],
+  ['aerospace.css', aerospace],
   ['scrollbar.css', scrollbar],
   ['gradient-shadow-text.css', gradientShadowText],
   ['shiki.css', shiki],

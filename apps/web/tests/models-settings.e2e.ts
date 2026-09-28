@@ -76,7 +76,7 @@ describe('web e2e: Models settings page configures a dormant provider', () => {
     const dialog = page.getByRole('dialog', { name: '设置' })
     await dialog.waitFor({ timeout: 10_000 })
     await dialog.getByRole('button', { name: '模型', exact: true }).click()
-    await dialog.getByText('填入各提供商的 API 密钥即可使用其模型。').waitFor({ timeout: 10_000 })
+    await dialog.getByText('接入本地模型服务，或配置云端模型提供商。').waitFor({ timeout: 10_000 })
     // The dormant pi-ai adapter contributes its whole installed catalog; no
     // provider is configured yet, so the page is one add button.
     const add = dialog.getByRole('button', { name: '添加模型提供商' })
@@ -249,11 +249,11 @@ describe('web e2e: Models settings page configures a dormant provider', () => {
     await add.click()
     // The custom-API mode is the second segment of the one add card; its
     // purpose line replaces the catalog one.
-    await dialog.getByRole('tab', { name: '自定义模型 API' }).click()
+    await dialog.getByRole('tab', { name: '本地 / 自定义 API' }).click()
     await dialog.getByText('连接中转站、自部署服务或其他兼容 OpenAI / Anthropic 协议的接口，需填写 API 地址、协议和模型。').waitFor({ timeout: 10_000 })
     // The third-party panel stays mounted, hidden, beside this one, so the
     // form is addressed through its own panel.
-    const custom = dialog.getByRole('tabpanel', { name: '自定义模型 API' })
+    const custom = dialog.getByRole('tabpanel', { name: '本地 / 自定义 API' })
     await custom.getByLabel('Provider ID').fill('acme-gateway')
     await custom.getByLabel('显示名称').fill('Acme Gateway')
     await custom.getByLabel('API 地址').fill('https://gateway.acme.example/v1')

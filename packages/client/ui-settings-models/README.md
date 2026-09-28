@@ -25,6 +25,10 @@ English | [中文](README.zh.md)
 <a id="use-this-package"></a>
 ## Use this package
 
+Astro One uses provider-neutral interface copy and routes model setup through API credentials or local services.
+
+The Local / custom API tab offers Ollama (`http://127.0.0.1:11434/v1`) and LM Studio (`http://127.0.0.1:1234/v1`) presets. Start the server separately, fetch its model list or enter a model ID, then create the provider. Addresses remain editable. The keyless checkbox explicitly enables an unauthenticated compatible service; a supplied key takes precedence and is stored through credentials. Local presets use a 32,768-token context and 4,096-token output default; set model limits to match the loaded server. Tool execution requires a tool-capable model.
+
 Open the Models page from the Settings navigation to see every configured provider as a row. The official DeepSeek provider (`deepseek-official`) always appears first; other providers retain their directory order. A whole-section provider whose key is not configured anywhere renders as its open setup card instead, but only in the first-run posture and only until the user closes that card. Each card kind owns its own open state, so closing one never discards a draft in another.
 
 A provider with a stored catalog error remains visible with its diagnostic and edit/delete actions. Add actions are offered only for registered settings namespaces, so an unavailable namespace cannot leave a button that opens no editor. A rejected save leaves the editor open and displays the Host diagnostic.

@@ -2,5 +2,6 @@ Astro One
 Astro One
 Welcome to Astro One
 Build potential. Explore intelligence.
-Sign in
+Use local models
+Sign in to DeepSeek
 Add API Key

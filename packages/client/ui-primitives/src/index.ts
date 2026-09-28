@@ -104,3 +104,4 @@ export {
 } from './plugin-artwork.tsx'
 export { ImageLightbox } from './ImageLightbox.tsx'
 export type { ImageLightboxLabels } from './ImageLightbox.tsx'
+export { OrbitLogo } from './OrbitLogo.tsx'

@@ -60,7 +60,9 @@
   --dsw-elevation-stroke-color: var(--dsw-alias-border-l2);
   border-radius: 22px;
   background: var(--dsw-specific-input-major);
-  box-shadow: var(--dsw-elevation-soft);
+  box-shadow: 0 0 0 0.5px var(--lh-glass-border), 0 16px 60px var(--lh-panel-glow);
+  backdrop-filter: blur(24px);
+
   /* The draft text follows the Settings font-size preference (the textarea,
      mirror, and backdrop all inherit from here, so the three layers stay in
      step); the line height keeps the default 10px leading via the shared px

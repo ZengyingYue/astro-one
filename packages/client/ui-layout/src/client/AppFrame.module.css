@@ -290,3 +290,9 @@
 .overlayLayer > * {
   pointer-events: auto;
 }
+
+.centerCol {
+  background-image: radial-gradient(ellipse at 50% 0%, var(--lh-glow), transparent 65%), linear-gradient(var(--lh-grid) 1px, transparent 1px), linear-gradient(90deg, var(--lh-grid) 1px, transparent 1px);
+  background-size: 100% 100%, 48px 48px, 48px 48px;
+}
+.sidebarCol { box-shadow: inset -1px 0 0 var(--dsw-alias-border-l2); }

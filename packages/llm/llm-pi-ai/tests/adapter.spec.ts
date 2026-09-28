@@ -73,6 +73,24 @@ beforeEach(() => {
 })
 
 describe('PiAiAdapter provider routing', () => {
+  it('streams from an explicitly keyless local route without ambient cloud credentials', async () => {
+    vi.stubEnv('OPENAI_API_KEY', 'unrelated-cloud-secret')
+    const server = await mockServer([{ events: textEvents }])
+    const ctx = new Context()
+    try {
+      await ctx.plugin(LlmRuntime)
+      await ctx.plugin(LlmPiAi, { providers: { ollama: {
+        authentication: 'none', api: 'openai-completions', baseURL: server.url,
+        models: [{ id: 'local-model', contextWindow: 32768, maxTokens: 4096 }],
+      } } })
+      const result = await assemble(ctx, { provider: 'ollama', model: 'local-model', messages: [] })
+      expect(result.finish).toEqual({ kind: 'stop' })
+      expect(result.message.content).toEqual([{ type: 'text', text: 'hello' }])
+      expect(server.headers[0]?.authorization).toBe('Bearer local')
+      expect(server.requests[0]).toMatchObject({ model: 'local-model' })
+    } finally { await ctx.fiber.dispose() }
+  })
+
   it('resolves a catalog model dynamically and uses a private endpoint', async () => {
     const server = await mockServer([{ events: textEvents }])
     const ctx = await harness(server.url)

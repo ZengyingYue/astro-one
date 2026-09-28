@@ -111,6 +111,7 @@
 
     - id: deepseek-account
       name: '@astro-one/deepseek-account-platform'
+      disabled: true
       config:
         desktopPlatform: !!js "ctx.get('profileContext')?.name === 'desktop' && ['darwin', 'win32'].includes(process.platform) ? process.platform : null"
 

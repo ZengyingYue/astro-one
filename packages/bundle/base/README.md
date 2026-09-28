@@ -25,6 +25,8 @@ Every base-backed `astro-one --profile` surface runs on `astro-one-base`, so tho
 <a id="use-this-package"></a>
 ## Use this package
 
+The default composition disables platform account credentials; model providers use API credentials or explicitly configured local services.
+
 You get the astro-one core automatically: the shipped `web`, `headless`, `sdk`, and `acp` profiles already include it, and a custom profile names it as its first bundle. After that, everything works with no further configuration.
 
 ### A minimal custom profile

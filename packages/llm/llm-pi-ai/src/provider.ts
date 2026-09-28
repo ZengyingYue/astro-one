@@ -72,13 +72,14 @@ export function supportedProtocols(): readonly string[] {
  * requirement actually lives — pi-ai's OpenAI-compatible implementation, for
  * one, still insists on a key or an `Authorization` header of its own.
  * @param name - display name used as the resolution's status label.
+ * @param keyless - Send a non-secret placeholder required by OpenAI client libraries.
  * @returns the api-key auth for a harness-authenticated route.
  */
-function harnessApiKeyAuth(name: string): ApiKeyAuth {
+function harnessApiKeyAuth(name: string, keyless = false): ApiKeyAuth {
   return {
     name,
     resolve: ({ credential }) => Promise.resolve({
-      auth: credential?.key === undefined ? {} : { apiKey: credential.key },
+      auth: credential?.key !== undefined ? { apiKey: credential.key } : keyless ? { apiKey: 'local' } : {},
       source: name,
     }),
   }
@@ -104,6 +105,8 @@ export interface ProviderSpec {
    * request, never at construction.
    */
   namesCredential: boolean
+  /** Explicitly selected keyless service; never uses ambient catalog credentials. */
+  authentication?: 'none'
 }
 
 /**
@@ -129,6 +132,7 @@ export interface ProviderSpec {
  * @returns the auth to construct this route's provider with.
  */
 function routeAuth(spec: ProviderSpec, catalog: Provider | undefined): Provider['auth'] {
+  if (spec.authentication === 'none') return { apiKey: harnessApiKeyAuth(spec.displayName, true) }
   if (catalog === undefined) return { apiKey: harnessApiKeyAuth(spec.displayName) }
   if (catalog.auth.apiKey !== undefined || !spec.namesCredential) return catalog.auth
   return { ...catalog.auth, apiKey: harnessApiKeyAuth(spec.displayName) }

@@ -25,6 +25,8 @@ kind: "package-bundle"
 <a id="use-this-package"></a>
 ## 使用本包
 
+Astro One 禁用账号菜单、平台账号控制器、官方品牌插件与自动凭据引导。用户在设置 → 模型中配置 API 提供商和本地服务。
+
 启动 GUI、打开浏览器，然后开始与 agent（智能体）对话。flag 用于微调本次调用。
 
 ### 启动 Web GUI

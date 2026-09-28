@@ -68,7 +68,7 @@ describe('web e2e: repairs a stored provider after catalog drift', () => {
     await dialog.getByRole('button', { name: '添加模型提供商', exact: true }).click()
     // Both modes stay offered beside a failed route: the card opens on the
     // third-party mode with the custom-API segment enabled.
-    expect(await dialog.getByRole('tab', { name: '自定义模型 API' }).isEnabled()).toBe(true)
+    expect(await dialog.getByRole('tab', { name: '本地 / 自定义 API' }).isEnabled()).toBe(true)
     await dialog.getByLabel('提供商', { exact: true }).selectOption('minimax-cn')
     await dialog.getByRole('button', { name: '保存', exact: true }).click()
     await dialog.getByText('已保存 minimax-cn。', { exact: true }).waitFor()

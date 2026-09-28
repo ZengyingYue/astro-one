@@ -8,7 +8,7 @@
   - button "打开配置文件"
   - button "关闭"
   - heading "模型" [level=2]
-  - paragraph: 填入各提供商的 API 密钥即可使用其模型。
+  - paragraph: 接入本地模型服务，或配置云端模型提供商。
   - status: 已保存 minimax-cn。
   - list:
     - listitem:

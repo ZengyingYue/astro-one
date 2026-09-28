@@ -25,6 +25,8 @@ kind: "package-bundle"
 <a id="use-this-package"></a>
 ## 使用本包
 
+默认组合禁用平台账号凭据；模型提供商使用 API 凭据或明确配置的本地服务。
+
 你会自动获得 astro-one 核心：随发行版交付的 `web`、`headless`、`sdk` 与 `acp` profile 已包含它，自定义 profile 则把它列为第一个组合包。之后一切无需任何额外配置即可工作。
 
 ### 最小自定义 profile

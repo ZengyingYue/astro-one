@@ -2,5 +2,6 @@ Astro One
 Astro One
 欢迎使用 Astro One
 组装无限可能，共探智能上限
-登录
+使用本地模型
+登录 DeepSeek
 添加 API Key

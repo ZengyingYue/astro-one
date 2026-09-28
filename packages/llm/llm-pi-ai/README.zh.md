@@ -25,6 +25,8 @@ kind: "package-reference"
 <a id="use-this-package"></a>
 ## 使用本包
 
+接入兼容 OpenAI 的本地服务时，在提供商配置中设置 `authentication: none`。未提供凭据时，适配器使用非机密的 `local` 协议占位值，不读取目录提供商的环境密钥。显式的 `apiKeyEnv` 仍通过凭据服务解析并优先使用；指定凭据缺失时仍报错。模型发现、流式响应、取消与工具调用沿用现有适配器路径。
+
 当组合需要通过 pi-ai 的提供方目录、或通过 pi-ai 已安装目录未描述的网关路由模型请求时挂载本插件。`providers` 字典就是整个配置面：每个键都是请求用 `GenerateOptions.provider` 选择的提供方路由名。
 
 适配器接受 LLM 服务的[仅供请求使用的 user 输入](../llm/README.zh.md#use-this-package)，并可将其与持久历史混用。user 身份与来源不会进入 pi-ai 内容；assistant 回放元数据和工具调用关联仍由持久消息携带。

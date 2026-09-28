@@ -25,6 +25,8 @@ English | [中文](README.zh.md)
 <a id="use-this-package"></a>
 ## Use this package
 
+For an OpenAI-compatible local service, set `authentication: none` on its provider profile. The adapter supplies the non-secret `local` protocol placeholder when no credential is provided, without reading catalog environment keys. An explicit `apiKeyEnv` still resolves through credentials and takes precedence; a missing named credential remains an error. Model discovery, streaming, cancellation, and tool calls use the existing adapter paths.
+
 Mount this plugin when a composition routes model requests through pi-ai's provider catalogs or through gateways that pi-ai's installed catalog does not describe. The `providers` dictionary is the whole configuration surface: each key is the provider route name a request selects with `GenerateOptions.provider`.
 
 The adapter accepts the LLM service's [request-only user inputs](../llm/README.md#use-this-package) alongside durable history. User identity and attribution do not enter pi-ai content; assistant replay metadata and tool-call correlation remain attached to durable messages.

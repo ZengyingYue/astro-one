@@ -45,6 +45,14 @@ function mount(language = 'zh-CN') {
 }
 
 describe('desktop welcome presentation', () => {
+  it('opens the workspace for local models without a cloud sign-in or key', async () => {
+    const view = mount()
+    fireEvent.click(view.button('#local-models'))
+    await vi.waitFor(() => { expect(view.api.skip).toHaveBeenCalledOnce() })
+    expect(view.api.startSignIn).not.toHaveBeenCalled()
+    expect(view.api.saveApiKey).not.toHaveBeenCalled()
+  })
+
   it.each(['zh-CN', 'en'])('renders the %s entry and API-key step', async (language) => {
     const view = mount(language)
     expect(view.document.documentElement.lang).toBe(language)

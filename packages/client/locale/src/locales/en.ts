@@ -33,7 +33,7 @@ export const en = {
   'collapse': 'Collapse',
   'expand': 'Expand',
   'back': 'Back',
-  'brand.localBuild': 'Astro One Local Build',
+  'brand.localBuild': 'Astro One',
   'unknown': 'Unknown',
   'none': 'None',
   'truncated': 'Truncated',

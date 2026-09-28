@@ -290,7 +290,10 @@ vi.mock('../src/update-coordinator.ts', () => ({ DesktopUpdateCoordinator: class
 } }))
 vi.mock('../src/welcome-backend.ts', () => ({
   connectDesktopWelcome: async () => ({
-    readLocalePreference: async () => null,
+    readLocalePreference: async () => {
+      const value = await (await harness.hosts.at(-1)!.fetch()).json() as { localePreference: string | null }
+      return value.localePreference
+    },
     read: async (): Promise<unknown> => (await harness.hosts.at(-1)!.fetch()).json() as Promise<unknown>,
     save: async () => ({ ok: true }),
     account: { watch: harness.watchAccount, state: async () => ({ status: 'signed-out', attempt: null }) },
@@ -1698,7 +1701,7 @@ describe('desktop main startup', () => {
   })
 })
 
-it.each(['failed', 'expired'] as const)('focuses Astro One once when browser authorization becomes %s', async (phase) => {
+it.each(['failed', 'expired'] as const)('ignores account authorization becoming %s', async (phase) => {
   await import('../src/main.ts')
   await harness.preparing.promise
   harness.prepared.resolve()
@@ -1713,10 +1716,10 @@ it.each(['failed', 'expired'] as const)('focuses Astro One once when browser aut
   }
   harness.publishAccount(state)
   harness.publishAccount(state)
-  expect(window.focus).toHaveBeenCalledTimes(1)
+  expect(window.focus).not.toHaveBeenCalled()
 })
 
-it.each([['light', false], ['dark', true]] as const)('opens Platform authorization in the effective %s palette', async (theme, shouldUseDarkColors) => {
+it.each([['light', false], ['dark', true]] as const)('does not open account authorization in the %s palette', async (_theme, shouldUseDarkColors) => {
   await import('../src/main.ts')
   await harness.preparing.promise
   harness.prepared.resolve()
@@ -1731,5 +1734,5 @@ it.each([['light', false], ['dark', true]] as const)('opens Platform authorizati
   }
   harness.publishAccount(state)
   harness.publishAccount(state)
-  expect(harness.openExternal).toHaveBeenCalledExactlyOnceWith(`https://platform.deepseek.com/astro-one/authorize?state=state-1&theme=${theme}`)
+  expect(harness.openExternal).not.toHaveBeenCalled()
 })
