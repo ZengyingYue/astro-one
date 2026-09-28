@@ -41,6 +41,9 @@ This table connects model-visible tool names to the plugin package and service s
 | `@astro-one/tool-subagent-control` | `interrupt_agent`, `list_agents`, `send_message` | `ctx.tools`, `ctx.subagents`, `ctx.agents and ctx.sessionProjections (list_agents only)` | `tool/call`, `tool/result`, `child session events through ctx.subagents` | - | The globally named control tools over continuable background subagents: provider-bound `tool-subagent` instances register distinct delegation tools, while this package registers `send_message` and `interrupt_agent` once, plus `list_agents` from its separately loaded `/list-agents` plugin (whose catalog rows use the sessionProjections and live Agent registries). |
 | `@astro-one/tool-jobs` | `job_kill`, `job_list`, `job_output` | `ctx.tools`, `ctx.jobs`, `ctx.systemPrompt` | `tool/call`, `tool/result`, `user/message via agent.inject() for background completion notices` | - | The kind-agnostic background-job controller: background bash commands, PTY sends, and subagents are read, listed, and killed through the same three tools. Loading the plugin attaches the controller that arms producers' `ctx.jobs.start()`. |
 | `@astro-one/experimental-tool-agent-team` | `interrupt_agent`, `list_agents`, `send_message`, `spawn_teammate`, `team_task_create`, `team_task_get`, `team_task_list`, `team_task_update`, `wait_agent` | `ctx.tools`, `ctx.systemPrompt`, `ctx.agentTeams`, `an exact live Team member Agent` | `tool/call`, `team/member`, `team/message/queued`, `team/message/delivered`, `team/task`, `tool/result` | - | All nine tools are scoped to implicit Team Leads and durable teammates. The shipped astro-one-base bundle keeps the package disabled; the documented Agent Teams profile patch enables it while disabling the legacy continuable-child control names. |
+| `@astro-one/tool-astrodynamics` | `attitude_determine`, `orbit_conjunction`, `orbit_convert`, `orbit_determine`, `orbit_passes`, `orbit_propagate`, `orbit_transfer` | `ctx.tools` | `tool/call`, `tool/result` | - | Shipped by the optional `@astro-one/aerospace` bundle, which the plugin manager offers switched off. Every Config bound is required; the catalog uses the bundle values, and the bounds appear only in failure messages, not in the schemas. |
+| `@astro-one/tool-gnss` | `gnss_position`, `gnss_visibility` | `ctx.tools`, `ctx.fs` | `tool/call`, `tool/result` | - | Shipped by the optional `@astro-one/aerospace` bundle. Both tools read RINEX 3 files through ctx.fs relative to the calling session workspace. |
+| `@astro-one/tool-remote-sensing` | `rs_change_detect`, `rs_spectral_index` | `ctx.tools`, `ctx.fs` | `tool/call`, `tool/result` | - | Shipped by the optional `@astro-one/aerospace` bundle without a detector, so this page shows rs_spectral_index and rs_change_detect. A deployment that configures `detector` also receives rs_detect_objects, whose description lists the configured class names. |
 | `@astro-one/tool-todo` | `todo_write` | `ctx.tools`, `owning Agent session` | `tool/call`, `todo/write`, `tool/result` | - | todo_write is session-owned state; UIs render the latest todo/write event as a checklist. `allowParallelInProgress` is required with no default, so the catalog states its choice: `true`, whose description invites several `in_progress` items. A deployment choosing `false` receives the same tool with a description asking for exactly one active task. |
 | `@astro-one/tool-workflow` | `workflow` | `ctx.tools`, `ctx.workflowEngine`, `ctx.systemPrompt`, `a calling Agent (exec.agent parents the script children)` | `tool/call`, `tool/result` | - | - |
 | `@astro-one/tool-workspace-dependencies` | `load_workspace_dependencies` | `ctx.tools` | `tool/call`, `tool/result` | - | - |
@@ -2307,6 +2310,1620 @@ Wait for the next teammate status, mailbox, or shared-task change after this cal
 Source: [`packages/experimental/tool-agent-team/src/index.ts`](../packages/experimental/tool-agent-team/src/index.ts)
 
 All nine tools are scoped to implicit Team Leads and durable teammates. The shipped astro-one-base bundle keeps the package disabled; the documented Agent Teams profile patch enables it while disabling the legacy continuable-child control names.
+
+<a id="astro-onetool-astrodynamics"></a>
+
+## `@astro-one/tool-astrodynamics`
+
+### `attitude_determine`
+
+Estimate spacecraft attitude from two or more vector observations (Wahba problem), for example Sun sensor, magnetometer, and star-tracker directions. Each observation pairs a measured body-frame vector with the same direction known in the reference frame (for example J2000) and a measurement sigma_deg. method q-method (Davenport, exact optimum, default), quest (Shuster, fast), or triad (first two vectors, first one trusted exactly). Returns the reference-to-body quaternion (scalar last, q4 >= 0), direction-cosine matrix, 3-2-1 yaw/pitch/roll, Wahba loss, and 1-sigma attitude errors about the body axes.
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "method": {
+      "type": "string",
+      "enum": [
+        "q-method",
+        "quest",
+        "triad"
+      ]
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "body": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "reference": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "sigma_deg": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "body",
+          "reference",
+          "sigma_deg"
+        ]
+      }
+    }
+  },
+  "required": [
+    "observations"
+  ]
+}
+```
+
+Source: [`packages/aerospace/tool-astrodynamics/src/index.ts`](../packages/aerospace/tool-astrodynamics/src/index.ts)
+
+### `orbit_conjunction`
+
+Screen two objects for close approaches between start and end and report each local minimum closer than screening_distance_km (default 10): time of closest approach, miss distance, relative speed, and the miss vector in the primary radial/transverse/normal frame. When both position covariances are given (3x3 RTN matrices in km², or sigma_rtn_km diagonals), also returns the short-encounter (2D, Foster) collision probability for hard_body_radius_km (combined object radius, default 0.02 km) and the covariance-free Alfano maximum. step_s (default 10) must be short relative to the encounter; each object has its own source and method.
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "primary": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "type": "object",
+          "description": "Orbit to use. kind=tle needs line1/line2; kind=omm needs omm (CCSDS OMM JSON keywords as served by CelesTrak); kind=state needs epoch, frame, position_km, velocity_km_s; kind=elements needs epoch, a_km, e, i_deg, raan_deg, argp_deg, and exactly one of true_anomaly_deg or mean_anomaly_deg (GCRF/J2000).",
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "tle",
+                "omm",
+                "state",
+                "elements"
+              ]
+            },
+            "line1": {
+              "type": "string"
+            },
+            "line2": {
+              "type": "string"
+            },
+            "omm": {},
+            "epoch": {
+              "type": "string",
+              "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+            },
+            "frame": {
+              "type": "string",
+              "description": "Frame of position_km/velocity_km_s.",
+              "enum": [
+                "gcrf",
+                "itrf",
+                "teme"
+              ]
+            },
+            "position_km": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "velocity_km_s": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "a_km": {
+              "type": "number"
+            },
+            "e": {
+              "type": "number"
+            },
+            "i_deg": {
+              "type": "number"
+            },
+            "raan_deg": {
+              "type": "number"
+            },
+            "argp_deg": {
+              "type": "number"
+            },
+            "true_anomaly_deg": {
+              "type": "number"
+            },
+            "mean_anomaly_deg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "kind"
+          ]
+        },
+        "method": {
+          "type": "string",
+          "description": "sgp4 (TLE/OMM sources only; standard for catalog element sets), numerical (RKF7(8) special perturbations with the forces field), or two-body (Keplerian).",
+          "enum": [
+            "sgp4",
+            "numerical",
+            "two-body"
+          ]
+        },
+        "covariance_rtn_km2": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "sigma_rtn_km": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "source",
+        "method"
+      ]
+    },
+    "secondary": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "type": "object",
+          "description": "Orbit to use. kind=tle needs line1/line2; kind=omm needs omm (CCSDS OMM JSON keywords as served by CelesTrak); kind=state needs epoch, frame, position_km, velocity_km_s; kind=elements needs epoch, a_km, e, i_deg, raan_deg, argp_deg, and exactly one of true_anomaly_deg or mean_anomaly_deg (GCRF/J2000).",
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "tle",
+                "omm",
+                "state",
+                "elements"
+              ]
+            },
+            "line1": {
+              "type": "string"
+            },
+            "line2": {
+              "type": "string"
+            },
+            "omm": {},
+            "epoch": {
+              "type": "string",
+              "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+            },
+            "frame": {
+              "type": "string",
+              "description": "Frame of position_km/velocity_km_s.",
+              "enum": [
+                "gcrf",
+                "itrf",
+                "teme"
+              ]
+            },
+            "position_km": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "velocity_km_s": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "a_km": {
+              "type": "number"
+            },
+            "e": {
+              "type": "number"
+            },
+            "i_deg": {
+              "type": "number"
+            },
+            "raan_deg": {
+              "type": "number"
+            },
+            "argp_deg": {
+              "type": "number"
+            },
+            "true_anomaly_deg": {
+              "type": "number"
+            },
+            "mean_anomaly_deg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "kind"
+          ]
+        },
+        "method": {
+          "type": "string",
+          "description": "sgp4 (TLE/OMM sources only; standard for catalog element sets), numerical (RKF7(8) special perturbations with the forces field), or two-body (Keplerian).",
+          "enum": [
+            "sgp4",
+            "numerical",
+            "two-body"
+          ]
+        },
+        "covariance_rtn_km2": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "sigma_rtn_km": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "source",
+        "method"
+      ]
+    },
+    "start": {
+      "type": "string",
+      "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+    },
+    "end": {
+      "type": "string",
+      "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+    },
+    "step_s": {
+      "type": "number"
+    },
+    "screening_distance_km": {
+      "type": "number"
+    },
+    "hard_body_radius_km": {
+      "type": "number"
+    },
+    "forces": {
+      "type": "object",
+      "description": "Numerical force model. Defaults: zonal_degree 2 (J2), no drag, no radiation pressure, no third bodies.",
+      "additionalProperties": false,
+      "properties": {
+        "zonal_degree": {
+          "type": "integer",
+          "description": "Highest zonal harmonic, 0 (point mass) to 6 (J2–J6)."
+        },
+        "drag": {
+          "type": "object",
+          "description": "Exponential-atmosphere drag.",
+          "additionalProperties": false,
+          "properties": {
+            "cd": {
+              "type": "number"
+            },
+            "area_m2": {
+              "type": "number"
+            },
+            "mass_kg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "cd",
+            "area_m2",
+            "mass_kg"
+          ]
+        },
+        "srp": {
+          "type": "object",
+          "description": "Cannonball solar radiation pressure with conical Earth shadow.",
+          "additionalProperties": false,
+          "properties": {
+            "cr": {
+              "type": "number"
+            },
+            "area_m2": {
+              "type": "number"
+            },
+            "mass_kg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "cr",
+            "area_m2",
+            "mass_kg"
+          ]
+        },
+        "sun": {
+          "type": "boolean",
+          "description": "Solar third-body gravity."
+        },
+        "moon": {
+          "type": "boolean",
+          "description": "Lunar third-body gravity."
+        }
+      }
+    }
+  },
+  "required": [
+    "primary",
+    "secondary",
+    "start",
+    "end"
+  ]
+}
+```
+
+Source: [`packages/aerospace/tool-astrodynamics/src/index.ts`](../packages/aerospace/tool-astrodynamics/src/index.ts)
+
+### `orbit_convert`
+
+Convert orbit and time representations. operation=state converts a source (state in gcrf/itrf/teme, Keplerian elements, TLE, or OMM) at its epoch into GCRF, ITRF, and TEME position/velocity, osculating elements, and the geodetic sub-point. operation=geodetic converts a station (lat_deg, lon_deg, alt_km) to Earth-fixed coordinates. operation=time converts an instant to Julian dates (UTC and TT), TAI-UTC, GPS week/seconds, and Greenwich sidereal time.
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "operation": {
+      "type": "string",
+      "enum": [
+        "state",
+        "geodetic",
+        "time"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "description": "Orbit to use. kind=tle needs line1/line2; kind=omm needs omm (CCSDS OMM JSON keywords as served by CelesTrak); kind=state needs epoch, frame, position_km, velocity_km_s; kind=elements needs epoch, a_km, e, i_deg, raan_deg, argp_deg, and exactly one of true_anomaly_deg or mean_anomaly_deg (GCRF/J2000).",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "tle",
+            "omm",
+            "state",
+            "elements"
+          ]
+        },
+        "line1": {
+          "type": "string"
+        },
+        "line2": {
+          "type": "string"
+        },
+        "omm": {},
+        "epoch": {
+          "type": "string",
+          "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+        },
+        "frame": {
+          "type": "string",
+          "description": "Frame of position_km/velocity_km_s.",
+          "enum": [
+            "gcrf",
+            "itrf",
+            "teme"
+          ]
+        },
+        "position_km": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "velocity_km_s": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "a_km": {
+          "type": "number"
+        },
+        "e": {
+          "type": "number"
+        },
+        "i_deg": {
+          "type": "number"
+        },
+        "raan_deg": {
+          "type": "number"
+        },
+        "argp_deg": {
+          "type": "number"
+        },
+        "true_anomaly_deg": {
+          "type": "number"
+        },
+        "mean_anomaly_deg": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "kind"
+      ]
+    },
+    "station": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "lat_deg": {
+          "type": "number"
+        },
+        "lon_deg": {
+          "type": "number"
+        },
+        "alt_km": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "lat_deg",
+        "lon_deg",
+        "alt_km"
+      ]
+    },
+    "time": {
+      "type": "string",
+      "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+    },
+    "eop": {
+      "type": "object",
+      "description": "Optional IERS Bulletin A values; omit for UT1=UTC and no polar motion (≈15 m and ≈0.4 km/s·ΔUT1 errors).",
+      "additionalProperties": false,
+      "properties": {
+        "dut1_s": {
+          "type": "number"
+        },
+        "xp_arcsec": {
+          "type": "number"
+        },
+        "yp_arcsec": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "required": [
+    "operation"
+  ]
+}
+```
+
+Source: [`packages/aerospace/tool-astrodynamics/src/index.ts`](../packages/aerospace/tool-astrodynamics/src/index.ts)
+
+### `orbit_determine`
+
+Determine an orbit from tracking observations. Initial methods: gibbs or herrick-gibbs (exactly three position observations; Herrick–Gibbs for arcs spanning only a few degrees), gauss (exactly three radec observations from ground stations, angles-only). Precise methods: batch (weighted least squares with outlier editing, gives a covariance) and ukf (unscented Kalman filter, state at the last observation). Observation types and units: position [x,y,z] km GCRF; range km; range_rate km/s; radec [right ascension, declination] deg topocentric J2000; azel [azimuth, elevation] deg. sigma uses the same units and is required for batch and ukf. Every type except position needs a station. batch and ukf use initial when given, otherwise an automatic Gibbs/Herrick–Gibbs or Gauss solution.
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "method": {
+      "type": "string",
+      "enum": [
+        "gibbs",
+        "herrick-gibbs",
+        "gauss",
+        "batch",
+        "ukf"
+      ]
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "time": {
+            "type": "string",
+            "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "position",
+              "range",
+              "range_rate",
+              "radec",
+              "azel"
+            ]
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "sigma": {
+            "type": "number"
+          },
+          "station": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "lat_deg": {
+                "type": "number"
+              },
+              "lon_deg": {
+                "type": "number"
+              },
+              "alt_km": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "lat_deg",
+              "lon_deg",
+              "alt_km"
+            ]
+          }
+        },
+        "required": [
+          "time",
+          "type",
+          "value"
+        ]
+      }
+    },
+    "initial": {
+      "type": "object",
+      "description": "A priori orbit for batch/ukf (any source kind).",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "tle",
+            "omm",
+            "state",
+            "elements"
+          ]
+        },
+        "line1": {
+          "type": "string"
+        },
+        "line2": {
+          "type": "string"
+        },
+        "omm": {},
+        "epoch": {
+          "type": "string",
+          "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+        },
+        "frame": {
+          "type": "string",
+          "description": "Frame of position_km/velocity_km_s.",
+          "enum": [
+            "gcrf",
+            "itrf",
+            "teme"
+          ]
+        },
+        "position_km": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "velocity_km_s": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "a_km": {
+          "type": "number"
+        },
+        "e": {
+          "type": "number"
+        },
+        "i_deg": {
+          "type": "number"
+        },
+        "raan_deg": {
+          "type": "number"
+        },
+        "argp_deg": {
+          "type": "number"
+        },
+        "true_anomaly_deg": {
+          "type": "number"
+        },
+        "mean_anomaly_deg": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "kind"
+      ]
+    },
+    "dynamics": {
+      "type": "string",
+      "description": "Dynamics for batch/ukf (default numerical).",
+      "enum": [
+        "numerical",
+        "two-body"
+      ]
+    },
+    "forces": {
+      "type": "object",
+      "description": "Numerical force model. Defaults: zonal_degree 2 (J2), no drag, no radiation pressure, no third bodies.",
+      "additionalProperties": false,
+      "properties": {
+        "zonal_degree": {
+          "type": "integer",
+          "description": "Highest zonal harmonic, 0 (point mass) to 6 (J2–J6)."
+        },
+        "drag": {
+          "type": "object",
+          "description": "Exponential-atmosphere drag.",
+          "additionalProperties": false,
+          "properties": {
+            "cd": {
+              "type": "number"
+            },
+            "area_m2": {
+              "type": "number"
+            },
+            "mass_kg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "cd",
+            "area_m2",
+            "mass_kg"
+          ]
+        },
+        "srp": {
+          "type": "object",
+          "description": "Cannonball solar radiation pressure with conical Earth shadow.",
+          "additionalProperties": false,
+          "properties": {
+            "cr": {
+              "type": "number"
+            },
+            "area_m2": {
+              "type": "number"
+            },
+            "mass_kg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "cr",
+            "area_m2",
+            "mass_kg"
+          ]
+        },
+        "sun": {
+          "type": "boolean",
+          "description": "Solar third-body gravity."
+        },
+        "moon": {
+          "type": "boolean",
+          "description": "Lunar third-body gravity."
+        }
+      }
+    },
+    "max_iterations": {
+      "type": "integer",
+      "description": "Batch differential-correction iterations (default 20)."
+    },
+    "edit_sigma": {
+      "type": "number",
+      "description": "Batch outlier threshold in normalized residuals (default 3; 0 disables editing)."
+    },
+    "process_noise_km_s2": {
+      "type": "number",
+      "description": "UKF white-noise acceleration sigma (default 1e-9 km/s²)."
+    },
+    "initial_sigma_km": {
+      "type": "number",
+      "description": "UKF a priori position sigma (default 1 km)."
+    },
+    "initial_sigma_km_s": {
+      "type": "number",
+      "description": "UKF a priori velocity sigma (default 0.001 km/s)."
+    },
+    "eop": {
+      "type": "object",
+      "description": "Optional IERS Bulletin A values; omit for UT1=UTC and no polar motion (≈15 m and ≈0.4 km/s·ΔUT1 errors).",
+      "additionalProperties": false,
+      "properties": {
+        "dut1_s": {
+          "type": "number"
+        },
+        "xp_arcsec": {
+          "type": "number"
+        },
+        "yp_arcsec": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "required": [
+    "method",
+    "observations"
+  ]
+}
+```
+
+Source: [`packages/aerospace/tool-astrodynamics/src/index.ts`](../packages/aerospace/tool-astrodynamics/src/index.ts)
+
+### `orbit_passes`
+
+Predict when a satellite is visible from a ground station between start and end: rise, culmination, and set times with azimuth/elevation/range, above min_elevation_deg (default 10). step_s (default 60) is the coarse search step and must be shorter than the shortest pass of interest. Each pass also reports whether the satellite is sunlit at culmination and the Sun elevation at the site (optically visible passes need a sunlit satellite and a site Sun elevation below about -6 deg).
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "source": {
+      "type": "object",
+      "description": "Orbit to use. kind=tle needs line1/line2; kind=omm needs omm (CCSDS OMM JSON keywords as served by CelesTrak); kind=state needs epoch, frame, position_km, velocity_km_s; kind=elements needs epoch, a_km, e, i_deg, raan_deg, argp_deg, and exactly one of true_anomaly_deg or mean_anomaly_deg (GCRF/J2000).",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "tle",
+            "omm",
+            "state",
+            "elements"
+          ]
+        },
+        "line1": {
+          "type": "string"
+        },
+        "line2": {
+          "type": "string"
+        },
+        "omm": {},
+        "epoch": {
+          "type": "string",
+          "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+        },
+        "frame": {
+          "type": "string",
+          "description": "Frame of position_km/velocity_km_s.",
+          "enum": [
+            "gcrf",
+            "itrf",
+            "teme"
+          ]
+        },
+        "position_km": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "velocity_km_s": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "a_km": {
+          "type": "number"
+        },
+        "e": {
+          "type": "number"
+        },
+        "i_deg": {
+          "type": "number"
+        },
+        "raan_deg": {
+          "type": "number"
+        },
+        "argp_deg": {
+          "type": "number"
+        },
+        "true_anomaly_deg": {
+          "type": "number"
+        },
+        "mean_anomaly_deg": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "kind"
+      ]
+    },
+    "method": {
+      "type": "string",
+      "description": "sgp4 (TLE/OMM sources only; standard for catalog element sets), numerical (RKF7(8) special perturbations with the forces field), or two-body (Keplerian).",
+      "enum": [
+        "sgp4",
+        "numerical",
+        "two-body"
+      ]
+    },
+    "station": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "lat_deg": {
+          "type": "number"
+        },
+        "lon_deg": {
+          "type": "number"
+        },
+        "alt_km": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "lat_deg",
+        "lon_deg",
+        "alt_km"
+      ]
+    },
+    "start": {
+      "type": "string",
+      "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+    },
+    "end": {
+      "type": "string",
+      "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+    },
+    "min_elevation_deg": {
+      "type": "number"
+    },
+    "step_s": {
+      "type": "number"
+    },
+    "forces": {
+      "type": "object",
+      "description": "Numerical force model. Defaults: zonal_degree 2 (J2), no drag, no radiation pressure, no third bodies.",
+      "additionalProperties": false,
+      "properties": {
+        "zonal_degree": {
+          "type": "integer",
+          "description": "Highest zonal harmonic, 0 (point mass) to 6 (J2–J6)."
+        },
+        "drag": {
+          "type": "object",
+          "description": "Exponential-atmosphere drag.",
+          "additionalProperties": false,
+          "properties": {
+            "cd": {
+              "type": "number"
+            },
+            "area_m2": {
+              "type": "number"
+            },
+            "mass_kg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "cd",
+            "area_m2",
+            "mass_kg"
+          ]
+        },
+        "srp": {
+          "type": "object",
+          "description": "Cannonball solar radiation pressure with conical Earth shadow.",
+          "additionalProperties": false,
+          "properties": {
+            "cr": {
+              "type": "number"
+            },
+            "area_m2": {
+              "type": "number"
+            },
+            "mass_kg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "cr",
+            "area_m2",
+            "mass_kg"
+          ]
+        },
+        "sun": {
+          "type": "boolean",
+          "description": "Solar third-body gravity."
+        },
+        "moon": {
+          "type": "boolean",
+          "description": "Lunar third-body gravity."
+        }
+      }
+    }
+  },
+  "required": [
+    "source",
+    "method",
+    "station",
+    "start",
+    "end"
+  ]
+}
+```
+
+Source: [`packages/aerospace/tool-astrodynamics/src/index.ts`](../packages/aerospace/tool-astrodynamics/src/index.ts)
+
+### `orbit_propagate`
+
+Propagate an orbit and return an ephemeris. Use method=sgp4 for TLE/OMM catalog element sets (the only physically consistent model for them), numerical for precise special-perturbation propagation of a state or elements with the forces field (J2–J6 zonals, drag, solar radiation pressure, Sun/Moon), or two-body for Keplerian motion. Give either times (explicit ISO instants) or start, end, and step_s. output_frame selects gcrf (J2000 inertial, default), itrf (Earth-fixed), teme (SGP4 frame), or geodetic (WGS-84 latitude, longitude, altitude). Distances are km, velocities km/s, angles degrees.
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "source": {
+      "type": "object",
+      "description": "Orbit to use. kind=tle needs line1/line2; kind=omm needs omm (CCSDS OMM JSON keywords as served by CelesTrak); kind=state needs epoch, frame, position_km, velocity_km_s; kind=elements needs epoch, a_km, e, i_deg, raan_deg, argp_deg, and exactly one of true_anomaly_deg or mean_anomaly_deg (GCRF/J2000).",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "tle",
+            "omm",
+            "state",
+            "elements"
+          ]
+        },
+        "line1": {
+          "type": "string"
+        },
+        "line2": {
+          "type": "string"
+        },
+        "omm": {},
+        "epoch": {
+          "type": "string",
+          "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+        },
+        "frame": {
+          "type": "string",
+          "description": "Frame of position_km/velocity_km_s.",
+          "enum": [
+            "gcrf",
+            "itrf",
+            "teme"
+          ]
+        },
+        "position_km": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "velocity_km_s": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "a_km": {
+          "type": "number"
+        },
+        "e": {
+          "type": "number"
+        },
+        "i_deg": {
+          "type": "number"
+        },
+        "raan_deg": {
+          "type": "number"
+        },
+        "argp_deg": {
+          "type": "number"
+        },
+        "true_anomaly_deg": {
+          "type": "number"
+        },
+        "mean_anomaly_deg": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "kind"
+      ]
+    },
+    "method": {
+      "type": "string",
+      "description": "sgp4 (TLE/OMM sources only; standard for catalog element sets), numerical (RKF7(8) special perturbations with the forces field), or two-body (Keplerian).",
+      "enum": [
+        "sgp4",
+        "numerical",
+        "two-body"
+      ]
+    },
+    "times": {
+      "type": "array",
+      "description": "Explicit output instants.",
+      "items": {
+        "type": "string",
+        "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+      }
+    },
+    "start": {
+      "type": "string",
+      "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+    },
+    "end": {
+      "type": "string",
+      "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+    },
+    "step_s": {
+      "type": "number",
+      "description": "Grid step in seconds."
+    },
+    "output_frame": {
+      "type": "string",
+      "enum": [
+        "gcrf",
+        "itrf",
+        "teme",
+        "geodetic"
+      ]
+    },
+    "forces": {
+      "type": "object",
+      "description": "Numerical force model. Defaults: zonal_degree 2 (J2), no drag, no radiation pressure, no third bodies.",
+      "additionalProperties": false,
+      "properties": {
+        "zonal_degree": {
+          "type": "integer",
+          "description": "Highest zonal harmonic, 0 (point mass) to 6 (J2–J6)."
+        },
+        "drag": {
+          "type": "object",
+          "description": "Exponential-atmosphere drag.",
+          "additionalProperties": false,
+          "properties": {
+            "cd": {
+              "type": "number"
+            },
+            "area_m2": {
+              "type": "number"
+            },
+            "mass_kg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "cd",
+            "area_m2",
+            "mass_kg"
+          ]
+        },
+        "srp": {
+          "type": "object",
+          "description": "Cannonball solar radiation pressure with conical Earth shadow.",
+          "additionalProperties": false,
+          "properties": {
+            "cr": {
+              "type": "number"
+            },
+            "area_m2": {
+              "type": "number"
+            },
+            "mass_kg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "cr",
+            "area_m2",
+            "mass_kg"
+          ]
+        },
+        "sun": {
+          "type": "boolean",
+          "description": "Solar third-body gravity."
+        },
+        "moon": {
+          "type": "boolean",
+          "description": "Lunar third-body gravity."
+        }
+      }
+    },
+    "eop": {
+      "type": "object",
+      "description": "Optional IERS Bulletin A values; omit for UT1=UTC and no polar motion (≈15 m and ≈0.4 km/s·ΔUT1 errors).",
+      "additionalProperties": false,
+      "properties": {
+        "dut1_s": {
+          "type": "number"
+        },
+        "xp_arcsec": {
+          "type": "number"
+        },
+        "yp_arcsec": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "required": [
+    "source",
+    "method"
+  ]
+}
+```
+
+Source: [`packages/aerospace/tool-astrodynamics/src/index.ts`](../packages/aerospace/tool-astrodynamics/src/index.ts)
+
+### `orbit_transfer`
+
+Design an impulsive transfer. mode=lambert solves the two-point boundary problem (Izzo 2015) from position r1_km to position r2_km in tof_s, returning every zero- and multi-revolution arc up to max_revolutions; give v1_km_s and/or v2_km_s (current and target velocities) to get departure/arrival Δv. mode=hohmann and mode=bi-elliptic price coplanar circular-to-circular transfers from radius1_km to radius2_km (bi-elliptic also needs the intermediate apoapsis radius rb_km). mode=plane-change prices an inclination change of delta_inclination_deg at speed_km_s. mu_km3_s2 defaults to Earth (398600.4418).
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "mode": {
+      "type": "string",
+      "enum": [
+        "lambert",
+        "hohmann",
+        "bi-elliptic",
+        "plane-change"
+      ]
+    },
+    "r1_km": {
+      "type": "array",
+      "description": "lambert: departure position [x,y,z].",
+      "items": {
+        "type": "number"
+      }
+    },
+    "r2_km": {
+      "type": "array",
+      "description": "lambert: arrival position [x,y,z].",
+      "items": {
+        "type": "number"
+      }
+    },
+    "radius1_km": {
+      "type": "number",
+      "description": "hohmann/bi-elliptic: initial circular-orbit radius."
+    },
+    "radius2_km": {
+      "type": "number",
+      "description": "hohmann/bi-elliptic: final circular-orbit radius."
+    },
+    "tof_s": {
+      "type": "number"
+    },
+    "prograde": {
+      "type": "boolean",
+      "description": "lambert: transfer direction about +z (default true)."
+    },
+    "max_revolutions": {
+      "type": "integer",
+      "description": "lambert: largest revolution count (default 0)."
+    },
+    "v1_km_s": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "v2_km_s": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "rb_km": {
+      "type": "number"
+    },
+    "speed_km_s": {
+      "type": "number"
+    },
+    "delta_inclination_deg": {
+      "type": "number"
+    },
+    "mu_km3_s2": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "mode"
+  ]
+}
+```
+
+Source: [`packages/aerospace/tool-astrodynamics/src/index.ts`](../packages/aerospace/tool-astrodynamics/src/index.ts)
+
+Shipped by the optional `@astro-one/aerospace` bundle, which the plugin manager offers switched off. Every Config bound is required; the catalog uses the bundle values, and the bounds appear only in failure messages, not in the schemas.
+
+<a id="astro-onetool-gnss"></a>
+
+## `@astro-one/tool-gnss`
+
+### `gnss_position`
+
+Compute receiver positions from RINEX 3 files in the workspace. mode=spp (default) runs single-point positioning on single-frequency code (GPS L1 C/A, Galileo E1, BeiDou B1I) with Klobuchar and Saastamoinen corrections, per-constellation clocks, and RAIM fault exclusion. mode=rtk runs short-baseline carrier-phase RTK against a base station (base_obs_path and surveyed base_position_m ECEF required; rover and base must share epochs) with LAMBDA integer ambiguity fixing accepted when the ratio test reaches ratio_threshold (default 3). Returns the mean position, east/north/up scatter, fix rate, DOP, RAIM exclusions, and per-epoch rows (the first epochs only when there are many).
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "rover_obs_path": {
+      "type": "string",
+      "description": "RINEX 3 observation file of the receiver to position."
+    },
+    "nav_path": {
+      "type": "string",
+      "description": "RINEX 3 navigation file (mixed or per-constellation)."
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "spp",
+        "rtk"
+      ]
+    },
+    "base_obs_path": {
+      "type": "string"
+    },
+    "base_position_m": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "rtk_mode": {
+      "type": "string",
+      "description": "kinematic (default) re-estimates the rover every epoch.",
+      "enum": [
+        "kinematic",
+        "static"
+      ]
+    },
+    "systems": {
+      "type": "array",
+      "description": "Constellations to use (default all three).",
+      "items": {
+        "type": "string",
+        "enum": [
+          "gps",
+          "galileo",
+          "beidou"
+        ]
+      }
+    },
+    "elevation_mask_deg": {
+      "type": "number"
+    },
+    "code_sigma_m": {
+      "type": "number",
+      "description": "Zenith code sigma (default 0.3 m)."
+    },
+    "phase_sigma_m": {
+      "type": "number",
+      "description": "Zenith phase sigma for RTK (default 0.003 m)."
+    },
+    "ratio_threshold": {
+      "type": "number"
+    },
+    "raim": {
+      "type": "boolean",
+      "description": "Fault detection and exclusion (default true)."
+    }
+  },
+  "required": [
+    "rover_obs_path",
+    "nav_path"
+  ]
+}
+```
+
+Source: [`packages/aerospace/tool-gnss/src/index.ts`](../packages/aerospace/tool-gnss/src/index.ts)
+
+### `gnss_visibility`
+
+Plan GNSS observations from a RINEX 3 navigation file: for a station and a time window, list the satellites above elevation_mask_deg (default 10) with azimuth/elevation and the GDOP/PDOP/HDOP/VDOP of the visible geometry at each step_s (default 600).
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "nav_path": {
+      "type": "string"
+    },
+    "station": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "lat_deg": {
+          "type": "number"
+        },
+        "lon_deg": {
+          "type": "number"
+        },
+        "alt_m": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "lat_deg",
+        "lon_deg",
+        "alt_m"
+      ]
+    },
+    "start": {
+      "type": "string",
+      "description": "ISO 8601 UTC instant."
+    },
+    "end": {
+      "type": "string"
+    },
+    "step_s": {
+      "type": "number"
+    },
+    "elevation_mask_deg": {
+      "type": "number"
+    },
+    "systems": {
+      "type": "array",
+      "description": "Constellations to use (default all three).",
+      "items": {
+        "type": "string",
+        "enum": [
+          "gps",
+          "galileo",
+          "beidou"
+        ]
+      }
+    }
+  },
+  "required": [
+    "nav_path",
+    "station",
+    "start",
+    "end"
+  ]
+}
+```
+
+Source: [`packages/aerospace/tool-gnss/src/index.ts`](../packages/aerospace/tool-gnss/src/index.ts)
+
+Shipped by the optional `@astro-one/aerospace` bundle. Both tools read RINEX 3 files through ctx.fs relative to the calling session workspace.
+
+<a id="astro-onetool-remote-sensing"></a>
+
+## `@astro-one/tool-remote-sensing`
+
+### `rs_change_detect`
+
+Detect change between two co-registered images of the same grid. method=cva (change vector analysis) uses the Euclidean magnitude of reflectance differences over the roles in bands; method=index uses the absolute difference of a spectral index (for example nbr for burn severity, ndvi for vegetation loss) and reports the signed mean change. The change threshold is Otsu's automatic threshold unless threshold is given. Returns the changed fraction and area, and the largest connected changed regions (8-connected, at least min_region_pixels) with pixel and map bounding boxes.
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "before_path": {
+      "type": "string"
+    },
+    "after_path": {
+      "type": "string"
+    },
+    "method": {
+      "type": "string",
+      "enum": [
+        "cva",
+        "index"
+      ]
+    },
+    "index": {
+      "type": "string",
+      "enum": [
+        "ndvi",
+        "ndwi",
+        "mndwi",
+        "ndbi",
+        "nbr",
+        "ndre",
+        "ndsi",
+        "evi",
+        "savi"
+      ]
+    },
+    "bands": {
+      "type": "object",
+      "description": "One-based band number of each spectral role in the file, for example {\"red\": 4, \"nir\": 8}.",
+      "additionalProperties": false,
+      "properties": {
+        "blue": {
+          "type": "integer"
+        },
+        "green": {
+          "type": "integer"
+        },
+        "red": {
+          "type": "integer"
+        },
+        "rededge": {
+          "type": "integer"
+        },
+        "nir": {
+          "type": "integer"
+        },
+        "swir1": {
+          "type": "integer"
+        },
+        "swir2": {
+          "type": "integer"
+        }
+      }
+    },
+    "scale": {
+      "type": "number",
+      "description": "Reflectance = DN × scale + offset (for example 0.0001 for Sentinel-2 L2A, 2.75e-5 for Landsat C2 L2)."
+    },
+    "offset": {
+      "type": "number",
+      "description": "Reflectance offset (for example -0.1 for Sentinel-2 L2A baseline 04.00+, -0.2 for Landsat C2 L2)."
+    },
+    "threshold": {
+      "type": "number"
+    },
+    "min_region_pixels": {
+      "type": "integer",
+      "description": "Smallest reported region (default 10)."
+    }
+  },
+  "required": [
+    "before_path",
+    "after_path",
+    "method",
+    "bands"
+  ]
+}
+```
+
+Source: [`packages/aerospace/tool-remote-sensing/src/index.ts`](../packages/aerospace/tool-remote-sensing/src/index.ts)
+
+### `rs_spectral_index`
+
+Compute a spectral index over a multispectral image and summarize it: ndvi (vegetation), ndwi (open water, McFeeters), mndwi (water, Xu), ndbi (built-up), nbr (burn), ndre (red-edge chlorophyll), ndsi (snow), evi and savi (soil-adjusted vegetation). Map each needed band role to a one-based band number in bands (and, for one-band-per-file products, a file in band_paths). Returns count, mean, std, min, max, percentiles, a histogram over [-1, 1], optional area fractions between class_breaks, and the georeference. No-data pixels are excluded.
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "index": {
+      "type": "string",
+      "enum": [
+        "ndvi",
+        "ndwi",
+        "mndwi",
+        "ndbi",
+        "nbr",
+        "ndre",
+        "ndsi",
+        "evi",
+        "savi"
+      ]
+    },
+    "path": {
+      "type": "string",
+      "description": "Raster file (GeoTIFF/COG, PNG, JPEG)."
+    },
+    "bands": {
+      "type": "object",
+      "description": "One-based band number of each spectral role in the file, for example {\"red\": 4, \"nir\": 8}.",
+      "additionalProperties": false,
+      "properties": {
+        "blue": {
+          "type": "integer"
+        },
+        "green": {
+          "type": "integer"
+        },
+        "red": {
+          "type": "integer"
+        },
+        "rededge": {
+          "type": "integer"
+        },
+        "nir": {
+          "type": "integer"
+        },
+        "swir1": {
+          "type": "integer"
+        },
+        "swir2": {
+          "type": "integer"
+        }
+      }
+    },
+    "band_paths": {
+      "type": "object",
+      "description": "Per-role file paths for products delivered one band per file (Landsat, Sentinel-2 as GeoTIFF); a role listed here reads band 1 of that file unless bands names another.",
+      "additionalProperties": false,
+      "properties": {
+        "blue": {
+          "type": "string"
+        },
+        "green": {
+          "type": "string"
+        },
+        "red": {
+          "type": "string"
+        },
+        "rededge": {
+          "type": "string"
+        },
+        "nir": {
+          "type": "string"
+        },
+        "swir1": {
+          "type": "string"
+        },
+        "swir2": {
+          "type": "string"
+        }
+      }
+    },
+    "scale": {
+      "type": "number",
+      "description": "Reflectance = DN × scale + offset (for example 0.0001 for Sentinel-2 L2A, 2.75e-5 for Landsat C2 L2)."
+    },
+    "offset": {
+      "type": "number",
+      "description": "Reflectance offset (for example -0.1 for Sentinel-2 L2A baseline 04.00+, -0.2 for Landsat C2 L2)."
+    },
+    "class_breaks": {
+      "type": "array",
+      "description": "Ascending thresholds; fractions are reported for each interval between consecutive breaks plus the open ends.",
+      "items": {
+        "type": "number"
+      }
+    },
+    "histogram_bins": {
+      "type": "integer",
+      "description": "Histogram bins over [-1, 1] (default 20)."
+    }
+  },
+  "required": [
+    "index"
+  ]
+}
+```
+
+Source: [`packages/aerospace/tool-remote-sensing/src/index.ts`](../packages/aerospace/tool-remote-sensing/src/index.ts)
+
+Shipped by the optional `@astro-one/aerospace` bundle without a detector, so this page shows rs_spectral_index and rs_change_detect. A deployment that configures `detector` also receives rs_detect_objects, whose description lists the configured class names.
 
 <a id="astro-onetool-todo"></a>
 

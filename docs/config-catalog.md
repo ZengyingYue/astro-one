@@ -3294,6 +3294,30 @@ export type TokenMeterConfig = Record<string, never>
 
 Source: [`packages/llm/token-meter/src/types.ts:13`](../packages/llm/token-meter/src/types.ts)
 
+<a id="astro-onetool-astrodynamics"></a>
+
+## `@astro-one/tool-astrodynamics`
+
+Requires: `tools`
+
+```ts config-catalog
+/** Deployment bounds and numerical settings. */
+export interface Config {
+  /** Largest ephemeris, event-search, or numerical-grid sample count per call. */
+  maxSamples: number
+  /** Largest observation count accepted by `orbit_determine`. */
+  maxObservations: number
+  /** RKF7(8) relative tolerance for numerical propagation. */
+  relativeTolerance: number
+  /** RKF7(8) absolute tolerance in km and km/s. */
+  absoluteTolerance: number
+  /** RKF7(8) step budget per propagation. */
+  maxIntegratorSteps: number
+}
+```
+
+Source: [`packages/aerospace/tool-astrodynamics/src/index.ts:25`](../packages/aerospace/tool-astrodynamics/src/index.ts)
+
 <a id="astro-onetool-bash"></a>
 
 ## `@astro-one/tool-bash`
@@ -3401,6 +3425,26 @@ export interface Config {
 ```
 
 Source: [`packages/fs/tool-fs-search/src/index.ts:73`](../packages/fs/tool-fs-search/src/index.ts)
+
+<a id="astro-onetool-gnss"></a>
+
+## `@astro-one/tool-gnss`
+
+Requires: `tools` · `fs`
+
+```ts config-catalog
+/** Deployment bounds. */
+export interface Config {
+  /** Largest RINEX file size read, bytes. */
+  maxFileBytes: number
+  /** Largest number of observation epochs processed per call. */
+  maxEpochs: number
+  /** Largest number of per-epoch rows returned to the model. */
+  maxReportedEpochs: number
+}
+```
+
+Source: [`packages/aerospace/tool-gnss/src/index.ts:27`](../packages/aerospace/tool-gnss/src/index.ts)
 
 <a id="astro-onetool-goal"></a>
 
@@ -3562,6 +3606,38 @@ export interface Config {
 ```
 
 Source: [`packages/workflow/tool-ralph/src/index.ts:21`](../packages/workflow/tool-ralph/src/index.ts)
+
+<a id="astro-onetool-remote-sensing"></a>
+
+## `@astro-one/tool-remote-sensing`
+
+Requires: `tools` · `fs`
+
+```ts config-catalog
+/** Deployment bounds and the optional detector. */
+export interface Config {
+  /** Largest raster file read, bytes. */
+  maxFileBytes: number
+  /** Largest raster size, pixels. */
+  maxPixels: number
+  /** Largest number of regions or detections reported per call. */
+  maxResults: number
+  /** Detector model; `rs_detect_objects` is registered only when present. */
+  detector?: DetectorConfig | undefined
+}
+
+/** Optional oriented-object detector. */
+export interface DetectorConfig {
+  /** Absolute path of a YOLO OBB model exported to ONNX (for example YOLO11-OBB trained on DOTA). */
+  modelPath: string
+  /** Square model input size, pixels. */
+  inputSize: number
+  /** Class names in model order. */
+  classNames: string[]
+}
+```
+
+Source: [`packages/aerospace/tool-remote-sensing/src/index.ts:38`](../packages/aerospace/tool-remote-sensing/src/index.ts)
 
 <a id="astro-onetool-session-query"></a>
 
@@ -4234,9 +4310,11 @@ Abstract service classes — a deployment loads a concrete implementation packag
 
 Imported as libraries by other packages; a `cordis.yml` cannot load them.
 
+- `@astro-one/aerospace` ([`packages/bundle/aerospace/src/index.ts`](../packages/bundle/aerospace/src/index.ts))
 - `@astro-one/agent-loop-testkit` ([`packages/test-support/agent-loop-testkit/src/index.ts`](../packages/test-support/agent-loop-testkit/src/index.ts))
 - `@astro-one/anonymous-user-id` ([`packages/identity/anonymous-user-id/src/index.ts`](../packages/identity/anonymous-user-id/src/index.ts))
 - `@astro-one/app-boot` ([`packages/boot/app-boot/src/index.ts`](../packages/boot/app-boot/src/index.ts))
+- `@astro-one/astrodynamics` ([`packages/aerospace/astrodynamics/src/index.ts`](../packages/aerospace/astrodynamics/src/index.ts))
 - `@astro-one/atomic-write` ([`packages/util/atomic-write/src/index.ts`](../packages/util/atomic-write/src/index.ts))
 - `@astro-one/base` ([`packages/bundle/base/src/index.ts`](../packages/bundle/base/src/index.ts))
 - `@astro-one/brand` ([`packages/util/brand/src/index.ts`](../packages/util/brand/src/index.ts))

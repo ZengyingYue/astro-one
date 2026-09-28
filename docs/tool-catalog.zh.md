@@ -45,6 +45,9 @@
 | `@astro-one/tool-subagent-control` | `interrupt_agent`、`list_agents`、`send_message` | `ctx.tools`、`ctx.subagents`、`ctx.agents and ctx.sessionProjections (list_agents only)` | `tool/call`、`tool/result`、`child session events through ctx.subagents` | - | 这些是控制可继续后台 subagent 的全局命名工具：绑定提供方的 `tool-subagent` 实例注册不同的委派工具；本包注册一次 `send_message` 和 `interrupt_agent`，另由 `list_agents` 通过单独加载的 `/list-agents` 插件提供，其目录行使用 sessionProjections 和实时 Agent 注册表。 |
 | `@astro-one/tool-jobs` | `job_kill`、`job_list`、`job_output` | `ctx.tools`、`ctx.jobs`、`ctx.systemPrompt` | `tool/call`、`tool/result`、`user/message via agent.inject() for background completion notices` | - | 与任务种类无关的后台任务控制器：后台 bash 命令、PTY 发送和 subagent 都通过相同的 3 个工具读取、列出和终止。加载该插件会挂接控制器，从而启用生产方的 `ctx.jobs.start()`。 |
 | `@astro-one/experimental-tool-agent-team` | `interrupt_agent`、`list_agents`、`send_message`、`spawn_teammate`、`team_task_create`、`team_task_get`、`team_task_list`、`team_task_update`、`wait_agent` | `ctx.tools`、`ctx.systemPrompt`、`ctx.agentTeams`、`an exact live Team member Agent` | `tool/call`、`team/member`、`team/message/queued`、`team/message/delivered`、`team/task`、`tool/result` | - | 这 9 个工具限定于隐式 Team Lead 与持久 teammate 作用域。随产品发布的 astro-one-base bundle 默认禁用该包；文档中的 Agent Teams profile patch 会启用它，并禁用旧 continuable child 的同名控制工具。 |
+| `@astro-one/tool-astrodynamics` | `attitude_determine`、`orbit_conjunction`、`orbit_convert`、`orbit_determine`、`orbit_passes`、`orbit_propagate`、`orbit_transfer` | `ctx.tools` | `tool/call`、`tool/result` | - | 随可选的 `@astro-one/aerospace` bundle 发布，插件管理器默认将其关闭。所有 Config 上限都是必填项；本目录使用 bundle 中的值，这些上限只出现在失败消息中，不出现在 schema 中。 |
+| `@astro-one/tool-gnss` | `gnss_position`、`gnss_visibility` | `ctx.tools`、`ctx.fs` | `tool/call`、`tool/result` | - | 随可选的 `@astro-one/aerospace` bundle 发布。两个工具都通过 ctx.fs 读取相对于调用会话工作区的 RINEX 3 文件。 |
+| `@astro-one/tool-remote-sensing` | `rs_change_detect`、`rs_spectral_index` | `ctx.tools`、`ctx.fs` | `tool/call`、`tool/result` | - | 随可选的 `@astro-one/aerospace` bundle 发布且不带检测器，因此本页展示 rs_spectral_index 与 rs_change_detect。配置了 `detector` 的部署还会获得 rs_detect_objects，其描述会列出配置的类别名称。 |
 | `@astro-one/tool-todo` | `todo_write` | `ctx.tools`、`owning Agent session` | `tool/call`、`todo/write`、`tool/result` | - | todo_write 是会话所有的状态；UI 将最新的 todo/write 事件渲染为检查清单。`allowParallelInProgress` 是没有默认值的必填项，因此本目录明确选择 `true`，对应描述允许同时存在多个 `in_progress` 项。选择 `false` 的部署会获得同一工具，但描述会要求只能有 1 个活动任务。 |
 | `@astro-one/tool-workflow` | `workflow` | `ctx.tools`、`ctx.workflowEngine`、`ctx.systemPrompt`、`a calling Agent (exec.agent parents the script children)` | `tool/call`、`tool/result` | - | - |
 | `@astro-one/tool-workspace-dependencies` | `load_workspace_dependencies` | `ctx.tools` | `tool/call`, `tool/result` | - | - |
@@ -2313,6 +2316,1623 @@ lsp 工具将提供方选择和语言服务器子进程置于 ctx.lsp 之后，�
 来源：[`packages/experimental/tool-agent-team/src/index.ts`](../packages/experimental/tool-agent-team/src/index.ts)
 
 这 10 个工具限定于隐式 Team Lead 与持久 teammate 作用域。随产品发布的 astro-one-base bundle 默认禁用该包；文档中的 Agent Teams profile patch 会启用它，并禁用旧 continuable child 的同名控制工具。
+
+
+<a id="astro-onetool-astrodynamics"></a>
+
+## `@astro-one/tool-astrodynamics`
+
+### `attitude_determine`
+
+由两个或更多矢量观测估计航天器姿态（Wahba 问题），例如太阳敏感器、磁强计和星敏感器方向。每个观测把测得的本体系矢量与参考系（例如 J2000）中已知的同一方向配对，并给出测量 sigma_deg。method 可选 q-method（Davenport，精确最优，默认）、quest（Shuster，快速）或 triad（前两个矢量，第一个视为精确）。返回参考系到本体系的四元数（标量在后，q4 >= 0）、方向余弦矩阵、3-2-1 偏航/俯仰/滚转角、Wahba 损失，以及绕本体轴的 1-sigma 姿态误差。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "method": {
+      "type": "string",
+      "enum": [
+        "q-method",
+        "quest",
+        "triad"
+      ]
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "body": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "reference": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "sigma_deg": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "body",
+          "reference",
+          "sigma_deg"
+        ]
+      }
+    }
+  },
+  "required": [
+    "observations"
+  ]
+}
+```
+
+来源：[`packages/aerospace/tool-astrodynamics/src/index.ts`](../packages/aerospace/tool-astrodynamics/src/index.ts)
+
+### `orbit_conjunction`
+
+在 start 与 end 之间筛查两个目标的近距离交会，报告每个小于 screening_distance_km（默认 10）的局部最小值：最近接近时刻、脱靶距离、相对速度，以及主目标径向/横向/法向坐标系中的脱靶矢量。当两个位置协方差都已给出（km² 单位的 3x3 RTN 矩阵，或 sigma_rtn_km 对角线）时，还会返回针对 hard_body_radius_km（组合目标半径，默认 0.02 km）的短时交会（2D，Foster）碰撞概率，以及不依赖协方差的 Alfano 最大概率。step_s（默认 10）必须远短于交会时长；每个目标都有自己的 source 与 method。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "primary": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "type": "object",
+          "description": "Orbit to use. kind=tle needs line1/line2; kind=omm needs omm (CCSDS OMM JSON keywords as served by CelesTrak); kind=state needs epoch, frame, position_km, velocity_km_s; kind=elements needs epoch, a_km, e, i_deg, raan_deg, argp_deg, and exactly one of true_anomaly_deg or mean_anomaly_deg (GCRF/J2000).",
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "tle",
+                "omm",
+                "state",
+                "elements"
+              ]
+            },
+            "line1": {
+              "type": "string"
+            },
+            "line2": {
+              "type": "string"
+            },
+            "omm": {},
+            "epoch": {
+              "type": "string",
+              "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+            },
+            "frame": {
+              "type": "string",
+              "description": "Frame of position_km/velocity_km_s.",
+              "enum": [
+                "gcrf",
+                "itrf",
+                "teme"
+              ]
+            },
+            "position_km": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "velocity_km_s": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "a_km": {
+              "type": "number"
+            },
+            "e": {
+              "type": "number"
+            },
+            "i_deg": {
+              "type": "number"
+            },
+            "raan_deg": {
+              "type": "number"
+            },
+            "argp_deg": {
+              "type": "number"
+            },
+            "true_anomaly_deg": {
+              "type": "number"
+            },
+            "mean_anomaly_deg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "kind"
+          ]
+        },
+        "method": {
+          "type": "string",
+          "description": "sgp4 (TLE/OMM sources only; standard for catalog element sets), numerical (RKF7(8) special perturbations with the forces field), or two-body (Keplerian).",
+          "enum": [
+            "sgp4",
+            "numerical",
+            "two-body"
+          ]
+        },
+        "covariance_rtn_km2": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "sigma_rtn_km": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "source",
+        "method"
+      ]
+    },
+    "secondary": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "type": "object",
+          "description": "Orbit to use. kind=tle needs line1/line2; kind=omm needs omm (CCSDS OMM JSON keywords as served by CelesTrak); kind=state needs epoch, frame, position_km, velocity_km_s; kind=elements needs epoch, a_km, e, i_deg, raan_deg, argp_deg, and exactly one of true_anomaly_deg or mean_anomaly_deg (GCRF/J2000).",
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "tle",
+                "omm",
+                "state",
+                "elements"
+              ]
+            },
+            "line1": {
+              "type": "string"
+            },
+            "line2": {
+              "type": "string"
+            },
+            "omm": {},
+            "epoch": {
+              "type": "string",
+              "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+            },
+            "frame": {
+              "type": "string",
+              "description": "Frame of position_km/velocity_km_s.",
+              "enum": [
+                "gcrf",
+                "itrf",
+                "teme"
+              ]
+            },
+            "position_km": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "velocity_km_s": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "a_km": {
+              "type": "number"
+            },
+            "e": {
+              "type": "number"
+            },
+            "i_deg": {
+              "type": "number"
+            },
+            "raan_deg": {
+              "type": "number"
+            },
+            "argp_deg": {
+              "type": "number"
+            },
+            "true_anomaly_deg": {
+              "type": "number"
+            },
+            "mean_anomaly_deg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "kind"
+          ]
+        },
+        "method": {
+          "type": "string",
+          "description": "sgp4 (TLE/OMM sources only; standard for catalog element sets), numerical (RKF7(8) special perturbations with the forces field), or two-body (Keplerian).",
+          "enum": [
+            "sgp4",
+            "numerical",
+            "two-body"
+          ]
+        },
+        "covariance_rtn_km2": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "sigma_rtn_km": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "source",
+        "method"
+      ]
+    },
+    "start": {
+      "type": "string",
+      "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+    },
+    "end": {
+      "type": "string",
+      "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+    },
+    "step_s": {
+      "type": "number"
+    },
+    "screening_distance_km": {
+      "type": "number"
+    },
+    "hard_body_radius_km": {
+      "type": "number"
+    },
+    "forces": {
+      "type": "object",
+      "description": "Numerical force model. Defaults: zonal_degree 2 (J2), no drag, no radiation pressure, no third bodies.",
+      "additionalProperties": false,
+      "properties": {
+        "zonal_degree": {
+          "type": "integer",
+          "description": "Highest zonal harmonic, 0 (point mass) to 6 (J2–J6)."
+        },
+        "drag": {
+          "type": "object",
+          "description": "Exponential-atmosphere drag.",
+          "additionalProperties": false,
+          "properties": {
+            "cd": {
+              "type": "number"
+            },
+            "area_m2": {
+              "type": "number"
+            },
+            "mass_kg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "cd",
+            "area_m2",
+            "mass_kg"
+          ]
+        },
+        "srp": {
+          "type": "object",
+          "description": "Cannonball solar radiation pressure with conical Earth shadow.",
+          "additionalProperties": false,
+          "properties": {
+            "cr": {
+              "type": "number"
+            },
+            "area_m2": {
+              "type": "number"
+            },
+            "mass_kg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "cr",
+            "area_m2",
+            "mass_kg"
+          ]
+        },
+        "sun": {
+          "type": "boolean",
+          "description": "Solar third-body gravity."
+        },
+        "moon": {
+          "type": "boolean",
+          "description": "Lunar third-body gravity."
+        }
+      }
+    }
+  },
+  "required": [
+    "primary",
+    "secondary",
+    "start",
+    "end"
+  ]
+}
+```
+
+来源：[`packages/aerospace/tool-astrodynamics/src/index.ts`](../packages/aerospace/tool-astrodynamics/src/index.ts)
+
+### `orbit_convert`
+
+转换轨道与时间表示。operation=state 把 source（gcrf/itrf/teme 状态、开普勒根数、TLE 或 OMM）在其历元转换为 GCRF、ITRF 和 TEME 位置/速度、密切根数以及大地星下点。operation=geodetic 把测站（lat_deg、lon_deg、alt_km）转换为地固坐标。operation=time 把时刻转换为儒略日（UTC 与 TT）、TAI-UTC、GPS 周/周内秒和格林尼治恒星时。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "operation": {
+      "type": "string",
+      "enum": [
+        "state",
+        "geodetic",
+        "time"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "description": "Orbit to use. kind=tle needs line1/line2; kind=omm needs omm (CCSDS OMM JSON keywords as served by CelesTrak); kind=state needs epoch, frame, position_km, velocity_km_s; kind=elements needs epoch, a_km, e, i_deg, raan_deg, argp_deg, and exactly one of true_anomaly_deg or mean_anomaly_deg (GCRF/J2000).",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "tle",
+            "omm",
+            "state",
+            "elements"
+          ]
+        },
+        "line1": {
+          "type": "string"
+        },
+        "line2": {
+          "type": "string"
+        },
+        "omm": {},
+        "epoch": {
+          "type": "string",
+          "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+        },
+        "frame": {
+          "type": "string",
+          "description": "Frame of position_km/velocity_km_s.",
+          "enum": [
+            "gcrf",
+            "itrf",
+            "teme"
+          ]
+        },
+        "position_km": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "velocity_km_s": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "a_km": {
+          "type": "number"
+        },
+        "e": {
+          "type": "number"
+        },
+        "i_deg": {
+          "type": "number"
+        },
+        "raan_deg": {
+          "type": "number"
+        },
+        "argp_deg": {
+          "type": "number"
+        },
+        "true_anomaly_deg": {
+          "type": "number"
+        },
+        "mean_anomaly_deg": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "kind"
+      ]
+    },
+    "station": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "lat_deg": {
+          "type": "number"
+        },
+        "lon_deg": {
+          "type": "number"
+        },
+        "alt_km": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "lat_deg",
+        "lon_deg",
+        "alt_km"
+      ]
+    },
+    "time": {
+      "type": "string",
+      "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+    },
+    "eop": {
+      "type": "object",
+      "description": "Optional IERS Bulletin A values; omit for UT1=UTC and no polar motion (≈15 m and ≈0.4 km/s·ΔUT1 errors).",
+      "additionalProperties": false,
+      "properties": {
+        "dut1_s": {
+          "type": "number"
+        },
+        "xp_arcsec": {
+          "type": "number"
+        },
+        "yp_arcsec": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "required": [
+    "operation"
+  ]
+}
+```
+
+来源：[`packages/aerospace/tool-astrodynamics/src/index.ts`](../packages/aerospace/tool-astrodynamics/src/index.ts)
+
+### `orbit_determine`
+
+由跟踪观测确定轨道。初始方法：gibbs 或 herrick-gibbs（恰好三个位置观测；弧段仅跨几度时用 Herrick–Gibbs）、gauss（恰好三个来自地面站的 radec 观测，仅测角）。精密方法：batch（带野值剔除的加权最小二乘，给出协方差）和 ukf（无迹卡尔曼滤波，状态位于最后一个观测时刻）。观测类型与单位：position [x,y,z] km GCRF；range km；range_rate km/s；radec [赤经, 赤纬] deg 站心 J2000；azel [方位角, 仰角] deg。sigma 使用相同单位，batch 与 ukf 必须提供。除 position 外的所有类型都需要 station。batch 与 ukf 在给出 initial 时使用它，否则自动使用 Gibbs/Herrick–Gibbs 或 Gauss 解。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "method": {
+      "type": "string",
+      "enum": [
+        "gibbs",
+        "herrick-gibbs",
+        "gauss",
+        "batch",
+        "ukf"
+      ]
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "time": {
+            "type": "string",
+            "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "position",
+              "range",
+              "range_rate",
+              "radec",
+              "azel"
+            ]
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "sigma": {
+            "type": "number"
+          },
+          "station": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "lat_deg": {
+                "type": "number"
+              },
+              "lon_deg": {
+                "type": "number"
+              },
+              "alt_km": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "lat_deg",
+              "lon_deg",
+              "alt_km"
+            ]
+          }
+        },
+        "required": [
+          "time",
+          "type",
+          "value"
+        ]
+      }
+    },
+    "initial": {
+      "type": "object",
+      "description": "A priori orbit for batch/ukf (any source kind).",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "tle",
+            "omm",
+            "state",
+            "elements"
+          ]
+        },
+        "line1": {
+          "type": "string"
+        },
+        "line2": {
+          "type": "string"
+        },
+        "omm": {},
+        "epoch": {
+          "type": "string",
+          "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+        },
+        "frame": {
+          "type": "string",
+          "description": "Frame of position_km/velocity_km_s.",
+          "enum": [
+            "gcrf",
+            "itrf",
+            "teme"
+          ]
+        },
+        "position_km": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "velocity_km_s": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "a_km": {
+          "type": "number"
+        },
+        "e": {
+          "type": "number"
+        },
+        "i_deg": {
+          "type": "number"
+        },
+        "raan_deg": {
+          "type": "number"
+        },
+        "argp_deg": {
+          "type": "number"
+        },
+        "true_anomaly_deg": {
+          "type": "number"
+        },
+        "mean_anomaly_deg": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "kind"
+      ]
+    },
+    "dynamics": {
+      "type": "string",
+      "description": "Dynamics for batch/ukf (default numerical).",
+      "enum": [
+        "numerical",
+        "two-body"
+      ]
+    },
+    "forces": {
+      "type": "object",
+      "description": "Numerical force model. Defaults: zonal_degree 2 (J2), no drag, no radiation pressure, no third bodies.",
+      "additionalProperties": false,
+      "properties": {
+        "zonal_degree": {
+          "type": "integer",
+          "description": "Highest zonal harmonic, 0 (point mass) to 6 (J2–J6)."
+        },
+        "drag": {
+          "type": "object",
+          "description": "Exponential-atmosphere drag.",
+          "additionalProperties": false,
+          "properties": {
+            "cd": {
+              "type": "number"
+            },
+            "area_m2": {
+              "type": "number"
+            },
+            "mass_kg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "cd",
+            "area_m2",
+            "mass_kg"
+          ]
+        },
+        "srp": {
+          "type": "object",
+          "description": "Cannonball solar radiation pressure with conical Earth shadow.",
+          "additionalProperties": false,
+          "properties": {
+            "cr": {
+              "type": "number"
+            },
+            "area_m2": {
+              "type": "number"
+            },
+            "mass_kg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "cr",
+            "area_m2",
+            "mass_kg"
+          ]
+        },
+        "sun": {
+          "type": "boolean",
+          "description": "Solar third-body gravity."
+        },
+        "moon": {
+          "type": "boolean",
+          "description": "Lunar third-body gravity."
+        }
+      }
+    },
+    "max_iterations": {
+      "type": "integer",
+      "description": "Batch differential-correction iterations (default 20)."
+    },
+    "edit_sigma": {
+      "type": "number",
+      "description": "Batch outlier threshold in normalized residuals (default 3; 0 disables editing)."
+    },
+    "process_noise_km_s2": {
+      "type": "number",
+      "description": "UKF white-noise acceleration sigma (default 1e-9 km/s²)."
+    },
+    "initial_sigma_km": {
+      "type": "number",
+      "description": "UKF a priori position sigma (default 1 km)."
+    },
+    "initial_sigma_km_s": {
+      "type": "number",
+      "description": "UKF a priori velocity sigma (default 0.001 km/s)."
+    },
+    "eop": {
+      "type": "object",
+      "description": "Optional IERS Bulletin A values; omit for UT1=UTC and no polar motion (≈15 m and ≈0.4 km/s·ΔUT1 errors).",
+      "additionalProperties": false,
+      "properties": {
+        "dut1_s": {
+          "type": "number"
+        },
+        "xp_arcsec": {
+          "type": "number"
+        },
+        "yp_arcsec": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "required": [
+    "method",
+    "observations"
+  ]
+}
+```
+
+来源：[`packages/aerospace/tool-astrodynamics/src/index.ts`](../packages/aerospace/tool-astrodynamics/src/index.ts)
+
+### `orbit_passes`
+
+预测卫星在 start 与 end 之间何时对地面站可见：高于 min_elevation_deg（默认 10）的升起、中天和降落时刻，以及方位角/仰角/距离。step_s（默认 60）是粗搜索步长，必须短于所关心的最短过境。每次过境还会报告卫星在中天时是否被太阳照亮以及测站处的太阳仰角（光学可见过境需要卫星被照亮且测站太阳仰角低于约 -6 deg）。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "source": {
+      "type": "object",
+      "description": "Orbit to use. kind=tle needs line1/line2; kind=omm needs omm (CCSDS OMM JSON keywords as served by CelesTrak); kind=state needs epoch, frame, position_km, velocity_km_s; kind=elements needs epoch, a_km, e, i_deg, raan_deg, argp_deg, and exactly one of true_anomaly_deg or mean_anomaly_deg (GCRF/J2000).",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "tle",
+            "omm",
+            "state",
+            "elements"
+          ]
+        },
+        "line1": {
+          "type": "string"
+        },
+        "line2": {
+          "type": "string"
+        },
+        "omm": {},
+        "epoch": {
+          "type": "string",
+          "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+        },
+        "frame": {
+          "type": "string",
+          "description": "Frame of position_km/velocity_km_s.",
+          "enum": [
+            "gcrf",
+            "itrf",
+            "teme"
+          ]
+        },
+        "position_km": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "velocity_km_s": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "a_km": {
+          "type": "number"
+        },
+        "e": {
+          "type": "number"
+        },
+        "i_deg": {
+          "type": "number"
+        },
+        "raan_deg": {
+          "type": "number"
+        },
+        "argp_deg": {
+          "type": "number"
+        },
+        "true_anomaly_deg": {
+          "type": "number"
+        },
+        "mean_anomaly_deg": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "kind"
+      ]
+    },
+    "method": {
+      "type": "string",
+      "description": "sgp4 (TLE/OMM sources only; standard for catalog element sets), numerical (RKF7(8) special perturbations with the forces field), or two-body (Keplerian).",
+      "enum": [
+        "sgp4",
+        "numerical",
+        "two-body"
+      ]
+    },
+    "station": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "lat_deg": {
+          "type": "number"
+        },
+        "lon_deg": {
+          "type": "number"
+        },
+        "alt_km": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "lat_deg",
+        "lon_deg",
+        "alt_km"
+      ]
+    },
+    "start": {
+      "type": "string",
+      "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+    },
+    "end": {
+      "type": "string",
+      "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+    },
+    "min_elevation_deg": {
+      "type": "number"
+    },
+    "step_s": {
+      "type": "number"
+    },
+    "forces": {
+      "type": "object",
+      "description": "Numerical force model. Defaults: zonal_degree 2 (J2), no drag, no radiation pressure, no third bodies.",
+      "additionalProperties": false,
+      "properties": {
+        "zonal_degree": {
+          "type": "integer",
+          "description": "Highest zonal harmonic, 0 (point mass) to 6 (J2–J6)."
+        },
+        "drag": {
+          "type": "object",
+          "description": "Exponential-atmosphere drag.",
+          "additionalProperties": false,
+          "properties": {
+            "cd": {
+              "type": "number"
+            },
+            "area_m2": {
+              "type": "number"
+            },
+            "mass_kg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "cd",
+            "area_m2",
+            "mass_kg"
+          ]
+        },
+        "srp": {
+          "type": "object",
+          "description": "Cannonball solar radiation pressure with conical Earth shadow.",
+          "additionalProperties": false,
+          "properties": {
+            "cr": {
+              "type": "number"
+            },
+            "area_m2": {
+              "type": "number"
+            },
+            "mass_kg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "cr",
+            "area_m2",
+            "mass_kg"
+          ]
+        },
+        "sun": {
+          "type": "boolean",
+          "description": "Solar third-body gravity."
+        },
+        "moon": {
+          "type": "boolean",
+          "description": "Lunar third-body gravity."
+        }
+      }
+    }
+  },
+  "required": [
+    "source",
+    "method",
+    "station",
+    "start",
+    "end"
+  ]
+}
+```
+
+来源：[`packages/aerospace/tool-astrodynamics/src/index.ts`](../packages/aerospace/tool-astrodynamics/src/index.ts)
+
+### `orbit_propagate`
+
+外推轨道并返回星历。TLE/OMM 编目根数使用 method=sgp4（对这类根数唯一物理一致的模型），状态或根数的精密特殊摄动外推使用 numerical 并配合 forces 字段（J2–J6 带谐项、大气阻力、太阳光压、日月引力），开普勒运动使用 two-body。给出 times（显式 ISO 时刻），或给出 start、end 与 step_s。output_frame 选择 gcrf（J2000 惯性系，默认）、itrf（地固系）、teme（SGP4 坐标系）或 geodetic（WGS-84 纬度、经度、高度）。距离单位为 km，速度为 km/s，角度为度。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "source": {
+      "type": "object",
+      "description": "Orbit to use. kind=tle needs line1/line2; kind=omm needs omm (CCSDS OMM JSON keywords as served by CelesTrak); kind=state needs epoch, frame, position_km, velocity_km_s; kind=elements needs epoch, a_km, e, i_deg, raan_deg, argp_deg, and exactly one of true_anomaly_deg or mean_anomaly_deg (GCRF/J2000).",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "tle",
+            "omm",
+            "state",
+            "elements"
+          ]
+        },
+        "line1": {
+          "type": "string"
+        },
+        "line2": {
+          "type": "string"
+        },
+        "omm": {},
+        "epoch": {
+          "type": "string",
+          "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+        },
+        "frame": {
+          "type": "string",
+          "description": "Frame of position_km/velocity_km_s.",
+          "enum": [
+            "gcrf",
+            "itrf",
+            "teme"
+          ]
+        },
+        "position_km": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "velocity_km_s": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "a_km": {
+          "type": "number"
+        },
+        "e": {
+          "type": "number"
+        },
+        "i_deg": {
+          "type": "number"
+        },
+        "raan_deg": {
+          "type": "number"
+        },
+        "argp_deg": {
+          "type": "number"
+        },
+        "true_anomaly_deg": {
+          "type": "number"
+        },
+        "mean_anomaly_deg": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "kind"
+      ]
+    },
+    "method": {
+      "type": "string",
+      "description": "sgp4 (TLE/OMM sources only; standard for catalog element sets), numerical (RKF7(8) special perturbations with the forces field), or two-body (Keplerian).",
+      "enum": [
+        "sgp4",
+        "numerical",
+        "two-body"
+      ]
+    },
+    "times": {
+      "type": "array",
+      "description": "Explicit output instants.",
+      "items": {
+        "type": "string",
+        "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+      }
+    },
+    "start": {
+      "type": "string",
+      "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+    },
+    "end": {
+      "type": "string",
+      "description": "ISO 8601 date-time with Z or a UTC offset, for example 2025-03-01T12:00:00Z."
+    },
+    "step_s": {
+      "type": "number",
+      "description": "Grid step in seconds."
+    },
+    "output_frame": {
+      "type": "string",
+      "enum": [
+        "gcrf",
+        "itrf",
+        "teme",
+        "geodetic"
+      ]
+    },
+    "forces": {
+      "type": "object",
+      "description": "Numerical force model. Defaults: zonal_degree 2 (J2), no drag, no radiation pressure, no third bodies.",
+      "additionalProperties": false,
+      "properties": {
+        "zonal_degree": {
+          "type": "integer",
+          "description": "Highest zonal harmonic, 0 (point mass) to 6 (J2–J6)."
+        },
+        "drag": {
+          "type": "object",
+          "description": "Exponential-atmosphere drag.",
+          "additionalProperties": false,
+          "properties": {
+            "cd": {
+              "type": "number"
+            },
+            "area_m2": {
+              "type": "number"
+            },
+            "mass_kg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "cd",
+            "area_m2",
+            "mass_kg"
+          ]
+        },
+        "srp": {
+          "type": "object",
+          "description": "Cannonball solar radiation pressure with conical Earth shadow.",
+          "additionalProperties": false,
+          "properties": {
+            "cr": {
+              "type": "number"
+            },
+            "area_m2": {
+              "type": "number"
+            },
+            "mass_kg": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "cr",
+            "area_m2",
+            "mass_kg"
+          ]
+        },
+        "sun": {
+          "type": "boolean",
+          "description": "Solar third-body gravity."
+        },
+        "moon": {
+          "type": "boolean",
+          "description": "Lunar third-body gravity."
+        }
+      }
+    },
+    "eop": {
+      "type": "object",
+      "description": "Optional IERS Bulletin A values; omit for UT1=UTC and no polar motion (≈15 m and ≈0.4 km/s·ΔUT1 errors).",
+      "additionalProperties": false,
+      "properties": {
+        "dut1_s": {
+          "type": "number"
+        },
+        "xp_arcsec": {
+          "type": "number"
+        },
+        "yp_arcsec": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "required": [
+    "source",
+    "method"
+  ]
+}
+```
+
+来源：[`packages/aerospace/tool-astrodynamics/src/index.ts`](../packages/aerospace/tool-astrodynamics/src/index.ts)
+
+### `orbit_transfer`
+
+设计脉冲转移。mode=lambert 求解从位置 r1_km 到位置 r2_km、飞行时间 tof_s 的两点边值问题（Izzo 2015），返回 max_revolutions 以内的所有零圈与多圈弧段；给出 v1_km_s 和/或 v2_km_s（当前与目标速度）即可得到出发/到达 Δv。mode=hohmann 与 mode=bi-elliptic 计算从 radius1_km 到 radius2_km 的共面圆轨道间转移代价（bi-elliptic 还需要中间远拱点半径 rb_km）。mode=plane-change 计算在 speed_km_s 速度下改变 delta_inclination_deg 倾角的代价。mu_km3_s2 默认为地球（398600.4418）。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "mode": {
+      "type": "string",
+      "enum": [
+        "lambert",
+        "hohmann",
+        "bi-elliptic",
+        "plane-change"
+      ]
+    },
+    "r1_km": {
+      "type": "array",
+      "description": "lambert: departure position [x,y,z].",
+      "items": {
+        "type": "number"
+      }
+    },
+    "r2_km": {
+      "type": "array",
+      "description": "lambert: arrival position [x,y,z].",
+      "items": {
+        "type": "number"
+      }
+    },
+    "radius1_km": {
+      "type": "number",
+      "description": "hohmann/bi-elliptic: initial circular-orbit radius."
+    },
+    "radius2_km": {
+      "type": "number",
+      "description": "hohmann/bi-elliptic: final circular-orbit radius."
+    },
+    "tof_s": {
+      "type": "number"
+    },
+    "prograde": {
+      "type": "boolean",
+      "description": "lambert: transfer direction about +z (default true)."
+    },
+    "max_revolutions": {
+      "type": "integer",
+      "description": "lambert: largest revolution count (default 0)."
+    },
+    "v1_km_s": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "v2_km_s": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "rb_km": {
+      "type": "number"
+    },
+    "speed_km_s": {
+      "type": "number"
+    },
+    "delta_inclination_deg": {
+      "type": "number"
+    },
+    "mu_km3_s2": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "mode"
+  ]
+}
+```
+
+来源：[`packages/aerospace/tool-astrodynamics/src/index.ts`](../packages/aerospace/tool-astrodynamics/src/index.ts)
+
+随可选的 `@astro-one/aerospace` bundle 发布，插件管理器默认将其关闭。所有 Config 上限都是必填项；本目录使用 bundle 中的值，这些上限只出现在失败消息中，不出现在 schema 中。
+
+
+<a id="astro-onetool-gnss"></a>
+
+## `@astro-one/tool-gnss`
+
+### `gnss_position`
+
+由工作区中的 RINEX 3 文件计算接收机位置。mode=spp（默认）基于单频伪距（GPS L1 C/A、Galileo E1、BeiDou B1I）进行单点定位，采用 Klobuchar 与 Saastamoinen 改正、分星座钟差和 RAIM 故障排除。mode=rtk 相对基准站进行短基线载波相位 RTK（需要 base_obs_path 与已测定的 ECEF base_position_m；流动站与基准站必须有共同历元），当 ratio 检验达到 ratio_threshold（默认 3）时接受 LAMBDA 整周模糊度固定。返回平均位置、东/北/天离散度、固定率、DOP、RAIM 排除项以及逐历元行（历元很多时仅返回最前面的历元）。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "rover_obs_path": {
+      "type": "string",
+      "description": "RINEX 3 observation file of the receiver to position."
+    },
+    "nav_path": {
+      "type": "string",
+      "description": "RINEX 3 navigation file (mixed or per-constellation)."
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "spp",
+        "rtk"
+      ]
+    },
+    "base_obs_path": {
+      "type": "string"
+    },
+    "base_position_m": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "rtk_mode": {
+      "type": "string",
+      "description": "kinematic (default) re-estimates the rover every epoch.",
+      "enum": [
+        "kinematic",
+        "static"
+      ]
+    },
+    "systems": {
+      "type": "array",
+      "description": "Constellations to use (default all three).",
+      "items": {
+        "type": "string",
+        "enum": [
+          "gps",
+          "galileo",
+          "beidou"
+        ]
+      }
+    },
+    "elevation_mask_deg": {
+      "type": "number"
+    },
+    "code_sigma_m": {
+      "type": "number",
+      "description": "Zenith code sigma (default 0.3 m)."
+    },
+    "phase_sigma_m": {
+      "type": "number",
+      "description": "Zenith phase sigma for RTK (default 0.003 m)."
+    },
+    "ratio_threshold": {
+      "type": "number"
+    },
+    "raim": {
+      "type": "boolean",
+      "description": "Fault detection and exclusion (default true)."
+    }
+  },
+  "required": [
+    "rover_obs_path",
+    "nav_path"
+  ]
+}
+```
+
+来源：[`packages/aerospace/tool-gnss/src/index.ts`](../packages/aerospace/tool-gnss/src/index.ts)
+
+### `gnss_visibility`
+
+由 RINEX 3 导航文件规划 GNSS 观测：针对一个测站和时间窗口，在每个 step_s（默认 600）列出高于 elevation_mask_deg（默认 10）的卫星及其方位角/仰角，以及可见几何的 GDOP/PDOP/HDOP/VDOP。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "nav_path": {
+      "type": "string"
+    },
+    "station": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "lat_deg": {
+          "type": "number"
+        },
+        "lon_deg": {
+          "type": "number"
+        },
+        "alt_m": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "lat_deg",
+        "lon_deg",
+        "alt_m"
+      ]
+    },
+    "start": {
+      "type": "string",
+      "description": "ISO 8601 UTC instant."
+    },
+    "end": {
+      "type": "string"
+    },
+    "step_s": {
+      "type": "number"
+    },
+    "elevation_mask_deg": {
+      "type": "number"
+    },
+    "systems": {
+      "type": "array",
+      "description": "Constellations to use (default all three).",
+      "items": {
+        "type": "string",
+        "enum": [
+          "gps",
+          "galileo",
+          "beidou"
+        ]
+      }
+    }
+  },
+  "required": [
+    "nav_path",
+    "station",
+    "start",
+    "end"
+  ]
+}
+```
+
+来源：[`packages/aerospace/tool-gnss/src/index.ts`](../packages/aerospace/tool-gnss/src/index.ts)
+
+随可选的 `@astro-one/aerospace` bundle 发布。两个工具都通过 ctx.fs 读取相对于调用会话工作区的 RINEX 3 文件。
+
+
+<a id="astro-onetool-remote-sensing"></a>
+
+## `@astro-one/tool-remote-sensing`
+
+### `rs_change_detect`
+
+检测同一网格上两幅已配准影像之间的变化。method=cva（变化矢量分析）使用 bands 中各角色反射率差的欧氏模；method=index 使用光谱指数差的绝对值（例如用 nbr 评估火烧程度、用 ndvi 评估植被损失），并报告带符号的平均变化。除非给出 threshold，变化阈值采用 Otsu 自动阈值。返回变化比例与面积，以及最大的连通变化区域（8 连通，至少 min_region_pixels）及其像素与地图边界框。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "before_path": {
+      "type": "string"
+    },
+    "after_path": {
+      "type": "string"
+    },
+    "method": {
+      "type": "string",
+      "enum": [
+        "cva",
+        "index"
+      ]
+    },
+    "index": {
+      "type": "string",
+      "enum": [
+        "ndvi",
+        "ndwi",
+        "mndwi",
+        "ndbi",
+        "nbr",
+        "ndre",
+        "ndsi",
+        "evi",
+        "savi"
+      ]
+    },
+    "bands": {
+      "type": "object",
+      "description": "One-based band number of each spectral role in the file, for example {\"red\": 4, \"nir\": 8}.",
+      "additionalProperties": false,
+      "properties": {
+        "blue": {
+          "type": "integer"
+        },
+        "green": {
+          "type": "integer"
+        },
+        "red": {
+          "type": "integer"
+        },
+        "rededge": {
+          "type": "integer"
+        },
+        "nir": {
+          "type": "integer"
+        },
+        "swir1": {
+          "type": "integer"
+        },
+        "swir2": {
+          "type": "integer"
+        }
+      }
+    },
+    "scale": {
+      "type": "number",
+      "description": "Reflectance = DN × scale + offset (for example 0.0001 for Sentinel-2 L2A, 2.75e-5 for Landsat C2 L2)."
+    },
+    "offset": {
+      "type": "number",
+      "description": "Reflectance offset (for example -0.1 for Sentinel-2 L2A baseline 04.00+, -0.2 for Landsat C2 L2)."
+    },
+    "threshold": {
+      "type": "number"
+    },
+    "min_region_pixels": {
+      "type": "integer",
+      "description": "Smallest reported region (default 10)."
+    }
+  },
+  "required": [
+    "before_path",
+    "after_path",
+    "method",
+    "bands"
+  ]
+}
+```
+
+来源：[`packages/aerospace/tool-remote-sensing/src/index.ts`](../packages/aerospace/tool-remote-sensing/src/index.ts)
+
+### `rs_spectral_index`
+
+对多光谱影像计算光谱指数并汇总：ndvi（植被）、ndwi（开阔水体，McFeeters）、mndwi（水体，Xu）、ndbi（建成区）、nbr（火烧）、ndre（红边叶绿素）、ndsi（积雪）、evi 与 savi（土壤调节植被）。在 bands 中把每个所需波段角色映射到从 1 开始的波段号（对于每个文件一个波段的产品，还要在 band_paths 中给出文件）。返回计数、均值、标准差、最小值、最大值、百分位数、[-1, 1] 区间上的直方图、可选的 class_breaks 区间面积比例以及地理参考。无数据像素会被排除。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "index": {
+      "type": "string",
+      "enum": [
+        "ndvi",
+        "ndwi",
+        "mndwi",
+        "ndbi",
+        "nbr",
+        "ndre",
+        "ndsi",
+        "evi",
+        "savi"
+      ]
+    },
+    "path": {
+      "type": "string",
+      "description": "Raster file (GeoTIFF/COG, PNG, JPEG)."
+    },
+    "bands": {
+      "type": "object",
+      "description": "One-based band number of each spectral role in the file, for example {\"red\": 4, \"nir\": 8}.",
+      "additionalProperties": false,
+      "properties": {
+        "blue": {
+          "type": "integer"
+        },
+        "green": {
+          "type": "integer"
+        },
+        "red": {
+          "type": "integer"
+        },
+        "rededge": {
+          "type": "integer"
+        },
+        "nir": {
+          "type": "integer"
+        },
+        "swir1": {
+          "type": "integer"
+        },
+        "swir2": {
+          "type": "integer"
+        }
+      }
+    },
+    "band_paths": {
+      "type": "object",
+      "description": "Per-role file paths for products delivered one band per file (Landsat, Sentinel-2 as GeoTIFF); a role listed here reads band 1 of that file unless bands names another.",
+      "additionalProperties": false,
+      "properties": {
+        "blue": {
+          "type": "string"
+        },
+        "green": {
+          "type": "string"
+        },
+        "red": {
+          "type": "string"
+        },
+        "rededge": {
+          "type": "string"
+        },
+        "nir": {
+          "type": "string"
+        },
+        "swir1": {
+          "type": "string"
+        },
+        "swir2": {
+          "type": "string"
+        }
+      }
+    },
+    "scale": {
+      "type": "number",
+      "description": "Reflectance = DN × scale + offset (for example 0.0001 for Sentinel-2 L2A, 2.75e-5 for Landsat C2 L2)."
+    },
+    "offset": {
+      "type": "number",
+      "description": "Reflectance offset (for example -0.1 for Sentinel-2 L2A baseline 04.00+, -0.2 for Landsat C2 L2)."
+    },
+    "class_breaks": {
+      "type": "array",
+      "description": "Ascending thresholds; fractions are reported for each interval between consecutive breaks plus the open ends.",
+      "items": {
+        "type": "number"
+      }
+    },
+    "histogram_bins": {
+      "type": "integer",
+      "description": "Histogram bins over [-1, 1] (default 20)."
+    }
+  },
+  "required": [
+    "index"
+  ]
+}
+```
+
+来源：[`packages/aerospace/tool-remote-sensing/src/index.ts`](../packages/aerospace/tool-remote-sensing/src/index.ts)
+
+随可选的 `@astro-one/aerospace` bundle 发布且不带检测器，因此本页展示 rs_spectral_index 与 rs_change_detect。配置了 `detector` 的部署还会获得 rs_detect_objects，其描述会列出配置的类别名称。
 
 
 <a id="astro-onetool-todo"></a>

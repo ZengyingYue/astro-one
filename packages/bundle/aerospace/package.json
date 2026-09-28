@@ -1,6 +1,7 @@
 {
   "name": "@astro-one/aerospace",
   "description": "Optional aerospace layer for Astro One: astrodynamics, GNSS positioning, and remote-sensing tools",
+  "icon": "./icon.svg",
   "version": "0.1.7-rc.1",
   "publishConfig": {
     "access": "public"
@@ -24,6 +25,7 @@
     "./package.json": "./package.json"
   },
   "files": [
+    "icon.svg",
     "locale/*.json",
     "lib/index.js",
     "cordis.patch.yml",

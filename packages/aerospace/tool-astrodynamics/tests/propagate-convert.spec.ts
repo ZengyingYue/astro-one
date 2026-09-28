@@ -8,13 +8,13 @@ import ToolRuntime from '@astro-one/tools'
 import * as Plugin from '../src/index.ts'
 import { call, CONFIG, fail, ISS_OMM, ok, setup, TLE } from './helpers.ts'
 
-const STATE = {
+const STATE: { [key: string]: JsonValue } = {
   kind: 'state',
   epoch: '2024-01-01T00:00:00Z',
   frame: 'gcrf',
   position_km: [6878, 0, 0],
   velocity_km_s: [0, 5.383, 5.383],
-} as const
+}
 
 describe('orbit_propagate', () => {
   it('registers every astrodynamics tool with a stable schema', async () => {

@@ -63,6 +63,9 @@ import BrowserUseRegistry from '@astro-one/browser-use'
 import * as StagehandBrowserTools from '@astro-one/experimental-browser-use-stagehand-native'
 import type TeamService from '@astro-one/experimental-agent-team'
 import * as ToolTeam from '@astro-one/experimental-tool-agent-team'
+import * as ToolAstrodynamics from '@astro-one/tool-astrodynamics'
+import * as ToolGnss from '@astro-one/tool-gnss'
+import * as ToolRemoteSensing from '@astro-one/tool-remote-sensing'
 import * as ToolTodo from '@astro-one/tool-todo'
 import type PluginManager from '@astro-one/plugin-manager'
 import * as PluginManagerTools from '@astro-one/plugin-manager/tools'
@@ -617,6 +620,46 @@ const TOOL_PACKAGES: ToolPackage[] = [
     scope: ctx => catalogChildScopes.get(ctx) as Agent,
     note:
       'All nine tools are scoped to implicit Team Leads and durable teammates. The shipped astro-one-base bundle keeps the package disabled; the documented Agent Teams profile patch enables it while disabling the legacy continuable-child control names.',
+  },
+  {
+    pkg: '@astro-one/tool-astrodynamics',
+    dir: 'tool-astrodynamics',
+    source: 'packages/aerospace/tool-astrodynamics/src/index.ts',
+    requires: ['ctx.tools'],
+    writes: ['tool/call', 'tool/result'],
+    async mount(ctx) {
+      await ctx.plugin(ToolAstrodynamics, {
+        maxSamples: 20000, maxObservations: 5000, relativeTolerance: 1e-11, absoluteTolerance: 1e-9, maxIntegratorSteps: 2000000,
+      })
+    },
+    note:
+      'Shipped by the optional `@astro-one/aerospace` bundle, which the plugin manager offers switched off. Every Config bound is required; the catalog uses the bundle values, and the bounds appear only in failure messages, not in the schemas.',
+  },
+  {
+    pkg: '@astro-one/tool-gnss',
+    dir: 'tool-gnss',
+    source: 'packages/aerospace/tool-gnss/src/index.ts',
+    requires: ['ctx.tools', 'ctx.fs'],
+    writes: ['tool/call', 'tool/result'],
+    async mount(ctx) {
+      await ctx.plugin(LocalFileSystem)
+      await ctx.plugin(ToolGnss, { maxFileBytes: 268435456, maxEpochs: 86400, maxReportedEpochs: 50 })
+    },
+    note:
+      'Shipped by the optional `@astro-one/aerospace` bundle. Both tools read RINEX 3 files through ctx.fs relative to the calling session workspace.',
+  },
+  {
+    pkg: '@astro-one/tool-remote-sensing',
+    dir: 'tool-remote-sensing',
+    source: 'packages/aerospace/tool-remote-sensing/src/index.ts',
+    requires: ['ctx.tools', 'ctx.fs'],
+    writes: ['tool/call', 'tool/result'],
+    async mount(ctx) {
+      await ctx.plugin(LocalFileSystem)
+      await ctx.plugin(ToolRemoteSensing, { maxFileBytes: 268435456, maxPixels: 25000000, maxResults: 100 })
+    },
+    note:
+      'Shipped by the optional `@astro-one/aerospace` bundle without a detector, so this page shows rs_spectral_index and rs_change_detect. A deployment that configures `detector` also receives rs_detect_objects, whose description lists the configured class names.',
   },
   {
     pkg: '@astro-one/tool-todo',

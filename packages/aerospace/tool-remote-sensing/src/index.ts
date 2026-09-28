@@ -164,6 +164,9 @@ function georeference(geo: Georeference | null, width: number, height: number) {
   }
 }
 
+/** Model-facing text of a JSON tool value. */
+const renderJson = (_args: unknown, value: unknown): { type: 'text'; text: string }[] => [{ type: 'text', text: JSON.stringify(value) }]
+
 const GEO_OUTPUT = { type: 'json', description: 'Georeference {epsg, units, pixel_size, bbox} or null.' } as const
 const SOURCE_PARAMS = {
   path: { type: 'string', description: 'Raster file (GeoTIFF/COG, PNG, JPEG).' },
@@ -209,7 +212,7 @@ export function spectralIndexTool(ctx: Context, config: Config): ToolDefinition 
           georeference: { ...GEO_OUTPUT, required: true },
         },
       },
-      render: (_args, value) => [{ type: 'text', text: JSON.stringify(value) }],
+      render: renderJson,
     },
     presentCall: args => ({ card: 'generic', title: `Spectral index (${args.index})`, kind: 'read' }),
     async execute(args, exec) {
@@ -289,7 +292,7 @@ export function changeTool(ctx: Context, config: Config): ToolDefinition {
           georeference: { ...GEO_OUTPUT, required: true },
         },
       },
-      render: (_args, value) => [{ type: 'text', text: JSON.stringify(value) }],
+      render: renderJson,
     },
     presentCall: args => ({ card: 'generic', title: `Change detection (${args.method})`, kind: 'read' }),
     async execute(args, exec) {
@@ -405,7 +408,7 @@ export function detectTool(ctx: Context, config: Config, detector: Detector): To
           detections_truncated: { type: 'boolean', required: true },
         },
       },
-      render: (_args, value) => [{ type: 'text', text: JSON.stringify(value) }],
+      render: renderJson,
     },
     presentCall: args => ({ card: 'generic', title: 'Object detection', kind: 'read', locations: [{ path: args.path }] }),
     async execute(args, exec) {

@@ -73,7 +73,11 @@ function geodetic(p: Vec3): { lat_deg: number; lon_deg: number; height_m: number
   return { lat_deg: r((g.lat * 180) / Math.PI, 9), lon_deg: r((g.lon * 180) / Math.PI, 9), height_m: r(g.h * 1000, 4) }
 }
 
-/** Mean position and east/north/up scatter of epoch positions. */
+/**
+ * Mean position and east/north/up scatter of epoch positions.
+ * @param points - ECEF positions, metres (at least one).
+ * @returns the mean ECEF position and the east, north, and up standard deviations about it.
+ */
 export function summarize(points: readonly Vec3[]): { mean: Vec3; enuStd: Vec3 } {
   const mean: Vec3 = [0, 1, 2].map(i => points.reduce((s, p) => s + (p[i] as number), 0) / points.length) as [number, number, number]
   const g = itrfToGeodetic([mean[0] / 1000, mean[1] / 1000, mean[2] / 1000])

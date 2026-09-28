@@ -28,6 +28,7 @@ This group maps the installable patch layers used by `astro-one --profile`. Each
 | [`headless`](headless/README.md) | One-shot command-line task application over base | `headless-runner` |
 | [`sdk-app`](sdk-app/README.md) | SDK JSON-RPC stdio application over base | mounts the SDK server |
 | [`sdk-minimal`](sdk-minimal/README.md) | Standalone minimal SDK application without base or Web | — (complete patch tree) |
+| [`aerospace`](aerospace/README.md) | Optional aerospace tool layer over base | inserts three tool rows |
 
 In-box bundles resolve from the astro-one installation; out-of-tree bundles install into a profile through `astro-one plugin --profile <name> add <package>`.
 

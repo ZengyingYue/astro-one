@@ -7,7 +7,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 import { afterEach, describe, expect, it } from 'vitest'
 import * as yaml from 'js-yaml'
 import { Context } from '@astro-one/cordis'
-import Loader from '@astro-one/cordis-plugin-loader'
+import Loader, { type ModuleLoaderV2 } from '@astro-one/cordis-plugin-loader'
 import Include, { entryListSchema } from '@astro-one/cordis-plugin-include'
 import LocalFileSystem from '@astro-one/fs-local'
 import { ToolCallId } from '@astro-one/llm'
@@ -63,13 +63,19 @@ async function boot(): Promise<Context> {
     ['@astro-one/tool-gnss', ToolGnss],
     ['@astro-one/tool-remote-sensing', ToolRemoteSensing],
   ])
-  ctx.loader.internal = {
+  const internal: ModuleLoaderV2 = {
     version: 'v2',
-    async import(specifier: string) {
+    loadCache: new Map(),
+    import: (specifier: string) => {
       if (!modules.has(specifier)) throw new Error(`unexpected Loader import: ${specifier}`)
-      return modules.get(specifier)
+      return Promise.resolve(modules.get(specifier))
     },
-  } as NonNullable<typeof ctx.loader.internal>
+    register(): never { throw new Error('unexpected module hook registration') },
+    getOrCreateModuleJob(): never { throw new Error('unexpected module job creation') },
+    resolveSync(): never { throw new Error('unexpected synchronous module resolution') },
+    load(): never { throw new Error('unexpected module load') },
+  }
+  ctx.loader.internal = internal
   await ctx.loader.create({ name: 'cordis:include', config: { path: pathToFileURL(configPath).href } })
   await ctx.loader.await()
   for (const entry of ctx.loader.entries()) await entry.fiber?.await()

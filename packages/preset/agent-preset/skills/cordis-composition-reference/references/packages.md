@@ -10,6 +10,14 @@ Every package below exports a Cordis plugin that a bundle patch can name in a Lo
 |---|---|---|
 | `@astro-one/acp` | yes | Automation-only Agent Client Protocol server for driving Astro One agents over JSON-RPC stdio |
 
+## aerospace
+
+| Package | Config | Description |
+|---|---|---|
+| `@astro-one/tool-astrodynamics` | yes | Model-facing astrodynamics tools for Astro One: orbit propagation, orbit determination, transfers, ground-station passes, conjunction assessment, frame conversion, and attitude determination |
+| `@astro-one/tool-gnss` | yes | Model-facing GNSS positioning tools for Astro One: RINEX 3 parsing, GPS/Galileo/BeiDou broadcast orbits, single-point positioning with RAIM, RTK with LAMBDA ambiguity resolution, and visibility/DOP planning |
+| `@astro-one/tool-remote-sensing` | yes | Model-facing Earth-observation tools for Astro One: GeoTIFF spectral indices, change detection with Otsu thresholding and connected regions, and ONNX oriented-object detection with tiled inference |
+
 ## api
 
 | Package | Config | Description |
