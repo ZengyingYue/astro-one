@@ -15,16 +15,11 @@ describe('package README Summary limit', () => {
     expect(packageReadmeSummaryErrors('packages/example/example/README.md', readme(summary))).toEqual([])
   })
 
-  it.each([
-    'package-group',
-    'package-reference',
-    'package-library',
-    'package-bundle',
-  ])('rejects 101 words and directs the author to the skill and %s template', (kind) => {
+  it('rejects 101 words and directs the author to keep the summary within the limit', () => {
     const summary = Array.from({ length: MAX_PACKAGE_README_SUMMARY_WORDS + 1 }, () => 'word').join(' ')
 
-    expect(packageReadmeSummaryErrors('packages/example/example/README.md', readme(summary, kind))).toEqual([
-      `packages/example/example/README.md: Summary has 101 words; the limit is 100. Read .agents/skills/astro-one-doc/SKILL.md and .agents/skills/astro-one-doc/templates/${kind}.md before rewriting it.`,
+    expect(packageReadmeSummaryErrors('packages/example/example/README.md', readme(summary))).toEqual([
+      'packages/example/example/README.md: Summary has 101 words; the limit is 100. Keep the summary within the limit.',
     ])
   })
 

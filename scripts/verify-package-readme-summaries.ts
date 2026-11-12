@@ -26,11 +26,6 @@ function h2Body(source: string, heading: string): string | undefined {
   return match?.[1]?.trim()
 }
 
-/** Read the package README kind for a diagnostic template link. */
-function readKind(source: string): string | undefined {
-  return /^kind:\s*["']?([a-z-]+)["']?\s*$/mu.exec(source)?.[1]
-}
-
 /**
  * Report Summary length violations for one English package README.
  * @param file - Repository-relative README path.
