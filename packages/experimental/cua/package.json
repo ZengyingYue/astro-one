@@ -1,0 +1,161 @@
+{
+  "name": "@astro-one/cua",
+  "description": "Shared Computer Use application objects, authorization, and logged tool execution",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/cua"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json",
+    "./api": {
+      "types": "./lib/types/api.d.ts",
+      "default": "./lib/api.js"
+    },
+    "./bridge": {
+      "types": "./lib/types/bridge.d.ts",
+      "default": "./lib/bridge.js"
+    },
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./types": {
+      "types": "./lib/types/remote-types.d.ts",
+      "default": "./lib/remote-types.js"
+    },
+    "./native-client": {
+      "types": "./lib/types/native-client.d.ts",
+      "default": "./lib/native-client.js"
+    },
+    "./protocol": {
+      "types": "./lib/types/protocol.d.ts",
+      "default": "./lib/protocol.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    }
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/remote-types.js",
+    "lib/api.js",
+    "lib/bridge.js",
+    "lib/native-client.js",
+    "lib/protocol.js",
+    "lib/types/**/*.d.ts",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/user-questions": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/ptc-runtime-node": "workspace:*"
+  },
+  "dependencies": {
+    "@astro-one/schemastery": "workspace:~",
+    "zod": "^4.4.3",
+    "@astro-one/atomic-write": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/computer-use": "workspace:*",
+    "@astro-one/storage-domain": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/working-directory": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-loop": "workspace:*",
+    "@astro-one/agent-loop-testkit": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/attachment-local": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/subprocess": "workspace:*",
+    "@astro-one/subprocess-local": "workspace:*",
+    "@astro-one/fs-local": "workspace:*",
+    "@astro-one/llm-deepseek": "workspace:*",
+    "@astro-one/ptc-runtime-node": "workspace:*",
+    "@astro-one/sandbox-local": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "sharp": "^0.35.3",
+    "@astro-one/ptc-runtime": "workspace:*",
+    "@astro-one/user-questions": "workspace:*",
+    "@astro-one/app-boot": "workspace:*",
+    "@astro-one/config-editor": "workspace:*",
+    "@astro-one/hmr": "workspace:*",
+    "@astro-one/cordis-plugin-timer": "workspace:~",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/agent-preset-registry": "workspace:*",
+    "@astro-one/api-remotes": "workspace:*",
+    "@astro-one/api-gateway": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/client-store": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
+    "@astro-one/client-ui-plugin-manager": "workspace:*",
+    "@astro-one/client-ui-settings": "workspace:*",
+    "@astro-one/client-ui-layout": "workspace:*",
+    "@astro-one/client-test-runtime": "workspace:*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@testing-library/react": "^16.1.0",
+    "@astro-one/loader-smoke": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/storage": "workspace:*",
+    "@astro-one/storage-json": "workspace:*",
+    "@astro-one/client-ui-user-questions": "workspace:*",
+    "@astro-one/client-ui-approval": "workspace:*",
+    "@astro-one/client-ui-conversation": "workspace:*"
+  },
+  "astroOne": {
+    "client": {
+      "inject": [
+        "@astro-one/api-remotes",
+        "@astro-one/client-locale",
+        "@astro-one/client-ui-plugin-manager",
+        "@astro-one/client-ui-settings",
+        "@astro-one/client-ui-layout",
+        "@astro-one/client-ui-user-questions",
+        "@astro-one/client-ui-approval",
+        "@astro-one/client-ui-conversation"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  }
+}

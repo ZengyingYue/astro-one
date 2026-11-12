@@ -1,0 +1,25 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/terminal/README.md
+/:
+  en: c7b99e9725406516
+  zh: 49bcc1910c4dfc87
+/terminal-persistent-pty-capability-family:
+  en: 0d89f20657644ebe
+  zh: ca48a8356c22ef3c
+/terminal-persistent-pty-capability-family/summary:
+  en: 07d4e06f5d65348a
+  zh: d2f9bc7efa388659
+/terminal-persistent-pty-capability-family/table-of-contents:
+  en: 1eb35b015a6c423f
+  zh: a8a3dceee2c9e943
+/terminal-persistent-pty-capability-family/packages:
+  en: 9e83e1d5a7a2f1d6
+  zh: 9119b1c97cce9347
+/terminal-persistent-pty-capability-family/related-documentation:
+  en: 6ad8b4e9e679876b
+  zh: c9f6a4c2bffcd671
+/terminal-persistent-pty-capability-family/dev-note:
+  en: 5de1d6304e00c58f
+  zh: 8d8225361cfa29e5

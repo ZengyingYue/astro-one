@@ -1,0 +1,46 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/browser-use-playwright-mcp/README.md
+/:
+  en: 65c3ef2e9fa0bb0e
+  zh: 530a4b4ca63094e8
+/astro-one-experimental-browser-use-playwright-mcp:
+  en: eac21c144e31970d
+  zh: 7fa7244ced926255
+/astro-one-experimental-browser-use-playwright-mcp/summary:
+  en: e7e2be79affd38a3
+  zh: 77934d7769ade556
+/astro-one-experimental-browser-use-playwright-mcp/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: ea2227f28624a0e6
+/astro-one-experimental-browser-use-playwright-mcp/use-this-package:
+  en: 2bfc4dcf230a0802
+  zh: 2a545f4dfebb5932
+/astro-one-experimental-browser-use-playwright-mcp/understand-the-implementation:
+  en: c25e8f504ef22cf9
+  zh: d0bce991e1d2f6e6
+/astro-one-experimental-browser-use-playwright-mcp/further-exploration:
+  en: a55ac4c786674c4b
+  zh: 7fc3e92b9acf082a
+/astro-one-experimental-browser-use-playwright-mcp/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-experimental-browser-use-playwright-mcp/model-experience/browser-tools-and-screenshots:
+  en: 1adc972910db543b
+  zh: 7a06e0d265f19499
+/astro-one-experimental-browser-use-playwright-mcp/model-experience/browser-tools-and-screenshots/what-the-model-sees:
+  en: 39b4784b86018ba7
+  zh: 0c8b06751b97520e
+/astro-one-experimental-browser-use-playwright-mcp/model-experience/browser-tools-and-screenshots/token-effect:
+  en: bc6d5d5db77d5fc3
+  zh: bbbd79e4ae29675f
+/astro-one-experimental-browser-use-playwright-mcp/model-experience/browser-tools-and-screenshots/kv-cache-effect:
+  en: 86e83cc10f829b2b
+  zh: c2e61c09531a5de2
+/astro-one-experimental-browser-use-playwright-mcp/known-limitations-and-deferred-work:
+  en: 6ff25ad8a8a433af
+  zh: f22ecae8bb84f8b3
+/astro-one-experimental-browser-use-playwright-mcp/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

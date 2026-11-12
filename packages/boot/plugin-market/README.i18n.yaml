@@ -1,0 +1,46 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/boot/plugin-market/README.md
+/:
+  en: 043de7aa04105a53
+  zh: b3d966c6029037e1
+/astro-one-plugin-market:
+  en: b1401b72f9eb5d5a
+  zh: fbef518432ab6739
+/astro-one-plugin-market/summary:
+  en: 5aff27ea0a0ac725
+  zh: e126e7719b453c27
+/astro-one-plugin-market/table-of-contents:
+  en: 76368b6b1da79c80
+  zh: 52384aee991ac542
+/astro-one-plugin-market/use-this-package:
+  en: 3dbd73048f381028
+  zh: caf36a07d7c13b3d
+/astro-one-plugin-market/use-this-package/plugin-detail-documents:
+  en: e66ab1f455fa8d1a
+  zh: 3cc0175d2dd62272
+/astro-one-plugin-market/understand-the-implementation:
+  en: 0f7a18ceef86c474
+  zh: c61157eaaf314dc7
+/astro-one-plugin-market/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-plugin-market/model-experience/market-listing-tool:
+  en: b8183cb06f3e4ba9
+  zh: 9a213e7a124f092d
+/astro-one-plugin-market/model-experience/market-listing-tool/what-the-model-sees:
+  en: 4ba199caed615edb
+  zh: 8cca3409836bf8a1
+/astro-one-plugin-market/model-experience/market-listing-tool/token-effect:
+  en: 2589c52e6deb5e48
+  zh: 9a71ca215165a8a5
+/astro-one-plugin-market/model-experience/market-listing-tool/kv-cache-effect:
+  en: 02cf6033092eb236
+  zh: cb928bfa6d39a7f7
+/astro-one-plugin-market/known-limitations-and-deferred-work:
+  en: 54122c96969ebbc2
+  zh: 3fbe84bc6069cb46
+/astro-one-plugin-market/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

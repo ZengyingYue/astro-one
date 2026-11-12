@@ -1,0 +1,79 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/terminal/terminal/README.md
+/:
+  en: 3d90ab1819787962
+  zh: d5279e899341168a
+/astro-one-terminal:
+  en: 15f4543922b8e02f
+  zh: 0c121346945e41d8
+/astro-one-terminal/summary:
+  en: 8c2d9d06ced27cfb
+  zh: 2b94c0e9125f5d85
+/astro-one-terminal/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-terminal/use-this-package:
+  en: 775f7601d87b5b83
+  zh: 50b1cfce1ede75a2
+/astro-one-terminal/use-this-package/when-to-choose-it:
+  en: c4244a1757ca3584
+  zh: b6fb10e30146b347
+/astro-one-terminal/use-this-package/composition:
+  en: c9c86435d685f597
+  zh: 9d62d2b4647513e7
+/astro-one-terminal/use-this-package/what-sessions-give-you:
+  en: 6527302f4ad84cbb
+  zh: 8edc988f1d0a3cee
+/astro-one-terminal/use-this-package/ownership-and-isolation:
+  en: 47820d85ea37cb36
+  zh: 857686d08af67fcb
+/astro-one-terminal/use-this-package/observable-outcomes-and-failures:
+  en: 4fcedb18b5e8d5f2
+  zh: d72bb1a45e45cfff
+/astro-one-terminal/understand-the-implementation:
+  en: 0d0669b98b14a3dd
+  zh: 57416c205270e4e1
+/astro-one-terminal/understand-the-implementation/design-concept:
+  en: 6bae42fb7275816f
+  zh: 5f75e1b26074108c
+/astro-one-terminal/understand-the-implementation/source-map:
+  en: 48dab6fe2f770ced
+  zh: 9bbfd23bcc5ac2b3
+/astro-one-terminal/understand-the-implementation/data-model-and-lifecycle:
+  en: a2adfa2708882e19
+  zh: 002f257fd8c4addb
+/astro-one-terminal/understand-the-implementation/ownership-and-cleanup-rules:
+  en: 7af36e58919e41d5
+  zh: 4fe7b4db1099bcbf
+/astro-one-terminal/understand-the-implementation/send-reservation:
+  en: 5815723cd0c6089c
+  zh: 0c612ffa4b8c466c
+/astro-one-terminal/further-exploration:
+  en: 3becdadf8df81c4c
+  zh: be81fb216fe06504
+/astro-one-terminal/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-terminal/model-experience/indirect-consumer:
+  en: a601a3c4f5b848cd
+  zh: ec617f79f706aaa1
+/astro-one-terminal/model-experience/indirect-consumer/what-the-model-sees:
+  en: 2b97c186ede5283c
+  zh: ee741b6f8d18eb49
+/astro-one-terminal/model-experience/indirect-consumer/token-effect:
+  en: 477da21b0a5be3a6
+  zh: 3ae1d37fe671ef96
+/astro-one-terminal/model-experience/indirect-consumer/kv-cache-effect:
+  en: 3e14d300418fb353
+  zh: 50d7c1332eb2d2c9
+/astro-one-terminal/known-limitations-and-deferred-work:
+  en: a133ebc47a4df34f
+  zh: 9bb949487ee566d5
+/astro-one-terminal/known-limitations-and-deferred-work/dev-note:
+  en: 112f870e68bd1ff3
+  zh: 693f37bbd32497a0
+/astro-one-terminal/known-limitations-and-deferred-work/dev-note/undecided-directions:
+  en: 3c5203a9c40a38ef
+  zh: a7660ca08bd0d279

@@ -1,0 +1,73 @@
+{
+  "name": "@astro-one/message-feedback",
+  "description": "Canonical Session-log ratings and notes for finalized assistant messages",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/feedback/message-feedback"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-persistence": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/command-feedback": "workspace:*"
+  },
+  "dependencies": {
+    "@astro-one/schemastery": "workspace:~",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-persistence": "workspace:*",
+    "@astro-one/session-persistence-jsonl": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/command-feedback": "workspace:*"
+  }
+}

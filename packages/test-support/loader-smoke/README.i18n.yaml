@@ -1,0 +1,58 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/test-support/loader-smoke/README.md
+/:
+  en: 00a7ac59f751e4d0
+  zh: 35334966b956621d
+/astro-one-loader-smoke:
+  en: 489e580fb47cd9d9
+  zh: f4cf55acef2c82a4
+/astro-one-loader-smoke/summary:
+  en: fbd32c3d7d8ae876
+  zh: 73c3f7400a45b996
+/astro-one-loader-smoke/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-loader-smoke/use-this-package:
+  en: 682780f6cbeb85cb
+  zh: 07a2458db985471a
+/astro-one-loader-smoke/use-this-package/booting-an-application-fixture:
+  en: 97736c0f2d663a84
+  zh: 9b331495507ce1d6
+/astro-one-loader-smoke/use-this-package/testing-a-shipped-profile:
+  en: fedef3a3f910c841
+  zh: 94bee4c4aa193004
+/astro-one-loader-smoke/use-this-package/driving-a-fixture-turn:
+  en: c99402b3d2219738
+  zh: cbff00f4bfb7d625
+/astro-one-loader-smoke/use-this-package/source-or-built-mode:
+  en: 5b4d49d045950d2e
+  zh: 219dc7c0be9d87a9
+/astro-one-loader-smoke/use-this-package/what-can-go-wrong:
+  en: 4c746da11716f810
+  zh: 8cd100adc840b76c
+/astro-one-loader-smoke/understand-the-implementation:
+  en: 3ffb8df759bf5071
+  zh: a93d3dd6472d9782
+/astro-one-loader-smoke/understand-the-implementation/design:
+  en: 00461658ccf7fa02
+  zh: a1ab18d787dfbf76
+/astro-one-loader-smoke/understand-the-implementation/source-map:
+  en: 1dd2e4e1cd1fad2d
+  zh: 4783ddacfbcf2cd5
+/astro-one-loader-smoke/further-exploration:
+  en: d8a21524e6e614aa
+  zh: 893d633d08cf59d4
+/astro-one-loader-smoke/model-experience:
+  en: 27696a3c4d31d171
+  zh: 48b6df074e0b0911
+/astro-one-loader-smoke/model-experience/kv-cache-effect:
+  en: c204a02c386ca3a0
+  zh: ce9b24304f9644aa
+/astro-one-loader-smoke/known-limitations-and-deferred-work:
+  en: a3e0e21178bb00cc
+  zh: f3dc6139370330f6
+/astro-one-loader-smoke/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

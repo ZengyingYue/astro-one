@@ -1,0 +1,58 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/lsp/lsp-stdio/README.md
+/:
+  en: c9eac4288ae5293a
+  zh: fb718ad3c2da3e49
+/astro-one-lsp-stdio:
+  en: 7539a1073597339d
+  zh: 1bc732a129e53395
+/astro-one-lsp-stdio/summary:
+  en: 794a47b819f0957b
+  zh: 7c4fef33c5d5c4f2
+/astro-one-lsp-stdio/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-lsp-stdio/use-this-package:
+  en: 21efc33e2d4ec21a
+  zh: 385e2ba47bf713f3
+/astro-one-lsp-stdio/use-this-package/minimal-configuration:
+  en: dbf4b2988747a8c3
+  zh: 186607a6021baab5
+/astro-one-lsp-stdio/use-this-package/what-a-query-does:
+  en: 41363baf8fdba020
+  zh: d1a6193b1aa813ba
+/astro-one-lsp-stdio/use-this-package/observable-success-and-failures:
+  en: 57f3a82c014af107
+  zh: 770fc617c1ab0eab
+/astro-one-lsp-stdio/use-this-package/security-boundary:
+  en: f1f7fef771bcaa6d
+  zh: f11dcf771a6fecfc
+/astro-one-lsp-stdio/understand-the-implementation:
+  en: 8a5efa64f5b12f88
+  zh: 451548c05c045c22
+/astro-one-lsp-stdio/understand-the-implementation/design-philosophy:
+  en: 7e5e63f993a287f2
+  zh: a5a01b22551e5d46
+/astro-one-lsp-stdio/understand-the-implementation/source-map:
+  en: 601baa446f830c66
+  zh: 8aaebaaae7081c82
+/astro-one-lsp-stdio/understand-the-implementation/protocol-behavior:
+  en: 0f9bac88ad9448b8
+  zh: f5d3a2e61a596003
+/astro-one-lsp-stdio/further-exploration:
+  en: 0cae76b332e01367
+  zh: e6e05a2cf0e1bbe9
+/astro-one-lsp-stdio/model-experience:
+  en: 2cf941d580434923
+  zh: 3bcf0379f5701d95
+/astro-one-lsp-stdio/model-experience/kv-cache-effect:
+  en: cf7309cca06ad145
+  zh: 0157a01dc4bc7a16
+/astro-one-lsp-stdio/known-limitations-and-deferred-work:
+  en: dc4fc5797b3b2d38
+  zh: f04e4159ce280218
+/astro-one-lsp-stdio/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

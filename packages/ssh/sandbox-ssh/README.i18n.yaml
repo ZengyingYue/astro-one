@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/ssh/sandbox-ssh/README.md
+/:
+  en: 222090dbd09cc030
+  zh: 24e479b8ff87e6d4
+/astro-one-sandbox-ssh:
+  en: 42e0518142ccfc0a
+  zh: 696bbf1644b902a2
+/astro-one-sandbox-ssh/summary:
+  en: 8da12fe242105ce6
+  zh: 020472f88fcdb664
+/astro-one-sandbox-ssh/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 725b47765ee8f30b
+/astro-one-sandbox-ssh/use-this-package:
+  en: 2cdc8a190fc648e1
+  zh: 91c57c0d15dfd086
+/astro-one-sandbox-ssh/understand-the-implementation:
+  en: b4c1c32707dc9f7e
+  zh: 33a0b69e312aa80d
+/astro-one-sandbox-ssh/further-exploration:
+  en: cb20c72b42431e1e
+  zh: d758be7d3e8dd727
+/astro-one-sandbox-ssh/model-experience:
+  en: 586c0afcf6a3097d
+  zh: 4723c59f600a3b04
+/astro-one-sandbox-ssh/model-experience/kv-cache-effect:
+  en: 21f304c66e5ba98b
+  zh: 18185d5b164f8216
+/astro-one-sandbox-ssh/known-limitations-and-deferred-work:
+  en: 916d7c0e971765bb
+  zh: 56d347094c07bc5d
+/astro-one-sandbox-ssh/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/util/package-manifest/README.md
+/:
+  en: af3d2bb5bd09a9e6
+  zh: e326b8a26f5f91fb
+/astro-one-package-manifest:
+  en: 49d4fc48aaefbeb2
+  zh: 9eedc2e27d819a48
+/astro-one-package-manifest/summary:
+  en: 31b7a2f1f73b6b4c
+  zh: a69a725591eaf68d
+/astro-one-package-manifest/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 1db86285abf6c499
+/astro-one-package-manifest/use-this-package:
+  en: 1df4e9d07b932c25
+  zh: 743653cb7bfb42f5
+/astro-one-package-manifest/understand-the-implementation:
+  en: 41ec449dee927f04
+  zh: ec1b583bd9025d84
+/astro-one-package-manifest/further-exploration:
+  en: 868ee42fd8a924de
+  zh: a6ee39eb45839d93
+/astro-one-package-manifest/model-experience:
+  en: 0b5aaa4787068a57
+  zh: bdb5dabe0b33ff9d
+/astro-one-package-manifest/model-experience/kv-cache-effect:
+  en: 2ed74a2a33958543
+  zh: 7d63c3a3801bef13
+/astro-one-package-manifest/known-limitations-and-deferred-work:
+  en: 94b9630a34dd4774
+  zh: b5f1a854fb3b9408
+/astro-one-package-manifest/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

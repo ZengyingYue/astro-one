@@ -1,0 +1,58 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/lsp/lsp/README.md
+/:
+  en: 1a8099ab9b557ff7
+  zh: 7054b2eab0e1fda8
+/astro-one-lsp:
+  en: e0a1395f487a1b2e
+  zh: 5155707bb1042652
+/astro-one-lsp/summary:
+  en: 5282b26ff51d5a08
+  zh: 9a200df045f9d1e7
+/astro-one-lsp/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-lsp/use-this-package:
+  en: 39ddcc57203b5a43
+  zh: ee46b6bb58434337
+/astro-one-lsp/use-this-package/when-to-choose-it:
+  en: 104953d3732e7d81
+  zh: 54acd5d4742bd728
+/astro-one-lsp/use-this-package/composing-a-navigation-stack:
+  en: f2c42a2967fa3a9e
+  zh: 0392bb54a8e671ed
+/astro-one-lsp/use-this-package/the-four-operations:
+  en: 201a9b2f8dfb13eb
+  zh: c9041adde15602c1
+/astro-one-lsp/use-this-package/failures-and-recovery:
+  en: eeeff6f68bba6807
+  zh: a83372441c505bb6
+/astro-one-lsp/understand-the-implementation:
+  en: 1e0acac55fc6c314
+  zh: fe4ebe8a86dc480f
+/astro-one-lsp/understand-the-implementation/design-philosophy:
+  en: 98ffe38651f1db61
+  zh: 68ae20c69c131dee
+/astro-one-lsp/understand-the-implementation/source-map:
+  en: 052a99d148619000
+  zh: 76624984e9bdbdd2
+/astro-one-lsp/understand-the-implementation/registration-and-selection-lifecycle:
+  en: 549e97f436b1570c
+  zh: df0436c58dd31175
+/astro-one-lsp/further-exploration:
+  en: cf8479590e18b0e6
+  zh: 53924e9a526fdb0c
+/astro-one-lsp/model-experience:
+  en: 6e7d0478621b3cb2
+  zh: 8e893d7bec721718
+/astro-one-lsp/model-experience/kv-cache-effect:
+  en: cf7309cca06ad145
+  zh: 0157a01dc4bc7a16
+/astro-one-lsp/known-limitations-and-deferred-work:
+  en: e7ba99257e4da9e6
+  zh: e384e82d4c707af1
+/astro-one-lsp/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

@@ -1,0 +1,94 @@
+{
+  "name": "@astro-one/client-ui-tool",
+  "description": "Client Tool call-tree renderer and keyed per-tool presentation slot",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/client/ui-tool"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "astroOne": {
+    "client": {
+      "inject": [
+        "@astro-one/api-workspace-controller",
+        "@astro-one/client-connection",
+        "@astro-one/client-locale",
+        "@astro-one/client-ui-conversation",
+        "@astro-one/api-session-controller"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/spill-policy": "workspace:*",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/tool-testkit": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/tool-executor-native": "workspace:*",
+    "@astro-one/tool-executor-ptc": "workspace:*",
+    "@astro-one/tool-jobs": "workspace:*",
+    "@astro-one/tool-session-query": "workspace:*",
+    "@astro-one/tool-terminal": "workspace:*",
+    "@astro-one/spill": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/api-remotes": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/client-test-runtime": "workspace:*",
+    "@astro-one/client-ui-conversation": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
+    "@testing-library/react": "^16.3.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@astro-one/api-workspace-controller": "workspace:*",
+    "@astro-one/client-ui-chat": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-session": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/util-workspace-path": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
+    "clsx": "^2.0.0",
+    "@astro-one/ptc-runtime": "workspace:*",
+    "@astro-one/token-meter": "workspace:*",
+    "@astro-one/user-questions": "workspace:*",
+    "@astro-one/client-ui-context-menu": "workspace:*",
+    "@astro-one/api-session-controller": "workspace:*"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts"
+  ]
+}

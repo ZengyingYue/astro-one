@@ -1,0 +1,70 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/jobs/jobs-local/README.md
+/:
+  en: 0abe764a4bc3e3db
+  zh: 280ff3a1c1a8bc5c
+/astro-one-jobs-local:
+  en: 06aae6d1598fffe3
+  zh: 44091f48de408651
+/astro-one-jobs-local/summary:
+  en: 5e584a21a3986094
+  zh: 04e450ab3229346f
+/astro-one-jobs-local/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-jobs-local/use-this-package:
+  en: 35365e99a3a4fae7
+  zh: 2dc4d29758d2633c
+/astro-one-jobs-local/use-this-package/when-to-choose-it:
+  en: 17479310883edc0a
+  zh: f1cea41c704dabe2
+/astro-one-jobs-local/use-this-package/minimal-configuration:
+  en: 9f22c11fcdd883f7
+  zh: 51710537a70c3ca2
+/astro-one-jobs-local/use-this-package/what-each-owner-gets:
+  en: 9ab66aa770694092
+  zh: 38de930bcfbc132c
+/astro-one-jobs-local/use-this-package/lifecycle:
+  en: 91dd372f742dcdb8
+  zh: 58eeee0254d33cd1
+/astro-one-jobs-local/use-this-package/session-timing-records:
+  en: 054fe2fdecd83955
+  zh: 2f2e895fda281890
+/astro-one-jobs-local/use-this-package/what-can-go-wrong:
+  en: 45f8284d8a5894e5
+  zh: d1cb523f9b8ca906
+/astro-one-jobs-local/understand-the-implementation:
+  en: f782557ca8da3138
+  zh: e8f0082b9692cacc
+/astro-one-jobs-local/understand-the-implementation/design-philosophy:
+  en: b92e6e5415553e2e
+  zh: c3e0be579af4c7fb
+/astro-one-jobs-local/understand-the-implementation/source-map:
+  en: cf99103141ed9f13
+  zh: 3a650aa8c4019156
+/astro-one-jobs-local/understand-the-implementation/scope-layers:
+  en: 2c53e11a60965985
+  zh: 63adc1628c71e62e
+/astro-one-jobs-local/understand-the-implementation/admission-and-settlement:
+  en: 412083c62ee0c48c
+  zh: a2f5ac7318c0b172
+/astro-one-jobs-local/understand-the-implementation/teardown:
+  en: 49e8bd5e2c1f6ffd
+  zh: ad3e1aa712fd59b3
+/astro-one-jobs-local/further-exploration:
+  en: 0835655ddb5a0ec7
+  zh: 21be5f10e6f346a6
+/astro-one-jobs-local/model-experience:
+  en: 2373e2e2df4e4d16
+  zh: 1d658930b820139b
+/astro-one-jobs-local/model-experience/kv-cache-effect:
+  en: e290ccc9b3c92c08
+  zh: d75d48f485447a74
+/astro-one-jobs-local/known-limitations-and-deferred-work:
+  en: 8b3e2d5505caf2cd
+  zh: 46435d6a6b3c9aff
+/astro-one-jobs-local/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

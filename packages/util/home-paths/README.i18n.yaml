@@ -1,0 +1,55 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/util/home-paths/README.md
+/:
+  en: a959df653e6e3d11
+  zh: 410462b0bfcfd609
+/astro-one-home-paths:
+  en: e14acfbaf421a2fe
+  zh: ddec7a186a8f9cfc
+/astro-one-home-paths/summary:
+  en: b0b40f2b7c27543e
+  zh: 551bf4c57bb5aaa1
+/astro-one-home-paths/table-of-contents:
+  en: 80b31a934611cb4a
+  zh: 05f3f7f9cb2fd881
+/astro-one-home-paths/use-this-package:
+  en: 5322022224da2f27
+  zh: d5cba67f4ea3e429
+/astro-one-home-paths/use-this-package/resolving-the-home:
+  en: ccf9c0a505843cef
+  zh: de182a0666704036
+/astro-one-home-paths/use-this-package/resolving-the-shared-agents-root:
+  en: d6decea46a14ac6d
+  zh: 1a13a37994690a4b
+/astro-one-home-paths/use-this-package/displaying-a-home:
+  en: 9e79573b7c76c97e
+  zh: aba1b2024b9bb1c8
+/astro-one-home-paths/use-this-package/expanding-user-paths:
+  en: 80bf5dead177c1d8
+  zh: 6faf257afbb9c246
+/astro-one-home-paths/use-this-package/canonicalizing-watch-paths:
+  en: 55c5d8179de704c5
+  zh: b86395e9605807cd
+/astro-one-home-paths/understand-the-implementation:
+  en: 3f97bd4606e12d4a
+  zh: 8f09f108141a478e
+/astro-one-home-paths/understand-the-implementation/source-map:
+  en: 584610e67c4aa386
+  zh: 766f77e35c65193d
+/astro-one-home-paths/understand-the-implementation/resolution-rules:
+  en: 215ff0572b5ca7c8
+  zh: 01fc5fa7b4af9d6f
+/astro-one-home-paths/understand-the-implementation/canonicalization-mechanics:
+  en: a79aecd162317dc2
+  zh: 342f9bae0231c3de
+/astro-one-home-paths/further-exploration:
+  en: 3d83d8ed2d7ec5de
+  zh: f025f1501c9beb14
+/astro-one-home-paths/known-limitations-and-deferred-work:
+  en: aa4aecf31a596da0
+  zh: 22dea997610fae2d
+/astro-one-home-paths/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

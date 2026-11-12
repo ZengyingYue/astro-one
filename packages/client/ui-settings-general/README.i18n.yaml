@@ -1,0 +1,61 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-settings-general/README.md
+/:
+  en: b15ad4b6ddc683b1
+  zh: ebd45670d6c2d887
+/astro-one-client-ui-settings-general:
+  en: 214110d7bd61df61
+  zh: 8f464fc58236b9cb
+/astro-one-client-ui-settings-general/summary:
+  en: ce7dfc58d042e49d
+  zh: ab0c9f7e661ae4b2
+/astro-one-client-ui-settings-general/table-of-contents:
+  en: 83760d53b3ee5fb8
+  zh: 30dd8802d4ffdcb7
+/astro-one-client-ui-settings-general/use-this-package:
+  en: c16070e06d8893ba
+  zh: aad3c8afbbefdaed
+/astro-one-client-ui-settings-general/use-this-package/the-general-section:
+  en: 90859c0a78f0aad9
+  zh: 10692aae11aed5fa
+/astro-one-client-ui-settings-general/use-this-package/opening-the-configuration-file:
+  en: 597df68b5913e8d7
+  zh: bc9114f3e877679a
+/astro-one-client-ui-settings-general/use-this-package/onboarding-steps:
+  en: 029c45a80bfda15b
+  zh: d5fe72f6518ad94b
+/astro-one-client-ui-settings-general/understand-the-implementation:
+  en: 9c8c35ae0e672b14
+  zh: 503c8e9d24a93d88
+/astro-one-client-ui-settings-general/understand-the-implementation/ledger-projections:
+  en: fd99444278ab8530
+  zh: 2efc5831c7e19be1
+/astro-one-client-ui-settings-general/understand-the-implementation/connection-recovery:
+  en: e37fb7df883ea356
+  zh: c972524e56c6d6c2
+/astro-one-client-ui-settings-general/understand-the-implementation/host-release-changes:
+  en: a6a4f1f17334e6e0
+  zh: 50e60788c1337034
+/astro-one-client-ui-settings-general/understand-the-implementation/document-availability:
+  en: ff1aec9eb1a87a79
+  zh: eb91ab8bef59742d
+/astro-one-client-ui-settings-general/understand-the-implementation/host-half:
+  en: 5d722d055516f905
+  zh: e7a236f0ff84f7ff
+/astro-one-client-ui-settings-general/further-exploration:
+  en: e23cd4229c1b782f
+  zh: db05453a771c1d8b
+/astro-one-client-ui-settings-general/model-experience:
+  en: 3120df665299c634
+  zh: 1d9f365d091d0d2a
+/astro-one-client-ui-settings-general/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/astro-one-client-ui-settings-general/known-limitations-and-deferred-work:
+  en: b04b2de0ec3624b9
+  zh: d9b295d415937274
+/astro-one-client-ui-settings-general/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

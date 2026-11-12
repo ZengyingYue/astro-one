@@ -1,0 +1,63 @@
+{
+  "name": "@astro-one/token-meter",
+  "description": "Replay-aware token measurement service (ctx.tokenMeter) for the Astro One",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/llm/token-meter"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client.d.ts",
+      "default": "./lib/types/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./estimate": {
+      "types": "./lib/types/estimate.d.ts",
+      "default": "./lib/types/estimate.js"
+    },
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/compaction": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/llm-retry": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/compaction-image-offload": "workspace:*"
+  },
+  "dependencies": {
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/compaction": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/llm-retry": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/compaction-image-offload": "workspace:*"
+  }
+}

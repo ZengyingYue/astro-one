@@ -1,0 +1,61 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/attachment/attachment-local/README.md
+/:
+  en: 45d7e32ec8712de8
+  zh: bba408e49144dee8
+/astro-one-attachment-local:
+  en: 7f310e8227757e31
+  zh: 189e542c261b8b64
+/astro-one-attachment-local/summary:
+  en: 2288efe77d6b663d
+  zh: fb3428b466d0fa50
+/astro-one-attachment-local/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-attachment-local/use-this-package:
+  en: 912a19be4b59ff8a
+  zh: 9c14694cf2ebbaf2
+/astro-one-attachment-local/use-this-package/minimal-configuration:
+  en: 7e9eb3b73992de16
+  zh: 44327f5ec1e0fa14
+/astro-one-attachment-local/use-this-package/where-your-images-are-stored-and-how-long-they-last:
+  en: 310945c948bc5146
+  zh: 037176c82f1ea144
+/astro-one-attachment-local/use-this-package/what-happens-when-you-attach-an-image:
+  en: 75ba799b1e4edba4
+  zh: 06c5f76200e8da8a
+/astro-one-attachment-local/use-this-package/what-can-go-wrong:
+  en: 377696b2dc08b170
+  zh: 6b831ef31c93f712
+/astro-one-attachment-local/understand-the-implementation:
+  en: e44b0aa3e234a0ef
+  zh: b7dd6829478eb7f1
+/astro-one-attachment-local/understand-the-implementation/design-decisions:
+  en: dcd9857653645420
+  zh: a27259a09f17465d
+/astro-one-attachment-local/understand-the-implementation/write-and-read-paths:
+  en: 4f27e08b12e26264
+  zh: 5c86b7a5bc20e310
+/astro-one-attachment-local/understand-the-implementation/source-map:
+  en: 05af85aa85934d01
+  zh: 1c89e80d496dc0a3
+/astro-one-attachment-local/further-exploration:
+  en: 68205a74b43f5ad7
+  zh: 182169bdf2dee3f1
+/astro-one-attachment-local/model-experience:
+  en: 2e18b3dfbc5af126
+  zh: aaee1745632c561a
+/astro-one-attachment-local/model-experience/kv-cache-effect:
+  en: 64670486210bdab7
+  zh: 44c988dd6268c1ff
+/astro-one-attachment-local/known-limitations-and-deferred-work:
+  en: 46a33da5b3740127
+  zh: c3ac244228b81d8f
+/astro-one-attachment-local/known-limitations-and-deferred-work/dev-note:
+  en: d56846da29ad869c
+  zh: 41e655e01351fd1d
+/astro-one-attachment-local/known-limitations-and-deferred-work/dev-note/future-retention-and-remote-storage:
+  en: b121c9864395a7a2
+  zh: a352b7c243e872be

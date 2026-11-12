@@ -1,0 +1,27 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "lib/types"
+  },
+  "include": [
+    "src"
+  ],
+  "references": [
+    {
+      "path": "../../../vendor/cordis"
+    },
+    {
+      "path": "../../aerospace/tool-astrodynamics"
+    },
+    {
+      "path": "../../aerospace/tool-gnss"
+    },
+    {
+      "path": "../../aerospace/tool-remote-sensing"
+    },
+    {
+      "path": "../../aerospace/tool-space-awareness"
+    }
+  ]
+}

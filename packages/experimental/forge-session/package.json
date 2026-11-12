@@ -1,0 +1,88 @@
+{
+  "name": "@astro-one/experimental-forge-session",
+  "description": "Binds change requests to the Session that created, pushed, or tracked them",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts"
+    },
+    "./locale/*.json": "./locale/*.json",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/forge-session"
+  },
+  "dependencies": {
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
+    "shell-quote": "^1.12.0",
+    "zod": "^4.4.3"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/experimental-forge": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/shell": "workspace:*",
+    "@astro-one/shell-env": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-loop": "workspace:*",
+    "@astro-one/bash-local": "workspace:*",
+    "@astro-one/experimental-forge": "workspace:*",
+    "@astro-one/experimental-forge-github": "workspace:*",
+    "@astro-one/fs-local": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/shell-env": "workspace:*",
+    "@astro-one/subprocess-local": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/tool-bash": "workspace:*",
+    "@astro-one/tool-executor-native": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/working-directory": "workspace:*",
+    "@astro-one/shell": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@astro-one/shell": {
+      "optional": true
+    },
+    "@astro-one/shell-env": {
+      "optional": true
+    },
+    "@astro-one/tools": {
+      "optional": true
+    },
+    "@astro-one/sandbox-policy": {
+      "optional": true
+    }
+  }
+}

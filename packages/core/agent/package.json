@@ -1,0 +1,68 @@
+{
+  "name": "@astro-one/agent",
+  "description": "Agent interface, registry, initiator scope, and event vocabulary for the Astro One",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/core/agent"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/workspace": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
+  },
+  "peerDependenciesMeta": {
+    "@astro-one/workspace": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/typert-registry": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/workspace": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
+  },
+  "dependencies": {
+    "@astro-one/brand": "workspace:*",
+    "zod": "4.4.3"
+  }
+}

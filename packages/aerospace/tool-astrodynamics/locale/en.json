@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Astrodynamics Tools",
+    "description": "Orbit propagation, orbit determination, transfers, passes, conjunctions, frame conversion, and attitude determination."
+  }
+}

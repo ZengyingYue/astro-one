@@ -1,0 +1,95 @@
+{
+  "name": "@astro-one/client-ui-plugin-manager",
+  "description": "Plugin management for the astro-one web client: the sidebar Plugins panel installs, enables, disables, retries, and composes installed plugin packages",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/client/ui-plugin-manager"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./locale/*.json": "./locale/*.json"
+  },
+  "astroOne": {
+    "client": {
+      "inject": [
+        "@astro-one/api-remotes",
+        "@astro-one/client-locale",
+        "@astro-one/client-ui-layout",
+        "@astro-one/client-ui-sidebar"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/api-remote-access": "workspace:*",
+    "@astro-one/api-remotes": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/client-store": "workspace:*",
+    "@astro-one/client-test-runtime": "workspace:*",
+    "@astro-one/client-ui-layout": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-sidebar": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
+    "@astro-one/official-bundles": "workspace:*",
+    "@astro-one/package-manifest": "workspace:*",
+    "@testing-library/react": "^16.3.3",
+    "clsx": "^2.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@astro-one/util-crypto": "workspace:*",
+    "@astro-one/client-ui-settings": "workspace:*",
+    "@astro-one/plugin-manager": "workspace:*",
+    "@astro-one/client-product-analytics": "workspace:*"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts"
+  ],
+  "dependencies": {
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
+    "zod": "4.4.3",
+    "@astro-one/typert-protocol": "workspace:*"
+  }
+}

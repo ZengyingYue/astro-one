@@ -1,0 +1,13 @@
+# Bilingual-pair consistency record for working-directory.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/subsystems/working-directory.md
+/working-directory:
+  en: 763fdbf21f78dca1
+  zh: 254025dba5f69a6b
+/working-directory/directory-selection:
+  en: b67e268cc9422d31
+  zh: 4c7243c87aadcd7a
+/working-directory/model-context:
+  en: efbf1de5baf16125
+  zh: 49e2e195d20f8efc

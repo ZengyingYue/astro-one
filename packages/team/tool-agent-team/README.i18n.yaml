@@ -1,0 +1,85 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/team/tool-agent-team/README.md
+/:
+  en: ca1947ba4777c2a0
+  zh: bed18854b761aae4
+/astro-one-tool-agent-team:
+  en: 3b5a2b782f2ca909
+  zh: b701408bf626cf19
+/astro-one-tool-agent-team/summary:
+  en: 3cfb2bbd5dd3b89e
+  zh: 070007c2ee2cec11
+/astro-one-tool-agent-team/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-tool-agent-team/use-this-package:
+  en: df43b5af04712f16
+  zh: 0ded9527c345d416
+/astro-one-tool-agent-team/use-this-package/when-to-choose-it:
+  en: 01cfd14533f28383
+  zh: 9539b1c1c92210b2
+/astro-one-tool-agent-team/use-this-package/smallest-working-example:
+  en: d97aafdad083fced
+  zh: 5408ead091447528
+/astro-one-tool-agent-team/use-this-package/what-the-model-can-do:
+  en: a22e343a4b0858ae
+  zh: 7151b799e8345565
+/astro-one-tool-agent-team/use-this-package/what-success-and-failure-look-like:
+  en: bf1eb0e693610f5b
+  zh: 2b29e5cf63623909
+/astro-one-tool-agent-team/understand-the-implementation:
+  en: 3952eb1d9de1f988
+  zh: 789d51b88f41b710
+/astro-one-tool-agent-team/understand-the-implementation/design-philosophy:
+  en: 2f83fb08f1f763e6
+  zh: ac85cf0c5548aa1a
+/astro-one-tool-agent-team/understand-the-implementation/source-map:
+  en: 3b906bae9ec19393
+  zh: 42c8dd145c704cb3
+/astro-one-tool-agent-team/understand-the-implementation/policy-and-tools:
+  en: e9d73d88f4d3a711
+  zh: 89ef405112ef0d50
+/astro-one-tool-agent-team/understand-the-implementation/scoped-registration-and-teardown:
+  en: ee8db166c0bc8a9b
+  zh: 6bfe192220e931a6
+/astro-one-tool-agent-team/further-exploration:
+  en: fab3fd4cab646ae5
+  zh: ab21ccb6f130d974
+/astro-one-tool-agent-team/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-tool-agent-team/model-experience/team-policy-system-prompt:
+  en: 8757dc3caca9e4e2
+  zh: fd0b7535a1b24189
+/astro-one-tool-agent-team/model-experience/team-policy-system-prompt/what-the-model-sees:
+  en: 25079a70c9a3ed87
+  zh: 34301e390669a887
+/astro-one-tool-agent-team/model-experience/team-policy-system-prompt/what-the-model-sees/team-policy:
+  en: 824ebdbe434d7b6c
+  zh: 6a442dbca7cf3625
+/astro-one-tool-agent-team/model-experience/team-policy-system-prompt/token-effect:
+  en: 7e2583f482a60938
+  zh: d3e68b204cd3d2b3
+/astro-one-tool-agent-team/model-experience/team-policy-system-prompt/kv-cache-effect:
+  en: 6723f8e3f2497338
+  zh: ca68851b279362e1
+/astro-one-tool-agent-team/model-experience/task-tool-schemas:
+  en: d6918434714cf05a
+  zh: eef799d16e0c8f4b
+/astro-one-tool-agent-team/model-experience/task-tool-schemas/what-the-model-sees:
+  en: 74fb265e5cc9ef91
+  zh: 3b4d8733764b26f6
+/astro-one-tool-agent-team/model-experience/task-tool-schemas/token-effect:
+  en: 5ae789db90ce9606
+  zh: 3b26fe33c811815c
+/astro-one-tool-agent-team/model-experience/task-tool-schemas/kv-cache-effect:
+  en: 41bfcd6adb8058f5
+  zh: 73363ee21021a96a
+/astro-one-tool-agent-team/known-limitations-and-deferred-work:
+  en: 863e528107d3b510
+  zh: bd0551f1f7e4607f
+/astro-one-tool-agent-team/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

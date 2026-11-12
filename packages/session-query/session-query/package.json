@@ -1,0 +1,65 @@
+{
+  "name": "@astro-one/session-query",
+  "description": "Combined session query service contract with concrete reads, traces, and filters",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/session-query/session-query"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-title": "workspace:*",
+    "@astro-one/tool-todo": "workspace:*",
+    "@astro-one/session-persistence": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/session-projection-cache": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
+  },
+  "peerDependenciesMeta": {
+    "@astro-one/session-persistence": {
+      "optional": true
+    },
+    "@astro-one/session-projection": {
+      "optional": true
+    },
+    "@astro-one/session-projection-cache": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-title": "workspace:*",
+    "@astro-one/tool-todo": "workspace:*",
+    "@astro-one/session-persistence": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/session-projection-cache": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
+  },
+  "dependencies": {
+    "@astro-one/session-format-catalog": "workspace:*"
+  }
+}

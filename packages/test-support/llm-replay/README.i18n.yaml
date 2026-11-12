@@ -1,0 +1,61 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/test-support/llm-replay/README.md
+/:
+  en: 80e8e69cb5216e23
+  zh: cd84f0762bc67487
+/astro-one-llm-replay:
+  en: 161ae1a8076bade1
+  zh: e0572cdcd0859897
+/astro-one-llm-replay/summary:
+  en: 25ed22c1aab13fd6
+  zh: af7e5bc0b46263fd
+/astro-one-llm-replay/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-llm-replay/use-this-package:
+  en: e2116be9c7a5c18f
+  zh: dc89da423decf4aa
+/astro-one-llm-replay/use-this-package/mounting-it:
+  en: 0c8a78a7ee634055
+  zh: a375c764c33c1d81
+/astro-one-llm-replay/use-this-package/how-the-fixture-works:
+  en: d7dd048cd69e723d
+  zh: 9f5dfa5186549cd0
+/astro-one-llm-replay/use-this-package/nested-agents:
+  en: 7745c49d10a63b0e
+  zh: 937b954c664f1973
+/astro-one-llm-replay/use-this-package/failure-modes-and-overrides:
+  en: 319e95521a4a06fe
+  zh: 884c8299028df8a3
+/astro-one-llm-replay/use-this-package/what-can-go-wrong:
+  en: 965da31d63ec88fe
+  zh: 8ca1428daae5d583
+/astro-one-llm-replay/understand-the-implementation:
+  en: 1d2dbd8b50da6f22
+  zh: ab738914c74212ff
+/astro-one-llm-replay/understand-the-implementation/design:
+  en: dfd1dd70ea389c66
+  zh: 3c0f2e0ee601e3f5
+/astro-one-llm-replay/understand-the-implementation/source-map:
+  en: 0542116615161c60
+  zh: 66fe2603b04760b6
+/astro-one-llm-replay/understand-the-implementation/binding-and-stream-flow:
+  en: 484c98a2679b218f
+  zh: 8d3266a0f3deac87
+/astro-one-llm-replay/further-exploration:
+  en: 10704b408c48a6e2
+  zh: 0a0b4cd2dd392c37
+/astro-one-llm-replay/model-experience:
+  en: ad4fe7025029da90
+  zh: 1cced10c67323c37
+/astro-one-llm-replay/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: f57cc48a1b5cbfa9
+/astro-one-llm-replay/known-limitations-and-deferred-work:
+  en: 003f1d9c1ec49eed
+  zh: 116bcde9030e4cb4
+/astro-one-llm-replay/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

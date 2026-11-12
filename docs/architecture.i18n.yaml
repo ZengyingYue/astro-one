@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for architecture.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/architecture.md
+/astro-one-architecture:
+  en: 11fd7d1c464a2d1d
+  zh: d6e9a3d901fef9cb
+/astro-one-architecture/cordis:
+  en: f8f8505726a3074a
+  zh: f9e7451c3ab79a3e
+/astro-one-architecture/profiles-and-bundles:
+  en: b1dd12379d4a27d9
+  zh: acb28db13ca7d506
+/astro-one-architecture/application-launch:
+  en: bdd9fc66ce291da0
+  zh: 2120c607e02a52fe
+/astro-one-architecture/desktop-application:
+  en: 1d30c617de103c6d
+  zh: ac5e5d2c6d7e62d8
+/astro-one-architecture/core-packages:
+  en: 113276ef49a6e9df
+  zh: dcb63ba2a3e65dff
+/astro-one-architecture/events:
+  en: bbb34f65b884d559
+  zh: 57635313b90bbb2f
+/astro-one-architecture/turn-flow:
+  en: a29b00da8da1d401
+  zh: 456e6dda7c5c6620
+/astro-one-architecture/session-log:
+  en: 04a3eb6680cc6f8f
+  zh: f53d2ad997dd82a3
+/astro-one-architecture/capability-seams:
+  en: 5b020bd070e226a1
+  zh: e41b2cf2d6f0e741
+/astro-one-architecture/where-new-behavior-goes:
+  en: 7ab1a042e651588d
+  zh: d073a7f486ed3407

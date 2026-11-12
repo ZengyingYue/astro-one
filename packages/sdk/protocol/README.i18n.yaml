@@ -1,0 +1,58 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/sdk/protocol/README.md
+/:
+  en: f7e65364dfe462b8
+  zh: 20d2b8f84f10f681
+/astro-one-sdk-protocol:
+  en: 095f98a081bd0bf2
+  zh: 11d0f41415965003
+/astro-one-sdk-protocol/summary:
+  en: 8bdd1f41b554f4d6
+  zh: f519e345fff2d7d8
+/astro-one-sdk-protocol/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-sdk-protocol/use-this-package:
+  en: 4e8a8a89c1e2c0c3
+  zh: 68b555e03ed73374
+/astro-one-sdk-protocol/use-this-package/framing-and-transport:
+  en: be53c71505c0d1b4
+  zh: 6210dee577715539
+/astro-one-sdk-protocol/use-this-package/the-sdk-methods:
+  en: bab9a97be0f43127
+  zh: 4d34262427b775da
+/astro-one-sdk-protocol/use-this-package/native-user-questions:
+  en: 65ea66231b17b6cf
+  zh: 8e1c57d0c27f842f
+/astro-one-sdk-protocol/use-this-package/payload-semantics:
+  en: 56564e307b9b3bbb
+  zh: a93adf40ac15f6bb
+/astro-one-sdk-protocol/understand-the-implementation:
+  en: a11b136d8296deda
+  zh: 85081da5be53c9e1
+/astro-one-sdk-protocol/understand-the-implementation/design-concept:
+  en: bc4b8dfc36ed4565
+  zh: 6a707eff1a4bbf2f
+/astro-one-sdk-protocol/understand-the-implementation/source-map:
+  en: b62c1e92501ebc93
+  zh: d1ac1a11653e97ed
+/astro-one-sdk-protocol/understand-the-implementation/frame-dispatch:
+  en: eaf7d095810481c8
+  zh: 92767f908500be5e
+/astro-one-sdk-protocol/further-exploration:
+  en: 012a44ffc279ee7d
+  zh: dda9b0f7a85471b4
+/astro-one-sdk-protocol/model-experience:
+  en: 1c3205c59385b059
+  zh: 9198a341567beca0
+/astro-one-sdk-protocol/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: 696d26adaf4eda6d
+/astro-one-sdk-protocol/known-limitations-and-deferred-work:
+  en: b146044e224a0c41
+  zh: 7dc35bae3ac9382d
+/astro-one-sdk-protocol/known-limitations-and-deferred-work/dev-note:
+  en: 951fa06249790ac1
+  zh: da66e7f53df3ab00

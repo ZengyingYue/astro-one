@@ -1,0 +1,13 @@
+- id: llm-deepseek
+  name: '@astro-one/llm-deepseek-api-key'
+  disabled: true
+
+- insert:
+    - id: llm-replay
+      name: '@astro-one/llm-replay'
+      config:
+        providers:
+          - id: deepseek-official
+            name: DeepSeek
+            models:
+              - id: deepseek-v4-flash

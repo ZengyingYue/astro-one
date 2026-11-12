@@ -1,0 +1,71 @@
+{
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "license": "MIT",
+  "name": "@astro-one/client-ui-action-cards",
+  "description": "Action cards below completed answers: the shared card frame, kind bodies and the compact tool row",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/client-ui-action-cards"
+  },
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./locale/*.json": "./locale/*.json"
+  },
+  "astroOne": {
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@astro-one/api-remotes",
+        "@astro-one/client-locale",
+        "@astro-one/client-ui-conversation",
+        "@astro-one/client-ui-chat",
+        "@astro-one/client-ui-session",
+        "@astro-one/client-ui-tool"
+      ]
+    }
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/api-remotes": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/client-ui-conversation": "workspace:*",
+    "@astro-one/client-ui-chat": "workspace:*",
+    "@astro-one/client-ui-session": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-tool": "workspace:*",
+    "react": "^18.2.0",
+    "@astro-one/action-cards": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/client-test-runtime": "workspace:*"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts"
+  ]
+}

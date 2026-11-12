@@ -1,0 +1,20 @@
+- name: '@astro-one/session'
+- name: '@astro-one/system-prompt'
+- name: '@astro-one/tools'
+- name: '@astro-one/tool-executor-native'
+- name: '@astro-one/fs-local'
+- name: '@astro-one/session-projection'
+- name: '@astro-one/working-directory'
+- name: '@astro-one/tool-fs'
+- name: '@astro-one/session-query-sqlite'
+  config:
+    path: ':memory:'
+    openAt: never
+- name: '@astro-one/session-reference'
+  config:
+    maxReferenceBytes: 360
+- name: './source-session.ts'
+- name: '@astro-one/spill-local'
+  config:
+    root: '{{spillRoot}}'
+    cleanupPeriodDays: 0

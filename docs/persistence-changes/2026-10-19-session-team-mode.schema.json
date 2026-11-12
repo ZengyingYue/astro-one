@@ -1,0 +1,15 @@
+{
+  "formatVersion": 2,
+  "roots": [
+    {"key":"event:team/mode","kind":"event","event":"team/mode","surface":false,"digest":"8afca447d68f59fe60538f1f0416e9a3fbc6339db94450044fd444a177b894ba"}
+  ],
+  "types": [],
+  "nodes": {
+    "1823ea72df944851": {"kind":"object","properties":[{"name":"enabled","type":"360d2cad07770f73","optional":false}],"indices":[]},
+    "360d2cad07770f73": {"kind":"primitive","type":"boolean"},
+    "546c2b19cfc9b771": {"kind":"primitive","type":"number"},
+    "8afca447d68f59fe": {"kind":"object","properties":[{"name":"data","type":"1823ea72df944851","optional":false},{"name":"ignorable","type":"e5f31a1a5321feee","optional":true},{"name":"seq","type":"546c2b19cfc9b771","optional":false},{"name":"time","type":"546c2b19cfc9b771","optional":false},{"name":"type","type":"c9ea3c6952b8228e","optional":false}],"indices":[]},
+    "c9ea3c6952b8228e": {"kind":"literal","value":"team/mode"},
+    "e5f31a1a5321feee": {"kind":"literal","value":true}
+  }
+}

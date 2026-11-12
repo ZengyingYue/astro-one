@@ -1,0 +1,22 @@
+# Bilingual-pair consistency record for maintaining-astro-one-code-review.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/cookbook/maintaining-astro-one-code-review.md
+/maintaining-the-astro-one-code-review-skill:
+  en: 390bb7922ee62afb
+  zh: 2f1b65d59010d5f5
+/maintaining-the-astro-one-code-review-skill/what-the-maintainer-receives:
+  en: 1981b5f5778152ec
+  zh: 56f06c998af0b069
+/maintaining-the-astro-one-code-review-skill/what-the-operator-does-with-a-candidate-diff:
+  en: c6f7b3ccb13cc6c8
+  zh: 7b3f0fb5f7e3206b
+/maintaining-the-astro-one-code-review-skill/when-a-run-produces-no-candidate:
+  en: feb6d261939d6c19
+  zh: 044d8238cd6537d3
+/maintaining-the-astro-one-code-review-skill/interruptions-and-handoff:
+  en: 520154150d11af44
+  zh: 67ab34fbcb16f530
+/maintaining-the-astro-one-code-review-skill/where-the-operator-s-private-setup-lives:
+  en: ae06145764738c16
+  zh: d527b944db8c52be

@@ -1,0 +1,31 @@
+# Bilingual-pair consistency record for astro-one-v0.1.0-rc.2.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/persistence-changes/releases/astro-one-v0.1.0-rc.2.md
+/:
+  en: 65aa1a63e09a6a9d
+  zh: d65e28c76efab31b
+/persistence-release-astro-one-v0-1-0-rc-2:
+  en: 2cb82fefc3df2430
+  zh: c988c036b65563ff
+/persistence-release-astro-one-v0-1-0-rc-2/summary:
+  en: cfb66ba6a266e7ac
+  zh: a5c09e0acbb876e9
+/persistence-release-astro-one-v0-1-0-rc-2/table-of-contents:
+  en: 0ff4a6f3c6af323f
+  zh: f5c7bd70cc1585c7
+/persistence-release-astro-one-v0-1-0-rc-2/release-evidence:
+  en: 5a689cbbc9fe89a2
+  zh: 1bb623ed600ee9c4
+/persistence-release-astro-one-v0-1-0-rc-2/declaration:
+  en: af9cea43334ee692
+  zh: c6c8bd0d6a17718a
+/persistence-release-astro-one-v0-1-0-rc-2/structural-changes:
+  en: 54958f4b7cc8ef6f
+  zh: 4ff5ab79aacc9b37
+/persistence-release-astro-one-v0-1-0-rc-2/verification:
+  en: 8ccca317964523b1
+  zh: 2c8b3e70a3320778
+/persistence-release-astro-one-v0-1-0-rc-2/dev-note:
+  en: b75c8458928b72b9
+  zh: 003ba4e17b4b5269

@@ -1,0 +1,41 @@
+{
+  "name": "@astro-one/skill-badge",
+  "description": "Bundled astro-one badge skill provider for Astro One",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/skill-badge"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "icon": "./icon.svg",
+  "files": [
+    "icon.svg",
+    "locale/*.json",
+    "lib/index.js",
+    "assets",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/skill": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/skill": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
+  }
+}

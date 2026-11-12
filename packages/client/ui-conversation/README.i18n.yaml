@@ -1,0 +1,40 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-conversation/README.md
+/:
+  en: 0ca51f37788dcbdb
+  zh: 14d73c6bc8d4e17f
+/astro-one-client-ui-conversation:
+  en: 835951a5fd227ec3
+  zh: c86330a557014ff1
+/astro-one-client-ui-conversation/summary:
+  en: 8811c28013fdc6dc
+  zh: 0a86edc422b38ba8
+/astro-one-client-ui-conversation/table-of-contents:
+  en: eef4f18c3972ccc4
+  zh: 6be65c6ac84ce497
+/astro-one-client-ui-conversation/conversation-assembly:
+  en: 4509f8d342b70dd7
+  zh: 2793b34f001d7a89
+/astro-one-client-ui-conversation/sent-user-text:
+  en: 0d108c8b71c03d91
+  zh: 935c3fd77138138e
+/astro-one-client-ui-conversation/shell-and-standard-props:
+  en: 0197d285d97cc914
+  zh: 508d6307e862bcd1
+/astro-one-client-ui-conversation/temporary-composer-entries:
+  en: 63ad2512f1068446
+  zh: 2b8291a335ac5bbb
+/astro-one-client-ui-conversation/model-experience:
+  en: e0a05b73ba3e4318
+  zh: dc85ab8433bb4456
+/astro-one-client-ui-conversation/model-experience/kv-cache-effect:
+  en: 9f4e0da7c8addf88
+  zh: 1a33d9981af75643
+/astro-one-client-ui-conversation/known-limitations-and-deferred-work:
+  en: 1413851e9d622bd3
+  zh: 84502501f8ce599b
+/astro-one-client-ui-conversation/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

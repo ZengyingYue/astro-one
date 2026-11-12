@@ -1,0 +1,9 @@
+- insert:
+    - id: subagent-codex
+      name: '@astro-one/subagent-codex'
+    - id: tool-subagent-codex
+      name: '@astro-one/tool-subagent'
+      config:
+        provider: codex
+        toolName: subagent_codex
+        maxDepth: provider-managed

@@ -1,0 +1,58 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-deliverables/README.md
+/:
+  en: 91a4da87e2e078ed
+  zh: 8d489c6cdf208c4d
+/astro-one-client-ui-deliverables:
+  en: 22e3061e4abaecc0
+  zh: d275f60d5c0b4158
+/astro-one-client-ui-deliverables/summary:
+  en: a17b97d16803f911
+  zh: ad80cf4bcb5a8018
+/astro-one-client-ui-deliverables/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-client-ui-deliverables/use-this-package:
+  en: 032a6dc35acd6ca4
+  zh: 04277e6fe42a0271
+/astro-one-client-ui-deliverables/use-this-package/explicit-deliveries:
+  en: d90937139a8a4a94
+  zh: 36351a15916cb292
+/astro-one-client-ui-deliverables/use-this-package/the-changed-files-card:
+  en: 4b279e2bddddc083
+  zh: a3135393299c935b
+/astro-one-client-ui-deliverables/use-this-package/the-review-tab:
+  en: 641a789258cf4c3d
+  zh: eab4522327b2a41e
+/astro-one-client-ui-deliverables/use-this-package/inline-code-links:
+  en: 35b9ef9ddbe5b92f
+  zh: 35d1c2e2ecf4a42a
+/astro-one-client-ui-deliverables/understand-the-implementation:
+  en: eef982d430c1adb3
+  zh: 6334f54cfcb38659
+/astro-one-client-ui-deliverables/further-exploration:
+  en: 4b5247ce1503b74b
+  zh: 82db6f9daa1efb41
+/astro-one-client-ui-deliverables/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-client-ui-deliverables/model-experience/desktop-file-references:
+  en: 18f9c56e10a44603
+  zh: b774e6e5f2a5db6d
+/astro-one-client-ui-deliverables/model-experience/desktop-file-references/what-the-model-sees:
+  en: 92d9380bf746d9af
+  zh: b57822561020c55e
+/astro-one-client-ui-deliverables/model-experience/desktop-file-references/token-effect:
+  en: 2f1bfc1df1d8d8f3
+  zh: 4af1b4599f3d6a6a
+/astro-one-client-ui-deliverables/model-experience/desktop-file-references/kv-cache-effect:
+  en: 4dc7674aa58029a5
+  zh: 8b605cd009e60775
+/astro-one-client-ui-deliverables/known-limitations-and-deferred-work:
+  en: 6223cbcd5b71f722
+  zh: f78962a037ca0050
+/astro-one-client-ui-deliverables/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

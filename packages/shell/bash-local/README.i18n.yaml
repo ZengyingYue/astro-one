@@ -1,0 +1,61 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/shell/bash-local/README.md
+/:
+  en: f70a1e0bb1e0d56d
+  zh: 927e75bc75573410
+/astro-one-bash-local:
+  en: 21e9f63078ae8dcb
+  zh: 2924292b0ff22808
+/astro-one-bash-local/summary:
+  en: 7eccbd44db22dc60
+  zh: 23606bf8f01f3529
+/astro-one-bash-local/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-bash-local/use-this-package:
+  en: 95ae7843275778ca
+  zh: 43b5069075a99625
+/astro-one-bash-local/use-this-package/minimal-configuration:
+  en: ed02f1d959dd9356
+  zh: 2382922b32b7b99e
+/astro-one-bash-local/use-this-package/running-commands:
+  en: a27f24e1c9908612
+  zh: 4183e0c89aebb96c
+/astro-one-bash-local/use-this-package/background-processes:
+  en: 3c580842cc8452af
+  zh: 5a156670a7cacc2a
+/astro-one-bash-local/use-this-package/adjusting-budgets-at-runtime:
+  en: 1098db4c932a48f8
+  zh: 33f78ab65dbfeb1d
+/astro-one-bash-local/understand-the-implementation:
+  en: 05e2abe4a25886fd
+  zh: 3f7f1326dc3c1d3f
+/astro-one-bash-local/understand-the-implementation/design-concept:
+  en: ec84e5746de85fe0
+  zh: 1c353325eeae87c6
+/astro-one-bash-local/understand-the-implementation/source-map:
+  en: 762bafaf8fb721c2
+  zh: cd5dd95212f7c270
+/astro-one-bash-local/understand-the-implementation/main-flow:
+  en: 723bbaedc34e58f3
+  zh: d0239dcfdd8a53c6
+/astro-one-bash-local/understand-the-implementation/invariants-and-ownership:
+  en: d698db378e1840b6
+  zh: 5bf0ce8650e554c4
+/astro-one-bash-local/further-exploration:
+  en: 98c630100334ed0e
+  zh: b38dd22dc4b43f88
+/astro-one-bash-local/model-experience:
+  en: 4d61187cbd4cffa0
+  zh: 5e773434531cd90a
+/astro-one-bash-local/model-experience/kv-cache-effect:
+  en: 40294c1c31b74824
+  zh: 788a4799b1d65a8b
+/astro-one-bash-local/known-limitations-and-deferred-work:
+  en: 53f38b8a9b3141d7
+  zh: e35b8e6aded8b0e7
+/astro-one-bash-local/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

@@ -1,0 +1,28 @@
+# Bilingual-pair consistency record for 0003-web-agent-gui-feedback-loop.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/postmortem/0003-web-agent-gui-feedback-loop.md
+/post-mortem-0003-web-agent-validated-a-replacement-server-instead-of-its-current-gui:
+  en: be3d5259614cd8b6
+  zh: e0c083523e4271fc
+/post-mortem-0003-web-agent-validated-a-replacement-server-instead-of-its-current-gui/executive-summary:
+  en: 468bba79eb6ffe3c
+  zh: 8d17e6ebc6ae1304
+/post-mortem-0003-web-agent-validated-a-replacement-server-instead-of-its-current-gui/summary:
+  en: 925769d316091823
+  zh: 1ec27364cf585bec
+/post-mortem-0003-web-agent-validated-a-replacement-server-instead-of-its-current-gui/impact:
+  en: 48899c487352c865
+  zh: 7ba3a7ecb1fde2e7
+/post-mortem-0003-web-agent-validated-a-replacement-server-instead-of-its-current-gui/timeline:
+  en: 80451c196fd4465d
+  zh: 9225b3710d5f7be8
+/post-mortem-0003-web-agent-validated-a-replacement-server-instead-of-its-current-gui/root-cause:
+  en: 462fb432de9b18fc
+  zh: e8815ce61587e30d
+/post-mortem-0003-web-agent-validated-a-replacement-server-instead-of-its-current-gui/guardrails-added:
+  en: 6d4df5ebfa53d5e6
+  zh: 4bad70efca961dd6
+/post-mortem-0003-web-agent-validated-a-replacement-server-instead-of-its-current-gui/lessons:
+  en: f7830cb5a4fe0be4
+  zh: 8422af4234ac9e40

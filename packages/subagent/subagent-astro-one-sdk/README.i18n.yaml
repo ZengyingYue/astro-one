@@ -1,0 +1,85 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/subagent/subagent-astro-one-sdk/README.md
+/:
+  en: 96519565b888c154
+  zh: 015dcb81826e5305
+/astro-one-subagent-astro-one-sdk:
+  en: e5b9b43da53cae1c
+  zh: dc823bc37f563f33
+/astro-one-subagent-astro-one-sdk/summary:
+  en: dace05ecde482839
+  zh: 5a4d6d5383f88916
+/astro-one-subagent-astro-one-sdk/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-subagent-astro-one-sdk/use-this-package:
+  en: 6bf6f3170548a1dc
+  zh: 9ae043408367fcdb
+/astro-one-subagent-astro-one-sdk/use-this-package/when-to-choose-it:
+  en: 14e862d66dab1303
+  zh: 32cf0ff162c7670f
+/astro-one-subagent-astro-one-sdk/use-this-package/configuration:
+  en: f53ec3adc818bcce
+  zh: 56d8002b1882e7f6
+/astro-one-subagent-astro-one-sdk/use-this-package/what-you-get:
+  en: b9ccfa85b40b07eb
+  zh: 4f84e7327b4ff188
+/astro-one-subagent-astro-one-sdk/use-this-package/failure-and-recovery:
+  en: afa946dbae322507
+  zh: 656fabd4babc6697
+/astro-one-subagent-astro-one-sdk/understand-the-implementation:
+  en: 00d076edd7fee716
+  zh: 7aea818c13fe3cc1
+/astro-one-subagent-astro-one-sdk/understand-the-implementation/design-concept:
+  en: e2f233b7d6e9ada8
+  zh: 7e61dd4872b5a0aa
+/astro-one-subagent-astro-one-sdk/understand-the-implementation/source-map:
+  en: 1bed6c1577997df6
+  zh: 8c99f132377f6ca2
+/astro-one-subagent-astro-one-sdk/understand-the-implementation/run-flow:
+  en: 6c50e4e8dc5e0698
+  zh: 9d0011e28341bbde
+/astro-one-subagent-astro-one-sdk/understand-the-implementation/stop-reason-mapping:
+  en: e040a57202916f91
+  zh: 196bf38f0f0db310
+/astro-one-subagent-astro-one-sdk/understand-the-implementation/process-boundary:
+  en: 82aae1253bbb1b01
+  zh: eda8f885542af88d
+/astro-one-subagent-astro-one-sdk/further-exploration:
+  en: aee31107d71fb1e9
+  zh: cc897d7987a204e8
+/astro-one-subagent-astro-one-sdk/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-subagent-astro-one-sdk/model-experience/child-agent-request:
+  en: 05e6180f1498fdf9
+  zh: 2b05d2b97bfa67da
+/astro-one-subagent-astro-one-sdk/model-experience/child-agent-request/what-the-model-sees:
+  en: b8e656d956ac5bd2
+  zh: 26fa79357d1ce452
+/astro-one-subagent-astro-one-sdk/model-experience/child-agent-request/token-effect:
+  en: c0b78d334d5d0a9c
+  zh: 71d1a375a6ab4109
+/astro-one-subagent-astro-one-sdk/model-experience/child-agent-request/kv-cache-effect:
+  en: ab1a7c0bf70e48cd
+  zh: bd699112b4067e95
+/astro-one-subagent-astro-one-sdk/model-experience/parent-tool-result-indirectly:
+  en: 75d061c2151624a7
+  zh: 71e58e020b60ff90
+/astro-one-subagent-astro-one-sdk/model-experience/parent-tool-result-indirectly/what-the-model-sees:
+  en: 39308b9eacf703fa
+  zh: 37a5469f7dc8ec88
+/astro-one-subagent-astro-one-sdk/model-experience/parent-tool-result-indirectly/token-effect:
+  en: 4fae54e2ff0c4874
+  zh: 1574bfe874f66a1f
+/astro-one-subagent-astro-one-sdk/model-experience/parent-tool-result-indirectly/kv-cache-effect:
+  en: f5d5f97a153f7c70
+  zh: 3d6bc05b9eadfbc2
+/astro-one-subagent-astro-one-sdk/known-limitations-and-deferred-work:
+  en: 8f43f79098cfeb37
+  zh: a5ded4086e3d8773
+/astro-one-subagent-astro-one-sdk/known-limitations-and-deferred-work/dev-note:
+  en: 04a404ccea615ef3
+  zh: df2d9d901d75f024

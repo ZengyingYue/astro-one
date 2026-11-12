@@ -1,0 +1,64 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/sandbox/sandbox-local/README.md
+/:
+  en: f172767891b86bf4
+  zh: e66e1cc8c96cc259
+/astro-one-sandbox-local:
+  en: 67974892486d79e0
+  zh: d52bc86be2ffd5cc
+/astro-one-sandbox-local/summary:
+  en: ec0783e3e9b032fe
+  zh: 315ae4fc489df007
+/astro-one-sandbox-local/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-sandbox-local/use-this-package:
+  en: 3759ad594d0a27fb
+  zh: 722010d952b9f87f
+/astro-one-sandbox-local/use-this-package/when-to-choose-it:
+  en: 722ad601000b13c7
+  zh: d2723f3743fe160b
+/astro-one-sandbox-local/use-this-package/minimal-configuration:
+  en: 2b742b0b4bac7dcf
+  zh: 467d71b330be87fa
+/astro-one-sandbox-local/use-this-package/confined-execution-and-enforcement:
+  en: 7282c9ec77fd6f01
+  zh: 10e385a9489105e3
+/astro-one-sandbox-local/use-this-package/failures-and-recovery:
+  en: 9b648f1bfdd55e76
+  zh: d9265bdf2e272581
+/astro-one-sandbox-local/understand-the-implementation:
+  en: 15db6ec303151ccc
+  zh: 91f62c1f64192f92
+/astro-one-sandbox-local/understand-the-implementation/runner-selection:
+  en: f0c44248c2ca6acc
+  zh: 554e9f706671d222
+/astro-one-sandbox-local/understand-the-implementation/platform-profiles:
+  en: ed5f24bd250783eb
+  zh: 08f994c731ec0c6e
+/astro-one-sandbox-local/understand-the-implementation/denial-and-runner-failure-dialects:
+  en: 62adfc9229c656cc
+  zh: 11b1534b6d61e5de
+/astro-one-sandbox-local/understand-the-implementation/source-map:
+  en: 215bb6bac514b8b4
+  zh: 41e7777eea10a480
+/astro-one-sandbox-local/further-exploration:
+  en: f25643f09e153b23
+  zh: 4b68a8df53ecbba0
+/astro-one-sandbox-local/model-experience:
+  en: 95463a6b4a9c0881
+  zh: aef2366d2272d3fc
+/astro-one-sandbox-local/model-experience/kv-cache-effect:
+  en: e290ccc9b3c92c08
+  zh: 469589ac12cdadab
+/astro-one-sandbox-local/known-limitations-and-deferred-work:
+  en: 7cd5c6a4cc971803
+  zh: 4e4f495b654d95c5
+/astro-one-sandbox-local/known-limitations-and-deferred-work/dev-note:
+  en: cc273320f6a1beaf
+  zh: 5c57a312ddc50651
+/astro-one-sandbox-local/known-limitations-and-deferred-work/dev-note/future-environment-coherent-groups:
+  en: 30806aba33067e06
+  zh: 5c417e89d32a8eac

@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Astro One badge skill",
+    "description": "Let agents add a “powered by astro-one” badge to documents, pull requests, and other outputs.",
+    "detail": "docs/DETAIL.md"
+  }
+}

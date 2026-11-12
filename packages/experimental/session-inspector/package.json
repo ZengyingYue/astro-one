@@ -1,0 +1,75 @@
+{
+  "name": "@astro-one/experimental-session-inspector",
+  "description": "Experimental virtualized Session log and live Chat group/node inspectors",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/session-inspector"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./locale/*.json": "./locale/*.json",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "astroOne": {
+    "client": {
+      "inject": [
+        "@astro-one/client-locale",
+        "@astro-one/client-ui-conversation",
+        "@astro-one/client-ui-sidebar-right",
+        "@astro-one/client-ui-session",
+        "@astro-one/client-ui-renderer"
+      ],
+      "platform": "web"
+    }
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/client-test-runtime": "workspace:*",
+    "@testing-library/react": "^16.3.3",
+    "react-dom": "^18.2.0",
+    "@astro-one/api-session-controller": "workspace:*",
+    "@astro-one/client-store": "workspace:*",
+    "@astro-one/client-ui-chat": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-sidebar-right": "workspace:*",
+    "@astro-one/client-ui-session": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@tanstack/react-virtual": "^3.14.10",
+    "react": "^18.2.0",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/client-ui-conversation": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*"
+  }
+}

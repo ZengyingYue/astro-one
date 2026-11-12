@@ -1,0 +1,49 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/creation-recommendations/README.md
+/:
+  en: dca7dd27c5f2c369
+  zh: 00d34e3837bed75a
+/astro-one-creation-recommendations:
+  en: 8d20e499a979bb7e
+  zh: 217f6b4352c0671d
+/astro-one-creation-recommendations/summary:
+  en: b5b132020dabe3d9
+  zh: 02bfe0e8a42d59e2
+/astro-one-creation-recommendations/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: b00dddf4c88f0a45
+/astro-one-creation-recommendations/use-this-package:
+  en: 7f905edd51a2a57f
+  zh: ca7829d72a9409fe
+/astro-one-creation-recommendations/use-this-package/outcomes-and-recovery:
+  en: 1d96f4897b1a5a28
+  zh: 25ca08bc167d1e4a
+/astro-one-creation-recommendations/understand-the-implementation:
+  en: bab1defbcd7430a2
+  zh: 2328f427d6976280
+/astro-one-creation-recommendations/further-exploration:
+  en: 9be99a804ce8dae1
+  zh: a247731fcfe909a7
+/astro-one-creation-recommendations/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-creation-recommendations/model-experience/creation-recommendations:
+  en: b950fbe9f29693d4
+  zh: 2dd7edb2d1c72941
+/astro-one-creation-recommendations/model-experience/creation-recommendations/what-the-model-sees:
+  en: fb03bb6d771bfbfd
+  zh: b1f618e1ecb4b655
+/astro-one-creation-recommendations/model-experience/creation-recommendations/token-effect:
+  en: bd78818f4a9f5422
+  zh: 0f54dbd0f41c5622
+/astro-one-creation-recommendations/model-experience/creation-recommendations/kv-cache-effect:
+  en: b5aa982d000a95fd
+  zh: 4f913a520691db99
+/astro-one-creation-recommendations/known-limitations-and-deferred-work:
+  en: 98b84ecd7080d42a
+  zh: 06402e11616dfc0f
+/astro-one-creation-recommendations/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

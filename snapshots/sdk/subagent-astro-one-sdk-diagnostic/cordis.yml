@@ -1,0 +1,65 @@
+# TypeScript SDK snapshot patch for automatic Astro One SDK failure notices.
+
+- id: skill-filesystem
+  name: '@astro-one/skill-filesystem'
+  config:
+    includeDefaultRoots: false
+
+- id: llm-deepseek
+  name: '@astro-one/llm-deepseek-api-key'
+  config:
+    thinking: enabled
+    reasoningEffort: max
+
+- id: session-persistence-jsonl
+  name: '@astro-one/session-persistence-jsonl'
+  config:
+    root: !!js astroOneHomePath('sessions')
+    compression: !!js "process.env.ASTRO_ONE_SNAPSHOT === undefined ? 'zstd' : 'none'"
+
+- id: session-log-deepseek
+  name: '@astro-one/session-log-deepseek'
+  config:
+    enabled: true
+
+- insert:
+    - id: subagent-astro-one-sdk-diagnostic
+      name: '@astro-one/subagent-astro-one-sdk'
+      config:
+        providerName: astro-one-sdk-diagnostic
+        profile: sdk
+        patches:
+          - !!js process.env.ASTRO_ONE_TEST_CHILD_PATCH
+        astroOneHome: !!js astroOneHomePath('children/first')
+        provider: mock
+        model: mock-echo
+        env:
+          ASTRO_ONE_TELEMETRY_DISABLED: '1'
+          ASTRO_ONE_TEST_CHILD_FAILURE: '1'
+    - id: tool-subagent-astro-one-sdk-diagnostic
+      name: '@astro-one/tool-subagent'
+      config:
+        provider: astro-one-sdk-diagnostic
+        toolName: subagent_astro_one_sdk
+        maxDepth: provider-managed
+    - id: subagent-astro-one-sdk-diagnostic-second
+      name: '@astro-one/subagent-astro-one-sdk'
+      config:
+        providerName: astro-one-sdk-diagnostic-second
+        profile: sdk
+        patches:
+          - !!js process.env.ASTRO_ONE_TEST_CHILD_PATCH
+        astroOneHome: !!js astroOneHomePath('children/second')
+        provider: mock
+        model: mock-echo
+        env:
+          ASTRO_ONE_TELEMETRY_DISABLED: '1'
+          ASTRO_ONE_TEST_CHILD_FAILURE: '1'
+    - id: tool-subagent-astro-one-sdk-diagnostic-second
+      name: '@astro-one/tool-subagent'
+      config:
+        provider: astro-one-sdk-diagnostic-second
+        toolName: subagent_astro_one_sdk_second
+        maxDepth: provider-managed
+    - id: await-external-subagents
+      name: '../../../packages/test-support/session-snapshot/tests/fixtures/subagent-settlement-barrier.ts'

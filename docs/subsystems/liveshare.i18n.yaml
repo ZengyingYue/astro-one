@@ -1,0 +1,25 @@
+# Bilingual-pair consistency record for liveshare.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/subsystems/liveshare.md
+/liveshare:
+  en: 499dab1d300bc8d6
+  zh: 5b3fafe4b0a411cf
+/liveshare/enabling-and-visibility:
+  en: 4bf8d7e42d3861ce
+  zh: b276697ca2c55fde
+/liveshare/share-modes:
+  en: 08ce9269b4556bdd
+  zh: 7b0e6e74e2f60865
+/liveshare/forks-and-their-ceiling:
+  en: 357a2147f48f5bac
+  zh: a8a297603f984ede
+/liveshare/retries-recovery-and-revocation:
+  en: 6b1346e73ab6eab9
+  zh: 888cfc08c6bc8522
+/liveshare/constraining-a-shared-session:
+  en: 6399c264a6e7b510
+  zh: 03190b1e7aefe6de
+/liveshare/viewer-states:
+  en: 635c793ef5b807ec
+  zh: 1ced24b0ba5fa5b4

@@ -1,0 +1,52 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/cua-macos/README.md
+/:
+  en: a1503331d3f35516
+  zh: fcb8e5220ff732e1
+/astro-one-experimental-cua-macos:
+  en: 5321f72cffdd1f69
+  zh: 25456f65c82fae6a
+/astro-one-experimental-cua-macos/summary:
+  en: 4549f02fc53854a5
+  zh: 6f74f1130b6623a8
+/astro-one-experimental-cua-macos/table-of-contents:
+  en: 35485b87351180ce
+  zh: 9bfdd4175ef74a38
+/astro-one-experimental-cua-macos/use-this-package:
+  en: 92a0113fe91e4a73
+  zh: 02c06c0377e461b7
+/astro-one-experimental-cua-macos/use-this-package/connect-an-external-execution-environment:
+  en: ace31d1666de9f2a
+  zh: e52a1075e69f2bea
+/astro-one-experimental-cua-macos/understand-the-implementation:
+  en: 8b9ec208ca057a4a
+  zh: e8dbb45891ad15b8
+/astro-one-experimental-cua-macos/further-exploration:
+  en: 69e81255fe9782c9
+  zh: f692d8d66c0dc7a2
+/astro-one-experimental-cua-macos/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-experimental-cua-macos/model-experience/native-application-operations:
+  en: ab7cba4a42334ab9
+  zh: f77cd9d84624b6c2
+/astro-one-experimental-cua-macos/model-experience/native-application-operations/what-the-model-sees:
+  en: c221fa5ce647b1dd
+  zh: 9388c91a9f89e029
+/astro-one-experimental-cua-macos/model-experience/native-application-operations/what-the-model-sees/operation-guidance-verbatim:
+  en: 2dbc22ffd1f8a717
+  zh: d4458872e75305d9
+/astro-one-experimental-cua-macos/model-experience/native-application-operations/token-effect:
+  en: ab52b46d874fa8b9
+  zh: e87d3620ef77cb06
+/astro-one-experimental-cua-macos/model-experience/native-application-operations/kv-cache-effect:
+  en: a2c9acb5a4320dda
+  zh: e8d1586af60215c4
+/astro-one-experimental-cua-macos/known-limitations-and-deferred-work:
+  en: 56511f4bd413d940
+  zh: 9c80ba7911238101
+/astro-one-experimental-cua-macos/known-limitations-and-deferred-work/dev-note:
+  en: b836f01bd0bceb4a
+  zh: 8122fa08b2aa95fa

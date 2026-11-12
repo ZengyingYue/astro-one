@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-shortcuts/README.md
+/:
+  en: 425afaf83c04db08
+  zh: d9e6db1541ba0911
+/astro-one-client-ui-shortcuts:
+  en: c25613d9756d9d9d
+  zh: b9bd7c1517c1f9d5
+/astro-one-client-ui-shortcuts/summary:
+  en: 17b5fa1a23fa2756
+  zh: ec6223b8d2a090f0
+/astro-one-client-ui-shortcuts/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 0cd57b7b8d8c9b59
+/astro-one-client-ui-shortcuts/use-this-package:
+  en: 08dc62d208521b9f
+  zh: f3d87f2ba8a4350e
+/astro-one-client-ui-shortcuts/understand-the-implementation:
+  en: f56f2610e7258825
+  zh: 249d7cdd55c57166
+/astro-one-client-ui-shortcuts/further-exploration:
+  en: e93fffe4a69c659d
+  zh: 181f514def48a623
+/astro-one-client-ui-shortcuts/model-experience:
+  en: 3120df665299c634
+  zh: e2dc75ed76d271bc
+/astro-one-client-ui-shortcuts/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: a0e9f8d52b4b62ee
+/astro-one-client-ui-shortcuts/known-limitations-and-deferred-work:
+  en: 38861843f3e2844f
+  zh: 1cb81d8c6b151795
+/astro-one-client-ui-shortcuts/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

@@ -1,0 +1,3 @@
+- name: '@astro-one/session'
+- name: '@astro-one/session-projection'
+- name: './legacy-plugin.ts'

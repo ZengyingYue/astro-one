@@ -1,0 +1,67 @@
+{
+  "name": "@astro-one/client-ui-settings-subagent",
+  "description": "Settings page of Subagent delegation on the astro-one web client's Plugins page: recursion depth, parallel capacity, and the models agents may choose for subagents",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/client/ui-settings-subagent"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "astroOne": {
+    "client": {
+      "inject": [
+        "@astro-one/client-locale",
+        "@astro-one/client-ui-settings",
+        "@astro-one/client-ui-plugin-manager",
+        "@astro-one/api-remotes"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/api-remotes": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/client-store": "workspace:*",
+    "@astro-one/client-test-runtime": "workspace:*",
+    "@astro-one/client-ui-plugin-manager": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-settings": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
+    "react": "^18.2.0"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts"
+  ]
+}

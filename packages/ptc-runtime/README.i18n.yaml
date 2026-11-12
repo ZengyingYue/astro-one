@@ -1,0 +1,25 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/ptc-runtime/README.md
+/:
+  en: 1bb0d1f590789f43
+  zh: 2297f7fb333c7212
+/ptc-runtime-ptc-execution-capability-family:
+  en: a79db82af9e86e44
+  zh: 60209355f84f324f
+/ptc-runtime-ptc-execution-capability-family/summary:
+  en: a51c702e3930c51a
+  zh: 3f9a2b131a319b71
+/ptc-runtime-ptc-execution-capability-family/table-of-contents:
+  en: 1eb35b015a6c423f
+  zh: a8a3dceee2c9e943
+/ptc-runtime-ptc-execution-capability-family/packages:
+  en: 8e7b7eaaf630ae51
+  zh: c49e6f1e0d5333a2
+/ptc-runtime-ptc-execution-capability-family/related-documentation:
+  en: 0e63f22eabf7257f
+  zh: 2b7070e5903d75d5
+/ptc-runtime-ptc-execution-capability-family/dev-note:
+  en: 5de1d6304e00c58f
+  zh: 8d8225361cfa29e5

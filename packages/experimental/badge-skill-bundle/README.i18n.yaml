@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/badge-skill-bundle/README.md
+/:
+  en: 2e9c29eba77e8910
+  zh: 89c950e4d6d5c06a
+/astro-one-experimental-badge-skill-bundle:
+  en: 2fc346e5d5b777f9
+  zh: 22242adde161c7bb
+/astro-one-experimental-badge-skill-bundle/summary:
+  en: bd5fbdc22538f96c
+  zh: 2e2d6adea1acaf39
+/astro-one-experimental-badge-skill-bundle/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 988e839059414d27
+/astro-one-experimental-badge-skill-bundle/use-this-package:
+  en: daec241bc345ce06
+  zh: d0f0b321f67b1ebc
+/astro-one-experimental-badge-skill-bundle/understand-the-implementation:
+  en: d07b8466ca40cbbe
+  zh: 905a02272de79d95
+/astro-one-experimental-badge-skill-bundle/further-exploration:
+  en: 3e786dd629abf7bd
+  zh: 8afc7c2475c79706
+/astro-one-experimental-badge-skill-bundle/model-experience:
+  en: 04055294bb74ef3d
+  zh: 17a7fbb45797b5ad
+/astro-one-experimental-badge-skill-bundle/model-experience/kv-cache-effect:
+  en: 1b2209bbbf869b1a
+  zh: 5b9de62271343e4e
+/astro-one-experimental-badge-skill-bundle/known-limitations-and-deferred-work:
+  en: b27c0eb9ccdcaa0d
+  zh: 7d51470bec70861a
+/astro-one-experimental-badge-skill-bundle/known-limitations-and-deferred-work/dev-note:
+  en: 279d01435256cd2a
+  zh: 83780964e5de2f54

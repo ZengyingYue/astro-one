@@ -1,0 +1,91 @@
+{
+  "name": "@astro-one/client-ui-schedule",
+  "description": "Host task management page and Session reminder catalog",
+  "version": "0.2.2-alpha.3",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "astroOne": {
+    "client": {
+      "inject": [
+        "@astro-one/api-remotes",
+        "@astro-one/api-session-controller",
+        "@astro-one/api-workspace-controller",
+        "@astro-one/client-connection",
+        "@astro-one/client-locale",
+        "@astro-one/client-ui-conversation",
+        "@astro-one/client-ui-layout",
+        "@astro-one/client-ui-sidebar",
+        "@astro-one/client-ui-sidebar-right",
+        "@astro-one/client-ui-tool",
+        "@astro-one/client-ui-workspace",
+        "@astro-one/client-ui-primitives"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/client/ui-schedule"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/api-remote-access": "workspace:*",
+    "@astro-one/api-remotes": "workspace:*",
+    "@astro-one/api-session-controller": "workspace:*",
+    "@astro-one/api-workspace-controller": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/client-store": "workspace:*",
+    "@astro-one/client-test-runtime": "workspace:*",
+    "@astro-one/client-ui-conversation": "workspace:*",
+    "@astro-one/client-ui-layout": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-session": "workspace:*",
+    "@astro-one/client-ui-sidebar": "workspace:*",
+    "@astro-one/client-ui-sidebar-right": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
+    "@astro-one/client-ui-tool": "workspace:*",
+    "@astro-one/client-ui-workspace": "workspace:*",
+    "@astro-one/schedule": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/util-time": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@testing-library/react": "^16.3.3",
+    "clsx": "^2.1.1",
+    "@astro-one/cordis": "workspace:~",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts"
+  ]
+}

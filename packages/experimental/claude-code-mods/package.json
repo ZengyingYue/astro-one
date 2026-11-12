@@ -1,0 +1,105 @@
+{
+  "name": "@astro-one/experimental-claude-code-mods",
+  "description": "Experimental bridge: load Claude Code mods (hooks modules) and run their hook chains on Astro One extension points",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/claude-code-mods"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./testing": {
+      "types": "./lib/types/testing.d.ts",
+      "default": "./lib/types/testing.js"
+    },
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./examples/*": "./examples/*",
+    "./src/*": "./src/*",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@astro-one/util-crypto": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
+    "zod": "^4.4.3"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/commands": "workspace:*",
+    "@astro-one/fs": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/storage-domain": "workspace:*",
+    "@astro-one/subprocess": "workspace:*",
+    "@astro-one/token-meter": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/user-questions": "workspace:*",
+    "@astro-one/working-directory": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-loop": "workspace:*",
+    "@astro-one/agent-loop-testkit": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/commands": "workspace:*",
+    "@astro-one/fs": "workspace:*",
+    "@astro-one/fs-local": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/storage": "workspace:*",
+    "@astro-one/storage-domain": "workspace:*",
+    "@astro-one/storage-json": "workspace:*",
+    "@astro-one/subprocess": "workspace:*",
+    "@astro-one/subprocess-local": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/token-meter": "workspace:*",
+    "@astro-one/tool-executor-native": "workspace:*",
+    "@astro-one/tool-testkit": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/user-questions": "workspace:*",
+    "@astro-one/working-directory": "workspace:*",
+    "@astro-one/session-persistence-jsonl": "workspace:*"
+  }
+}

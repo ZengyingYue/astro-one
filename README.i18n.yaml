@@ -1,0 +1,46 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write README.md
+/astro-one:
+  en: 8facf1b9d0a61fbd
+  zh: e24961a1a69c4912
+/astro-one/why-astro-one:
+  en: 4b79af43a5099129
+  zh: 92d97a54b2b5ebd4
+/astro-one/see-it-in-action:
+  en: e20e8f0a5d2d8a32
+  zh: e2a47ae7109be697
+/astro-one/see-it-in-action/orbit-mechanics-when-can-i-see-the-iss:
+  en: 1e222d1bc87ff604
+  zh: 12f920a01ed5d341
+/astro-one/see-it-in-action/earth-observation-mapping-the-lahaina-wildfire-burn-scar:
+  en: 00d2b51a0f20a529
+  zh: b0da295748124b7c
+/astro-one/see-it-in-action/gnss-single-point-positioning-versus-rtk:
+  en: 1ae4465a4c84d4ae
+  zh: 47a12140bb2c10af
+/astro-one/see-it-in-action/one-switch-to-enable:
+  en: 5f583e004641a05c
+  zh: 5027477fb7a598fb
+/astro-one/aerospace-toolset:
+  en: 24d0baa5e64f39a4
+  zh: 67f327908d8ccbfb
+/astro-one/run:
+  en: 5f71c84cae09c3ce
+  zh: 9d3a921529f0b875
+/astro-one/run/run-from-source:
+  en: a94c936e7da94744
+  zh: 1481e70986fb8df5
+/astro-one/architecture:
+  en: 6a5e84f1d9811b70
+  zh: 403f9a69dc98cd8c
+/astro-one/development:
+  en: f8a097e28569a60d
+  zh: aaff9ca4ee16e5f8
+/astro-one/acknowledgements:
+  en: 58bac4960886b271
+  zh: 589600ea8f7b3e87
+/astro-one/license:
+  en: bc8cfcd4426031d3
+  zh: ff42d2fc354c5513

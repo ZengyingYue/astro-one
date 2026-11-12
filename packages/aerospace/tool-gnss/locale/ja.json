@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "GNSS 測位ツール",
+    "description": "RINEX に基づく RAIM 付き単独測位、LAMBDA アンビギュイティ解決を用いた RTK、衛星可視性と DOP の計画。"
+  }
+}

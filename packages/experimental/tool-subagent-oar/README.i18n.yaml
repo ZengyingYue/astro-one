@@ -1,0 +1,52 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/tool-subagent-oar/README.md
+/:
+  en: 85780a9fcc4720e5
+  zh: ff5b2d870cf3b73f
+/astro-one-experimental-tool-subagent-oar:
+  en: 456d0bafe95d7c45
+  zh: fd74a8785a6aac96
+/astro-one-experimental-tool-subagent-oar/summary:
+  en: 8adbaf2511d2c47f
+  zh: 1495f6bdb84a30ea
+/astro-one-experimental-tool-subagent-oar/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 8d1e20b826450ffe
+/astro-one-experimental-tool-subagent-oar/use-this-package:
+  en: 811bd2eaff077236
+  zh: c48777c04a40b6c6
+/astro-one-experimental-tool-subagent-oar/use-this-package/when-to-choose-it:
+  en: b06f103fc0be1e5f
+  zh: d000b83e1b624c1d
+/astro-one-experimental-tool-subagent-oar/use-this-package/minimal-configuration:
+  en: 4a006fb5756fd151
+  zh: 5140c3e0ca4d2bc2
+/astro-one-experimental-tool-subagent-oar/understand-the-implementation:
+  en: 3e8a9fffa9c5afd0
+  zh: 932b6d0b682208ba
+/astro-one-experimental-tool-subagent-oar/further-exploration:
+  en: 2227c4f360e83848
+  zh: 8ff14fc8a565b458
+/astro-one-experimental-tool-subagent-oar/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-experimental-tool-subagent-oar/model-experience/external-delegation-tool:
+  en: 8febbb031aa0452d
+  zh: da3f9011631652da
+/astro-one-experimental-tool-subagent-oar/model-experience/external-delegation-tool/what-the-model-sees:
+  en: bdd352aa9a721577
+  zh: 4e8ea781b38558ba
+/astro-one-experimental-tool-subagent-oar/model-experience/external-delegation-tool/token-effect:
+  en: 60d7ffec7f4dc858
+  zh: 09f286978df6b4ec
+/astro-one-experimental-tool-subagent-oar/model-experience/external-delegation-tool/kv-cache-effect:
+  en: 7c1ac0b007b2f0ce
+  zh: 2332a07c6f8bcbdc
+/astro-one-experimental-tool-subagent-oar/known-limitations-and-deferred-work:
+  en: 5157ca8c4aa1a865
+  zh: 47ad253d87a02838
+/astro-one-experimental-tool-subagent-oar/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

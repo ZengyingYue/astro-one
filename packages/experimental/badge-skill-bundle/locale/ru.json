@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Astro One значок навыка",
+    "description": "Позвольте агентам добавлять значок «Powered by astro-one» к документам, запросам на включение и другим результатам.",
+    "detail": "docs/DETAIL.md"
+  }
+}

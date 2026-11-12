@@ -1,0 +1,52 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/host/open-in-app/README.md
+/:
+  en: fbd3cf9953271b10
+  zh: 6efe4d036544d0d2
+/astro-one-host-open-in-app:
+  en: f78ab62c650bc340
+  zh: 997bd4d0bd7f1ed2
+/astro-one-host-open-in-app/summary:
+  en: 887d751088ec0cc8
+  zh: 0a3ae668ecbe8c18
+/astro-one-host-open-in-app/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 725b47765ee8f30b
+/astro-one-host-open-in-app/use-this-package:
+  en: b27687b8ab1dcdcb
+  zh: 8fade23ade989748
+/astro-one-host-open-in-app/use-this-package/when-to-choose-it:
+  en: a4d8266c4f023496
+  zh: 5272283d4b86c3c5
+/astro-one-host-open-in-app/use-this-package/minimal-configuration:
+  en: 49b2d1eca0e62421
+  zh: 32637720f72bbb83
+/astro-one-host-open-in-app/use-this-package/the-catalog-and-how-it-resolves:
+  en: 7a63acc1bc55aa6f
+  zh: bbe541dbe88b2ba6
+/astro-one-host-open-in-app/use-this-package/what-to-expect:
+  en: 353cf61df9fca382
+  zh: fadb7558ecf69b41
+/astro-one-host-open-in-app/use-this-package/the-shared-subpath:
+  en: 558e741770080c93
+  zh: 80482d355dc89cae
+/astro-one-host-open-in-app/understand-the-implementation:
+  en: ee2a0ae772aecfb1
+  zh: 3d23cb19f3420d0b
+/astro-one-host-open-in-app/further-exploration:
+  en: 50777c8cd0cd74f8
+  zh: c5c06974d048b66e
+/astro-one-host-open-in-app/model-experience:
+  en: f4b8dd6b4e986564
+  zh: 814a768a38e52c03
+/astro-one-host-open-in-app/model-experience/kv-cache-effect:
+  en: 47f982e326fe77fd
+  zh: c2241315dc0c89c9
+/astro-one-host-open-in-app/known-limitations-and-deferred-work:
+  en: 6e1cf559c4ce0d56
+  zh: f78c5548bb3d6236
+/astro-one-host-open-in-app/known-limitations-and-deferred-work/dev-note:
+  en: 1b7b12a6d7d52628
+  zh: 57d096d25b40778e

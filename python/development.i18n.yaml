@@ -1,0 +1,22 @@
+# Bilingual-pair consistency record for development.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write python/development.md
+/python-contributor-workflows:
+  en: 71731f1f93dd9788
+  zh: 321be304814cf362
+/python-contributor-workflows/build-runtime-artifacts:
+  en: 8e99640e4936332d
+  zh: 729d5de1e0ad2869
+/python-contributor-workflows/validate-the-sdk:
+  en: 7e5fc36d2acd34c2
+  zh: 062282bd862e3c4f
+/python-contributor-workflows/run-against-node-source:
+  en: 48efd78cd90ab467
+  zh: 7f08ceaef3aa19cb
+/python-contributor-workflows/build-distributions:
+  en: fb4b9b4333873b6d
+  zh: 180f304a304c8639
+/python-contributor-workflows/validate-a-release-candidate:
+  en: dd3298f2b221451f
+  zh: 8dad5bf59caa2636

@@ -1,0 +1,124 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/sdk/server/README.md
+/:
+  en: 0ab798e5157e9d6c
+  zh: 8f6c9b5c4fe1956b
+/astro-one-sdk-jsonrpc-server:
+  en: 020736fa9bd79abd
+  zh: cdbcad0f2aa4745b
+/astro-one-sdk-jsonrpc-server/summary:
+  en: e45c8921b908ed63
+  zh: 7335bc937ab9c240
+/astro-one-sdk-jsonrpc-server/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-sdk-jsonrpc-server/use-this-package:
+  en: b94f4e847152f289
+  zh: 6def38323818fd78
+/astro-one-sdk-jsonrpc-server/use-this-package/wiring:
+  en: 47a33e9397e36e15
+  zh: e6d173820f9ea6e5
+/astro-one-sdk-jsonrpc-server/use-this-package/configuration:
+  en: 2e8132331810d865
+  zh: 0f33c5e3e833d5cb
+/astro-one-sdk-jsonrpc-server/use-this-package/stdout-is-the-protocol:
+  en: 784b68b5a498f2d5
+  zh: 2c3c5a1490845179
+/astro-one-sdk-jsonrpc-server/use-this-package/what-sdk-clients-can-do:
+  en: c01314142649a6f7
+  zh: 7c4d7d35845ca815
+/astro-one-sdk-jsonrpc-server/use-this-package/native-user-questions:
+  en: f69f633e75d87f2f
+  zh: 475b6296921dc7e4
+/astro-one-sdk-jsonrpc-server/use-this-package/shutdown-and-exit:
+  en: 08c3858f53090f39
+  zh: dfae960e11515b06
+/astro-one-sdk-jsonrpc-server/understand-the-implementation:
+  en: eca39e7027d67d8f
+  zh: dd3f494276322857
+/astro-one-sdk-jsonrpc-server/understand-the-implementation/design-concept:
+  en: 12faadd490cd3497
+  zh: 7b75112d87b235e0
+/astro-one-sdk-jsonrpc-server/understand-the-implementation/source-map:
+  en: 783bd2b6628c0680
+  zh: ca5b6b730893ddec
+/astro-one-sdk-jsonrpc-server/understand-the-implementation/request-flow:
+  en: 2658804b2f90b135
+  zh: 085aa00c8f0bbbcd
+/astro-one-sdk-jsonrpc-server/understand-the-implementation/teardown:
+  en: 7e4403a7b1da7ff4
+  zh: ef75ee9411486b90
+/astro-one-sdk-jsonrpc-server/further-exploration:
+  en: 19061160f159fd01
+  zh: b014717683a424d5
+/astro-one-sdk-jsonrpc-server/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-sdk-jsonrpc-server/model-experience/sdk-user-message:
+  en: 04d1b73cd8e06dfe
+  zh: cd67fbbfdf39f776
+/astro-one-sdk-jsonrpc-server/model-experience/sdk-user-message/what-the-model-sees:
+  en: 04c09df4f7053490
+  zh: 236f0f0b97892821
+/astro-one-sdk-jsonrpc-server/model-experience/sdk-user-message/token-effect:
+  en: 372ed851986b76d2
+  zh: 075b94a565275368
+/astro-one-sdk-jsonrpc-server/model-experience/sdk-user-message/kv-cache-effect:
+  en: f5d5f97a153f7c70
+  zh: f681f89596f500f5
+/astro-one-sdk-jsonrpc-server/model-experience/manual-compaction:
+  en: fa59bcc530a2f385
+  zh: 4b17b38c0b30e85f
+/astro-one-sdk-jsonrpc-server/model-experience/manual-compaction/what-the-model-sees:
+  en: 754bb45c7f3809ee
+  zh: 1e56854d32d9debf
+/astro-one-sdk-jsonrpc-server/model-experience/manual-compaction/token-effect:
+  en: 8f0d7b5a80cc1240
+  zh: 2c28370ab2ff5556
+/astro-one-sdk-jsonrpc-server/model-experience/manual-compaction/kv-cache-effect:
+  en: 6575950aede7f71e
+  zh: bfbfbba8b10fc448
+/astro-one-sdk-jsonrpc-server/model-experience/session-permission-changes:
+  en: 9a6bbed77944026e
+  zh: 0cf9e179dddeeeb5
+/astro-one-sdk-jsonrpc-server/model-experience/session-permission-changes/what-the-model-sees:
+  en: 14cfae7e6bb34dac
+  zh: 35e9d4139499ab1e
+/astro-one-sdk-jsonrpc-server/model-experience/session-permission-changes/token-effect:
+  en: 6fd7b795a324c0e9
+  zh: e13a949d27e91e4d
+/astro-one-sdk-jsonrpc-server/model-experience/session-permission-changes/kv-cache-effect:
+  en: a6c8c78f7e558ed1
+  zh: 410aef8f5f230d67
+/astro-one-sdk-jsonrpc-server/model-experience/plan-commands:
+  en: 6714c05c148b2a6e
+  zh: e85929c987561499
+/astro-one-sdk-jsonrpc-server/model-experience/plan-commands/what-the-model-sees:
+  en: d3501b446077ab57
+  zh: faea67877f102c27
+/astro-one-sdk-jsonrpc-server/model-experience/plan-commands/token-effect:
+  en: 915597a108a3e579
+  zh: 22f818fa1e6a5e1c
+/astro-one-sdk-jsonrpc-server/model-experience/plan-commands/kv-cache-effect:
+  en: 1403de19597c9bfd
+  zh: a3d41798c45577cb
+/astro-one-sdk-jsonrpc-server/model-experience/goal-commands:
+  en: 00f1a91f6d15e4a0
+  zh: cad13107ea16b3de
+/astro-one-sdk-jsonrpc-server/model-experience/goal-commands/what-the-model-sees:
+  en: c6eb4550e60408b3
+  zh: 5b3c86f26cf8dc09
+/astro-one-sdk-jsonrpc-server/model-experience/goal-commands/token-effect:
+  en: 7a4c40ba3c812bca
+  zh: 8ba8e1c5e1a1c58d
+/astro-one-sdk-jsonrpc-server/model-experience/goal-commands/kv-cache-effect:
+  en: f4edb02fb1124718
+  zh: 0f70aae68553eb5a
+/astro-one-sdk-jsonrpc-server/known-limitations-and-deferred-work:
+  en: a6d0b12d02961572
+  zh: 92822e033db55980
+/astro-one-sdk-jsonrpc-server/known-limitations-and-deferred-work/dev-note:
+  en: 583a835f84c55c33
+  zh: a4377e2c9bea8c4e

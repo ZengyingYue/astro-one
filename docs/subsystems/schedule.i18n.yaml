@@ -1,0 +1,49 @@
+# Bilingual-pair consistency record for schedule.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/subsystems/schedule.md
+/host-wide-schedule:
+  en: 3343def60a250ece
+  zh: 9bb7ebe88d2e8b1f
+/host-wide-schedule/durable-tasks:
+  en: 6e5332363ca760d8
+  zh: 54aa016cd7a7150f
+/host-wide-schedule/storage-versioning:
+  en: c1a2787b967821eb
+  zh: 79466d0daeec2fcd
+/host-wide-schedule/recurrence-rules:
+  en: aac0efd6e1b0dc6d
+  zh: cdc83fade8120717
+/host-wide-schedule/absolute-time-input:
+  en: a7c1c1b63ffb19cf
+  zh: 9b00f818c4774ad8
+/host-wide-schedule/daily-and-weekly-input:
+  en: a4c09868c5009bef
+  zh: 511ec3d7ae6b0d98
+/host-wide-schedule/fixed-rate-input-and-catch-up:
+  en: 79fb76147de2d82c
+  zh: 8a75d2bc1229caf3
+/host-wide-schedule/cron-input:
+  en: 0019e68edcba3717
+  zh: 82efc84f09bb8062
+/host-wide-schedule/rrule-input:
+  en: f93ebb99c73f5d38
+  zh: 8b5787f0ea845ad2
+/host-wide-schedule/delivery-targets:
+  en: d10b60799a055427
+  zh: 68d33f2f59f826b8
+/host-wide-schedule/task-management:
+  en: 41c78fe6d9bcb0d1
+  zh: 479fb465dc5a387c
+/host-wide-schedule/timing-edits:
+  en: 93c882d1c1924527
+  zh: 750b73ab93c9517a
+/host-wide-schedule/saved-delivery-records:
+  en: 968ae643ca6533a9
+  zh: ec47298b370b2b05
+/host-wide-schedule/host-delivery:
+  en: 362e9b4c26f90b5a
+  zh: 37a9882fcf5bafc1
+/host-wide-schedule/historical-session-changes:
+  en: 0df44daf6df88577
+  zh: 178d9dc601ac2843

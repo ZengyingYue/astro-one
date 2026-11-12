@@ -1,0 +1,19 @@
+# Bilingual-pair consistency record for system-prompt.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/subsystems/system-prompt.md
+/system-prompt-assembly:
+  en: 369099fb3ffd5ba0
+  zh: 6324cceb8ad4b6f8
+/system-prompt-assembly/assembly-context:
+  en: a51dd9cc3d9c677a
+  zh: e879c09c815e3028
+/system-prompt-assembly/tool-provider-result:
+  en: 89cb015bf2e3e7a5
+  zh: b4340e853b34c777
+/system-prompt-assembly/prompt-sections:
+  en: 89b41872d2fe8ed5
+  zh: 1cb59b9575f48e24
+/system-prompt-assembly/dynamic-prompt-context:
+  en: 2abb13dec8e6d041
+  zh: 8cf434f360d8a519

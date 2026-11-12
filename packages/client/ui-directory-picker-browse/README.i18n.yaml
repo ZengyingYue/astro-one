@@ -1,0 +1,40 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-directory-picker-browse/README.md
+/:
+  en: 5f823b578f5be33d
+  zh: 5e12bb5290b0286b
+/astro-one-client-ui-directory-picker-browse:
+  en: 8796a2d72c9a13da
+  zh: a5a2d3ba548bf529
+/astro-one-client-ui-directory-picker-browse/summary:
+  en: b2a71dd3bc0df9a5
+  zh: de367cad5471ba43
+/astro-one-client-ui-directory-picker-browse/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-client-ui-directory-picker-browse/use-this-package:
+  en: cdbe8123b57753f7
+  zh: 5dde9de661e98273
+/astro-one-client-ui-directory-picker-browse/use-this-package/navigating-and-creating:
+  en: 18e10884b02f288f
+  zh: 06debd0a4a88bdac
+/astro-one-client-ui-directory-picker-browse/understand-the-implementation:
+  en: e3099cebf3b1c6b2
+  zh: 408a9d4079fdba85
+/astro-one-client-ui-directory-picker-browse/further-exploration:
+  en: 56bd483484f876df
+  zh: 65e720bcbd987865
+/astro-one-client-ui-directory-picker-browse/model-experience:
+  en: 3bcc2b54b66f366e
+  zh: 489716ece3a4ef2a
+/astro-one-client-ui-directory-picker-browse/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: f57cc48a1b5cbfa9
+/astro-one-client-ui-directory-picker-browse/known-limitations-and-deferred-work:
+  en: 20e381071e1644e2
+  zh: 9260bcb09a52dd8c
+/astro-one-client-ui-directory-picker-browse/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

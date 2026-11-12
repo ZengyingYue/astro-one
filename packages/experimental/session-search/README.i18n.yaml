@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/session-search/README.md
+/:
+  en: c8e3f38d9f1a4e2f
+  zh: 0ece950cf48261a1
+/astro-one-experimental-session-search:
+  en: 55e8b6d2e05ffd39
+  zh: d5da6e365a13a058
+/astro-one-experimental-session-search/summary:
+  en: b97bf7f544470659
+  zh: ca0cc17a5806963f
+/astro-one-experimental-session-search/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 988e839059414d27
+/astro-one-experimental-session-search/use-this-package:
+  en: c31576d94c484dd0
+  zh: b67a0ad0bc9c2594
+/astro-one-experimental-session-search/understand-the-implementation:
+  en: a7c63303ada9fb3c
+  zh: b7c5e5aab2cd0205
+/astro-one-experimental-session-search/further-exploration:
+  en: 4b58e11d44cbbe61
+  zh: f44cd4b81a3d1e1a
+/astro-one-experimental-session-search/model-experience:
+  en: 5fb4075c24cbacd7
+  zh: 0d1253aef1b0963b
+/astro-one-experimental-session-search/model-experience/kv-cache-effect:
+  en: 25f20eda0e696067
+  zh: 378c4a15a5704ba0
+/astro-one-experimental-session-search/known-limitations-and-deferred-work:
+  en: 5ba4aae8ef1f62d2
+  zh: a7599243880f7482
+/astro-one-experimental-session-search/known-limitations-and-deferred-work/dev-note:
+  en: 279d01435256cd2a
+  zh: 83780964e5de2f54

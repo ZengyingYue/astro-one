@@ -1,0 +1,91 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/llm/llm-deepseek/README.md
+/:
+  en: c6924d7c0d7c82ff
+  zh: 95fbf06db428f532
+/astro-one-llm-deepseek:
+  en: 08c99e9468699199
+  zh: 577fca39b443dc85
+/astro-one-llm-deepseek/summary:
+  en: c54fba3894be2460
+  zh: 989bae02641a14d8
+/astro-one-llm-deepseek/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-llm-deepseek/use-this-package:
+  en: 054f39e8c3784226
+  zh: a931eb65f7a092f0
+/astro-one-llm-deepseek/use-this-package/when-to-choose-it:
+  en: 29e2846630a47ab8
+  zh: 44a4a3731352d895
+/astro-one-llm-deepseek/use-this-package/minimal-configuration:
+  en: 59f78e2d99f5574a
+  zh: 0039f85827e8fe2b
+/astro-one-llm-deepseek/use-this-package/endpoint-and-wire-format:
+  en: 559f2a1b85de8d42
+  zh: 08af2386b3e9ecbd
+/astro-one-llm-deepseek/use-this-package/account-credentials:
+  en: 8c38cf178e8045a9
+  zh: dcf10190f85dc56b
+/astro-one-llm-deepseek/use-this-package/streaming-with-thinking-and-images:
+  en: 81bf213499f015ba
+  zh: e9107ef322213e56
+/astro-one-llm-deepseek/use-this-package/dynamic-configuration:
+  en: 49290fc5647136b4
+  zh: 96fa9ce0f9e83c13
+/astro-one-llm-deepseek/use-this-package/provider-specific-request-fields:
+  en: 9d567d227505f3c6
+  zh: ed055e4b91c6f161
+/astro-one-llm-deepseek/use-this-package/failures-and-recovery:
+  en: af765c639fb06d3d
+  zh: 8d439e45692d4c32
+/astro-one-llm-deepseek/understand-the-implementation:
+  en: 1598ac8a8bb9b6bf
+  zh: fdd089c5ae7722cd
+/astro-one-llm-deepseek/understand-the-implementation/design-philosophy:
+  en: 829203c4c282dc46
+  zh: e05dada4a1420a95
+/astro-one-llm-deepseek/understand-the-implementation/source-map:
+  en: 584698e2c7686997
+  zh: 2aed9608d5317d7b
+/astro-one-llm-deepseek/understand-the-implementation/wire-flow:
+  en: 9477d8af3d762450
+  zh: 52a2967518509f94
+/astro-one-llm-deepseek/further-exploration:
+  en: a0875fc045a6b6a6
+  zh: c4ec74ca6f79fc17
+/astro-one-llm-deepseek/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-llm-deepseek/model-experience/deepseek-request:
+  en: 1dc50052999253c6
+  zh: 7abf968fc18bffcd
+/astro-one-llm-deepseek/model-experience/deepseek-request/what-the-model-sees:
+  en: e7b2d86fc1c4e3ca
+  zh: 9b383ea055822332
+/astro-one-llm-deepseek/model-experience/deepseek-request/token-effect:
+  en: cb7dc24373526829
+  zh: 6a4310f1ba634ad5
+/astro-one-llm-deepseek/model-experience/deepseek-request/kv-cache-effect:
+  en: 87ac92776176ee15
+  zh: bb49edf3a68dda07
+/astro-one-llm-deepseek/model-experience/deepseek-response:
+  en: 957d6665495e5ca5
+  zh: 0aa72b2c2dc07167
+/astro-one-llm-deepseek/model-experience/deepseek-response/what-the-model-sees:
+  en: 36a3d0297d6ca209
+  zh: bfc68b8300f61593
+/astro-one-llm-deepseek/model-experience/deepseek-response/token-effect:
+  en: 533309d1f93b89de
+  zh: 4cc0b86f05c9be53
+/astro-one-llm-deepseek/model-experience/deepseek-response/kv-cache-effect:
+  en: ddfbea043596878d
+  zh: 4fbf5864a684c053
+/astro-one-llm-deepseek/known-limitations-and-deferred-work:
+  en: 2d0568055648a7e9
+  zh: f120103b903fff7b
+/astro-one-llm-deepseek/known-limitations-and-deferred-work/dev-note:
+  en: 79866ec883826f35
+  zh: 3493c81821726131

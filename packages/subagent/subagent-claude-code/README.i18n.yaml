@@ -1,0 +1,82 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/subagent/subagent-claude-code/README.md
+/:
+  en: 098697371ce8b694
+  zh: 1cf5aee9be614a5d
+/astro-one-subagent-claude-code:
+  en: 669dc819a26927c4
+  zh: e48ca58e621269d1
+/astro-one-subagent-claude-code/summary:
+  en: 498d97a8dd913e53
+  zh: d76f0cd25940c540
+/astro-one-subagent-claude-code/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-subagent-claude-code/use-this-package:
+  en: 8e614ec7785cbaae
+  zh: dd5b2ffff8d513c7
+/astro-one-subagent-claude-code/use-this-package/installing-the-bundle:
+  en: 13a2307c030f911f
+  zh: dd1943ac6a91eefc
+/astro-one-subagent-claude-code/use-this-package/configuration:
+  en: 8bc4f9eaf4daca13
+  zh: 0296a69b57c49d70
+/astro-one-subagent-claude-code/use-this-package/exposing-the-tool:
+  en: ebf6ba7fef393ebb
+  zh: fad30b829e2e4188
+/astro-one-subagent-claude-code/use-this-package/what-you-get:
+  en: a731eabea54893d5
+  zh: e370dba101b3a7e8
+/astro-one-subagent-claude-code/use-this-package/failure-and-recovery:
+  en: 3cfe78175e68269e
+  zh: 478666ce1fcb4e59
+/astro-one-subagent-claude-code/understand-the-implementation:
+  en: a04818121f31d222
+  zh: 2ed476ab086c1686
+/astro-one-subagent-claude-code/understand-the-implementation/design-concept:
+  en: c01f4a013f7f1a2f
+  zh: 92221e45d438334d
+/astro-one-subagent-claude-code/understand-the-implementation/source-map:
+  en: 4826e5016f7d9655
+  zh: 9b80696313be1816
+/astro-one-subagent-claude-code/understand-the-implementation/run-flow:
+  en: 4dd16da30209644e
+  zh: 7ea63e1bf4cee29d
+/astro-one-subagent-claude-code/further-exploration:
+  en: 0ac64ce70a075252
+  zh: d2f1fa26c0098911
+/astro-one-subagent-claude-code/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-subagent-claude-code/model-experience/child-request:
+  en: 1796fa78833bfc2b
+  zh: d925d4c0d6c46552
+/astro-one-subagent-claude-code/model-experience/child-request/what-the-model-sees:
+  en: 3edc725966ed48c2
+  zh: 2ec900cc7a4ae459
+/astro-one-subagent-claude-code/model-experience/child-request/token-effect:
+  en: 631f762d31c31a3d
+  zh: f32ad086756bf33d
+/astro-one-subagent-claude-code/model-experience/child-request/kv-cache-effect:
+  en: 1f37a0a78ef63223
+  zh: b6543531dda88e22
+/astro-one-subagent-claude-code/model-experience/parent-scheduling-and-results-indirectly:
+  en: 4c391bb16e3cd380
+  zh: ab3847efe35fa6dc
+/astro-one-subagent-claude-code/model-experience/parent-scheduling-and-results-indirectly/what-the-model-sees:
+  en: a9254151d292c7f5
+  zh: 4a323fef1722ab9d
+/astro-one-subagent-claude-code/model-experience/parent-scheduling-and-results-indirectly/token-effect:
+  en: 0c436fb0897a6eca
+  zh: 7ec0a953d0232af2
+/astro-one-subagent-claude-code/model-experience/parent-scheduling-and-results-indirectly/kv-cache-effect:
+  en: 19f1316ea4bb1bb9
+  zh: 181231ddffdc8494
+/astro-one-subagent-claude-code/known-limitations-and-deferred-work:
+  en: 421cfbcfb55c7e2b
+  zh: df54ab7743cf6e33
+/astro-one-subagent-claude-code/known-limitations-and-deferred-work/dev-note:
+  en: 185beb4ff55f0946
+  zh: 068ca7c57137eb33

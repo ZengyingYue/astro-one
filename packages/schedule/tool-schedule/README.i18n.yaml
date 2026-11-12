@@ -1,0 +1,88 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/schedule/tool-schedule/README.md
+/:
+  en: d77b6ecc8e63e0f2
+  zh: 19ff500139aec118
+/astro-one-tool-schedule:
+  en: 20c871fd32c3d9be
+  zh: cd9f01c218262b5b
+/astro-one-tool-schedule/summary:
+  en: 12d3a73a51c92ec7
+  zh: d5b8b8f0d36fbbfb
+/astro-one-tool-schedule/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-tool-schedule/use-this-package:
+  en: d54bb40aa19d48e9
+  zh: 5ff029a30b4ee2c4
+/astro-one-tool-schedule/use-this-package/when-to-choose-it:
+  en: dc23388348c08890
+  zh: c33c5b803ec7a82a
+/astro-one-tool-schedule/use-this-package/user-authorization:
+  en: bf63fe71777703fe
+  zh: 3935ef0931f9b50f
+/astro-one-tool-schedule/use-this-package/the-four-tools:
+  en: 283174b947d36564
+  zh: af71df1e4afc8f23
+/astro-one-tool-schedule/use-this-package/minimal-configuration:
+  en: 4da5d0e7bff6f5b3
+  zh: 093699c732eacf72
+/astro-one-tool-schedule/understand-the-implementation:
+  en: b3bbc30caad60d2a
+  zh: a0c2fa3e8e085759
+/astro-one-tool-schedule/understand-the-implementation/source-map:
+  en: 9d899dc328be7e20
+  zh: f0c353326e644395
+/astro-one-tool-schedule/further-exploration:
+  en: c49dd1a725c76da9
+  zh: 9bb2c44f1202fa6c
+/astro-one-tool-schedule/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-tool-schedule/model-experience/shared-system-prompt:
+  en: eb7c154ebdf40bd7
+  zh: 40f739f10eb4c89e
+/astro-one-tool-schedule/model-experience/shared-system-prompt/what-the-model-sees:
+  en: bf567fba90b70e70
+  zh: 9b2e01bd756c9b20
+/astro-one-tool-schedule/model-experience/shared-system-prompt/what-the-model-sees/task-authorization:
+  en: 286eac8fa217213b
+  zh: 805ac84224bc2140
+/astro-one-tool-schedule/model-experience/shared-system-prompt/token-effect:
+  en: f943e9c303ec4c7b
+  zh: f44cb084c17b6d2b
+/astro-one-tool-schedule/model-experience/shared-system-prompt/kv-cache-effect:
+  en: 8ecdb4f045cb35e5
+  zh: 46cd350ee096511d
+/astro-one-tool-schedule/model-experience/tool-schemas:
+  en: 3039bc5e7a796b21
+  zh: 6b7a9eaf69c9ea53
+/astro-one-tool-schedule/model-experience/tool-schemas/what-the-model-sees:
+  en: 9d90c5aee1e9c3f0
+  zh: 69d6e6f552e80036
+/astro-one-tool-schedule/model-experience/tool-schemas/token-effect:
+  en: 70fb9094859d0804
+  zh: 30726b045484713c
+/astro-one-tool-schedule/model-experience/tool-schemas/kv-cache-effect:
+  en: 332231fb9f1b8146
+  zh: eace0b2e789d1c0f
+/astro-one-tool-schedule/model-experience/task-results:
+  en: c47b2272c94ac202
+  zh: 6a5bcfde187b3007
+/astro-one-tool-schedule/model-experience/task-results/what-the-model-sees:
+  en: 18459cc1f3009e83
+  zh: 00a9e870dae49f58
+/astro-one-tool-schedule/model-experience/task-results/token-effect:
+  en: 681160f74fec9bec
+  zh: c4cec94e94c56aa8
+/astro-one-tool-schedule/model-experience/task-results/kv-cache-effect:
+  en: 2fbf2175168e8244
+  zh: 9c4c1964ae59e661
+/astro-one-tool-schedule/known-limitations-and-deferred-work:
+  en: 7f67053c33dc9e93
+  zh: a9f743a0ddbd9577
+/astro-one-tool-schedule/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: b2ee0fbaa165910d

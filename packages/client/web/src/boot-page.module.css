@@ -1,0 +1,108 @@
+/* The framework-free boot page cannot depend on theme delivery succeeding. */
+
+.boot {
+  --astro-one-boot-label-primary: #0a1426;
+  --astro-one-boot-label-secondary: #3a4b63;
+  --astro-one-boot-label-tertiary: #5a6c86;
+  --astro-one-boot-border: rgb(13 64 92 / 14%);
+  --astro-one-boot-brand: #0b9d8e;
+
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 45%, color-mix(in srgb, var(--astro-one-boot-brand) 12%, transparent), transparent 70%),
+    var(--astro-one-boot-bg, Canvas);
+}
+
+:global(body[data-ds-dark-theme]) .boot {
+  --astro-one-boot-label-primary: #e6f1ff;
+  --astro-one-boot-label-secondary: #a8b9d2;
+  --astro-one-boot-label-tertiary: #8093b0;
+  --astro-one-boot-border: rgb(120 214 255 / 16%);
+  --astro-one-boot-brand: #4be3d0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.wordmark {
+  font-family: ui-monospace, 'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  color: var(--astro-one-boot-brand);
+  text-shadow: 0 0 18px color-mix(in srgb, var(--astro-one-boot-brand) 60%, transparent);
+}
+
+.hint {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--dsw-alias-label-tertiary, var(--astro-one-boot-label-tertiary));
+}
+
+.spinner {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  corner-shape: round;
+  border: 2px solid var(--dsw-alias-border-l2, var(--astro-one-boot-border));
+  animation: spin 0.8s linear infinite;
+}
+
+.spinner::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    var(--astro-one-boot-brand) var(--astro-one-boot-arc, 72deg),
+    transparent 0
+  );
+  filter: drop-shadow(0 0 6px var(--astro-one-boot-brand));
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 0);
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 0);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.failed {
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.failedTitle {
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 600;
+  color: var(--dsw-alias-label-primary, var(--astro-one-boot-label-primary));
+}
+
+.failedItem {
+  font-family: var(
+    --ds-font-family-code,
+    'SF Mono',
+    'JetBrains Mono',
+    'Fira Code',
+    Consolas,
+    'Liberation Mono',
+    Menlo,
+    Courier,
+    'PingFang SC',
+    'Microsoft YaHei'
+  );
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--dsw-alias-label-secondary, var(--astro-one-boot-label-secondary));
+  white-space: pre-wrap;
+}

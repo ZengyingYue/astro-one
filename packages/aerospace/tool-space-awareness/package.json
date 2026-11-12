@@ -1,0 +1,56 @@
+{
+  "name": "@astro-one/tool-space-awareness",
+  "description": "Model-facing space-object awareness tools for Astro One: catalog queries and conjunction screening, observation-to-object correlation, maneuver detection, optical observability and brightness, light-curve spin periods, orbital decay, and TLE fitting",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/aerospace/tool-space-awareness"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@astro-one/astrodynamics": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
+    "@astro-one/util-values": "workspace:*"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/fs": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/tools": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-loop-testkit": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/fs": "workspace:*",
+    "@astro-one/fs-local": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/tool-testkit": "workspace:*",
+    "@astro-one/tools": "workspace:*"
+  }
+}

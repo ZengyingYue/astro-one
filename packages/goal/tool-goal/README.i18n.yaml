@@ -1,0 +1,79 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/goal/tool-goal/README.md
+/:
+  en: 1965bb8d690c2163
+  zh: ccbb80e24190cb70
+/astro-one-tool-goal:
+  en: 786a70612b6be2de
+  zh: 49b6392995335bdf
+/astro-one-tool-goal/summary:
+  en: a190002cc99a1c20
+  zh: 32a25dd71de3fabe
+/astro-one-tool-goal/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-tool-goal/use-this-package:
+  en: cd2b966911f0938f
+  zh: 20087260ff7ec69b
+/astro-one-tool-goal/use-this-package/tools:
+  en: 48dce14f274a98d2
+  zh: c856cdbc582172cf
+/astro-one-tool-goal/use-this-package/configure-it:
+  en: 2a4aa302c55006b6
+  zh: 665e16b25291f03f
+/astro-one-tool-goal/use-this-package/authority-rules:
+  en: a00f0dac577c3e9e
+  zh: 5dedb3dfcce449bc
+/astro-one-tool-goal/understand-the-implementation:
+  en: 4e9fdb5a89f4baa3
+  zh: 50d182467ae1f3a7
+/astro-one-tool-goal/understand-the-implementation/design:
+  en: 3e0735d353de2137
+  zh: 58b6fede85818840
+/astro-one-tool-goal/understand-the-implementation/source-map:
+  en: 4d5c648787409868
+  zh: b4938bfe660f18aa
+/astro-one-tool-goal/understand-the-implementation/tool-output:
+  en: 79e54f40e0bfbe2b
+  zh: 895f7ba22749bc07
+/astro-one-tool-goal/further-exploration:
+  en: 38cd90803ef6e2dd
+  zh: be21cffdec85a307
+/astro-one-tool-goal/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-tool-goal/model-experience/system-prompt:
+  en: cf78b9dd5596495f
+  zh: bd44560f8c2435e8
+/astro-one-tool-goal/model-experience/system-prompt/what-the-model-sees:
+  en: c4ddc481746664fc
+  zh: f86e0ba3bb0043be
+/astro-one-tool-goal/model-experience/system-prompt/what-the-model-sees/goal-policy:
+  en: 452e35a67b130e54
+  zh: ad6030b6cb0eaabc
+/astro-one-tool-goal/model-experience/system-prompt/token-effect:
+  en: 0ca47969efda70ab
+  zh: bfb6dd046182bcfe
+/astro-one-tool-goal/model-experience/system-prompt/kv-cache-effect:
+  en: 1228efe95b389486
+  zh: 0eb2e21c6ab3bc33
+/astro-one-tool-goal/model-experience/tool-schemas-and-results:
+  en: cadc497841430a21
+  zh: af4cc374d7d16917
+/astro-one-tool-goal/model-experience/tool-schemas-and-results/what-the-model-sees:
+  en: 4c2f70ef1518f289
+  zh: 94f22ca1a6845c2d
+/astro-one-tool-goal/model-experience/tool-schemas-and-results/token-effect:
+  en: 636b06a2958786bd
+  zh: 4bb09f24ef382b3b
+/astro-one-tool-goal/model-experience/tool-schemas-and-results/kv-cache-effect:
+  en: c2d2e98ce08fb40e
+  zh: 54d278190a1a9ed5
+/astro-one-tool-goal/known-limitations-and-deferred-work:
+  en: 89841552dc850c1f
+  zh: 8b5dc893470bb91a
+/astro-one-tool-goal/known-limitations-and-deferred-work/dev-note:
+  en: 47101daa04549489
+  zh: 1a3babd48193c068

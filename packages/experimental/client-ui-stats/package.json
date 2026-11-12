@@ -1,0 +1,80 @@
+{
+  "name": "@astro-one/experimental-client-ui-stats",
+  "description": "Per-turn and per-step context, timing, cache, and tool-cost table contributed as an experimental conversation View",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/client-ui-stats"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "astroOne": {
+    "client": {
+      "inject": [
+        "@astro-one/api-session-controller",
+        "@astro-one/client-locale",
+        "@astro-one/client-ui-conversation",
+        "@astro-one/client-ui-renderer"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent-team": "workspace:*",
+    "@astro-one/api-session-controller": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/client-store": "workspace:*",
+    "@astro-one/client-test-runtime": "workspace:*",
+    "@astro-one/client-ui-conversation": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-session": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/llm-retry": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/tool-executor-ptc": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@testing-library/react": "^16.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@astro-one/compaction": "workspace:*",
+    "@astro-one/session-stats": "workspace:*",
+    "@astro-one/token-meter": "workspace:*",
+    "@astro-one/user-approval": "workspace:*"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts"
+  ]
+}

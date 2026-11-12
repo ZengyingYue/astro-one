@@ -1,0 +1,59 @@
+{
+  "name": "@astro-one/session",
+  "description": "Event-sourced session store for the Astro One",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/core/session"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./fork": {
+      "types": "./lib/types/fork.d.ts",
+      "default": "./lib/types/fork.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./surface": {
+      "types": "./lib/types/surface.d.ts",
+      "default": "./lib/types/surface.js"
+    },
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/typert-registry": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
+  },
+  "dependencies": {
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/util-values": "workspace:*"
+  }
+}

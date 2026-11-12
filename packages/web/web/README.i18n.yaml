@@ -1,0 +1,76 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/web/web/README.md
+/:
+  en: 31868a4f15364a93
+  zh: 86824e1a18e237a7
+/astro-one-web:
+  en: 3b778d4efdc8158d
+  zh: 2a6f094070333ef6
+/astro-one-web/summary:
+  en: 6a351a6e13b81496
+  zh: f5a22708aa58f438
+/astro-one-web/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-web/use-this-package:
+  en: 86ceadc09c0baee8
+  zh: 546e9274eb3b22cc
+/astro-one-web/use-this-package/when-to-choose-it:
+  en: f310845a6db6dbae
+  zh: 2907b62e068d9873
+/astro-one-web/use-this-package/minimal-configuration:
+  en: 850786fb7b1f6d40
+  zh: 67741e22fcbcd311
+/astro-one-web/use-this-package/searching-and-fetching:
+  en: dc94281081b89135
+  zh: 99b3878464923722
+/astro-one-web/use-this-package/provider-selection:
+  en: 5973c94b327aa8ae
+  zh: cbc15a2925f70347
+/astro-one-web/use-this-package/listing-providers:
+  en: 8b5f69e527f331b0
+  zh: fcbb8efab447da5b
+/astro-one-web/use-this-package/listing-providers/add-another-provider:
+  en: b86ab150fb5ce50c
+  zh: 49d3db865ae9b1ae
+/astro-one-web/use-this-package/search-and-fetch-readiness:
+  en: 47fe25d5cd96e8c5
+  zh: f3f7f5a776bc21ea
+/astro-one-web/use-this-package/failures-and-recovery:
+  en: d8d09ed3839f6474
+  zh: 7164d902f333592a
+/astro-one-web/understand-the-implementation:
+  en: a3364d8193deb7f0
+  zh: d1c4afbf25a7ae4d
+/astro-one-web/understand-the-implementation/design-philosophy:
+  en: c4d5437cfb1e2157
+  zh: 411b1b398de73426
+/astro-one-web/understand-the-implementation/source-map:
+  en: 2d8d315dba3b5f1e
+  zh: dca7443453d96ba7
+/astro-one-web/understand-the-implementation/data-model:
+  en: cef6c457776a4ff5
+  zh: 95e8ca0ee83b23b8
+/astro-one-web/understand-the-implementation/selection-flow:
+  en: d5cd4851d81892e6
+  zh: 18266b0bc8b1d1ae
+/astro-one-web/further-exploration:
+  en: 7f6b92a19639c62b
+  zh: 9ba4a7c10c6a31bb
+/astro-one-web/model-experience:
+  en: a595de0e6c370028
+  zh: 188edd1c2dc725cf
+/astro-one-web/model-experience/kv-cache-effect:
+  en: 40294c1c31b74824
+  zh: d75d48f485447a74
+/astro-one-web/known-limitations-and-deferred-work:
+  en: 59171fb9dff49bef
+  zh: 90108966f4765d08
+/astro-one-web/known-limitations-and-deferred-work/dev-note:
+  en: 7f775cc79dbce94b
+  zh: 12b8f68f9e7c48ca
+/astro-one-web/known-limitations-and-deferred-work/dev-note/future-observing-provider-state:
+  en: a4ece830bb4d86ba
+  zh: 6e6fa8b9b407f142

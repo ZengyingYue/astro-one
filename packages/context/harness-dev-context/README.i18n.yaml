@@ -1,0 +1,67 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/context/harness-dev-context/README.md
+/:
+  en: e63c57036b348acf
+  zh: 8c948df8cc976de9
+/astro-one-harness-dev-context:
+  en: 20bf6cc7a8b622dd
+  zh: c79207a312a02075
+/astro-one-harness-dev-context/summary:
+  en: 84882ed02ea86b0a
+  zh: f195cdca60b1be76
+/astro-one-harness-dev-context/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-harness-dev-context/use-this-package:
+  en: d3192709a416f7fb
+  zh: 479253a5ae1adcb2
+/astro-one-harness-dev-context/use-this-package/what-the-model-gets:
+  en: ac4e34b67ef36667
+  zh: 648b6e39687f91a8
+/astro-one-harness-dev-context/use-this-package/sessions-from-earlier-releases:
+  en: d810950db5118265
+  zh: d20e3965fa78e0f8
+/astro-one-harness-dev-context/understand-the-implementation:
+  en: 2d21fa2aad5a729d
+  zh: cfbfada0eb647435
+/astro-one-harness-dev-context/understand-the-implementation/design-concept:
+  en: 401a852a3444aff4
+  zh: 5288a593f61c168b
+/astro-one-harness-dev-context/understand-the-implementation/source-map:
+  en: 4696b6c3a1f91f96
+  zh: 3a56d257ec768a5e
+/astro-one-harness-dev-context/understand-the-implementation/main-flow:
+  en: 55c4cdd475f9f851
+  zh: ac4fb96e7be88810
+/astro-one-harness-dev-context/further-exploration:
+  en: 306cf3578028dabb
+  zh: 499d6ff98f606bab
+/astro-one-harness-dev-context/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-harness-dev-context/model-experience/harness-checkout-and-web-gui:
+  en: ddbe5927f55a6275
+  zh: 1687795c41c16a8c
+/astro-one-harness-dev-context/model-experience/harness-checkout-and-web-gui/what-the-model-sees:
+  en: f3236c45cf5bc3a6
+  zh: 1a3499b2e21f4761
+/astro-one-harness-dev-context/model-experience/harness-checkout-and-web-gui/what-the-model-sees/system-prompt-paragraphs:
+  en: c6c9fa4caf6f2f30
+  zh: f501149c17c0ea60
+/astro-one-harness-dev-context/model-experience/harness-checkout-and-web-gui/what-the-model-sees/runtime-context-lines:
+  en: 37680cbe3eaabef5
+  zh: 8c1b432ddf7d20b5
+/astro-one-harness-dev-context/model-experience/harness-checkout-and-web-gui/token-effect:
+  en: 2c629df08d801b36
+  zh: 437d43a9c5fdc68a
+/astro-one-harness-dev-context/model-experience/harness-checkout-and-web-gui/kv-cache-effect:
+  en: e8f89a14bd36dae0
+  zh: bd4ec43e07e234c9
+/astro-one-harness-dev-context/known-limitations-and-deferred-work:
+  en: 0407932a25b089a6
+  zh: 4962b6df4179cac1
+/astro-one-harness-dev-context/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

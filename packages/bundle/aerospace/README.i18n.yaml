@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/bundle/aerospace/README.md
+/:
+  en: 291d70192e4db7fb
+  zh: 5e660e517d5417ed
+/astro-one-aerospace:
+  en: 5a54e2bbef0c790c
+  zh: 532cbf860fe8fe8d
+/astro-one-aerospace/summary:
+  en: 7f29a3dadfe00855
+  zh: 2d755e5dd44706f4
+/astro-one-aerospace/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-aerospace/use-this-package:
+  en: 81e01f0bb7dede13
+  zh: f7122ddf7e78fcc5
+/astro-one-aerospace/understand-the-implementation:
+  en: 6126fe00e96a66f6
+  zh: f53a4ccc317ca5be
+/astro-one-aerospace/further-exploration:
+  en: 0dcb6a4f613d6b30
+  zh: b2639c546c26c797
+/astro-one-aerospace/model-experience:
+  en: 9c664b40afaa2207
+  zh: 945867cd2bd837ab
+/astro-one-aerospace/model-experience/kv-cache-effect:
+  en: ed5e728e9db817e7
+  zh: cfdd0510d0692be3
+/astro-one-aerospace/known-limitations-and-deferred-work:
+  en: d964a59748aacab0
+  zh: 4c666de2c55c4a9a
+/astro-one-aerospace/known-limitations-and-deferred-work/dev-note:
+  en: 0225ba087c5266f3
+  zh: 9c1d441532d6e9e6

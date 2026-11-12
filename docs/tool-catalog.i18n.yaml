@@ -1,0 +1,403 @@
+# Bilingual-pair consistency record for tool-catalog.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/tool-catalog.md
+/:
+  en: 0be8ffbf23193557
+  zh: ce2c69aa86875171
+/tool-schema-catalog:
+  en: 485de4ccceca98be
+  zh: 17d089a899b69e53
+/tool-schema-catalog/tool-package-map:
+  en: 97a6351bdf36bb0e
+  zh: 0f7a15c441e8050c
+/tool-schema-catalog/astro-one-plugin-manager:
+  en: d84b001795d61802
+  zh: d84b001795d61802
+/tool-schema-catalog/astro-one-plugin-manager/plugin-manager:
+  en: 520667e661fe1291
+  zh: 2907a73815ddd45a
+/tool-schema-catalog/astro-one-plugin-market:
+  en: 29a7855d96de5ea9
+  zh: 29a7855d96de5ea9
+/tool-schema-catalog/astro-one-plugin-market/plugin-market:
+  en: 8434c0a64ceed875
+  zh: 14bb5df3a8782c30
+/tool-schema-catalog/astro-one-mcp-resources:
+  en: 4ece9615b6bdecbb
+  zh: 4ece9615b6bdecbb
+/tool-schema-catalog/astro-one-mcp-resources/list-mcp-resource-templates:
+  en: 96275ece9d040944
+  zh: 1fa9744642601ece
+/tool-schema-catalog/astro-one-mcp-resources/list-mcp-resources:
+  en: bf4236607199d61e
+  zh: 82f4f749dcabc89f
+/tool-schema-catalog/astro-one-mcp-resources/read-mcp-resource:
+  en: a8326e9eb6567fa9
+  zh: 9eef42e7bbcc211b
+/tool-schema-catalog/astro-one-experimental-browser-use-stagehand-native:
+  en: 8698256c441b161e
+  zh: 8698256c441b161e
+/tool-schema-catalog/astro-one-experimental-browser-use-stagehand-native/stagehand-act:
+  en: c4b27bf62c534dcc
+  zh: 70c53824ed57ac23
+/tool-schema-catalog/astro-one-experimental-browser-use-stagehand-native/stagehand-extract:
+  en: ec7462ab99848155
+  zh: 632fe0249040708e
+/tool-schema-catalog/astro-one-experimental-browser-use-stagehand-native/stagehand-navigate:
+  en: ef97f063a037a006
+  zh: 27727ccc908e007f
+/tool-schema-catalog/astro-one-experimental-browser-use-stagehand-native/stagehand-observe:
+  en: 2068f1baa0a59e1b
+  zh: 5743c7b33e2c5ccb
+/tool-schema-catalog/astro-one-experimental-browser-use-stagehand-native/stagehand-screenshot:
+  en: 4910ab327694ee97
+  zh: 17e79e4366cb636d
+/tool-schema-catalog/astro-one-experimental-browser-use-stagehand-native/stagehand-tabs:
+  en: 9e26b197ca161745
+  zh: c8a20c7be3df429f
+/tool-schema-catalog/astro-one-action-cards:
+  en: 082d6746ac3c681f
+  zh: 082d6746ac3c681f
+/tool-schema-catalog/astro-one-action-cards/propose-action:
+  en: a692d451eb48bd2d
+  zh: 24efaac48d628dfd
+/tool-schema-catalog/astro-one-tool-ask-user:
+  en: f44f00aab72969da
+  zh: f44f00aab72969da
+/tool-schema-catalog/astro-one-tool-ask-user/ask-user-question:
+  en: 941ce149ee609061
+  zh: efd29701f3a92adb
+/tool-schema-catalog/astro-one-tool-executor-ptc:
+  en: a07f7952393981a2
+  zh: a07f7952393981a2
+/tool-schema-catalog/astro-one-tool-executor-ptc/run-code:
+  en: b3bd7e10ff1aca2e
+  zh: 60548b9557a45c7f
+/tool-schema-catalog/astro-one-plan-mode:
+  en: 9ecd456e8f42e827
+  zh: 9ecd456e8f42e827
+/tool-schema-catalog/astro-one-plan-mode/exit-plan-mode:
+  en: 33b2fe842a1c3e04
+  zh: 3fabc934207f13de
+/tool-schema-catalog/astro-one-tool-bash:
+  en: d747fe77eb5c469b
+  zh: d747fe77eb5c469b
+/tool-schema-catalog/astro-one-tool-bash/bash:
+  en: 759dfa5eba74cf72
+  zh: a34f1aa284ec9461
+/tool-schema-catalog/astro-one-tool-present:
+  en: ea6bcef37d708afc
+  zh: ea6bcef37d708afc
+/tool-schema-catalog/astro-one-tool-present/present:
+  en: 6e84671ee7d167cc
+  zh: 312b0bb5687af97e
+/tool-schema-catalog/astro-one-tool-pwsh:
+  en: b4541d215ec3c3e1
+  zh: b4541d215ec3c3e1
+/tool-schema-catalog/astro-one-tool-pwsh/pwsh:
+  en: c8668aa70bfcc6ff
+  zh: 9551f0beadd0792e
+/tool-schema-catalog/astro-one-tool-cordis:
+  en: 64c163ffbd21cfc7
+  zh: 64c163ffbd21cfc7
+/tool-schema-catalog/astro-one-tool-cordis/cordis-inspect-list:
+  en: 594e5b42047969cc
+  zh: 72189ca21345c210
+/tool-schema-catalog/astro-one-tool-cordis/cordis-inspect-query:
+  en: 885667026d273460
+  zh: 4cef32944a013134
+/tool-schema-catalog/astro-one-tool-bash-persistent:
+  en: b3746c75a412f1f1
+  zh: b3746c75a412f1f1
+/tool-schema-catalog/astro-one-tool-bash-persistent/bash:
+  en: b6004da9b8a102de
+  zh: 45b0046229de6124
+/tool-schema-catalog/astro-one-tool-pwsh-persistent:
+  en: 1cef21d7672a1158
+  zh: 1cef21d7672a1158
+/tool-schema-catalog/astro-one-tool-pwsh-persistent/pwsh:
+  en: 77b45af46e5f88f6
+  zh: ef7ec816958c1004
+/tool-schema-catalog/astro-one-tool-str-replace-editor:
+  en: cf1ebb8f07585ee0
+  zh: cf1ebb8f07585ee0
+/tool-schema-catalog/astro-one-tool-str-replace-editor/str-replace-editor:
+  en: f27ce5ff9f4c7109
+  zh: ed445f1e2d041338
+/tool-schema-catalog/astro-one-tool-fs:
+  en: a82547dfca5195d2
+  zh: a82547dfca5195d2
+/tool-schema-catalog/astro-one-tool-fs/apply-patch:
+  en: 882f2fa9fac236d6
+  zh: e8320796a5cb038f
+/tool-schema-catalog/astro-one-tool-fs/edit:
+  en: 5b6a252adde51af6
+  zh: 7aa172a5d8b9cbd2
+/tool-schema-catalog/astro-one-tool-fs/read:
+  en: 94bfc5b03c63baef
+  zh: 339338a0e74696c3
+/tool-schema-catalog/astro-one-tool-fs/read-image:
+  en: f6f7a1140066ce04
+  zh: d528e01a0939795a
+/tool-schema-catalog/astro-one-tool-fs/write:
+  en: 8a5a4723d3075aa3
+  zh: 6aa99a3b1ca9b833
+/tool-schema-catalog/astro-one-tool-fs-search:
+  en: 150bb0113daed703
+  zh: 150bb0113daed703
+/tool-schema-catalog/astro-one-tool-fs-search/glob:
+  en: 3ba734ba7852cdd5
+  zh: c6ce31ff2c195520
+/tool-schema-catalog/astro-one-tool-fs-search/grep:
+  en: 46d9b262fad47c2d
+  zh: a5e8024b103600b2
+/tool-schema-catalog/astro-one-tool-terminal:
+  en: 6d5aa35f039650ee
+  zh: 6d5aa35f039650ee
+/tool-schema-catalog/astro-one-tool-terminal/terminal-close:
+  en: 4da73ab1c95aadc6
+  zh: 998471bc4f5af00a
+/tool-schema-catalog/astro-one-tool-terminal/terminal-list:
+  en: 4cde2b1d38f93e04
+  zh: 2c93f43d54ec9da2
+/tool-schema-catalog/astro-one-tool-terminal/terminal-open:
+  en: 7051c20587ae426d
+  zh: 39a6aad70d643fbc
+/tool-schema-catalog/astro-one-tool-terminal/terminal-read:
+  en: 833b47cca9b00b9d
+  zh: 24b3db5b48f0446a
+/tool-schema-catalog/astro-one-tool-terminal/terminal-send:
+  en: 60a8805611533884
+  zh: 50e4ac6e7f7b9b0a
+/tool-schema-catalog/astro-one-tool-terminal/terminal-signal:
+  en: d2525cd13fc319b6
+  zh: 534838193286fda3
+/tool-schema-catalog/astro-one-tool-goal:
+  en: ae3eef5d230d8624
+  zh: ae3eef5d230d8624
+/tool-schema-catalog/astro-one-tool-goal/create-goal:
+  en: 9ae877cdf8a641a3
+  zh: f83c3c09e80e4190
+/tool-schema-catalog/astro-one-tool-goal/get-goal:
+  en: 0b517f13dfde11fe
+  zh: b7ee7482e8ecde56
+/tool-schema-catalog/astro-one-tool-goal/update-goal:
+  en: b8effdb8dd5513a1
+  zh: 7551bceb9d877c2e
+/tool-schema-catalog/astro-one-tool-schedule:
+  en: 6cf8083066d78b7b
+  zh: 6cf8083066d78b7b
+/tool-schema-catalog/astro-one-tool-schedule/schedule-create:
+  en: 7237e492f01fb8fb
+  zh: 2fd2bea81919baf6
+/tool-schema-catalog/astro-one-tool-schedule/schedule-edit:
+  en: 08db239b9e1c3e8f
+  zh: c3860a8f20a01965
+/tool-schema-catalog/astro-one-tool-schedule/schedule-list:
+  en: e2c657d431fd02a8
+  zh: 7651bf05938eff69
+/tool-schema-catalog/astro-one-tool-schedule/schedule-view:
+  en: d751c70db635a347
+  zh: 739ac176787e23ee
+/tool-schema-catalog/astro-one-tool-lsp:
+  en: 7a29286699adea2e
+  zh: 7a29286699adea2e
+/tool-schema-catalog/astro-one-tool-lsp/lsp:
+  en: 74810af35145bc49
+  zh: 021b78064546f4c2
+/tool-schema-catalog/astro-one-tool-ralph:
+  en: 48ecfe1b80c882aa
+  zh: 48ecfe1b80c882aa
+/tool-schema-catalog/astro-one-tool-ralph/ralph:
+  en: dc6e229f2c5e2a28
+  zh: 762454913dfcdbeb
+/tool-schema-catalog/astro-one-tool-skill:
+  en: 05926eeeab848de1
+  zh: 05926eeeab848de1
+/tool-schema-catalog/astro-one-tool-skill/skill:
+  en: 54640f6cc4cacae4
+  zh: 34f0312cb4781e2a
+/tool-schema-catalog/astro-one-tool-session-query:
+  en: 9f6bd8c88e874ebf
+  zh: 9f6bd8c88e874ebf
+/tool-schema-catalog/astro-one-tool-session-query/session-event-read:
+  en: 285bab0bd6b50949
+  zh: 9c839e05237a7226
+/tool-schema-catalog/astro-one-tool-session-query/session-event-search:
+  en: 5cd9f05b83f5797e
+  zh: dc6880566b0c5138
+/tool-schema-catalog/astro-one-tool-session-query/session-event-trace:
+  en: de64e837459d7313
+  zh: 60bfcb3691ab862c
+/tool-schema-catalog/astro-one-tool-session-query/session-search:
+  en: c7bc2ee2892bf0e9
+  zh: 1cd6a5d6f7494ca1
+/tool-schema-catalog/astro-one-tool-session-query/session-trace:
+  en: d067f115fa9f1b86
+  zh: c35c6358aa40e8a1
+/tool-schema-catalog/astro-one-experimental-tool-subagent-oar:
+  en: 7f91ea2726584a0a
+  zh: 7f91ea2726584a0a
+/tool-schema-catalog/astro-one-experimental-tool-subagent-oar/subagent-oar:
+  en: 2229d9bd26727f14
+  zh: 7c2955f1e1c444a2
+/tool-schema-catalog/astro-one-tool-subagent:
+  en: 8494cd16ca70fd32
+  zh: 8494cd16ca70fd32
+/tool-schema-catalog/astro-one-tool-subagent/list-subagent-models:
+  en: 0e21650bbe8c71c7
+  zh: fe4033efb38d51a3
+/tool-schema-catalog/astro-one-tool-subagent/subagent:
+  en: 5dc27d9a08b7eb55
+  zh: 12a718864c4bb6ac
+/tool-schema-catalog/astro-one-tool-subagent-control:
+  en: b755398b41a33247
+  zh: b755398b41a33247
+/tool-schema-catalog/astro-one-tool-subagent-control/interrupt-agent:
+  en: a622b15cc2598d51
+  zh: 48e1b05956d63e26
+/tool-schema-catalog/astro-one-tool-subagent-control/list-agents:
+  en: a56168133c21c6a0
+  zh: f9df1c0fe49fa225
+/tool-schema-catalog/astro-one-tool-subagent-control/send-message:
+  en: b53326fedeab850d
+  zh: ecb75b6ce31da009
+/tool-schema-catalog/astro-one-tool-subagent-control/wait-agent:
+  en: a73ec417c702dd90
+  zh: c6527c5d725fd41a
+/tool-schema-catalog/astro-one-tool-jobs:
+  en: b483c57610b6bdc1
+  zh: b483c57610b6bdc1
+/tool-schema-catalog/astro-one-tool-jobs/job-kill:
+  en: 14294cc1988ae768
+  zh: 80a9152bdc02723f
+/tool-schema-catalog/astro-one-tool-jobs/job-list:
+  en: 0c37fb1fed979d72
+  zh: 5ea9d07f5a4a8a6c
+/tool-schema-catalog/astro-one-tool-jobs/job-output:
+  en: 353d1c896909bf45
+  zh: 08813f088f551560
+/tool-schema-catalog/astro-one-tool-agent-team:
+  en: 453dc91db33f20a1
+  zh: 453dc91db33f20a1
+/tool-schema-catalog/astro-one-tool-agent-team/team-task-create:
+  en: ac9ed819b705b4b8
+  zh: 306477d2d457369a
+/tool-schema-catalog/astro-one-tool-agent-team/team-task-get:
+  en: bca1abf330638c19
+  zh: 903bfa977f75c046
+/tool-schema-catalog/astro-one-tool-agent-team/team-task-list:
+  en: 8001eda7e9ff6a25
+  zh: 2414761029f21404
+/tool-schema-catalog/astro-one-tool-agent-team/team-task-update:
+  en: 7fd4b8f8f7aaed44
+  zh: ba4f2350f037bfa5
+/tool-schema-catalog/astro-one-tool-astrodynamics:
+  en: ea6d8c36fcce49ea
+  zh: ea6d8c36fcce49ea
+/tool-schema-catalog/astro-one-tool-astrodynamics/attitude-determine:
+  en: 33cdf3e2f68db272
+  zh: 94f37bc99f58ab5c
+/tool-schema-catalog/astro-one-tool-astrodynamics/orbit-conjunction:
+  en: 49febfaed062c472
+  zh: 7dcd3bc43b81f2b3
+/tool-schema-catalog/astro-one-tool-astrodynamics/orbit-convert:
+  en: f48e73b70e742b49
+  zh: af2be129aa39a974
+/tool-schema-catalog/astro-one-tool-astrodynamics/orbit-determine:
+  en: 1d198602d69c8db3
+  zh: 9c18645ab443e8c4
+/tool-schema-catalog/astro-one-tool-astrodynamics/orbit-passes:
+  en: 9cf4b02a5e5001aa
+  zh: 8b658f766077dc68
+/tool-schema-catalog/astro-one-tool-astrodynamics/orbit-propagate:
+  en: 3e8c2acdb1f67420
+  zh: 129983ee3c7df70c
+/tool-schema-catalog/astro-one-tool-astrodynamics/orbit-transfer:
+  en: 2af0fe60f6a4d735
+  zh: 419689639075d9b3
+/tool-schema-catalog/astro-one-tool-gnss:
+  en: 52314a2fe1524e68
+  zh: 52314a2fe1524e68
+/tool-schema-catalog/astro-one-tool-gnss/gnss-position:
+  en: dd1279207bd7faed
+  zh: e30dcbe3413e06b4
+/tool-schema-catalog/astro-one-tool-gnss/gnss-visibility:
+  en: c3fc2b7f9929b037
+  zh: 0b1d4ca811ed73b2
+/tool-schema-catalog/astro-one-tool-remote-sensing:
+  en: e34518218eaa49ea
+  zh: e34518218eaa49ea
+/tool-schema-catalog/astro-one-tool-remote-sensing/rs-change-detect:
+  en: aae3c90f982922a4
+  zh: 5eb5b73a1d7d61b9
+/tool-schema-catalog/astro-one-tool-remote-sensing/rs-spectral-index:
+  en: 022e007c02f3c1a4
+  zh: 2a2c6b1643686d51
+/tool-schema-catalog/astro-one-tool-space-awareness:
+  en: c6b75972850f87d7
+  zh: c6b75972850f87d7
+/tool-schema-catalog/astro-one-tool-space-awareness/ssa-catalog-query:
+  en: b2158bae7b00346c
+  zh: 496cf48f7d3f4d87
+/tool-schema-catalog/astro-one-tool-space-awareness/ssa-catalog-screen:
+  en: 544afac29cbf0df3
+  zh: 4f2becb1b8644620
+/tool-schema-catalog/astro-one-tool-space-awareness/ssa-correlate:
+  en: 7863d3d8813f5553
+  zh: fa0c9fba5c120608
+/tool-schema-catalog/astro-one-tool-space-awareness/ssa-decay:
+  en: a3889d79694f7701
+  zh: 51fe03f39be562b4
+/tool-schema-catalog/astro-one-tool-space-awareness/ssa-lightcurve:
+  en: dbd481c20ffb5936
+  zh: cbc33b5f6863a668
+/tool-schema-catalog/astro-one-tool-space-awareness/ssa-maneuver-detect:
+  en: 0c114e0733992a04
+  zh: 035d94add5bb283c
+/tool-schema-catalog/astro-one-tool-space-awareness/ssa-optical-windows:
+  en: 9b719968260295c9
+  zh: 0f449cc44594e6ef
+/tool-schema-catalog/astro-one-tool-space-awareness/ssa-tle-fit:
+  en: a2f4c15d2242dd33
+  zh: 0d24cd23598eb3aa
+/tool-schema-catalog/astro-one-tool-todo:
+  en: 996f73dcc0767948
+  zh: 996f73dcc0767948
+/tool-schema-catalog/astro-one-tool-todo/todo-write:
+  en: a502c872eaa890cd
+  zh: 892750c290894854
+/tool-schema-catalog/astro-one-tool-working-directory:
+  en: a29289a28b25b701
+  zh: a29289a28b25b701
+/tool-schema-catalog/astro-one-tool-working-directory/working-directory:
+  en: f8ebe3a0453a03ef
+  zh: 62352dceb63819f5
+/tool-schema-catalog/astro-one-experimental-tool-worktree:
+  en: c3e78bdb590fe51c
+  zh: c3e78bdb590fe51c
+/tool-schema-catalog/astro-one-experimental-tool-worktree/create-worktree:
+  en: 2d0b4b1fda91e5fe
+  zh: 184b075b07dad577
+/tool-schema-catalog/astro-one-tool-workflow:
+  en: 4d56a471e4e90a31
+  zh: 4d56a471e4e90a31
+/tool-schema-catalog/astro-one-tool-workflow/workflow:
+  en: 86e8beea371b768a
+  zh: 1768e91d8f898aa2
+/tool-schema-catalog/astro-one-tool-workspace-dependencies:
+  en: 3e3d5e12424d9786
+  zh: 3e3d5e12424d9786
+/tool-schema-catalog/astro-one-tool-workspace-dependencies/load-workspace-dependencies:
+  en: ea291d75f3803f3f
+  zh: 1d70af1ee6d828d1
+/tool-schema-catalog/astro-one-tool-web:
+  en: 7377e22f8f148cf5
+  zh: 7377e22f8f148cf5
+/tool-schema-catalog/astro-one-tool-web/web-fetch:
+  en: 8673f203aea9bdf2
+  zh: 4e17783ffdf34c83
+/tool-schema-catalog/astro-one-tool-web/web-search:
+  en: cc1ad38bf0006710
+  zh: 324eacb827a09e93

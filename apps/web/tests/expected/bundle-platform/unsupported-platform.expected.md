@@ -1,0 +1,1 @@
+- status: 此插件不支持运行 Astro One 的主机操作系统

@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/api-speech-to-text/README.md
+/:
+  en: 492c18403fe67bc0
+  zh: 547cb261324c7691
+/astro-one-experimental-api-speech-to-text:
+  en: 15293efd399b960a
+  zh: aa51a728b693640d
+/astro-one-experimental-api-speech-to-text/summary:
+  en: 81978b4b6c035754
+  zh: f1a08200eb31c020
+/astro-one-experimental-api-speech-to-text/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 364c80ee00a374ff
+/astro-one-experimental-api-speech-to-text/use-this-package:
+  en: 23efd2789fe70cd9
+  zh: 3edd559ee5975742
+/astro-one-experimental-api-speech-to-text/understand-the-implementation:
+  en: cffe2ab0b7cd0b8b
+  zh: 5fd4f71cb083de80
+/astro-one-experimental-api-speech-to-text/further-exploration:
+  en: 3b4f03914d04ea83
+  zh: a5b9484cc8a1fcdd
+/astro-one-experimental-api-speech-to-text/model-experience:
+  en: 3c5a85f8b7129ce8
+  zh: d5f491ca88d9a810
+/astro-one-experimental-api-speech-to-text/model-experience/kv-cache-effect:
+  en: b5ec79db2e1d0dbc
+  zh: e5aff567ae5ee6fc
+/astro-one-experimental-api-speech-to-text/known-limitations-and-deferred-work:
+  en: 067a5c6a1772f2eb
+  zh: 6973c5a4a950c5cf
+/astro-one-experimental-api-speech-to-text/known-limitations-and-deferred-work/dev-note:
+  en: 0225ba087c5266f3
+  zh: 4e706f1b2b984e63

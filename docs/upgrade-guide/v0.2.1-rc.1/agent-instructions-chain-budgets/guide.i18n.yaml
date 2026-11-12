@@ -1,0 +1,16 @@
+# Bilingual-pair consistency record for guide.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/upgrade-guide/v0.2.1-rc.1/agent-instructions-chain-budgets/guide.md
+/:
+  en: 8891b7a7adba6fd1
+  zh: e621bbda19334cfd
+/size-maxbytes-of-astro-one-agent-instructions-per-instruction-chain:
+  en: 38f7c0cc4baf3607
+  zh: fc79ed7be496f89e
+/size-maxbytes-of-astro-one-agent-instructions-per-instruction-chain/change:
+  en: c1d15bf2df018ec0
+  zh: d962554462879fe4
+/size-maxbytes-of-astro-one-agent-instructions-per-instruction-chain/migration:
+  en: a5dd7b8430a16b66
+  zh: 5882a9c3f7cf71f5

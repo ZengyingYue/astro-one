@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for mcp-memory.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/user/guide/mcp-memory.md
+/connect-a-third-party-memory-mcp-server:
+  en: 5f9a10c4f1ce24f4
+  zh: eb90f82d559e85d4
+/connect-a-third-party-memory-mcp-server/what-astro-one-does:
+  en: b072873a3ab97807
+  zh: c64783d5534870b6
+/connect-a-third-party-memory-mcp-server/choose-one:
+  en: 257a536ce62bc959
+  zh: 600ed7ccf29085e4
+/connect-a-third-party-memory-mcp-server/enable-one:
+  en: 8d478207fbb7154f
+  zh: 6902fa093e58b39a
+/connect-a-third-party-memory-mcp-server/provider-setup:
+  en: ea88b3912a142edc
+  zh: aaccbb2fb9a851a4
+/connect-a-third-party-memory-mcp-server/provider-setup/memorix:
+  en: f59d063163425de4
+  zh: 60357a9afbd4d377
+/connect-a-third-party-memory-mcp-server/provider-setup/mcp-reference-memory:
+  en: 75974e9b0f89a2b7
+  zh: b53b1e003b78c325
+/connect-a-third-party-memory-mcp-server/provider-setup/engram:
+  en: d4d26dab9e18e008
+  zh: 7897a698424835a7
+/connect-a-third-party-memory-mcp-server/optional-shared-model-instruction:
+  en: 27330df8c21b4c20
+  zh: 28fc205a73ccbff9
+/connect-a-third-party-memory-mcp-server/verify-write-fresh-session-recall-and-use:
+  en: e9e828a8a4346ddc
+  zh: 6d5df929307cee91
+/connect-a-third-party-memory-mcp-server/bring-another-mcp-server:
+  en: a64eb09726e63a83
+  zh: 83838d5f27f51d22

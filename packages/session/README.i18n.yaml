@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/session/README.md
+/:
+  en: 4301d9cb9fc0a0e9
+  zh: 3127f24ac355656b
+/session-durable-session-data-plane:
+  en: 57ecaf779bf47521
+  zh: 0f87b07d63d56f61
+/session-durable-session-data-plane/summary:
+  en: 4cced6bd65f9b42c
+  zh: 1e5c5fd08f3e2655
+/session-durable-session-data-plane/table-of-contents:
+  en: 1eb35b015a6c423f
+  zh: a8a3dceee2c9e943
+/session-durable-session-data-plane/packages:
+  en: 7be50f4cafe40dab
+  zh: a6f06f187e686c05
+/session-durable-session-data-plane/packages/persistence:
+  en: d6dbbc9d5bd5bc85
+  zh: dfd482c5ef1a5e02
+/session-durable-session-data-plane/packages/projection:
+  en: 52feaeff18cc7cbb
+  zh: 59159b2288ded114
+/session-durable-session-data-plane/packages/titles:
+  en: fd0631c2318c55b0
+  zh: 6c39bb412031c2fd
+/session-durable-session-data-plane/packages/telemetry:
+  en: ac34cf6095b0b057
+  zh: e3b23d193c36e3b3
+/session-durable-session-data-plane/related-documentation:
+  en: 93e432c5ddad7f22
+  zh: 6aaa9dc720c4e57b
+/session-durable-session-data-plane/dev-note:
+  en: b75c8458928b72b9
+  zh: 003ba4e17b4b5269

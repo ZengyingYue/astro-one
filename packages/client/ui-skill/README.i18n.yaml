@@ -1,0 +1,58 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-skill/README.md
+/:
+  en: 91453725acc6e3ee
+  zh: 317db483f6ac2f55
+/astro-one-client-ui-skill:
+  en: d2c05a773bad49da
+  zh: fa7a56e727cfae02
+/astro-one-client-ui-skill/summary:
+  en: 61dd96d6adb076a4
+  zh: 874ae26210db5f47
+/astro-one-client-ui-skill/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-client-ui-skill/use-this-package:
+  en: 2f17d0875048ef3c
+  zh: 6878ee4c75f2b2cf
+/astro-one-client-ui-skill/use-this-package/what-the-source-offers:
+  en: 2ba1a6158c85b46e
+  zh: 9ab58ceef8743849
+/astro-one-client-ui-skill/use-this-package/the-skill-tool-row:
+  en: 270bc37a226ed247
+  zh: 15a1c4c82c3a1f00
+/astro-one-client-ui-skill/understand-the-implementation:
+  en: df2a0ee9d2638f41
+  zh: 3b4af7e505e990ca
+/astro-one-client-ui-skill/understand-the-implementation/candidate-flow:
+  en: e8921ef18728794c
+  zh: dabc89ee5186d8c6
+/astro-one-client-ui-skill/understand-the-implementation/registration:
+  en: 2f49c968340fd48f
+  zh: 867b790dc8e402da
+/astro-one-client-ui-skill/further-exploration:
+  en: cb0d16f4f0d4071d
+  zh: 2fb3927f1ba9380a
+/astro-one-client-ui-skill/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-client-ui-skill/model-experience/user-explicit-skill-invocation:
+  en: ae1928252b0ea55c
+  zh: 6c78cb51c6805a2d
+/astro-one-client-ui-skill/model-experience/user-explicit-skill-invocation/what-the-model-sees:
+  en: 6acc802876eef1b7
+  zh: 0329310c7fba4086
+/astro-one-client-ui-skill/model-experience/user-explicit-skill-invocation/token-effect:
+  en: cb759321f8c62a96
+  zh: 6d479501856d9cd6
+/astro-one-client-ui-skill/model-experience/user-explicit-skill-invocation/kv-cache-effect:
+  en: da53c649077dad7e
+  zh: 845f77793f8e10a2
+/astro-one-client-ui-skill/known-limitations-and-deferred-work:
+  en: 3c5dd1c12e5a5d61
+  zh: 19e27163cb94dbc1
+/astro-one-client-ui-skill/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

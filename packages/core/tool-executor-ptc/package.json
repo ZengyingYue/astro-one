@@ -1,0 +1,75 @@
+{
+  "name": "@astro-one/tool-executor-ptc",
+  "description": "PTC program execution, tool bindings, and generated SDK prompts",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/core/tool-executor-ptc"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./client": {
+      "types": "./lib/types/client.d.ts",
+      "default": "./lib/types/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/ptc-runtime": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/user-approval": "workspace:*",
+    "@astro-one/working-directory": "workspace:*"
+  },
+  "dependencies": {
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/schemastery": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-loop-testkit": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/ptc-runtime": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/tool-executor-native": "workspace:*",
+    "@astro-one/tool-testkit": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/user-approval": "workspace:*",
+    "@astro-one/working-directory": "workspace:*"
+  }
+}

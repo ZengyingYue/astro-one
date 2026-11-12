@@ -1,0 +1,9 @@
+- insert:
+    - id: cua-provider-registry
+      name: '../../../computer-use/computer-use/src/index.ts'
+    - id: cua
+      name: '../src/index.ts'
+      config:
+        agentPreset: false
+        # ASTRO_ONE_CUA_HELPER must name Astro One Computer Use.app/Contents/MacOS/astro-one-cua-native.
+        helperPath: !!js process.env.ASTRO_ONE_CUA_HELPER

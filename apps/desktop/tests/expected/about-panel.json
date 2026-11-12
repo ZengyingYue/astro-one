@@ -1,0 +1,54 @@
+{
+  "darwin:en-US": {
+    "menu": [
+      { "label": "About Astro One", "role": "about" },
+      { "type": "separator" }
+    ],
+    "options": {
+      "applicationName": "Astro One",
+      "applicationVersion": "1.0.0",
+      "version": "",
+      "copyright": "",
+      "iconPath": "<app icon>"
+    }
+  },
+  "darwin:zh-CN": {
+    "menu": [
+      { "label": "关于 Astro One", "role": "about" },
+      { "type": "separator" }
+    ],
+    "options": {
+      "applicationName": "Astro One",
+      "applicationVersion": "1.0.0",
+      "version": "",
+      "copyright": "",
+      "iconPath": "<app icon>"
+    }
+  },
+  "win32:zh-CN": {
+    "menu": [
+      { "label": "关于 Astro One" },
+      { "type": "separator" }
+    ],
+    "options": {
+      "applicationName": "Astro One",
+      "applicationVersion": "1.0.0",
+      "version": "",
+      "copyright": "",
+      "iconPath": "<app icon>"
+    }
+  },
+  "win32:en-US": {
+    "menu": [
+      { "label": "About Astro One" },
+      { "type": "separator" }
+    ],
+    "options": {
+      "applicationName": "Astro One",
+      "applicationVersion": "1.0.0",
+      "version": "",
+      "copyright": "",
+      "iconPath": "<app icon>"
+    }
+  }
+}

@@ -1,0 +1,67 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/typert/generator/README.md
+/:
+  en: 3fe330c4d51197ec
+  zh: 5874f3bcd419dbbc
+/astro-one-typert-generator:
+  en: b3dbaf292c80c5f1
+  zh: f6195274b36e9ac7
+/astro-one-typert-generator/summary:
+  en: 5b81888b0bdf738e
+  zh: fbbe54cf4bc202a2
+/astro-one-typert-generator/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-typert-generator/use-this-package:
+  en: 949dec3bb987644a
+  zh: 0ed333a6067465dc
+/astro-one-typert-generator/use-this-package/publishing-typert-artifacts-from-a-package:
+  en: 45fba328f856bd7f
+  zh: 533ac56ac12e51d9
+/astro-one-typert-generator/use-this-package/ordinary-remote-metadata:
+  en: e11bcafba9e04335
+  zh: 8050e1dbb22018aa
+/astro-one-typert-generator/use-this-package/analyzing-a-workspace-statically:
+  en: 0a4f5896df9f2fab
+  zh: e7d0d6cddd7a59e7
+/astro-one-typert-generator/use-this-package/running-generation-inside-a-tsdown-build:
+  en: 15ecce4f32b7a8c0
+  zh: c7d6b449d7b20338
+/astro-one-typert-generator/use-this-package/generating-without-a-bundler:
+  en: cf6893be24bdc495
+  zh: dafc23e2d2e8553e
+/astro-one-typert-generator/understand-the-implementation:
+  en: b90762df7a978580
+  zh: 123ab225a2b5df2a
+/astro-one-typert-generator/understand-the-implementation/design-concept:
+  en: 0a515742229bf442
+  zh: dfd2c5eddd943af9
+/astro-one-typert-generator/understand-the-implementation/source-map:
+  en: 89d9205446b496a6
+  zh: d7bcae876c1905ec
+/astro-one-typert-generator/understand-the-implementation/analysis-and-faces:
+  en: b2923f5024bbbc1e
+  zh: 128876fd78445c57
+/astro-one-typert-generator/understand-the-implementation/emission-and-publication-contract:
+  en: 5db62e360fac9599
+  zh: 3a117939c424b147
+/astro-one-typert-generator/understand-the-implementation/catalog-projection:
+  en: e85b521a1e01ab2c
+  zh: 4416dca569de0f61
+/astro-one-typert-generator/further-exploration:
+  en: 38ae5116a9848945
+  zh: 79495b0b9d1c8eb4
+/astro-one-typert-generator/model-experience:
+  en: e6641e8b5e5f42ca
+  zh: 2fdc0d3fde7e9216
+/astro-one-typert-generator/model-experience/kv-cache-effect:
+  en: 09310605f7d136d4
+  zh: 3535ec7eba83b90f
+/astro-one-typert-generator/known-limitations-and-deferred-work:
+  en: fdc6707a82ceb4c3
+  zh: 91fb8cab9fcf56bc
+/astro-one-typert-generator/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

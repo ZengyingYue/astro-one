@@ -1,0 +1,79 @@
+{
+  "name": "@astro-one/client-ui-satellite-workshop",
+  "description": "Satellite assembly workshop for the astro-one web client: a 3D bench that mounts catalog parts on a satellite bus, budgets the build, and hands it to the model for evaluation",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/client/ui-satellite-workshop"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "astroOne": {
+    "client": {
+      "inject": [
+        "@astro-one/api-session-controller",
+        "@astro-one/api-workspace-controller",
+        "@astro-one/client-locale",
+        "@astro-one/client-ui-conversation",
+        "@astro-one/client-ui-layout",
+        "@astro-one/client-ui-sidebar",
+        "@astro-one/client-ui-workspace"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/api-session-controller": "workspace:*",
+    "@astro-one/api-workspace-controller": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/client-store": "workspace:*",
+    "@astro-one/client-test-runtime": "workspace:*",
+    "@astro-one/client-ui-conversation": "workspace:*",
+    "@astro-one/client-ui-layout": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-sidebar": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
+    "@astro-one/client-ui-workspace": "workspace:*",
+    "@testing-library/react": "^16.1.0",
+    "@types/three": "^0.187.0",
+    "clsx": "^2.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "three": "^0.187.0"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/client.*.js",
+    "lib/types/**/*.d.ts"
+  ]
+}

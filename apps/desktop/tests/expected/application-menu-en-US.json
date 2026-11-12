@@ -1,0 +1,44 @@
+[
+  {
+    "label": "About Astro One",
+    "role": "about"
+  },
+  {
+    "type": "separator"
+  },
+  {
+    "label": "Check for Updates…"
+  },
+  {
+    "label": "Manage astro-one Command…"
+  },
+  {
+    "type": "separator"
+  },
+  {
+    "role": "toggleDevTools",
+    "label": "Developer tools"
+  },
+  {
+    "type": "separator"
+  },
+  {
+    "role": "hide",
+    "label": "Hide Astro One"
+  },
+  {
+    "role": "hideOthers",
+    "label": "Hide Others"
+  },
+  {
+    "role": "unhide",
+    "label": "Show All"
+  },
+  {
+    "type": "separator"
+  },
+  {
+    "role": "quit",
+    "label": "Quit Astro One"
+  }
+]

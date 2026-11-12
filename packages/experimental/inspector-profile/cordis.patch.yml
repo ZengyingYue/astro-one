@@ -1,0 +1,10 @@
+- insert:
+    - id: experimental-inspector
+      name: '@astro-one/experimental-inspector'
+      disabled: false
+      config:
+        captureFetch: true
+    - id: session-inspector
+      name: '@astro-one/experimental-session-inspector'
+    - id: client-ui-stats
+      name: '@astro-one/experimental-client-ui-stats'

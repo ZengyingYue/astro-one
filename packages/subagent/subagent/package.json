@@ -1,0 +1,133 @@
+{
+  "name": "@astro-one/subagent",
+  "description": "Abstract subagent seam (ctx.subagents): named-provider registry for delegating to child agents",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/subagent/subagent"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client.d.ts",
+      "default": "./lib/types/client.js"
+    },
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/chunked-list": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
+    "zod": "4.4.3"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-preset-registry": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-persistence": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/session-query": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/user-approval": "workspace:*",
+    "@astro-one/util-time": "workspace:*",
+    "@astro-one/permission-presets": "workspace:*",
+    "@astro-one/workspace": "workspace:*",
+    "@astro-one/working-directory": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@astro-one/agent-preset-registry": {
+      "optional": true
+    },
+    "@astro-one/permission-presets": {
+      "optional": true
+    },
+    "@astro-one/sandbox": {
+      "optional": true
+    },
+    "@astro-one/sandbox-policy": {
+      "optional": true
+    },
+    "@astro-one/session-persistence": {
+      "optional": true
+    },
+    "@astro-one/session-query": {
+      "optional": true
+    },
+    "@astro-one/workspace": {
+      "optional": true
+    },
+    "@astro-one/user-approval": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-preset-registry": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-persistence": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/session-query": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/tool-testkit": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/user-approval": "workspace:*",
+    "@astro-one/util-time": "workspace:*",
+    "@astro-one/permission-presets": "workspace:*",
+    "@astro-one/workspace": "workspace:*",
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/agent-loop": "workspace:*",
+    "@astro-one/agent-loop-testkit": "workspace:*",
+    "@astro-one/fs-sandbox": "workspace:*",
+    "@astro-one/tool-fs": "workspace:*",
+    "@astro-one/session-persistence-jsonl": "workspace:*",
+    "@astro-one/working-directory": "workspace:*"
+  }
+}

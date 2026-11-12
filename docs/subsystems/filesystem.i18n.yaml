@@ -1,0 +1,40 @@
+# Bilingual-pair consistency record for filesystem.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/subsystems/filesystem.md
+/filesystem:
+  en: 2282d95173aa37b1
+  zh: 3fe4f249823b470a
+/filesystem/target-identity-and-metadata-provider-contract:
+  en: 1e55f1c74f0ade3f
+  zh: faecf389a2fb0a93
+/filesystem/patch-syntax-records:
+  en: 84b3a5a7c48bd707
+  zh: 7cdbfdc6eaf4b716
+/filesystem/write-and-edit-guards-provider-contract:
+  en: a7c449176367a0d6
+  zh: ecb49a885304db62
+/filesystem/the-fs-policy-events-provider-contract-vocabulary:
+  en: aefd38873f500c34
+  zh: aa8eca94caeddb1e
+/filesystem/execution-context-policy-plugin:
+  en: 4c440c0ff6d249d4
+  zh: c58372998e2c0b84
+/filesystem/read-outcome-consumer-read-rendering:
+  en: 8565c46f94131b27
+  zh: a64ed8ee8f492f7b
+/filesystem/observed-file-state-policy-plugin:
+  en: aa3c70a31bbd26f2
+  zh: d7c1c23e2f70b45a
+/filesystem/patch-execution-consumer:
+  en: dc18df2e265ac383
+  zh: 77f2c9703453bc1f
+/filesystem/error-taxonomy-provider-contract:
+  en: c7b6fda609d9ae51
+  zh: f7f419acbca46577
+/filesystem/no-timeouts-on-file-io:
+  en: e70d05113fd4024a
+  zh: 10fc2e46c736d60f
+/filesystem/the-service-and-the-plugin:
+  en: 9f45a5b090c7f238
+  zh: 35b7fce03d66c2f8

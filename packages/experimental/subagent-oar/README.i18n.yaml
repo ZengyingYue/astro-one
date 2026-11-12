@@ -1,0 +1,67 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/subagent-oar/README.md
+/:
+  en: e2a966cf2f6d7f5f
+  zh: e19b979aeef0d29a
+/astro-one-experimental-subagent-oar:
+  en: bb0204b610ac7795
+  zh: b38bbe616efadbe0
+/astro-one-experimental-subagent-oar/summary:
+  en: 75bc60daa998f16a
+  zh: 31f09b5ed600232d
+/astro-one-experimental-subagent-oar/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 8d1e20b826450ffe
+/astro-one-experimental-subagent-oar/use-this-package:
+  en: bbff250eba0f1b89
+  zh: 0a618f05cc88ee2b
+/astro-one-experimental-subagent-oar/use-this-package/compose-a-profile:
+  en: cd9907fd615bc048
+  zh: eb44d9f2feba4aa1
+/astro-one-experimental-subagent-oar/use-this-package/what-you-get:
+  en: be284a73e45317c5
+  zh: b19b336c3405f61e
+/astro-one-experimental-subagent-oar/use-this-package/configure-a-runtime-instance:
+  en: 2e7c72c670e28a3d
+  zh: ee65f6cebfa12a90
+/astro-one-experimental-subagent-oar/understand-the-implementation:
+  en: 351120d189956f10
+  zh: a5a3fb604f89e5ff
+/astro-one-experimental-subagent-oar/further-exploration:
+  en: 545b1507dcf4042a
+  zh: 15ef2594e51971b2
+/astro-one-experimental-subagent-oar/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-experimental-subagent-oar/model-experience/child-request:
+  en: 1796fa78833bfc2b
+  zh: b78af12284632249
+/astro-one-experimental-subagent-oar/model-experience/child-request/what-the-model-sees:
+  en: 16dd6345fbe5b557
+  zh: adbd8e9b2f4d247f
+/astro-one-experimental-subagent-oar/model-experience/child-request/token-effect:
+  en: 51b1a72453170ef9
+  zh: 521ff4e9e9a84186
+/astro-one-experimental-subagent-oar/model-experience/child-request/kv-cache-effect:
+  en: 26a77ed7165e7414
+  zh: 61d802041b7663c6
+/astro-one-experimental-subagent-oar/model-experience/parent-results-indirectly:
+  en: cc55ad2a7e04a064
+  zh: e7d3d72a5b1e80e3
+/astro-one-experimental-subagent-oar/model-experience/parent-results-indirectly/what-the-model-sees:
+  en: 0d7117e8d488af23
+  zh: 7331101acfc52c1d
+/astro-one-experimental-subagent-oar/model-experience/parent-results-indirectly/token-effect:
+  en: 99d04595c61a32fc
+  zh: 47f6253729070269
+/astro-one-experimental-subagent-oar/model-experience/parent-results-indirectly/kv-cache-effect:
+  en: b7aefacba16e861e
+  zh: 7130666057e7e89f
+/astro-one-experimental-subagent-oar/known-limitations-and-deferred-work:
+  en: 606c2db0b357b09c
+  zh: 8bcaf9522ca2b1ed
+/astro-one-experimental-subagent-oar/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "GNSS Positioning Tools",
+    "description": "RINEX-based single-point positioning with RAIM, RTK with LAMBDA ambiguity resolution, and satellite visibility/DOP planning."
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "roots": [
+    {"key":"event:workspace/changes","kind":"event","event":"workspace/changes","surface":false,"digest":"3249d7662e536450014f9408dd3911f23ce94288b4bd7ed0b5fdd4df5ded0a6f"}
+  ],
+  "types": [],
+  "nodes": {
+    "3249d7662e536450": {"kind":"object","properties":[{"name":"data","type":"db5b1fe9857f8a83","optional":false},{"name":"ignorable","type":"e5f31a1a5321feee","optional":true},{"name":"seq","type":"546c2b19cfc9b771","optional":false},{"name":"time","type":"546c2b19cfc9b771","optional":false},{"name":"type","type":"7b1a312e323bb6ca","optional":false}],"indices":[]},
+    "546c2b19cfc9b771": {"kind":"primitive","type":"number"},
+    "7b1a312e323bb6ca": {"kind":"literal","value":"workspace/changes"},
+    "db5b1fe9857f8a83": {"kind":"object","properties":[{"name":"turn","type":"546c2b19cfc9b771","optional":false}],"indices":[]},
+    "e5f31a1a5321feee": {"kind":"literal","value":true}
+  }
+}

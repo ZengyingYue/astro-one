@@ -1,0 +1,25 @@
+# Bilingual-pair consistency record for network-proxy.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/user/guide/network-proxy.md
+/run-astro-one-behind-a-network-proxy:
+  en: e58ae511bbd59124
+  zh: cc3f9ecbec70143e
+/run-astro-one-behind-a-network-proxy/export-the-variables:
+  en: 3d8df61aa260b3b3
+  zh: 52327fb6f598bfde
+/run-astro-one-behind-a-network-proxy/why-your-browser-is-proxied-but-your-terminal-is-not:
+  en: 460f78d37e5981c3
+  zh: 1990f251a495a381
+/run-astro-one-behind-a-network-proxy/choose-what-stays-direct:
+  en: 9643cc5ce7976b90
+  zh: 48274db6ba4d73c3
+/run-astro-one-behind-a-network-proxy/limits-worth-knowing:
+  en: cfc8a88eb5258ff9
+  zh: 49cfeff0cd39b473
+/run-astro-one-behind-a-network-proxy/what-stays-direct:
+  en: e37a9317fd3fbc19
+  zh: 5e2472867aa69f13
+/run-astro-one-behind-a-network-proxy/check-that-it-worked:
+  en: 52e388d3c1add0b1
+  zh: 9b4d2c25380f02c4

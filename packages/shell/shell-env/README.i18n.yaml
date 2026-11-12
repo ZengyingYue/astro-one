@@ -1,0 +1,58 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/shell/shell-env/README.md
+/:
+  en: 00c7039c93a1bb7d
+  zh: 2cd9da92213ce2b9
+/astro-one-shell-env:
+  en: 5e289bbc6916ab5f
+  zh: b89d1dc75ad01508
+/astro-one-shell-env/summary:
+  en: 9ae7de9247437de2
+  zh: c1c2a3e8b934af60
+/astro-one-shell-env/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-shell-env/use-this-package:
+  en: 7ecca16d998b1ad3
+  zh: 2f4bf3e5f0d6fa65
+/astro-one-shell-env/use-this-package/what-every-shell-call-receives:
+  en: 5d354211d5f5f85e
+  zh: 58357b7b9f68be7a
+/astro-one-shell-env/use-this-package/adding-your-own-environment-facts:
+  en: 5543eb70b3507a88
+  zh: 3f355847df6b95e8
+/astro-one-shell-env/use-this-package/choosing-the-harness-home:
+  en: 681c94e5d8e435f5
+  zh: b5f5b48e1275594f
+/astro-one-shell-env/use-this-package/what-can-go-wrong:
+  en: 9038a2a5976577fc
+  zh: ada142c44674b86e
+/astro-one-shell-env/understand-the-implementation:
+  en: f782557ca8da3138
+  zh: e8f0082b9692cacc
+/astro-one-shell-env/understand-the-implementation/design-philosophy:
+  en: 1011f6473ee69270
+  zh: 60a5e231c20d8250
+/astro-one-shell-env/understand-the-implementation/source-map:
+  en: 72eba3bfadcfa581
+  zh: dcd83e02a1910f27
+/astro-one-shell-env/understand-the-implementation/collection:
+  en: 112495ea13493126
+  zh: 26b3545b8d160a70
+/astro-one-shell-env/further-exploration:
+  en: a0ddaf0ad9a42333
+  zh: 48b5f4fcaa8981dd
+/astro-one-shell-env/model-experience:
+  en: 5e5d96d47b9cb624
+  zh: 7fc2f6713e6bc607
+/astro-one-shell-env/model-experience/kv-cache-effect:
+  en: e95e649f0410fa75
+  zh: b3d64877420b4c0d
+/astro-one-shell-env/known-limitations-and-deferred-work:
+  en: f398b1bea65c11ad
+  zh: 3d0723ef08cb8238
+/astro-one-shell-env/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

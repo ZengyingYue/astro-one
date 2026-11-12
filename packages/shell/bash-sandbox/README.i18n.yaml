@@ -1,0 +1,97 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/shell/bash-sandbox/README.md
+/:
+  en: 2d1caa2e6179218a
+  zh: 0b51a5dbda727ffa
+/astro-one-bash-sandbox:
+  en: 259f5fd9c3e5dab5
+  zh: 43ce89ec861cb53e
+/astro-one-bash-sandbox/summary:
+  en: f8d9c4e450beb840
+  zh: 9b663d09182f5424
+/astro-one-bash-sandbox/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-bash-sandbox/use-this-package:
+  en: 250abe489cd5e31b
+  zh: dfed78f9a12e0890
+/astro-one-bash-sandbox/use-this-package/when-to-choose-it:
+  en: a3fd4847596a3593
+  zh: 5204b805e9013286
+/astro-one-bash-sandbox/use-this-package/modes-and-file-effects:
+  en: bc096fe6f8eb54cd
+  zh: 1a3e3122ca40b0e5
+/astro-one-bash-sandbox/use-this-package/minimal-configuration:
+  en: 2d438ef4fa54c2ae
+  zh: 2dd42f873798720b
+/astro-one-bash-sandbox/use-this-package/denials-are-result-facts:
+  en: a10127c3fb2869ef
+  zh: 17908b572ddb5507
+/astro-one-bash-sandbox/use-this-package/failures-and-recovery:
+  en: 0d5b6818c3dad919
+  zh: cd0357477c0726c3
+/astro-one-bash-sandbox/understand-the-implementation:
+  en: 05e2abe4a25886fd
+  zh: 9240b331c45ac81e
+/astro-one-bash-sandbox/understand-the-implementation/design-concept:
+  en: 754f205c9c10108b
+  zh: 7c53d843e2a49be2
+/astro-one-bash-sandbox/understand-the-implementation/source-map:
+  en: 8963005b41bfc3c6
+  zh: 7df1436563c10a19
+/astro-one-bash-sandbox/understand-the-implementation/main-flow:
+  en: 731878f592fa79c6
+  zh: 3187f4c6907a13c2
+/astro-one-bash-sandbox/understand-the-implementation/invariants:
+  en: 0b6c6d7e216e1d23
+  zh: 15f94cfccf4fa242
+/astro-one-bash-sandbox/further-exploration:
+  en: 825b98b5d88b3b27
+  zh: aa642374123e897a
+/astro-one-bash-sandbox/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-bash-sandbox/model-experience/bash-tool-schema-indirectly:
+  en: 8e3df84fdcaeee60
+  zh: 25ad519340c6c232
+/astro-one-bash-sandbox/model-experience/bash-tool-schema-indirectly/what-the-model-sees:
+  en: 39236baf674acf64
+  zh: c4df855abaf04fdb
+/astro-one-bash-sandbox/model-experience/bash-tool-schema-indirectly/token-effect:
+  en: 8109db825b2ec6e3
+  zh: 6fcb961ac116984d
+/astro-one-bash-sandbox/model-experience/bash-tool-schema-indirectly/kv-cache-effect:
+  en: d25d46a61dc2b0c1
+  zh: e1deea6d70be4691
+/astro-one-bash-sandbox/model-experience/bash-tool-result-indirectly:
+  en: ba37fed04252f1eb
+  zh: 0e91d66334ec17c3
+/astro-one-bash-sandbox/model-experience/bash-tool-result-indirectly/what-the-model-sees:
+  en: 6b86ae2b3b41e8b2
+  zh: 825a446625a1d594
+/astro-one-bash-sandbox/model-experience/bash-tool-result-indirectly/token-effect:
+  en: b06db71c69ceaf8c
+  zh: e0b8230b993c93cc
+/astro-one-bash-sandbox/model-experience/bash-tool-result-indirectly/kv-cache-effect:
+  en: f5d5f97a153f7c70
+  zh: f681f89596f500f5
+/astro-one-bash-sandbox/model-experience/bash-tool-error-indirectly:
+  en: 8e6caeadd596ea8f
+  zh: fe525ddc52b2d711
+/astro-one-bash-sandbox/model-experience/bash-tool-error-indirectly/what-the-model-sees:
+  en: 74fcc73436adbb3b
+  zh: ae1387cf44c6ecb8
+/astro-one-bash-sandbox/model-experience/bash-tool-error-indirectly/token-effect:
+  en: 8f514efe94edfa8a
+  zh: 8a7ae8a2bdb4c01a
+/astro-one-bash-sandbox/model-experience/bash-tool-error-indirectly/kv-cache-effect:
+  en: f5d5f97a153f7c70
+  zh: f681f89596f500f5
+/astro-one-bash-sandbox/known-limitations-and-deferred-work:
+  en: 056f7e09b6ad03f9
+  zh: 2996d78fbe0c70e1
+/astro-one-bash-sandbox/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

@@ -1,0 +1,70 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/fs/fs-observation-policy/README.md
+/:
+  en: 2e7d205b959bad5b
+  zh: 78111c063c98c309
+/astro-one-fs-observation-policy:
+  en: 9480b607664e68ba
+  zh: dbceae4e2a96f095
+/astro-one-fs-observation-policy/summary:
+  en: f91eeb758758c241
+  zh: cbb5e520c1c59b2b
+/astro-one-fs-observation-policy/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-fs-observation-policy/use-this-package:
+  en: 2263ad421c1e43e1
+  zh: 49c2dbc263e20156
+/astro-one-fs-observation-policy/use-this-package/minimal-composition:
+  en: d85e3b814b43768e
+  zh: 89d3672dbb2f6d30
+/astro-one-fs-observation-policy/use-this-package/what-changes-for-the-model:
+  en: 91686925a433794d
+  zh: 9ac2a197203d6549
+/astro-one-fs-observation-policy/use-this-package/failures-and-recovery:
+  en: 1ecc7b68f7c7b3f0
+  zh: f6a9800786ed30c0
+/astro-one-fs-observation-policy/understand-the-implementation:
+  en: 612e69f76edc8795
+  zh: 55edab9956941616
+/astro-one-fs-observation-policy/understand-the-implementation/design-concept:
+  en: c2111be94b4cd1b6
+  zh: 16601b728bc5d183
+/astro-one-fs-observation-policy/understand-the-implementation/source-map:
+  en: b9833b0ab790a500
+  zh: ba7c3108c61e1727
+/astro-one-fs-observation-policy/understand-the-implementation/decision-flow:
+  en: 73aa4270241081dd
+  zh: bb51748111e748fe
+/astro-one-fs-observation-policy/understand-the-implementation/single-slot-first-wins:
+  en: 226bb7885eb147b8
+  zh: 0b68d59ddc55fb07
+/astro-one-fs-observation-policy/understand-the-implementation/lifecycle:
+  en: 02a1e3e7707706fb
+  zh: eff587af0445d032
+/astro-one-fs-observation-policy/further-exploration:
+  en: 1ee29d3839c1766f
+  zh: dbad2b182abadcc3
+/astro-one-fs-observation-policy/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-fs-observation-policy/model-experience/filesystem-tool-outcome:
+  en: ee1f02dc1bb69955
+  zh: 9ba9205a9b15d132
+/astro-one-fs-observation-policy/model-experience/filesystem-tool-outcome/what-the-model-sees:
+  en: c2d3b7ac20915f62
+  zh: 77ff038f052de74f
+/astro-one-fs-observation-policy/model-experience/filesystem-tool-outcome/token-effect:
+  en: 425ccc7dafa6218d
+  zh: d2c1a29955a60e3d
+/astro-one-fs-observation-policy/model-experience/filesystem-tool-outcome/kv-cache-effect:
+  en: 2fbf2175168e8244
+  zh: 3d6bc05b9eadfbc2
+/astro-one-fs-observation-policy/known-limitations-and-deferred-work:
+  en: c1ce95870bc7771f
+  zh: 5c45500a093788ec
+/astro-one-fs-observation-policy/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

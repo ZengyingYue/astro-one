@@ -1,0 +1,58 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-satellite-workshop/README.md
+/:
+  en: fca63bbda9861202
+  zh: 2f68cdfc8a2dd9d8
+/astro-one-client-ui-satellite-workshop:
+  en: 746df82fac1c3e94
+  zh: c2b5a03195935c12
+/astro-one-client-ui-satellite-workshop/summary:
+  en: cd4b9579da8c34c3
+  zh: f3417ce1cfad9f24
+/astro-one-client-ui-satellite-workshop/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-client-ui-satellite-workshop/use-this-package:
+  en: f7a1fcfea9803d26
+  zh: 6e1693f06cac3713
+/astro-one-client-ui-satellite-workshop/use-this-package/catalog:
+  en: a6bdf13baa5d7e4c
+  zh: 1ab4a629afd4aec3
+/astro-one-client-ui-satellite-workshop/use-this-package/mouse-and-keyboard:
+  en: d68e5c96e5b8fa19
+  zh: 42733aa382b73a2e
+/astro-one-client-ui-satellite-workshop/use-this-package/budgets-and-rule-checks:
+  en: 6020452c76a50310
+  zh: 97c6838d612a024d
+/astro-one-client-ui-satellite-workshop/use-this-package/model-evaluation:
+  en: 45c9ee6860d9c50e
+  zh: 1b62e989875550c2
+/astro-one-client-ui-satellite-workshop/understand-the-implementation:
+  en: aff834b0f3f5b50c
+  zh: e919ff6eac7f3633
+/astro-one-client-ui-satellite-workshop/further-exploration:
+  en: 53538b3b09a01b07
+  zh: 9578e04f455993fb
+/astro-one-client-ui-satellite-workshop/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-client-ui-satellite-workshop/model-experience/evaluation-prompt:
+  en: 08b949e00586fced
+  zh: 10a2af651c6a5738
+/astro-one-client-ui-satellite-workshop/model-experience/evaluation-prompt/what-the-model-sees:
+  en: 661ac3c4843a2c68
+  zh: 517c057a0e097029
+/astro-one-client-ui-satellite-workshop/model-experience/evaluation-prompt/token-effect:
+  en: 7221a14336cdd6d4
+  zh: ad2aa0b03e162561
+/astro-one-client-ui-satellite-workshop/model-experience/evaluation-prompt/kv-cache-effect:
+  en: 599a995f5cde0254
+  zh: 25c4155c9715fa39
+/astro-one-client-ui-satellite-workshop/known-limitations-and-deferred-work:
+  en: 7f17becc84acab7e
+  zh: df85b6043f309975
+/astro-one-client-ui-satellite-workshop/known-limitations-and-deferred-work/dev-note:
+  en: 87c22b7cc6fb75f5
+  zh: 50917d9d1cafa67b

@@ -1,0 +1,52 @@
+{
+  "name": "@astro-one/tmux-context",
+  "description": "Opt-in durable per-step context with this agent's tmux pane and window location",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/context/tmux-context"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@astro-one/schemastery": "workspace:~",
+    "zod": "4.4.3"
+  },
+  "peerDependencies": {
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/shell": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/session-projection": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-loop-testkit": "workspace:*",
+    "@astro-one/shell": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/session-projection": "workspace:*"
+  }
+}

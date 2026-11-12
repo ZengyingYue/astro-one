@@ -1,0 +1,73 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/aerospace/tool-gnss/README.md
+/:
+  en: 67d134fd136292ed
+  zh: 3d7d05d7da86794a
+/astro-one-tool-gnss:
+  en: 00bd8f249cfd8c32
+  zh: 8640f53d59ffef6e
+/astro-one-tool-gnss/summary:
+  en: 87e38b48ef1a9115
+  zh: 7c73e46848dc679e
+/astro-one-tool-gnss/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-tool-gnss/use-this-package:
+  en: 43becad04ec1d7d9
+  zh: 8157eb0e3252daab
+/astro-one-tool-gnss/use-this-package/when-to-choose-it:
+  en: 4697ce3aef7aa06c
+  zh: e3e5c7902429bd76
+/astro-one-tool-gnss/use-this-package/minimal-configuration:
+  en: ad1d2d8f5fc8f282
+  zh: 112e55ae2846ffa8
+/astro-one-tool-gnss/use-this-package/tools:
+  en: aae70678879bc8c4
+  zh: 8df034b35ade8509
+/astro-one-tool-gnss/use-this-package/failures-and-recovery:
+  en: a63ac7fa4bf21c39
+  zh: 3a0dcef7a454be1e
+/astro-one-tool-gnss/understand-the-implementation:
+  en: 327b54a1567adf06
+  zh: a7bcb1c7bb7ea56e
+/astro-one-tool-gnss/understand-the-implementation/source-map:
+  en: 909635f534be8923
+  zh: 3470e77bbd6cfb7c
+/astro-one-tool-gnss/further-exploration:
+  en: 7c1a09f848777b77
+  zh: 9ac28a727e7f135b
+/astro-one-tool-gnss/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-tool-gnss/model-experience/tool-schemas:
+  en: 3039bc5e7a796b21
+  zh: 6b7a9eaf69c9ea53
+/astro-one-tool-gnss/model-experience/tool-schemas/what-the-model-sees:
+  en: 777d457f27241180
+  zh: e8b8ec76fb93f31c
+/astro-one-tool-gnss/model-experience/tool-schemas/token-effect:
+  en: ea91fa9ce96dac66
+  zh: bd8c97b0245fbf82
+/astro-one-tool-gnss/model-experience/tool-schemas/kv-cache-effect:
+  en: 91a13c8c95ddc114
+  zh: 9ce3c60dac57a2db
+/astro-one-tool-gnss/model-experience/positioning-and-visibility-results:
+  en: 65fb1a6888d197a0
+  zh: c3c8d9d244bcc750
+/astro-one-tool-gnss/model-experience/positioning-and-visibility-results/what-the-model-sees:
+  en: ae0c710b05f49e15
+  zh: 5ba0e0c510416591
+/astro-one-tool-gnss/model-experience/positioning-and-visibility-results/token-effect:
+  en: e5f2d67650d658ef
+  zh: e8e743c36600e08d
+/astro-one-tool-gnss/model-experience/positioning-and-visibility-results/kv-cache-effect:
+  en: f5d5f97a153f7c70
+  zh: e51236a78b8b4ac4
+/astro-one-tool-gnss/known-limitations-and-deferred-work:
+  en: 0357d9d35272d440
+  zh: c5d30c8d069d2455
+/astro-one-tool-gnss/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

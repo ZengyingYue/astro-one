@@ -1,0 +1,25 @@
+- id: session-telemetry-otel
+  disabled: true
+- id: headless-startup
+  disabled: true
+- id: headless-runner
+  disabled: true
+- insert:
+    - id: product-telemetry-otel
+      name: '@astro-one/host-product-telemetry-otel'
+      config:
+        endpoint: !!js process.env.ASTRO_ONE_PRODUCT_TELEMETRY_TEST_ENDPOINT
+        serviceName: astro-one-environment-test
+        serviceVersion: synthetic-release
+        compression: none
+    - id: product-analytics
+      name: '@astro-one/client-product-analytics'
+      config:
+        enabled: true
+        appVersion: synthetic-release
+
+- id: sandbox-policy
+  inject: []
+  config:
+    mode: !!js process.env.ASTRO_ONE_PERMISSION_MODE ?? 'workspace-write'
+    workspaceRoot: !!js process.cwd()

@@ -1,0 +1,40 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/bundle/sdk-app/README.md
+/:
+  en: 8148fef9eb6f852e
+  zh: f4419bed153c9760
+/astro-one-sdk-app:
+  en: 583f3af899554b67
+  zh: f2116c8d30419cc1
+/astro-one-sdk-app/summary:
+  en: 0a504b8af933db88
+  zh: f5937792b0f16319
+/astro-one-sdk-app/table-of-contents:
+  en: 4e53164159b5ce41
+  zh: 89582dc0294d0776
+/astro-one-sdk-app/use-this-package:
+  en: f7e15d45ea622e8e
+  zh: b1cb0e3903203557
+/astro-one-sdk-app/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-sdk-app/model-experience/sdk-model-context:
+  en: 4f88e647c6df4f42
+  zh: 2bd3e4b0bdfe9412
+/astro-one-sdk-app/model-experience/sdk-model-context/what-the-model-sees:
+  en: 233cf50735fca11f
+  zh: ed619fcd96a75d43
+/astro-one-sdk-app/model-experience/sdk-model-context/token-effect:
+  en: cef8efe97fe1ff16
+  zh: c052ab3e6706efa6
+/astro-one-sdk-app/model-experience/sdk-model-context/kv-cache-effect:
+  en: b1169743449b2272
+  zh: 98d465d802bf55c1
+/astro-one-sdk-app/known-limitations-and-deferred-work:
+  en: f408c56e0d5b0245
+  zh: c9638640419a3961
+/astro-one-sdk-app/known-limitations-and-deferred-work/dev-note:
+  en: b9b4e27513ebba78
+  zh: 51b123ac60ff28c6

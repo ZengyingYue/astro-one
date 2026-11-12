@@ -1,0 +1,49 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/bundle/sdk-minimal/README.md
+/:
+  en: b2fce08b0fa865da
+  zh: 97e214d87ded4b54
+/astro-one-sdk-minimal:
+  en: c74b64b14797239f
+  zh: e72a670df49cf473
+/astro-one-sdk-minimal/summary:
+  en: 61a5d678ccedb57d
+  zh: c1a83fba396fe59f
+/astro-one-sdk-minimal/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-sdk-minimal/use-this-package:
+  en: d69d83c0696a7953
+  zh: 5a6cb5bf180163b9
+/astro-one-sdk-minimal/understand-the-implementation:
+  en: 1ec60dcfa370c858
+  zh: 06e9bfeeccda4a17
+/astro-one-sdk-minimal/understand-the-implementation/source-map:
+  en: 3784c554e96ab004
+  zh: 0a05d4fe1e26b3b1
+/astro-one-sdk-minimal/further-exploration:
+  en: 3cf0ea2fbde587db
+  zh: 8f6c8d6f12ba1740
+/astro-one-sdk-minimal/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-sdk-minimal/model-experience/minimal-coding-agent-composition:
+  en: bd87e16b0c6e0506
+  zh: c8ee5e3b4578754e
+/astro-one-sdk-minimal/model-experience/minimal-coding-agent-composition/what-the-model-sees:
+  en: 06ca7c42497a3cad
+  zh: d5b39f832ba55097
+/astro-one-sdk-minimal/model-experience/minimal-coding-agent-composition/token-effect:
+  en: fabd79515d5ede60
+  zh: d2a49b0fc0c6ff37
+/astro-one-sdk-minimal/model-experience/minimal-coding-agent-composition/kv-cache-effect:
+  en: dd887b6519f40ab3
+  zh: a98e56411fdc79df
+/astro-one-sdk-minimal/known-limitations-and-deferred-work:
+  en: b80b2181956beb61
+  zh: 0417969a2200d4db
+/astro-one-sdk-minimal/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

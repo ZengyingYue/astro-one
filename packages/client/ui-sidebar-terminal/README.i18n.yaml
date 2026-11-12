@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-sidebar-terminal/README.md
+/:
+  en: cbb34e66a0b2a790
+  zh: 51f560b10b0a10cd
+/astro-one-client-ui-sidebar-terminal:
+  en: a589dcd3d45e7081
+  zh: 20b9da5c039381d8
+/astro-one-client-ui-sidebar-terminal/summary:
+  en: d13b7ab16f865716
+  zh: 2332b0db623e7d75
+/astro-one-client-ui-sidebar-terminal/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 1fa9a72d1ee045cc
+/astro-one-client-ui-sidebar-terminal/use-this-package:
+  en: 40180ad0a830a452
+  zh: 36d40efe0f6fb4a6
+/astro-one-client-ui-sidebar-terminal/understand-the-implementation:
+  en: 8e851d8996d8e114
+  zh: 3284497cbe087162
+/astro-one-client-ui-sidebar-terminal/further-exploration:
+  en: c8265916eca3aca3
+  zh: c2a1dd709a9d1a9b
+/astro-one-client-ui-sidebar-terminal/model-experience:
+  en: 2c52eec781441d2a
+  zh: 35a7c88f180f74a1
+/astro-one-client-ui-sidebar-terminal/model-experience/kv-cache-effect:
+  en: 507d3b3b80596fdc
+  zh: 4659007c4671afdc
+/astro-one-client-ui-sidebar-terminal/known-limitations-and-deferred-work:
+  en: 53d0b4b028b69a33
+  zh: c7adf9e9c9ede59c
+/astro-one-client-ui-sidebar-terminal/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 7aeea62eda52b83b

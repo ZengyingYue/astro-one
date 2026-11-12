@@ -1,0 +1,19 @@
+{
+  "organization": "astro-one",
+  "repository": "astro-one",
+  "projectNumber": 1,
+  "projectTitle": "Astro One Issue Management",
+  "lifecycleActor": "astro-one-issue-management",
+  "priorityField": "Priority",
+  "startDateField": "Start Date",
+  "projectTimeZone": "Asia/Shanghai",
+  "statuses": [
+    "Inbox",
+    "Backlog",
+    "Ready",
+    "In progress",
+    "In review",
+    "Done",
+    "No action"
+  ]
+}

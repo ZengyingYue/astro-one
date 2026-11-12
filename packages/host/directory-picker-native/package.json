@@ -1,0 +1,48 @@
+{
+  "name": "@astro-one/host-directory-picker-native",
+  "description": "Native-OS-chooser backend of the directory-picker seam for the Astro One web GUI host",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/host/directory-picker-native"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./worker": {
+      "types": "./lib/types/win32-dialog-worker.d.ts",
+      "default": "./lib/worker.cjs"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/worker.cjs",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@astro-one/host-directory-picker": "workspace:*",
+    "@astro-one/native-command": "workspace:*",
+    "koffi": "3.1.1"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "tsx": "^4.23.13"
+  }
+}

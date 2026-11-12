@@ -1,0 +1,10 @@
+version: 1
+scenario: subagent-astro-one-sdk-dynamic-route
+profile: sdk
+composition: sdk-astro-one-sdk-dynamic-route
+recording: authored
+header:
+  class: sdk-astro-one-sdk-dynamic-route
+  pin: true
+  childSystemPrompts: [1]
+  childToolSchemas: [1]

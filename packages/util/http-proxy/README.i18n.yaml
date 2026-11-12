@@ -1,0 +1,55 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/util/http-proxy/README.md
+/:
+  en: 117b4d191f773a9c
+  zh: 0b9e150f6cd23b04
+/astro-one-http-proxy:
+  en: 33892eb5605eb29a
+  zh: d525f98cffbfab5f
+/astro-one-http-proxy/summary:
+  en: c3b1b32ab36f5f97
+  zh: 143b744ab361f0d4
+/astro-one-http-proxy/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-http-proxy/use-this-package:
+  en: 57ccea4406710053
+  zh: c2bae56905272c02
+/astro-one-http-proxy/use-this-package/writing-a-new-outbound-call:
+  en: 240e713b0128cc98
+  zh: 9519a53790f5d49a
+/astro-one-http-proxy/use-this-package/what-the-policy-reads:
+  en: faaacbc6ec54149c
+  zh: b809c0f86e2e3a9f
+/astro-one-http-proxy/use-this-package/failures:
+  en: 4248bc9a662680ed
+  zh: 4150ade9f1aa9287
+/astro-one-http-proxy/understand-the-implementation:
+  en: ee4615a04fa6503d
+  zh: ee2c5fb2204a43cf
+/astro-one-http-proxy/understand-the-implementation/design-philosophy:
+  en: 9c58d594c107e25b
+  zh: e3e5182c18e838c7
+/astro-one-http-proxy/understand-the-implementation/source-map:
+  en: 5b4db22bf563515b
+  zh: 0d5e116b95387654
+/astro-one-http-proxy/understand-the-implementation/bypass-matching:
+  en: e9ad6c2e8ee2fc21
+  zh: c10de6995cf594bc
+/astro-one-http-proxy/further-exploration:
+  en: eeded8a679ee387d
+  zh: 8bc5ace506134a73
+/astro-one-http-proxy/model-experience:
+  en: e0af6a1073934d5a
+  zh: d8bf9c77b54ed5ae
+/astro-one-http-proxy/model-experience/kv-cache-effect:
+  en: 7f12ca92e7722f98
+  zh: 97fa75de6a3f6a3f
+/astro-one-http-proxy/known-limitations-and-deferred-work:
+  en: 6188f4cc5203f24b
+  zh: 5ba31a7cf37a3878
+/astro-one-http-proxy/known-limitations-and-deferred-work/dev-note:
+  en: 8f915ac6f4fc1525
+  zh: 29b06e0aae5a30ec

@@ -1,0 +1,34 @@
+# Bilingual-pair consistency record for deepseek-llm-api-wire-extensions.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/deepseek-llm-api-wire-extensions.md
+/official-deepseek-llm-api-wire-extensions:
+  en: 050884cd3a1a0779
+  zh: 6ab67967a080c3f2
+/official-deepseek-llm-api-wire-extensions/wire-namespaces-and-versioning:
+  en: 3000d4c0c6e299e4
+  zh: e8e4e49ac12c7807
+/official-deepseek-llm-api-wire-extensions/request-headers:
+  en: ab2b8d709177d0f9
+  zh: f3b060f7444a4390
+/official-deepseek-llm-api-wire-extensions/body-extension-transaction:
+  en: 48001cfd1281a23b
+  zh: d410530ae8aa2823
+/official-deepseek-llm-api-wire-extensions/astro-one-plugin-packages:
+  en: 88f7c596c6eb0981
+  zh: 113ccfc303382cec
+/official-deepseek-llm-api-wire-extensions/astro-one-session-log:
+  en: bab270c2c50874fd
+  zh: 2cfa8accf3318107
+/official-deepseek-llm-api-wire-extensions/astro-one-session-log/wire-session-header:
+  en: 49f0c47be2973f05
+  zh: 288475ce9a02b4cb
+/official-deepseek-llm-api-wire-extensions/astro-one-session-log/canonical-event-envelopes:
+  en: 008a21df5e314154
+  zh: 8855710a37542ec5
+/official-deepseek-llm-api-wire-extensions/astro-one-session-log/acceptance-watermark-and-at-least-once-delivery:
+  en: 4d84cb1e61f9cf58
+  zh: 8a63ce3069e2f0b3
+/official-deepseek-llm-api-wire-extensions/exposure-and-receiver-requirements:
+  en: cf0fe0969adbda42
+  zh: 74803d8c01b49b8e

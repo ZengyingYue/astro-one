@@ -1,0 +1,82 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/session-query/session-log-export/README.md
+/:
+  en: 2ed4e25828621cc5
+  zh: e9aa38b58d716093
+/astro-one-session-log-export:
+  en: 4e0bde2658f2adb3
+  zh: 44fa47fb55e6a373
+/astro-one-session-log-export/summary:
+  en: 6d99b2647676e894
+  zh: 17dfe4562a75265e
+/astro-one-session-log-export/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-session-log-export/use-this-package:
+  en: f07848910e21caff
+  zh: 5c0934f85a66a357
+/astro-one-session-log-export/use-this-package/copy-session-as-markdown:
+  en: 55c163a4ae5b8d5d
+  zh: c1dac154ed1fa56d
+/astro-one-session-log-export/use-this-package/when-to-choose-it:
+  en: 4011f686afd24f09
+  zh: 2710b9995c80ba1f
+/astro-one-session-log-export/use-this-package/backend-conversion:
+  en: 252bc78a7850557a
+  zh: e695658a94c8c2bf
+/astro-one-session-log-export/use-this-package/composition:
+  en: 2e20f972e543161b
+  zh: 7e1c2bcfb48d8e72
+/astro-one-session-log-export/use-this-package/configuration:
+  en: 377a0d8860c46f63
+  zh: 9eb7698f813b2fa3
+/astro-one-session-log-export/use-this-package/command-contract:
+  en: 26329688b9a924a7
+  zh: 94e21c10fdcfc1ac
+/astro-one-session-log-export/use-this-package/what-to-expect:
+  en: 44be1f1d1903d12a
+  zh: c8f1eb5b92b71a30
+/astro-one-session-log-export/use-this-package/failures:
+  en: e92a382bebfe99e3
+  zh: 671178b06808bfb9
+/astro-one-session-log-export/understand-the-implementation:
+  en: 7cb82a6851405f95
+  zh: b8c525170d19dc6c
+/astro-one-session-log-export/understand-the-implementation/design-split:
+  en: 3bb8e18b107c353f
+  zh: 3cc45ce2b5699066
+/astro-one-session-log-export/understand-the-implementation/download-flow:
+  en: bd46d2fa1273a6a4
+  zh: 4d3eb2cf0a9bf12b
+/astro-one-session-log-export/understand-the-implementation/markdown-copy-flow:
+  en: d4e02b56ffb8ee8a
+  zh: 0a329039788a13ee
+/astro-one-session-log-export/further-exploration:
+  en: eff7ab325c91de7c
+  zh: f2bf7a76070fd968
+/astro-one-session-log-export/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-session-log-export/model-experience/human-export-and-copy-controls:
+  en: fc738fb50c699115
+  zh: d9184c11b904d36c
+/astro-one-session-log-export/model-experience/human-export-and-copy-controls/what-the-model-sees:
+  en: e7784b93213942e5
+  zh: 598c2ce6af076d2f
+/astro-one-session-log-export/model-experience/human-export-and-copy-controls/token-effect:
+  en: 312b2def8b2cd7d4
+  zh: 9af5e3a7cd12ce65
+/astro-one-session-log-export/model-experience/human-export-and-copy-controls/kv-cache-effect:
+  en: 61e7dbf79010d071
+  zh: 29294355598c0476
+/astro-one-session-log-export/known-limitations-and-deferred-work:
+  en: 961c206403204080
+  zh: c0cea2c965cc0b1b
+/astro-one-session-log-export/known-limitations-and-deferred-work/dev-note:
+  en: 4ee4d24c26c127bf
+  zh: 1facdfbfa3ccefbc
+/astro-one-session-log-export/known-limitations-and-deferred-work/dev-note/future-export-destinations-beyond-the-browser:
+  en: 820a5a5f2c5471cd
+  zh: 59d5852372a1f3ed

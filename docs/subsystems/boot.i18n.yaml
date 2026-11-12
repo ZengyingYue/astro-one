@@ -1,0 +1,16 @@
+# Bilingual-pair consistency record for boot.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/subsystems/boot.md
+/profile-management:
+  en: edc368148df33aca
+  zh: 76415c47323f62d2
+/profile-management/management-records:
+  en: 084b86981782f1c5
+  zh: 8b455ecc0520f121
+/profile-management/market-records:
+  en: 676a70b4b797f69c
+  zh: 14bcbd174b180fb3
+/profile-management/profile-reconciliation:
+  en: 42a093314af774d4
+  zh: 7c1784a3af02b31c

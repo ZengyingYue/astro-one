@@ -1,0 +1,46 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/session/message-quotes/README.md
+/:
+  en: 3747c4c75b3f49e0
+  zh: 5b0b9248cb91d91b
+/astro-one-message-quotes:
+  en: 3b0b4f66012288a0
+  zh: c52a1673392ed03e
+/astro-one-message-quotes/summary:
+  en: 9c349c80f5fd3ede
+  zh: 073e7e5a45bd03b5
+/astro-one-message-quotes/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 405b30feaf48c087
+/astro-one-message-quotes/use-this-package:
+  en: 5a2c3edf0a026abe
+  zh: aec2f54b6d833591
+/astro-one-message-quotes/understand-the-implementation:
+  en: abb52a6a7f7bda7a
+  zh: b03b8394462a63c5
+/astro-one-message-quotes/further-exploration:
+  en: 1319304d243125ad
+  zh: 1e9353ff26ae5f1e
+/astro-one-message-quotes/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-message-quotes/model-experience/quoted-message-text:
+  en: 4570ae90b328ddf5
+  zh: 5c2c95075c5e0fa4
+/astro-one-message-quotes/model-experience/quoted-message-text/what-the-model-sees:
+  en: 913152fe14c493f6
+  zh: 3bdf114beaff1e04
+/astro-one-message-quotes/model-experience/quoted-message-text/token-effect:
+  en: af92deb8bf69432b
+  zh: 2582520fcb9b982e
+/astro-one-message-quotes/model-experience/quoted-message-text/kv-cache-effect:
+  en: 626c54bc58b74f8f
+  zh: 82a5a8a445734d64
+/astro-one-message-quotes/known-limitations-and-deferred-work:
+  en: 4d2c9783f0268d55
+  zh: 40d6d48ceed3194c
+/astro-one-message-quotes/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

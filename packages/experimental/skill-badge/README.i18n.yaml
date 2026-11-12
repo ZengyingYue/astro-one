@@ -1,0 +1,55 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/skill-badge/README.md
+/:
+  en: c8555b488215783b
+  zh: b59f38b804b9366b
+/astro-one-skill-badge:
+  en: da4bd1db762abe16
+  zh: 914f8fc6b9ce7483
+/astro-one-skill-badge/summary:
+  en: 9b03d3935fc4d493
+  zh: 558abde487f998bd
+/astro-one-skill-badge/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-skill-badge/use-this-package:
+  en: c0bc848a34df861e
+  zh: e9551dc425b11e78
+/astro-one-skill-badge/use-this-package/when-to-choose-it:
+  en: aa54311ff86b3b93
+  zh: 3e2e5f38efb09ed8
+/astro-one-skill-badge/use-this-package/enable-the-plugin:
+  en: 932ada20ab14232f
+  zh: 49098e1cbcc7dc58
+/astro-one-skill-badge/use-this-package/what-the-badge-skill-provides:
+  en: 0f0598f515f46baa
+  zh: 691b6718fe569ac8
+/astro-one-skill-badge/use-this-package/observable-success-and-failures:
+  en: 38166e660b6115b6
+  zh: e58f30a0b4eb50c5
+/astro-one-skill-badge/understand-the-implementation:
+  en: 63465b0133f30e85
+  zh: 84bebb7c1fe0ceba
+/astro-one-skill-badge/understand-the-implementation/design-concept:
+  en: b22275b992f32f0a
+  zh: dc667ed33ac92f99
+/astro-one-skill-badge/understand-the-implementation/source-map:
+  en: 98406930975c2601
+  zh: 9c6c98b28aa83d5d
+/astro-one-skill-badge/further-exploration:
+  en: 5861822edb4ba7b4
+  zh: 5c77e19a4729c0ad
+/astro-one-skill-badge/model-experience:
+  en: a90b16cc17984c09
+  zh: b4e611fd99a160b6
+/astro-one-skill-badge/model-experience/kv-cache-effect:
+  en: 5b5bcb4fc0513bef
+  zh: 67a1d939c6a18c2e
+/astro-one-skill-badge/known-limitations-and-deferred-work:
+  en: 047fec4cf830248a
+  zh: d6f54302720400af
+/astro-one-skill-badge/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

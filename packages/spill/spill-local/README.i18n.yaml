@@ -1,0 +1,64 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/spill/spill-local/README.md
+/:
+  en: 081da64c1be2d775
+  zh: cd51e86e3c5c49cf
+/astro-one-spill-local:
+  en: c0d0d7882fc4f288
+  zh: 9215b032ec33571a
+/astro-one-spill-local/summary:
+  en: 73a7d0446e2ededf
+  zh: 7a78cf763f7d243e
+/astro-one-spill-local/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-spill-local/use-this-package:
+  en: 5a24d68f01af10af
+  zh: 57a083c3438410fc
+/astro-one-spill-local/use-this-package/minimal-configuration:
+  en: a0a4f0a6c6910cee
+  zh: 0414f1b662c15401
+/astro-one-spill-local/use-this-package/what-you-get-back:
+  en: c8aca7d0d3fe321e
+  zh: b7f7a168d3ca78e0
+/astro-one-spill-local/use-this-package/where-files-land:
+  en: 32262a03c40c49df
+  zh: 9a028fff66aed750
+/astro-one-spill-local/use-this-package/startup-cleanup:
+  en: 0162a4c058402f58
+  zh: 8920db205d225846
+/astro-one-spill-local/use-this-package/failures-and-recovery:
+  en: 910bbe363921952d
+  zh: 1c21b9ca1d050a1e
+/astro-one-spill-local/understand-the-implementation:
+  en: deb655b3b1860576
+  zh: d83d8a3c24a71a16
+/astro-one-spill-local/understand-the-implementation/design-philosophy:
+  en: 905f7242345308cd
+  zh: 66907177a6dd4b94
+/astro-one-spill-local/understand-the-implementation/source-map:
+  en: 4396717876acc2be
+  zh: a08321bdb3768143
+/astro-one-spill-local/understand-the-implementation/file-naming-and-write:
+  en: cb92a60310c465a8
+  zh: ce474c16abd2df5d
+/astro-one-spill-local/further-exploration:
+  en: ccb563a6c9b6f141
+  zh: 8a8f924acfabe19d
+/astro-one-spill-local/model-experience:
+  en: ae2966f8fc63dc5b
+  zh: 141aa4ebbc52574f
+/astro-one-spill-local/model-experience/kv-cache-effect:
+  en: 40294c1c31b74824
+  zh: 6b9a967b5b4765e4
+/astro-one-spill-local/known-limitations-and-deferred-work:
+  en: 363cf4b1b822e043
+  zh: c28e52f67ef21400
+/astro-one-spill-local/known-limitations-and-deferred-work/dev-note:
+  en: a63e51f03bdb279f
+  zh: 191a48d3bfc4a792
+/astro-one-spill-local/known-limitations-and-deferred-work/dev-note/future-workspace-confinement-interplay:
+  en: 7cc389241a5b9a4c
+  zh: af4b8e65ed565ec6

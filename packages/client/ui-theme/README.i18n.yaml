@@ -1,0 +1,58 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-theme/README.md
+/:
+  en: 6bbadc862b5efec7
+  zh: 7737c0d4c0a14f5c
+/astro-one-client-ui-theme:
+  en: f4a6cf96d97da0ce
+  zh: e3dabd72c8a6d67b
+/astro-one-client-ui-theme/summary:
+  en: 7e6489c32792e83a
+  zh: e73f18ed48a09f54
+/astro-one-client-ui-theme/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-client-ui-theme/use-this-package:
+  en: dcea238609175df1
+  zh: 458d8273bf3866d8
+/astro-one-client-ui-theme/use-this-package/appearance-and-font-size:
+  en: 7dff01929847efd1
+  zh: ec04b4c4485aba96
+/astro-one-client-ui-theme/use-this-package/fonts:
+  en: b45d5b48ca799c3a
+  zh: af65514b3759204f
+/astro-one-client-ui-theme/use-this-package/registering-a-theme:
+  en: 5244fc168d0a03f8
+  zh: c7ab12fdf8c6c55b
+/astro-one-client-ui-theme/use-this-package/pre-plugin-palette:
+  en: b87550b73ca43823
+  zh: 8d3d5aa9a9efeb0a
+/astro-one-client-ui-theme/understand-the-implementation:
+  en: 721d9fd608c1ab19
+  zh: 9a19e00a14a7a042
+/astro-one-client-ui-theme/understand-the-implementation/stylesheets:
+  en: c823eeec5945ea34
+  zh: 8656eb9a3fd69a83
+/astro-one-client-ui-theme/understand-the-implementation/scrollbar-rebinding:
+  en: 67bf681cabac99cb
+  zh: 12aa2c42d6c65eb8
+/astro-one-client-ui-theme/understand-the-implementation/preference-persistence:
+  en: 8eb3e46851f8bc48
+  zh: e43feeee275331c9
+/astro-one-client-ui-theme/further-exploration:
+  en: fc5c86c5f6f4e581
+  zh: 1c9e6b2e090ebe0c
+/astro-one-client-ui-theme/model-experience:
+  en: 3120df665299c634
+  zh: 1d9f365d091d0d2a
+/astro-one-client-ui-theme/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/astro-one-client-ui-theme/known-limitations-and-deferred-work:
+  en: 2388061abb1dd40f
+  zh: 1a4ad9a8e12472df
+/astro-one-client-ui-theme/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

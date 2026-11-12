@@ -1,0 +1,52 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/session/session-format-v0-to-v1/README.md
+/:
+  en: 4ab6679a500310ef
+  zh: 26b95b9400580d46
+/astro-one-session-format-v0-to-v1:
+  en: f06b162465b021a9
+  zh: e4d66d015ac50959
+/astro-one-session-format-v0-to-v1/summary:
+  en: e67a9a547320a867
+  zh: dc724ea9d6e0905e
+/astro-one-session-format-v0-to-v1/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-session-format-v0-to-v1/use-this-package:
+  en: bbff250eba0f1b89
+  zh: 0a618f05cc88ee2b
+/astro-one-session-format-v0-to-v1/use-this-package/when-to-use-it:
+  en: 01cb4fa8dae01d9b
+  zh: e1b4867feae650b2
+/astro-one-session-format-v0-to-v1/use-this-package/entry-point:
+  en: 12e0858e80044921
+  zh: 88b4e9709ce24d7d
+/astro-one-session-format-v0-to-v1/understand-the-implementation:
+  en: c0cf5fae48838078
+  zh: 958edf61dabcbaba
+/astro-one-session-format-v0-to-v1/further-exploration:
+  en: cf13b28c03eaeabd
+  zh: b57e16f6773bb3e5
+/astro-one-session-format-v0-to-v1/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-session-format-v0-to-v1/model-experience/historical-restoration:
+  en: e63dd8ef6de7cf7c
+  zh: 4c3dde3b3052bb7a
+/astro-one-session-format-v0-to-v1/model-experience/historical-restoration/what-the-model-sees:
+  en: 2ef5c5585de26729
+  zh: 456d352f16553c64
+/astro-one-session-format-v0-to-v1/model-experience/historical-restoration/token-effect:
+  en: f7d1eb359afe1932
+  zh: 5fc82f0403c52d19
+/astro-one-session-format-v0-to-v1/model-experience/historical-restoration/kv-cache-effect:
+  en: c78d21c5c83e5854
+  zh: 95c8f1a6948b8b56
+/astro-one-session-format-v0-to-v1/known-limitations-and-deferred-work:
+  en: 8398f2f0e7c7a6b2
+  zh: 73ec58c0ae513772
+/astro-one-session-format-v0-to-v1/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

@@ -1,0 +1,25 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/llm/README.md
+/:
+  en: 2c229c1ca0bb752f
+  zh: d238dc305f853b48
+/llm-llm-capability-family:
+  en: f4f8e1fe6041af16
+  zh: 4527d2b928b5e378
+/llm-llm-capability-family/summary:
+  en: 757ca5b6ecfda2bf
+  zh: b133a4be8fd9b803
+/llm-llm-capability-family/table-of-contents:
+  en: 1eb35b015a6c423f
+  zh: a8a3dceee2c9e943
+/llm-llm-capability-family/packages:
+  en: 85f6c2462662a838
+  zh: 9f5a034d8af8ad53
+/llm-llm-capability-family/related-documentation:
+  en: 51275537b09909fd
+  zh: e39e9df4af4a7939
+/llm-llm-capability-family/dev-note:
+  en: b75c8458928b72b9
+  zh: 003ba4e17b4b5269

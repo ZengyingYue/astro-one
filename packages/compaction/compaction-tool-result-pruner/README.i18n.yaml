@@ -1,0 +1,67 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/compaction/compaction-tool-result-pruner/README.md
+/:
+  en: 9ed7a84c51988fdb
+  zh: 4df60a349c2be7dc
+/astro-one-compaction-tool-result-pruner:
+  en: fef9cad4a9a57b17
+  zh: eea031e13bc6b85c
+/astro-one-compaction-tool-result-pruner/summary:
+  en: 0b14054289683b8b
+  zh: 9abb5e5f424bd852
+/astro-one-compaction-tool-result-pruner/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-compaction-tool-result-pruner/use-this-package:
+  en: d043985698fab900
+  zh: 1c6a743f43efe8cf
+/astro-one-compaction-tool-result-pruner/use-this-package/smallest-working-composition:
+  en: 55eadf840a54d2f8
+  zh: cc6bf82f58058c7b
+/astro-one-compaction-tool-result-pruner/use-this-package/what-gets-trimmed:
+  en: a5cb5c94edcd91e3
+  zh: ed95adc91d11bbda
+/astro-one-compaction-tool-result-pruner/use-this-package/setting-the-size-limits:
+  en: caa88f51cfc7aafe
+  zh: cc374a7962e89694
+/astro-one-compaction-tool-result-pruner/use-this-package/when-trimming-runs:
+  en: fa2ffd60c388fc71
+  zh: a8fa631ab693f851
+/astro-one-compaction-tool-result-pruner/understand-the-implementation:
+  en: 57aaa53880042873
+  zh: 667f54624411c37d
+/astro-one-compaction-tool-result-pruner/understand-the-implementation/design-philosophy:
+  en: 5adff8207c6294e0
+  zh: ccba42d804989abb
+/astro-one-compaction-tool-result-pruner/understand-the-implementation/pruning-mechanics:
+  en: 9813749e4f016897
+  zh: f2b2b5d6e5e8977a
+/astro-one-compaction-tool-result-pruner/understand-the-implementation/source-map:
+  en: 4544e91902960a0e
+  zh: 0b07cb7e3d96267b
+/astro-one-compaction-tool-result-pruner/further-exploration:
+  en: 2efd8718473e80e4
+  zh: e035ee4cffe035e2
+/astro-one-compaction-tool-result-pruner/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-compaction-tool-result-pruner/model-experience/pruned-tool-result:
+  en: 0b0dfb7ec1bf906f
+  zh: 68f70bde796751cd
+/astro-one-compaction-tool-result-pruner/model-experience/pruned-tool-result/what-the-model-sees:
+  en: 8514b5a6586bd65d
+  zh: 2a0648bea6cb81b6
+/astro-one-compaction-tool-result-pruner/model-experience/pruned-tool-result/token-effect:
+  en: 1b11d405468e8d5d
+  zh: 06dc9aef281c776d
+/astro-one-compaction-tool-result-pruner/model-experience/pruned-tool-result/kv-cache-effect:
+  en: aac7de507412ba39
+  zh: bdd8f391ad9c9a81
+/astro-one-compaction-tool-result-pruner/known-limitations-and-deferred-work:
+  en: 2a7be98dc032e9bc
+  zh: d6710b1130722d12
+/astro-one-compaction-tool-result-pruner/known-limitations-and-deferred-work/dev-note:
+  en: 19120c19286532da
+  zh: 49187f1e83b31007

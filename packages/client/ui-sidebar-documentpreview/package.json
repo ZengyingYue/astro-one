@@ -1,0 +1,104 @@
+{
+  "name": "@astro-one/client-ui-sidebar-documentpreview",
+  "description": "Extensible Sidebar previews for Office documents, spreadsheets, Markdown, code, images, PDF, HTML, and plain text",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/client/ui-sidebar-documentpreview"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "astroOne": {
+    "client": {
+      "inject": [
+        "@astro-one/api-gateway",
+        "@astro-one/api-workspace-files",
+        "@astro-one/client-resources",
+        "@astro-one/client-ui-sidebar-right",
+        "@astro-one/client-ui-session",
+        "@astro-one/api-remotes",
+        "@astro-one/client-locale",
+        "@astro-one/client-ui-settings",
+        "@astro-one/client-ui-file-drag",
+        "@astro-one/client-ui-context-menu"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/api-gateway": "workspace:*",
+    "@astro-one/api-remotes": "workspace:*",
+    "@astro-one/api-workspace-files": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/client-resources": "workspace:*",
+    "@astro-one/client-store": "workspace:*",
+    "@astro-one/client-test-runtime": "workspace:*",
+    "@astro-one/client-ui-dockkit": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-session": "workspace:*",
+    "@astro-one/client-ui-settings": "workspace:*",
+    "@astro-one/client-ui-sidebar-files": "workspace:*",
+    "@astro-one/client-ui-sidebar-right": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
+    "@astro-one/office-to-pdf": "workspace:*",
+    "@astro-one/host-webserver": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/util-workspace-path": "workspace:*",
+    "@fortune-sheet/core": "1.0.4",
+    "@fortune-sheet/react": "1.0.4",
+    "@testing-library/react": "^16.3.3",
+    "@types/papaparse": "^5.3.16",
+    "clsx": "^2.0.0",
+    "dompurify": "^3.4.16",
+    "exceljs": "4.4.0",
+    "fast-xml-parser": "5.11.1",
+    "fflate": "^0.8.3",
+    "papaparse": "5.7.0",
+    "pdfjs-dist": "6.3.289",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
+    "yaml": "^2.9.0",
+    "@astro-one/client-ui-file-drag": "workspace:*",
+    "@astro-one/client-ui-context-menu": "workspace:*"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/client.*.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "dependencies": {
+    "@astro-one/schemastery": "workspace:~"
+  }
+}

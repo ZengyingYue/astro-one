@@ -1,0 +1,60 @@
+{
+  "name": "@astro-one/experimental-worktree",
+  "description": "Creates a named Git worktree and changes the calling Session working directory",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/worktree"
+  },
+  "dependencies": {
+    "@astro-one/schemastery": "workspace:~",
+    "@astro-one/timeout": "workspace:*"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/fs": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/subprocess": "workspace:*",
+    "@astro-one/working-directory": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-loop-testkit": "workspace:*",
+    "@astro-one/fs": "workspace:*",
+    "@astro-one/fs-local": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-local": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/subprocess": "workspace:*",
+    "@astro-one/subprocess-local": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/working-directory": "workspace:*"
+  }
+}

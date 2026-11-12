@@ -1,0 +1,13 @@
+- insert:
+    - id: action-cards
+      name: '@astro-one/action-cards'
+    - id: client-ui-action-cards
+      name: '@astro-one/client-ui-action-cards'
+    - id: creation-recommendations
+      name: '@astro-one/creation-recommendations'
+    - id: client-ui-creation-recommendations
+      name: '@astro-one/client-ui-creation-recommendations'
+    - id: plugin-recommendations
+      name: '@astro-one/plugin-recommendations'
+    - id: client-ui-plugin-recommendations
+      name: '@astro-one/client-ui-plugin-recommendations'

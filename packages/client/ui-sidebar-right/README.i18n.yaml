@@ -1,0 +1,55 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-sidebar-right/README.md
+/:
+  en: 8bcd7a526439da7b
+  zh: 676fa7431aec64ba
+/astro-one-client-ui-sidebar-right:
+  en: eab9007bfa5da5db
+  zh: 58d569ce0ec76a18
+/astro-one-client-ui-sidebar-right/summary:
+  en: 8aafe5400014fdac
+  zh: b2d7d0e8dc4f1291
+/astro-one-client-ui-sidebar-right/table-of-contents:
+  en: ff17f27d8c5557d1
+  zh: 6efe4b3d4902a441
+/astro-one-client-ui-sidebar-right/what-lives-here-and-what-does-not:
+  en: 8ece3dd6d20837d5
+  zh: db3e0a7472e06f70
+/astro-one-client-ui-sidebar-right/presentations:
+  en: 391ebdec764556e7
+  zh: e65fd90c343b9dc8
+/astro-one-client-ui-sidebar-right/the-expand-button:
+  en: ca7a1966ad9cef31
+  zh: b9a7a967a14f067e
+/astro-one-client-ui-sidebar-right/state:
+  en: d4c09d9dfd466c79
+  zh: 4145154ea43a5fd3
+/astro-one-client-ui-sidebar-right/extension-seats:
+  en: ab23ed75e84cb94d
+  zh: 1923b68603b6c6a0
+/astro-one-client-ui-sidebar-right/ctx-sidebarright:
+  en: 04654c7cc73d0688
+  zh: d92c399cb9b56a8d
+/astro-one-client-ui-sidebar-right/the-tab-domain:
+  en: a33d93217fc86cd8
+  zh: 113cdfcd50e1f221
+/astro-one-client-ui-sidebar-right/the-guide:
+  en: 68fd575ef382223e
+  zh: 1ab1653ee20c64e9
+/astro-one-client-ui-sidebar-right/copy:
+  en: fb81f6df35063082
+  zh: 6b6cb9d074cd6da0
+/astro-one-client-ui-sidebar-right/model-experience:
+  en: 3120df665299c634
+  zh: 242f3d68e8267e55
+/astro-one-client-ui-sidebar-right/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: f57cc48a1b5cbfa9
+/astro-one-client-ui-sidebar-right/known-limitations-and-deferred-work:
+  en: 76a763b4dd71babd
+  zh: fdc966dd427a82fb
+/astro-one-client-ui-sidebar-right/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

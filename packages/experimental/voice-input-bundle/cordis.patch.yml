@@ -1,0 +1,13 @@
+- insert:
+    - id: speech-to-text
+      name: '@astro-one/experimental-speech-to-text'
+      config:
+        defaultProvider: sensevoice-local
+    - id: speech-to-text-sensevoice
+      name: '@astro-one/experimental-speech-to-text-sensevoice'
+      config:
+        dataRoot: !!js astroOneHomePath('speech-to-text', 'sensevoice')
+    - id: api-speech-to-text
+      name: '@astro-one/experimental-api-speech-to-text'
+    - id: ui-voice-input
+      name: '@astro-one/experimental-client-ui-voice-input'

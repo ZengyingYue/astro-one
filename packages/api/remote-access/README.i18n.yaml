@@ -1,0 +1,34 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/api/remote-access/README.md
+/:
+  en: bbd88553f12d4f3d
+  zh: c5fa4ac3f9746170
+/astro-one-api-remote-access:
+  en: 4ba4c3a0064f7341
+  zh: 5ca605cd389cd329
+/astro-one-api-remote-access/summary:
+  en: 5ee3928586122cf9
+  zh: 825eb31789bf12f1
+/astro-one-api-remote-access/table-of-contents:
+  en: a18ecc232e3c3933
+  zh: b8e43580403f6d77
+/astro-one-api-remote-access/host-service-remoteaccessservice-ctx-key-remoteaccess:
+  en: 8fddfadc074ab652
+  zh: ca0fd592bed0ff20
+/astro-one-api-remote-access/client-face:
+  en: 12d453e51b3ca373
+  zh: 23e29b6360e5c023
+/astro-one-api-remote-access/model-experience:
+  en: 8b07250cecacd3aa
+  zh: d28ab93980bdcdad
+/astro-one-api-remote-access/model-experience/kv-cache-effect:
+  en: 60835eca1cee4e0e
+  zh: 3b5579ceccd5b5e7
+/astro-one-api-remote-access/known-limitations-and-deferred-work:
+  en: 66b483bf5144ac46
+  zh: 84bde5e0b1af270b
+/astro-one-api-remote-access/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

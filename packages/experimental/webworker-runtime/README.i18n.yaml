@@ -1,0 +1,31 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/webworker-runtime/README.md
+/:
+  en: 9a7ee334bf98bb3d
+  zh: 0a78ada4049c27fe
+/astro-one-experimental-webworker-runtime:
+  en: eef4127cc70096c5
+  zh: b16e72b984db579e
+/astro-one-experimental-webworker-runtime/summary:
+  en: f3353eda810a96cb
+  zh: 720050892c66b6f0
+/astro-one-experimental-webworker-runtime/table-of-contents:
+  en: 4e53164159b5ce41
+  zh: 89582dc0294d0776
+/astro-one-experimental-webworker-runtime/use-this-package:
+  en: 715d4ed5916fdfb6
+  zh: 81a309cec3d28728
+/astro-one-experimental-webworker-runtime/model-experience:
+  en: 61fce9b4c7dc96e6
+  zh: dc2d931063a38327
+/astro-one-experimental-webworker-runtime/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: 64715dc7e6d02f71
+/astro-one-experimental-webworker-runtime/known-limitations-and-deferred-work:
+  en: a7857865ec433d7f
+  zh: ae828a79e62a3eff
+/astro-one-experimental-webworker-runtime/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

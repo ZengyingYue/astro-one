@@ -1,0 +1,19 @@
+# Bilingual-pair consistency record for public-deployments.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/user/guide/public-deployments.md
+/publish-the-web-ui-behind-a-reverse-proxy:
+  en: 3f117e5e0ed6f495
+  zh: bd5607352418c57f
+/publish-the-web-ui-behind-a-reverse-proxy/what-public-url-advertises:
+  en: fac670ab0c230023
+  zh: 108e5ddf5aba5c21
+/publish-the-web-ui-behind-a-reverse-proxy/what-the-proxy-must-do:
+  en: 2f93051763125365
+  zh: 1dd699cb84ecf034
+/publish-the-web-ui-behind-a-reverse-proxy/trust-the-authority-browsers-use:
+  en: 08e5a6cc45918876
+  zh: d59178e10e915748
+/publish-the-web-ui-behind-a-reverse-proxy/secure-the-external-leg:
+  en: 1c101aba2db9643d
+  zh: 7c5b46b5f0d71db8

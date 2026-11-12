@@ -1,0 +1,61 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/web/README.md
+/:
+  en: bd6e5fc50f07893f
+  zh: 0ee146674eb01770
+/astro-one-client-web:
+  en: 0c43bfca699ca1d8
+  zh: 8d6d067b48803f92
+/astro-one-client-web/summary:
+  en: 4ad35c3243dccf04
+  zh: 93560cfed5e1b3ff
+/astro-one-client-web/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-client-web/use-this-package:
+  en: 6d4a6e3399c4045c
+  zh: 366b3b306ce4e46b
+/astro-one-client-web/use-this-package/what-boot-looks-like:
+  en: f3b01aa878764e5c
+  zh: f02eab65d441bfe0
+/astro-one-client-web/use-this-package/the-boot-page:
+  en: 0e77a7d3fc52f5a7
+  zh: 9da54cac5839906e
+/astro-one-client-web/use-this-package/the-shared-module-table:
+  en: f8ba7b75401363f1
+  zh: b946b0dbf60015dc
+/astro-one-client-web/use-this-package/configuration:
+  en: 39938c47c971438a
+  zh: 733a3d834e5578a0
+/astro-one-client-web/understand-the-implementation:
+  en: 30d20e383fdeafac
+  zh: 1f656152b75738f3
+/astro-one-client-web/understand-the-implementation/design-concept:
+  en: a8e8f2e466eff0a1
+  zh: e0216136dcf36934
+/astro-one-client-web/understand-the-implementation/two-stage-boot:
+  en: bb21da20ff3197c8
+  zh: c89ce091dea0c226
+/astro-one-client-web/understand-the-implementation/boot-page-mechanics:
+  en: a651d65bede943a5
+  zh: 481c25e6892a4abc
+/astro-one-client-web/understand-the-implementation/source-map:
+  en: 36046f6bc4347fa5
+  zh: a6a8c55ba77fd77b
+/astro-one-client-web/further-exploration:
+  en: b74327d6404f5242
+  zh: bf76184aba3e069e
+/astro-one-client-web/model-experience:
+  en: ec17334dcce181f3
+  zh: bc8bc6e25ecbf9e8
+/astro-one-client-web/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/astro-one-client-web/known-limitations-and-deferred-work:
+  en: 718bd1dee0fc8f2d
+  zh: 0053746647650ddd
+/astro-one-client-web/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

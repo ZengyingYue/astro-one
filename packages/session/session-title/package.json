@@ -1,0 +1,63 @@
+{
+  "name": "@astro-one/session-title",
+  "description": "Log-backed session title service and provider registry for the Astro One",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/session/session-title"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./client": {
+      "types": "./lib/types/client.d.ts",
+      "default": "./lib/types/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*"
+  },
+  "dependencies": {
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-loop": "workspace:*",
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-persistence-jsonl": "workspace:*",
+    "@astro-one/session-projection": "workspace:*"
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "name": "@astro-one/api-remotes",
+  "description": "Remote BFF assembly for application-selected Host capabilities",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/api/remotes"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "astroOne": {
+    "client": {
+      "inject": [
+        "@astro-one/api-gateway"
+      ],
+      "platform": "web",
+      "immediately": true
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "dependencies": {
+    "@astro-one/deque": "workspace:*",
+    "@astro-one/util-values": "workspace:*"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/scope": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-preset-registry": "workspace:*",
+    "@astro-one/api-gateway": "workspace:*",
+    "@astro-one/api-job-controller": "workspace:*",
+    "@astro-one/api-session-controller": "workspace:*",
+    "@astro-one/api-settings-controller": "workspace:*",
+    "@astro-one/api-workspace-controller": "workspace:*",
+    "@astro-one/api-workspace-files": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/client-file-upload": "workspace:*",
+    "@astro-one/commands": "workspace:*",
+    "@astro-one/cordis-host-runner": "workspace:*",
+    "@astro-one/credentials": "workspace:*",
+    "@astro-one/file-reference": "workspace:*",
+    "@astro-one/goal": "workspace:*",
+    "@astro-one/host-plugin-inventory": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/message-feedback": "workspace:*",
+    "@astro-one/permission-presets": "workspace:*",
+    "@astro-one/schedule": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-reference": "workspace:*",
+    "@astro-one/settings": "workspace:*",
+    "@astro-one/subagent": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/user-approval": "workspace:*",
+    "@astro-one/user-questions": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "zod": "4.4.3",
+    "@astro-one/command-feedback": "workspace:*",
+    "@astro-one/api-terminal-controller": "workspace:*",
+    "@astro-one/plugin-manager": "workspace:*",
+    "@astro-one/mcp-manager": "workspace:*",
+    "@astro-one/plugin-market": "workspace:*",
+    "@astro-one/client-ui-plugin-manager": "workspace:*",
+    "@astro-one/office-to-pdf": "workspace:*",
+    "@astro-one/api-account-controller": "workspace:*",
+    "@astro-one/deepseek-account": "workspace:*",
+    "@astro-one/client-product-analytics": "workspace:*",
+    "@astro-one/agent-team": "workspace:*",
+    "@astro-one/client-ui-trajectory": "workspace:*",
+    "@astro-one/web": "workspace:*"
+  }
+}

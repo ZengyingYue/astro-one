@@ -1,0 +1,49 @@
+{
+  "name": "@astro-one/sandbox-local",
+  "description": "Local process-sandbox backends for the Astro One sandbox seam: bwrap, the npm-distributed landlock-run launcher, macOS Seatbelt, or the Windows ACL restricted-token runner — functionally probed, fail-closed",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/sandbox/sandbox-local"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/session": "workspace:*"
+  },
+  "dependencies": {
+    "@astro-one/sandbox-windows-acl": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/node-addon-system": "workspace:~",
+    "@astro-one/schemastery": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/session": "workspace:*"
+  }
+}

@@ -1,0 +1,6 @@
+- region "Welcome to Astro One":
+  - heading "Welcome to Astro One" [level=1]:
+    - text: Welcome to
+    - emphasis: Astro One
+  - paragraph: Astro One works in a local folder and uses tools to read and write files on your computer. It can help you research and organize information, create documents and spreadsheets, write code, troubleshoot issues, and more.
+  - button "Get started"

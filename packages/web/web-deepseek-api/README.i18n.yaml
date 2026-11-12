@@ -1,0 +1,61 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/web/web-deepseek-api/README.md
+/:
+  en: eb52169ad8cf3b38
+  zh: 3ad61fa2317079cf
+/astro-one-web-deepseek-api:
+  en: d05f6e5f18b4a17a
+  zh: e57fc906948bb4aa
+/astro-one-web-deepseek-api/summary:
+  en: 9c9db9afb5e93dea
+  zh: 783b586ba3e4a682
+/astro-one-web-deepseek-api/table-of-contents:
+  en: 76368b6b1da79c80
+  zh: 1e8f931a56b7d34d
+/astro-one-web-deepseek-api/use-this-package:
+  en: 6f0f3609bf33e54f
+  zh: 76e032263cae2bf8
+/astro-one-web-deepseek-api/use-this-package/authentication:
+  en: a2930cd65657d2d2
+  zh: 887efda51f506d6d
+/astro-one-web-deepseek-api/use-this-package/results-and-failures:
+  en: 5e18a8544cb84be5
+  zh: 629a319afd287071
+/astro-one-web-deepseek-api/understand-the-implementation:
+  en: 5723fede3a458c48
+  zh: 0bd98d0ee7fffd5f
+/astro-one-web-deepseek-api/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-web-deepseek-api/model-experience/conversation-tool-results:
+  en: dfd3b61aff4a8aa8
+  zh: 06e2b6cc71f461e2
+/astro-one-web-deepseek-api/model-experience/conversation-tool-results/what-the-model-sees:
+  en: a9fbb78ffe886f0b
+  zh: 813dc7ee283018d2
+/astro-one-web-deepseek-api/model-experience/conversation-tool-results/token-effect:
+  en: 1f33560e768d18c5
+  zh: edeedeef2662e4bb
+/astro-one-web-deepseek-api/model-experience/conversation-tool-results/kv-cache-effect:
+  en: 54ed534b58469807
+  zh: c3f8f178abb86ccb
+/astro-one-web-deepseek-api/model-experience/conversation-tool-list-indirectly:
+  en: ddcce72a4a4e0def
+  zh: 338aa339f5708d7d
+/astro-one-web-deepseek-api/model-experience/conversation-tool-list-indirectly/what-the-model-sees:
+  en: 48083d5fd9bc0047
+  zh: 739039d2c5f5e261
+/astro-one-web-deepseek-api/model-experience/conversation-tool-list-indirectly/token-effect:
+  en: 4e75bf3d1e75e28c
+  zh: 608bfad662133716
+/astro-one-web-deepseek-api/model-experience/conversation-tool-list-indirectly/kv-cache-effect:
+  en: 96422459b9c3e2f0
+  zh: f4c24ac32b3c234d
+/astro-one-web-deepseek-api/known-limitations-and-deferred-work:
+  en: ba51396a3bc2a3e3
+  zh: 6f7610e507d7945b
+/astro-one-web-deepseek-api/known-limitations-and-deferred-work/dev-note:
+  en: 0a1253c6f7b5e8b9
+  zh: 9f56528562c7c914

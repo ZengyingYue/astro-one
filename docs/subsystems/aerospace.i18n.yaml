@@ -1,0 +1,16 @@
+# Bilingual-pair consistency record for aerospace.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/subsystems/aerospace.md
+/aerospace:
+  en: ee1f820c98f1012d
+  zh: 4275359f317cbdab
+/aerospace/units-and-time:
+  en: c0eb376400b9d812
+  zh: 24a5c4b9c9ebee7c
+/aerospace/reference-frames:
+  en: a0f7de99a651df17
+  zh: 0febac9043d8a920
+/aerospace/algorithms:
+  en: be2aaf6bfd9d98bc
+  zh: 5eb5699a244729b2

@@ -1,0 +1,64 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-subagent/README.md
+/:
+  en: efa0393d6bfc958d
+  zh: fd84866048c2e906
+/astro-one-client-ui-subagent:
+  en: 51fa4b7f65ce77d8
+  zh: d6cefd5c8d08ccf2
+/astro-one-client-ui-subagent/summary:
+  en: 6e0bbf514ad3bef7
+  zh: 5a29d88c124d35cc
+/astro-one-client-ui-subagent/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-client-ui-subagent/use-this-package:
+  en: 4dd9b9e038ba168c
+  zh: 78528a7fcef9f30f
+/astro-one-client-ui-subagent/use-this-package/browsing-the-tree:
+  en: 4ecdca030e42109d
+  zh: 406b08590ba8df83
+/astro-one-client-ui-subagent/use-this-package/continuing-a-conversation:
+  en: e4ec261d3b122eb5
+  zh: 320bb2efc93dccdc
+/astro-one-client-ui-subagent/use-this-package/the-reference-source:
+  en: 6a5f91b7dfcefafe
+  zh: 2d11441952cfea53
+/astro-one-client-ui-subagent/understand-the-implementation:
+  en: 96cc8e4addd1d0b7
+  zh: 1d527dea9553497a
+/astro-one-client-ui-subagent/understand-the-implementation/catalog-derivation:
+  en: 41492c7bf30f2a48
+  zh: b225f51bd226d60d
+/astro-one-client-ui-subagent/understand-the-implementation/duration-completion-and-tokens:
+  en: dcbc58d4cad47fa8
+  zh: e962a8cbdfd4a914
+/astro-one-client-ui-subagent/understand-the-implementation/composer-election:
+  en: df0be92b57355ded
+  zh: da6b8fd0ff1d8c6b
+/astro-one-client-ui-subagent/further-exploration:
+  en: 26c13c21db396cff
+  zh: f7955b46f2912017
+/astro-one-client-ui-subagent/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-client-ui-subagent/model-experience/subagent-label-text-in-the-user-prompt:
+  en: 7207881f1c032278
+  zh: 911d6e8b319da21a
+/astro-one-client-ui-subagent/model-experience/subagent-label-text-in-the-user-prompt/what-the-model-sees:
+  en: 5688696ee061a0e1
+  zh: 7199ef8cb8697960
+/astro-one-client-ui-subagent/model-experience/subagent-label-text-in-the-user-prompt/token-effect:
+  en: bf3c483598710d54
+  zh: 32742fbb880db1b2
+/astro-one-client-ui-subagent/model-experience/subagent-label-text-in-the-user-prompt/kv-cache-effect:
+  en: de2762a99572475f
+  zh: 9b41107ad14ebf8a
+/astro-one-client-ui-subagent/known-limitations-and-deferred-work:
+  en: ee310ff3cd487639
+  zh: 23793aa1c28a23af
+/astro-one-client-ui-subagent/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

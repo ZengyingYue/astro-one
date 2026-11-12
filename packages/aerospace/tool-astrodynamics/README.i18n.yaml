@@ -1,0 +1,85 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/aerospace/tool-astrodynamics/README.md
+/:
+  en: 71224973f62dc41e
+  zh: c8da95f53c24536c
+/astro-one-tool-astrodynamics:
+  en: 1ac37a08cb472d44
+  zh: 002d49351c1208ad
+/astro-one-tool-astrodynamics/summary:
+  en: c6d1a82ff93e5f03
+  zh: 2a254179b3bb1e8f
+/astro-one-tool-astrodynamics/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-tool-astrodynamics/use-this-package:
+  en: 884e9896a35e683f
+  zh: af2bcd58589a86f5
+/astro-one-tool-astrodynamics/use-this-package/when-to-choose-it:
+  en: 6b333974de160075
+  zh: dc4d2590005b9e5f
+/astro-one-tool-astrodynamics/use-this-package/minimal-configuration:
+  en: cf03e82e0776c0bf
+  zh: 778d158aafa77266
+/astro-one-tool-astrodynamics/use-this-package/tools:
+  en: b32e242de251976d
+  zh: 79965884a21981af
+/astro-one-tool-astrodynamics/use-this-package/failures-and-recovery:
+  en: a628927c2d1cbbde
+  zh: 86950534b542d741
+/astro-one-tool-astrodynamics/understand-the-implementation:
+  en: 572b8705d949eef4
+  zh: 0267392871242b0c
+/astro-one-tool-astrodynamics/understand-the-implementation/source-map:
+  en: be4146bc2872a458
+  zh: 662a57729b985531
+/astro-one-tool-astrodynamics/further-exploration:
+  en: db8ade10166f0562
+  zh: 44f3b09daf511a75
+/astro-one-tool-astrodynamics/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-tool-astrodynamics/model-experience/tool-schemas:
+  en: 3039bc5e7a796b21
+  zh: 6b7a9eaf69c9ea53
+/astro-one-tool-astrodynamics/model-experience/tool-schemas/what-the-model-sees:
+  en: f65c776f571731e2
+  zh: afa0778d8dca2b17
+/astro-one-tool-astrodynamics/model-experience/tool-schemas/token-effect:
+  en: ad7b96e74eced49a
+  zh: 28f0d56d2a5f0bf2
+/astro-one-tool-astrodynamics/model-experience/tool-schemas/kv-cache-effect:
+  en: 91a13c8c95ddc114
+  zh: 9ce3c60dac57a2db
+/astro-one-tool-astrodynamics/model-experience/ephemeris-result:
+  en: b4c5d0960aea7882
+  zh: c9f2d4927269cf4c
+/astro-one-tool-astrodynamics/model-experience/ephemeris-result/what-the-model-sees:
+  en: f41f9a0add088258
+  zh: 13e215fc9eb0f0e1
+/astro-one-tool-astrodynamics/model-experience/ephemeris-result/token-effect:
+  en: 1696eb974c98d84f
+  zh: 188061ab7e319ae6
+/astro-one-tool-astrodynamics/model-experience/ephemeris-result/kv-cache-effect:
+  en: f5d5f97a153f7c70
+  zh: e51236a78b8b4ac4
+/astro-one-tool-astrodynamics/model-experience/analysis-results:
+  en: f275e1f6873c801d
+  zh: fcab326eb9402f3a
+/astro-one-tool-astrodynamics/model-experience/analysis-results/what-the-model-sees:
+  en: 91b16e17854bd785
+  zh: 1be36a8d71551159
+/astro-one-tool-astrodynamics/model-experience/analysis-results/token-effect:
+  en: b5485eb2b48c3457
+  zh: 79b5ffe272fe28dd
+/astro-one-tool-astrodynamics/model-experience/analysis-results/kv-cache-effect:
+  en: f5d5f97a153f7c70
+  zh: e51236a78b8b4ac4
+/astro-one-tool-astrodynamics/known-limitations-and-deferred-work:
+  en: dc5792dab7fc830e
+  zh: 8637658f6d45d282
+/astro-one-tool-astrodynamics/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

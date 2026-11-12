@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/connection/README.md
+/:
+  en: 13b131457d03a224
+  zh: 6dedd0706d5ffc0a
+/astro-one-client-connection:
+  en: f9b251e8c34df655
+  zh: 1f1e1fd62a0c3498
+/astro-one-client-connection/summary:
+  en: a83b5e9fd1968062
+  zh: ac68628e185a4bff
+/astro-one-client-connection/table-of-contents:
+  en: 18792bf2fb4f8030
+  zh: 84c63acc7e0099ae
+/astro-one-client-connection/use-this-package:
+  en: b1d6ecd7a7a67101
+  zh: 51462d948472b3bb
+/astro-one-client-connection/browser-authentication-and-request-trust:
+  en: 6e8ddd44b211f961
+  zh: 80b4c9dd9a4cefd4
+/astro-one-client-connection/connection-generation:
+  en: 30e7c308c32c5289
+  zh: 8f8faca56497b54b
+/astro-one-client-connection/model-experience:
+  en: 88bbc33fe9ae9df8
+  zh: bfbab6d51b4abd40
+/astro-one-client-connection/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/astro-one-client-connection/known-limitations-and-deferred-work:
+  en: 39c51508ec450341
+  zh: eb5f7021ea28844a
+/astro-one-client-connection/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

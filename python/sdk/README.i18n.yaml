@@ -1,0 +1,28 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write python/sdk/README.md
+/astro-one-python-sdk:
+  en: addcf7bdfa504576
+  zh: b5d2df87b7ff34a6
+/astro-one-python-sdk/optional-office-operations:
+  en: ae7c688df1cc5434
+  zh: baeb6a5de26e1b69
+/astro-one-python-sdk/start-a-runtime:
+  en: eb6ac9fb3852d75e
+  zh: dceef33fe416ac54
+/astro-one-python-sdk/run-text-and-commands:
+  en: 193ebb05b72a35b1
+  zh: ae89515958d94cf2
+/astro-one-python-sdk/client-approvals:
+  en: 63720ca354e5f4f4
+  zh: 69001cd6aab41ce1
+/astro-one-python-sdk/customize-plugins:
+  en: a6da6d98e514bd84
+  zh: 256cc69711aca18a
+/astro-one-python-sdk/native-user-questions:
+  en: 12477f5dd013d8fa
+  zh: 1dd78b0c76dabda6
+/astro-one-python-sdk/results-and-notifications:
+  en: b50240a57cbe1283
+  zh: f96314b66adee19b

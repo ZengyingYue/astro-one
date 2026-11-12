@@ -1,0 +1,10 @@
+- insert:
+    - id: cua-provider-registry
+      name: '@astro-one/computer-use'
+    - id: cua
+      name: '@astro-one/experimental-cua-macos'
+      disabled: !!js process.platform !== 'darwin'
+      config:
+        agentPreset: ptc
+    - id: ui-cua
+      name: '@astro-one/cua'

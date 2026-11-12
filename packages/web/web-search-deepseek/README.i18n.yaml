@@ -1,0 +1,100 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/web/web-search-deepseek/README.md
+/:
+  en: d3ed4f8639422b9d
+  zh: 35c2ac10b0158bd3
+/astro-one-web-search-deepseek:
+  en: e9ef3bec69441a3f
+  zh: d2a6af776f0393af
+/astro-one-web-search-deepseek/summary:
+  en: 7c057f786fc64bc0
+  zh: 9db5fe68c3f61775
+/astro-one-web-search-deepseek/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-web-search-deepseek/use-this-package:
+  en: e0d352d6402d9d3b
+  zh: a449234557ef8bd6
+/astro-one-web-search-deepseek/use-this-package/when-to-choose-it:
+  en: 0187c8af8d2d98c5
+  zh: 1c9607b3a662bcaa
+/astro-one-web-search-deepseek/use-this-package/minimal-configuration:
+  en: 8856c2f6611637b2
+  zh: 09f3a457e623fef1
+/astro-one-web-search-deepseek/use-this-package/authentication:
+  en: 77523dfc4224e9ef
+  zh: 4885e6d57d9a6a13
+/astro-one-web-search-deepseek/use-this-package/what-a-search-returns:
+  en: e30442c90365357b
+  zh: 9c9e2f1182963a8a
+/astro-one-web-search-deepseek/use-this-package/request-logging:
+  en: 467b8238cf7e140c
+  zh: 85a519c8811557aa
+/astro-one-web-search-deepseek/use-this-package/failures-and-recovery:
+  en: 8e69cf009b707c49
+  zh: f7d50bfc06b01b6d
+/astro-one-web-search-deepseek/understand-the-implementation:
+  en: 9842c69ad3636bb3
+  zh: 3cdc3f816cbdd0cb
+/astro-one-web-search-deepseek/understand-the-implementation/design-philosophy:
+  en: 1b1760efbf4568c1
+  zh: fca06c959e51ce16
+/astro-one-web-search-deepseek/understand-the-implementation/source-map:
+  en: 6488e1c85646339f
+  zh: 2b5ca1c6b5939a8c
+/astro-one-web-search-deepseek/understand-the-implementation/request-flow:
+  en: d6c3f30b70a5f4b5
+  zh: ab7c5b7d6fc3cae6
+/astro-one-web-search-deepseek/further-exploration:
+  en: 5a30bc2096e87636
+  zh: 9a057597092b2929
+/astro-one-web-search-deepseek/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-web-search-deepseek/model-experience/auxiliary-deepseek-search-request:
+  en: 722e4bf02953e236
+  zh: b3432958beb7b60f
+/astro-one-web-search-deepseek/model-experience/auxiliary-deepseek-search-request/what-the-model-sees:
+  en: 6b2b2909347efee8
+  zh: 664c3e210ec75cfd
+/astro-one-web-search-deepseek/model-experience/auxiliary-deepseek-search-request/token-effect:
+  en: 9b079b978c305dd8
+  zh: af2c3f39976b34de
+/astro-one-web-search-deepseek/model-experience/auxiliary-deepseek-search-request/kv-cache-effect:
+  en: 2bac9662f1792a79
+  zh: 556d9baabd79f9cb
+/astro-one-web-search-deepseek/model-experience/conversation-tool-result-indirectly:
+  en: 666f5753c99783ab
+  zh: b44328e99bcc45c9
+/astro-one-web-search-deepseek/model-experience/conversation-tool-result-indirectly/what-the-model-sees:
+  en: 8b7a8cd201ea89e4
+  zh: 07248b123049e924
+/astro-one-web-search-deepseek/model-experience/conversation-tool-result-indirectly/token-effect:
+  en: 01ec43a9b616139d
+  zh: 0a5b7c28fde34bcf
+/astro-one-web-search-deepseek/model-experience/conversation-tool-result-indirectly/kv-cache-effect:
+  en: f5d5f97a153f7c70
+  zh: f681f89596f500f5
+/astro-one-web-search-deepseek/model-experience/conversation-tool-list-indirectly:
+  en: ddcce72a4a4e0def
+  zh: 338aa339f5708d7d
+/astro-one-web-search-deepseek/model-experience/conversation-tool-list-indirectly/what-the-model-sees:
+  en: 5b31bbc0b83de89c
+  zh: 3a793c6c6c153695
+/astro-one-web-search-deepseek/model-experience/conversation-tool-list-indirectly/token-effect:
+  en: fc3904d8f90cc055
+  zh: 60f82b8a3b894e7a
+/astro-one-web-search-deepseek/model-experience/conversation-tool-list-indirectly/kv-cache-effect:
+  en: 42b8cd547a2eac06
+  zh: b9e1fbd57ca8d058
+/astro-one-web-search-deepseek/known-limitations-and-deferred-work:
+  en: d1e5b8506d99bd3f
+  zh: 665199a2285fed4d
+/astro-one-web-search-deepseek/known-limitations-and-deferred-work/dev-note:
+  en: 7f775cc79dbce94b
+  zh: 12b8f68f9e7c48ca
+/astro-one-web-search-deepseek/known-limitations-and-deferred-work/dev-note/dedicated-retrieval-endpoint:
+  en: 1b2a6d69ee036781
+  zh: 2259cfbb41f3add7

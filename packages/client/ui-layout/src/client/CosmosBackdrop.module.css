@@ -1,0 +1,27 @@
+/* The backdrop paints at the bottom of the frame's isolated stacking context,
+   under every column, and never takes the pointer. All motion lives in the
+   canvas (cosmos.ts); the vignette is static. */
+.root {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+  background:
+    radial-gradient(ellipse 120% 90% at 70% 10%, var(--lh-void) 0%, var(--lh-void-deep) 100%);
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 85% 75% at 55% 45%, transparent 55%, var(--lh-void-deep) 100%);
+  opacity: .7;
+}

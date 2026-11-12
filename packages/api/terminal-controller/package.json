@@ -1,0 +1,100 @@
+{
+  "name": "@astro-one/api-terminal-controller",
+  "description": "Session-owned interactive terminals with shell discovery, screen recovery and typed Remote control",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/api/terminal-controller"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "astroOne": {
+    "client": {
+      "inject": [
+        "@astro-one/api-gateway"
+      ],
+      "external": [
+        "@astro-one/api-gateway/client"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@astro-one/deque": "workspace:*",
+    "@astro-one/lazy-require": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
+    "@xterm/addon-serialize": "^0.14.0",
+    "@xterm/headless": "^6.0.0",
+    "zod": "4.4.3"
+  },
+  "peerDependencies": {
+    "@astro-one/subprocess": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/api-gateway": "workspace:*",
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/client-store": "workspace:*",
+    "@astro-one/fs": "workspace:*",
+    "@astro-one/remote-mock": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/subprocess": "workspace:*",
+    "@astro-one/subprocess-local": "workspace:*",
+    "@astro-one/util-crypto": "workspace:*",
+    "@astro-one/working-directory": "workspace:*"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts"
+  ]
+}

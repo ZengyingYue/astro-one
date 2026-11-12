@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/personalized-recommendations/README.md
+/:
+  en: d7cf0e812c2b84ef
+  zh: 959798411569393e
+/astro-one-personalized-recommendations:
+  en: 7482cb4817a64c3b
+  zh: 37c4c5eb72f0250a
+/astro-one-personalized-recommendations/summary:
+  en: 5508a30d24f41f16
+  zh: dae436e8131b1b65
+/astro-one-personalized-recommendations/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: ce40cab8e7534137
+/astro-one-personalized-recommendations/use-this-package:
+  en: c94f69cd09d8f0ab
+  zh: 24c39e07a2bdced6
+/astro-one-personalized-recommendations/understand-the-implementation:
+  en: e386724a57fffa9b
+  zh: 865f1db569dcafc8
+/astro-one-personalized-recommendations/further-exploration:
+  en: 453ffb1ccdba38fb
+  zh: 36fb2cc23f22ab25
+/astro-one-personalized-recommendations/model-experience:
+  en: 8c3ddb0d6cbd0d6b
+  zh: 603f48a0df45ee7d
+/astro-one-personalized-recommendations/model-experience/kv-cache-effect:
+  en: 066b4db0f17c7edf
+  zh: 3e41a4ab3d56f059
+/astro-one-personalized-recommendations/known-limitations-and-deferred-work:
+  en: 28998b3d1fcbb16a
+  zh: 88fee9565fbf01a3
+/astro-one-personalized-recommendations/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

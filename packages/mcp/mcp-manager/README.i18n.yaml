@@ -1,0 +1,64 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/mcp/mcp-manager/README.md
+/:
+  en: 706845526cca8ee3
+  zh: 8807cb31259da85a
+/astro-one-mcp-manager:
+  en: f5ba2f61025dab9e
+  zh: 92bf37e34077ca79
+/astro-one-mcp-manager/summary:
+  en: 114327500f508c0e
+  zh: edef4c95fad80ebc
+/astro-one-mcp-manager/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: f14f34fce35a8d90
+/astro-one-mcp-manager/use-this-package:
+  en: aacb7dc50f4df41e
+  zh: 9df357e1f494e297
+/astro-one-mcp-manager/use-this-package/when-to-choose-it:
+  en: e43b5d10e8502674
+  zh: 3fb5af964c8bd1d6
+/astro-one-mcp-manager/use-this-package/minimal-configuration:
+  en: 804c003258747b49
+  zh: 4184554967ab5d4c
+/astro-one-mcp-manager/use-this-package/managing-configured-servers:
+  en: 7a9de27dc63655f1
+  zh: 7f41a51a0e9eec69
+/astro-one-mcp-manager/use-this-package/registering-a-server-from-a-plugin:
+  en: 313bcb35b12be8e1
+  zh: a85f75db6b138547
+/astro-one-mcp-manager/use-this-package/observing-and-recovering:
+  en: 1aab15d93a450282
+  zh: 2c3a04ab964db576
+/astro-one-mcp-manager/use-this-package/remote-operations:
+  en: ca75bb1e878b3700
+  zh: d38bec4b779f6154
+/astro-one-mcp-manager/understand-the-implementation:
+  en: 8a74186fa5bfe79d
+  zh: c7c952876ca2992b
+/astro-one-mcp-manager/understand-the-implementation/design-philosophy:
+  en: 910e4cfd420dad93
+  zh: 4985a140ffd51160
+/astro-one-mcp-manager/understand-the-implementation/source-map:
+  en: 874fe61698123da8
+  zh: 85f9cb1eb4881cbc
+/astro-one-mcp-manager/understand-the-implementation/lifecycle-notes:
+  en: 22a062b31ef64262
+  zh: db244dae206d56fc
+/astro-one-mcp-manager/further-exploration:
+  en: dc363c08e27519df
+  zh: c6181139cdfefb9c
+/astro-one-mcp-manager/model-experience:
+  en: 14c5f590305ac131
+  zh: 0b6ee101edd082e8
+/astro-one-mcp-manager/model-experience/kv-cache-effect:
+  en: 7a8d0bf11425040b
+  zh: b39181f89ba4fbe8
+/astro-one-mcp-manager/known-limitations-and-deferred-work:
+  en: 4c85bea0533cc44a
+  zh: 73fdc5d1a90a3011
+/astro-one-mcp-manager/known-limitations-and-deferred-work/dev-note:
+  en: 8b2c53fe07fdaf2d
+  zh: 7839d0302f02fa5b

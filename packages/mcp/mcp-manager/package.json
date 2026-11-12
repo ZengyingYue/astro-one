@@ -1,0 +1,77 @@
+{
+  "name": "@astro-one/mcp-manager",
+  "description": "MCP server manager: a settings-driven fleet of mcp-client instances with runtime status, restart, and probe",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/mcp/mcp-manager"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./src/*": "./src/*",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/mcp-client": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/typert-protocol": "workspace:*"
+  },
+  "dependencies": {
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/client": "2.2.0",
+    "@astro-one/credentials": "workspace:*",
+    "@astro-one/mcp-client": "workspace:*",
+    "@astro-one/settings": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/app-boot": "workspace:*",
+    "@astro-one/config-editor": "workspace:*",
+    "@astro-one/hmr": "workspace:*",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/cordis-plugin-timer": "workspace:~",
+    "@astro-one/typert-protocol": "workspace:*"
+  }
+}

@@ -1,0 +1,73 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/bundle/web-app/README.md
+/:
+  en: e6cece644d0bd3df
+  zh: 499b209031025593
+/astro-one-web-app:
+  en: fa6c46b4284a8bf7
+  zh: 76d309c217e7f929
+/astro-one-web-app/summary:
+  en: 4f60bb0eb87020f7
+  zh: 0aed565ec2d84eb0
+/astro-one-web-app/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-web-app/use-this-package:
+  en: 84b85595cc536178
+  zh: 43fd4d84fd201c00
+/astro-one-web-app/use-this-package/starting-the-web-gui:
+  en: e13876196a036f25
+  zh: eae50f83e168bf26
+/astro-one-web-app/use-this-package/configuration:
+  en: eb2e2e14e47af8d8
+  zh: e8f08b3d6533fdf6
+/astro-one-web-app/use-this-package/listening-trust-and-public-deployments:
+  en: fefb9babf994d96f
+  zh: e39982eff07c146d
+/astro-one-web-app/use-this-package/running-over-ssh:
+  en: f7de7bd94adf9431
+  zh: 05fa168eff905c12
+/astro-one-web-app/use-this-package/per-session-agent-setup:
+  en: bdb41170bf5cde73
+  zh: 0dbdcb876f8c6c3f
+/astro-one-web-app/understand-the-implementation:
+  en: 8683612abe4d04b3
+  zh: b845690cb4532b69
+/astro-one-web-app/understand-the-implementation/patch-semantics:
+  en: a6d126f30b1594d7
+  zh: 7f0ccc8a55d6f743
+/astro-one-web-app/understand-the-implementation/advertised-application-url:
+  en: dd3f4759b2e60f6e
+  zh: d6aec19807f73da4
+/astro-one-web-app/understand-the-implementation/readiness:
+  en: 973128fd346869df
+  zh: 54e6792f9f82a192
+/astro-one-web-app/understand-the-implementation/source-map:
+  en: 3177619722ad26a1
+  zh: 6fe9f2677cb5382e
+/astro-one-web-app/further-exploration:
+  en: 4fa7fa7d667a4fd8
+  zh: e4f5d2c3327d5c10
+/astro-one-web-app/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-web-app/model-experience/web-runtime-variable:
+  en: 623bf8a0bf05599d
+  zh: 398ded2e7b20c1ea
+/astro-one-web-app/model-experience/web-runtime-variable/what-the-model-sees:
+  en: 505e603543b22c52
+  zh: d0f554e11bfb96b6
+/astro-one-web-app/model-experience/web-runtime-variable/token-effect:
+  en: 449fbfa3986f98f0
+  zh: a7d66333594ab2dd
+/astro-one-web-app/model-experience/web-runtime-variable/kv-cache-effect:
+  en: 37542a8b81a744f5
+  zh: c0048aaadecae296
+/astro-one-web-app/known-limitations-and-deferred-work:
+  en: a75e6d90b829ed6c
+  zh: eef54244bde96adf
+/astro-one-web-app/known-limitations-and-deferred-work/dev-note:
+  en: 3f81b4f3beb74a0d
+  zh: 2e377ca40822d093

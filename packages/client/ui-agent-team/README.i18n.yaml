@@ -1,0 +1,40 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-agent-team/README.md
+/:
+  en: cecfe90c9079279f
+  zh: 58062db454093088
+/astro-one-client-ui-agent-team:
+  en: eadada4e8c83b084
+  zh: 75e51ff8ec4a7f49
+/astro-one-client-ui-agent-team/summary:
+  en: 88103cec4c91d755
+  zh: 6536e4307a5ce122
+/astro-one-client-ui-agent-team/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-client-ui-agent-team/use-this-package:
+  en: 20b284d804af972f
+  zh: 22a51e9655661e23
+/astro-one-client-ui-agent-team/use-this-package/inspect-the-task-board:
+  en: 7e88fb00a3abd230
+  zh: 08efcf80afecb0c0
+/astro-one-client-ui-agent-team/understand-the-implementation:
+  en: 9b0b6a8505a9ebbf
+  zh: beb5d89f80463b3e
+/astro-one-client-ui-agent-team/further-exploration:
+  en: bbc4cb9ea0a3c0b7
+  zh: 992a8f23665b10e5
+/astro-one-client-ui-agent-team/model-experience:
+  en: 47ebeba07d72759d
+  zh: 8fe8133f6dd845a9
+/astro-one-client-ui-agent-team/model-experience/kv-cache-effect:
+  en: b51b320f5e4dacfc
+  zh: 6695947c3f9fed28
+/astro-one-client-ui-agent-team/known-limitations-and-deferred-work:
+  en: 8be0a045f2f42e9e
+  zh: 36f98d5cc1189f7a
+/astro-one-client-ui-agent-team/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

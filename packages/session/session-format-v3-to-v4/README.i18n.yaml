@@ -1,0 +1,91 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/session/session-format-v3-to-v4/README.md
+/:
+  en: a24b02a97921b07a
+  zh: 92428dfee88d27fd
+/astro-one-session-format-v3-to-v4:
+  en: 78e4b88a65649b6a
+  zh: d0b3c774de27cfc4
+/astro-one-session-format-v3-to-v4/summary:
+  en: 0162a0e7e6493e0a
+  zh: 4107af760c449097
+/astro-one-session-format-v3-to-v4/table-of-contents:
+  en: b501b06f4b21cc31
+  zh: bd67928bedf6c786
+/astro-one-session-format-v3-to-v4/use-this-package:
+  en: 0e67eb003e90663b
+  zh: 389d4e378882baed
+/astro-one-session-format-v3-to-v4/v3-to-v4-specification:
+  en: d3463f5e222c44a2
+  zh: ec932eb4acac30f4
+/astro-one-session-format-v3-to-v4/v3-to-v4-specification/header-and-physical-framing:
+  en: 69f24696bd941ceb
+  zh: bc51ca330a4aa361
+/astro-one-session-format-v3-to-v4/v3-to-v4-specification/tool-result-representation:
+  en: 32b845f1e1867195
+  zh: 3e4e046dbc36478e
+/astro-one-session-format-v3-to-v4/v3-to-v4-specification/extension-data:
+  en: 3e7af0248b029e9a
+  zh: b73ddd133db65d05
+/astro-one-session-format-v3-to-v4/v3-to-v4-specification/message-source-conversion:
+  en: 29657d5deac4ac79
+  zh: 78ccfa20b9fc8577
+/astro-one-session-format-v3-to-v4/v3-to-v4-specification/parent-catalog-prerequisites:
+  en: c56414f49d5b5408
+  zh: 6370b0da4dc12e2e
+/astro-one-session-format-v3-to-v4/v3-to-v4-specification/sequence-references-and-inheritance:
+  en: 8543a15b3c24cd43
+  zh: 5eacb6ffd009d1bc
+/astro-one-session-format-v3-to-v4/v3-to-v4-specification/delivery-generations:
+  en: c362f394977bdeb3
+  zh: f8d35950bc2e1efa
+/astro-one-session-format-v3-to-v4/v3-to-v4-specification/source-audit-and-refusal:
+  en: bfc56afb05348d19
+  zh: 21afbb4ced91e87f
+/astro-one-session-format-v3-to-v4/native-v4-admission:
+  en: 7c2a1375c98e9b9f
+  zh: 39a57a82df56a2d4
+/astro-one-session-format-v3-to-v4/native-v4-admission/header-messages-and-surface-metadata:
+  en: 610f35b8c44538a2
+  zh: 17e5c07f09783106
+/astro-one-session-format-v3-to-v4/native-v4-admission/lifecycle-and-reference-relationships:
+  en: ab15834f75b83021
+  zh: a3221b164d1f3eb1
+/astro-one-session-format-v3-to-v4/native-v4-admission/developer-changes-and-deferred-schemas:
+  en: b05de23a81f78413
+  zh: b727d82d8ca0b161
+/astro-one-session-format-v3-to-v4/native-v4-admission/fork-generated-results:
+  en: db82b002989ac151
+  zh: da80b797bf321c3f
+/astro-one-session-format-v3-to-v4/native-v4-admission/validation-entry-points-and-recovery:
+  en: 1d6db95cf7a82846
+  zh: 837c690fe87f47db
+/astro-one-session-format-v3-to-v4/understand-the-implementation:
+  en: bd4d2271b5844ca1
+  zh: b5d00e78d6085a25
+/astro-one-session-format-v3-to-v4/further-exploration:
+  en: 15ac23f21ec55474
+  zh: bb99f4522b62474f
+/astro-one-session-format-v3-to-v4/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-session-format-v3-to-v4/model-experience/historical-restoration:
+  en: e63dd8ef6de7cf7c
+  zh: f1e356f01b601079
+/astro-one-session-format-v3-to-v4/model-experience/historical-restoration/what-the-model-sees:
+  en: 8885a0ae5f305b88
+  zh: 2064d2d02dd1b303
+/astro-one-session-format-v3-to-v4/model-experience/historical-restoration/token-effect:
+  en: adb2bef43125d1df
+  zh: 02f8d1d6a25d57ab
+/astro-one-session-format-v3-to-v4/model-experience/historical-restoration/kv-cache-effect:
+  en: 143ddba012e03d0c
+  zh: 93dfdb806bf9a697
+/astro-one-session-format-v3-to-v4/known-limitations-and-deferred-work:
+  en: f79cef7742ef4294
+  zh: 047cbd3d149c8dc1
+/astro-one-session-format-v3-to-v4/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

@@ -1,0 +1,16 @@
+# Bilingual-pair consistency record for guide.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/upgrade-guide/v0.2.1-alpha.2/sdk-minimal-image-compaction/guide.md
+/:
+  en: 5fc67054b45f1734
+  zh: 0cb92b2e036dfb67
+/sdk-minimal-image-reading-and-automatic-compaction:
+  en: bdde5e56e7410d7e
+  zh: 0d60a2b76ae1c939
+/sdk-minimal-image-reading-and-automatic-compaction/change:
+  en: d46f6e4b7ff0177a
+  zh: 6d41c2c9c025c12d
+/sdk-minimal-image-reading-and-automatic-compaction/migration:
+  en: cbf4540a7a59b0f3
+  zh: de23f542a93aeba7

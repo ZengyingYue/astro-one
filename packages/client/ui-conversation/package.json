@@ -1,0 +1,110 @@
+{
+  "name": "@astro-one/client-ui-conversation",
+  "description": "Target-neutral Conversation assembly, shell, composer, queue, and view navigation",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/client/ui-conversation"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "astroOne": {
+    "client": {
+      "inject": [
+        "@astro-one/api-session-controller",
+        "@astro-one/client-file-upload",
+        "@astro-one/client-locale",
+        "@astro-one/client-ui-layout",
+        "@astro-one/client-ui-renderer",
+        "@astro-one/client-ui-session",
+        "@astro-one/client-ui-settings",
+        "@astro-one/client-ui-workspace",
+        "@astro-one/client-ui-context-menu"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@astro-one/schemastery": "workspace:~"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/api-remotes": "workspace:*",
+    "@astro-one/api-session-controller": "workspace:*",
+    "@astro-one/api-workspace-controller": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/client-file-upload": "workspace:*",
+    "@astro-one/client-store": "workspace:*",
+    "@astro-one/client-test-runtime": "workspace:*",
+    "@astro-one/client-ui-layout": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-session": "workspace:*",
+    "@astro-one/client-ui-settings": "workspace:*",
+    "@astro-one/client-ui-workspace": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
+    "@astro-one/commands": "workspace:*",
+    "@astro-one/goal": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/llm-retry": "workspace:*",
+    "@astro-one/plan-mode": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/token-meter": "workspace:*",
+    "@astro-one/tool-todo": "workspace:*",
+    "@astro-one/util-crypto": "workspace:*",
+    "@astro-one/workspace": "workspace:*",
+    "@astro-one/file-reference": "workspace:*",
+    "@astro-one/util-workspace-path": "workspace:*",
+    "react": "^18.2.0",
+    "@lexical/headless": "^0.49.0",
+    "react-dom": "^18.2.0",
+    "zod": "4.4.3",
+    "lexical": "^0.49.0",
+    "clsx": "^2.0.0",
+    "@lexical/utils": "^0.49.0",
+    "@lexical/text": "^0.49.0",
+    "@lexical/plain-text": "^0.49.0",
+    "@lexical/history": "^0.49.0",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/settings": "workspace:*",
+    "@astro-one/client-shortcuts": "workspace:*",
+    "@astro-one/client-product-analytics": "workspace:*",
+    "@astro-one/message-quotes": "workspace:*",
+    "@astro-one/client-ui-context-menu": "workspace:*"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts"
+  ]
+}

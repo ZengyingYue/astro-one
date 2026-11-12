@@ -1,0 +1,59 @@
+{
+  "name": "@astro-one/compaction-image-offload",
+  "description": "Durable image offload for image-capable routes: replace over-budget request images with placeholders and retry",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/compaction/compaction-image-offload"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json",
+    "./projection": {
+      "types": "./lib/types/projection.d.ts",
+      "default": "./lib/types/projection.js"
+    },
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/compaction": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-loop": "workspace:*",
+    "@astro-one/agent-loop-testkit": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/compaction": "workspace:*",
+    "@astro-one/compaction-basic": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/llm-deepseek": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/token-meter": "workspace:*"
+  },
+  "dependencies": {
+    "@astro-one/util-values": "workspace:*"
+  }
+}

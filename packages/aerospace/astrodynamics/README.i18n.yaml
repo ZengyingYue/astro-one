@@ -1,0 +1,46 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/aerospace/astrodynamics/README.md
+/:
+  en: ad1b2c098d1d7b61
+  zh: bf7dce77a734dc13
+/astro-one-astrodynamics:
+  en: 2a0f2bbc8a12a5df
+  zh: 526943cec05faeb4
+/astro-one-astrodynamics/summary:
+  en: 805fe2231276780c
+  zh: 63573f4f65fe4575
+/astro-one-astrodynamics/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-astrodynamics/use-this-package:
+  en: bbff250eba0f1b89
+  zh: 0a618f05cc88ee2b
+/astro-one-astrodynamics/use-this-package/when-to-use-it:
+  en: e73f64ad039f31cc
+  zh: d5503f08205a88e1
+/astro-one-astrodynamics/use-this-package/entry-point:
+  en: 3559643713940ffb
+  zh: a378a31047596930
+/astro-one-astrodynamics/understand-the-implementation:
+  en: 6f8deb7b939c0c8c
+  zh: 0b5edb595a91f1c0
+/astro-one-astrodynamics/understand-the-implementation/source-map:
+  en: 9a61acb56b49780e
+  zh: 2e0f49516a054b7d
+/astro-one-astrodynamics/further-exploration:
+  en: 63c8c9a3f14dfa90
+  zh: 173709e950568d6c
+/astro-one-astrodynamics/model-experience:
+  en: 8add9f69ba7bfb40
+  zh: 3171dfe7dc96f07f
+/astro-one-astrodynamics/model-experience/kv-cache-effect:
+  en: cf1497b632d7ef95
+  zh: c8837821f9951c0d
+/astro-one-astrodynamics/known-limitations-and-deferred-work:
+  en: a6fb0b7657dd3a88
+  zh: 3f76d02d5eda61af
+/astro-one-astrodynamics/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

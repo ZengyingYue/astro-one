@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/client-ui-forge/README.md
+/:
+  en: 27cf01b13f177106
+  zh: c4b56ad7dfe7b1c7
+/astro-one-experimental-client-ui-forge:
+  en: 2bc904d6e865649e
+  zh: f973ac020e9eb12e
+/astro-one-experimental-client-ui-forge/summary:
+  en: 45a45ac63d61a466
+  zh: 294f3f8484732426
+/astro-one-experimental-client-ui-forge/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 2f8a621b991260a1
+/astro-one-experimental-client-ui-forge/use-this-package:
+  en: e5634216fc8a6c85
+  zh: 3985b09feac8050f
+/astro-one-experimental-client-ui-forge/understand-the-implementation:
+  en: ce975c47e17e53f6
+  zh: e2b807e03853cf2e
+/astro-one-experimental-client-ui-forge/further-exploration:
+  en: 75dcf4f0fabb0e10
+  zh: d843cded23043fcb
+/astro-one-experimental-client-ui-forge/model-experience:
+  en: f7a1517de6265e7b
+  zh: 4e4ddc7e1fde8e54
+/astro-one-experimental-client-ui-forge/model-experience/kv-cache-effect:
+  en: 2bc25a99e17789c4
+  zh: 4bec723fbf249d28
+/astro-one-experimental-client-ui-forge/known-limitations-and-deferred-work:
+  en: bfa5c7816de558e5
+  zh: 2988a9f26242dc49
+/astro-one-experimental-client-ui-forge/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

@@ -1,0 +1,100 @@
+{
+  "name": "@astro-one/agent-preset-registry",
+  "description": "Declarative Agent preset registry and profile-backed editing",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/preset/agent-preset-registry"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./display": {
+      "types": "./lib/types/display.d.ts",
+      "default": "./lib/types/display.js"
+    },
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/settings": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
+  },
+  "dependencies": {
+    "@astro-one/app-boot": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
+    "zod": "4.4.3",
+    "js-yaml": "^4.3.2"
+  },
+  "devDependencies": {
+    "@astro-one/cordis-plugin-group": "workspace:~",
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-loop": "workspace:*",
+    "@astro-one/atomic-write": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/settings": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/tool-executor-native": "workspace:*",
+    "@astro-one/tool-executor-ptc": "workspace:*",
+    "@astro-one/tool-testkit": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/fs-local": "workspace:*",
+    "@astro-one/hmr": "workspace:*",
+    "@astro-one/ptc-runtime": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/user-approval": "workspace:*",
+    "@astro-one/agent-preset": "workspace:*",
+    "@astro-one/working-directory": "workspace:*",
+    "@types/js-yaml": "^4.0.9"
+  }
+}

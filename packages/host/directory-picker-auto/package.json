@@ -1,0 +1,56 @@
+{
+  "name": "@astro-one/host-directory-picker-auto",
+  "description": "Adaptive chooser of the directory-picker seam: resolves the host situation at boot and mounts the native or browse backend for the Astro One web GUI host",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/host/directory-picker-auto"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/client-ui-directory-picker-browse": "workspace:*",
+    "@astro-one/client-ui-directory-picker-native": "workspace:*",
+    "@astro-one/host-directory-picker-browse": "workspace:*",
+    "@astro-one/host-directory-picker-native": "workspace:*",
+    "@astro-one/host-webserver": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/client-ui-directory-picker-browse": "workspace:*",
+    "@astro-one/client-ui-directory-picker-native": "workspace:*",
+    "@astro-one/host-directory-picker": "workspace:*",
+    "@astro-one/host-directory-picker-browse": "workspace:*",
+    "@astro-one/host-directory-picker-native": "workspace:*",
+    "@astro-one/host-webserver": "workspace:*"
+  },
+  "dependencies": {
+    "@astro-one/launch-environment": "workspace:*"
+  }
+}

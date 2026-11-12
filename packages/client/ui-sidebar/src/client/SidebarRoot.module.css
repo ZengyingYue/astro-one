@@ -1,0 +1,824 @@
+/* Flight-log column under the command bar: it holds only the browsing
+   region. Collapse is a slide + crossfade, not a morph: the content holds its
+   frozen expanded layout (inline width set by the component) and fades in
+   place (.fading) while the sliding column (AppFrame grid tracks) clips it;
+   the rail layout (.collapsed) only applies after the fade settles, so
+   nothing reflows mid-slide. */
+
+.root {
+  --astro-one-sidebar-inline-padding: 12px;
+  --astro-one-sidebar-row-padding: 12px;
+  --astro-one-sidebar-label-gap: 6px;
+  --astro-one-sidebar-paint-inset: 3px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 16px var(--astro-one-sidebar-inline-padding) 16px calc(var(--astro-one-sidebar-inline-padding) + 10px);
+  box-sizing: border-box;
+  color: var(--dsw-alias-label-primary);
+  font-size: 14px;
+  /* The sidebar is elevated above the conversation surface, so a revealed
+     scrollbar uses the l2 pair. .quietBars hides it without changing layout. */
+  --astro-one-scrollbar-thumb: var(--dsw-alias-scrollbar-bg-l2);
+  --astro-one-scrollbar-thumb-hover: var(--dsw-alias-scrollbar-hover-l2);
+}
+
+:global([data-animating]:not([data-dragging])) .root {
+  transition: width var(--ds-transition-duration-slow) var(--ds-ease-in-out);
+}
+
+/* macOS desktop: the AppFrame column owns the translucent sidebar tint; an
+   opaque fill here would sit on top of it and block the window vibrancy. */
+:global([data-platform='darwin']) .root {
+  background: transparent;
+}
+
+/* Rail geometry: the browsing region's icon column centred in the 56px rail
+   inside the inset glass panel. */
+.root.collapsed {
+  padding: 26px 8px 14px 12px;
+}
+
+:global([data-windows-titlebar]) .brandIdentity {
+  transform: translateY(1px);
+}
+
+:global([data-windows-titlebar]) .brandMark {
+  transform: translateX(1px);
+}
+
+:global([data-windows-titlebar]) .brandName {
+  font-weight: 400;
+}
+
+:global([data-windows-titlebar]) .root.collapsed {
+  padding: 0;
+}
+
+:global([data-windows-titlebar]) .collapsed .regionArea {
+  display: none;
+}
+
+/* The sidebar toggle lives in the command bar, so the Windows caption menus
+   start at the caption's left edge. */
+:global(html[data-windows-titlebar]) {
+  --astro-one-windows-menu-start: 12px;
+}
+
+/* Scrollbars in the column are a pointer affordance: the shell adds this
+   class whenever the pointer is not inside (SidebarRoot.tsx owns the linger),
+   and rebinding ui-theme's indirection pair to `transparent` takes the thumb
+   out of every scroll region nested under it — the workspace browser's
+   session list. `transparent` rather than `display: none` on the bar:
+   the reservation (`scrollbar-gutter: stable` on the list) stays in force, so
+   revealing the thumb never reflows a row. Rebinding contract and the two
+   rendering paths it reaches: ui-theme's README. */
+.root.quietBars {
+  --astro-one-scrollbar-thumb: transparent;
+  --astro-one-scrollbar-thumb-hover: transparent;
+}
+
+/* Collapse phase 1: the whole frozen-width content fades out in place over
+   150ms; at settle the children unmount/snap to the rail layout. The command
+   bar spans the window, so it stays. */
+.fading > :not(.commandBar) {
+  opacity: 0;
+  transition: opacity 150ms var(--ds-ease-in-out);
+}
+
+/* Brand group (figma I133:7632): the full wordmark rides the text ink
+   (figma flows: the main-screen instance is black; blue is brand
+   emphasis only). A button only in behavior (New Session shortcut): the
+   pointer cursor is the sole affordance — no hover chrome on the mark. */
+.brand {
+  flex: 1;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* On macOS the brand is a window-drag surface, not a New Session button;
+   a pointer cursor would promise a click that drags the window instead. */
+:global([data-platform='darwin']) .brand {
+  cursor: default;
+}
+
+/* Mark and name are independent slots; the shell owns their shared baseline,
+   spacing, and height so either occupant can vary in width. */
+.brandIdentity {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 24px;
+  min-width: 0;
+}
+
+.brandMark {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brandName {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  height: 24px;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+}
+
+.fallbackBrandName {
+  font-size: 17px;
+  letter-spacing: 0px;
+  white-space: nowrap;
+}
+
+.localBuildBrand {
+  flex: none;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1px;
+  height: 24px;
+  white-space: nowrap;
+}
+
+/* Local-build fallbacks copy the version, also on macOS, where the
+   surrounding brand is a window-drag surface. */
+.copyVersion {
+  display: inline-flex;
+  cursor: pointer;
+  -webkit-app-region: no-drag;
+}
+
+.localBuildTitle {
+  font-size: 12px;
+  line-height: 13px;
+  letter-spacing: 0;
+}
+
+.iconButton {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  corner-shape: round;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  color: var(--dsw-alias-label-secondary);
+}
+
+@media (hover: hover) {
+  .iconButton:hover {
+    background-color: var(--dsw-alias-interactive-bg-hover);
+  }
+}
+
+.buildVersion {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  height: 10px;
+  padding: 0 3px;
+  border-radius: 2px;
+  color: var(--dsw-alias-label-primary-inverted);
+  background: var(--dsw-alias-label-primary);
+  font-family: var(--ds-font-family-code);
+  font-size: 6px;
+  font-weight: 500;
+  line-height: 10px;
+  white-space: nowrap;
+}
+
+/* New Session: 38px bar, 12px radius (figma 133:7634 geometry, squared-off
+   corners); collapsed it renders as the rail's plain icon control. */
+.newSession {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 38px;
+  padding: 8px 16px;
+  margin: 0 2px 12px;
+  box-sizing: border-box;
+  border: 0.5px solid var(--dsw-alias-border-l3);
+  border-radius: var(--dsw-radius-md);
+  background: var(--dsw-alias-button-elevated-fill);
+  color: var(--dsw-alias-label-primary);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+@media (hover: hover) {
+  .newSession:hover {
+    background: var(--dsw-alias-button-floating-hover);
+  }
+}
+
+/* macOS: the themed elevated fill reads as a foreign slab on the vibrancy
+   sidebar; a white wash sits in the glass like native macOS sidebar
+   controls. Dark keeps the same white ink at lower alpha. */
+:global([data-platform='darwin']) :where(.root:not([role='dialog'])) .newSession {
+  background: rgb(255 255 255 / 0.55);
+}
+
+@media (hover: hover) {
+  :global([data-platform='darwin']) :where(.root:not([role='dialog'])) .newSession:hover {
+    background: rgb(255 255 255 / 0.3);
+  }
+}
+
+:global([data-platform='darwin']) :global([data-ds-dark-theme]) :where(.root:not([role='dialog'])) .newSession {
+  background: rgb(255 255 255 / 0.15);
+}
+
+@media (hover: hover) {
+  :global([data-platform='darwin']) :global([data-ds-dark-theme]) :where(.root:not([role='dialog'])) .newSession:hover {
+    background: rgb(255 255 255 / 0.2);
+  }
+}
+
+.newSessionLabel {
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.newSessionShortcut {
+  opacity: 0;
+  display: inline-flex;
+  flex: none;
+  pointer-events: none;
+  font-weight: 400;
+}
+
+.newSession:focus-visible .newSessionShortcut {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .newSession:hover .newSessionShortcut {
+    opacity: 1;
+  }
+}
+
+.scrollRegion {
+  margin-top: 4px;
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The workspace section is `100cqh` of this bounded region, one viewport tall without a resize observer. */
+.root:not(.collapsed) .scrollRegion {
+  container-type: size;
+}
+
+/* Both gaps scroll away; ordinary rows do not force overflow when they fit. The
+   trailing column keeps content 8px from the sidebar edge; this viewport draws no
+   scrollbar of its own. */
+.scrollArea {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 4px minmax(0, 1fr) calc(var(--astro-one-sidebar-inline-padding) - 2px);
+  grid-template-rows: 8px max-content 2px max-content;
+  align-content: start;
+  margin-left: -4px;
+  margin-right: calc(2px - var(--astro-one-sidebar-inline-padding));
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Expanded, this viewport only scrolls the navigation away; the section below
+   scrolls its own rows and draws the only visible scrollbar. Descendants query
+   the scroll state to take scrolling once this viewport ends. */
+.root:not(.collapsed) .scrollArea {
+  container-type: scroll-state;
+  scrollbar-width: none;
+}
+
+/* Safari versions without `scrollbar-width` still use the WebKit scrollbar. */
+.root:not(.collapsed) .scrollArea::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollArea::before,
+.scrollArea::after {
+  content: '';
+  grid-column: 2;
+  pointer-events: none;
+}
+
+.scrollArea::before { grid-row: 1; }
+.scrollArea::after { grid-row: 3; }
+
+.scrollFade {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 24px;
+  background: linear-gradient(to bottom, transparent, var(--dsw-specific-sidebar-fill));
+  pointer-events: none;
+}
+
+:global([data-platform='darwin']) .scrollFade,
+.collapsed .scrollFade,
+.collapsed .scrollArea::before,
+.collapsed .scrollArea::after {
+  display: none;
+}
+
+.collapsed .scrollRegion {
+  margin-top: 0;
+}
+
+.collapsed .scrollArea {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+}
+
+/* The entry wrapper paints the row fill, so it carries the shared paint inset
+   instead of its inner panel row. */
+.panelEntry {
+  position: relative;
+  display: flex;
+  border-inline: var(--astro-one-sidebar-paint-inset) solid transparent;
+  border-radius: var(--dsw-radius-md);
+  background-clip: padding-box;
+}
+
+.panelEntryWide > *:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.panelEntryWide .panelRow {
+  width: 100%;
+  margin: 0;
+  border-inline: 0;
+  padding-right: 38px;
+  background: transparent;
+}
+
+.panelEntryActive,
+.panelEntry:has(:focus-visible) {
+  background-color: var(--dsw-alias-interactive-bg-hover);
+}
+
+.panelUnpin {
+  position: absolute;
+  right: 0;
+  top: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--dsw-radius-sm);
+  background: transparent;
+  color: var(--dsw-alias-label-caption);
+  cursor: pointer;
+}
+
+.panelUnpin:focus-visible {
+  outline: var(--dsw-focus-ring-width) solid var(--dsw-focus-ring-color, var(--dsw-alias-state-business-primary));
+  outline-offset: -2px;
+}
+
+@media (hover: hover) {
+  .panelUnpin { opacity: 0; }
+  .panelEntry:hover { background-color: var(--dsw-alias-interactive-bg-hover); }
+  .panelEntry .panelRow:hover { background: transparent; }
+  .panelUnpin:hover { color: var(--dsw-alias-label-primary); }
+  .panelEntry:hover .panelUnpin,
+  .panelEntry:has(:focus-visible) .panelUnpin { opacity: 1; }
+}
+
+.panelList {
+  grid-column: 2;
+  grid-row: 2;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+
+/* Panel entries use a 3px paint inset, the New Session bar's 12px radius,
+   the session rows' hover/selected fill, and the primary ink. */
+.panelRow {
+  display: flex;
+  align-items: center;
+  gap: var(--astro-one-sidebar-label-gap);
+  margin: 0;
+  min-height: 32px;
+  padding: 5px calc(var(--astro-one-sidebar-row-padding) - var(--astro-one-sidebar-paint-inset));
+  box-sizing: border-box;
+  border: none;
+  border-inline: var(--astro-one-sidebar-paint-inset) solid transparent;
+  border-radius: var(--dsw-radius-md);
+  background: transparent;
+  background-clip: padding-box;
+  color: var(--dsw-alias-label-primary);
+  font: inherit;
+  line-height: 22px;
+  text-align: left;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .panelRow:hover {
+    background-color: var(--dsw-alias-interactive-bg-hover);
+  }
+}
+
+.panelRow:focus-visible {
+  outline: 2px solid var(--dsw-focus-ring-color, var(--dsw-alias-state-business-primary));
+  outline-offset: -2px;
+}
+
+/* The More launcher keeps the panel rows' geometry inside the menu's anchor wrapper. */
+.moreAnchor {
+  display: flex;
+  flex-direction: column;
+}
+
+.panelRow[aria-expanded='true'] {
+  background-color: var(--dsw-alias-interactive-bg-hover);
+}
+
+.moreMenu {
+  width: 288px;
+  max-width: calc(100vw - 24px);
+}
+
+.panelGlyph {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panelTitle {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The workspace seat stays mounted while its wide and rail bodies change. */
+.regionArea {
+  grid-column: 2;
+  grid-row: 4;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.collapsed .regionArea {
+  flex: 1;
+}
+
+.settingsArea,
+.footerActions {
+  flex: none;
+  min-width: 0;
+  width: 100%;
+}
+
+.footerActions {
+  display: flex;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fading > :not(.commandBar) {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* Floating console: the glass panel is a pseudo-element inset from the
+   column edges, so the column keeps its solved width and the cosmos shows
+   around the panel. The panel tints rather than blurs: a backdrop filter over
+   the animated cosmos would re-render every frame. Four HUD brackets mark the panel corners. The root must
+   not form a stacking context: the settings dialog mounts inside the sidebar
+   and needs its z-index to compete at the frame level. The -1 layers paint
+   above the frame's cosmos backdrop, which precedes them in the frame. */
+.root::before {
+  content: '';
+  position: absolute;
+  inset: 10px 0 10px 10px;
+  z-index: -1;
+  border: 1px solid var(--lh-glass-border);
+  border-radius: var(--dsw-radius-xl);
+  background:
+    linear-gradient(180deg, var(--lh-ion-soft), transparent 22%),
+    var(--lh-glass);
+  box-shadow: inset 0 1px 0 var(--lh-glass-edge), 0 24px 70px rgb(0 0 0 / .28);
+}
+
+.root::after {
+  --lh-bracket: linear-gradient(var(--lh-hud), var(--lh-hud));
+  content: '';
+  position: absolute;
+  inset: 16px 6px 16px 16px;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    var(--lh-bracket) left top / 12px 1px no-repeat,
+    var(--lh-bracket) left top / 1px 12px no-repeat,
+    var(--lh-bracket) right top / 12px 1px no-repeat,
+    var(--lh-bracket) right top / 1px 12px no-repeat,
+    var(--lh-bracket) left bottom / 12px 1px no-repeat,
+    var(--lh-bracket) left bottom / 1px 12px no-repeat,
+    var(--lh-bracket) right bottom / 12px 1px no-repeat,
+    var(--lh-bracket) right bottom / 1px 12px no-repeat;
+  opacity: .7;
+}
+
+.root[role='dialog']::before {
+  /* The drawer floats over the conversation, whose text would show through the glass. */
+  background:
+    linear-gradient(180deg, var(--lh-ion-soft), transparent 22%),
+    var(--lh-void);
+}
+
+.root.collapsed::before {
+  inset: 8px 2px 8px 8px;
+  border-radius: var(--dsw-radius-lg);
+}
+
+.root.collapsed::after {
+  inset: 13px 7px 13px 13px;
+}
+
+:global([data-windows-titlebar]) .root::before {
+  inset: 4px 0 10px 10px;
+}
+
+.brandIdentity {
+  color: var(--lh-ion);
+  filter: drop-shadow(0 0 6px var(--lh-ion-glow));
+}
+
+.fallbackBrandName,
+.localBuildTitle {
+  text-transform: uppercase;
+  font-family: var(--lh-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .22em;
+  background: linear-gradient(90deg, var(--lh-ion), var(--dsw-alias-label-primary) 70%);
+  background-clip: text;
+  color: transparent;
+}
+
+.buildVersion {
+  height: 12px;
+  padding: 0 5px;
+  border: 1px solid var(--lh-glass-border);
+  border-radius: 6px;
+  color: var(--lh-ion);
+  background: var(--lh-ion-soft);
+  font-family: var(--lh-mono);
+  font-size: 7px;
+  line-height: 10px;
+  letter-spacing: .06em;
+}
+
+.newSession {
+  position: relative;
+  border: 1px solid color-mix(in srgb, var(--lh-ion) 45%, transparent);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--lh-ion) 22%, transparent), color-mix(in srgb, var(--lh-ion) 6%, transparent));
+  color: var(--dsw-alias-label-primary);
+  box-shadow: 0 0 0 0 var(--lh-ion-glow), inset 0 1px 0 var(--lh-glass-edge);
+  transition: box-shadow var(--ds-transition-duration-base, 200ms) ease, border-color var(--ds-transition-duration-base, 200ms) ease;
+}
+
+.newSession::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--lh-ion) 35%, transparent) 50%, transparent 70%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .newSession:hover::after {
+    animation: newSessionScan 1.6s ease-in-out infinite;
+  }
+
+  .newSession:hover {
+    border-color: var(--lh-ion);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--lh-ion) 30%, transparent), color-mix(in srgb, var(--lh-ion) 10%, transparent));
+    box-shadow: 0 0 22px -4px var(--lh-ion-glow), inset 0 1px 0 var(--lh-glass-edge);
+  }
+}
+
+.panelEntryActive {
+  background-color: var(--dsw-specific-sidebar-nav-item-active);
+}
+
+/* The sidebar is translucent glass on every platform, so a gradient into its
+   fill would paint a smear instead of a fade. */
+.scrollFade {
+  display: none;
+}
+
+@keyframes newSessionScan {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: reduce) {
+  .newSession:hover::after {
+    animation: none;
+  }
+}
+
+/* Command bar: fixed across the top of the window above every column (the
+   frame reserves --lh-command-bar-height for it; on Windows it sits under the
+   caption row). Mission identity on the left, launch and panel entries next
+   to it, and station actions and Settings on the right. */
+.commandBar {
+  position: fixed;
+  top: var(--lh-command-bar-top, 0px);
+  left: 0;
+  right: 0;
+  z-index: 18;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--lh-command-bar-height, 56px);
+  padding: 0 14px 0 12px;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--lh-glass-border);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--lh-void) 94%, transparent), color-mix(in srgb, var(--lh-void) 78%, transparent));
+  color: var(--dsw-alias-label-primary);
+  font-size: 13px;
+}
+
+.commandBar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--lh-ion) 18%, var(--lh-solar) 50%, var(--lh-ion) 82%, transparent);
+  opacity: .45;
+  pointer-events: none;
+}
+
+/* The bar marks itself `data-window-drag` in markup (SidebarRoot); its controls subtract via the base.css rule. */
+:global([data-platform='darwin']) .commandBar {
+  padding-left: 84px;
+}
+
+.commandBar .brand {
+  flex: none;
+  padding: 4px 6px;
+  border-radius: 10px;
+}
+
+@media (hover: hover) {
+  .commandBar .brand:hover {
+    background: var(--dsw-alias-interactive-bg-hover);
+  }
+}
+
+.commandDivider {
+  flex: none;
+  width: 1px;
+  height: 22px;
+  margin: 0 6px;
+  background: var(--lh-glass-border);
+}
+
+.commandSpacer {
+  flex: 1;
+  min-width: 12px;
+}
+
+.commandBar .newSession {
+  height: 34px;
+  margin: 0;
+  padding: 0 16px;
+  border-radius: 999px;
+  corner-shape: round;
+  font-size: 13px;
+}
+
+.commandBar .panelList {
+  flex-direction: row;
+  gap: 2px;
+  margin: 0 0 0 4px;
+}
+
+.commandBar .panelRow {
+  min-height: 34px;
+  margin: 0;
+  padding: 0 12px;
+  gap: 6px;
+  border-radius: 999px;
+  corner-shape: round;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.commandBar .panelEntry {
+  border-inline: 0;
+  border-radius: 999px;
+  corner-shape: round;
+}
+
+.commandBar .panelEntryActive .panelRow {
+  color: var(--dsw-alias-label-primary);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--lh-ion) 45%, transparent);
+}
+
+.commandBar .footerActions,
+.commandBar .settingsArea {
+  display: flex;
+  align-items: center;
+  width: auto;
+}
+
+/* Drawer mode: the column translates off canvas, so the bar's controls stack
+   inside it. Panel entries keep their vertical geometry and unpin controls. */
+.commandBarDrawer {
+  position: static;
+  flex: none;
+  flex-wrap: wrap;
+  height: auto;
+  padding: 0 0 8px;
+  border-bottom: 0;
+  background: none;
+}
+
+.commandBarDrawer::after,
+.commandBarDrawer .commandDivider,
+.commandBarDrawer .commandSpacer {
+  display: none;
+}
+
+:global([data-platform='darwin']) .commandBarDrawer {
+  padding: 36px 0 8px;
+}
+
+.commandBarDrawer .brand {
+  flex: 1;
+}
+
+.commandBarDrawer .newSession {
+  width: 100%;
+}
+
+.commandBarDrawer .panelList {
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+}
+
+.commandBarDrawer .panelEntry {
+  border-radius: var(--dsw-radius-md);
+}
+
+.commandBarDrawer .panelRow {
+  min-height: 32px;
+  padding: 5px 9px;
+  padding-right: 38px;
+  border-radius: var(--dsw-radius-md);
+}

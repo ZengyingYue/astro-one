@@ -1,0 +1,64 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/llm/llm/README.md
+/:
+  en: 860509fb08c860f4
+  zh: b2c4448e8afc1f12
+/astro-one-llm:
+  en: b9d06e334ec6bede
+  zh: 41fe55817f7b5c72
+/astro-one-llm/summary:
+  en: f996ba7b0f39d565
+  zh: 99352ccfa0f0c713
+/astro-one-llm/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-llm/use-this-package:
+  en: b8fbcecd62f6cad0
+  zh: d6eb81611ef0f3c5
+/astro-one-llm/use-this-package/when-to-choose-it:
+  en: 83a437ef3f426a60
+  zh: 5344a16a7023d876
+/astro-one-llm/use-this-package/minimal-composition:
+  en: 5913623e872c01a9
+  zh: ce95e5a21e690f36
+/astro-one-llm/use-this-package/what-you-can-do:
+  en: dc61eb86585f6e0d
+  zh: 9c0d6b240dfd2cda
+/astro-one-llm/use-this-package/failures-and-recovery:
+  en: b636fbc1768922fb
+  zh: faaa94525f89d422
+/astro-one-llm/understand-the-implementation:
+  en: 9630d7e26193a512
+  zh: 94222c2a487c4b8c
+/astro-one-llm/understand-the-implementation/design-philosophy:
+  en: 12d0444c18a397c7
+  zh: 9d4a5468b4bb7fcd
+/astro-one-llm/understand-the-implementation/source-map:
+  en: ae1618577f4e8364
+  zh: a6e8ab1563c08dfb
+/astro-one-llm/understand-the-implementation/main-flow:
+  en: 433db1b96a312f61
+  zh: d3e7be69adc1243f
+/astro-one-llm/understand-the-implementation/invariants:
+  en: 0163a050239248e5
+  zh: 885c95bedcbe2ff4
+/astro-one-llm/further-exploration:
+  en: 7c55988d2d74d63c
+  zh: 3200959492d0ad62
+/astro-one-llm/model-experience:
+  en: fa5677003ad6bc0a
+  zh: ba33cfc860d9c37c
+/astro-one-llm/model-experience/kv-cache-effect:
+  en: a81634136baef72f
+  zh: b92dda883986b0e1
+/astro-one-llm/known-limitations-and-deferred-work:
+  en: fdc3422794b96ca3
+  zh: fb36c6eae52c9ecb
+/astro-one-llm/known-limitations-and-deferred-work/dev-note:
+  en: ecbc333b88e14d88
+  zh: 77c725d92efd8646
+/astro-one-llm/known-limitations-and-deferred-work/dev-note/open-items:
+  en: 29d937b08abd91c1
+  zh: 04bf90fc88c9919e

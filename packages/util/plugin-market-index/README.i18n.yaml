@@ -1,0 +1,34 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/util/plugin-market-index/README.md
+/:
+  en: a26df983d333bde8
+  zh: a462f624e725f8c9
+/astro-one-plugin-market-index:
+  en: 48536a77bad37729
+  zh: 43286f2ff3087812
+/astro-one-plugin-market-index/summary:
+  en: 19b4096d61bd90a8
+  zh: ac6f2f4311ac1669
+/astro-one-plugin-market-index/table-of-contents:
+  en: cd2a60a905c978d6
+  zh: cc71d387d0cbd442
+/astro-one-plugin-market-index/use-this-package:
+  en: 8eac2625e2e366a8
+  zh: 652131f240e929e0
+/astro-one-plugin-market-index/api:
+  en: e0e4444616427bf2
+  zh: 3960a7602bb17705
+/astro-one-plugin-market-index/model-experience:
+  en: c8196af3c2c1c7d9
+  zh: 320b6509adb16734
+/astro-one-plugin-market-index/model-experience/kv-cache-effect:
+  en: a7a5484352ac021c
+  zh: fe00da8797e85e06
+/astro-one-plugin-market-index/known-limitations-and-deferred-work:
+  en: 154a3493f47dd1d5
+  zh: 9968461e45e78b77
+/astro-one-plugin-market-index/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

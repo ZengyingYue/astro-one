@@ -1,0 +1,52 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-renderer/README.md
+/:
+  en: cf36cd30cadd9a71
+  zh: 738ae535528197b7
+/astro-one-client-ui-renderer:
+  en: 99f2826e6372e176
+  zh: 5a67e86046a4515d
+/astro-one-client-ui-renderer/summary:
+  en: e024f63d13e6cd78
+  zh: 9e1aacf7d301a74c
+/astro-one-client-ui-renderer/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-client-ui-renderer/use-this-package:
+  en: bbb6931bcbb367fc
+  zh: b71614b216ce7021
+/astro-one-client-ui-renderer/use-this-package/what-mounting-does:
+  en: 1d5350799ce072d0
+  zh: 942e543fdab51818
+/astro-one-client-ui-renderer/use-this-package/for-business-plugins:
+  en: 15a2bfee2c0bd051
+  zh: 0c5b336fc5afbbc6
+/astro-one-client-ui-renderer/understand-the-implementation:
+  en: 0de0a8ad857b93f6
+  zh: 98a0fae2d6606a7d
+/astro-one-client-ui-renderer/understand-the-implementation/activation-and-mount:
+  en: 3b4dd1ba945c0509
+  zh: a647f6389ec19988
+/astro-one-client-ui-renderer/understand-the-implementation/slot-bindings:
+  en: 6ab26cf5744a23d4
+  zh: 84a531322a724a84
+/astro-one-client-ui-renderer/understand-the-implementation/identity:
+  en: 2a349d500ead79cb
+  zh: ac49c8b1d73dcd6c
+/astro-one-client-ui-renderer/further-exploration:
+  en: 25fb5e1b17b1a0d7
+  zh: 25654aa4488ca49a
+/astro-one-client-ui-renderer/model-experience:
+  en: ca4e29db08d34e6d
+  zh: de6ec680414b1d54
+/astro-one-client-ui-renderer/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/astro-one-client-ui-renderer/known-limitations-and-deferred-work:
+  en: 14bccc68da30d0f3
+  zh: 6b6b306556cdd8a4
+/astro-one-client-ui-renderer/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

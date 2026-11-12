@@ -1,0 +1,77 @@
+{
+  "name": "@astro-one/plan-mode",
+  "description": "Logged per-agent plan mode with deployment guidance, a direct slash command, and a user-reviewed exit",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/plan/plan-mode"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./client": {
+      "types": "./lib/types/client.d.ts",
+      "default": "./lib/types/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/commands": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/user-questions": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
+  },
+  "peerDependenciesMeta": {
+    "@astro-one/commands": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@astro-one/brand": "workspace:*",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-loop": "workspace:*",
+    "@astro-one/ptc-runtime": "workspace:*",
+    "@astro-one/commands": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/tool-executor-native": "workspace:*",
+    "@astro-one/tool-executor-ptc": "workspace:*",
+    "@astro-one/tool-testkit": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/user-questions": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent-loop-testkit": "workspace:*"
+  }
+}

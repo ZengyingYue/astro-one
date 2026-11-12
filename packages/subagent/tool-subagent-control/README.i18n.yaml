@@ -1,0 +1,121 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/subagent/tool-subagent-control/README.md
+/:
+  en: 72896dc291dfbcfe
+  zh: a5fcbbf13af6cb3c
+/astro-one-tool-subagent-control:
+  en: 169ced4f938203b9
+  zh: 0a5da4c3194710c0
+/astro-one-tool-subagent-control/summary:
+  en: e2dde96ee3e68c11
+  zh: af2f678830e27ba3
+/astro-one-tool-subagent-control/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-tool-subagent-control/use-this-package:
+  en: f486d856fd8e392c
+  zh: 6ddbc59dd08d3c49
+/astro-one-tool-subagent-control/use-this-package/minimal-configuration:
+  en: 7a98050812c2b90e
+  zh: 15f16a2d752228ba
+/astro-one-tool-subagent-control/use-this-package/send-message:
+  en: 849b9b3e576aed01
+  zh: d52239ca40d3a168
+/astro-one-tool-subagent-control/use-this-package/interrupt-agent:
+  en: de45d5a4b98d3c91
+  zh: 666aa187170b9c0d
+/astro-one-tool-subagent-control/use-this-package/wait-agent:
+  en: 29a3466bcc8e8e9d
+  zh: ea38770df450a43e
+/astro-one-tool-subagent-control/use-this-package/list-agents:
+  en: 912206fb3da120b5
+  zh: 3b247046a52d5f2a
+/astro-one-tool-subagent-control/understand-the-implementation:
+  en: c5cdf01a78c990f2
+  zh: 53c180d726ce4502
+/astro-one-tool-subagent-control/understand-the-implementation/design-concept:
+  en: 3b6f1956d232964d
+  zh: 9949b906020c9a79
+/astro-one-tool-subagent-control/understand-the-implementation/delivery-and-signal-ownership:
+  en: 65137f5fe14ebb7f
+  zh: ce00e4f32709246a
+/astro-one-tool-subagent-control/understand-the-implementation/listing-projection:
+  en: ee3136b09f0c9ef2
+  zh: 5cbe189bb857fdc7
+/astro-one-tool-subagent-control/understand-the-implementation/source-map:
+  en: 988d8adc49bfc0c2
+  zh: b3091ceb8d6dcad3
+/astro-one-tool-subagent-control/further-exploration:
+  en: 9b52fab0c5e9540e
+  zh: 40f5393f7892a156
+/astro-one-tool-subagent-control/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-tool-subagent-control/model-experience/tool-schema:
+  en: e4c7376d4f29dbd5
+  zh: 6b7a9eaf69c9ea53
+/astro-one-tool-subagent-control/model-experience/tool-schema/what-the-model-sees:
+  en: 3115744f2bd5183c
+  zh: cf62bbf92be835c3
+/astro-one-tool-subagent-control/model-experience/tool-schema/token-effect:
+  en: 5eb1d46a94b7ec1b
+  zh: 5670760ca695d4ad
+/astro-one-tool-subagent-control/model-experience/tool-schema/kv-cache-effect:
+  en: 89619e31f3ea7585
+  zh: 5681bc8096cd8e32
+/astro-one-tool-subagent-control/model-experience/identity-and-communication-context:
+  en: fc88c8ffb8ebc083
+  zh: 0baf2e5df37d813e
+/astro-one-tool-subagent-control/model-experience/identity-and-communication-context/what-the-model-sees:
+  en: f15da8ae032d1133
+  zh: d778adb601756c27
+/astro-one-tool-subagent-control/model-experience/identity-and-communication-context/token-effect:
+  en: e2c1a9e7f3a0bbea
+  zh: d13f6963c8b2a8c5
+/astro-one-tool-subagent-control/model-experience/identity-and-communication-context/kv-cache-effect:
+  en: feed847f7a028d67
+  zh: 623a3438346d2bf8
+/astro-one-tool-subagent-control/model-experience/interrupt-result:
+  en: d64e936e83e89a2b
+  zh: b9905c33af6cca45
+/astro-one-tool-subagent-control/model-experience/interrupt-result/what-the-model-sees:
+  en: 89305619897680ba
+  zh: e610a844fc09c53f
+/astro-one-tool-subagent-control/model-experience/interrupt-result/token-effect:
+  en: 5d1bcef28b5f18da
+  zh: 027d67d93d660e76
+/astro-one-tool-subagent-control/model-experience/interrupt-result/kv-cache-effect:
+  en: 4a629edb36a17e32
+  zh: 5a7539cfbf404c54
+/astro-one-tool-subagent-control/model-experience/delivery-result:
+  en: ab964e307bd37dca
+  zh: 03f975252f838a42
+/astro-one-tool-subagent-control/model-experience/delivery-result/what-the-model-sees:
+  en: 8746cb9fa6557bfe
+  zh: 49828e113e901160
+/astro-one-tool-subagent-control/model-experience/delivery-result/token-effect:
+  en: f7e47f835a1e0628
+  zh: d2818b98c773ad35
+/astro-one-tool-subagent-control/model-experience/delivery-result/kv-cache-effect:
+  en: f5d5f97a153f7c70
+  zh: 3d6bc05b9eadfbc2
+/astro-one-tool-subagent-control/model-experience/listing-result:
+  en: 094e55d258f2ec2e
+  zh: f364bc9046530bff
+/astro-one-tool-subagent-control/model-experience/listing-result/what-the-model-sees:
+  en: 08c89e5dbbd691a8
+  zh: 5d74e546d024735b
+/astro-one-tool-subagent-control/model-experience/listing-result/token-effect:
+  en: 027aaeb808238388
+  zh: 5b974abc429d9e23
+/astro-one-tool-subagent-control/model-experience/listing-result/kv-cache-effect:
+  en: 4a629edb36a17e32
+  zh: 5a7539cfbf404c54
+/astro-one-tool-subagent-control/known-limitations-and-deferred-work:
+  en: 4436a17ab98af811
+  zh: d58f9388e0c127dc
+/astro-one-tool-subagent-control/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

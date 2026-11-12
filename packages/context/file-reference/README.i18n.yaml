@@ -1,0 +1,55 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/context/file-reference/README.md
+/:
+  en: 21c486a1839068f4
+  zh: 0333ad7c4f984794
+/astro-one-file-reference:
+  en: 17e63198bbf8fda6
+  zh: c0a523560b924f96
+/astro-one-file-reference/summary:
+  en: 771304026b572411
+  zh: 5c282121f02175b2
+/astro-one-file-reference/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-file-reference/use-this-package:
+  en: e37b5d4bf0020063
+  zh: 2eb37494ea43228f
+/astro-one-file-reference/use-this-package/mention-grammar:
+  en: efbe0e9233f402a4
+  zh: e3ec7c6ae2335a41
+/astro-one-file-reference/use-this-package/getting-candidates:
+  en: 4dc2d6289f532225
+  zh: af06ce75299f23e5
+/astro-one-file-reference/use-this-package/pairing-with-a-provider:
+  en: ab55e3e17935133c
+  zh: 66e3d8e5a2558830
+/astro-one-file-reference/understand-the-implementation:
+  en: 92049fb7a6c345c3
+  zh: 86efc4d17127f97f
+/astro-one-file-reference/understand-the-implementation/design-concept:
+  en: dbee1016e2314bd8
+  zh: ab8d62fcbcb69d57
+/astro-one-file-reference/understand-the-implementation/source-map:
+  en: 7ca26c752fab5c46
+  zh: 961bc4283792155d
+/astro-one-file-reference/understand-the-implementation/main-flow:
+  en: fd65f309c940de96
+  zh: c1517e592d646d6c
+/astro-one-file-reference/further-exploration:
+  en: f341f8a84af97bdd
+  zh: 761788edc4dd1f0c
+/astro-one-file-reference/model-experience:
+  en: ab69d93c10a1572c
+  zh: b63720b1e6182805
+/astro-one-file-reference/model-experience/kv-cache-effect:
+  en: 0aba47b2a2828b78
+  zh: 83a1af441dac3074
+/astro-one-file-reference/known-limitations-and-deferred-work:
+  en: cc83a00bd7d4ccc9
+  zh: 130ba16bb567db5a
+/astro-one-file-reference/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

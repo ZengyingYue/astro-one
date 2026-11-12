@@ -1,0 +1,79 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write apps/desktop/README.md
+/:
+  en: 0d36989eb614345d
+  zh: a0a1a18c07621393
+/astro-one-desktop:
+  en: 14587671d6ae4631
+  zh: 6d35744af0ec7219
+/astro-one-desktop/summary:
+  en: 7bc8bf30de693222
+  zh: e85993d8852b6cab
+/astro-one-desktop/table-of-contents:
+  en: 6eb25fee2c5507f0
+  zh: 67d5c36a042a9093
+/astro-one-desktop/application-overview:
+  en: 59ad14aae8e5d660
+  zh: 17f9ba2d29cca20e
+/astro-one-desktop/terminal-command:
+  en: bc323c829aac63e4
+  zh: 27169f9f266c0646
+/astro-one-desktop/closing-the-window-and-quitting:
+  en: 73ad2a2a6dd6f2ee
+  zh: 3ac89183a333cb86
+/astro-one-desktop/key-technical-decisions:
+  en: cb6cf29ac15d83f3
+  zh: 42449f161d868d76
+/astro-one-desktop/key-technical-decisions/bundled-workspace-dependencies:
+  en: 03f927130f463336
+  zh: f0e682aa2c5cfcc3
+/astro-one-desktop/bundled-command-runtime:
+  en: 08da309d54ebfdff
+  zh: 8e24fd5e2f92fcb0
+/astro-one-desktop/installation-ownership:
+  en: 90758bcd2efafd35
+  zh: 15fa7712a8df867c
+/astro-one-desktop/installation-ownership/runtime-and-plugin-activation:
+  en: cd893ca9d3330dfa
+  zh: d3c26f893373595e
+/astro-one-desktop/installation-ownership/host-environment:
+  en: 806af0be2258c02d
+  zh: e7724b27ee1bfa14
+/astro-one-desktop/develop:
+  en: a00ff3bfd676293d
+  zh: 7e7641961e561f95
+/astro-one-desktop/develop/startup-onboarding:
+  en: c93c27ed6ef13b3a
+  zh: f5e2d43f6f7a35a8
+/astro-one-desktop/develop/welcome-window-appearance:
+  en: ff0256c84c52e576
+  zh: 71582f6a6d4c2a60
+/astro-one-desktop/package:
+  en: 8725e05bca245c57
+  zh: b7b4607cbe0c314f
+/astro-one-desktop/windows-installer-interface:
+  en: 210bf7a36f2004ac
+  zh: 9e4b762cec5bcd93
+/astro-one-desktop/updates:
+  en: 815f50131a0b69a7
+  zh: d9ae46dc078d6dab
+/astro-one-desktop/updates/local-desktop-settings:
+  en: 2eac46b1ee64a7f3
+  zh: de196cd4632ec7b5
+/astro-one-desktop/updates/mandatory-update-policy:
+  en: f24d8d46d9616d02
+  zh: a28c9e6894b630f7
+/astro-one-desktop/updates/local-updater-qualification:
+  en: 353da5fd379c179b
+  zh: d0e2b015fd86e341
+/astro-one-desktop/low-level-development-overrides:
+  en: 2f9e352ec5e9df3e
+  zh: d6d9fdc28d1d484a
+/astro-one-desktop/known-limitations:
+  en: e0e537d34bcfb903
+  zh: e806d45304aa337d
+/astro-one-desktop/dev-note:
+  en: 5ced9bcf2b862010
+  zh: 139fa32825ef1bb2

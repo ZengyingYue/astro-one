@@ -1,0 +1,25 @@
+# Bilingual-pair consistency record for shell.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/subsystems/shell.md
+/shell-executor:
+  en: e465c26aebe1ffef
+  zh: db47e5b1443ab5b6
+/shell-executor/managed-shell-environment-namespace:
+  en: 0956a2d793ebc5f8
+  zh: 2ee4ef334c919984
+/shell-executor/request-vs-spec-the-resolve-split:
+  en: ae3a51354ebdc9ff
+  zh: c10cc9c557b6e7cd
+/shell-executor/foreground-runs-shellrunresult:
+  en: 9778d1f987ac4c22
+  zh: cecbe28bf967b2fc
+/shell-executor/file-sandbox-shellsandboxinfo:
+  en: 3774a1a973ce46eb
+  zh: 6a26fdcc0532c385
+/shell-executor/background-processes-shellprocess:
+  en: 7bc6e3e25ed16d34
+  zh: fd6246d9fe1f4b9e
+/shell-executor/the-service:
+  en: 84fcce510f21225c
+  zh: 73189c0afc96dbc8

@@ -1,0 +1,4 @@
+- id: sandbox
+  name: '@astro-one/sandbox-local'
+- id: skills
+  name: '@astro-one/skill'

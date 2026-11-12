@@ -1,0 +1,46 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/util/plugin-detail/README.md
+/:
+  en: 505fd12717a89948
+  zh: 2ad120714356f61b
+/astro-one-plugin-detail:
+  en: 5addfdbf7a977a99
+  zh: 1a02d1e9190f1980
+/astro-one-plugin-detail/summary:
+  en: 4f09b5b9a124286a
+  zh: 09c7e89d1d83e819
+/astro-one-plugin-detail/table-of-contents:
+  en: cd2a60a905c978d6
+  zh: cc71d387d0cbd442
+/astro-one-plugin-detail/use-this-package:
+  en: ccdf3fdf80317f76
+  zh: 023b893b30d1dd5b
+/astro-one-plugin-detail/use-this-package/document-order:
+  en: 07c7a5d4d1090a12
+  zh: 1d00fdcdf4bb2b87
+/astro-one-plugin-detail/use-this-package/images:
+  en: abeb7bb1f7695e5e
+  zh: 59b87c9abea17dfb
+/astro-one-plugin-detail/use-this-package/file-sources:
+  en: 9542401a7d104851
+  zh: 99f80d2960b77bc8
+/astro-one-plugin-detail/use-this-package/image-responses:
+  en: d6e7da207ee7f2fb
+  zh: c7b6acaa4d2839a2
+/astro-one-plugin-detail/api:
+  en: 01a59d94fc398c21
+  zh: 64eb368c787239cd
+/astro-one-plugin-detail/model-experience:
+  en: 60eeeeff73bf48b4
+  zh: cf3e6e1885719d6a
+/astro-one-plugin-detail/model-experience/kv-cache-effect:
+  en: 4f0eadf94828e66e
+  zh: 4f8a6ec170ebbfb6
+/astro-one-plugin-detail/known-limitations-and-deferred-work:
+  en: 5d8abfbb06761f7f
+  zh: 8515079f96e513bf
+/astro-one-plugin-detail/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

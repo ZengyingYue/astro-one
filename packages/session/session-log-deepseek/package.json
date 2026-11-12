@@ -1,0 +1,60 @@
+{
+  "name": "@astro-one/session-log-deepseek",
+  "description": "Incremental lossless session-log request extension for the official DeepSeek LLM API",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/session/session-log-deepseek"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/schemastery": "workspace:~"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/deepseek-llm-api-extensions": "workspace:*",
+    "@astro-one/session": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/command-feedback": "workspace:*",
+    "@astro-one/deepseek-llm-api-extensions": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/llm-deepseek": "workspace:*",
+    "@astro-one/llm-deepseek-api-key": "workspace:*",
+    "@astro-one/llm-mock-server": "workspace:*",
+    "@astro-one/message-feedback": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-persistence-jsonl": "workspace:*"
+  }
+}

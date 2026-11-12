@@ -1,0 +1,55 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/core/agent-tool-presentation/README.md
+/:
+  en: 1c67fea11cb4a325
+  zh: 7dc1256148273b02
+/astro-one-agent-tool-presentation:
+  en: 005601bbceab1a6e
+  zh: 6bbebb47db38fce3
+/astro-one-agent-tool-presentation/summary:
+  en: 4a180d59fe2dbda0
+  zh: 99787aa360768d42
+/astro-one-agent-tool-presentation/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-agent-tool-presentation/use-this-package:
+  en: 9ad88c3b4d6e389e
+  zh: f5d78ac15598aabb
+/astro-one-agent-tool-presentation/use-this-package/add-the-row-to-a-preset:
+  en: d0f1eee83f62d8d3
+  zh: a356326ef40765b6
+/astro-one-agent-tool-presentation/use-this-package/what-ptc-mode-requires:
+  en: 1028f48a5df8e744
+  zh: 566a9ff5f791f14b
+/astro-one-agent-tool-presentation/use-this-package/one-presentation-per-agent:
+  en: 46bf80f051175567
+  zh: 8f5e1623da5d1520
+/astro-one-agent-tool-presentation/understand-the-implementation:
+  en: ce7e776e9d516bdb
+  zh: 59d2751743db7795
+/astro-one-agent-tool-presentation/understand-the-implementation/design-concept:
+  en: 0fbb3dd32193e54c
+  zh: 5b3835aef5115bb7
+/astro-one-agent-tool-presentation/understand-the-implementation/source-map:
+  en: 89ecdb3d5d032e7f
+  zh: 64ae2feb4344c679
+/astro-one-agent-tool-presentation/understand-the-implementation/behavior-notes:
+  en: d9300d0a040f3e70
+  zh: 11969cc8c9e60ad0
+/astro-one-agent-tool-presentation/further-exploration:
+  en: 6ef1511345e0a454
+  zh: aef9b9278ab733f8
+/astro-one-agent-tool-presentation/model-experience:
+  en: afe19e5cb8ded2d2
+  zh: cce546f6b0f233b1
+/astro-one-agent-tool-presentation/model-experience/kv-cache-effect:
+  en: c75b16e38577f026
+  zh: f802d115af4bf9a1
+/astro-one-agent-tool-presentation/known-limitations-and-deferred-work:
+  en: 583b046bb6d61acf
+  zh: 155601a35aac8ca8
+/astro-one-agent-tool-presentation/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

@@ -1,0 +1,100 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/llm/llm-pi-ai/README.md
+/:
+  en: 8a6ec0a589e6fd18
+  zh: e85fc352c9cba373
+/astro-one-llm-pi-ai:
+  en: 53e96f3a424706b1
+  zh: f04ef2378552a5a9
+/astro-one-llm-pi-ai/summary:
+  en: b5da0cc80b61d240
+  zh: 39cee7f67b491e87
+/astro-one-llm-pi-ai/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-llm-pi-ai/use-this-package:
+  en: 15f2cd7552d13c46
+  zh: 831a5580d4244b84
+/astro-one-llm-pi-ai/use-this-package/when-to-choose-it:
+  en: 18b47cd9cea4fcf4
+  zh: e8165904cc990370
+/astro-one-llm-pi-ai/use-this-package/configure-provider-routes:
+  en: 95ffd3871b78fac3
+  zh: 375101854dbfee04
+/astro-one-llm-pi-ai/use-this-package/sign-in-to-a-provider:
+  en: c36f66438638ae08
+  zh: 066a2fc4cb97c86f
+/astro-one-llm-pi-ai/use-this-package/resolve-the-model-catalog:
+  en: 376f83206858b601
+  zh: 38bb6993609c96a6
+/astro-one-llm-pi-ai/use-this-package/run-with-reasoning-and-wire-compatibility:
+  en: b58b917e7f250aee
+  zh: aff599081bac08c3
+/astro-one-llm-pi-ai/use-this-package/change-configuration-at-runtime:
+  en: 92f554e1718614ca
+  zh: f17ed3ad3e5d28e2
+/astro-one-llm-pi-ai/use-this-package/discover-models-from-endpoints:
+  en: 6619e8cfe7555c73
+  zh: b2f80c25acb81cf8
+/astro-one-llm-pi-ai/use-this-package/failures-and-recovery:
+  en: 3c1edbc63de24a1a
+  zh: 01592718c3a2c79f
+/astro-one-llm-pi-ai/understand-the-implementation:
+  en: 1598ac8a8bb9b6bf
+  zh: fdd089c5ae7722cd
+/astro-one-llm-pi-ai/understand-the-implementation/design-philosophy:
+  en: db1ac8ccca2d858b
+  zh: 1d7cd4153aad22b0
+/astro-one-llm-pi-ai/understand-the-implementation/request-headers:
+  en: 615ca9834bf6544f
+  zh: 2d70b548f99000d1
+/astro-one-llm-pi-ai/understand-the-implementation/source-map:
+  en: 64912b8a3a336419
+  zh: 33a245969b4194f6
+/astro-one-llm-pi-ai/understand-the-implementation/registration-and-directory:
+  en: 0c6df3e8b6a75372
+  zh: 476666a6f209542c
+/astro-one-llm-pi-ai/understand-the-implementation/generated-provider-metadata:
+  en: 477d277e9ac35c8f
+  zh: 96870ca333fb6510
+/astro-one-llm-pi-ai/understand-the-implementation/replay-and-vocabulary:
+  en: e64173763fdbcfae
+  zh: 73ed2c2af54b62f6
+/astro-one-llm-pi-ai/further-exploration:
+  en: 5dfd63a250e1d3f1
+  zh: 2738f9dd6a4691f9
+/astro-one-llm-pi-ai/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-llm-pi-ai/model-experience/provider-request-through-pi-ai:
+  en: e7348db3f7115960
+  zh: 5fd5fb09d7d09982
+/astro-one-llm-pi-ai/model-experience/provider-request-through-pi-ai/what-the-model-sees:
+  en: 0ab3d26c2c27b331
+  zh: a1fb9125ca214408
+/astro-one-llm-pi-ai/model-experience/provider-request-through-pi-ai/token-effect:
+  en: 820221e8ae37aa61
+  zh: 7e6ff4db10067fc0
+/astro-one-llm-pi-ai/model-experience/provider-request-through-pi-ai/kv-cache-effect:
+  en: cc7d4ec548afa30c
+  zh: ff3b01a65512f4ac
+/astro-one-llm-pi-ai/model-experience/provider-response:
+  en: 802d7ff60a1d03ff
+  zh: c41c56e28f3e8680
+/astro-one-llm-pi-ai/model-experience/provider-response/what-the-model-sees:
+  en: 94ca496012c92fa9
+  zh: 9539b08924b5022d
+/astro-one-llm-pi-ai/model-experience/provider-response/token-effect:
+  en: f002b21d0f4c3df0
+  zh: 388c8ed4676ed1af
+/astro-one-llm-pi-ai/model-experience/provider-response/kv-cache-effect:
+  en: b6bd570c0159ba08
+  zh: 7d2d91eea6a8d830
+/astro-one-llm-pi-ai/known-limitations-and-deferred-work:
+  en: b8117f745275a043
+  zh: 29946f7b53ec1681
+/astro-one-llm-pi-ai/known-limitations-and-deferred-work/dev-note:
+  en: 3678dd0f6642c2a5
+  zh: 75cbdd064cc64282

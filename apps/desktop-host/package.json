@@ -1,0 +1,44 @@
+{
+  "name": "@astro-one/desktop-host",
+  "description": "Private Node-mode host process for the Electron desktop application",
+  "version": "0.2.2-alpha.3",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "main": "lib/index.js",
+  "files": [
+    "lib/index.js",
+    "lib/cli.js"
+  ],
+  "dependencies": {
+    "koffi": "3.1.1",
+    "@deepseek-ai/libreoffice-kit": "^0.1.5",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cli": "workspace:*",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/app-boot": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/host-webserver": "workspace:*",
+    "@astro-one/home-paths": "workspace:*",
+    "@astro-one/jobs": "workspace:*",
+    "@astro-one/schedule": "workspace:*",
+    "@astro-one/tool-workspace-dependencies": "workspace:*",
+    "@astro-one/skill-office": "workspace:*",
+    "@astro-one/deepseek-account": "workspace:*",
+    "@astro-one/workspace": "workspace:*",
+    "@astro-one/plugin-manager": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/skill": "workspace:*",
+    "@astro-one/fs": "workspace:*",
+    "@astro-one/fs-local": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-persistence": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/util-workspace-path": "workspace:*",
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/tool-executor-native": "workspace:*"
+  }
+}

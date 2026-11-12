@@ -1,0 +1,19 @@
+# Bilingual-pair consistency record for rescope.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/rescope.md
+/vendored-package-rescope:
+  en: 5c01c8f9ea10dfc1
+  zh: 535f6d908e4a822b
+/vendored-package-rescope/name-mapping:
+  en: e376954e20ce4994
+  zh: aac61023df1f5646
+/vendored-package-rescope/what-the-rename-does-not-touch:
+  en: e53be321335efa63
+  zh: d17df421d5d5584d
+/vendored-package-rescope/what-your-code-has-to-change:
+  en: 77e303c5dfb1447c
+  zh: a8790f9cb3dd9d70
+/vendored-package-rescope/applying-verifying-and-reverting:
+  en: 2a7f21e03e6cb4f7
+  zh: dcf4172adf916fda

@@ -1,0 +1,49 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/plugin-recommendations/README.md
+/:
+  en: c34591bc4458dc55
+  zh: 7672f17a222f287e
+/astro-one-plugin-recommendations:
+  en: 12bb278a8eacfcfc
+  zh: 7b597637a7b61a8f
+/astro-one-plugin-recommendations/summary:
+  en: 240a9be5950c9edc
+  zh: 31a1fdae40ba9e25
+/astro-one-plugin-recommendations/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 59094206ec49ad20
+/astro-one-plugin-recommendations/use-this-package:
+  en: ce4e4f2fb91488ad
+  zh: 4d25640dce073e45
+/astro-one-plugin-recommendations/use-this-package/outcomes-and-recovery:
+  en: 3b07d58a6bc4394a
+  zh: 5d64630582c8da80
+/astro-one-plugin-recommendations/understand-the-implementation:
+  en: fdfc4e7099f55f42
+  zh: 6e8c227893502361
+/astro-one-plugin-recommendations/further-exploration:
+  en: d808fdff447731ba
+  zh: 967736b93cf5fb48
+/astro-one-plugin-recommendations/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-plugin-recommendations/model-experience/official-plugin-recommendations:
+  en: 79e932b35e50619a
+  zh: 821b4d95d6ce1d22
+/astro-one-plugin-recommendations/model-experience/official-plugin-recommendations/what-the-model-sees:
+  en: b3838f4e231c62f2
+  zh: 0ffa62cd30da9723
+/astro-one-plugin-recommendations/model-experience/official-plugin-recommendations/token-effect:
+  en: b70f0604f4a70ef9
+  zh: e369c6a42092f9c4
+/astro-one-plugin-recommendations/model-experience/official-plugin-recommendations/kv-cache-effect:
+  en: ea58129ff5772f22
+  zh: a3adf188f846be25
+/astro-one-plugin-recommendations/known-limitations-and-deferred-work:
+  en: fc3171d0573a897f
+  zh: 7acf5dc1c3ecbe41
+/astro-one-plugin-recommendations/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

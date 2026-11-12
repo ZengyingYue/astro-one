@@ -1,0 +1,74 @@
+{
+  "name": "@astro-one/tool-pwsh",
+  "description": "Model-facing pwsh tool over the bash executor seam",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/shell/tool-pwsh"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/jobs": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/shell": "workspace:*",
+    "@astro-one/shell-env": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/user-approval": "workspace:*",
+    "@astro-one/working-directory": "workspace:*"
+  },
+  "dependencies": {
+    "@astro-one/schemastery": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-loop": "workspace:*",
+    "@astro-one/agent-loop-testkit": "workspace:*",
+    "@astro-one/app-boot": "workspace:*",
+    "@astro-one/jobs": "workspace:*",
+    "@astro-one/jobs-local": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/loader-smoke": "workspace:*",
+    "@astro-one/pwsh-local": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/shell": "workspace:*",
+    "@astro-one/shell-env": "workspace:*",
+    "@astro-one/subprocess-local": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/tool-executor-native": "workspace:*",
+    "@astro-one/tool-jobs": "workspace:*",
+    "@astro-one/tool-testkit": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/user-approval": "workspace:*",
+    "@astro-one/working-directory": "workspace:*",
+    "@astro-one/fs-local": "workspace:*"
+  }
+}

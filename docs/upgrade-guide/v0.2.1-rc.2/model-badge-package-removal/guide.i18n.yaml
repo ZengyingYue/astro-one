@@ -1,0 +1,16 @@
+# Bilingual-pair consistency record for guide.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/upgrade-guide/v0.2.1-rc.2/model-badge-package-removal/guide.md
+/:
+  en: e3db78299cefc568
+  zh: 0c1892abef438638
+/the-ui-deepseek-model-label-1017-package-is-removed:
+  en: c2047007f4881bf7
+  zh: cb30884a12238135
+/the-ui-deepseek-model-label-1017-package-is-removed/change:
+  en: 71c54f83d035871d
+  zh: dcfd598f250770a9
+/the-ui-deepseek-model-label-1017-package-is-removed/migration:
+  en: b4f10532c1807ba1
+  zh: 777d5e1a9e2a1275

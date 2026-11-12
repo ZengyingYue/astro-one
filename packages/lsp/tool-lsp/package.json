@@ -1,0 +1,62 @@
+{
+  "name": "@astro-one/tool-lsp",
+  "description": "Model-facing lsp tool over the Astro One LSP capability seam (ctx.lsp) \u2014 one read-only tool with goToDefinition/findReferences/goToImplementation/hover operations, one-based UTF-16 cursor coordinates, bounded location rendering, and hover normalization",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/lsp/tool-lsp"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/lsp": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/working-directory": "workspace:*"
+  },
+  "dependencies": {
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/schemastery": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/fs-local": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/lsp": "workspace:*",
+    "@astro-one/lsp-stdio": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/subprocess-local": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/tool-call-timeout-policy": "workspace:*",
+    "@astro-one/tool-executor-native": "workspace:*",
+    "@astro-one/tool-testkit": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/working-directory": "workspace:*",
+    "@astro-one/agent-loop-testkit": "workspace:*"
+  }
+}

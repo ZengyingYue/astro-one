@@ -1,0 +1,64 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/storage/storage-sqlite/README.md
+/:
+  en: 07adf973ef2924fb
+  zh: dbc6a9255d76b7e4
+/astro-one-storage-sqlite:
+  en: ba4bf57bc6d9b213
+  zh: e655915d50ddcc32
+/astro-one-storage-sqlite/summary:
+  en: 2c999657d4bd569b
+  zh: 14fe010ae2a97430
+/astro-one-storage-sqlite/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-storage-sqlite/use-this-package:
+  en: 98de508e10f22c1e
+  zh: 1e7d0cadc10cba8d
+/astro-one-storage-sqlite/use-this-package/when-to-choose-it:
+  en: f5b6290fe1e6929b
+  zh: dead924928ace851
+/astro-one-storage-sqlite/use-this-package/configuration:
+  en: b9a5adbe6490fd5d
+  zh: b7a0d2824086832f
+/astro-one-storage-sqlite/use-this-package/observable-behavior:
+  en: 45e2149351ca18dc
+  zh: cd0fa7d55b18e897
+/astro-one-storage-sqlite/understand-the-implementation:
+  en: 8f003bbcea33bf50
+  zh: c79bf8f71d345070
+/astro-one-storage-sqlite/understand-the-implementation/design-concept:
+  en: 46b7d90df396de82
+  zh: b59445936f921779
+/astro-one-storage-sqlite/understand-the-implementation/open-sequence:
+  en: 50d85e8d8e8b5bc1
+  zh: 2a7067bd7fb47b35
+/astro-one-storage-sqlite/understand-the-implementation/source-map:
+  en: 79780e581c765030
+  zh: fa2bb0eaf915aab6
+/astro-one-storage-sqlite/further-exploration:
+  en: f46258a50fff0165
+  zh: 380b46f3d39a2891
+/astro-one-storage-sqlite/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-storage-sqlite/model-experience/stored-domain-records:
+  en: c5d5ffaf6b114f3e
+  zh: 97db23b0b14ff1c0
+/astro-one-storage-sqlite/model-experience/stored-domain-records/what-the-model-sees:
+  en: d0798e9e30583b55
+  zh: 968f7f595b4bf1ff
+/astro-one-storage-sqlite/model-experience/stored-domain-records/token-effect:
+  en: 592ed887c69e5c46
+  zh: cb9be9de6e38db55
+/astro-one-storage-sqlite/model-experience/stored-domain-records/kv-cache-effect:
+  en: c13c59d13a5f1651
+  zh: 5aab838ae3ff5324
+/astro-one-storage-sqlite/known-limitations-and-deferred-work:
+  en: 528ca77480d5a868
+  zh: 36fa03755b1a14cf
+/astro-one-storage-sqlite/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

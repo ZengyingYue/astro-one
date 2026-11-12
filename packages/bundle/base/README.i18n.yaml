@@ -1,0 +1,58 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/bundle/base/README.md
+/:
+  en: 735e2d2345a68080
+  zh: 960fbc5dbd47a4bc
+/astro-one-base:
+  en: e82d9cefe9510785
+  zh: b8c13c42dc781feb
+/astro-one-base/summary:
+  en: bbd0123b0d1dc39d
+  zh: e9f589c1eacfa093
+/astro-one-base/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-base/use-this-package:
+  en: d56acb3b1aaa7ac0
+  zh: a9988c4c4fd052b1
+/astro-one-base/use-this-package/a-minimal-custom-profile:
+  en: 3e24a1b7c68519b2
+  zh: abe4d0e24b299388
+/astro-one-base/use-this-package/what-you-get:
+  en: 0b636c739b5b972d
+  zh: 0822521796979318
+/astro-one-base/use-this-package/shell-tools-per-platform:
+  en: 2dce12f82d6ee955
+  zh: d4599eb899a3cd88
+/astro-one-base/use-this-package/changing-the-defaults:
+  en: 96a55abd5f7007dd
+  zh: d94f020708c38a17
+/astro-one-base/understand-the-implementation:
+  en: 094cfca8e26a0042
+  zh: de435e3e38420c01
+/astro-one-base/understand-the-implementation/composition-mechanics:
+  en: fd37bc66e39ac5e7
+  zh: 1a039afb8bf2d517
+/astro-one-base/understand-the-implementation/platform-gating:
+  en: aad5572936cb062a
+  zh: 57c8a3f7acbd86cf
+/astro-one-base/understand-the-implementation/source-map:
+  en: a8efda71d444155e
+  zh: c8221593709fbb99
+/astro-one-base/further-exploration:
+  en: 0b9951eedaa4dd7e
+  zh: 410e94c4df7a7331
+/astro-one-base/model-experience:
+  en: f6c4d2609b5f4bb6
+  zh: 869a9565a133fb01
+/astro-one-base/model-experience/kv-cache-effect:
+  en: e6e907c99df7cd0a
+  zh: f19f2f84a5f95177
+/astro-one-base/known-limitations-and-deferred-work:
+  en: bc13036e9f722f19
+  zh: ac09c126fff1f0cd
+/astro-one-base/known-limitations-and-deferred-work/dev-note:
+  en: ca037cb236aa841a
+  zh: e06f3899be43b572

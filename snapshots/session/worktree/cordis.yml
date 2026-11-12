@@ -1,0 +1,5 @@
+- insert:
+    - id: worktree
+      name: '@astro-one/experimental-worktree'
+    - id: tool-worktree
+      name: '@astro-one/experimental-tool-worktree'

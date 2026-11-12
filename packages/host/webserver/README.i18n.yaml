@@ -1,0 +1,61 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/host/webserver/README.md
+/:
+  en: 7b0123143b731803
+  zh: 0ef8ad760107d8f6
+/astro-one-host-webserver:
+  en: 21dd291954efe8b8
+  zh: 6232e2054266bc5e
+/astro-one-host-webserver/summary:
+  en: 67314862f6d7f604
+  zh: 476bf059283e4779
+/astro-one-host-webserver/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-host-webserver/use-this-package:
+  en: 1998834973f7cf17
+  zh: 63455a2f75d090ad
+/astro-one-host-webserver/use-this-package/minimal-configuration:
+  en: eeb4865ed96338a5
+  zh: 08138a132e633e54
+/astro-one-host-webserver/use-this-package/serving-https:
+  en: 90352948bfdc1d99
+  zh: 35d148bf3bfcf76f
+/astro-one-host-webserver/use-this-package/registering-routes:
+  en: 55b5f5751c46e0ee
+  zh: 6c609104f0798e01
+/astro-one-host-webserver/use-this-package/the-fallback-seat:
+  en: 0407ad7e07cbfdc6
+  zh: 093a5d7eab197657
+/astro-one-host-webserver/use-this-package/behavior-under-failure:
+  en: 1bfff905b600f694
+  zh: 73f3b7704af686dc
+/astro-one-host-webserver/understand-the-implementation:
+  en: 42b15ac6321706aa
+  zh: 4ed0861911abaf5d
+/astro-one-host-webserver/understand-the-implementation/design-concept:
+  en: 88adbd5967b978d3
+  zh: b4fabfd6f5df1b71
+/astro-one-host-webserver/understand-the-implementation/matching-and-lifecycle:
+  en: 8589aba0cbaa1c76
+  zh: babf3b27b0cdb35e
+/astro-one-host-webserver/understand-the-implementation/source-map:
+  en: 4a0b809827d92cb3
+  zh: 609885ab34257ff1
+/astro-one-host-webserver/further-exploration:
+  en: 2a85e46fc3e50fa6
+  zh: 5bcdc9d7fa1a967e
+/astro-one-host-webserver/model-experience:
+  en: 38887e1f9117e7e5
+  zh: 6a6e1a002fac4624
+/astro-one-host-webserver/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/astro-one-host-webserver/known-limitations-and-deferred-work:
+  en: 03db56573562812f
+  zh: 3cb88f2f86540f0f
+/astro-one-host-webserver/known-limitations-and-deferred-work/dev-note:
+  en: 245b35764295ba1e
+  zh: a15b132b111bfef0

@@ -1,0 +1,52 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-chat/README.md
+/:
+  en: d88f75fc0178ba53
+  zh: 52bc7ae9551ab1cf
+/astro-one-client-ui-chat:
+  en: 3a3bf3abace4c3e5
+  zh: ae7f38063401fd90
+/astro-one-client-ui-chat/summary:
+  en: 4f2d50107db6c4f8
+  zh: ea7ccfcce8f1849e
+/astro-one-client-ui-chat/table-of-contents:
+  en: 41cd21266011d571
+  zh: 3172d1a2acbb27b7
+/astro-one-client-ui-chat/reference-previews:
+  en: 73a9b0a0b913470b
+  zh: a444f8a00ce80926
+/astro-one-client-ui-chat/hidden-chat-rows:
+  en: 91b7c7a5263eda35
+  zh: 16d39b45edee038f
+/astro-one-client-ui-chat/command-and-failure-rows:
+  en: cc70b3f15ee553c4
+  zh: 428a495e5f1c7d44
+/astro-one-client-ui-chat/turn-token-usage:
+  en: 141d509af12f92ce
+  zh: 0e2e68623790a7ae
+/astro-one-client-ui-chat/completed-turn-footer:
+  en: 382821ca3ffa60dd
+  zh: 9840ffa07c13082a
+/astro-one-client-ui-chat/turn-process-folding:
+  en: 5ce77e659d3870c1
+  zh: 94a554ac64551da6
+/astro-one-client-ui-chat/grouped-rendering:
+  en: c9f15bef031a0104
+  zh: dafed2e7e50be72c
+/astro-one-client-ui-chat/scroll-ownership:
+  en: e376ba72e9ef9dfd
+  zh: 3eeba26631748eb7
+/astro-one-client-ui-chat/model-experience:
+  en: c17b4dd43a61c569
+  zh: f7414309810c3a08
+/astro-one-client-ui-chat/model-experience/kv-cache-effect:
+  en: 15a7151ff9268f15
+  zh: 6eae68c718be579b
+/astro-one-client-ui-chat/known-limitations-and-deferred-work:
+  en: f3ac35a1613de9fe
+  zh: 51e2505b40a0659e
+/astro-one-client-ui-chat/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

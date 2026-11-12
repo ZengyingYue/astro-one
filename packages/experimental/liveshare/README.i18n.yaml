@@ -1,0 +1,52 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/liveshare/README.md
+/:
+  en: 3b6746ea8a915cb3
+  zh: c4ec7d5cf3cd89f4
+/astro-one-experimental-liveshare:
+  en: 79addae40d58a1c3
+  zh: cac9b8fbfebf2830
+/astro-one-experimental-liveshare/summary:
+  en: 4e1463bacbd0cacb
+  zh: 9026edc661e394d3
+/astro-one-experimental-liveshare/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 405b30feaf48c087
+/astro-one-experimental-liveshare/use-this-package:
+  en: bbff250eba0f1b89
+  zh: 0a618f05cc88ee2b
+/astro-one-experimental-liveshare/use-this-package/profile-and-build-requirements:
+  en: b1caee3fb826ccec
+  zh: bb422095b970db02
+/astro-one-experimental-liveshare/use-this-package/default-visibility-and-enabling:
+  en: e6d4b58c1548f447
+  zh: 0ed8645c5acea03b
+/astro-one-experimental-liveshare/use-this-package/owner-configuration:
+  en: 958c26507c82d49b
+  zh: 1245a95a686ad3f7
+/astro-one-experimental-liveshare/use-this-package/sign-in-and-manage-shares:
+  en: a23d0162e0efa6a4
+  zh: 0d01659cfeb94640
+/astro-one-experimental-liveshare/use-this-package/session-tiers:
+  en: b21b64696f9ae925
+  zh: 324530a1ba6b91cf
+/astro-one-experimental-liveshare/understand-the-implementation:
+  en: 9da7f0f37d88e3e5
+  zh: e05168e41d2cc807
+/astro-one-experimental-liveshare/further-exploration:
+  en: ac75692fa541ddd3
+  zh: a5d12dd8647e48ac
+/astro-one-experimental-liveshare/model-experience:
+  en: 3b248c02220df02d
+  zh: 9d752fb049a04e83
+/astro-one-experimental-liveshare/model-experience/kv-cache-effect:
+  en: 22a9da7d4b23a015
+  zh: 5700901ba5f655c8
+/astro-one-experimental-liveshare/known-limitations-and-deferred-work:
+  en: 805f47eb67eefa6a
+  zh: 5a35ac4de1982afe
+/astro-one-experimental-liveshare/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

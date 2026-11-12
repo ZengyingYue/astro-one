@@ -1,0 +1,60 @@
+{
+  "name": "@astro-one/webhook-github",
+  "description": "Signed GitHub HTTP webhook adapter for the Astro One webhook runtime",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/webhook-github"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./src/*": "./src/*",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json",
+    "./examples/*": "./examples/*"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "examples/github-review/cordis.yml",
+    "examples/github-review/github-ready-review-rule.mjs",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/credentials": "workspace:*",
+    "@astro-one/host-webserver": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/webhook": "workspace:*"
+  },
+  "dependencies": {
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
+    "@octokit/webhooks": "^14.2.0"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/credentials": "workspace:*",
+    "@astro-one/host-webserver": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/webhook": "workspace:*"
+  }
+}

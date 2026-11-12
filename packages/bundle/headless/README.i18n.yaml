@@ -1,0 +1,73 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/bundle/headless/README.md
+/:
+  en: 21e89aebe69095a0
+  zh: c80ddcbfe5b4a879
+/astro-one-headless:
+  en: 4b7a2c3821d5077a
+  zh: b8a1f02e067ff404
+/astro-one-headless/summary:
+  en: bc4421fb06e09e74
+  zh: 2d5a9ab73a18c96e
+/astro-one-headless/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-headless/use-this-package:
+  en: 4447012f4c84100d
+  zh: faf579ae9f04c096
+/astro-one-headless/use-this-package/running-a-one-shot-task:
+  en: 029d3c9336314d99
+  zh: 1319354279aa7224
+/astro-one-headless/use-this-package/credentials:
+  en: 30fa49fff7de47b0
+  zh: 26fc31dbce00483f
+/astro-one-headless/use-this-package/choosing-the-session-identity:
+  en: 85120c2d6db2cac4
+  zh: bac532df6c84e755
+/astro-one-headless/use-this-package/supervising-implementation-tasks:
+  en: ff1319be1f53bd66
+  zh: 04a27078ce89091d
+/astro-one-headless/use-this-package/experimental-auto-review:
+  en: 21094fe79e49a5c3
+  zh: 3a14b958130f3950
+/astro-one-headless/use-this-package/machine-readable-output:
+  en: 9a2e847480a19a8a
+  zh: 5d685d425081be88
+/astro-one-headless/use-this-package/when-to-use-it:
+  en: 33414a6fa8eef261
+  zh: 571aac606d306da9
+/astro-one-headless/use-this-package/help-and-task-errors:
+  en: 94c1fe764e3b62ca
+  zh: 89f4c863803246d8
+/astro-one-headless/understand-the-implementation:
+  en: be1b73a6d0ee3902
+  zh: bdba099685d68b27
+/astro-one-headless/understand-the-implementation/run-flow:
+  en: 3b3d2e7bc4a36616
+  zh: 5ef248369858895c
+/astro-one-headless/understand-the-implementation/patch-surface-over-base:
+  en: ef79e338e318ea9c
+  zh: d77d2b5fc6c0ea16
+/astro-one-headless/understand-the-implementation/exit-mapping:
+  en: ac6b6467db9be250
+  zh: 5395f6104d137539
+/astro-one-headless/understand-the-implementation/source-map:
+  en: 98a98f01f11d8700
+  zh: a0ff93ad13b33876
+/astro-one-headless/further-exploration:
+  en: 3bc7c7cb999e7fbf
+  zh: 60370c5fc76b4d0d
+/astro-one-headless/model-experience:
+  en: c5a0991833f64dd7
+  zh: 46f9feb255778f11
+/astro-one-headless/model-experience/kv-cache-effect:
+  en: 0b0f74b412c7c6d8
+  zh: 6e8f918d0c4bf342
+/astro-one-headless/known-limitations-and-deferred-work:
+  en: b4bd3fbf8ba4b3d7
+  zh: f8a937c1eadeac1d
+/astro-one-headless/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

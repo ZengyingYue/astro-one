@@ -1,0 +1,84 @@
+{
+  "name": "@astro-one/experimental-inspector",
+  "description": "Experimental cross-realm CDP hub for Host debugging and Client Runtime inspection",
+  "version": "0.2.2-alpha.3",
+  "icon": "./icon.svg",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/inspector"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./locale/*.json": "./locale/*.json",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "astroOne": {
+    "client": {
+      "inject": [],
+      "platform": "web",
+      "immediately": true
+    }
+  },
+  "files": [
+    "icon.svg",
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/client.*.js",
+    "lib/worker.js",
+    "lib/devtools/**",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@astro-one/app-boot": "workspace:*",
+    "@astro-one/util-crypto": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
+    "open": "^11.0.2",
+    "serve-static": "^2.2.1",
+    "ws": "^8.21.3"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "chrome-devtools-frontend": "1.0.1638082",
+    "@types/serve-static": "^2.2.0",
+    "@astro-one/client-test-runtime": "workspace:*",
+    "@testing-library/react": "^16.3.3",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-layout": "workspace:*",
+    "@astro-one/client-shortcuts": "workspace:*",
+    "@astro-one/client-store": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "react": "^18.2.0",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/host-webserver": "workspace:*",
+    "@astro-one/cmdline": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@types/ws": "^8.18.1",
+    "playwright": "^1.49.0",
+    "tsx": "^4.23.13",
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/client-modules": "workspace:*"
+  }
+}

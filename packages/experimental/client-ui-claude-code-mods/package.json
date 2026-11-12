@@ -1,0 +1,73 @@
+{
+  "name": "@astro-one/experimental-client-ui-claude-code-mods",
+  "description": "Web band above the prompt for Claude Code mods: draws each session's mod tree and sends button presses back to the bridge",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/client-ui-claude-code-mods"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./src/*": "./src/*",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "astroOne": {
+    "client": {
+      "inject": [
+        "@astro-one/api-remotes",
+        "@astro-one/api-session-controller",
+        "@astro-one/client-locale",
+        "@astro-one/client-ui-conversation",
+        "@astro-one/client-ui-primitives"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/api-remotes": "workspace:*",
+    "@astro-one/api-session-controller": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/client-test-runtime": "workspace:*",
+    "@astro-one/client-ui-conversation": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-session": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
+    "@astro-one/experimental-claude-code-mods": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@testing-library/react": "^16.3.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

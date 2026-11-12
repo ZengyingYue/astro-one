@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Remote Sensing Tools",
+    "description": "Spectral indices, change detection, and ONNX oriented-object detection for satellite imagery."
+  }
+}

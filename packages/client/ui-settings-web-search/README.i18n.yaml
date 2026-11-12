@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-settings-web-search/README.md
+/:
+  en: e6358d73c3792c39
+  zh: 0c69db322c8d74a2
+/astro-one-client-ui-settings-web-search:
+  en: a249cbb9f62fe069
+  zh: 6899145d208522f7
+/astro-one-client-ui-settings-web-search/summary:
+  en: 93af84c75a57345b
+  zh: 67836fe89e423a52
+/astro-one-client-ui-settings-web-search/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-client-ui-settings-web-search/use-this-package:
+  en: 8fe7a57538060a0c
+  zh: f39feff64d70bb5e
+/astro-one-client-ui-settings-web-search/understand-the-implementation:
+  en: 078184ee0b31389a
+  zh: 8d74eb3b687a2d6f
+/astro-one-client-ui-settings-web-search/further-exploration:
+  en: 1868a5ae01f84650
+  zh: 1ca3b10b0bfe5999
+/astro-one-client-ui-settings-web-search/model-experience:
+  en: 6b7c6f82ab6c8435
+  zh: 4517689c899abcbe
+/astro-one-client-ui-settings-web-search/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: 6e1c9a8fdde89577
+/astro-one-client-ui-settings-web-search/known-limitations-and-deferred-work:
+  en: 42c0c45310c7a115
+  zh: 2d917f3e0920c4ac
+/astro-one-client-ui-settings-web-search/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/api/terminal-controller/README.md
+/:
+  en: 6a19f6d3fdfe0db2
+  zh: a361afe6b8cd3010
+/astro-one-api-terminal-controller:
+  en: 9ee4640e6bb521ac
+  zh: 7eb9b41554da86b0
+/astro-one-api-terminal-controller/summary:
+  en: afcf6f0d2f899ecc
+  zh: e38e2c0830e42ac9
+/astro-one-api-terminal-controller/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 1fa9a72d1ee045cc
+/astro-one-api-terminal-controller/use-this-package:
+  en: f37242def4811e99
+  zh: 3e13f8f48e0f4576
+/astro-one-api-terminal-controller/understand-the-implementation:
+  en: b88f969ac48fc893
+  zh: 37e6ce4d592eb64b
+/astro-one-api-terminal-controller/further-exploration:
+  en: db1335e6f1625c6d
+  zh: 8c2964aa054df288
+/astro-one-api-terminal-controller/model-experience:
+  en: e580791e1cb1a3d7
+  zh: bc88cdb8802958a2
+/astro-one-api-terminal-controller/model-experience/kv-cache-effect:
+  en: be6f8e99d307c7ac
+  zh: 7dd4dcc0429e766c
+/astro-one-api-terminal-controller/known-limitations-and-deferred-work:
+  en: 40709eca6776d808
+  zh: 7a6c5e801d04a594
+/astro-one-api-terminal-controller/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 7aeea62eda52b83b

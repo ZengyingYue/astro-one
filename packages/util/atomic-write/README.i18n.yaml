@@ -1,0 +1,55 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/util/atomic-write/README.md
+/:
+  en: 1065a4fcafd0430d
+  zh: 40bc911b6d01288b
+/astro-one-atomic-write:
+  en: c880e514feaf409f
+  zh: 3eefe63e89b787c4
+/astro-one-atomic-write/summary:
+  en: a8618d7548cff565
+  zh: 630228ebc9a5cfea
+/astro-one-atomic-write/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-atomic-write/use-this-package:
+  en: 30fbc2c61904195d
+  zh: 09c2ac3f44aa3f08
+/astro-one-atomic-write/use-this-package/writing-a-file-atomically:
+  en: 7b757dc3c3b27335
+  zh: a097d90a2561475d
+/astro-one-atomic-write/use-this-package/coordinating-writers:
+  en: 77c865c1f78d2a0c
+  zh: 5a91874c352c6f18
+/astro-one-atomic-write/use-this-package/failures-to-plan-for:
+  en: a8292aa69d7f909c
+  zh: 60d8403fa6e04d17
+/astro-one-atomic-write/understand-the-implementation:
+  en: 93b537308f7c88c7
+  zh: 282e0d2042aeb1be
+/astro-one-atomic-write/understand-the-implementation/source-map:
+  en: aee5320dc8746377
+  zh: f35dbbf350f7b5cf
+/astro-one-atomic-write/understand-the-implementation/write-path:
+  en: 2a1df7eba4767071
+  zh: 9faa1d3799236102
+/astro-one-atomic-write/understand-the-implementation/why-the-swap-stays-safe:
+  en: 784e985c1fb3a25e
+  zh: 4afda1b9bf5f29cc
+/astro-one-atomic-write/further-exploration:
+  en: ea79343428e06a2d
+  zh: 3cb2f8f407b71082
+/astro-one-atomic-write/model-experience:
+  en: 225fc1d94a284905
+  zh: 7319a43c3b8a884d
+/astro-one-atomic-write/model-experience/kv-cache-effect:
+  en: 815e93723a98919c
+  zh: 921da870f67e4033
+/astro-one-atomic-write/known-limitations-and-deferred-work:
+  en: fa413fe1ee23e01f
+  zh: 8563b57f91ea194b
+/astro-one-atomic-write/known-limitations-and-deferred-work/dev-note:
+  en: d3461ceeaf041974
+  zh: f59df2adbf52fed9

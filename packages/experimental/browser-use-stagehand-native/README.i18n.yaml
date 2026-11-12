@@ -1,0 +1,67 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/browser-use-stagehand-native/README.md
+/:
+  en: 3f9127c3981e9453
+  zh: b4fcc1468319b9b2
+/astro-one-experimental-browser-use-stagehand-native:
+  en: a1fe22ba05d30f12
+  zh: 01e6b86de2331f42
+/astro-one-experimental-browser-use-stagehand-native/summary:
+  en: 05c2fd0d2d2856a0
+  zh: fd90ef7fce885498
+/astro-one-experimental-browser-use-stagehand-native/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: a949126695843224
+/astro-one-experimental-browser-use-stagehand-native/use-this-package:
+  en: de47f71ab56fd0ed
+  zh: fdc58f273a7dba3d
+/astro-one-experimental-browser-use-stagehand-native/use-this-package/minimal-configuration:
+  en: 1554d55fd5be9735
+  zh: d39e7dd0b8ff1b7d
+/astro-one-experimental-browser-use-stagehand-native/use-this-package/verification:
+  en: 663464233616c7f8
+  zh: 629109232c46749d
+/astro-one-experimental-browser-use-stagehand-native/understand-the-implementation:
+  en: 9b41e3fd14d27d66
+  zh: 6e130c93a9053ddc
+/astro-one-experimental-browser-use-stagehand-native/further-exploration:
+  en: f97f9e1602652377
+  zh: 04d4d767dc95b6b0
+/astro-one-experimental-browser-use-stagehand-native/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-experimental-browser-use-stagehand-native/model-experience/browser-guidance:
+  en: db27706a7478c425
+  zh: d36d746cf60e56c4
+/astro-one-experimental-browser-use-stagehand-native/model-experience/browser-guidance/what-the-model-sees:
+  en: c76eeb849a7dcc9d
+  zh: 466f6573ee758f66
+/astro-one-experimental-browser-use-stagehand-native/model-experience/browser-guidance/what-the-model-sees/browser-guidance-text:
+  en: d618f1a8fcd2f9b4
+  zh: a2c8620646573b9f
+/astro-one-experimental-browser-use-stagehand-native/model-experience/browser-guidance/token-effect:
+  en: 54fb52d906a0ed1d
+  zh: 0c92cb1daf790ce9
+/astro-one-experimental-browser-use-stagehand-native/model-experience/browser-guidance/kv-cache-effect:
+  en: 8b85590b83e40fc0
+  zh: 9061599a76700e66
+/astro-one-experimental-browser-use-stagehand-native/model-experience/native-browser-tools-and-results:
+  en: 0295a32030d24cd0
+  zh: 65ef3d8920d811c2
+/astro-one-experimental-browser-use-stagehand-native/model-experience/native-browser-tools-and-results/what-the-model-sees:
+  en: 998c3b431ebce092
+  zh: ef50e53f1213453b
+/astro-one-experimental-browser-use-stagehand-native/model-experience/native-browser-tools-and-results/token-effect:
+  en: 5c95dfc009da5fe5
+  zh: 28277bc02ff0842f
+/astro-one-experimental-browser-use-stagehand-native/model-experience/native-browser-tools-and-results/kv-cache-effect:
+  en: 2bd36c8da753a1e5
+  zh: 172e2151f7c7b0cd
+/astro-one-experimental-browser-use-stagehand-native/known-limitations-and-deferred-work:
+  en: 527b0514c67e5cb3
+  zh: c299b5646977ae39
+/astro-one-experimental-browser-use-stagehand-native/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

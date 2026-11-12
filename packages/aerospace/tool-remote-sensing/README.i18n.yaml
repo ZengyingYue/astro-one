@@ -1,0 +1,76 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/aerospace/tool-remote-sensing/README.md
+/:
+  en: 3a99d5540a26ee6f
+  zh: f57f33275c99988b
+/astro-one-tool-remote-sensing:
+  en: cc80825e14a8ed54
+  zh: 7e20fe4d34f40075
+/astro-one-tool-remote-sensing/summary:
+  en: eebb90cc2c913a7d
+  zh: 2ea23c1387ac6447
+/astro-one-tool-remote-sensing/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-tool-remote-sensing/use-this-package:
+  en: 43becad04ec1d7d9
+  zh: 8157eb0e3252daab
+/astro-one-tool-remote-sensing/use-this-package/when-to-choose-it:
+  en: 30d58cec7f37e7a3
+  zh: 39104f6e5a7ade26
+/astro-one-tool-remote-sensing/use-this-package/minimal-configuration:
+  en: 25df7d09ff60a0ff
+  zh: e22cbf40d1ed2cbd
+/astro-one-tool-remote-sensing/use-this-package/enable-object-detection:
+  en: 586d041271c973e8
+  zh: d3e6c923a96a43ef
+/astro-one-tool-remote-sensing/use-this-package/tools:
+  en: 72ee1234c12b966a
+  zh: e5bbfa1985c64fca
+/astro-one-tool-remote-sensing/use-this-package/failures-and-recovery:
+  en: 10ebf1e2df6b64d4
+  zh: 57151c6a20c14375
+/astro-one-tool-remote-sensing/understand-the-implementation:
+  en: f0d889b3d85a760f
+  zh: e2b71099bd201710
+/astro-one-tool-remote-sensing/understand-the-implementation/source-map:
+  en: 248e7f39574483cb
+  zh: 71103d96f80d9504
+/astro-one-tool-remote-sensing/further-exploration:
+  en: 01abe470c027f0e4
+  zh: 734bffdd6667df42
+/astro-one-tool-remote-sensing/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-tool-remote-sensing/model-experience/tool-schemas:
+  en: 3039bc5e7a796b21
+  zh: 6b7a9eaf69c9ea53
+/astro-one-tool-remote-sensing/model-experience/tool-schemas/what-the-model-sees:
+  en: c9aeb9050e999ab0
+  zh: ccab90c57b29d602
+/astro-one-tool-remote-sensing/model-experience/tool-schemas/token-effect:
+  en: a45b5f482fd3bee3
+  zh: e83ffaa64c945d40
+/astro-one-tool-remote-sensing/model-experience/tool-schemas/kv-cache-effect:
+  en: 0e5a296e5cce3f6c
+  zh: 28dfd002120ab2e2
+/astro-one-tool-remote-sensing/model-experience/analysis-and-detection-results:
+  en: 6be79033cc0e1dcc
+  zh: f10e177f0527de6d
+/astro-one-tool-remote-sensing/model-experience/analysis-and-detection-results/what-the-model-sees:
+  en: 6ec14c7b03998b5a
+  zh: 8a32966f1cae105e
+/astro-one-tool-remote-sensing/model-experience/analysis-and-detection-results/token-effect:
+  en: ee3e4ca9e53ab21b
+  zh: ad8d1f8569854a83
+/astro-one-tool-remote-sensing/model-experience/analysis-and-detection-results/kv-cache-effect:
+  en: f5d5f97a153f7c70
+  zh: e51236a78b8b4ac4
+/astro-one-tool-remote-sensing/known-limitations-and-deferred-work:
+  en: 2575b8a0876619f1
+  zh: e684f5ae919a75f0
+/astro-one-tool-remote-sensing/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

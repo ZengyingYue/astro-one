@@ -1,0 +1,8 @@
+version: 1
+scenario: subagent-astro-one-sdk-diagnostic
+profile: sdk
+composition: sdk-astro-one-sdk-diagnostic
+recording: live
+header:
+  class: sdk-astro-one-sdk-diagnostic
+  pin: true

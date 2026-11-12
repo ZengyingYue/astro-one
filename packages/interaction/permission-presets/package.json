@@ -1,0 +1,82 @@
+{
+  "name": "@astro-one/permission-presets",
+  "description": "User-facing permission presets (ctx.permissionPresets) for the Astro One: one product-level Permissions select bundling the sandbox-mode and approval-policy knobs, written through to their own session events",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/interaction/permission-presets"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./client": {
+      "types": "./lib/types/client.d.ts",
+      "default": "./lib/types/client.js"
+    },
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/shell": "workspace:*",
+    "@astro-one/commands": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/user-approval": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
+  },
+  "dependencies": {
+    "@astro-one/schemastery": "workspace:~",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/shell": "workspace:*",
+    "@astro-one/commands": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/user-approval": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/settings": "workspace:*",
+    "@astro-one/agent-loop-testkit": "workspace:*"
+  }
+}

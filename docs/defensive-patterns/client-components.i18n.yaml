@@ -1,0 +1,46 @@
+# Bilingual-pair consistency record for client-components.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/defensive-patterns/client-components.md
+/client-component-rules:
+  en: 4abde96c961cb989
+  zh: 675e6088d6018daa
+/client-component-rules/state-arrives-through-injection:
+  en: 375ce9d3646efe97
+  zh: 8a65b3ad4d6f1953
+/client-component-rules/props-carry-data-and-callbacks-not-react-nodes:
+  en: a3ce5ac67761beb3
+  zh: 4bfe765dd7510bdf
+/client-component-rules/a-slot-registration-is-a-stable-function-component:
+  en: 784d3a4bba02f8a4
+  zh: 0ccfcc1a504b135c
+/client-component-rules/components-never-receive-a-cordis-context:
+  en: 8bb102b178615c03
+  zh: 93cb177a578a1373
+/client-component-rules/context-comes-from-the-current-scope:
+  en: 652ec94d13ee51c9
+  zh: b47c39e96c53cfac
+/client-component-rules/resource-consumers-go-through-useresource:
+  en: 692313649515a259
+  zh: c7694aaec8e61910
+/client-component-rules/store-usage-is-narrow-and-explicit:
+  en: 49a4117fac5806da
+  zh: cc9451dd913ea111
+/client-component-rules/identity-and-initial-state-are-deliberate:
+  en: a34c30b8f7c415d4
+  zh: cbd0c0cf0c0db57c
+/client-component-rules/uselayouteffect-is-not-a-default:
+  en: f53f17846a8a89b2
+  zh: 94d205c4d85f1de9
+/client-component-rules/effects-never-push-render-derived-data-to-a-parent:
+  en: 580441bd6cce9ee9
+  zh: a5f093d8e7dec2ee
+/client-component-rules/build-and-style-follow-their-owners:
+  en: dd4e36d2ee324cf5
+  zh: 98107be3ef3cb85e
+/client-component-rules/a-key-states-what-it-identifies:
+  en: 1d6f9bdc2b267fef
+  zh: cf4d579ca877c422
+/client-component-rules/each-shared-layer-keeps-its-own-isolation-level:
+  en: 3faec81a6a7c9fdd
+  zh: aa512c089b5f9afc

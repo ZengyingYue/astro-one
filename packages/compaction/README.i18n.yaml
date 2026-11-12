@@ -1,0 +1,25 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/compaction/README.md
+/:
+  en: 4fe8f6f7b09339c1
+  zh: d138739147e506ef
+/compaction-compaction-capability-family:
+  en: 95ec0d3f1815e8d0
+  zh: ee8082e558d73fdc
+/compaction-compaction-capability-family/summary:
+  en: 107e112426bbf67e
+  zh: 99d50b78b41df7ce
+/compaction-compaction-capability-family/table-of-contents:
+  en: 1eb35b015a6c423f
+  zh: a8a3dceee2c9e943
+/compaction-compaction-capability-family/packages:
+  en: 2720a9d0c23e2c3e
+  zh: 5580735334aee74d
+/compaction-compaction-capability-family/related-documentation:
+  en: e95cae3049cb524b
+  zh: 09c091d27c45fec0
+/compaction-compaction-capability-family/dev-note:
+  en: 5de1d6304e00c58f
+  zh: 8d8225361cfa29e5

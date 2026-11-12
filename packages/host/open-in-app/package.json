@@ -1,0 +1,54 @@
+{
+  "name": "@astro-one/host-open-in-app",
+  "description": "Host half of open-in-app: resolved application catalog, icons, and the launch endpoint as three webServer routes",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/host/open-in-app"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./shared": {
+      "types": "./lib/types/shared.d.ts",
+      "default": "./lib/types/shared.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@astro-one/launch-environment": "workspace:*",
+    "@astro-one/native-command": "workspace:*",
+    "@astro-one/subprocess": "workspace:*",
+    "@astro-one/schemastery": "workspace:~"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/host-webserver": "workspace:*"
+  }
+}

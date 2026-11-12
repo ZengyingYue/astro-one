@@ -1,0 +1,70 @@
+{
+  "name": "@astro-one/experimental-translator",
+  "description": "Machine translation with reusable Session results",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/translator"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@astro-one/schemastery": "workspace:~"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-persistence": "workspace:*",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/credentials": "workspace:*",
+    "@astro-one/launch-environment": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/app-boot": "workspace:*",
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-persistence": "workspace:*",
+    "@astro-one/session-persistence-jsonl": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/credentials": "workspace:*",
+    "@astro-one/launch-environment": "workspace:*",
+    "@astro-one/llm-deepseek": "workspace:*",
+    "@astro-one/llm-deepseek-api-key": "workspace:*",
+    "@astro-one/llm-deepseek-account": "workspace:*",
+    "@astro-one/deepseek-account": "workspace:*",
+    "@astro-one/deepseek-llm-api-extensions": "workspace:*",
+    "@astro-one/session-log-deepseek": "workspace:*",
+    "@astro-one/session-query-sqlite": "workspace:*"
+  }
+}

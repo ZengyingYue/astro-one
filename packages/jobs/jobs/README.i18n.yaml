@@ -1,0 +1,61 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/jobs/jobs/README.md
+/:
+  en: 4055a3bc920e4ac2
+  zh: 3bc99f3b5bc2fd71
+/astro-one-jobs:
+  en: 22593a1f3a2208fb
+  zh: 799a7f2b626394ed
+/astro-one-jobs/summary:
+  en: 74b5128169cdc254
+  zh: c6daf49ed42c81c6
+/astro-one-jobs/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-jobs/use-this-package:
+  en: 96a9086952bd2c28
+  zh: 525eb56fdb3bfd90
+/astro-one-jobs/use-this-package/what-a-background-job-gives-you:
+  en: 7471ed16f48eef41
+  zh: 8822a045a4e6cf7e
+/astro-one-jobs/use-this-package/the-ownership-boundary:
+  en: 167ab1eab8fad704
+  zh: 7da554826fb483c1
+/astro-one-jobs/use-this-package/starting-background-work-needs-a-controller:
+  en: 59b0e346c898a0e2
+  zh: 41a7761e447e5a8d
+/astro-one-jobs/use-this-package/smallest-working-composition:
+  en: e7bcac875322e074
+  zh: 45ddc584264f3f45
+/astro-one-jobs/use-this-package/what-can-go-wrong:
+  en: fcfee3f72ea703ac
+  zh: 80299901bd44783b
+/astro-one-jobs/understand-the-implementation:
+  en: 7e13d669ecc96d59
+  zh: b5fe7ae65812d926
+/astro-one-jobs/understand-the-implementation/design-philosophy:
+  en: f5cf4af6f4549662
+  zh: 06f266c6f67e7419
+/astro-one-jobs/understand-the-implementation/source-map:
+  en: c9a58b4340999ae4
+  zh: ef68a0b71a06d183
+/astro-one-jobs/understand-the-implementation/service-operations:
+  en: 2dafff61cae70e71
+  zh: 987f3f5ebbe03714
+/astro-one-jobs/further-exploration:
+  en: f969d0824e9879ed
+  zh: 43ba7a831b3b60fc
+/astro-one-jobs/model-experience:
+  en: efb58cac0fc08163
+  zh: 838791f77fd79917
+/astro-one-jobs/model-experience/kv-cache-effect:
+  en: e290ccc9b3c92c08
+  zh: d75d48f485447a74
+/astro-one-jobs/known-limitations-and-deferred-work:
+  en: bf4e5e0bd25d579e
+  zh: ed995c02012f0c72
+/astro-one-jobs/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

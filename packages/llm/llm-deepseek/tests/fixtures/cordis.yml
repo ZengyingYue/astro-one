@@ -1,0 +1,25 @@
+- name: '@astro-one/llm'
+- name: '@astro-one/session'
+- name: '@astro-one/session-projection'
+- name: '@astro-one/system-prompt'
+- name: '@astro-one/tools'
+- name: '@astro-one/tool-executor-native'
+- name: '@astro-one/agent'
+- name: '@astro-one/agent-loop'
+  config:
+    agents: []
+- name: '@astro-one/credentials-local'
+  config:
+    path: {{credentials}}
+    watch: false
+- name: '@astro-one/llm-deepseek-api-key'
+  config:
+    apiKeyEnv: DEEPSEEK_API_KEY
+    baseURL: {{endpoint}}
+    thinking: enabled
+    reasoningEffort: high
+    maxTokens: 256000
+    streamIdleTimeoutMs: 300000
+- name: '@astro-one/llm-deepseek-account'
+  config:
+    baseURL: {{endpoint}}

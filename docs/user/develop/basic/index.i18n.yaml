@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for index.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/user/develop/basic/index.md
+/your-first-plugin:
+  en: de46c20107f754f7
+  zh: 42a1cc87fbaddac0
+/your-first-plugin/create-a-local-project:
+  en: 2a9ff85da3a6ea8b
+  zh: 9ac5daf1dd3e3b95
+/your-first-plugin/what-is-a-plugin:
+  en: 0bca3ea987fecb61
+  zh: b4d398b887da6648
+/your-first-plugin/create-the-plugin-file:
+  en: 80e4e9f139d4773e
+  zh: c045d63ec04a2f3d
+/your-first-plugin/register-it-in-cordis-yml:
+  en: d82d029e78488eb3
+  zh: 7ef0c37452b7fda6
+/your-first-plugin/automatic-cleanup:
+  en: 0a1486714b9d67d7
+  zh: 544df97baa7a8c59
+/your-first-plugin/declare-dependencies:
+  en: da59e4c09e258f94
+  zh: 1b3ef70741eccb31
+/your-first-plugin/three-plugin-forms:
+  en: 155369321743b317
+  zh: e2e98be100be297b
+/your-first-plugin/three-plugin-forms/object-form:
+  en: d674c416f5b0fd14
+  zh: a2224f5fe6ceae73
+/your-first-plugin/three-plugin-forms/class-form:
+  en: 1fe7196d76beeb52
+  zh: 39d7e1139168fa3c
+/your-first-plugin/next-steps:
+  en: ac89a8c8dde6488e
+  zh: 050260cdde795d1e

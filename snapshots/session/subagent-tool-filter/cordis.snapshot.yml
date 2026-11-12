@@ -1,0 +1,87 @@
+# Replay patch shared by the ordinary headless snapshot composition. The model
+# script comes from the scenario's committed session JSONL.
+
+- id: llm-deepseek
+  name: '@astro-one/llm-deepseek-api-key'
+  disabled: true
+
+- id: plugin-package-inventory-deepseek
+  disabled: true
+
+- id: session-title-llm
+  disabled: true
+
+- id: session-persistence-jsonl
+  name: '@astro-one/session-persistence-jsonl'
+  config:
+    root: !!js astroOneHomePath('sessions')
+    compression: none
+
+- id: sandbox
+  name: '@astro-one/sandbox-local'
+  config:
+    runnerCommand:
+      - bash
+      - -c
+      - while [ "$1" != "--" ]; do shift; done; shift; exec "$@"
+      - passthrough-runner
+    runnerFailureSignatures:
+      - 'passthrough-runner: profile rejected'
+
+- insert:
+    - id: llm-replay
+      name: '@astro-one/llm-replay'
+      config:
+        providers:
+          - id: deepseek-official
+            name: DeepSeek
+            models:
+              - id: deepseek-v4-flash
+              - id: deepseek-v4-pro
+
+# The parent owns its file and web tools; the child selects a separate preset.
+- id: tool-fs
+  disabled: true
+
+- id: tool-fs-search
+  disabled: true
+
+- id: tool-web
+  disabled: true
+
+- insert:
+    - id: agent-preset-registry
+      name: '@astro-one/agent-preset-registry'
+      config:
+        default: parent
+    - id: preset-parent
+      name: '@astro-one/agent-preset'
+      config:
+        id: parent
+        plugins:
+          - name: '@astro-one/tool-fs'
+            config:
+              applyPatch: true
+          - name: '@astro-one/tool-fs-search'
+            config:
+              sampleOverCapGlobResults: false
+          - name: '@astro-one/tool-web'
+            config:
+              fetch: true
+              searchTimeoutMs: 60000
+    - id: preset-child
+      name: '@astro-one/agent-preset'
+      config:
+        id: child
+        plugins: []
+    - id: parent-agent-preset
+      name: '../../../packages/test-support/session-snapshot/tests/fixtures/parent-agent-preset.ts'
+
+- id: tool-subagent
+  name: '@astro-one/tool-subagent'
+  inject: [agentPresets]
+  config:
+    provider: spawn
+    toolName: subagent
+    maxDepth: 1
+    agentPreset: child

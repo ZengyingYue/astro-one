@@ -1,0 +1,70 @@
+{
+  "name": "@astro-one/acp",
+  "description": "Automation-only Agent Client Protocol server for driving Astro One agents over JSON-RPC stdio",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/acp/acp"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@agentclientprotocol/sdk": "1.4.0",
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/schemastery": "workspace:~"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/mcp-client": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-persistence": "workspace:*",
+    "@astro-one/token-meter": "workspace:*",
+    "@astro-one/user-approval": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@astro-one/token-meter": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-loop": "workspace:*",
+    "@astro-one/agent-loop-testkit": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/mcp-client": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-persistence": "workspace:*",
+    "@astro-one/session-persistence-jsonl": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/subagent": "workspace:*",
+    "@astro-one/token-meter": "workspace:*",
+    "@astro-one/tool-testkit": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/user-approval": "workspace:*"
+  }
+}

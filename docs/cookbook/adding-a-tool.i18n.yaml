@@ -1,0 +1,31 @@
+# Bilingual-pair consistency record for adding-a-tool.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/cookbook/adding-a-tool.md
+/tool-authoring-reference:
+  en: 1ef17963e7bf8502
+  zh: 8c8c4cd0de6d5d0f
+/tool-authoring-reference/the-minimal-shape:
+  en: 2cc80a2a79e23005
+  zh: 87e43383055890ce
+/tool-authoring-reference/rules-of-the-execute-contract:
+  en: 42163f245cf62a65
+  zh: e0c344bf8f56ad40
+/tool-authoring-reference/long-running-work:
+  en: 3a369cae5fbb43fb
+  zh: 1bd563a750af6cbf
+/tool-authoring-reference/execution-policy-and-observation:
+  en: 6ea988afa4962f67
+  zh: 1b81d4144be5c077
+/tool-authoring-reference/ptc-mode-reaches-your-tool-for-free:
+  en: 00247d24a6c29e9a
+  zh: 9bae086e767a2f34
+/tool-authoring-reference/how-your-tool-renders-in-a-ui:
+  en: 1b6edcbf76d55f03
+  zh: 576f1fd5be1da8aa
+/tool-authoring-reference/web-client-presentation:
+  en: 9fc678704e907e49
+  zh: c8c5c24e3874d12c
+/tool-authoring-reference/verification:
+  en: 7b39cf5d1e9f79a7
+  zh: a5cc7c3633a659c0

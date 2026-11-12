@@ -1,0 +1,16 @@
+# Bilingual-pair consistency record for computer-use.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/subsystems/computer-use.md
+/computer-use:
+  en: 1a8df63044808e0b
+  zh: 005d198014edf225
+/computer-use/choose-a-provider:
+  en: 44db67c1ec98c85a
+  zh: c453472b96ee1ca4
+/computer-use/lifetime-and-desktop-sharing:
+  en: 07ae97a615769fda
+  zh: 3752c46e14409635
+/computer-use/results-and-platform-requirements:
+  en: bb461be308013835
+  zh: 98ff5b372ede57db

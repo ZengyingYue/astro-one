@@ -1,0 +1,67 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/api/workspace-files/README.md
+/:
+  en: f83c75aa73ae21dd
+  zh: e8873aafd23a8038
+/astro-one-api-workspace-files:
+  en: 34c2b4cbeb7de0d4
+  zh: 378e32e9032ccf94
+/astro-one-api-workspace-files/summary:
+  en: 27c562441286bdbf
+  zh: 205dfac32c96873b
+/astro-one-api-workspace-files/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-api-workspace-files/use-this-package:
+  en: 6b314201c6edc238
+  zh: 2bc40ac097d70cb4
+/astro-one-api-workspace-files/use-this-package/addressing-and-paths:
+  en: b9565cfa7a1da451
+  zh: fc4078a58322fc7f
+/astro-one-api-workspace-files/use-this-package/pages:
+  en: 9cd68b8be3390c80
+  zh: 26049ce447f00452
+/astro-one-api-workspace-files/use-this-package/binary-reads:
+  en: 93ca9e832fbfd632
+  zh: 69412adba259c6f8
+/astro-one-api-workspace-files/use-this-package/file-read-and-directory-checks:
+  en: aa85c7754557a22f
+  zh: c576d06749fbe0a5
+/astro-one-api-workspace-files/use-this-package/the-change-feed:
+  en: 8bd2d820a512d461
+  zh: 0614ddd842ae7526
+/astro-one-api-workspace-files/use-this-package/configuration:
+  en: c96bfec8b9c4d2e8
+  zh: 35205beb3722b252
+/astro-one-api-workspace-files/use-this-package/failures:
+  en: c53d597c8f255e69
+  zh: 1e00318f9a34f3bb
+/astro-one-api-workspace-files/use-this-package/client-file-resources:
+  en: 4df49b82202ecd02
+  zh: e0b7d5ccb73dfc3f
+/astro-one-api-workspace-files/understand-the-implementation:
+  en: 42b15ac6321706aa
+  zh: ce1d25bffb6948cd
+/astro-one-api-workspace-files/understand-the-implementation/design-concept:
+  en: c3a8852c33dcc0e9
+  zh: d24fd47da7faaa29
+/astro-one-api-workspace-files/understand-the-implementation/source-map:
+  en: 596a75f43bfafda3
+  zh: 3cb267a0946cd75e
+/astro-one-api-workspace-files/further-exploration:
+  en: 825ea14d29de1b37
+  zh: 5e2ac5b599653e10
+/astro-one-api-workspace-files/model-experience:
+  en: 37b4264c8301323f
+  zh: 74ea89b3383ff7da
+/astro-one-api-workspace-files/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: 03126f3b1aac5859
+/astro-one-api-workspace-files/known-limitations-and-deferred-work:
+  en: bb54de7fce097006
+  zh: 61d40d61c1cb205f
+/astro-one-api-workspace-files/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

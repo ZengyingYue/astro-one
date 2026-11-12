@@ -1,0 +1,83 @@
+{
+  "name": "@astro-one/experimental-client-ui-voice-input",
+  "description": "Record speech and insert editable text into the conversation draft",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/client-ui-voice-input"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json",
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    }
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {},
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/api-remotes": "workspace:*",
+    "@astro-one/api-session-controller": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/client-ui-conversation": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-session": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/experimental-api-speech-to-text": "workspace:*",
+    "@astro-one/experimental-speech-to-text": "workspace:*",
+    "@astro-one/client-test-runtime": "workspace:*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@testing-library/react": "^16.3.3",
+    "@astro-one/api-gateway": "workspace:*",
+    "@astro-one/client-store": "workspace:*",
+    "@astro-one/client-ui-plugin-manager": "workspace:*"
+  },
+  "astroOne": {
+    "client": {
+      "inject": [
+        "@astro-one/api-remotes",
+        "@astro-one/api-session-controller",
+        "@astro-one/client-locale",
+        "@astro-one/client-ui-conversation",
+        "@astro-one/client-ui-primitives",
+        "@astro-one/api-gateway",
+        "@astro-one/client-ui-plugin-manager"
+      ],
+      "platform": "web",
+      "external": [
+        "@astro-one/api-gateway/client"
+      ]
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  }
+}

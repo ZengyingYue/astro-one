@@ -1,0 +1,46 @@
+{
+  "name": "@astro-one/session-title-all-prompts-llm",
+  "description": "All-user-messages LLM provider plugin for Astro One session titles",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/session-title-all-prompts-llm"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "files": ["locale/*.json", "lib/index.js", "lib/types/**/*.d.ts"],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-title": "workspace:*",
+    "@astro-one/session-title-llm": "workspace:*",
+    "@astro-one/cordis": "workspace:~"
+  },
+  "dependencies": {
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/schemastery": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-title": "workspace:*",
+    "@astro-one/session-title-llm": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/agent-loop": "workspace:*"
+  }
+}

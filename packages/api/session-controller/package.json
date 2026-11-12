@@ -1,0 +1,173 @@
+{
+  "name": "@astro-one/api-session-controller",
+  "description": "Session Remote commands, cold reads, and live control transport",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/api/session-controller"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./remote-events": {
+      "types": "./lib/types/remote-events.d.ts",
+      "default": "./lib/types/remote-events.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "astroOne": {
+    "client": {
+      "external": [
+        "@astro-one/api-gateway/client"
+      ],
+      "inject": [
+        "@astro-one/api-gateway",
+        "@astro-one/client-file-upload"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/deque": "workspace:*",
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
+    "mime-types": "^3.0.2",
+    "zod": "4.4.3"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-default-model": "workspace:*",
+    "@astro-one/agent-preset-registry": "workspace:*",
+    "@astro-one/api-gateway": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/client-file-upload": "workspace:*",
+    "@astro-one/commands": "workspace:*",
+    "@astro-one/credentials": "workspace:*",
+    "@astro-one/file-reference": "workspace:*",
+    "@astro-one/fs": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/native-command": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-persistence": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/session-projection-cache": "workspace:*",
+    "@astro-one/session-query": "workspace:*",
+    "@astro-one/session-title": "workspace:*",
+    "@astro-one/settings": "workspace:*",
+    "@astro-one/skill": "workspace:*",
+    "@astro-one/subagent": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/typert-registry": "workspace:*",
+    "@astro-one/util-time": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/util-workspace-path": "workspace:*",
+    "@astro-one/workspace": "workspace:*",
+    "@astro-one/working-directory": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@astro-one/session-persistence": {
+      "optional": true
+    },
+    "@astro-one/session-projection-cache": {
+      "optional": true
+    },
+    "@astro-one/settings": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@astro-one/api-remote-access": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-default-model": "workspace:*",
+    "@astro-one/agent-loop": "workspace:*",
+    "@astro-one/agent-loop-testkit": "workspace:*",
+    "@astro-one/agent-preset-registry": "workspace:*",
+    "@astro-one/api-gateway": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/attachment-local": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/client-file-upload": "workspace:*",
+    "@astro-one/client-store": "workspace:*",
+    "@astro-one/client-test-runtime": "workspace:*",
+    "@astro-one/commands": "workspace:*",
+    "@astro-one/credentials": "workspace:*",
+    "@astro-one/file-reference": "workspace:*",
+    "@astro-one/fs": "workspace:*",
+    "@astro-one/fs-local": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/native-command": "workspace:*",
+    "@astro-one/permission-presets": "workspace:*",
+    "@astro-one/remote-mock": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-persistence": "workspace:*",
+    "@astro-one/session-persistence-jsonl": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/session-projection-cache": "workspace:*",
+    "@astro-one/session-query": "workspace:*",
+    "@astro-one/session-title": "workspace:*",
+    "@astro-one/settings": "workspace:*",
+    "@astro-one/skill": "workspace:*",
+    "@astro-one/storage": "workspace:*",
+    "@astro-one/storage-domain": "workspace:*",
+    "@astro-one/storage-json": "workspace:*",
+    "@astro-one/subagent": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/typert-registry": "workspace:*",
+    "@astro-one/util-crypto": "workspace:*",
+    "@astro-one/util-time": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/util-workspace-path": "workspace:*",
+    "@astro-one/workspace": "workspace:*",
+    "@types/mime-types": "^3.0.1",
+    "@astro-one/working-directory": "workspace:*"
+  }
+}

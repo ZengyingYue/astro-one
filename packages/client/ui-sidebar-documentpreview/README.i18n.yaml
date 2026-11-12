@@ -1,0 +1,46 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-sidebar-documentpreview/README.md
+/:
+  en: ef50065f5ff17aa1
+  zh: ee5d2b7986739fca
+/astro-one-client-ui-sidebar-documentpreview:
+  en: 0804893d325c0f47
+  zh: f7cdfad1346c3cf0
+/astro-one-client-ui-sidebar-documentpreview/summary:
+  en: a74c16667d0baada
+  zh: 4fd709ff9f98b84f
+/astro-one-client-ui-sidebar-documentpreview/table-of-contents:
+  en: 0dd8c3a22e28aacf
+  zh: c27c11bf4b5cceba
+/astro-one-client-ui-sidebar-documentpreview/what-it-registers:
+  en: 9b33931468bd48a6
+  zh: 0740a4b47c2446db
+/astro-one-client-ui-sidebar-documentpreview/addresses:
+  en: 46eb3567d7c00d5a
+  zh: ac9584720ed7c64c
+/astro-one-client-ui-sidebar-documentpreview/how-it-reads:
+  en: 1f1f59c1a4b46621
+  zh: 2f392532cd60c687
+/astro-one-client-ui-sidebar-documentpreview/excel-preview:
+  en: a3e06facb33f48e5
+  zh: 5134382ca127907d
+/astro-one-client-ui-sidebar-documentpreview/office-preview:
+  en: 03001c6195709f55
+  zh: 6aea4501a40cfbe9
+/astro-one-client-ui-sidebar-documentpreview/navigation:
+  en: c220b9c1a3d64ec4
+  zh: f442d255c76baa50
+/astro-one-client-ui-sidebar-documentpreview/model-experience:
+  en: ca1deb99d0e44755
+  zh: f285fc56cee669ec
+/astro-one-client-ui-sidebar-documentpreview/model-experience/kv-cache-effect:
+  en: 7edb4c0bb5f13847
+  zh: ae5d0bbebe4aa563
+/astro-one-client-ui-sidebar-documentpreview/known-limitations-and-deferred-work:
+  en: e3d4db32fcf59b0b
+  zh: 07cbe6cbd83d47e6
+/astro-one-client-ui-sidebar-documentpreview/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

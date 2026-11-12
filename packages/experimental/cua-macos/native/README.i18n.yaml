@@ -1,0 +1,34 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/cua-macos/native/README.md
+/:
+  en: 43b5e4e8cad52456
+  zh: 657b0fc9d4391135
+/astro-one-cua-native-helper:
+  en: b839a83493e9468d
+  zh: e44e7ef4b9c22a19
+/astro-one-cua-native-helper/summary:
+  en: 9aeb574bf09a3de2
+  zh: 7df2def6acb71ac3
+/astro-one-cua-native-helper/table-of-contents:
+  en: e8cbc43d38786c40
+  zh: 52b3ba85d98011b9
+/astro-one-cua-native-helper/build-and-service:
+  en: 15af4499047f1b2d
+  zh: 56afdd50b3248ee9
+/astro-one-cua-native-helper/request-protocol:
+  en: fc8043c425322cdd
+  zh: cf1edb9a78fda301
+/astro-one-cua-native-helper/observation-and-input:
+  en: cec90793e80d1aa6
+  zh: 766da7ec48a65ad1
+/astro-one-cua-native-helper/verification:
+  en: 77d897240ec794f5
+  zh: da21be050b1b19ab
+/astro-one-cua-native-helper/further-exploration:
+  en: d903cc4548626cb9
+  zh: 3f5a11da0ba2aeb6
+/astro-one-cua-native-helper/dev-note:
+  en: b75c8458928b72b9
+  zh: 003ba4e17b4b5269

@@ -1,0 +1,85 @@
+{
+  "name": "@astro-one/mcp-client",
+  "description": "MCP client bridge: connects to MCP servers and registers their tools on ctx.tools",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/mcp/mcp-client"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./src/*": "./src/*",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/subprocess": "workspace:*",
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/mcp-resources": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/credentials": "workspace:*"
+  },
+  "dependencies": {
+    "@astro-one/schemastery": "workspace:~",
+    "@modelcontextprotocol/client": "2.2.0",
+    "@astro-one/util-values": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/attachment-local": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/subprocess": "workspace:*",
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/tool-executor-native": "workspace:*",
+    "@astro-one/tool-testkit": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@modelcontextprotocol/server-everything": "^2026.8.31",
+    "@modelcontextprotocol/server-filesystem": "^2026.8.31",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/http-proxy": "workspace:*",
+    "@modelcontextprotocol/server": "2.2.0",
+    "@modelcontextprotocol/node": "2.0.0",
+    "zod": "4.4.3",
+    "@astro-one/mcp-resources": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/credentials": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@astro-one/mcp-resources": {
+      "optional": true
+    },
+    "@astro-one/system-prompt": {
+      "optional": true
+    },
+    "@astro-one/credentials": {
+      "optional": true
+    }
+  }
+}

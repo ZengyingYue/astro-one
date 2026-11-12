@@ -1,0 +1,58 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-sidebar/README.md
+/:
+  en: 4a08a7dc1c6d7fef
+  zh: 15244072702468a7
+/astro-one-client-ui-sidebar:
+  en: 318736521146a302
+  zh: c2123b99221ab2e6
+/astro-one-client-ui-sidebar/summary:
+  en: 427c49f5103c10fe
+  zh: 91badcedcad3d0b5
+/astro-one-client-ui-sidebar/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-client-ui-sidebar/use-this-package:
+  en: e6559c7f608ab76e
+  zh: 38a28085847d8321
+/astro-one-client-ui-sidebar/use-this-package/brand-and-new-session:
+  en: d7cdaf2d4f7a29bd
+  zh: 9b4b256ef56d7a06
+/astro-one-client-ui-sidebar/use-this-package/global-panel-entries:
+  en: 1270284e68fce012
+  zh: 89e2119ac42c3dfd
+/astro-one-client-ui-sidebar/use-this-package/collapse-behavior:
+  en: a6f0f539ca54dc61
+  zh: f0127ab2e547d90a
+/astro-one-client-ui-sidebar/use-this-package/macos-desktop:
+  en: c2a713f308a4115c
+  zh: eda20ee15486e1a2
+/astro-one-client-ui-sidebar/use-this-package/scrollbars:
+  en: 9e7b31acee759f2b
+  zh: 3a6beb63b23d26ae
+/astro-one-client-ui-sidebar/use-this-package/click-analytics:
+  en: 3e84ffdf6c7c1731
+  zh: 3f7b19cac6d6674f
+/astro-one-client-ui-sidebar/understand-the-implementation:
+  en: 17429616286894c4
+  zh: 4b5cb48ef3fc7ca5
+/astro-one-client-ui-sidebar/understand-the-implementation/slot-discipline:
+  en: 6eefc5c45abe8a8f
+  zh: 20b651e48a0ea903
+/astro-one-client-ui-sidebar/further-exploration:
+  en: 060809048bf3cf72
+  zh: ccc46c0586b48951
+/astro-one-client-ui-sidebar/model-experience:
+  en: 3120df665299c634
+  zh: 1d9f365d091d0d2a
+/astro-one-client-ui-sidebar/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/astro-one-client-ui-sidebar/known-limitations-and-deferred-work:
+  en: 9738f4cd887876d0
+  zh: 95a646deba4a6489
+/astro-one-client-ui-sidebar/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

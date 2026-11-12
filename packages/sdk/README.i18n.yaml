@@ -1,0 +1,25 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/sdk/README.md
+/:
+  en: 3345ee8fe0f8ee0c
+  zh: 541859dcfff0f0f4
+/sdk-drive-a-harness-runtime-from-another-process:
+  en: a26a6acddead173c
+  zh: bfac7b98b545aa6e
+/sdk-drive-a-harness-runtime-from-another-process/summary:
+  en: 8c508d1e22aff47b
+  zh: 972e709e837ffe0b
+/sdk-drive-a-harness-runtime-from-another-process/table-of-contents:
+  en: 1eb35b015a6c423f
+  zh: a8a3dceee2c9e943
+/sdk-drive-a-harness-runtime-from-another-process/packages:
+  en: 2f86de6c2916efee
+  zh: eaab5853be5c1f38
+/sdk-drive-a-harness-runtime-from-another-process/related-documentation:
+  en: 9f506a157032f3a7
+  zh: 9e3fc780163df2fe
+/sdk-drive-a-harness-runtime-from-another-process/dev-note:
+  en: b75c8458928b72b9
+  zh: 003ba4e17b4b5269

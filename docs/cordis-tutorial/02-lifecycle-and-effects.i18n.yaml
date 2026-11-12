@@ -1,0 +1,16 @@
+# Bilingual-pair consistency record for 02-lifecycle-and-effects.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/cordis-tutorial/02-lifecycle-and-effects.md
+/2-lifecycle-and-effects:
+  en: e63ad5dbc47cfab3
+  zh: 4cc0a4597c3e05b0
+/2-lifecycle-and-effects/effects:
+  en: 2405133f23696f0e
+  zh: 30bcd69cba560176
+/2-lifecycle-and-effects/the-fiber-state-machine:
+  en: 27b02108040d0879
+  zh: 55dca31070b4e495
+/2-lifecycle-and-effects/what-is-already-an-effect:
+  en: ce39d094df47fcde
+  zh: b9718c4c310763e8

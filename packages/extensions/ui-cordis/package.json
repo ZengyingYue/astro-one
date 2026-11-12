@@ -1,0 +1,74 @@
+{
+  "name": "@astro-one/client-ui-cordis",
+  "description": "Cordis dynamic-plugin definition card: the keyed cordis_define tool row with its run/stop switch",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/extensions/ui-cordis"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "astroOne": {
+    "client": {
+      "inject": [
+        "@astro-one/client-connection",
+        "@astro-one/cordis-client-runner",
+        "@astro-one/api-remotes",
+        "@astro-one/client-locale",
+        "@astro-one/client-ui-renderer",
+        "@astro-one/client-ui-session",
+        "@astro-one/client-ui-tool",
+        "@astro-one/client-ui-sidebar"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/api-remotes": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/cordis-client-runner": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-sidebar": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-session": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
+    "@astro-one/client-ui-tool": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "react": "^18.2.0"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts"
+  ]
+}

@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/webhook-github/README.md
+/:
+  en: 60db7ae899ed9fd9
+  zh: 4fe10fa8823aa6d1
+/astro-one-webhook-github:
+  en: 8df31e87dd9b35a0
+  zh: 04e43b921a71d0c3
+/astro-one-webhook-github/summary:
+  en: 0539f375ea39bf80
+  zh: 0e8a4f44c3813f94
+/astro-one-webhook-github/table-of-contents:
+  en: b946752a1c17cd00
+  zh: cdaaea55e4da6831
+/astro-one-webhook-github/configuration:
+  en: a32a5195a6ae6a61
+  zh: a135089e86948290
+/astro-one-webhook-github/http-contract:
+  en: 2d8b5cb8d44bef8e
+  zh: a98ec470d9d6bc2d
+/astro-one-webhook-github/dedicated-listener-composition:
+  en: 79d33bf834987314
+  zh: f19b6b6ed640fdce
+/astro-one-webhook-github/model-experience:
+  en: 9e0b5127bd5ec3e2
+  zh: bc9ea2c959836fa0
+/astro-one-webhook-github/model-experience/kv-cache-effect:
+  en: a7c54f451f61179e
+  zh: aaf25d0781ad4d6b
+/astro-one-webhook-github/known-limitations-and-deferred-work:
+  en: 0c3192c3e300bb46
+  zh: 7c84d20e6a8a768e
+/astro-one-webhook-github/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

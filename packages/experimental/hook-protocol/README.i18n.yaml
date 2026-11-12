@@ -1,0 +1,61 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/hook-protocol/README.md
+/:
+  en: 7cfe3761eedff848
+  zh: 80b0bed5743d0924
+/astro-one-hook-protocol:
+  en: a342d923122749da
+  zh: 83caaa7c72cbd9e8
+/astro-one-hook-protocol/summary:
+  en: 213468456108761c
+  zh: 7f3cc54236cb6c2a
+/astro-one-hook-protocol/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-hook-protocol/use-this-package:
+  en: 3fc703f2aad5014a
+  zh: 7275a81a4ce94062
+/astro-one-hook-protocol/use-this-package/when-to-choose-it:
+  en: 11cf5d3b27b4d0ac
+  zh: 21166d7b3af5c83d
+/astro-one-hook-protocol/use-this-package/what-a-hook-can-do:
+  en: 043f54b3a5b518a7
+  zh: a4115083a9b1cef1
+/astro-one-hook-protocol/use-this-package/what-you-see-when-hooks-run:
+  en: ba2d6ed1db063f53
+  zh: ab1b8d72dccd2ff1
+/astro-one-hook-protocol/understand-the-implementation:
+  en: 08b3960150e9c5e2
+  zh: 6bb2f236d697de01
+/astro-one-hook-protocol/understand-the-implementation/processing-pipeline:
+  en: 3a94a9f247a912a4
+  zh: 0470739d93a44e03
+/astro-one-hook-protocol/understand-the-implementation/hook-session-events:
+  en: 46c9f98737b4e68f
+  zh: 43e6efba39d80a4d
+/astro-one-hook-protocol/understand-the-implementation/design-philosophy:
+  en: b6f654ffc6a09505
+  zh: 3a4196e3936285b7
+/astro-one-hook-protocol/understand-the-implementation/source-map:
+  en: 0d8956a6d8608ee0
+  zh: 9f554284c4c0a36e
+/astro-one-hook-protocol/further-exploration:
+  en: ad8cb1f80eac0a08
+  zh: 010ad58067a7174a
+/astro-one-hook-protocol/model-experience:
+  en: 4acb6660a0dbb682
+  zh: 3cae80cfb281f346
+/astro-one-hook-protocol/model-experience/kv-cache-effect:
+  en: e290ccc9b3c92c08
+  zh: cb3c8823f41e7afe
+/astro-one-hook-protocol/known-limitations-and-deferred-work:
+  en: 7ca7222ffea784e9
+  zh: 6cad51a2378b781e
+/astro-one-hook-protocol/known-limitations-and-deferred-work/dev-note:
+  en: ac1d08360a93382b
+  zh: 6c58749bae9a6e65
+/astro-one-hook-protocol/known-limitations-and-deferred-work/dev-note/future-run-level-halt:
+  en: bfb3db50de22c1d0
+  zh: 2a979359b0edbbe7

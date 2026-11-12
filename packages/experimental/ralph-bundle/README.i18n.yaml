@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/ralph-bundle/README.md
+/:
+  en: 471abb0843949bd8
+  zh: 57662fb79022166e
+/astro-one-experimental-ralph-bundle:
+  en: a9b9c9fdc8718992
+  zh: 4892e26b016014d0
+/astro-one-experimental-ralph-bundle/summary:
+  en: 11a7f36c084f2b46
+  zh: e299c5cb709bbbaa
+/astro-one-experimental-ralph-bundle/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 988e839059414d27
+/astro-one-experimental-ralph-bundle/use-this-package:
+  en: 5e43d9bf3b5f21c9
+  zh: 517018e17b4270dd
+/astro-one-experimental-ralph-bundle/understand-the-implementation:
+  en: 62c4c141dcb1b739
+  zh: 40df21dc1c9de5b9
+/astro-one-experimental-ralph-bundle/further-exploration:
+  en: 360081220f9d7e47
+  zh: 9c50118b4000cdf6
+/astro-one-experimental-ralph-bundle/model-experience:
+  en: 571d12a64f827694
+  zh: 140c2a5f1ffe764a
+/astro-one-experimental-ralph-bundle/model-experience/kv-cache-effect:
+  en: 25f20eda0e696067
+  zh: 378c4a15a5704ba0
+/astro-one-experimental-ralph-bundle/known-limitations-and-deferred-work:
+  en: 39918e19422a80c1
+  zh: 71346d112bdea43f
+/astro-one-experimental-ralph-bundle/known-limitations-and-deferred-work/dev-note:
+  en: 279d01435256cd2a
+  zh: 83780964e5de2f54

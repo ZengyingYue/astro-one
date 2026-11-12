@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/browser-use-runtime/README.md
+/:
+  en: 32bd01db6a5146ed
+  zh: 31e56827b98bc1b3
+/astro-one-experimental-browser-use-runtime:
+  en: bb5e73e43c7ae1b2
+  zh: 154da792a2d7e00f
+/astro-one-experimental-browser-use-runtime/summary:
+  en: ac29eb4a94d3cbff
+  zh: 66f2e800cabb19aa
+/astro-one-experimental-browser-use-runtime/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: f14f34fce35a8d90
+/astro-one-experimental-browser-use-runtime/use-this-package:
+  en: 00777d422125f5e7
+  zh: 39d994529aaf846b
+/astro-one-experimental-browser-use-runtime/understand-the-implementation:
+  en: 5f3a8a633a1fff70
+  zh: fb297fdf6a621f5d
+/astro-one-experimental-browser-use-runtime/further-exploration:
+  en: 3a042053d5975e62
+  zh: 0c1a3077ad32a062
+/astro-one-experimental-browser-use-runtime/model-experience:
+  en: 5cc87b994301718a
+  zh: 858b881d064f7a6c
+/astro-one-experimental-browser-use-runtime/model-experience/kv-cache-effect:
+  en: 066ff4d955210cfe
+  zh: 74ad1b1444383493
+/astro-one-experimental-browser-use-runtime/known-limitations-and-deferred-work:
+  en: 51cb6832b515cce7
+  zh: ea8363bde804d52b
+/astro-one-experimental-browser-use-runtime/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

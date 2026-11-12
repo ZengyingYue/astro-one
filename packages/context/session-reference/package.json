@@ -1,0 +1,104 @@
+{
+  "name": "@astro-one/session-reference",
+  "description": "Cross-session snapshot references and durable untrusted model context (ctx.sessionReferenceResolver)",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/context/session-reference"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
+    "zod": "4.4.3"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/compaction": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/output-retention": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/session-projection-cache": "workspace:*",
+    "@astro-one/session-query": "workspace:*",
+    "@astro-one/session-title": "workspace:*",
+    "@astro-one/spill": "workspace:*",
+    "@astro-one/subagent": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@astro-one/spill": {
+      "optional": true
+    },
+    "@astro-one/session-projection-cache": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/compaction": "workspace:*",
+    "@astro-one/fs-local": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/output-retention": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/session-projection-cache": "workspace:*",
+    "@astro-one/session-query": "workspace:*",
+    "@astro-one/session-query-sqlite": "workspace:*",
+    "@astro-one/session-title": "workspace:*",
+    "@astro-one/spill": "workspace:*",
+    "@astro-one/subagent": "workspace:*",
+    "@astro-one/spill-local": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/tool-executor-native": "workspace:*",
+    "@astro-one/tool-fs": "workspace:*",
+    "@astro-one/tool-testkit": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/working-directory": "workspace:*"
+  }
+}

@@ -1,0 +1,16 @@
+# Bilingual-pair consistency record for guide.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/upgrade-guide/v0.2.1-alpha.1/terminal-command-labels/guide.md
+/:
+  en: 0722f826c1c12360
+  zh: 9b48ce197b6091f2
+/terminal-command-labels:
+  en: c845895d4d8258c6
+  zh: d2d127538fd99f27
+/terminal-command-labels/change:
+  en: dcbb6c13ec0426b3
+  zh: 2de0d99a08516f4a
+/terminal-command-labels/migration:
+  en: 2044b801804a40aa
+  zh: 0f98e7da80e2f066

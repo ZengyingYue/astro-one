@@ -1,0 +1,85 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/claude-code-mods/README.md
+/:
+  en: cb0dbbc3d172bd8f
+  zh: 9b6d3dc2ccbb89dd
+/astro-one-experimental-claude-code-mods:
+  en: 2d3ef5fb2ddc390d
+  zh: 8f6217ef22f96172
+/astro-one-experimental-claude-code-mods/summary:
+  en: 182ac52fb2fcfdf1
+  zh: 2d6ebc6d6ce0add5
+/astro-one-experimental-claude-code-mods/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-experimental-claude-code-mods/use-this-package:
+  en: e1945fd8857a6c5a
+  zh: 2066611bf3376d51
+/astro-one-experimental-claude-code-mods/use-this-package/which-events-your-mod-receives:
+  en: d2d735b07524c08a
+  zh: 6b90dc578d61ab22
+/astro-one-experimental-claude-code-mods/use-this-package/the-band-above-the-prompt:
+  en: 2b04be6b58e61a74
+  zh: f4854198d8999d11
+/astro-one-experimental-claude-code-mods/use-this-package/which-members-your-mod-can-call:
+  en: 563ff4127a48a194
+  zh: 2acf06dfcfcc6457
+/astro-one-experimental-claude-code-mods/use-this-package/test-a-mod:
+  en: ce77fd2064e71a77
+  zh: 96f01e7c324c178e
+/astro-one-experimental-claude-code-mods/understand-the-implementation:
+  en: 42b15ac6321706aa
+  zh: cfcb757213648bd9
+/astro-one-experimental-claude-code-mods/understand-the-implementation/loading:
+  en: 7b48e62da7d73a85
+  zh: a7f8e46cecb726cf
+/astro-one-experimental-claude-code-mods/understand-the-implementation/the-chain:
+  en: 655859f9ac0f0d25
+  zh: 19ed5070afcb5841
+/astro-one-experimental-claude-code-mods/understand-the-implementation/mapping-onto-the-harness:
+  en: 955ed36f58b0a5c4
+  zh: 65b2f0ddc1154be4
+/astro-one-experimental-claude-code-mods/understand-the-implementation/source-map:
+  en: a141066b146cef7c
+  zh: fe91851f05c008c4
+/astro-one-experimental-claude-code-mods/further-exploration:
+  en: fe979b0abbf910b7
+  zh: aa098134de2717e2
+/astro-one-experimental-claude-code-mods/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-experimental-claude-code-mods/model-experience/prompt-context-and-submitted-prompts:
+  en: 2e9d6b50a26a5e10
+  zh: d884e62e639cad69
+/astro-one-experimental-claude-code-mods/model-experience/prompt-context-and-submitted-prompts/what-the-model-sees:
+  en: 60631d1fc8ff1c11
+  zh: 080dc67f66c60f17
+/astro-one-experimental-claude-code-mods/model-experience/prompt-context-and-submitted-prompts/what-the-model-sees/framing-of-a-prompt-a-mod-submits:
+  en: f521d5aba5ab7027
+  zh: 5aa721441103f9a7
+/astro-one-experimental-claude-code-mods/model-experience/prompt-context-and-submitted-prompts/token-effect:
+  en: 04a7869d92d45eb8
+  zh: 8ddbd20f844dba65
+/astro-one-experimental-claude-code-mods/model-experience/prompt-context-and-submitted-prompts/kv-cache-effect:
+  en: 75b19101cbd036ff
+  zh: 193106a75b280c73
+/astro-one-experimental-claude-code-mods/model-experience/tool-outcomes-a-mod-decides:
+  en: fe8166c6d3eb962a
+  zh: 5f8fe74778a78166
+/astro-one-experimental-claude-code-mods/model-experience/tool-outcomes-a-mod-decides/what-the-model-sees:
+  en: 5b4aa2a1ec36106b
+  zh: c28c286f2a04d716
+/astro-one-experimental-claude-code-mods/model-experience/tool-outcomes-a-mod-decides/token-effect:
+  en: cbf27f737c6254e6
+  zh: 333cbb22f97f8955
+/astro-one-experimental-claude-code-mods/model-experience/tool-outcomes-a-mod-decides/kv-cache-effect:
+  en: ca31263f47f654d9
+  zh: 17d55e6641705627
+/astro-one-experimental-claude-code-mods/known-limitations-and-deferred-work:
+  en: 08a967cf7f62a257
+  zh: 26a8b6884e41c0b0
+/astro-one-experimental-claude-code-mods/known-limitations-and-deferred-work/dev-note:
+  en: 4d1e26f4cc9c3c1c
+  zh: d80209b56c56b11c

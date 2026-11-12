@@ -1,0 +1,39 @@
+# Minimal tool-pwsh composition: real app boot path, real pwsh executor, real
+# foreground + background tool calls; driven by the package's loader.spec.ts.
+- id: system-prompt
+  name: '@astro-one/system-prompt'
+
+- id: fs
+  name: '@astro-one/fs-local'
+
+- id: session-projections
+  name: '@astro-one/session-projection'
+
+- id: working-directory
+  name: '@astro-one/working-directory'
+
+- id: tools
+  name: '@astro-one/tools'
+
+- id: tool-executor-native
+  name: '@astro-one/tool-executor-native'
+
+- id: subprocess
+  name: '@astro-one/subprocess-local'
+
+- id: bash
+  name: '@astro-one/pwsh-local'
+  config:
+    graceMs: 200
+
+- id: shell-env
+  name: '@astro-one/shell-env'
+
+- id: tasks
+  name: '@astro-one/jobs-local'
+
+- id: tool-jobs
+  name: '@astro-one/tool-jobs'
+
+- id: tool-pwsh
+  name: '@astro-one/tool-pwsh'

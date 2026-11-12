@@ -1,0 +1,47 @@
+name: Astro One desktop
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/local-desktop]
+permissions:
+  contents: read
+concurrency:
+  group: local-desktop-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  package:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    env:
+      ASTRO_ONE_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@v6
+      - name: Enable Windows symlinks
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: >-
+          reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"
+          /t REG_DWORD /f /v "AllowDevelopmentWithoutDevLicense" /d "1"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.7.0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run package:desktop:local
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astro-one-${{ matrix.os }}
+          path: |
+            apps/desktop/.desktop-build/targets/*/local-artifacts/*.AppImage
+            apps/desktop/.desktop-build/targets/*/local-artifacts/*.deb
+            apps/desktop/.desktop-build/targets/*/local-artifacts/*.exe
+          if-no-files-found: error
+          include-hidden-files: true
+          compression-level: 0

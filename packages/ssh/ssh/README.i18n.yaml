@@ -1,0 +1,40 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/ssh/ssh/README.md
+/:
+  en: e8056e7ebc59ace5
+  zh: 69512c6dc08b162f
+/astro-one-ssh:
+  en: aeb92a5df0cda828
+  zh: 3dc33a1de1474074
+/astro-one-ssh/summary:
+  en: 5ab5493c62a17e6a
+  zh: fe9b2ed5cdce5487
+/astro-one-ssh/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 725b47765ee8f30b
+/astro-one-ssh/use-this-package:
+  en: 3661d8fb1a84e7ff
+  zh: 8590e0f0562133c1
+/astro-one-ssh/use-this-package/deployment-prerequisites:
+  en: 12d05ed35c9f18ec
+  zh: d11bf2fa4b250dbf
+/astro-one-ssh/understand-the-implementation:
+  en: 6156b76f56e241c3
+  zh: 6688f94f6db930e4
+/astro-one-ssh/further-exploration:
+  en: 3a6cec47f7c13f48
+  zh: c108edc05969c54c
+/astro-one-ssh/model-experience:
+  en: 46f8a19ad50774a3
+  zh: cfa8af8f94f691f5
+/astro-one-ssh/model-experience/kv-cache-effect:
+  en: 21f304c66e5ba98b
+  zh: 18185d5b164f8216
+/astro-one-ssh/known-limitations-and-deferred-work:
+  en: c173949c197e6deb
+  zh: a951c8cfeca150ab
+/astro-one-ssh/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

@@ -1,0 +1,31 @@
+# Bilingual-pair consistency record for python-sdk.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/user/guide/python-sdk.md
+/get-started-with-the-python-sdk:
+  en: fcaead48a02b5298
+  zh: c123e065c84f7aff
+/get-started-with-the-python-sdk/prerequisites:
+  en: b5a921f7d6c4a420
+  zh: ef51283857d18c64
+/get-started-with-the-python-sdk/install-the-sdk:
+  en: 84c292cf20e3eb30
+  zh: 5a4b26a8d877779c
+/get-started-with-the-python-sdk/run-the-checked-in-example:
+  en: c895eaae062d42ae
+  zh: dc5884e4fdbd180e
+/get-started-with-the-python-sdk/use-the-sdk-in-your-program:
+  en: d6e73d6339747e94
+  zh: 6c8212ef6f108413
+/get-started-with-the-python-sdk/install-or-define-plugins:
+  en: 11b345cdfc4daa74
+  zh: 9c9f4fb6dee3b27a
+/get-started-with-the-python-sdk/install-or-define-plugins/opt-in-to-str-replace-editor:
+  en: 8ab53015518488ca
+  zh: 37445e2e7608710c
+/get-started-with-the-python-sdk/install-or-define-plugins/enable-team-mode:
+  en: 5fac9ac55eaec3ca
+  zh: 6271a6d4284b34dc
+/get-started-with-the-python-sdk/understand-the-minimal-profile:
+  en: ffd51f84f488fbe4
+  zh: e557eebafb3932a1

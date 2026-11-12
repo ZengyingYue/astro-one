@@ -1,0 +1,101 @@
+{
+  "name": "@astro-one/client-ui-trajectory",
+  "description": "Trajectory event ledger and timing overview with live tool-result inspection",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/client/ui-trajectory"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json",
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts"
+    }
+  },
+  "astroOne": {
+    "client": {
+      "inject": [
+        "@astro-one/api-session-controller",
+        "@astro-one/client-locale",
+        "@astro-one/client-ui-conversation",
+        "@astro-one/client-ui-renderer",
+        "@astro-one/client-ui-session"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/client-test-runtime": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-conversation": "workspace:*",
+    "@astro-one/tool-executor-ptc": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
+    "@astro-one/compaction": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@astro-one/client-store": "workspace:*",
+    "@astro-one/client-ui-chat": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/api-session-controller": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-session": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
+    "@tanstack/react-virtual": "3.14.10",
+    "diff": "^9.0.0",
+    "@astro-one/api-gateway": "workspace:*",
+    "@astro-one/tools": "workspace:*"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts"
+  ],
+  "dependencies": {
+    "@astro-one/typert-protocol": "workspace:*",
+    "zod": "4.4.3",
+    "@astro-one/schemastery": "workspace:~"
+  }
+}

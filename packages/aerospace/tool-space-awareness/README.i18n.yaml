@@ -1,0 +1,73 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/aerospace/tool-space-awareness/README.md
+/:
+  en: 1cf34ff04ad051cd
+  zh: cfd3b2c7444983a4
+/astro-one-tool-space-awareness:
+  en: 2d026e4c3ddf6650
+  zh: bc2850fab802ec2b
+/astro-one-tool-space-awareness/summary:
+  en: a7b5d70af8164232
+  zh: 3b52e5db0523b678
+/astro-one-tool-space-awareness/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-tool-space-awareness/use-this-package:
+  en: 43becad04ec1d7d9
+  zh: 8157eb0e3252daab
+/astro-one-tool-space-awareness/use-this-package/when-to-choose-it:
+  en: 0c82a415a1c8c054
+  zh: c8481c6444897654
+/astro-one-tool-space-awareness/use-this-package/minimal-configuration:
+  en: dfb2fc8bfd08c58d
+  zh: 4c01bdaf7bc8689d
+/astro-one-tool-space-awareness/use-this-package/tools:
+  en: e2b3350880a8201a
+  zh: 0f1f4276433837e3
+/astro-one-tool-space-awareness/use-this-package/failures-and-recovery:
+  en: 18dd90a981eedd4d
+  zh: da48980e6f75382c
+/astro-one-tool-space-awareness/understand-the-implementation:
+  en: 4f70b03b4e9fe87c
+  zh: d35e09d11548994d
+/astro-one-tool-space-awareness/understand-the-implementation/source-map:
+  en: b6ca64dc7b1c1967
+  zh: 0155e8676ea5e304
+/astro-one-tool-space-awareness/further-exploration:
+  en: 47081d97d624939f
+  zh: d8d0cd7ff3724e9c
+/astro-one-tool-space-awareness/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-tool-space-awareness/model-experience/tool-schemas:
+  en: 3039bc5e7a796b21
+  zh: 6b7a9eaf69c9ea53
+/astro-one-tool-space-awareness/model-experience/tool-schemas/what-the-model-sees:
+  en: c1ed85beeb904746
+  zh: 6b6fda17525bd2d9
+/astro-one-tool-space-awareness/model-experience/tool-schemas/token-effect:
+  en: e87c05a7209b3f39
+  zh: ddb5c53cfe35c409
+/astro-one-tool-space-awareness/model-experience/tool-schemas/kv-cache-effect:
+  en: 91a13c8c95ddc114
+  zh: 9ce3c60dac57a2db
+/astro-one-tool-space-awareness/model-experience/analysis-results:
+  en: f275e1f6873c801d
+  zh: fcab326eb9402f3a
+/astro-one-tool-space-awareness/model-experience/analysis-results/what-the-model-sees:
+  en: ff8f196025d6247c
+  zh: c32f592b64a45967
+/astro-one-tool-space-awareness/model-experience/analysis-results/token-effect:
+  en: e9c533be7097d152
+  zh: bb01f2b4431927be
+/astro-one-tool-space-awareness/model-experience/analysis-results/kv-cache-effect:
+  en: f5d5f97a153f7c70
+  zh: e51236a78b8b4ac4
+/astro-one-tool-space-awareness/known-limitations-and-deferred-work:
+  en: 8ffda237863d10c7
+  zh: 7a16b0c2696e5332
+/astro-one-tool-space-awareness/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

@@ -1,0 +1,49 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/cua/README.md
+/:
+  en: ed2539c6d12f814a
+  zh: 55a6c9d7f0d21fb7
+/astro-one-cua:
+  en: 059ac98ff4fc67f2
+  zh: 6fd0641131aa9a35
+/astro-one-cua/summary:
+  en: f4d9cc48587d62a2
+  zh: d1bac6c1fe7eb29e
+/astro-one-cua/table-of-contents:
+  en: 5db4d4fea25493b9
+  zh: 65ab64fc24eb0d09
+/astro-one-cua/use-this-package:
+  en: 831fe84d49a7eaf9
+  zh: c1388e64ceab90b0
+/astro-one-cua/use-this-package/permission-controls:
+  en: 177aafcaa448d6a3
+  zh: 9e88d20dae737e95
+/astro-one-cua/understand-the-implementation:
+  en: 1bbff7111f49e73a
+  zh: dc19e79a92bd01ff
+/astro-one-cua/further-exploration:
+  en: 08d7d203c2b0572a
+  zh: 85ebe400556e7841
+/astro-one-cua/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-cua/model-experience/authorized-application-operations:
+  en: 0faf1e4d409d61aa
+  zh: 1866dd0b702f2a26
+/astro-one-cua/model-experience/authorized-application-operations/what-the-model-sees:
+  en: eb718bf3d192c826
+  zh: 333c171277534082
+/astro-one-cua/model-experience/authorized-application-operations/token-effect:
+  en: 88463f0304c207bd
+  zh: 6d3ae2f1b8e45747
+/astro-one-cua/model-experience/authorized-application-operations/kv-cache-effect:
+  en: 2d5df52dafa1d940
+  zh: 06e815759b9150c3
+/astro-one-cua/known-limitations-and-deferred-work:
+  en: 6016d57714b0fdd2
+  zh: 78cb637dea23678c
+/astro-one-cua/known-limitations-and-deferred-work/dev-note:
+  en: 0a1253c6f7b5e8b9
+  zh: 9f56528562c7c914

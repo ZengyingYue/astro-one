@@ -1,0 +1,52 @@
+# Replay-only patch layered after `cordis.yml`: replace the network adapter
+# with recorded JSONL, pin the recorded top-level model, and keep persistence
+# raw for fixture harvesting.
+
+- id: llm-deepseek
+  name: '@astro-one/llm-deepseek-api-key'
+  disabled: true
+
+- id: acp
+  name: '@astro-one/acp'
+  config:
+    provider: deepseek-official
+    model: deepseek-v4-flash
+
+- id: session-persistence-jsonl
+  name: '@astro-one/session-persistence-jsonl'
+  config:
+    root: !!js process.env.ASTRO_ONE_SNAPSHOT_SESSIONS_ROOT ?? astroOneHomePath('sessions')
+    compression: none
+
+- id: sandbox
+  name: '@astro-one/sandbox-local'
+  config:
+    runnerCommand:
+      - bash
+      - -c
+      - while [ "$1" != "--" ]; do shift; done; shift; exec "$@"
+      - passthrough-runner
+    runnerFailureSignatures:
+      - 'passthrough-runner: profile rejected'
+
+- insert:
+    - id: llm-replay
+      name: '@astro-one/llm-replay'
+      config:
+        providers:
+          - id: deepseek-official
+            name: DeepSeek
+            models:
+              - id: deepseek-v4-flash
+              - id: deepseek-v4-pro
+
+    - id: subagent-settlement-marker
+      name: './subagent-settlement-marker.ts'
+
+- insert:
+    - id: snapshot-shell-path
+      name: ../../../scripts/snapshot-shell-path.ts
+      config:
+        command: "printf 'escalated\\n' > /tmp/astro-one-escalated.txt && cat /tmp/astro-one-escalated.txt && rm /tmp/astro-one-escalated.txt"
+        recordedPath: /tmp/astro-one-escalated.txt
+        livePath: !!js process.env.ASTRO_ONE_SNAPSHOT_SPILL_ROOT + '/astro-one-escalated.txt'

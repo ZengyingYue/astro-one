@@ -1,0 +1,63 @@
+{
+  "name": "@astro-one/sdk-app",
+  "description": "The astro-one SDK profile bundle: stdio JSON-RPC serving and process lifecycle over astro-one-base",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/bundle/sdk-app"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./src/*": "./src/*",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "cordis.patch.yml",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "astroOne": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "dependencies": {
+    "@astro-one/cmdline": "workspace:*",
+    "@astro-one/sdk-jsonrpc-server": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
+    "commander": "^15.0.0",
+    "@astro-one/skill-office": "workspace:*",
+    "@astro-one/tool-workspace-dependencies": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/client-file-upload": "workspace:*",
+    "@astro-one/workspace": "workspace:*",
+    "@astro-one/schedule": "workspace:*",
+    "@astro-one/time-context": "workspace:*",
+    "@astro-one/tool-schedule": "workspace:*",
+    "@astro-one/tool-ask-user": "workspace:*",
+    "@astro-one/tool-present": "workspace:*",
+    "@astro-one/file-reference-local": "workspace:*",
+    "@astro-one/deliverable-file-references": "workspace:*"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/cordis": "workspace:~"
+  }
+}

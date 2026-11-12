@@ -1,0 +1,70 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/boot/app-boot/README.md
+/:
+  en: f379e1d883caeef8
+  zh: e7453e3262a1f54c
+/astro-one-app-boot:
+  en: 53476d64678392d8
+  zh: f4be5ca8215a61ce
+/astro-one-app-boot/summary:
+  en: c23e64751e4ff030
+  zh: 9eace0a1f63e7216
+/astro-one-app-boot/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-app-boot/use-this-package:
+  en: ac087a1531bd61b6
+  zh: 6b87da3d27ecbad2
+/astro-one-app-boot/use-this-package/when-to-use-it:
+  en: f86667a22f3d634c
+  zh: 3bc95f935e24af18
+/astro-one-app-boot/use-this-package/starting-the-app:
+  en: 65bf2834b81f87da
+  zh: c864ac60a3005b99
+/astro-one-app-boot/use-this-package/profiles:
+  en: b8e54fc22e34a8b9
+  zh: 6ee38da0205c7c56
+/astro-one-app-boot/use-this-package/previewing-the-effective-configuration:
+  en: 646a0ccdd7881ad1
+  zh: e3696acb1573dd7b
+/astro-one-app-boot/use-this-package/inspecting-plugin-configuration-schemas:
+  en: e64a3eb3291018fd
+  zh: 242c13e79fb1db8b
+/astro-one-app-boot/use-this-package/reading-plugin-display-metadata:
+  en: 0912b00e99b8cb59
+  zh: 314f5fe4fad878ec
+/astro-one-app-boot/use-this-package/startup-and-reload-failures:
+  en: 79cf05e0f5805f8e
+  zh: baf52c9012673949
+/astro-one-app-boot/understand-the-implementation:
+  en: f4a2695cb4c8a570
+  zh: 89837235d2f376cf
+/astro-one-app-boot/understand-the-implementation/design-notes:
+  en: 31ceaa93d212fe83
+  zh: e8c9057ef4459573
+/astro-one-app-boot/understand-the-implementation/helper-behavior:
+  en: 6fa850d1bb000d0e
+  zh: aa83a40a9d3db295
+/astro-one-app-boot/understand-the-implementation/source-map:
+  en: 541700d5c39e0ab4
+  zh: 7522dbd9cd68c930
+/astro-one-app-boot/further-exploration:
+  en: 0cecc0e44532e5f4
+  zh: 45177770f0e0a2fa
+/astro-one-app-boot/model-experience:
+  en: d2d0a21502d88c50
+  zh: 82a60c7a490a6834
+/astro-one-app-boot/model-experience/kv-cache-effect:
+  en: 5a1d9344c8fdc790
+  zh: 0b32579f658b2ca1
+/astro-one-app-boot/known-limitations-and-deferred-work:
+  en: 1400c4f22a79b59a
+  zh: 269f6c91584aec3e
+/astro-one-app-boot/known-limitations-and-deferred-work/dev-note:
+  en: d2f0d68fe29fb750
+  zh: 323d21ee73a9e3f6
+/astro-one-app-boot/known-limitations-and-deferred-work/dev-note/open-yaml-config-dump-stability:
+  en: 5ff3d8fab3d09091
+  zh: 2fd11c4359441ee5

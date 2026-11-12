@@ -1,0 +1,53 @@
+{
+  "name": "@astro-one/experimental-ptc-runtime-python",
+  "description": "CPython subprocess implementation of the Astro One PTC execution seam",
+  "version": "0.2.2-alpha.3",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/ptc-runtime-python"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "py/**/*.py",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/ptc-runtime": "workspace:*",
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/ptc-runtime": "workspace:*",
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/util-values": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/sandbox-local": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/session": "workspace:*"
+  },
+  "dependencies": {
+    "@astro-one/schemastery": "workspace:~"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

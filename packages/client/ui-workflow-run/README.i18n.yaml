@@ -1,0 +1,49 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-workflow-run/README.md
+/:
+  en: ef18c07bfe46a24f
+  zh: 926ebd71be99f196
+/astro-one-client-ui-workflow-run:
+  en: 96bdecc1251c6fcd
+  zh: c4febe924ef8fde1
+/astro-one-client-ui-workflow-run/summary:
+  en: ae0795ffc57b757c
+  zh: 3a7a653ee0fe5574
+/astro-one-client-ui-workflow-run/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-client-ui-workflow-run/use-this-package:
+  en: f7cbdca0c0b1e691
+  zh: 96a577f0da9ab18f
+/astro-one-client-ui-workflow-run/use-this-package/navigating-the-node:
+  en: 9f223e9f1e5f84d6
+  zh: f9416f079efc7c83
+/astro-one-client-ui-workflow-run/use-this-package/state-and-completion:
+  en: de2dbff7df2294ed
+  zh: 97a03787caf02e2b
+/astro-one-client-ui-workflow-run/understand-the-implementation:
+  en: d41b996f3fb6727b
+  zh: 6b40fdf1db894fff
+/astro-one-client-ui-workflow-run/understand-the-implementation/disclosure-choices:
+  en: adf86d983c51865e
+  zh: 014a4644d55be111
+/astro-one-client-ui-workflow-run/understand-the-implementation/composition:
+  en: 364d3c38e5f02149
+  zh: ca5dbee6ac27e141
+/astro-one-client-ui-workflow-run/further-exploration:
+  en: 2cfb5ba3938210d3
+  zh: 81e33b736c84a41e
+/astro-one-client-ui-workflow-run/model-experience:
+  en: 62a75f801964a0bb
+  zh: a247663753a52ae9
+/astro-one-client-ui-workflow-run/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/astro-one-client-ui-workflow-run/known-limitations-and-deferred-work:
+  en: ccf93626658a6513
+  zh: 662c331c377c3fd6
+/astro-one-client-ui-workflow-run/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

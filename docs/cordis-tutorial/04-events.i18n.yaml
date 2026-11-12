@@ -1,0 +1,16 @@
+# Bilingual-pair consistency record for 04-events.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/cordis-tutorial/04-events.md
+/4-events:
+  en: 1217b4f46562a878
+  zh: a1ee685418235952
+/4-events/declare-emit-listen:
+  en: a5b9207a435caf1f
+  zh: 3e06d12249fb712e
+/4-events/dispatch-modes:
+  en: df6accbcde3e3ef4
+  zh: 280c97a8e006ae34
+/4-events/waterfall-transform-or-short-circuit:
+  en: 2e4f89a4b61f5517
+  zh: 2018d3d811f90353

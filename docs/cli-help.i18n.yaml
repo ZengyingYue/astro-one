@@ -1,0 +1,34 @@
+# Bilingual-pair consistency record for cli-help.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/cli-help.md
+/:
+  en: d11ca88bdc409249
+  zh: d11ca88bdc409249
+/astro-one-cli-help:
+  en: bfbe672ade937d5d
+  zh: 7329eb14a2a21ca4
+/astro-one-cli-help/contents:
+  en: 5c39b48c03d8ab71
+  zh: 5397cc8074eb4fd5
+/astro-one-cli-help/astro-one:
+  en: 3c583cf61b63f891
+  zh: 1ff0865079419eb4
+/astro-one-cli-help/astro-one-plugin:
+  en: ae3463d4397a5eae
+  zh: 263c07814300aeb7
+/astro-one-cli-help/astro-one-acp:
+  en: 0102d01a00ec5922
+  zh: 080ccf65b6ecb957
+/astro-one-cli-help/astro-one-headless:
+  en: ed02cb827a9bfa91
+  zh: b71ba66aa9c0f104
+/astro-one-cli-help/astro-one-sdk:
+  en: 8e680bf35eacc355
+  zh: 1a41910344234f1e
+/astro-one-cli-help/astro-one-sdk-minimal:
+  en: eef866cac1199f1d
+  zh: 0509ad2187028799
+/astro-one-cli-help/astro-one-web:
+  en: dc961f542c23d0a5
+  zh: 604c8a0061e1ece5

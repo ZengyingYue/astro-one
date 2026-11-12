@@ -1,0 +1,55 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/computer-use-cua-driver-mcp/README.md
+/:
+  en: 9402e76135b1a640
+  zh: 13645ec9b9fe38de
+/astro-one-experimental-computer-use-cua-driver-mcp:
+  en: aa73041fc29771ce
+  zh: 7e2b62ae1cb74a98
+/astro-one-experimental-computer-use-cua-driver-mcp/summary:
+  en: 44777c18cdaf3b1a
+  zh: c9074f5857539122
+/astro-one-experimental-computer-use-cua-driver-mcp/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 725b47765ee8f30b
+/astro-one-experimental-computer-use-cua-driver-mcp/use-this-package:
+  en: 068aafbdce8d2e7a
+  zh: 39048ec16df7d45e
+/astro-one-experimental-computer-use-cua-driver-mcp/use-this-package/minimal-configuration:
+  en: d269a396bad462bf
+  zh: 1761570197930341
+/astro-one-experimental-computer-use-cua-driver-mcp/use-this-package/activation-and-ownership:
+  en: 982228a311225712
+  zh: 2e8f7908494d0a89
+/astro-one-experimental-computer-use-cua-driver-mcp/understand-the-implementation:
+  en: 13e164882813f89e
+  zh: dd8abaad16d1e76a
+/astro-one-experimental-computer-use-cua-driver-mcp/understand-the-implementation/verify-an-installed-driver:
+  en: 453e6cf1b9b3f54f
+  zh: 6a269f33d17a7a30
+/astro-one-experimental-computer-use-cua-driver-mcp/further-exploration:
+  en: ff442412414843e4
+  zh: 9eb97d218278b98b
+/astro-one-experimental-computer-use-cua-driver-mcp/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-experimental-computer-use-cua-driver-mcp/model-experience/cua-driver-tools-and-screenshots:
+  en: 9d221bfceb3efcf9
+  zh: 3ee738cd4d24157e
+/astro-one-experimental-computer-use-cua-driver-mcp/model-experience/cua-driver-tools-and-screenshots/what-the-model-sees:
+  en: 721e7cd3fba61ad4
+  zh: da2b6d63450101dc
+/astro-one-experimental-computer-use-cua-driver-mcp/model-experience/cua-driver-tools-and-screenshots/token-effect:
+  en: fd697825fdf78c9b
+  zh: 973cf9a0caaaa558
+/astro-one-experimental-computer-use-cua-driver-mcp/model-experience/cua-driver-tools-and-screenshots/kv-cache-effect:
+  en: 7064d248c94a5c4c
+  zh: 18abcf5142c078c7
+/astro-one-experimental-computer-use-cua-driver-mcp/known-limitations-and-deferred-work:
+  en: 8f09ff3a3bd01e9f
+  zh: 2682f4474b62cfe4
+/astro-one-experimental-computer-use-cua-driver-mcp/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

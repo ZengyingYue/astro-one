@@ -1,0 +1,46 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/cua-bundle/README.md
+/:
+  en: cc518dcd97629a96
+  zh: 465e999011282dc3
+/astro-one-cua-bundle:
+  en: bd3b5258d3b15757
+  zh: 6830ab08054f7c38
+/astro-one-cua-bundle/summary:
+  en: 614728216582f6a1
+  zh: cf695e509069c5f2
+/astro-one-cua-bundle/table-of-contents:
+  en: b563e4ec4727d0de
+  zh: d0228da978238e05
+/astro-one-cua-bundle/use-this-package:
+  en: d30279826f7a893e
+  zh: ea87b056058d4a5b
+/astro-one-cua-bundle/understand-the-implementation:
+  en: bdc9ae99d184449d
+  zh: dd3b6fbe8550ee11
+/astro-one-cua-bundle/further-exploration:
+  en: 11e8623526c8fff2
+  zh: f4c0afc2fe945f0e
+/astro-one-cua-bundle/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-cua-bundle/model-experience/computer-use-in-ptc-sessions:
+  en: e8f11f45b375771e
+  zh: e8f11f45b375771e
+/astro-one-cua-bundle/model-experience/computer-use-in-ptc-sessions/what-the-model-sees:
+  en: 9cde829c438023bf
+  zh: 83cf6ecf55e5844c
+/astro-one-cua-bundle/model-experience/computer-use-in-ptc-sessions/token-effect:
+  en: e8de232e96220fe7
+  zh: 5c791307e2123667
+/astro-one-cua-bundle/model-experience/computer-use-in-ptc-sessions/kv-cache-effect:
+  en: 417c40acd93df532
+  zh: 69cc5cf7140c75a9
+/astro-one-cua-bundle/known-limitations-and-deferred-work:
+  en: 559776e398bb7c47
+  zh: 27adfd2cacad1ee6
+/astro-one-cua-bundle/known-limitations-and-deferred-work/dev-note:
+  en: 0a1253c6f7b5e8b9
+  zh: ce96645b3e75874e

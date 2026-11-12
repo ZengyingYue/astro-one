@@ -1,0 +1,87 @@
+{
+  "name": "@astro-one/session-log-export",
+  "description": "Web Session-log ZIP export and Session Markdown copy",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/session-query/session-log-export"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@astro-one/session-format": "workspace:*",
+    "@astro-one/schemastery": "workspace:~",
+    "fflate": "^0.8.2",
+    "@astro-one/brand": "workspace:*"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-persistence": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/client-store": "workspace:*",
+    "@astro-one/client-ui-commands": "workspace:*",
+    "@astro-one/client-ui-conversation": "workspace:*",
+    "@astro-one/client-ui-layout": "workspace:*",
+    "@astro-one/client-ui-message-feedback": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-session": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
+    "@astro-one/commands": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-persistence": "workspace:*",
+    "@astro-one/session-query": "workspace:*",
+    "@astro-one/session-title": "workspace:*",
+    "react": "^18.2.0"
+  },
+  "astroOne": {
+    "client": {
+      "inject": [
+        "@astro-one/client-locale",
+        "@astro-one/client-ui-commands",
+        "@astro-one/client-ui-conversation",
+        "@astro-one/client-ui-layout",
+        "@astro-one/client-ui-renderer",
+        "@astro-one/client-ui-session"
+      ],
+      "platform": "web"
+    }
+  }
+}

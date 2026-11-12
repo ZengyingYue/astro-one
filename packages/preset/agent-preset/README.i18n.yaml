@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/preset/agent-preset/README.md
+/:
+  en: a3eb6ca39858c3d0
+  zh: 6fc16750d5f06034
+/astro-one-agent-preset:
+  en: 614efd92f69c1790
+  zh: 0fa88f5593ccdc1d
+/astro-one-agent-preset/summary:
+  en: af8933f035049563
+  zh: ab7a5f3dc562e84d
+/astro-one-agent-preset/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: b3ad7867f23dad1c
+/astro-one-agent-preset/use-this-package:
+  en: 3e243b0ee04dd23f
+  zh: 832841c35b57180a
+/astro-one-agent-preset/understand-the-implementation:
+  en: 6b0ac2d7cc0135d6
+  zh: c14b0fd45f9443ae
+/astro-one-agent-preset/further-exploration:
+  en: 0ce08b9b56318223
+  zh: 6113165735a07ce1
+/astro-one-agent-preset/model-experience:
+  en: e982cd210104c513
+  zh: cbde971d870c7ca5
+/astro-one-agent-preset/model-experience/kv-cache-effect:
+  en: 4644bd5f0c865667
+  zh: 9aedc8ac43fb8b61
+/astro-one-agent-preset/known-limitations-and-deferred-work:
+  en: 4546a11627bbbca1
+  zh: eaa260cdfe37e31f
+/astro-one-agent-preset/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

@@ -1,0 +1,7 @@
+- alert: This session is already in use, possibly by another running Astro One instance (such as astro-one web or the desktop app). Quit other running Astro One instances and try again.
+- textbox "Message or run a task, / commands, @ files or sessions":
+  - paragraph: Queue submission to retry
+- button "Add files or run commands"
+- 'button "Access mode, current: Workspace Write"': Workspace Write
+- button "Select model, current DeepSeek-V4-Flash": DeepSeek-V4-Flash
+- button "Queue message"

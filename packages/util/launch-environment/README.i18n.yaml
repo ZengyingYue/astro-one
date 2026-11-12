@@ -1,0 +1,49 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/util/launch-environment/README.md
+/:
+  en: 6bd544ce4e92a4e1
+  zh: cb05ca5ce08f4bd4
+/astro-one-launch-environment:
+  en: 9201540a3cbc5341
+  zh: 3df0c321fabf314d
+/astro-one-launch-environment/summary:
+  en: 8471c0412927f0d0
+  zh: c814524197e82311
+/astro-one-launch-environment/table-of-contents:
+  en: 80b31a934611cb4a
+  zh: 05f3f7f9cb2fd881
+/astro-one-launch-environment/use-this-package:
+  en: c9df1b8cf300ab4f
+  zh: 6f80e2e72fc5b1d4
+/astro-one-launch-environment/use-this-package/resolving-a-value:
+  en: 5aed2d5fa0b116c0
+  zh: 9ad018c5cb09791d
+/astro-one-launch-environment/use-this-package/how-layers-rank:
+  en: 621192d2f497e2e7
+  zh: 4071cb5b99a7c6be
+/astro-one-launch-environment/use-this-package/when-no-launcher-booted-the-tree:
+  en: 3c368938c6960588
+  zh: c704bee90390f259
+/astro-one-launch-environment/understand-the-implementation:
+  en: c2cdb9ea66c61cc5
+  zh: 5ccf1802da65483d
+/astro-one-launch-environment/understand-the-implementation/source-map:
+  en: c693fdeed31fab31
+  zh: 5d25a3c90cfa8f80
+/astro-one-launch-environment/understand-the-implementation/how-the-snapshot-stays-frozen:
+  en: f933fc349e258d27
+  zh: 717166c9a80a4821
+/astro-one-launch-environment/understand-the-implementation/what-omission-means:
+  en: 03782c3e48792227
+  zh: c83116ba53b3ab12
+/astro-one-launch-environment/further-exploration:
+  en: 30518a53f9c687ba
+  zh: cc3b1ebb4ad00c48
+/astro-one-launch-environment/known-limitations-and-deferred-work:
+  en: eb6a992a63279a66
+  zh: 74acb823b52773a0
+/astro-one-launch-environment/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

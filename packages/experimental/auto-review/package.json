@@ -1,0 +1,89 @@
+{
+  "name": "@astro-one/experimental-auto-review",
+  "description": "Per-tool LLM authorization review for the Astro One Auto permission preset",
+  "version": "0.2.2-alpha.3",
+  "icon": "./icon.svg",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/auto-review"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./locale/*.json": "./locale/*.json",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./cordis.patch.yml": "./cordis.patch.yml"
+  },
+  "files": [
+    "icon.svg",
+    "locale/*.json",
+    "docs",
+    "lib/index.js",
+    "cordis.patch.yml",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-instructions": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/permission-presets": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/working-directory": "workspace:*"
+  },
+  "dependencies": {
+    "@astro-one/util-values": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-instructions": "workspace:*",
+    "@astro-one/agent-loop": "workspace:*",
+    "@astro-one/agent-loop-testkit": "workspace:*",
+    "@astro-one/bash-sandbox": "workspace:*",
+    "@astro-one/compaction": "workspace:*",
+    "@astro-one/fs-local": "workspace:*",
+    "@astro-one/fs-observation-policy": "workspace:*",
+    "@astro-one/fs-sandbox": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/llm-deepseek": "workspace:*",
+    "@astro-one/llm-deepseek-api-key": "workspace:*",
+    "@astro-one/permission-presets": "workspace:*",
+    "@astro-one/ptc-runtime-node": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/shell": "workspace:*",
+    "@astro-one/shell-env": "workspace:*",
+    "@astro-one/subagent": "workspace:*",
+    "@astro-one/subprocess-local": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/tool-bash": "workspace:*",
+    "@astro-one/tool-executor-native": "workspace:*",
+    "@astro-one/tool-executor-ptc": "workspace:*",
+    "@astro-one/tool-fs": "workspace:*",
+    "@astro-one/tool-subagent": "workspace:*",
+    "@astro-one/tool-testkit": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/user-approval": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/working-directory": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "astroOne": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

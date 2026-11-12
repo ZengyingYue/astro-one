@@ -1,0 +1,16 @@
+# Bilingual-pair consistency record for guide.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/upgrade-guide/v0.2.1-alpha.3/plugin-engines-astro-one/guide.md
+/:
+  en: 92b290f595a77904
+  zh: f8fcafba8c7e193a
+/plugin-compatibility-reads-engines-astroone-first:
+  en: 0de3c28f33060df1
+  zh: 14173d3400a7da07
+/plugin-compatibility-reads-engines-astroone-first/change:
+  en: 4bd6c2d74a382647
+  zh: bfaf080bfa4a42fb
+/plugin-compatibility-reads-engines-astroone-first/migration:
+  en: 675d7736ec78ccf9
+  zh: cd8a817e6ef975e5

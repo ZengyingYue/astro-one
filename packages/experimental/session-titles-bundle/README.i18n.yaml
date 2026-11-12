@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/session-titles-bundle/README.md
+/:
+  en: fa9b9ced4806b14a
+  zh: faa2967665315c2a
+/astro-one-experimental-session-titles-bundle:
+  en: ad836f178f444ed4
+  zh: a922dfe5fb346d0d
+/astro-one-experimental-session-titles-bundle/summary:
+  en: a56206d66c18d447
+  zh: 67cde874fd703b58
+/astro-one-experimental-session-titles-bundle/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 988e839059414d27
+/astro-one-experimental-session-titles-bundle/use-this-package:
+  en: 3a843c2d148f94f1
+  zh: e67b41828084eb86
+/astro-one-experimental-session-titles-bundle/understand-the-implementation:
+  en: df3cf52d23ed7693
+  zh: f258232fc2567726
+/astro-one-experimental-session-titles-bundle/further-exploration:
+  en: 1f2f3b3918419526
+  zh: 13ef2791e96a642c
+/astro-one-experimental-session-titles-bundle/model-experience:
+  en: ca951947e3bc7aea
+  zh: c776c27d94aa2ed2
+/astro-one-experimental-session-titles-bundle/model-experience/kv-cache-effect:
+  en: 1b2209bbbf869b1a
+  zh: 5b9de62271343e4e
+/astro-one-experimental-session-titles-bundle/known-limitations-and-deferred-work:
+  en: 833386166a2ec27c
+  zh: a70ebec93a3be891
+/astro-one-experimental-session-titles-bundle/known-limitations-and-deferred-work/dev-note:
+  en: 279d01435256cd2a
+  zh: 83780964e5de2f54

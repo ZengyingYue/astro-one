@@ -1,0 +1,88 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/core/system-prompt/README.md
+/:
+  en: 51d99b2500db958f
+  zh: 91f2b113ba7989fd
+/astro-one-system-prompt:
+  en: 318d91bf343a9dbf
+  zh: 045632684f3886fd
+/astro-one-system-prompt/summary:
+  en: 46c26d8da90a6477
+  zh: 22087407a8db53a9
+/astro-one-system-prompt/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-system-prompt/use-this-package:
+  en: a53d35a5eb3496aa
+  zh: a022914c4a2b7b46
+/astro-one-system-prompt/use-this-package/configure-the-prompt:
+  en: 62468851b4f8e03a
+  zh: 77ad1fee6b698500
+/astro-one-system-prompt/use-this-package/contribute-a-prompt-section:
+  en: ef415fcd9e1cf8bb
+  zh: 6ad4df288f91bdb1
+/astro-one-system-prompt/use-this-package/contribute-a-prompt-variable:
+  en: 4a2bfba641d7d6ee
+  zh: 9b7c3dca85304e9e
+/astro-one-system-prompt/use-this-package/contribute-tool-schemas:
+  en: 009ef267dac2f270
+  zh: e79c24bff5cd836f
+/astro-one-system-prompt/use-this-package/suppress-runtime-context:
+  en: a664608a3b37f8d7
+  zh: d6dd60772f4d72b8
+/astro-one-system-prompt/understand-the-implementation:
+  en: ce7e776e9d516bdb
+  zh: 59d2751743db7795
+/astro-one-system-prompt/understand-the-implementation/design-concept:
+  en: c91963b89a866fed
+  zh: ef9ef4940145778f
+/astro-one-system-prompt/understand-the-implementation/source-map:
+  en: d9575bcb07a1145b
+  zh: 0f1a388780d055b1
+/astro-one-system-prompt/understand-the-implementation/assembly-and-rendering:
+  en: d51940213af9b87f
+  zh: f3a2540010624a79
+/astro-one-system-prompt/understand-the-implementation/scoping:
+  en: 1100ab1dfe961631
+  zh: c510275c893951b4
+/astro-one-system-prompt/further-exploration:
+  en: d921685273652a8f
+  zh: 9c744c596be3052c
+/astro-one-system-prompt/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-system-prompt/model-experience/system-prompt:
+  en: cf78b9dd5596495f
+  zh: bd44560f8c2435e8
+/astro-one-system-prompt/model-experience/system-prompt/what-the-model-sees:
+  en: 622e83de7772dc1f
+  zh: 7b3c54f08a317e93
+/astro-one-system-prompt/model-experience/system-prompt/what-the-model-sees/harness-identity:
+  en: 40effd71cb503319
+  zh: 9969356237a4f398
+/astro-one-system-prompt/model-experience/system-prompt/token-effect:
+  en: 29722e212137deaa
+  zh: 92cd0f1a16b10315
+/astro-one-system-prompt/model-experience/system-prompt/kv-cache-effect:
+  en: 0fbc460470ceb0ef
+  zh: d69204293c91a587
+/astro-one-system-prompt/model-experience/tool-schemas:
+  en: 3039bc5e7a796b21
+  zh: 6b7a9eaf69c9ea53
+/astro-one-system-prompt/model-experience/tool-schemas/what-the-model-sees:
+  en: 138d5a48840f4ed4
+  zh: 91cea2cc5d6da4ad
+/astro-one-system-prompt/model-experience/tool-schemas/token-effect:
+  en: f3a7d374c55e1720
+  zh: 0ee48af678cb875f
+/astro-one-system-prompt/model-experience/tool-schemas/kv-cache-effect:
+  en: ebd329e360f0d143
+  zh: 9d67fe503a6a095a
+/astro-one-system-prompt/known-limitations-and-deferred-work:
+  en: 23bb9f59ceb1620c
+  zh: be34f1770fa2e027
+/astro-one-system-prompt/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

@@ -1,0 +1,58 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write apps/desktop/packaging/README.md
+/:
+  en: 9bc7767fc1bced33
+  zh: 4f6198337a573cf4
+/desktop-packaging:
+  en: 2fd919cda323b718
+  zh: 0f85259b462b7533
+/desktop-packaging/summary:
+  en: e98e516b9e1bd0f4
+  zh: 1a2abd7d89ef78a1
+/desktop-packaging/table-of-contents:
+  en: a6203dc2e690c7e1
+  zh: 07b516549b8e3328
+/desktop-packaging/choose-a-build-path:
+  en: 265b5c638e09d72f
+  zh: aa2a3bf5cd654ade
+/desktop-packaging/release-versions:
+  en: 306ec1505e095e8c
+  zh: 3b159165268183fd
+/desktop-packaging/configuration-and-local-builds:
+  en: 49871bd5e4fc47a5
+  zh: 7b3ea4d7e8248679
+/desktop-packaging/windows-actions-packaging:
+  en: b6110907122f86b1
+  zh: 34976ef328103da8
+/desktop-packaging/macos-self-hosted-packaging:
+  en: 49b7e99540b20d7a
+  zh: 7b4e51b6037f7cfe
+/desktop-packaging/unsigned-windows-test-installer:
+  en: 737ee51a1e84e0b2
+  zh: 29727949d50969bb
+/desktop-packaging/local-macos-dmg-without-release-signing:
+  en: 69cae63d90c68051
+  zh: 96d41912d756eae5
+/desktop-packaging/macos-release-signing-and-diagnostics:
+  en: f28691139c7bc4ec
+  zh: 9fc5a08054223255
+/desktop-packaging/directory-builds-and-preparation:
+  en: 34fe440bbb49d990
+  zh: 7c590284a4569a29
+/desktop-packaging/local-official-bundles-from-a-loopback-registry:
+  en: 29cf243c9933ba9a
+  zh: da82d6de1d566d1f
+/desktop-packaging/runtime-file-selection-and-installation-checks:
+  en: eb65eb5860c5bcb8
+  zh: b8e78e5c9d9c2227
+/desktop-packaging/desktop-runtime-preparation:
+  en: 22b809fb736c8838
+  zh: 3267e74a4bfcd77e
+/desktop-packaging/installation-and-release-verification:
+  en: edd1099195644712
+  zh: 3ca7492ade3b068b
+/desktop-packaging/dev-note:
+  en: 691194744993dfaa
+  zh: e5798faf99546ff8

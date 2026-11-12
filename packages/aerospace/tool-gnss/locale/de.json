@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "GNSS-Positionierungswerkzeuge",
+    "description": "RINEX-basierte Einzelpunktpositionierung mit RAIM, RTK mit LAMBDA-Mehrdeutigkeitslösung und Planung von Satellitensichtbarkeit und DOP."
+  }
+}

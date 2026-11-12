@@ -1,0 +1,42 @@
+- id: agent-default-model
+  name: '@astro-one/agent-default-model'
+  config:
+    provider: deepseek-official
+    model: deepseek-v4-pro
+
+- id: session-persistence-jsonl
+  name: '@astro-one/session-persistence-jsonl'
+  config:
+    root: !!js astroOneHomePath('sessions')
+    compression: !!js 'process.env.ASTRO_ONE_SNAPSHOT === undefined ? ''zstd'' : ''none'''
+
+- id: agent-instructions
+  name: '@astro-one/agent-instructions'
+  config:
+    maxBytes: 65536
+
+- id: tool-executor-native
+  disabled: false
+
+- id: tool-executor-ptc
+  disabled: true
+
+- id: system-prompt
+  name: '@astro-one/system-prompt'
+  config:
+    personaPrefix: |
+      You are a coding assistant powered by the {{model}} model.
+
+      Verify your work by running the code or tests. Keep answers brief and factual.
+
+- insert:
+    - id: cordis-host-runner
+      name: '@astro-one/cordis-host-runner'
+      config:
+        clientInspectTimeoutMs: 100
+    - id: cordis-inspect-providers
+      name: '@astro-one/tool-cordis/host'
+    - id: tool-cordis
+      name: '@astro-one/tool-cordis'
+    - id: client-inspect-timeout-fixture
+      name: ./client-fixture.mjs

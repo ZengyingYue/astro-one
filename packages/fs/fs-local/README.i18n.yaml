@@ -1,0 +1,61 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/fs/fs-local/README.md
+/:
+  en: ce32f58ec51489e8
+  zh: d12c4665bd72e452
+/astro-one-fs-local:
+  en: 1427efeb122863b7
+  zh: 42e5c8c566144536
+/astro-one-fs-local/summary:
+  en: 9a11b928e723ea63
+  zh: 04085b903ec8b2f6
+/astro-one-fs-local/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-fs-local/use-this-package:
+  en: 90f470ea11d1ca6e
+  zh: c71be0ff7284973f
+/astro-one-fs-local/use-this-package/when-to-choose-it:
+  en: 5dbd3b1d7d222593
+  zh: b895fc2cae6c019c
+/astro-one-fs-local/use-this-package/minimal-configuration:
+  en: cd143da1c09dfd66
+  zh: 53e280bf28ad9c57
+/astro-one-fs-local/use-this-package/what-you-can-do:
+  en: 04b6889eec28bd96
+  zh: e94e2787de0ba704
+/astro-one-fs-local/understand-the-implementation:
+  en: 6ffc93e09381bd3d
+  zh: 57c3192c26a080ef
+/astro-one-fs-local/understand-the-implementation/design-concept:
+  en: 197876fc5f05cdc3
+  zh: a6e7a9eb921d394b
+/astro-one-fs-local/understand-the-implementation/source-map:
+  en: e69aa171af80b6b4
+  zh: 5ebf652092c70aad
+/astro-one-fs-local/understand-the-implementation/write-path:
+  en: eefa5c3b69af4614
+  zh: d5ac6b2e14efe268
+/astro-one-fs-local/understand-the-implementation/edit-path:
+  en: 1e130ab16c931821
+  zh: b3690b8e13292027
+/astro-one-fs-local/understand-the-implementation/ownership-and-invariants:
+  en: f094e3ea30517cb4
+  zh: b213bb41b7a0201d
+/astro-one-fs-local/further-exploration:
+  en: 978de4f3d771fc1f
+  zh: b9c28150ba3fd096
+/astro-one-fs-local/model-experience:
+  en: abf4c62d95a4af7d
+  zh: d5a992cb51e1eab0
+/astro-one-fs-local/model-experience/kv-cache-effect:
+  en: 40294c1c31b74824
+  zh: 0857e9b4dd363e0a
+/astro-one-fs-local/known-limitations-and-deferred-work:
+  en: 653e3d81d6a5f82d
+  zh: 633f47afeb0da9ba
+/astro-one-fs-local/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

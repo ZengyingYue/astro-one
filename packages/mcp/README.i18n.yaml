@@ -1,0 +1,25 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/mcp/README.md
+/:
+  en: e6a2aa771ce2d33c
+  zh: e072e7f0f03d7f0f
+/mcp-model-context-protocol:
+  en: 819500055b3dc492
+  zh: 33d88730da1e9f5d
+/mcp-model-context-protocol/summary:
+  en: 3511f6406979c66b
+  zh: a82c10f1fd8564c1
+/mcp-model-context-protocol/table-of-contents:
+  en: 1eb35b015a6c423f
+  zh: a8a3dceee2c9e943
+/mcp-model-context-protocol/packages:
+  en: 403cb1e964ed2cc5
+  zh: 782cd7965cc79652
+/mcp-model-context-protocol/related-documentation:
+  en: edbf789b63074a06
+  zh: 9fa4473c025dbd5e
+/mcp-model-context-protocol/dev-note:
+  en: 5de1d6304e00c58f
+  zh: 8d8225361cfa29e5

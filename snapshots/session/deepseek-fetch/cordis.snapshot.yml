@@ -1,0 +1,36 @@
+# Keyless replay counterpart: deterministic HTTP remains real; only the model
+# adapter is replaced by replay.
+- id: llm-deepseek
+  name: '@astro-one/llm-deepseek-api-key'
+  disabled: true
+
+- insert:
+    - id: llm-replay
+      name: '@astro-one/llm-replay'
+      config:
+        providers:
+          - id: deepseek-official
+            name: DeepSeek
+            models:
+              - id: deepseek-v4-flash
+              - id: deepseek-v4-pro
+
+    - id: deepseek-fetch-fixture
+      name: './deepseek-fetch-fixture.mjs'
+
+- id: web
+  name: '@astro-one/web'
+  config:
+    searchProvider: deepseek-search-api
+    fetchProvider: deepseek-fetch-api
+
+- id: web-deepseek-api
+  name: '@astro-one/web-deepseek-api'
+  config:
+    fetchApiKeyEnv: ASTRO_ONE_SNAPSHOT_FETCH_KEY
+    fetchBaseURL: http://127.0.0.1:43118/api/v1/tools
+
+- id: tool-web
+  name: '@astro-one/tool-web'
+  config:
+    search: false

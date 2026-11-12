@@ -1,0 +1,46 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/util/official-bundles/README.md
+/:
+  en: 8664930982032477
+  zh: a034cae3843550c3
+/astro-one-official-bundles:
+  en: 420dc7ce60bc26e3
+  zh: d444f0a55aef62c2
+/astro-one-official-bundles/summary:
+  en: a12b8b3caf9f6a6e
+  zh: 22ceeb046983d42c
+/astro-one-official-bundles/table-of-contents:
+  en: 80b31a934611cb4a
+  zh: 05f3f7f9cb2fd881
+/astro-one-official-bundles/use-this-package:
+  en: 1cb89d16a6de115c
+  zh: 75925ae7a16278ad
+/astro-one-official-bundles/use-this-package/profile-templates:
+  en: ad1034d25b88721a
+  zh: cf661740858f6136
+/astro-one-official-bundles/use-this-package/optional-and-retired-bundles:
+  en: 6070329c110c6502
+  zh: ad80ca91e2d6f6bc
+/astro-one-official-bundles/use-this-package/plugin-manager-lists:
+  en: 78b65456d94fe327
+  zh: 317398082b96ad28
+/astro-one-official-bundles/use-this-package/on-demand-bundles:
+  en: edc05d1c40beee7a
+  zh: 3d098b2103cfaf6a
+/astro-one-official-bundles/understand-the-implementation:
+  en: 3fb2b58db529d8be
+  zh: 46064459a23d458d
+/astro-one-official-bundles/understand-the-implementation/source-map:
+  en: bbd3b4f82e6349d9
+  zh: f1e056d14620519d
+/astro-one-official-bundles/further-exploration:
+  en: 427d88229f85d371
+  zh: ea877e45c7ec1b46
+/astro-one-official-bundles/known-limitations-and-deferred-work:
+  en: 397b1c12c4e1b977
+  zh: 26117db1df24e836
+/astro-one-official-bundles/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

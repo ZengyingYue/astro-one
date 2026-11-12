@@ -1,0 +1,169 @@
+{
+  "name": "@astro-one/experimental-liveshare",
+  "description": "Opt-in LiveShare host bundle: share a Session through a separate Relay at the view or bounded-write tier, with forking and attachment uploads as independent switches",
+  "version": "0.2.2-alpha.3",
+  "icon": "./icon.svg",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/liveshare"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./types": {
+      "types": "./lib/types/share-api-types.d.ts"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./locale/*.json": "./locale/*.json",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "icon.svg",
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "cordis.patch.yml",
+    "lib/owner-gateway/cli.js",
+    "lib/retry-backoff-*.js",
+    "lib/types/**/*.d.ts",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts"
+  ],
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@astro-one/atomic-write": "workspace:*",
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/experimental-liveshare-protocol": "workspace:*",
+    "@astro-one/http-proxy": "workspace:*",
+    "@astro-one/official-bundles": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/typert-protocol": "workspace:*",
+    "@astro-one/util-values": "workspace:*",
+    "undici": "8.11.2",
+    "ws": "^8.18.3",
+    "zod": "4.4.3"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/scope": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-loop-testkit": "workspace:*",
+    "@astro-one/api-gateway": "workspace:*",
+    "@astro-one/api-remote-access": "workspace:*",
+    "@astro-one/api-remotes": "workspace:*",
+    "@astro-one/api-session-controller": "workspace:*",
+    "@astro-one/api-settings-controller": "workspace:*",
+    "@astro-one/api-workspace-controller": "workspace:*",
+    "@astro-one/api-workspace-files": "workspace:*",
+    "@astro-one/client-connection": "workspace:*",
+    "@astro-one/client-file-upload": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/client-modules": "workspace:*",
+    "@astro-one/client-resources": "workspace:*",
+    "@astro-one/client-shortcuts": "workspace:*",
+    "@astro-one/client-store": "workspace:*",
+    "@astro-one/client-test-runtime": "workspace:*",
+    "@astro-one/client-ui-agent-preset": "workspace:*",
+    "@astro-one/client-ui-approval": "workspace:*",
+    "@astro-one/client-ui-attachment": "workspace:*",
+    "@astro-one/client-ui-brand-official": "workspace:*",
+    "@astro-one/client-ui-chat": "workspace:*",
+    "@astro-one/client-ui-commands": "workspace:*",
+    "@astro-one/client-ui-context-menu": "workspace:*",
+    "@astro-one/client-ui-conversation": "workspace:*",
+    "@astro-one/client-ui-deliverables": "workspace:*",
+    "@astro-one/client-ui-input-trigger": "workspace:*",
+    "@astro-one/client-ui-jobs": "workspace:*",
+    "@astro-one/client-ui-layout": "workspace:*",
+    "@astro-one/client-ui-plan": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-reference": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-session": "workspace:*",
+    "@astro-one/client-ui-settings": "workspace:*",
+    "@astro-one/client-ui-sidebar": "workspace:*",
+    "@astro-one/client-ui-sidebar-right": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
+    "@astro-one/client-ui-subagent": "workspace:*",
+    "@astro-one/client-ui-theme": "workspace:*",
+    "@astro-one/client-ui-tool": "workspace:*",
+    "@astro-one/client-ui-trajectory": "workspace:*",
+    "@astro-one/client-ui-user-questions": "workspace:*",
+    "@astro-one/client-ui-workflow-run": "workspace:*",
+    "@astro-one/client-ui-workspace": "workspace:*",
+    "@astro-one/client-web": "workspace:*",
+    "@astro-one/cua": "workspace:*",
+    "@astro-one/experimental-api-speech-to-text": "workspace:*",
+    "@astro-one/experimental-claude-code-mods": "workspace:*",
+    "@astro-one/experimental-client-ui-cot-translation": "workspace:*",
+    "@astro-one/fs": "workspace:*",
+    "@astro-one/fs-local": "workspace:*",
+    "@astro-one/fs-observation-policy": "workspace:*",
+    "@astro-one/fs-sandbox": "workspace:*",
+    "@astro-one/host-webserver": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/settings": "workspace:*",
+    "@astro-one/tool-executor-native": "workspace:*",
+    "@astro-one/tool-fs": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/typert-registry": "workspace:*",
+    "@astro-one/workspace": "workspace:*",
+    "@types/ws": "^8.18.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "astroOne": {
+    "bundle": {
+      "patch": "./cordis.patch.yml",
+      "listedByDefault": false
+    },
+    "client": {
+      "inject": [
+        "@astro-one/api-remote-access",
+        "@astro-one/api-remotes",
+        "@astro-one/client-locale",
+        "@astro-one/client-ui-conversation",
+        "@astro-one/client-ui-primitives",
+        "@astro-one/client-ui-renderer",
+        "@astro-one/client-ui-session"
+      ],
+      "platform": "web"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

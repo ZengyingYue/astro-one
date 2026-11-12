@@ -1,0 +1,36 @@
+# PTC mode image overlay: mounts the worker runtime and durable attachment
+# store so a nested read_image result can cross the generic rich-result bridge.
+# The live config selects the shipped vision route for manual use.
+- id: agent-default-model
+  name: '@astro-one/agent-default-model'
+  config:
+    provider: deepseek-official
+    model: deepseek-v4-flash-vision-exp
+
+- id: session-persistence-jsonl
+  name: '@astro-one/session-persistence-jsonl'
+  config:
+    root: !!js astroOneHomePath('sessions')
+    compression: !!js 'process.env.ASTRO_ONE_SNAPSHOT === undefined ? ''zstd'' : ''none'''
+
+- id: agent-instructions
+  name: '@astro-one/agent-instructions'
+  config:
+    maxBytes: 65536
+
+- id: tool-executor-native
+  disabled: true
+
+- id: tool-executor-ptc
+  disabled: false
+
+- id: system-prompt
+  name: '@astro-one/system-prompt'
+  config:
+    personaPrefix: |
+      You are a coding assistant powered by the {{model}} model.
+
+      Verify your work by running the code or tests. Keep answers brief and factual.
+
+- id: attachment-local
+  name: '@astro-one/attachment-local'

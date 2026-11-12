@@ -1,0 +1,64 @@
+{
+  "name": "@astro-one/tool-session-query",
+  "description": "Workspace-authorized model-facing session history search, trace, and event read tools",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/tool-session-query"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-query": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/tools": "workspace:*"
+  },
+  "dependencies": {
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/schemastery": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-loop": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-persistence": "workspace:*",
+    "@astro-one/session-persistence-jsonl": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/session-query": "workspace:*",
+    "@astro-one/session-query-sqlite": "workspace:*",
+    "@astro-one/session-title": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/timeout": "workspace:*",
+    "@astro-one/tool-call-timeout-policy": "workspace:*",
+    "@astro-one/tool-executor-native": "workspace:*",
+    "@astro-one/tool-testkit": "workspace:*",
+    "@astro-one/tools": "workspace:*"
+  }
+}

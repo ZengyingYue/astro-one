@@ -1,0 +1,58 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/host/directory-picker/README.md
+/:
+  en: 12d81f579b3578c5
+  zh: 31ceb9bec2a62864
+/astro-one-host-directory-picker:
+  en: 5165c95fd5818629
+  zh: 3b58bf5d10cae4de
+/astro-one-host-directory-picker/summary:
+  en: eccb4c3b89bf1072
+  zh: 97f245651d77ec7c
+/astro-one-host-directory-picker/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-host-directory-picker/use-this-package:
+  en: 05f272a3dc5484cb
+  zh: 0cc21b2d26fc0ff0
+/astro-one-host-directory-picker/use-this-package/choosing-a-backend:
+  en: fd2d6ab15855960b
+  zh: 03da237d8fc6f460
+/astro-one-host-directory-picker/use-this-package/the-capability-contract:
+  en: cb6a87e5fa0dcda6
+  zh: 721c2c9271f633df
+/astro-one-host-directory-picker/use-this-package/what-rows-carry:
+  en: 9842d42847a8240f
+  zh: e3bba4ee8075e6bc
+/astro-one-host-directory-picker/understand-the-implementation:
+  en: 42b15ac6321706aa
+  zh: 4ed0861911abaf5d
+/astro-one-host-directory-picker/understand-the-implementation/design-concept:
+  en: 83c5f6025b89178a
+  zh: 8e7c011376abef02
+/astro-one-host-directory-picker/understand-the-implementation/the-merge-extensible-vocabulary:
+  en: 3a5018ce8b2b8a6f
+  zh: 6d27549330773627
+/astro-one-host-directory-picker/understand-the-implementation/source-map:
+  en: 742ee37fe9c70d93
+  zh: 93f0371cc6ec6dae
+/astro-one-host-directory-picker/understand-the-implementation/failure-vocabulary:
+  en: 410862f3762b441a
+  zh: f15318e549388618
+/astro-one-host-directory-picker/further-exploration:
+  en: 3b9c687a11e2a63d
+  zh: eed310475506a9c2
+/astro-one-host-directory-picker/model-experience:
+  en: 90a8149ae911c396
+  zh: 887d434607099162
+/astro-one-host-directory-picker/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/astro-one-host-directory-picker/known-limitations-and-deferred-work:
+  en: 8c2c5c2dcb2bd5ec
+  zh: 17005c66ae6029ad
+/astro-one-host-directory-picker/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

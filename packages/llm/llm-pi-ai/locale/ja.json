@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "pi-ai モデルアダプター",
+    "description": "pi-ai を通じて Astro One に DeepSeek モデルを接続する、astro-one-llm-deepseek の設計検証用実装です。"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "formatVersion": 2,
+  "roots": [
+    {"key":"event:job/registered","kind":"event","event":"job/registered","surface":false,"digest":"58ce0801696b1933865834b433a83890e9c38ecbdea64d3943129e9a35593b8f"},
+    {"key":"event:job/settled","kind":"event","event":"job/settled","surface":false,"digest":"3690782986ea116dc846a779600f88a35e5122a736a5fed588d4c74d4dc5f899"}
+  ],
+  "types": [],
+  "nodes": {
+    "2dd4f4a86cd47530": {"kind":"object","properties":[{"name":"cause","type":"fdc9d4ce1886b14f","optional":false},{"name":"detail","type":"fcf6898d4d89ad11","optional":true},{"name":"finishedAt","type":"546c2b19cfc9b771","optional":false},{"name":"jobId","type":"fcf6898d4d89ad11","optional":false},{"name":"kind","type":"fcf6898d4d89ad11","optional":false},{"name":"label","type":"fcf6898d4d89ad11","optional":false},{"name":"owner","type":"fcf6898d4d89ad11","optional":false},{"name":"producerReported","type":"360d2cad07770f73","optional":false},{"name":"startedAt","type":"546c2b19cfc9b771","optional":false},{"name":"status","type":"5ec46ae38c3888f8","optional":false},{"name":"toolCall","type":"da38aa969776e2c0","optional":true}],"indices":[]},
+    "351a53bf3ecd43be": {"kind":"object","properties":[{"name":"jobId","type":"fcf6898d4d89ad11","optional":false},{"name":"kind","type":"fcf6898d4d89ad11","optional":false},{"name":"label","type":"fcf6898d4d89ad11","optional":false},{"name":"owner","type":"fcf6898d4d89ad11","optional":false},{"name":"startedAt","type":"546c2b19cfc9b771","optional":false},{"name":"toolCall","type":"da38aa969776e2c0","optional":true}],"indices":[]},
+    "360d2cad07770f73": {"kind":"primitive","type":"boolean"},
+    "3690782986ea116d": {"kind":"object","properties":[{"name":"data","type":"2dd4f4a86cd47530","optional":false},{"name":"ignorable","type":"e5f31a1a5321feee","optional":true},{"name":"seq","type":"546c2b19cfc9b771","optional":false},{"name":"time","type":"546c2b19cfc9b771","optional":false},{"name":"type","type":"5b7864abc9d202da","optional":false}],"indices":[]},
+    "546c2b19cfc9b771": {"kind":"primitive","type":"number"},
+    "58ce0801696b1933": {"kind":"object","properties":[{"name":"data","type":"351a53bf3ecd43be","optional":false},{"name":"ignorable","type":"e5f31a1a5321feee","optional":true},{"name":"seq","type":"546c2b19cfc9b771","optional":false},{"name":"time","type":"546c2b19cfc9b771","optional":false},{"name":"type","type":"dbbcec50eb686ee0","optional":false}],"indices":[]},
+    "5b7864abc9d202da": {"kind":"literal","value":"job/settled"},
+    "5ec46ae38c3888f8": {"kind":"union","types":["88b09fd79ea3ffe1","8a3ceac43ed5ee32","e4a22f5217bbcdec"]},
+    "681060822dbbfbea": {"kind":"literal","value":"producer"},
+    "88b09fd79ea3ffe1": {"kind":"literal","value":"killed"},
+    "8a3ceac43ed5ee32": {"kind":"literal","value":"completed"},
+    "c787ebabebe0f173": {"kind":"literal","value":"kill"},
+    "da38aa969776e2c0": {"kind":"object","properties":[{"name":"callId","type":"fcf6898d4d89ad11","optional":false},{"name":"rootCallId","type":"fcf6898d4d89ad11","optional":false}],"indices":[]},
+    "dbbcec50eb686ee0": {"kind":"literal","value":"job/registered"},
+    "e0cd0afa3808dc2c": {"kind":"literal","value":"teardown"},
+    "e4a22f5217bbcdec": {"kind":"literal","value":"failed"},
+    "e5f31a1a5321feee": {"kind":"literal","value":true},
+    "fcf6898d4d89ad11": {"kind":"primitive","type":"string"},
+    "fdc9d4ce1886b14f": {"kind":"union","types":["681060822dbbfbea","c787ebabebe0f173","e0cd0afa3808dc2c"]}
+  }
+}

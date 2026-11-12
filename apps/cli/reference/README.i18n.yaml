@@ -1,0 +1,31 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write apps/cli/reference/README.md
+/astro-one-cli-behavior-reference:
+  en: 45f04e3c1a61b217
+  zh: a2b6036d72cff04b
+/astro-one-cli-behavior-reference/profile-boot:
+  en: 75727236f40e4495
+  zh: f15c90d6c3eb796d
+/astro-one-cli-behavior-reference/profile-boot/app-arguments:
+  en: 568b87e305535c48
+  zh: 4d4a10b875a64158
+/astro-one-cli-behavior-reference/profile-boot/config-schema-dump:
+  en: 01d107b7aea2c78a
+  zh: dbeee8659a7591fb
+/astro-one-cli-behavior-reference/startup-diagnostics:
+  en: 90ff2c0802e64896
+  zh: fa22ed992c72ff2d
+/astro-one-cli-behavior-reference/plugin-management:
+  en: fce28cb9817571c1
+  zh: 3d6c4d00dbe95bdf
+/astro-one-cli-behavior-reference/web-profile:
+  en: 7721f00fb2652145
+  zh: 4b6c4f9455f64a25
+/astro-one-cli-behavior-reference/shared-deployment-behavior:
+  en: f3d2402588ed8f79
+  zh: 6dbc76bd16d7c3b0
+/astro-one-cli-behavior-reference/source-execution:
+  en: f300b2ea68d5f5c3
+  zh: 9af598e337b8fb09

@@ -1,0 +1,94 @@
+{
+  "name": "@astro-one/client-ui-open-in-app",
+  "description": "Web \"Open In...\" controls: the Session-header split button opening the workspace directory in an installed application, and the document preview's default-application controls for one file",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/client/ui-open-in-app"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "astroOne": {
+    "client": {
+      "inject": [
+        "@astro-one/api-gateway",
+        "@astro-one/api-remotes",
+        "@astro-one/api-session-controller",
+        "@astro-one/client-locale",
+        "@astro-one/client-shortcuts",
+        "@astro-one/client-ui-conversation",
+        "@astro-one/client-ui-layout",
+        "@astro-one/client-ui-renderer",
+        "@astro-one/client-ui-session",
+        "@astro-one/client-ui-sidebar-documentpreview",
+        "@astro-one/client-ui-context-menu",
+        "@astro-one/client-ui-sidebar-right",
+        "@astro-one/api-workspace-files",
+        "@astro-one/client-ui-workspace"
+      ],
+      "platform": "web"
+    }
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/api-gateway": "workspace:*",
+    "@astro-one/api-remotes": "workspace:*",
+    "@astro-one/api-session-controller": "workspace:*",
+    "@astro-one/client-locale": "workspace:*",
+    "@astro-one/client-store": "workspace:*",
+    "@astro-one/client-test-runtime": "workspace:*",
+    "@astro-one/client-ui-conversation": "workspace:*",
+    "@astro-one/client-ui-layout": "workspace:*",
+    "@astro-one/client-ui-primitives": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-session": "workspace:*",
+    "@astro-one/client-ui-sidebar-documentpreview": "workspace:*",
+    "@astro-one/client-ui-sidebar-files": "workspace:*",
+    "@astro-one/client-ui-slots": "workspace:*",
+    "@astro-one/host-open-in-app": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "react": "^18.2.0",
+    "@astro-one/client-ui-deliverables": "workspace:*",
+    "@astro-one/native-command": "workspace:*",
+    "@astro-one/client-shortcuts": "workspace:*",
+    "@astro-one/client-ui-context-menu": "workspace:*",
+    "@astro-one/client-ui-file-actions": "workspace:*",
+    "@astro-one/util-workspace-path": "workspace:*",
+    "@astro-one/client-ui-sidebar-right": "workspace:*",
+    "@astro-one/api-workspace-files": "workspace:*",
+    "@astro-one/client-ui-sidebar-browser": "workspace:*",
+    "@astro-one/client-ui-workspace": "workspace:*"
+  }
+}

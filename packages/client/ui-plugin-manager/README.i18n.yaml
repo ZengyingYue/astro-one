@@ -1,0 +1,67 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-plugin-manager/README.md
+/:
+  en: 65c981be6a40344b
+  zh: 468873de4e2db85f
+/astro-one-client-ui-plugin-manager:
+  en: ec77a52f7a48a145
+  zh: 2afa00ccc7baada7
+/astro-one-client-ui-plugin-manager/summary:
+  en: 0dc67850ca5358de
+  zh: 4ff1bb5bdc184e3e
+/astro-one-client-ui-plugin-manager/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-client-ui-plugin-manager/use-this-package:
+  en: 4f0193a53b9e1edd
+  zh: 47883bfca55ba585
+/astro-one-client-ui-plugin-manager/use-this-package/installing-a-bundle:
+  en: 75103c78621bd649
+  zh: 3093ea0be2857f94
+/astro-one-client-ui-plugin-manager/use-this-package/updating-a-registry-bundle:
+  en: f48c73f5972418d8
+  zh: da8fd9c23433d18c
+/astro-one-client-ui-plugin-manager/use-this-package/switching-a-bundle:
+  en: 390dc85aceac033a
+  zh: 746ceae45f70dd33
+/astro-one-client-ui-plugin-manager/use-this-package/switching-one-row-of-a-bundle:
+  en: 6907baec93edfe29
+  zh: ba68da43cbdeae8a
+/astro-one-client-ui-plugin-manager/use-this-package/configuration-pages:
+  en: 40fd39195300908b
+  zh: 1449d693e91a2c19
+/astro-one-client-ui-plugin-manager/use-this-package/detail-page-extension-points:
+  en: d5e3cad5c31cae59
+  zh: 6dc38f09b410d247
+/astro-one-client-ui-plugin-manager/use-this-package/page-tabs:
+  en: 9c7217382b5277a4
+  zh: 6ee0867318c376e9
+/astro-one-client-ui-plugin-manager/understand-the-implementation:
+  en: 203168fc87e939bd
+  zh: 72d0ccd2c54f3f44
+/astro-one-client-ui-plugin-manager/understand-the-implementation/registration:
+  en: 93871919adaf1082
+  zh: 67c9ef0b500e6917
+/astro-one-client-ui-plugin-manager/understand-the-implementation/the-store:
+  en: ef7ab41b4119c7b9
+  zh: 3166661bf84415e5
+/astro-one-client-ui-plugin-manager/understand-the-implementation/configuration-slots:
+  en: b8d0f4687e41b55c
+  zh: a223432b1908c5e7
+/astro-one-client-ui-plugin-manager/further-exploration:
+  en: 6e6d1da00bffed1a
+  zh: 9be617552d3120d9
+/astro-one-client-ui-plugin-manager/model-experience:
+  en: 8dcc6c6fbfb567d2
+  zh: 43690ae350f1d6a7
+/astro-one-client-ui-plugin-manager/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: 2064958b0754647e
+/astro-one-client-ui-plugin-manager/known-limitations-and-deferred-work:
+  en: 9948a05936384f1c
+  zh: b347769c1e31f715
+/astro-one-client-ui-plugin-manager/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

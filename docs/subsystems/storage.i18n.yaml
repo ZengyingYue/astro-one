@@ -1,0 +1,28 @@
+# Bilingual-pair consistency record for storage.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/subsystems/storage.md
+/storage:
+  en: 3de1ff32a30d3aa6
+  zh: 9d81f2d915c9fb28
+/storage/the-hub-ctx-storage:
+  en: b11e06e7c0e0fd13
+  zh: 4585f26ff416cb41
+/storage/the-backend-contract:
+  en: 72fc97798728f603
+  zh: 008170ef5a50ded3
+/storage/declaring-a-domain:
+  en: 01831eafb67b017c
+  zh: fc0044d189ee64d7
+/storage/domain-versioning:
+  en: 637a26fc42cd9a27
+  zh: ff533f24aa6cce2f
+/storage/the-open-domain:
+  en: c0787f6a496b4c46
+  zh: f219b16ec96d6cb6
+/storage/the-domain-facility-ctx-storagedomain:
+  en: deed74fcd4506ef4
+  zh: 8e3e6e5d2dc2e989
+/storage/the-change-event-domain-changed:
+  en: 104008d23966e8f6
+  zh: 1972e70b6991281e

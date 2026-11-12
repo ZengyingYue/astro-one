@@ -1,0 +1,61 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/test-support/session-snapshot/README.md
+/:
+  en: 35f64a68381efbd0
+  zh: dd2c508ba263d788
+/astro-one-session-snapshot:
+  en: b521d991194a2864
+  zh: 39578810fe849063
+/astro-one-session-snapshot/summary:
+  en: 8286fe1c614e1653
+  zh: 4c9f6ff8a494a3a4
+/astro-one-session-snapshot/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-session-snapshot/use-this-package:
+  en: 594ad1f3e6f02054
+  zh: 7ca4f565976704be
+/astro-one-session-snapshot/use-this-package/writing-a-snapshot-suite:
+  en: 0b31eb8d9c1822f4
+  zh: 4b94879f5192aeb9
+/astro-one-session-snapshot/use-this-package/record-replay-and-refresh:
+  en: baec0aa45e982461
+  zh: ad74202f73dc8245
+/astro-one-session-snapshot/use-this-package/pinning-request-headers-and-system-prompts:
+  en: fe59b0197fa5e34c
+  zh: dfa1844c2c965358
+/astro-one-session-snapshot/use-this-package/platform-and-composition-variants:
+  en: 64666ea2894acc4a
+  zh: 0e78df32bcfd3633
+/astro-one-session-snapshot/use-this-package/what-can-go-wrong:
+  en: 7efae200fecbc9e4
+  zh: 4cc6795bb157f6f4
+/astro-one-session-snapshot/understand-the-implementation:
+  en: 18ff76b440fe40da
+  zh: 4dbf2eb5f9ee98a2
+/astro-one-session-snapshot/understand-the-implementation/design:
+  en: 8771607f15c4f4e1
+  zh: 7c2cf395f704717c
+/astro-one-session-snapshot/understand-the-implementation/source-map:
+  en: 1510b3b09c3bd553
+  zh: 1931fba0891f7d65
+/astro-one-session-snapshot/understand-the-implementation/data-flow:
+  en: a71c8ab2e78798c5
+  zh: 419cebed1c023fbf
+/astro-one-session-snapshot/further-exploration:
+  en: 2fb8065f0ad73ba0
+  zh: bac346dd3cc83140
+/astro-one-session-snapshot/model-experience:
+  en: 9f12d94ab5e31ade
+  zh: 7c75a17565caca1c
+/astro-one-session-snapshot/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: f57cc48a1b5cbfa9
+/astro-one-session-snapshot/known-limitations-and-deferred-work:
+  en: 45f892142927f6f2
+  zh: 0b84943053dac2e5
+/astro-one-session-snapshot/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

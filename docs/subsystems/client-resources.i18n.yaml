@@ -1,0 +1,22 @@
+# Bilingual-pair consistency record for client-resources.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/subsystems/client-resources.md
+/client-resources:
+  en: c1b237117fee6774
+  zh: 4623076dce27e3c1
+/client-resources/addresses:
+  en: 92d6cfde94b6b5f8
+  zh: 89f734e76128e3ae
+/client-resources/registering-a-provider:
+  en: fae7e2aea835bd1b
+  zh: b92f033c33038432
+/client-resources/reading-a-resource:
+  en: 4db5cefbd552e254
+  zh: 7a0e14f8230c4107
+/client-resources/holding-and-releasing:
+  en: c4f4dea195038622
+  zh: 5eba426247b339db
+/client-resources/limits:
+  en: 0bb8c1e28d645c4a
+  zh: 1c353afec3af2546

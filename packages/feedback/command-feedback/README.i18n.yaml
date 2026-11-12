@@ -1,0 +1,64 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/feedback/command-feedback/README.md
+/:
+  en: 6fde8a2c01a13756
+  zh: 63b06f1e5373a1f0
+/astro-one-command-feedback:
+  en: a9b16d549bc245cc
+  zh: d7aa0ed95192bf73
+/astro-one-command-feedback/summary:
+  en: bb2087398a875cd0
+  zh: 98146bfcc801f749
+/astro-one-command-feedback/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-command-feedback/use-this-package:
+  en: 4bd3dab1dc7d0f42
+  zh: 9b7af2275387be77
+/astro-one-command-feedback/use-this-package/the-feedback-command:
+  en: 645ee72ee1af491d
+  zh: 32b86c39307093e3
+/astro-one-command-feedback/use-this-package/the-web-feedback-dialog:
+  en: 21fae542942446d2
+  zh: 34d83535891dabee
+/astro-one-command-feedback/use-this-package/recording-feedback-from-your-own-ui:
+  en: c6ee98ae5229d76f
+  zh: e058dae4cb5dd254
+/astro-one-command-feedback/understand-the-implementation:
+  en: 42b15ac6321706aa
+  zh: 4ed0861911abaf5d
+/astro-one-command-feedback/understand-the-implementation/design-concept:
+  en: 8363f597c28788d2
+  zh: 9dda2a864a01f4ce
+/astro-one-command-feedback/understand-the-implementation/how-a-remark-is-recorded:
+  en: 0c6ceecbb1f45224
+  zh: 8138bb0fd3e68317
+/astro-one-command-feedback/understand-the-implementation/source-map:
+  en: cb5f1c6c4dfd08b5
+  zh: f5785924c0f42afc
+/astro-one-command-feedback/further-exploration:
+  en: e9e1bc378981d0e9
+  zh: 62979aa1ed06ee3e
+/astro-one-command-feedback/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-command-feedback/model-experience/human-feedback-capture:
+  en: 987bab29bbe8ec43
+  zh: 725efc45361172b5
+/astro-one-command-feedback/model-experience/human-feedback-capture/what-the-model-sees:
+  en: 6ad8e2a4f961d2f4
+  zh: b510d05a74d6df0c
+/astro-one-command-feedback/model-experience/human-feedback-capture/token-effect:
+  en: 1fcbd4d84eff267f
+  zh: 8da9902c44bf8dc4
+/astro-one-command-feedback/model-experience/human-feedback-capture/kv-cache-effect:
+  en: c72e7dfee7b0957a
+  zh: b122fce5efccfafa
+/astro-one-command-feedback/known-limitations-and-deferred-work:
+  en: b45e656a009e37b7
+  zh: 4949bd712564ee54
+/astro-one-command-feedback/known-limitations-and-deferred-work/dev-note:
+  en: b4bf58d55f599bc2
+  zh: fea7a6b69b0266e1

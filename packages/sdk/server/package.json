@@ -1,0 +1,85 @@
+{
+  "name": "@astro-one/sdk-jsonrpc-server",
+  "description": "Stdio JSON-RPC server plugin for out-of-process Astro One SDK clients",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/sdk/server"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/schemastery": "workspace:~"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/commands": "workspace:*",
+    "@astro-one/goal": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/llm-deepseek-api-key": "workspace:*",
+    "@astro-one/schedule": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/sdk-protocol": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/subagent": "workspace:*",
+    "@astro-one/user-approval": "workspace:*",
+    "@astro-one/user-questions": "workspace:*",
+    "@astro-one/working-directory": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-loop": "workspace:*",
+    "@astro-one/agent-loop-testkit": "workspace:*",
+    "@astro-one/attachment": "workspace:*",
+    "@astro-one/command-compact": "workspace:*",
+    "@astro-one/command-goal": "workspace:*",
+    "@astro-one/commands": "workspace:*",
+    "@astro-one/compaction-basic": "workspace:*",
+    "@astro-one/goal": "workspace:*",
+    "@astro-one/goal-round-driver": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/llm-deepseek-api-key": "workspace:*",
+    "@astro-one/permission-presets": "workspace:*",
+    "@astro-one/plan-mode": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/schedule": "workspace:*",
+    "@astro-one/scope": "workspace:*",
+    "@astro-one/sdk-protocol": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/session-persistence-jsonl": "workspace:*",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/shell": "workspace:*",
+    "@astro-one/subagent": "workspace:*",
+    "@astro-one/token-meter": "workspace:*",
+    "@astro-one/tool-goal": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/user-approval": "workspace:*",
+    "@astro-one/user-questions": "workspace:*",
+    "@astro-one/working-directory": "workspace:*"
+  }
+}

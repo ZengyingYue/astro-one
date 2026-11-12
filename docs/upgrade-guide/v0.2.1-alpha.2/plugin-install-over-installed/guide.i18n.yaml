@@ -1,0 +1,16 @@
+# Bilingual-pair consistency record for guide.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/upgrade-guide/v0.2.1-alpha.2/plugin-install-over-installed/guide.md
+/:
+  en: 036db2d1004f0aa0
+  zh: fb026ec0af7949f6
+/installing-over-an-installed-plugin-package-is-refused-with-hmr:
+  en: aa880fce79c8a22b
+  zh: 1483f70943a5b6d7
+/installing-over-an-installed-plugin-package-is-refused-with-hmr/change:
+  en: 5ebc93b557b8a536
+  zh: 884cb4121757b8ad
+/installing-over-an-installed-plugin-package-is-refused-with-hmr/migration:
+  en: f72eeb19e689bbee
+  zh: 9ae1f049688edf38

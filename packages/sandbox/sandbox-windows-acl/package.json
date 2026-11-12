@@ -1,0 +1,57 @@
+{
+  "name": "@astro-one/sandbox-windows-acl",
+  "description": "Windows ACL write-restriction sandbox backend (restricted-token spawn with capability-SID write allowlist) for the Astro One sandbox seam",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/sandbox/sandbox-windows-acl"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./runner": {
+      "types": "./lib/types/runner.d.ts",
+      "default": "./lib/runner.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/runner.js",
+    "lib/types-*.js",
+    "assets",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/skill": "workspace:*",
+    "@astro-one/subprocess": "workspace:*"
+  },
+  "dependencies": {
+    "@astro-one/lazy-require": "workspace:*",
+    "@astro-one/win32-process": "workspace:*",
+    "koffi": "3.1.1",
+    "yaml": "^2.4.2"
+  },
+  "devDependencies": {
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/pwsh-local": "workspace:*",
+    "@astro-one/sandbox-local": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/skill": "workspace:*",
+    "@astro-one/subprocess": "workspace:*",
+    "@astro-one/subprocess-local": "workspace:*"
+  }
+}

@@ -1,0 +1,61 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-primitives/README.md
+/:
+  en: de2b6f26c7cd2276
+  zh: 1b06e79c2b130496
+/astro-one-client-ui-primitives:
+  en: ef7d6d77e8c73e36
+  zh: a55527b610161349
+/astro-one-client-ui-primitives/summary:
+  en: 6de1c4a61d72e095
+  zh: d80574d4108c5f49
+/astro-one-client-ui-primitives/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-client-ui-primitives/use-this-package:
+  en: 24552037a03a5fcb
+  zh: 35ef3cf6d919b40e
+/astro-one-client-ui-primitives/use-this-package/component-catalog:
+  en: ef659a90dbd69e70
+  zh: 10fe14110d25b5ab
+/astro-one-client-ui-primitives/use-this-package/controls-and-icons:
+  en: 18a2e15bf27ace46
+  zh: 60db3415bd00f1be
+/astro-one-client-ui-primitives/use-this-package/rendering-agent-output:
+  en: 81e1bad0c5d1b7b2
+  zh: 9338592d057298f3
+/astro-one-client-ui-primitives/use-this-package/localizing-copy:
+  en: 81e58c7b342baf3c
+  zh: 6cd47b16124b215c
+/astro-one-client-ui-primitives/understand-the-implementation:
+  en: 3890201344fa1892
+  zh: e5486f5a87eb8a78
+/astro-one-client-ui-primitives/understand-the-implementation/source-map:
+  en: fd510d34404eb090
+  zh: d05b0890db929ae6
+/astro-one-client-ui-primitives/understand-the-implementation/input-modality:
+  en: 28ac53391d4cc65d
+  zh: 21e2938c6d2f1654
+/astro-one-client-ui-primitives/understand-the-implementation/streaming-markdown:
+  en: 8bbfa14c27f3bfd7
+  zh: 88f7548ac3a114e1
+/astro-one-client-ui-primitives/understand-the-implementation/geometry-and-overflow:
+  en: 45f4cd1ef96bb6d2
+  zh: f264d25b780ad1dc
+/astro-one-client-ui-primitives/further-exploration:
+  en: aad9c6321ef76af3
+  zh: 4f139ea8fb1c85b2
+/astro-one-client-ui-primitives/model-experience:
+  en: 3120df665299c634
+  zh: 1d9f365d091d0d2a
+/astro-one-client-ui-primitives/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/astro-one-client-ui-primitives/known-limitations-and-deferred-work:
+  en: 5ef25c55c71533c2
+  zh: 6c389b4c7ae86785
+/astro-one-client-ui-primitives/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

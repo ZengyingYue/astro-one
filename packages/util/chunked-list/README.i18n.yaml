@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/util/chunked-list/README.md
+/:
+  en: e29affc07acbcf4f
+  zh: 10e2da625e145a68
+/astro-one-chunked-list:
+  en: dca96d22b317b8ea
+  zh: 1a9c964ba9e3c940
+/astro-one-chunked-list/summary:
+  en: 4b94e77a0ee8692e
+  zh: 224a5d9cee1a63f1
+/astro-one-chunked-list/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 75f067b4c4218355
+/astro-one-chunked-list/use-this-package:
+  en: 6808bfba89c5ffbf
+  zh: f80761fdcd3db317
+/astro-one-chunked-list/understand-the-implementation:
+  en: 7cd6e9d9367246f3
+  zh: 127a64392a7dd976
+/astro-one-chunked-list/further-exploration:
+  en: 6ba1542e08588bbf
+  zh: 2a47ef6b20933146
+/astro-one-chunked-list/model-experience:
+  en: bc7e4d8a0c8b8ebb
+  zh: e11fe3bd45d4354a
+/astro-one-chunked-list/model-experience/kv-cache-effect:
+  en: e7ba08477bf22c4e
+  zh: c38c528fe563bb51
+/astro-one-chunked-list/known-limitations-and-deferred-work:
+  en: fdc87d52574748eb
+  zh: e1e7cbd86cd2bde0
+/astro-one-chunked-list/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

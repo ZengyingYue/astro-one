@@ -1,0 +1,67 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/shell/shell/README.md
+/:
+  en: 4a173bf52227a3b6
+  zh: 76bb85595252765c
+/astro-one-shell:
+  en: ed548ea8fa83d370
+  zh: 477d8a173833c6b9
+/astro-one-shell/summary:
+  en: bb40932744bc4b80
+  zh: 22e2af1327b2f835
+/astro-one-shell/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-shell/use-this-package:
+  en: b81fffe9eb713a49
+  zh: ac37478e7f1f7499
+/astro-one-shell/use-this-package/foreground-commands:
+  en: cf38f6bc0e150602
+  zh: 2ff6cfb0ce48a7b8
+/astro-one-shell/use-this-package/background-processes:
+  en: 277c543917453017
+  zh: d2c100e37944f151
+/astro-one-shell/use-this-package/deadlines-and-bounded-waits:
+  en: 719b0708bf3cf1cf
+  zh: 044f53d543960f42
+/astro-one-shell/use-this-package/requests-and-resolved-specs:
+  en: ed07333fb001fbee
+  zh: c53709935fde2820
+/astro-one-shell/use-this-package/choosing-and-composing-an-executor:
+  en: 13bb65aa4af765df
+  zh: d5dd6445707e496c
+/astro-one-shell/use-this-package/the-shared-exit-status-contract:
+  en: f4125282c1deab36
+  zh: 46b8ee789ae68a9a
+/astro-one-shell/understand-the-implementation:
+  en: d2192b68c2faf92b
+  zh: 7678a2fd356d8587
+/astro-one-shell/understand-the-implementation/design-philosophy:
+  en: 50a98e97d03e4d01
+  zh: 5e07b7c098327387
+/astro-one-shell/understand-the-implementation/source-map:
+  en: 1e9231bae2662059
+  zh: 2bac2b8e8fc08eb9
+/astro-one-shell/understand-the-implementation/settings-namespace:
+  en: a5b81ecee7fe9938
+  zh: 25fcf060b48e14cf
+/astro-one-shell/understand-the-implementation/background-lifecycle-and-ownership:
+  en: 63853c610719e1bb
+  zh: 09668e6fd34c9161
+/astro-one-shell/further-exploration:
+  en: 190380320de2bece
+  zh: b62d4faad52bd676
+/astro-one-shell/model-experience:
+  en: 13dac19c9463b80c
+  zh: e0478e965a5e17ca
+/astro-one-shell/model-experience/kv-cache-effect:
+  en: 40294c1c31b74824
+  zh: 788a4799b1d65a8b
+/astro-one-shell/known-limitations-and-deferred-work:
+  en: 8f8e282909f4503e
+  zh: 1409864e7a08f977
+/astro-one-shell/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3c8bbe93d71a3377

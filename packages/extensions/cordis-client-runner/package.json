@@ -1,0 +1,65 @@
+{
+  "name": "@astro-one/cordis-client-runner",
+  "description": "Browser half of dynamic dual-half plugin packages: event subscription, closure evaluation, guard facade, and loader entries",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/extensions/cordis-client-runner"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "astroOne": {
+    "client": {
+      "inject": [
+        "@astro-one/client-ui-renderer",
+        "@astro-one/api-remotes",
+        "@astro-one/client-modules",
+        "@astro-one/client-ui-theme"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/cordis-plugin-timer": "workspace:~",
+    "@astro-one/api-remotes": "workspace:*",
+    "@astro-one/client-modules": "workspace:*",
+    "@astro-one/client-ui-renderer": "workspace:*",
+    "@astro-one/client-ui-theme": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "react": "^18.2.0",
+    "@astro-one/util-values": "workspace:*"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts"
+  ]
+}

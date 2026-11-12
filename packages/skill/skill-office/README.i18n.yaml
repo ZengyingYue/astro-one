@@ -1,0 +1,40 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/skill/skill-office/README.md
+/:
+  en: b65118b967447a79
+  zh: 83afe7dbc1a82c44
+/astro-one-skill-office:
+  en: 7567ad528fc5d2ca
+  zh: 52deb2fd7349230b
+/astro-one-skill-office/summary:
+  en: 3f41e39809756048
+  zh: 5ec8623eeb617755
+/astro-one-skill-office/table-of-contents:
+  en: c361195a73cf5755
+  zh: 745b04e7be0be369
+/astro-one-skill-office/use-this-package:
+  en: e4c54bb174d8ca53
+  zh: 83767d8a7ad50cc7
+/astro-one-skill-office/use-this-package/progressive-loading:
+  en: 86278b4393aa8d81
+  zh: 55cfd145a7734ebd
+/astro-one-skill-office/understand-the-implementation:
+  en: 6946e30f3663c72f
+  zh: 81dd5de9c7e61562
+/astro-one-skill-office/further-exploration:
+  en: ff116c0b63797582
+  zh: ce2fe5bb63d09d1a
+/astro-one-skill-office/model-experience:
+  en: 7f297a920a2e5fce
+  zh: 47a2c2c0ba1f655d
+/astro-one-skill-office/model-experience/kv-cache-effect:
+  en: dc9e9205d989f1d0
+  zh: 01bdbbfba743813a
+/astro-one-skill-office/known-limitations-and-deferred-work:
+  en: 1f718fc3bb4352d9
+  zh: c1aa108ad2b05fdd
+/astro-one-skill-office/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

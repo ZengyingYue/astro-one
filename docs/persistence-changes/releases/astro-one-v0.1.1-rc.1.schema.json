@@ -1,0 +1,30 @@
+{
+  "formatVersion": 1,
+  "roots": [
+    {"key":"event:permission/preset","kind":"event","event":"permission/preset","surface":false,"digest":"3b9bf22b76208fd75990df1fbe5fe523a2298366e1b733383137aa8a2e54acaf"}
+  ],
+  "types": [
+    {"digest":"546c2b19cfc9b771e888b6af913f7761c0d2d63c408fdc3e0eac11f9cefe65ef","names":[],"sources":[]},
+    {"digest":"a4380bb2efbc62ecb286f502322dedab65d6fc08b8ba336c61df85dab191bb1d","names":[],"sources":[]},
+    {"digest":"fcf6898d4d89ad11a2caf3fc657f6fc693dd921d0c48fa6fbbb78dcfa30ba917","names":["packages/attachment/attachment/src/brand.ts#AttachmentId","packages/compaction/compaction/src/brand.ts#CompactionId","packages/core/session/src/types.ts#SessionId","packages/experimental/agent-team/src/types.ts#TeamId","packages/experimental/agent-team/src/types.ts#TeamMessageId","packages/experimental/agent-team/src/types.ts#TeamTaskId","packages/goal/goal/src/types.ts#GoalId","packages/host/apiproxy/src/api/rpc.ts#RpcId","packages/interaction/commands/src/brand.ts#CommandId","packages/interaction/user-approval/src/types.ts#ApprovalRequestId","packages/llm/llm-retry/src/brand.ts#RetryId","packages/llm/llm/src/brand.ts#CallId","packages/llm/llm/src/brand.ts#MessageId","packages/llm/llm/src/brand.ts#ProviderRequestId","packages/llm/llm/src/brand.ts#ReasoningEffortId","packages/schedule/schedule/src/types.ts#ScheduleId","packages/session/session-title/src/index.ts#SessionTitleProviderId","packages/workflow/workflow/src/types.ts#WorkflowRunId"],"sources":["packages/attachment/attachment/src/brand.ts","packages/compaction/compaction/src/brand.ts","packages/core/session/src/types.ts","packages/experimental/agent-team/src/types.ts","packages/goal/goal/src/types.ts","packages/host/apiproxy/src/api/rpc.ts","packages/interaction/commands/src/brand.ts","packages/interaction/user-approval/src/types.ts","packages/llm/llm-retry/src/brand.ts","packages/llm/llm/src/brand.ts","packages/schedule/schedule/src/types.ts","packages/session/session-title/src/index.ts","packages/workflow/workflow/src/types.ts"]},
+    {"digest":"fa3d6d40b4bcc1c66c21425b7967453f6ab703c77ad6504f2063d2142e44144a","names":["event:permission/preset[0].data.origin"],"sources":[]},
+    {"digest":"3b9bf22b76208fd75990df1fbe5fe523a2298366e1b733383137aa8a2e54acaf","names":["event:permission/preset","event:permission/preset[0]"],"sources":["packages/core/session/src/types.ts"]},
+    {"digest":"b0663ddf838529b197a76fe8fab9bd0294ad61dff30e6446423301e251eeb46e","names":[],"sources":[]},
+    {"digest":"a416a10ada844a6d3ed652ed00bcbf7b0a93400f4dfed76aa9e1cab4679500dd","names":[],"sources":[]},
+    {"digest":"765e8849f8b4b5fe183b2185bb59587136941769828cf53cc259b98d9e8675f8","names":[],"sources":[]},
+    {"digest":"e5f31a1a5321feeebb6d6cb6fe92065d0361482f24624b57ad766881874b8aed","names":[],"sources":[]},
+    {"digest":"db04ad5151815d0fd6a2ecee8ec5ac0b604a82d107ae23ea1b093782d6415d9b","names":["event:permission/preset[0].data"],"sources":["packages/interaction/permission-presets/src/index.ts"]}
+  ],
+  "nodes": {
+    "3b9bf22b76208fd7": {"kind":"object","properties":[{"name":"data","type":"db04ad5151815d0f","optional":false},{"name":"ignorable","type":"e5f31a1a5321feee","optional":true},{"name":"seq","type":"546c2b19cfc9b771","optional":false},{"name":"time","type":"546c2b19cfc9b771","optional":false},{"name":"type","type":"a416a10ada844a6d","optional":false}],"indices":[]},
+    "546c2b19cfc9b771": {"kind":"primitive","type":"number"},
+    "765e8849f8b4b5fe": {"kind":"literal","value":"default"},
+    "a416a10ada844a6d": {"kind":"literal","value":"permission/preset"},
+    "a4380bb2efbc62ec": {"kind":"literal","value":"inferred"},
+    "b0663ddf838529b1": {"kind":"literal","value":"selection"},
+    "db04ad5151815d0f": {"kind":"object","properties":[{"name":"origin","type":"fa3d6d40b4bcc1c6","optional":true},{"name":"preset","type":"fcf6898d4d89ad11","optional":false}],"indices":[]},
+    "e5f31a1a5321feee": {"kind":"literal","value":true},
+    "fa3d6d40b4bcc1c6": {"kind":"union","types":["765e8849f8b4b5fe","a4380bb2efbc62ec","b0663ddf838529b1"]},
+    "fcf6898d4d89ad11": {"kind":"primitive","type":"string"}
+  }
+}

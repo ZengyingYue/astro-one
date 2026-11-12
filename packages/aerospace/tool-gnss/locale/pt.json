@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Ferramentas de posicionamento GNSS",
+    "description": "Posicionamento por ponto baseado em RINEX com RAIM, RTK com resolução de ambiguidades LAMBDA e planejamento de visibilidade de satélites e DOP."
+  }
+}

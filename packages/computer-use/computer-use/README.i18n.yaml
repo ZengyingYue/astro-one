@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/computer-use/computer-use/README.md
+/:
+  en: 5c5d7b5f1329ac1b
+  zh: b68d332df957109f
+/astro-one-computer-use:
+  en: 6108e60bfbb327e4
+  zh: 81f645f48589acc2
+/astro-one-computer-use/summary:
+  en: ed9ede017d7c2313
+  zh: ad293db36f0c6100
+/astro-one-computer-use/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 405b30feaf48c087
+/astro-one-computer-use/use-this-package:
+  en: 5e46cf00413e155a
+  zh: 82e7be8a807547ed
+/astro-one-computer-use/understand-the-implementation:
+  en: 181679887837591a
+  zh: cc2e96766ce0aa63
+/astro-one-computer-use/further-exploration:
+  en: 813e77a8ec25fd47
+  zh: 42041cfb9f234042
+/astro-one-computer-use/model-experience:
+  en: 8780c250dfaefaaa
+  zh: 1c4b3598a131fb65
+/astro-one-computer-use/model-experience/kv-cache-effect:
+  en: 0cc866a67a19d08b
+  zh: e1c3bb5ee2fed596
+/astro-one-computer-use/known-limitations-and-deferred-work:
+  en: e252e6ec178594ba
+  zh: ac5991101dc9f327
+/astro-one-computer-use/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 6c5f9788c6536776

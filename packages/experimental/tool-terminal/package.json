@@ -1,0 +1,70 @@
+{
+  "name": "@astro-one/tool-terminal",
+  "description": "Six model-facing persistent PTY tools with owner isolation and generic background-job integration",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/tool-terminal"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@astro-one/schemastery": "workspace:~"
+  },
+  "peerDependencies": {
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/terminal": "workspace:*",
+    "@astro-one/output-retention": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/jobs": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/working-directory": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/cordis-plugin-include": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/agent-loop-testkit": "workspace:*",
+    "@astro-one/llm": "workspace:*",
+    "@astro-one/terminal": "workspace:*",
+    "@astro-one/terminal-bash": "workspace:*",
+    "@astro-one/output-retention": "workspace:*",
+    "@astro-one/sandbox": "workspace:*",
+    "@astro-one/sandbox-policy": "workspace:*",
+    "@astro-one/session": "workspace:*",
+    "@astro-one/subprocess-local": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/jobs": "workspace:*",
+    "@astro-one/jobs-local": "workspace:*",
+    "@astro-one/tool-executor-native": "workspace:*",
+    "@astro-one/tool-executor-ptc": "workspace:*",
+    "@astro-one/tool-jobs": "workspace:*",
+    "@astro-one/tool-testkit": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/session-projection": "workspace:*",
+    "@astro-one/working-directory": "workspace:*"
+  }
+}

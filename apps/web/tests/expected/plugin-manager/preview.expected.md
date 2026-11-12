@@ -1,0 +1,24 @@
+- button "返回 实验性插件": 实验性插件
+- status
+- switch "启用 Astro One 徽章技能"
+- heading "Astro One 徽章技能" [level=3]
+- text: v{{version}} 实验性
+- paragraph:
+  - code: "@astro-one/experimental-badge-skill-bundle"
+- paragraph: 让 Agent 为文档、PR 等产出添加「powered by astro-one」徽章。
+- region "详细介绍":
+  - paragraph:
+    - img "Astro One 徽章技能功能预览"
+- heading "包含的组件" [level=4]
+- text: 共 1 个 · 1 已停用
+- list:
+  - listitem:
+    - text: Astro One 提供官方 powered-by-Astro One 徽章技能。
+    - code: skill-badge
+    - code: "@astro-one/skill-badge"
+    - text: 已关闭
+- heading "来源信息" [level=4]
+- term: 代码来源
+- definition: 内置
+- term: 当前版本
+- definition: {{version}}

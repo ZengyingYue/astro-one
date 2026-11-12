@@ -1,0 +1,58 @@
+{
+  "name": "@astro-one/tool-cordis",
+  "description": "Read-only runtime API inspection for Harness plugin development",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/extensions/tool-cordis"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./host": {
+      "types": "./lib/types/host.d.ts",
+      "default": "./lib/types/host.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./host/locale/*.json": "./locale/host/*.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "locale/host/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/app-boot": "workspace:*",
+    "@astro-one/cordis-host-runner": "workspace:*",
+    "@astro-one/tools": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/cordis-plugin-group": "workspace:~",
+    "@astro-one/cordis-plugin-loader": "workspace:~",
+    "@astro-one/agent": "workspace:*",
+    "@astro-one/app-boot": "workspace:*",
+    "@astro-one/cordis-host-runner": "workspace:*",
+    "@astro-one/system-prompt": "workspace:*",
+    "@astro-one/tool-executor-native": "workspace:*",
+    "@astro-one/tools": "workspace:*",
+    "@astro-one/schemastery": "workspace:~"
+  }
+}

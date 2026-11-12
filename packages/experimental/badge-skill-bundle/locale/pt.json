@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Astro One habilidade de distintivo",
+    "description": "Permita que os agentes adicionem um selo “powered by astro-one” a documentos, pull requests e outros resultados.",
+    "detail": "docs/DETAIL.md"
+  }
+}

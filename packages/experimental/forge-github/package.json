@@ -1,0 +1,48 @@
+{
+  "name": "@astro-one/experimental-forge-github",
+  "description": "GitHub provider for the experimental forge registry, read through the GitHub CLI on the host",
+  "version": "0.2.2-alpha.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./locale/*.json": "./locale/*.json",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengyingYue/astro-one.git",
+    "directory": "packages/experimental/forge-github"
+  },
+  "dependencies": {
+    "@astro-one/schemastery": "workspace:~",
+    "@astro-one/timeout": "workspace:*",
+    "execa": "^10.0.1",
+    "zod": "^4.4.3"
+  },
+  "peerDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/experimental-forge": "workspace:*",
+    "@astro-one/subprocess": "workspace:*"
+  },
+  "devDependencies": {
+    "@astro-one/cordis": "workspace:~",
+    "@astro-one/brand": "workspace:*",
+    "@astro-one/experimental-forge": "workspace:*",
+    "@astro-one/subprocess": "workspace:*"
+  }
+}

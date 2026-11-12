@@ -1,0 +1,67 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/auto-review/README.md
+/:
+  en: fdb9237f7c9ddfa6
+  zh: 3bb572e4a945183f
+/astro-one-experimental-auto-review:
+  en: ccbf2257f441a0eb
+  zh: 8f4466346c72614c
+/astro-one-experimental-auto-review/summary:
+  en: 4e13242b58f496ac
+  zh: 3d73ca6491383035
+/astro-one-experimental-auto-review/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-experimental-auto-review/use-this-package:
+  en: 8f9e85817f05aa4d
+  zh: f60136fb39abcf29
+/astro-one-experimental-auto-review/use-this-package/install-into-a-profile:
+  en: eef3c122791452f9
+  zh: 11c40644a2ea02a9
+/astro-one-experimental-auto-review/use-this-package/headless-supervision:
+  en: 599d308cb426b48d
+  zh: 946e5d2dae183b2e
+/astro-one-experimental-auto-review/use-this-package/what-you-get:
+  en: 8ab9885ad1415d62
+  zh: 1639ccf1f93e5748
+/astro-one-experimental-auto-review/understand-the-implementation:
+  en: 891ec74b95d59d93
+  zh: 7d302d035826d756
+/astro-one-experimental-auto-review/further-exploration:
+  en: 4c8347718c85c6fb
+  zh: d79838ab29c365f5
+/astro-one-experimental-auto-review/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-experimental-auto-review/model-experience/per-call-reviewer:
+  en: 7ec217b1012cd8fa
+  zh: 6188796b4990f2ef
+/astro-one-experimental-auto-review/model-experience/per-call-reviewer/what-the-model-sees:
+  en: d1670b32b5be6795
+  zh: d6a6456f415b0daa
+/astro-one-experimental-auto-review/model-experience/per-call-reviewer/token-effect:
+  en: 9c3e575c061d53fe
+  zh: 74db1c5a77b2d2a7
+/astro-one-experimental-auto-review/model-experience/per-call-reviewer/kv-cache-effect:
+  en: 27773ae2aa7eb52f
+  zh: 158da0dc659da483
+/astro-one-experimental-auto-review/model-experience/tool-denial:
+  en: f9b4d7b686f14fc5
+  zh: a2fac9a8eaf5e2a3
+/astro-one-experimental-auto-review/model-experience/tool-denial/what-the-model-sees:
+  en: a0b93e8eebc1b497
+  zh: aec11cfbf6c1ec75
+/astro-one-experimental-auto-review/model-experience/tool-denial/token-effect:
+  en: 679cb3d82e97022f
+  zh: 15c98505e75ff881
+/astro-one-experimental-auto-review/model-experience/tool-denial/kv-cache-effect:
+  en: 8da1089dee147f94
+  zh: 87361347bfd10c6c
+/astro-one-experimental-auto-review/known-limitations-and-deferred-work:
+  en: cacae56156203a5b
+  zh: bd62f1f23bc12dfb
+/astro-one-experimental-auto-review/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

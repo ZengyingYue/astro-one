@@ -1,0 +1,21 @@
+- insert:
+    - id: worktree
+      name: '@astro-one/experimental-worktree'
+    - id: tool-worktree
+      name: '@astro-one/experimental-tool-worktree'
+    - id: forge
+      name: '@astro-one/experimental-forge'
+    - id: forge-github
+      name: '@astro-one/experimental-forge-github'
+    - id: forge-session
+      name: '@astro-one/experimental-forge-session'
+    - id: optional-forge-panel
+      name: cordis:group
+      group: true
+      isolate:
+        worktrees: true
+      config:
+        - id: forge-worktree
+          name: '@astro-one/experimental-worktree'
+        - id: forge-panel
+          name: '@astro-one/experimental-client-ui-forge'

@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write apps/desktop/publishing/ci/README.md
+/:
+  en: 5bbdeb4ea94502b4
+  zh: 107894e10c74d22d
+/desktop-ci-publication:
+  en: 5ce160384fcf9cdd
+  zh: d112e230c6e7f11f
+/desktop-ci-publication/summary:
+  en: 470bdf1487a739f9
+  zh: cd80330eaa8f730c
+/desktop-ci-publication/table-of-contents:
+  en: 34283bf8397f6836
+  zh: 1798bd921c3adf6c
+/desktop-ci-publication/setup-sequence:
+  en: c29a8d7e7a21d081
+  zh: c5dacd874735630e
+/desktop-ci-publication/runner-labels-and-queue-diagnosis:
+  en: c57ae796893d91a9
+  zh: e9eb93b65ede4d83
+/desktop-ci-publication/machine-setup:
+  en: 85ae887c80aed025
+  zh: 1301a2626e5849a3
+/desktop-ci-publication/package-and-publish:
+  en: dc0fc011c5083fa6
+  zh: fde6b0623822dcd1
+/desktop-ci-publication/recovery-and-records:
+  en: 4ff6f0673d057ca8
+  zh: 7171d060dd86db9a
+/desktop-ci-publication/restore-a-channel:
+  en: 3382eb6ecad24624
+  zh: 746e0e42975a9a50
+/desktop-ci-publication/dev-note:
+  en: b75c8458928b72b9
+  zh: 003ba4e17b4b5269

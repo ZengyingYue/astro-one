@@ -1,0 +1,79 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/subagent/subagent-spawn-in-process/README.md
+/:
+  en: d510765ec1bebc28
+  zh: 35efb9f71f05f326
+/astro-one-subagent-spawn-in-process:
+  en: 04ea6859438d42f4
+  zh: 33ba3b9b24ce64ae
+/astro-one-subagent-spawn-in-process/summary:
+  en: 277933e248ce12d6
+  zh: 52d1a526d72c9b94
+/astro-one-subagent-spawn-in-process/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/astro-one-subagent-spawn-in-process/use-this-package:
+  en: 6bbeeb35e234c464
+  zh: c49c8b92de6c70e6
+/astro-one-subagent-spawn-in-process/use-this-package/when-to-choose-it:
+  en: 5f14443940e59bb5
+  zh: 3e8610aec21c55e8
+/astro-one-subagent-spawn-in-process/use-this-package/minimal-configuration:
+  en: ab438834ee5ee53e
+  zh: eb39721415e3c4ea
+/astro-one-subagent-spawn-in-process/use-this-package/what-a-delegation-does:
+  en: 7baf6721ab8561fd
+  zh: 3937807c9ed8949b
+/astro-one-subagent-spawn-in-process/understand-the-implementation:
+  en: 7f34637751939818
+  zh: 2937553168e1aee5
+/astro-one-subagent-spawn-in-process/understand-the-implementation/design-concept:
+  en: 4e1c964c1ce8d6fb
+  zh: b1f34663e3b8a156
+/astro-one-subagent-spawn-in-process/understand-the-implementation/source-map:
+  en: b7c55a4bff3ae1f0
+  zh: 9d0f514f433250c6
+/astro-one-subagent-spawn-in-process/understand-the-implementation/run-flow:
+  en: 5f07f1044bf7c370
+  zh: d31a485a3e333500
+/astro-one-subagent-spawn-in-process/understand-the-implementation/ownership-and-scope:
+  en: 1288272d1eabfdc1
+  zh: 6efde7517f434179
+/astro-one-subagent-spawn-in-process/further-exploration:
+  en: 52f739327cf4e4bc
+  zh: 1295249db197b8c2
+/astro-one-subagent-spawn-in-process/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/astro-one-subagent-spawn-in-process/model-experience/child-agent-request:
+  en: 05e6180f1498fdf9
+  zh: 2b05d2b97bfa67da
+/astro-one-subagent-spawn-in-process/model-experience/child-agent-request/what-the-model-sees:
+  en: c9dfab9a4d363fed
+  zh: 6cb3b0914ccb73e2
+/astro-one-subagent-spawn-in-process/model-experience/child-agent-request/token-effect:
+  en: eb373a4b35a4b548
+  zh: 9537d0e466e8bcd9
+/astro-one-subagent-spawn-in-process/model-experience/child-agent-request/kv-cache-effect:
+  en: 6da85bad412c741e
+  zh: c9af9fd1b4e7eed2
+/astro-one-subagent-spawn-in-process/model-experience/parent-tool-result-indirectly:
+  en: 75d061c2151624a7
+  zh: 71e58e020b60ff90
+/astro-one-subagent-spawn-in-process/model-experience/parent-tool-result-indirectly/what-the-model-sees:
+  en: 308e39a935325ab7
+  zh: 8c63c35670f5d002
+/astro-one-subagent-spawn-in-process/model-experience/parent-tool-result-indirectly/token-effect:
+  en: ff8045aa0f466c2a
+  zh: e38fc5c6af2ce076
+/astro-one-subagent-spawn-in-process/model-experience/parent-tool-result-indirectly/kv-cache-effect:
+  en: f5d5f97a153f7c70
+  zh: 3d6bc05b9eadfbc2
+/astro-one-subagent-spawn-in-process/known-limitations-and-deferred-work:
+  en: 0c0b19dc1ccec027
+  zh: a7799c516dc3b034
+/astro-one-subagent-spawn-in-process/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

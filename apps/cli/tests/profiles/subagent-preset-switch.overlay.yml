@@ -1,0 +1,27 @@
+- insert:
+    - id: preset-delegate-a
+      name: '@astro-one/agent-preset'
+      config:
+        id: delegate-a
+        plugins:
+          - name: '@astro-one/tool-subagent'
+            config:
+              provider: spawn
+              allowedAgentPresets: [standard, ptc, minimal]
+          - name: '@astro-one/tool-subagent'
+            config:
+              provider: fork
+              toolName: subagent_fork
+    - id: preset-delegate-b
+      name: '@astro-one/agent-preset'
+      config:
+        id: delegate-b
+        plugins:
+          - name: '@astro-one/tool-subagent'
+            config:
+              provider: spawn
+              allowedAgentPresets: [standard, ptc, minimal]
+          - name: '@astro-one/tool-subagent'
+            config:
+              provider: fork
+              toolName: subagent_fork

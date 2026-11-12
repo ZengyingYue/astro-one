@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/ssh/subprocess-ssh/README.md
+/:
+  en: 3e3b8e1b999fccbb
+  zh: 996257b8c3c219a8
+/astro-one-subprocess-ssh:
+  en: 2843b91a3d2a926d
+  zh: a503ad14fd6d2039
+/astro-one-subprocess-ssh/summary:
+  en: 9044a5e6623f99f5
+  zh: 8d94700e48b74bb2
+/astro-one-subprocess-ssh/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 725b47765ee8f30b
+/astro-one-subprocess-ssh/use-this-package:
+  en: 9225ea3a07e56452
+  zh: 57c34be2971bd46f
+/astro-one-subprocess-ssh/understand-the-implementation:
+  en: 43e077b38567e149
+  zh: ddcc6643d51c9408
+/astro-one-subprocess-ssh/further-exploration:
+  en: 2c49c5494b07ae22
+  zh: 38b8d7861d53d73c
+/astro-one-subprocess-ssh/model-experience:
+  en: 02267d26e71b847c
+  zh: 749305233e7f63e4
+/astro-one-subprocess-ssh/model-experience/kv-cache-effect:
+  en: 21f304c66e5ba98b
+  zh: 18185d5b164f8216
+/astro-one-subprocess-ssh/known-limitations-and-deferred-work:
+  en: 0aa40f28ee1eb6e1
+  zh: da785a9b66cdbed9
+/astro-one-subprocess-ssh/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

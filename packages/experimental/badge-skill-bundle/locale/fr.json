@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Compétence du badge Astro One",
+    "description": "Laissez les agents ajouter un badge « propulsé par astro-one » aux documents, demandes d'extraction et autres sorties.",
+    "detail": "docs/DETAIL.md"
+  }
+}

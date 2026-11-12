@@ -1,0 +1,45 @@
+# Keyless replay counterpart of agent-instructions.cordis.yml: apply the
+# scenario values and model swap to the ACP profile.
+- id: llm-deepseek
+  name: '@astro-one/llm-deepseek-api-key'
+  disabled: true
+
+- id: agent-default-model
+  name: '@astro-one/agent-default-model'
+  config:
+    provider: deepseek-official
+    model: deepseek-v4-flash
+
+- id: session-persistence-jsonl
+  name: '@astro-one/session-persistence-jsonl'
+  config:
+    root: !!js astroOneHomePath('sessions')
+    compression: none
+
+- id: agent-instructions
+  name: '@astro-one/agent-instructions'
+  config:
+    maxBytes: 65536
+    projectRootMarkers:
+      - .astro-one-project
+
+- id: system-prompt
+  name: '@astro-one/system-prompt'
+  config:
+    personaPrefix: |
+      You are a coding assistant powered by the {{model}} model.
+
+      Verify your work by running the code or tests. Keep answers brief and factual.
+
+- insert:
+    - id: llm-replay
+      name: '@astro-one/llm-replay'
+      config:
+        providers:
+          - id: deepseek-official
+            name: DeepSeek
+            models:
+              - id: deepseek-v4-flash
+              - id: deepseek-v4-pro
+    - id: workspace-context-compaction
+      name: '../../../packages/test-support/session-snapshot/tests/fixtures/workspace-context-compaction.ts'
